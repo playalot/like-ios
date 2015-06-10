@@ -1,0 +1,112 @@
+10
+
+dir
+0
+https://titd%40qq.com@github.com/titman/LCFramework.git/trunk/0.1.4/LCFramework/Foundation/Extension
+https://titd%40qq.com@github.com/titman/LCFramework.git
+add
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5a564079-567f-b5a4-aedf-ce57b7db7bff
+
+NSArray+LCExtension.m
+file
+
+
+
+add
+
+NSObject+LCPerformSelector.h
+file
+
+
+
+add
+
+NSString+LCExtension.h
+file
+
+
+
+add
+
+NSData+LCExtension.h
+file
+
+
+
+add
+
+
+
+
+
+has-props
+has-prop-mods
+
+NSObject+LCFastSingleton.h
+file
+
+
+
+add
+
+NSObject+LCPerformSelector.m
+file
+
+
+
+add
+
+NSString+LCExtension.m
+file
+
+
+
+add
+
+NSArray+LCExtension.h
+file
+
+
+
+add
+
+NSData+LCExtension.m
+file
+
+
+
+add
+
+
+
+
+
+has-props
+has-prop-mods
+
+NSObject+LCFastSingleton.m
+file
+
+
+
+add
+

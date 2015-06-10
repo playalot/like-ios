@@ -1,0 +1,95 @@
+//
+//
+//      _|          _|_|_|
+//      _|        _|
+//      _|        _|
+//      _|        _|
+//      _|_|_|_|    _|_|_|
+//
+//
+//  Copyright (c) 2014-2015, Licheng Guo. ( http://nsobject.me )
+//  http://github.com/titman
+//
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a
+//  copy of this software and associated documentation files (the "Software"),
+//  to deal in the Software without restriction, including without limitation
+//  the rights to use, copy, modify, merge, publish, distribute, sublicense,
+//  and/or sell copies of the Software, and to permit persons to whom the
+//  Software is furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+//  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+//  IN THE SOFTWARE.
+//
+
+#import "LCModelSignal.h"
+
+@implementation LCHTTPRequestModel (LCModelSignal)
+
+-(LCSignalSend) SEND
+{
+    LCSignalSend block = ^ LCSignal * (NSString * name){
+        
+        LCSignal * signal = [LCSignal signal];
+        
+        signal.from = self;
+        signal.name = name;
+        
+        self.PERFORM_DELAY(@selector($send:), signal, 0);
+        
+        return signal;
+    };
+    
+    return block;
+}
+
+-(LCSignalSendTo) SEND_TO
+{
+    LCSignalSendTo block = ^ LCSignal * (NSString * name, id to){
+        
+        LCSignal * signal = [LCSignal signal];
+        
+        signal.from = self;
+        signal.name = name;
+        signal.to = to;
+        
+        self.PERFORM_DELAY(@selector($send:), signal, 0);
+        
+        return signal;
+    };
+    
+    return block;
+}
+
+-(void) $send:(LCSignal *)signal
+{
+    if(!signal){
+        return;
+    }
+    
+    NSString * selectorName = [NSString stringWithFormat:@"handleModelSignal$%@:", signal.name];
+    
+    SEL selector = NSSelectorFromString(selectorName);
+    
+    if(signal.to){
+        
+        ((NSObject *)signal.to).PERFORM(selector, signal);
+    }
+    else{
+    
+        for (id observer in self.observers) {
+            
+            ((NSObject *)observer).PERFORM(selector, signal);
+        }
+    }
+}
+
+@end

@@ -304,7 +304,6 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     agreement.viewFrameY = self.view.viewFrameHeight - 60;
     agreement.viewFrameWidth = self.view.viewFrameWidth;
     agreement.viewFrameHeight = 20;
-    agreement.FIT();
     agreement.viewFrameX = LC_DEVICE_WIDTH / 2 - agreement.viewMidWidth;
     agreement.textAlignment = UITextAlignmentCenter;
     agreement.font = LK_FONT(10);
@@ -370,8 +369,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     
     self.codeButton.userInteractionEnabled = NO;
     
-    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"user/sendcode"];
-    [interface setMethodType:LKHttpRequestMethodTypePost];
+    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"user/sendcode"].POST_METHOD();
     [interface addParameter:self.phoneField.text key:@"mobile"];
     
     @weakly(self);
@@ -405,8 +403,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     self.loginButton.title = @"登录中...";
     self.loginButton.userInteractionEnabled = NO;
     
-    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"user"];
-    [interface setMethodType:LKHttpRequestMethodTypePost];
+    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"user"].POST_METHOD();
     [interface addParameter:self.phoneField.text key:@"mobile"];
     [interface addParameter:self.codeField.text key:@"code"];
 

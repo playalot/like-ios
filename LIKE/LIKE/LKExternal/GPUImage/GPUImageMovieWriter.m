@@ -199,10 +199,14 @@ NSString *const kGPUImageColorSwizzlingFragmentShaderString = SHADER_STRING
     // custom output settings specified
     else 
     {
+        
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-variable"
 		NSString *videoCodec = [outputSettings objectForKey:AVVideoCodecKey];
 		NSNumber *width = [outputSettings objectForKey:AVVideoWidthKey];
 		NSNumber *height = [outputSettings objectForKey:AVVideoHeightKey];
-		
+#pragma clang diagnostic pop
+
 		NSAssert(videoCodec && width && height, @"OutputSettings is missing required parameters.");
         
         if( [outputSettings objectForKey:@"EncodingLiveVideo"] ) {
@@ -211,7 +215,7 @@ NSString *const kGPUImageColorSwizzlingFragmentShaderString = SHADER_STRING
             outputSettings = tmp;
         }
     }
-    
+
     /*
     NSDictionary *videoCleanApertureSettings = [NSDictionary dictionaryWithObjectsAndKeys:
                                                 [NSNumber numberWithInt:videoSize.width], AVVideoCleanApertureWidthKey,
@@ -578,9 +582,10 @@ NSString *const kGPUImageColorSwizzlingFragmentShaderString = SHADER_STRING
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, movieRenderbuffer);	
     }
     
-	
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-variable"
 	GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-    
+#pragma clang diagnostic pop
     NSAssert(status == GL_FRAMEBUFFER_COMPLETE, @"Incomplete filter FBO: %d", status);
 }
 

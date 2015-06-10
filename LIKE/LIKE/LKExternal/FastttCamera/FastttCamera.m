@@ -333,7 +333,6 @@
     
     _previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:_session];
     _previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-    _previewLayer.automaticallyAdjustsMirroring = YES;
     _previewLayer.connection.automaticallyAdjustsVideoMirroring = YES;
     _previewLayer.connection.videoMirrored = YES;
     _previewLayer.frame = rootLayer.bounds;

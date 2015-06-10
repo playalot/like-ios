@@ -15,7 +15,13 @@
 }
 
 /// For the constants see: <http://developer.apple.com/documentation/Cocoa/Conceptual/ObjectiveC/Articles/chapter_14_section_9.html>
-- (instancetype)initWithValue:(const void *)value objCType:(const char *)type {
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wobjc-designated-initializers"
+- (instancetype)initWithValue:(const void *)value objCType:(const char *)type
+#pragma clang diagnostic pop
+
+{
 	if ('^' == *type
 	    && nil == *(__unsafe_unretained id *)value) return nil; // nil should stay nil, even if it's technically a (void *)
 	id number = [NSNumber alloc];

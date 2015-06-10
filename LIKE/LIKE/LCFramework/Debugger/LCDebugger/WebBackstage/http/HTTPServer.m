@@ -713,6 +713,11 @@ static NSThread *bonjourThread;
 	}
 }
 
+-(void) donothingatall:(id)value
+{
+    
+}
+
 + (void)executeBonjourBlock:(dispatch_block_t)block
 {
 	NSAssert([NSThread currentThread] == bonjourThread, @"Executed on incorrect thread");

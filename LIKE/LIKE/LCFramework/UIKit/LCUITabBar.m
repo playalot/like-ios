@@ -16,7 +16,6 @@
 
 @interface LCUITabBarItem ()
 
-LC_PROPERTY(strong) UIImage * image;
 LC_PROPERTY(strong) UIImage * selectedImage;
 
 @end

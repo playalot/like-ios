@@ -145,7 +145,7 @@ LC_PROPERTY(strong) UILongPressGestureRecognizer * longPressGestureRecognizer;
 {
     if (self.strikeThroughLine)
     {
-        CGSize contentSize = [self.text sizeWithFont:self.font constrainedToSize:self.frame.size];
+        CGSize contentSize = [self.text sizeWithFont:self.font byWidth:self.viewFrameWidth];
         CGContextRef c = UIGraphicsGetCurrentContext();
         //CGFloat color[4] = {0.667, 0.667, 0.667, 1.0};
         CGContextSetStrokeColor(c, CGColorGetComponents(self.textColor.CGColor));

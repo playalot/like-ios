@@ -80,7 +80,7 @@
 
     _loaded	= NO;
     _inited = YES;
-    self.animationDuration = 0.25;
+    self.changeImageAnimationDuration = 0.25;
 }
 
 -(LCUIImageViewGetURL) URL
@@ -280,7 +280,7 @@
         
         
         CATransition * animation = [CATransition animation];
-        [animation setDuration:self.animationDuration];
+        [animation setDuration:self.changeImageAnimationDuration];
         
         if (self.flipAnimation) {
             

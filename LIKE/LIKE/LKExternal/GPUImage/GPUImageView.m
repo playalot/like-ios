@@ -184,7 +184,10 @@
 
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, displayRenderbuffer);
 	
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-variable"
     GLuint framebufferCreationStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+#pragma clang diagnostic pop
     NSAssert(framebufferCreationStatus == GL_FRAMEBUFFER_COMPLETE, @"Failure with display framebuffer generation for display of size: %f, %f", self.bounds.size.width, self.bounds.size.height);
     boundsSizeAtFrameBufferEpoch = self.bounds.size;
 }

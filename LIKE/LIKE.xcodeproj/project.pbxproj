@@ -388,7 +388,6 @@
 		13BCD8DC1ADBCD1000A0CBF5 /* LKUserInfoCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BCD8DB1ADBCD1000A0CBF5 /* LKUserInfoCache.m */; };
 		13BCD8DF1ADBD0C700A0CBF5 /* LKUserInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BCD8DE1ADBD0C700A0CBF5 /* LKUserInfoModel.m */; };
 		13D2ACBF1AFB18E40068C0CD /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 13D2AB731AFB18E30068C0CD /* Info.plist */; };
-		13D2ACC01AFB18E40068C0CD /* module.modulemap in Sources */ = {isa = PBXBuildFile; fileRef = 13D2AB741AFB18E30068C0CD /* module.modulemap */; };
 		13D2ACC11AFB18E40068C0CD /* GLProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D2AB761AFB18E30068C0CD /* GLProgram.m */; };
 		13D2ACC21AFB18E40068C0CD /* GPUImage3x3ConvolutionFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D2AB7A1AFB18E30068C0CD /* GPUImage3x3ConvolutionFilter.m */; };
 		13D2ACC31AFB18E40068C0CD /* GPUImage3x3TextureSamplingFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D2AB7C1AFB18E30068C0CD /* GPUImage3x3TextureSamplingFilter.m */; };
@@ -596,23 +595,6 @@
 		13DEEC1B1AE789E6005E01A6 /* LC_WebStop.png in Resources */ = {isa = PBXBuildFile; fileRef = 13DEEC111AE789E6005E01A6 /* LC_WebStop.png */; };
 		13DEEC1C1AE789E6005E01A6 /* LC_WebStop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13DEEC121AE789E6005E01A6 /* LC_WebStop@2x.png */; };
 		13E14F5F1B21C032009CCF9F /* LCNetworkCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 13E14F5E1B21C032009CCF9F /* LCNetworkCenter.m */; };
-		13E14F861B26CF80009CCF9F /* ALAsset+accessibilityLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13E14F641B26CF80009CCF9F /* ALAsset+accessibilityLabel.m */; };
-		13E14F871B26CF80009CCF9F /* ALAsset+assetType.m in Sources */ = {isa = PBXBuildFile; fileRef = 13E14F661B26CF80009CCF9F /* ALAsset+assetType.m */; };
-		13E14F881B26CF80009CCF9F /* ALAsset+isEqual.m in Sources */ = {isa = PBXBuildFile; fileRef = 13E14F681B26CF80009CCF9F /* ALAsset+isEqual.m */; };
-		13E14F891B26CF80009CCF9F /* ALAssetsGroup+isEqual.m in Sources */ = {isa = PBXBuildFile; fileRef = 13E14F6A1B26CF80009CCF9F /* ALAssetsGroup+isEqual.m */; };
-		13E14F8A1B26CF80009CCF9F /* CTAssetItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13E14F6C1B26CF80009CCF9F /* CTAssetItemViewController.m */; };
-		13E14F8B1B26CF80009CCF9F /* CTAssetScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13E14F6E1B26CF80009CCF9F /* CTAssetScrollView.m */; };
-		13E14F8C1B26CF80009CCF9F /* CTAssetsGroupViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13E14F701B26CF80009CCF9F /* CTAssetsGroupViewCell.m */; };
-		13E14F8D1B26CF80009CCF9F /* CTAssetsGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13E14F721B26CF80009CCF9F /* CTAssetsGroupViewController.m */; };
-		13E14F8E1B26CF80009CCF9F /* CTAssetsPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13E14F741B26CF80009CCF9F /* CTAssetsPageViewController.m */; };
-		13E14F8F1B26CF80009CCF9F /* CTAssetsPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13E14F771B26CF80009CCF9F /* CTAssetsPickerController.m */; };
-		13E14F901B26CF80009CCF9F /* CTAssetsSupplementaryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13E14F791B26CF80009CCF9F /* CTAssetsSupplementaryView.m */; };
-		13E14F911B26CF80009CCF9F /* CTAssetsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13E14F7B1B26CF80009CCF9F /* CTAssetsViewCell.m */; };
-		13E14F921B26CF80009CCF9F /* CTAssetsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13E14F7D1B26CF80009CCF9F /* CTAssetsViewController.m */; };
-		13E14F931B26CF80009CCF9F /* CTAssetsViewControllerTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 13E14F7F1B26CF80009CCF9F /* CTAssetsViewControllerTransition.m */; };
-		13E14F941B26CF80009CCF9F /* NSBundle+CTAssetsPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13E14F811B26CF80009CCF9F /* NSBundle+CTAssetsPickerController.m */; };
-		13E14F951B26CF80009CCF9F /* NSDateFormatter+timeIntervalFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 13E14F831B26CF80009CCF9F /* NSDateFormatter+timeIntervalFormatter.m */; };
-		13E14F961B26CF80009CCF9F /* UIImage+CTAssetsPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13E14F851B26CF80009CCF9F /* UIImage+CTAssetsPickerController.m */; };
 		13E14F991B26CFC2009CCF9F /* LKUIImagePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13E14F981B26CFC2009CCF9F /* LKUIImagePickerViewController.m */; };
 		13E1A2C31AE61DCB00E24C3C /* LKTagLikesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13E1A2C21AE61DCB00E24C3C /* LKTagLikesViewController.m */; };
 		13E1A2C61AE6292B00E24C3C /* LKTagLikesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13E1A2C51AE6292B00E24C3C /* LKTagLikesCell.m */; };
@@ -1479,7 +1461,6 @@
 		13BCD8DE1ADBD0C700A0CBF5 /* LKUserInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKUserInfoModel.m; sourceTree = "<group>"; };
 		13D2AB721AFB18E30068C0CD /* GPUImageFramework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageFramework.h; sourceTree = "<group>"; };
 		13D2AB731AFB18E30068C0CD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		13D2AB741AFB18E30068C0CD /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		13D2AB751AFB18E30068C0CD /* GLProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLProgram.h; sourceTree = "<group>"; };
 		13D2AB761AFB18E30068C0CD /* GLProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLProgram.m; sourceTree = "<group>"; };
 		13D2AB771AFB18E30068C0CD /* GPUImage-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GPUImage-Prefix.pch"; sourceTree = "<group>"; };
@@ -1871,41 +1852,6 @@
 		13DEEC121AE789E6005E01A6 /* LC_WebStop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LC_WebStop@2x.png"; sourceTree = "<group>"; };
 		13E14F5D1B21C032009CCF9F /* LCNetworkCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCNetworkCenter.h; sourceTree = "<group>"; };
 		13E14F5E1B21C032009CCF9F /* LCNetworkCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCNetworkCenter.m; sourceTree = "<group>"; };
-		13E14F631B26CF80009CCF9F /* ALAsset+accessibilityLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAsset+accessibilityLabel.h"; sourceTree = "<group>"; };
-		13E14F641B26CF80009CCF9F /* ALAsset+accessibilityLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALAsset+accessibilityLabel.m"; sourceTree = "<group>"; };
-		13E14F651B26CF80009CCF9F /* ALAsset+assetType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAsset+assetType.h"; sourceTree = "<group>"; };
-		13E14F661B26CF80009CCF9F /* ALAsset+assetType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALAsset+assetType.m"; sourceTree = "<group>"; };
-		13E14F671B26CF80009CCF9F /* ALAsset+isEqual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAsset+isEqual.h"; sourceTree = "<group>"; };
-		13E14F681B26CF80009CCF9F /* ALAsset+isEqual.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALAsset+isEqual.m"; sourceTree = "<group>"; };
-		13E14F691B26CF80009CCF9F /* ALAssetsGroup+isEqual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAssetsGroup+isEqual.h"; sourceTree = "<group>"; };
-		13E14F6A1B26CF80009CCF9F /* ALAssetsGroup+isEqual.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALAssetsGroup+isEqual.m"; sourceTree = "<group>"; };
-		13E14F6B1B26CF80009CCF9F /* CTAssetItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetItemViewController.h; sourceTree = "<group>"; };
-		13E14F6C1B26CF80009CCF9F /* CTAssetItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTAssetItemViewController.m; sourceTree = "<group>"; };
-		13E14F6D1B26CF80009CCF9F /* CTAssetScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetScrollView.h; sourceTree = "<group>"; };
-		13E14F6E1B26CF80009CCF9F /* CTAssetScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTAssetScrollView.m; sourceTree = "<group>"; };
-		13E14F6F1B26CF80009CCF9F /* CTAssetsGroupViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetsGroupViewCell.h; sourceTree = "<group>"; };
-		13E14F701B26CF80009CCF9F /* CTAssetsGroupViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTAssetsGroupViewCell.m; sourceTree = "<group>"; };
-		13E14F711B26CF80009CCF9F /* CTAssetsGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetsGroupViewController.h; sourceTree = "<group>"; };
-		13E14F721B26CF80009CCF9F /* CTAssetsGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTAssetsGroupViewController.m; sourceTree = "<group>"; };
-		13E14F731B26CF80009CCF9F /* CTAssetsPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetsPageViewController.h; sourceTree = "<group>"; };
-		13E14F741B26CF80009CCF9F /* CTAssetsPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTAssetsPageViewController.m; sourceTree = "<group>"; };
-		13E14F751B26CF80009CCF9F /* CTAssetsPickerCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetsPickerCommon.h; sourceTree = "<group>"; };
-		13E14F761B26CF80009CCF9F /* CTAssetsPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetsPickerController.h; sourceTree = "<group>"; };
-		13E14F771B26CF80009CCF9F /* CTAssetsPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTAssetsPickerController.m; sourceTree = "<group>"; };
-		13E14F781B26CF80009CCF9F /* CTAssetsSupplementaryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetsSupplementaryView.h; sourceTree = "<group>"; };
-		13E14F791B26CF80009CCF9F /* CTAssetsSupplementaryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTAssetsSupplementaryView.m; sourceTree = "<group>"; };
-		13E14F7A1B26CF80009CCF9F /* CTAssetsViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetsViewCell.h; sourceTree = "<group>"; };
-		13E14F7B1B26CF80009CCF9F /* CTAssetsViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTAssetsViewCell.m; sourceTree = "<group>"; };
-		13E14F7C1B26CF80009CCF9F /* CTAssetsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetsViewController.h; sourceTree = "<group>"; };
-		13E14F7D1B26CF80009CCF9F /* CTAssetsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTAssetsViewController.m; sourceTree = "<group>"; };
-		13E14F7E1B26CF80009CCF9F /* CTAssetsViewControllerTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetsViewControllerTransition.h; sourceTree = "<group>"; };
-		13E14F7F1B26CF80009CCF9F /* CTAssetsViewControllerTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTAssetsViewControllerTransition.m; sourceTree = "<group>"; };
-		13E14F801B26CF80009CCF9F /* NSBundle+CTAssetsPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+CTAssetsPickerController.h"; sourceTree = "<group>"; };
-		13E14F811B26CF80009CCF9F /* NSBundle+CTAssetsPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+CTAssetsPickerController.m"; sourceTree = "<group>"; };
-		13E14F821B26CF80009CCF9F /* NSDateFormatter+timeIntervalFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDateFormatter+timeIntervalFormatter.h"; sourceTree = "<group>"; };
-		13E14F831B26CF80009CCF9F /* NSDateFormatter+timeIntervalFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDateFormatter+timeIntervalFormatter.m"; sourceTree = "<group>"; };
-		13E14F841B26CF80009CCF9F /* UIImage+CTAssetsPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+CTAssetsPickerController.h"; sourceTree = "<group>"; };
-		13E14F851B26CF80009CCF9F /* UIImage+CTAssetsPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+CTAssetsPickerController.m"; sourceTree = "<group>"; };
 		13E14F971B26CFC2009CCF9F /* LKUIImagePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKUIImagePickerViewController.h; sourceTree = "<group>"; };
 		13E14F981B26CFC2009CCF9F /* LKUIImagePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKUIImagePickerViewController.m; sourceTree = "<group>"; };
 		13E1A2C11AE61DCB00E24C3C /* LKTagLikesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKTagLikesViewController.h; sourceTree = "<group>"; };
@@ -3286,7 +3232,6 @@
 		138EDECC1AD7B70F0020957C /* LKExternal */ = {
 			isa = PBXGroup;
 			children = (
-				13E14F621B26CF80009CCF9F /* CTAssetsPickerController */,
 				13892C641B1DD2B50053303E /* MMMaterialDesignSpinner */,
 				13925A711B146BD1004D0656 /* INSSearchBar */,
 				13F21F2F1B0F1D6200124291 /* Weibo */,
@@ -3751,7 +3696,6 @@
 			children = (
 				13D2AB721AFB18E30068C0CD /* GPUImageFramework.h */,
 				13D2AB731AFB18E30068C0CD /* Info.plist */,
-				13D2AB741AFB18E30068C0CD /* module.modulemap */,
 			);
 			path = Framework;
 			sourceTree = "<group>";
@@ -3811,48 +3755,6 @@
 				13DEEC121AE789E6005E01A6 /* LC_WebStop@2x.png */,
 			);
 			path = Resource;
-			sourceTree = "<group>";
-		};
-		13E14F621B26CF80009CCF9F /* CTAssetsPickerController */ = {
-			isa = PBXGroup;
-			children = (
-				13E14F631B26CF80009CCF9F /* ALAsset+accessibilityLabel.h */,
-				13E14F641B26CF80009CCF9F /* ALAsset+accessibilityLabel.m */,
-				13E14F651B26CF80009CCF9F /* ALAsset+assetType.h */,
-				13E14F661B26CF80009CCF9F /* ALAsset+assetType.m */,
-				13E14F671B26CF80009CCF9F /* ALAsset+isEqual.h */,
-				13E14F681B26CF80009CCF9F /* ALAsset+isEqual.m */,
-				13E14F691B26CF80009CCF9F /* ALAssetsGroup+isEqual.h */,
-				13E14F6A1B26CF80009CCF9F /* ALAssetsGroup+isEqual.m */,
-				13E14F6B1B26CF80009CCF9F /* CTAssetItemViewController.h */,
-				13E14F6C1B26CF80009CCF9F /* CTAssetItemViewController.m */,
-				13E14F6D1B26CF80009CCF9F /* CTAssetScrollView.h */,
-				13E14F6E1B26CF80009CCF9F /* CTAssetScrollView.m */,
-				13E14F6F1B26CF80009CCF9F /* CTAssetsGroupViewCell.h */,
-				13E14F701B26CF80009CCF9F /* CTAssetsGroupViewCell.m */,
-				13E14F711B26CF80009CCF9F /* CTAssetsGroupViewController.h */,
-				13E14F721B26CF80009CCF9F /* CTAssetsGroupViewController.m */,
-				13E14F731B26CF80009CCF9F /* CTAssetsPageViewController.h */,
-				13E14F741B26CF80009CCF9F /* CTAssetsPageViewController.m */,
-				13E14F751B26CF80009CCF9F /* CTAssetsPickerCommon.h */,
-				13E14F761B26CF80009CCF9F /* CTAssetsPickerController.h */,
-				13E14F771B26CF80009CCF9F /* CTAssetsPickerController.m */,
-				13E14F781B26CF80009CCF9F /* CTAssetsSupplementaryView.h */,
-				13E14F791B26CF80009CCF9F /* CTAssetsSupplementaryView.m */,
-				13E14F7A1B26CF80009CCF9F /* CTAssetsViewCell.h */,
-				13E14F7B1B26CF80009CCF9F /* CTAssetsViewCell.m */,
-				13E14F7C1B26CF80009CCF9F /* CTAssetsViewController.h */,
-				13E14F7D1B26CF80009CCF9F /* CTAssetsViewController.m */,
-				13E14F7E1B26CF80009CCF9F /* CTAssetsViewControllerTransition.h */,
-				13E14F7F1B26CF80009CCF9F /* CTAssetsViewControllerTransition.m */,
-				13E14F801B26CF80009CCF9F /* NSBundle+CTAssetsPickerController.h */,
-				13E14F811B26CF80009CCF9F /* NSBundle+CTAssetsPickerController.m */,
-				13E14F821B26CF80009CCF9F /* NSDateFormatter+timeIntervalFormatter.h */,
-				13E14F831B26CF80009CCF9F /* NSDateFormatter+timeIntervalFormatter.m */,
-				13E14F841B26CF80009CCF9F /* UIImage+CTAssetsPickerController.h */,
-				13E14F851B26CF80009CCF9F /* UIImage+CTAssetsPickerController.m */,
-			);
-			path = CTAssetsPickerController;
 			sourceTree = "<group>";
 		};
 		13E1A2CC1AE644B400E24C3C /* UserCenter */ = {
@@ -4719,7 +4621,6 @@
 				13E1A4EB1AE65FE300E24C3C /* FastttEmptyFilter.m in Sources */,
 				13D2ACC41AFB18E40068C0CD /* GPUImageAdaptiveThresholdFilter.m in Sources */,
 				13D2AD001AFB18E40068C0CD /* GPUImageHoughTransformLineDetector.m in Sources */,
-				13E14F931B26CF80009CCF9F /* CTAssetsViewControllerTransition.m in Sources */,
 				13FCC0891ADE40AC0008DB41 /* LKUserCenterPhotoCell.m in Sources */,
 				138EDDFF1AD7B0A30020957C /* LCCrashReport.m in Sources */,
 				138EDE071AD7B0A30020957C /* LCCPULoad.m in Sources */,
@@ -4741,13 +4642,11 @@
 				138EDE6D1AD7B0A30020957C /* UIScrollView+SVPullToRefresh.m in Sources */,
 				138EDE3F1AD7B0A30020957C /* WebSocket.m in Sources */,
 				138EDE551AD7B0A30020957C /* ASIS3Bucket.m in Sources */,
-				13E14F951B26CF80009CCF9F /* NSDateFormatter+timeIntervalFormatter.m in Sources */,
 				134F92A21AFCB84B00784185 /* LKLikesPage.m in Sources */,
 				13F505051B0B253100D8D484 /* LKShare.m in Sources */,
 				13D2ACD51AFB18E40068C0CD /* GPUImageColorBurnBlendFilter.m in Sources */,
 				13D2AD081AFB18E40068C0CD /* GPUImageLanczosResamplingFilter.m in Sources */,
 				13D2ACD71AFB18E40068C0CD /* GPUImageColorInvertFilter.m in Sources */,
-				13D2ACC01AFB18E40068C0CD /* module.modulemap in Sources */,
 				13D2ACE51AFB18E40068C0CD /* GPUImageDivideBlendFilter.m in Sources */,
 				13BCD8931ADBA92200A0CBF5 /* POPCustomAnimation.mm in Sources */,
 				134765631AE25EA40055D099 /* QNUrlSafeBase64.m in Sources */,
@@ -4772,7 +4671,6 @@
 				138EDE621AD7B0A30020957C /* JSONModelClassProperty.m in Sources */,
 				13D2AD321AFB18E40068C0CD /* GPUImagePrewittEdgeDetectionFilter.m in Sources */,
 				138EDE4B1AD7B0A30020957C /* ASIInputStream.m in Sources */,
-				13E14F921B26CF80009CCF9F /* CTAssetsViewController.m in Sources */,
 				134765691AE25EA40055D099 /* QNFileRecorder.m in Sources */,
 				138EDE301AD7B0A30020957C /* LCHandleViewHighlightRequest.m in Sources */,
 				138EDE7A1AD7B0A30020957C /* LCDeviceIdentifier.m in Sources */,
@@ -4788,7 +4686,6 @@
 				13D2AD281AFB18E40068C0CD /* GPUImagePerlinNoiseFilter.m in Sources */,
 				134765A21AE267BB0055D099 /* AFURLConnectionOperation.m in Sources */,
 				139B06A51ADBF50F006A260F /* SquareCashStyleBehaviorDefiner.m in Sources */,
-				13E14F8E1B26CF80009CCF9F /* CTAssetsPageViewController.m in Sources */,
 				13D2AD141AFB18E40068C0CD /* GPUImageLuminosityBlendFilter.m in Sources */,
 				13D2ACFE1AFB18E40068C0CD /* GPUImageHistogramFilter.m in Sources */,
 				13D2AD5A1AFB18E40068C0CD /* GPUImageTwoPassTextureSamplingFilter.m in Sources */,
@@ -4798,10 +4695,8 @@
 				138EDEAA1AD7B0A30020957C /* LCUIBlurView.m in Sources */,
 				13D2ACFF1AFB18E40068C0CD /* GPUImageHistogramGenerator.m in Sources */,
 				13D63ADF1AEA2DB3001587C0 /* JTSAnimatedGIFUtility.m in Sources */,
-				13E14F881B26CF80009CCF9F /* ALAsset+isEqual.m in Sources */,
 				13E1A4E91AE65FE300E24C3C /* FastttCapturedImage.m in Sources */,
 				13D2ACE41AFB18E40068C0CD /* GPUImageDissolveBlendFilter.m in Sources */,
-				13E14F911B26CF80009CCF9F /* CTAssetsViewCell.m in Sources */,
 				138EDE8E1AD7B0A30020957C /* LCDataModel.m in Sources */,
 				13D2AD201AFB18E40068C0CD /* GPUImageNobleCornerDetectionFilter.m in Sources */,
 				138EDE1E1AD7B0A30020957C /* LCRAMTableView.m in Sources */,
@@ -4812,7 +4707,6 @@
 				138EDEC01AD7B0A30020957C /* LCUIWebViewController.m in Sources */,
 				13D2AD311AFB18E40068C0CD /* GPUImagePosterizeFilter.m in Sources */,
 				13D2ACF31AFB18E40068C0CD /* GPUImageGaussianBlurPositionFilter.m in Sources */,
-				13E14F871B26CF80009CCF9F /* ALAsset+assetType.m in Sources */,
 				13D2AD101AFB18E40068C0CD /* GPUImageLowPassFilter.m in Sources */,
 				135DBAF51AE5193E004AD150 /* LKPostDetailCell.m in Sources */,
 				1347656D1AE25EA40055D099 /* QNUploadOption.m in Sources */,
@@ -4982,7 +4876,6 @@
 				139B06A91ADBF577006A260F /* LKHomepageHeader.m in Sources */,
 				134765A41AE267BB0055D099 /* AFURLResponseSerialization.m in Sources */,
 				13F504F61B0B121F00D8D484 /* LKSinaShare.m in Sources */,
-				13E14F8D1B26CF80009CCF9F /* CTAssetsGroupViewController.m in Sources */,
 				138EDE941AD7B0A30020957C /* LCNetwork.m in Sources */,
 				13D2ACEC1AFB18E40068C0CD /* GPUImageFilter.m in Sources */,
 				13B5B4F61B1710AE00252A78 /* LKTagCommentCell.m in Sources */,
@@ -5034,7 +4927,6 @@
 				13D2ACF81AFB18E40068C0CD /* GPUImageHardLightBlendFilter.m in Sources */,
 				138EDE261AD7B0A30020957C /* LCProcessInfo.m in Sources */,
 				13D2AD641AFB18E40068C0CD /* GPUImageZoomBlurFilter.m in Sources */,
-				13E14F901B26CF80009CCF9F /* CTAssetsSupplementaryView.m in Sources */,
 				13D2AD0B1AFB18E40068C0CD /* GPUImageLightenBlendFilter.m in Sources */,
 				134765301AE24AEA0055D099 /* LKNewPostViewController.m in Sources */,
 				138EDE241AD7B0A30020957C /* LCNetworkInfoController.m in Sources */,
@@ -5045,7 +4937,6 @@
 				13D2ACC11AFB18E40068C0CD /* GLProgram.m in Sources */,
 				13D2ACDC1AFB18E40068C0CD /* GPUImageCropFilter.m in Sources */,
 				135D58321ADFB15100811B06 /* LKCameraViewController.m in Sources */,
-				13E14F8C1B26CF80009CCF9F /* CTAssetsGroupViewCell.m in Sources */,
 				13D63AE41AEA2DB3001587C0 /* UIImage+JTSImageEffects.m in Sources */,
 				138EDE0E1AD7B0A30020957C /* LCGLLineGraph.m in Sources */,
 				13D2AD1C1AFB18E40068C0CD /* GPUImageMovie.m in Sources */,
@@ -5067,12 +4958,10 @@
 				138EDE601AD7B0A30020957C /* JSONModel.m in Sources */,
 				13D2AD621AFB18E40068C0CD /* GPUImageWhiteBalanceFilter.m in Sources */,
 				138EDE7C1AD7B0A30020957C /* LCFoundation.m in Sources */,
-				13E14F961B26CF80009CCF9F /* UIImage+CTAssetsPickerController.m in Sources */,
 				13D63AE71AEA3896001587C0 /* LKPhotoAlbum.m in Sources */,
 				135DBAEF1AE4EF79004AD150 /* LKPostDetailViewController.m in Sources */,
 				138EDE3B1AD7B0A30020957C /* HTTPFileResponse.m in Sources */,
 				13FCC0991ADF852A0008DB41 /* LKInputView.m in Sources */,
-				13E14F941B26CF80009CCF9F /* NSBundle+CTAssetsPickerController.m in Sources */,
 				13D2ACCF1AFB18E40068C0CD /* GPUImageCannyEdgeDetectionFilter.m in Sources */,
 				13D2AD331AFB18E40068C0CD /* GPUImageRawDataInput.m in Sources */,
 				13D2AD3E1AFB18E40068C0CD /* GPUImageSharpenFilter.m in Sources */,
@@ -5109,9 +4998,7 @@
 				138EDE981AD7B0A30020957C /* LCUISignal.m in Sources */,
 				13BCD8CC1ADBA93000A0CBF5 /* CALayer+MCShorthand.m in Sources */,
 				138EDE6C1AD7B0A30020957C /* UIScrollView+SVInfiniteScrolling.m in Sources */,
-				13E14F8B1B26CF80009CCF9F /* CTAssetScrollView.m in Sources */,
 				13E27F061AF9CBB700C17362 /* LKPopAnimation.m in Sources */,
-				13E14F8F1B26CF80009CCF9F /* CTAssetsPickerController.m in Sources */,
 				138EDEFE1AD7DC590020957C /* LKLocalUser.m in Sources */,
 				13D2AD3D1AFB18E40068C0CD /* GPUImageSepiaFilter.m in Sources */,
 				13D2AD161AFB18E40068C0CD /* GPUImageMedianFilter.m in Sources */,
@@ -5140,7 +5027,6 @@
 				13925A701B146666004D0656 /* LKSearchViewController.m in Sources */,
 				13D2AD5F1AFB18E40068C0CD /* GPUImageVignetteFilter.m in Sources */,
 				13FCC0741ADE17F70008DB41 /* LKSegmentHeader.m in Sources */,
-				13E14F8A1B26CF80009CCF9F /* CTAssetItemViewController.m in Sources */,
 				13FCC07C1ADE37790008DB41 /* LKUserCenterModel.m in Sources */,
 				13D2AD051AFB18E40068C0CD /* GPUImageJFAVoronoiFilter.m in Sources */,
 				138EDEAC1AD7B0A30020957C /* LCUIHud.m in Sources */,
@@ -5150,7 +5036,6 @@
 				13BCD88B1ADBA92200A0CBF5 /* POPAnimation.mm in Sources */,
 				13B6C1991AE8EA9F008912C0 /* LKUserDefaults.m in Sources */,
 				138EDE3D1AD7B0A30020957C /* HTTPRedirectResponse.m in Sources */,
-				13E14F891B26CF80009CCF9F /* ALAssetsGroup+isEqual.m in Sources */,
 				13D63AE31AEA2DB3001587C0 /* UIApplication+JTSImageViewController.m in Sources */,
 				13D2AD1A1AFB18E40068C0CD /* GPUImageMotionBlurFilter.m in Sources */,
 				138EDE721AD7B0A30020957C /* NSObject+LCPerformSelector.m in Sources */,
@@ -5188,7 +5073,6 @@
 				13D2AD361AFB18E40068C0CD /* GPUImageRGBDilationFilter.m in Sources */,
 				138EDE651AD7B0A30020957C /* JSONAPI.m in Sources */,
 				13FCC07F1ADE3B340008DB41 /* LKPost.m in Sources */,
-				13E14F861B26CF80009CCF9F /* ALAsset+accessibilityLabel.m in Sources */,
 				13D2AD581AFB18E40068C0CD /* GPUImageTwoInputFilter.m in Sources */,
 				138EDE591AD7B0A30020957C /* ASIS3Request.m in Sources */,
 				138EDEA91AD7B0A30020957C /* LCUIApplication.m in Sources */,

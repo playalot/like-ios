@@ -24,7 +24,7 @@ LC_PROPERTY(assign) BOOL blur;
 LC_PROPERTY(assign) BOOL showIndicator;
 LC_PROPERTY(readonly) BOOL loaded;
 LC_PROPERTY(assign) BOOL flipAnimation;
-LC_PROPERTY(assign) CGFloat animationDuration;
+LC_PROPERTY(assign) CGFloat changeImageAnimationDuration;
 
 LC_PROPERTY(strong) UIColor * imageTintColor;
 LC_PROPERTY(strong) M13ProgressViewRing * indicator;

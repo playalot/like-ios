@@ -67,7 +67,10 @@
         NSValue *existingRangeValue = key;
         NSRange existingRange = [existingRangeValue rangeValue];
         
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-variable"
         BOOL noRangeConflict = (NSIntersectionRange(progressPercentRange, existingRange).length == 0);
+#pragma clang diagnostic pop
         NSAssert(noRangeConflict, @"progressPercentRange sent to -addSnappingProgressPosition:forProgressPercentRange: intersects a progressPercentRange for an existing progressPosition.");
     }];
     

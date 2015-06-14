@@ -95,7 +95,7 @@ LC_PROPERTY(strong) LKCommentsView * commentsView;
     
     self.alpha = 0;
     
-    LC_FAST_ANIMATIONS(0.25, ^{
+    LC_FAST_ANIMATIONS(0.6, ^{
        
         self.alpha = 1;
     });

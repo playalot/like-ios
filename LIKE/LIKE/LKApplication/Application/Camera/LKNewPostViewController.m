@@ -13,6 +13,7 @@
 #import "LKPost.h"
 #import "LKHomeViewController.h"
 #import "LKCameraViewController.h"
+#import "LKNewPostUploadCenter.h"
 
 @interface LKNewPostViewController ()
 
@@ -29,9 +30,9 @@ LC_PROPERTY(strong) LKInputView * inputView;
 
 
 // Upload
-LC_PROPERTY(assign) BOOL uploading;
-LC_PROPERTY(assign) BOOL uploadFinished;
-LC_PROPERTY(copy) NSString * imagekey;
+//LC_PROPERTY(assign) BOOL uploading;
+//LC_PROPERTY(assign) BOOL uploadFinished;
+//LC_PROPERTY(copy) NSString * imagekey;
 
 
 @end
@@ -52,20 +53,20 @@ LC_PROPERTY(copy) NSString * imagekey;
 {
     [super viewDidLoad];
     
-    self.uploading = YES;
-    self.uploadFinished = NO;
-    
-    @weakly(self);
-    
-    [LKFileUploader uploadFileData:self.image suffix:@"jpg" completeBlock:^(BOOL completed, NSString *uploadedKey, NSString *error) {
-       
-        @normally(self);
-        
-        // ...
-        self.uploadFinished = completed;
-        self.uploading = NO;
-        self.imagekey = uploadedKey;
-    }];
+//    self.uploading = YES;
+//    self.uploadFinished = NO;
+//
+//    @weakly(self);
+//    
+//    [LKFileUploader uploadFileData:self.image suffix:@"jpg" completeBlock:^(BOOL completed, NSString *uploadedKey, NSString *error) {
+//       
+//        @normally(self);
+//        
+//        // ...
+//        self.uploadFinished = completed;
+//        self.uploading = NO;
+//        self.imagekey = uploadedKey;
+//    }];
     
 }
 
@@ -251,7 +252,21 @@ LC_PROPERTY(copy) NSString * imagekey;
     tag.tag = tagString;
     
     [self.selectedTags.tags addObject:tag];
-    [self.selectedTags reloadData];
+    
+    
+    if (self.selectedTags.tags.count == 1) {
+        
+        LC_FAST_ANIMATIONS(0.25, ^{
+            
+            [self.selectedTags reloadData];
+        });
+    }
+    else{
+        
+        [self.selectedTags reloadData];
+    }
+
+    
     
     [self updateScrollSubviewsLayout];
     
@@ -274,32 +289,37 @@ LC_PROPERTY(copy) NSString * imagekey;
 
 -(void) finishIt
 {
-    [self showTopLoadingMessageHud:@"发布中..."];
+    [LKNewPostUploadCenter uploadImage:self.image tags:self.selectedTags.tags];
     
-    if (self.uploadFinished && self.uploading == NO && self.imagekey) {
-        
-        // post...
-        [self post];
-    }
-    else{
-        
-        [LKFileUploader.singleton cancelAllRequests];
-        
-        [LKFileUploader uploadFileData:self.image suffix:@"jpg" completeBlock:^(BOOL completed, NSString *uploadedKey, NSString *error) {
-            
-            if (!completed) {
-                
-                [RKDropdownAlert dismissAllAlert];
-                [self showTopMessageErrorHud:@"上传失败..."];
-            }
-            else{
-                
-                self.imagekey = uploadedKey;
-                [self post];
-            }
-        }];
+    [self dismissAction];
 
-    }
+    
+//    [self showTopLoadingMessageHud:@"发布中..."];
+//    
+//    if (self.uploadFinished && self.uploading == NO && self.imagekey) {
+//        
+//        // post...
+//        [self post];
+//    }
+//    else{
+//        
+//        [LKFileUploader.singleton cancelAllRequests];
+//        
+//        [LKFileUploader uploadFileData:self.image suffix:@"jpg" completeBlock:^(BOOL completed, NSString *uploadedKey, NSString *error) {
+//            
+//            if (!completed) {
+//                
+//                [RKDropdownAlert dismissAllAlert];
+//                [self showTopMessageErrorHud:@"上传失败..."];
+//            }
+//            else{
+//                
+//                self.imagekey = uploadedKey;
+//                [self post];
+//            }
+//        }];
+//
+//    }
 }
 
 -(void) previewTapAction
@@ -316,33 +336,33 @@ LC_PROPERTY(copy) NSString * imagekey;
 
 -(void) post
 {
-    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"post"].AUTO_SESSION().POST_METHOD();
-    [interface addParameter:self.imagekey key:@"content"];
-    [interface addParameter:@"PHOTO"  key:@"type"];
-    [interface addParameter:[self jsonStringFromSelectedTags] key:@"tags"];
-    
-    
-    @weakly(self);
-    
-    [self request:interface complete:^(LKHttpRequestResult *result) {
-       
-        @normally(self);
-        
-        if (result.state == LKHttpRequestStateFinished) {
-            
-            [RKDropdownAlert dismissAllAlert];
-            [self dismissAction];
-            
-            LKPost * post = [LKPost objectFromDictionary:result.json[@"data"]];
-            
-            [self postNotification:LKHomeViewControllerAddNewPost withObject:post];
-        }
-        else if(result.state == LKHttpRequestStateFailed){
-        
-            [RKDropdownAlert dismissAllAlert];
-            [self showTopMessageErrorHud:result.error];
-        }
-    }];
+//    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"post"].AUTO_SESSION().POST_METHOD();
+//    [interface addParameter:self.imagekey key:@"content"];
+//    [interface addParameter:@"PHOTO"  key:@"type"];
+//    [interface addParameter:[self jsonStringFromSelectedTags] key:@"tags"];
+//    
+//    
+//    @weakly(self);
+//    
+//    [self request:interface complete:^(LKHttpRequestResult *result) {
+//       
+//        @normally(self);
+//        
+//        if (result.state == LKHttpRequestStateFinished) {
+//            
+//            [RKDropdownAlert dismissAllAlert];
+//            [self dismissAction];
+//            
+//            LKPost * post = [LKPost objectFromDictionary:result.json[@"data"]];
+//            
+//            [self postNotification:LKHomeViewControllerAddNewPost withObject:post];
+//        }
+//        else if(result.state == LKHttpRequestStateFailed){
+//        
+//            [RKDropdownAlert dismissAllAlert];
+//            [self showTopMessageErrorHud:result.error];
+//        }
+//    }];
     
 }
 

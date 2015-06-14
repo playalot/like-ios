@@ -245,6 +245,11 @@ LC_PROPERTY(strong) NSMutableArray * datasource;
 
 #pragma mark - 
 
+LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
+{
+    [self.inputView resignFirstResponder];
+}
+
 -(void) showInViewController:(UIViewController *)viewController
 {
     UIView * view = self.FIND(1002);
@@ -393,17 +398,23 @@ LC_PROPERTY(strong) NSMutableArray * datasource;
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    LKComment * comment = self.datasource[indexPath.row];
-    
-    if (LKLocalUser.singleton.user.id.integerValue != comment.user.id.integerValue) {
+    if (indexPath.section == 0) {
         
-        [self replyUserAction:comment.user];
+        self.SEND(@"PushUserCenter").object = self.tagValue.user;
     }
     else{
+     
+        LKComment * comment = self.datasource[indexPath.row];
         
-        [self inputBecomeFirstResponder];
+        if (LKLocalUser.singleton.user.id.integerValue != comment.user.id.integerValue) {
+            
+            [self replyUserAction:comment.user];
+        }
+        else{
+            
+            [self inputBecomeFirstResponder];
+        }
     }
-    
 }
 
 -(void) scrollViewDidScroll:(UIScrollView *)scrollView

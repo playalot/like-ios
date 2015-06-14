@@ -119,7 +119,7 @@
                 self.itemDidLoad();
             }
             
-            LC_FAST_ANIMATIONS(0.5, ^{
+            LC_FAST_ANIMATIONS(1, ^{
                
                 self.alpha = 1;
             });

@@ -17,7 +17,7 @@ LC_BLOCK(UIImage *, LCUIImageNamed, (NSString * name));
 
 #define LC_USE_SYSTEM_IMAGE_CACHE ( NO )
 
-+(UIImage *)imageNamed:(NSString *)name useCache:(BOOL)useCache;
++(UIImage *) imageNamed:(NSString *)name useCache:(BOOL)useCache;
 
 -(UIImage *) scaleToWidth:(CGFloat)width height:(CGFloat)height;
 -(UIImage *) scaleToWidth:(CGFloat)width;

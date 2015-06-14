@@ -28,6 +28,8 @@
 #import "LKTime.h"
 #import "LKAssistiveTouchButton.h"
 #import "LKSearchViewController.h"
+#import "LKNewPostUploadCenter.h"
+#import "LKUploadingCell.h"
 
 @interface LKHomeViewController () <UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate>
 
@@ -144,6 +146,49 @@ LC_PROPERTY(strong) UIView * fromView;
         
         self.datasource = datasource;
     }
+    
+    @weakly(self);
+    
+    LKNewPostUploadCenter.singleton.addedNewValue = ^(LKPosting * posting, NSNumber * index){
+        
+        @normally(self);
+        
+        [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index.integerValue inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+        [self performSelector:@selector(scrollViewScrollToTop) withObject:nil afterDelay:0.5];
+    };
+    
+    LKNewPostUploadCenter.singleton.uploadFinished = ^(LKPost * value, NSNumber * index){
+        
+        @normally(self);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+        
+    
+        [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index.integerValue inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+        
+        
+        if (value) {
+         
+            [self.datasource insertObject:value atIndex:0];
+            
+            [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
+        }
+    };
+    
+    
+    LKNewPostUploadCenter.singleton.uploadFailed = ^(id value){
+        
+        @normally(self);
+        
+        [self reloadData];
+        
+        [self showTopMessageErrorHud:@"上传失败啦！请检查您的网络稍后再试Orz～"];
+    };
+    
+    LKNewPostUploadCenter.singleton.stateChanged = ^(id value){
+        
+        @normally(self);
+
+        [self reloadData];
+    };
 }
 
 -(void) buildUI
@@ -274,7 +319,7 @@ LC_PROPERTY(strong) UIView * fromView;
             return;
         }
         
-        LKHomeTableViewCell * cell = (LKHomeTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:0]];
+        LKHomeTableViewCell * cell = (LKHomeTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:1]];
         
         
         if ([self checkTag:string onTags:((LKPost *)self.inputView.userInfo).tags]) {
@@ -295,7 +340,7 @@ LC_PROPERTY(strong) UIView * fromView;
         @normally(self);
         
         // scroll...
-        LKHomeTableViewCell * cell = (LKHomeTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:0]];
+        LKHomeTableViewCell * cell = (LKHomeTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:1]];
         
         [self.tableView setContentOffset: LC_POINT(0, cell.viewFrameY - 62) animated:YES];
         
@@ -565,16 +610,47 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
     [self.navigationController pushViewController:[LKTabBarController hiddenBottomBarWhenPushed:detail] animated:YES];
 }
 
+LC_HANDLE_UI_SIGNAL(LKUploadingCellCancel, signal)
+{
+    [LKNewPostUploadCenter.singleton cancelPosting:signal.object];
+}
+
+LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
+{
+    [LKNewPostUploadCenter.singleton reuploadPosting:signal.object];
+}
+
 #pragma mark -
+
+-(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.datasource.count;
+    if (section == 0) {
+        
+        return LKNewPostUploadCenter.singleton.uploadingImages.count;
+    }
+    else{
+        
+        return self.datasource.count;
+    }
 }
 
 - (UITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    LKHomeTableViewCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"cell" andClass:[LKHomeTableViewCell class]];
+    if (indexPath.section == 0) {
+        
+        LKUploadingCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Upload" andClass:[LKUploadingCell class]];
+        
+        cell.posting = LKNewPostUploadCenter.singleton.uploadingImages[indexPath.row];
+                
+        return cell;
+    }
+    
+    LKHomeTableViewCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Content" andClass:[LKHomeTableViewCell class]];
 
     LKPost * post = self.datasource[indexPath.row];
     
@@ -612,6 +688,11 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.section == 0) {
+        
+        return 38;
+    }
+    
     return [LKHomeTableViewCell height:self.datasource[indexPath.row]];
 }
 

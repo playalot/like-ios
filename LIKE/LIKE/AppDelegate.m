@@ -30,8 +30,10 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
 
 -(void) load
 {
+    
     // 全局容错
     [LCSwizzle beginFaultTolerant];
+    
     
     // Debugger
     [LCDebugger sharedInstance];

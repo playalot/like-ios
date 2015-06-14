@@ -821,6 +821,8 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             // check
             if(![LKLoginViewController needLoginOnViewController:self]){
 
+                [self.inputView resignFirstResponder];
+
                 LKTagCommentsViewController * comments = [[LKTagCommentsViewController alloc] initWithTag:tag];
                 
                 [comments showInViewController:self];
@@ -834,8 +836,6 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
                     [self.tableView reloadData];
                     
                 };
-                
-                [self.inputView resignFirstResponder];
             }
         };
         
@@ -847,6 +847,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
 
             if(![LKLoginViewController needLoginOnViewController:self]){
                 
+                [self.inputView resignFirstResponder];
                 
                 LKTagCommentsViewController * comments = [[LKTagCommentsViewController alloc] initWithTag:tag];
                 
@@ -865,9 +866,6 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
                     [self.tableView reloadData];
                     
                 };
-                
-                [self.inputView resignFirstResponder];
-                
             }
         };
         
@@ -877,6 +875,8 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             @normally(self);
 
             if(![LKLoginViewController needLoginOnViewController:self]){
+
+                [self.inputView resignFirstResponder];
 
                 LKTagCommentsViewController * comments = [[LKTagCommentsViewController alloc] initWithTag:tag];
                 
@@ -890,9 +890,6 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
                     [self.tableView reloadData];
                     
                 };
-                
-                [self.inputView resignFirstResponder];
-                
             }
         };
         

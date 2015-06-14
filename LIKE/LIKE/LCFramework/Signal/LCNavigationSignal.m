@@ -42,8 +42,7 @@
         signal.from = self;
         signal.name = name;
         
-        self.PERFORM_DELAY(@selector($send:), signal, 0);
-        
+        [self performSelector:@selector($send:) withObject:signal afterDelay:0];
         return signal;
     };
     
@@ -60,8 +59,7 @@
         signal.name = name;
         signal.to = to;
         
-        self.PERFORM_DELAY(@selector($send:), signal, 0);
-        
+        [self performSelector:@selector($send:) withObject:signal afterDelay:0];
         return signal;
     };
     

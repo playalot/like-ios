@@ -18,10 +18,16 @@ typedef NS_ENUM(NSUInteger, LCHTTPRequestMethod) {
     LCHTTPRequestMethodDelete,
 };
 
+@interface NSObject (LCNetworkTagString)
+
+LC_PROPERTY(strong) NSString * _TagString_;
+
+@end
+
 @interface LCHTTPRequestResult : NSObject
 
 LC_PROPERTY(strong) NSURLSessionDataTask * task;
-LC_PROPERTY(assign) NSError * error;
+LC_PROPERTY(strong) NSError * error;
 LC_PROPERTY(strong) id responseObject;
 
 @end

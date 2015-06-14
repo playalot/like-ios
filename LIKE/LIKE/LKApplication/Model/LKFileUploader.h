@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class QNUploadOption;
+
 LC_BLOCK(void, LKFileUploadCompleted, (BOOL completed, NSString * uploadedKey, NSString * error));
 
 @interface LKFileUploader : NSObject
@@ -17,5 +19,9 @@ LC_BLOCK(void, LKFileUploadCompleted, (BOOL completed, NSString * uploadedKey, N
 + (void) uploadAvatarImage:(UIImage *)data suffix:(NSString *)suffix completeBlock:(LKFileUploadCompleted)completeBlock;
 
 + (void) uploadCover:(UIImage *)data suffix:(NSString *)suffix completeBlock:(LKFileUploadCompleted)completeBlock;
+
+
+
+-(void) uploadFileData:(UIImage *)data suffix:(NSString *)suffix completeBlock:(LKFileUploadCompleted)completeBlock option:(QNUploadOption *)option;
 
 @end

@@ -39,20 +39,14 @@ NSString * LCHTTPRequestMethodString(LCHTTPRequestMethod method)
 
 @end
 
-@interface NSURLSessionTask (LCTagString)
+@implementation NSObject (LCNetworkTagString)
 
-LC_PROPERTY(copy) NSString * tagString;
-
-@end
-
-@implementation NSURLSessionTask (LCTagString)
-
--(void) setTagString:(NSString *)tagString
+-(void) set_TagString_:(NSString *)_TagString_
 {
-    [LCAssociate setAssociatedObject:self value:tagString key:@"NSURLSessionTaskTagString"];
+    [LCAssociate setAssociatedObject:self value:_TagString_ key:@"NSURLSessionTaskTagString"];
 }
 
--(NSString *) tagString
+-(NSString *) _TagString_
 {
     return [LCAssociate getAssociatedObject:self key:@"NSURLSessionTaskTagString"];
 }
@@ -220,7 +214,7 @@ LC_PROPERTY(strong) NSLock * lock;
         
         for(NSURLSessionDataTask * task in subArray) {
             
-            if ([task.tagString isEqualToString:p]) {
+            if ([task._TagString_ isEqualToString:p]) {
                 
                 return task;
             }
@@ -234,7 +228,7 @@ LC_PROPERTY(strong) NSLock * lock;
 {
     NSString * p = LC_NSSTRING_FORMAT(@"LCNetworkCenter-%p",sender);
 
-    task.tagString = p;
+    task._TagString_ = p;
 
     NSMutableArray * subArray = self.requests[p];
     
@@ -249,7 +243,7 @@ LC_PROPERTY(strong) NSLock * lock;
 
 -(void) removeTask:(NSURLSessionDataTask *)task withSender:(NSObject *)sender
 {
-    if (!task.tagString) {
+    if (!task._TagString_) {
         return;
     }
     
@@ -283,16 +277,22 @@ LC_PROPERTY(strong) NSLock * lock;
     [self.lock unlock];
 }
 
--(void) handleFailureTask:(NSURLSessionDataTask *)task error:(NSError *)error updateBlock:(LCNetworkCenterBlock)updateBlock sender:(NSObject *)sender
+-(void) handleFailureTask:(NSURLSessionDataTask *)task
+                    error:(NSError *)error
+              updateBlock:(LCNetworkCenterBlock)updateBlock sender:(NSObject *)sender
 {
     LCHTTPRequestResult * result = [[LCHTTPRequestResult alloc] init];
-    result.error = error;
+    
+    NSDictionary * userInfo = [NSDictionary dictionaryWithObject:@"请求失败...请检查您的网络后重试"                                                                      forKey:NSLocalizedDescriptionKey];
+    
+    NSError * newError = [NSError errorWithDomain:@"LCNetworkCenter" code:-1 userInfo:userInfo];
+    
+    result.error = newError;
     result.task = task;
     
     if (updateBlock) {
         updateBlock(result);
     }
-    
     
     [self.lock lock];
     [self removeTask:task withSender:sender];

@@ -12,7 +12,7 @@
 
 - (RKDropdownAlert *)showTopMessageErrorHud:(NSString *)message
 {
-    return [RKDropdownAlert title:message backgroundColor:LC_RGBA(255, 66, 75, 0.9) textColor:[UIColor whiteColor] time:3];
+    return [RKDropdownAlert title:message backgroundColor:LC_RGBA(255, 66, 75, 1) textColor:[UIColor whiteColor] time:3];
 }
 
 - (RKDropdownAlert *)showTopLoadingMessageHud:(NSString *)message

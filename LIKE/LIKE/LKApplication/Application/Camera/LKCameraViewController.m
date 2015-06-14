@@ -62,6 +62,7 @@ LC_PROPERTY(assign) NSInteger currentFilter;
 {
     if ([notification is:LKCameraViewControllerDismiss]) {
         
+        [self.navigationController popToRootViewControllerAnimated:NO];
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 }

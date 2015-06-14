@@ -18,7 +18,7 @@ typedef void (^LKFileUploadConfigUpdateCompleted) (BOOL completed, NSString * er
 
 + (void) uploadFileData:(UIImage *)data suffix:(NSString *)suffix completeBlock:(LKFileUploadCompleted)completeBlock
 {
-    [LKFileUploader.singleton uploadFileData:data suffix:suffix completeBlock:completeBlock];
+    [LKFileUploader.singleton uploadFileData:data suffix:suffix completeBlock:completeBlock option:nil];
 }
 
 + (void) uploadAvatarImage:(UIImage *)data suffix:(NSString *)suffix completeBlock:(LKFileUploadCompleted)completeBlock
@@ -59,47 +59,48 @@ typedef void (^LKFileUploadConfigUpdateCompleted) (BOOL completed, NSString * er
     }];
 }
 
--(void) uploadFileData:(UIImage *)data suffix:(NSString *)suffix completeBlock:(LKFileUploadCompleted)completeBlock
+-(void) uploadFileData:(UIImage *)data suffix:(NSString *)suffix completeBlock:(LKFileUploadCompleted)completeBlock option:(QNUploadOption *)option
 {
-    
     // 每次都请求Token
-//   if (!LKQiniuConfig.singleton.token) {
+    //   if (!LKQiniuConfig.singleton.token) {
+    
+    [self updateFileUploaderConfig:^(BOOL completed, NSString * error) {
         
-        [self updateFileUploaderConfig:^(BOOL completed, NSString * error) {
-            
-            if (!completed) {
-                completeBlock(NO, nil,error);
-            }
-            else{
-                [self realUploadFileData:data suffix:suffix completeBlock:completeBlock];
-            }
-        }];
-//    }
-//    else{
-//        
-//        // 判断是否过期
-//        NSTimeInterval time = [[NSDate date] timeIntervalSince1970];
-//        NSTimeInterval expTime = LKQiniuConfig.singleton.expires.doubleValue;
-//        
-//        // 过期了
-//        if (time > expTime) {
-//            
-//            [self updateFileUploaderConfig:^(BOOL completed, NSString * error) {
-//                
-//                if (!completed) {
-//                    completeBlock(NO, nil,error);
-//                }
-//                else{
-//                    [self realUploadFileData:data suffix:suffix completeBlock:completeBlock];
-//                }
-//            }];
-//        }
-//        // 没过期 直接上传
-//        else{
-//            
-//            [self realUploadFileData:data suffix:suffix completeBlock:completeBlock];
-//        }
-//    }
+        if (!completed) {
+            completeBlock(NO, nil,error);
+        }
+        else{
+            [self realUploadFileData:data suffix:suffix completeBlock:completeBlock option:option];
+        }
+    }];
+    //    }
+    //    else{
+    //
+    //        // 判断是否过期
+    //        NSTimeInterval time = [[NSDate date] timeIntervalSince1970];
+    //        NSTimeInterval expTime = LKQiniuConfig.singleton.expires.doubleValue;
+    //
+    //        // 过期了
+    //        if (time > expTime) {
+    //
+    //            [self updateFileUploaderConfig:^(BOOL completed, NSString * error) {
+    //
+    //                if (!completed) {
+    //                    completeBlock(NO, nil,error);
+    //                }
+    //                else{
+    //                    [self realUploadFileData:data suffix:suffix completeBlock:completeBlock];
+    //                }
+    //            }];
+    //        }
+    //        // 没过期 直接上传
+    //        else{
+    //
+    //            [self realUploadFileData:data suffix:suffix completeBlock:completeBlock];
+    //        }
+    //    }
+
+    
 }
 
 #pragma mark -
@@ -168,7 +169,7 @@ typedef void (^LKFileUploadConfigUpdateCompleted) (BOOL completed, NSString * er
     } option:nil];
 }
 
--(void) realUploadFileData:(UIImage *)image suffix:(NSString *)suffix completeBlock:(LKFileUploadCompleted)completeBlock
+-(void) realUploadFileData:(UIImage *)image suffix:(NSString *)suffix completeBlock:(LKFileUploadCompleted)completeBlock option:(QNUploadOption *)option
 {
     NSString * token = LKQiniuConfig.singleton.token;
     
@@ -203,7 +204,7 @@ typedef void (^LKFileUploadConfigUpdateCompleted) (BOOL completed, NSString * er
             completeBlock(NO, nil, info.error.description);
         }
         
-    } option:nil];
+    } option:option];
 }
 
 #pragma mark -

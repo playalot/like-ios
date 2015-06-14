@@ -356,7 +356,9 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     LCUIWebViewController * web = [[LCUIWebViewController alloc] initWithURL:[NSURL URLWithString:@"http://terms.likeorz.com"]];
     [self presentViewController:LC_UINAVIGATION(web) animated:YES completion:nil];
     
-    web.navigationController.navigationBar.barTintColor = LKColor.color;
+    
+    [web.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
+
 }
 
 -(void) getCode
@@ -368,6 +370,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     [self cancelAllRequests];
     
     self.codeButton.userInteractionEnabled = NO;
+    self.codeButton.title = @"获取中...";
     
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"user/sendcode"].POST_METHOD();
     [interface addParameter:self.phoneField.text key:@"mobile"];
@@ -388,6 +391,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
             
             [self showTopMessageErrorHud:result.error];
             
+            self.codeButton.title = @"获取验证码";
             self.codeButton.userInteractionEnabled = YES;
         }
     }];
@@ -457,6 +461,7 @@ LC_HANDLE_TIMER(timer)
     
     self.codeButton.userInteractionEnabled = NO;
     
+    self.codeButton.title = @"60秒后重新发送";
     [self fireTimer:@"CodeTimer" timeInterval:1 repeat:YES];
 }
 
@@ -464,7 +469,6 @@ LC_HANDLE_TIMER(timer)
 -(void) $restoreTimer
 {
     self.codeButton.userInteractionEnabled = YES;
-
     self.codeButton.title = LC_LO(@"获取验证码");
     [self cancelAllTimers];
 }

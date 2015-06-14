@@ -160,7 +160,15 @@
                     }
                 }];
             }
+            
+            [picker dismissViewControllerAnimated:YES completion:nil];
         };
+    };
+    
+    picker.cancellationBlock = ^(UIImagePickerController * picker){
+        
+        [picker dismissViewControllerAnimated:YES completion:nil];
+        
     };
 
 }

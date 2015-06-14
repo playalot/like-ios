@@ -35,6 +35,7 @@ LC_PROPERTY(strong) UIImageView * line;
     self.head.cornerRadius = self.head.viewMidWidth;
     self.head.backgroundColor = [UIColor whiteColor];
     self.head.userInteractionEnabled = YES;
+    [self.head addTapGestureRecognizer:self selector:@selector(handleHeadTap:)];
     self.ADD(self.head);
     
     self.contentLabel = LCUILabel.view;
@@ -58,6 +59,11 @@ LC_PROPERTY(strong) UIImageView * line;
     self.line = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
     self.line.viewFrameWidth = LC_DEVICE_WIDTH;
     self.ADD(self.line);
+}
+
+-(void) handleHeadTap:(UITapGestureRecognizer *)tap
+{
+    self.SEND(@"PushUserCenter").object = self.comment.user;
 }
 
 -(void) setComment:(LKComment *)comment

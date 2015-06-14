@@ -43,8 +43,7 @@
         signal.from = self;
         signal.name = name;
         
-        self.PERFORM_DELAY(@selector($send:), signal, 0);
-        
+        [self performSelector:@selector($send:) withObject:signal afterDelay:0];
         return signal;
     };
     
@@ -61,8 +60,7 @@
         signal.name = name;
         signal.to = to;
         
-        self.PERFORM_DELAY(@selector($send:), signal, 0);
-        
+        [self performSelector:@selector($send:) withObject:signal afterDelay:0];
         return signal;
     };
     
@@ -97,7 +95,13 @@
             
             while (superView) {
                 
-                superView.PERFORM(selector, signal);
+                if([superView respondsToSelector:selector]){
+
+                    _Pragma("clang diagnostic push") \
+                    _Pragma("clang diagnostic ignored \"-Warc-performSelector-leaks\"") \
+                    [superView performSelector:selector withObject:signal];
+                    _Pragma("clang diagnostic pop") \
+                }
                 
                 UIView * tmp = superView.superview;
                 

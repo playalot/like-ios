@@ -185,7 +185,6 @@ LC_PROPERTY(strong) LKInputView * inputView;
     self.inputView.dismissButton.title = @"添加";
     self.inputView.dismissButton.titleFont = LK_FONT(13);
     self.inputView.dismissButton.titleColor = LC_RGBA(0, 0, 0, 0.5);
-    self.inputView.textField.keyboardAppearance = UIKeyboardAppearanceDark;
     self.view.ADD(self.inputView);
     
     self.inputView.sendAction = ^(NSString * string){

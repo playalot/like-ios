@@ -12,11 +12,12 @@
 #import "LKAssistiveTouchButton.h"
 #import "LKWelcome.h"
 #import "MobClick.h"
-#import "WXApi.h"
+#import "LKWeChatShare.h"
+#import "LKSinaShare.h"
 #import <TencentOpenAPI/QQApiInterface.h>
 #import <TencentOpenAPI/TencentOAuth.h>
-#import "WeiboSDK.h"
 #import "LKNotificationCount.h"
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 @interface AppDelegate () <LC_CMD_IMP>
 
@@ -30,7 +31,6 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
 
 -(void) load
 {
-    
     // 全局容错
     [LCSwizzle beginFaultTolerant];
     
@@ -193,12 +193,19 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
     }
 }
 
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    [QQApiInterface handleOpenURL:url delegate:nil];
     
-//    [QQApiInterface handleOpenURL:url delegate:nil];
-//    [WXApi handleOpenURL:url delegate:nil];
-//    [WeiboSDK handleOpenURL:url delegate:nil];
+    [WXApi handleOpenURL:url delegate:LKWeChatShare.singleton];
     
+    [WeiboSDK handleOpenURL:url delegate:LKSinaShare.singleton];
+    
+    [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                   openURL:url
+                                         sourceApplication:sourceApplication
+                                                annotation:annotation];
+
     return YES;
 }
 

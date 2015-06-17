@@ -30,7 +30,7 @@ LC_PROPERTY(strong) NSMutableArray * datasource;
 
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:animated];
 
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:[LKColor.color colorWithAlphaComponent:0.98] andSize:LC_SIZE(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:[LKColor.color colorWithAlphaComponent:1] andSize:LC_SIZE(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
     
     [self setNavigationBarHidden:NO animated:animated];
 }

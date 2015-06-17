@@ -149,9 +149,9 @@ LC_PROPERTY(assign) BOOL isLocalUser;
             
             LKSegmentHeader * tableViewHeader = (LKSegmentHeader *)self.tableView.tableHeaderView;
             
-            [tableViewHeader setTitle:LC_NSSTRING_FORMAT(@"%@",self.userInfoModel.user.postCount) subTitle:@"照片" atIndex:0];
-            [tableViewHeader setTitle:LC_NSSTRING_FORMAT(@"%@",self.userInfoModel.user.followCount) subTitle:@"关注" atIndex:1];
-            [tableViewHeader setTitle:LC_NSSTRING_FORMAT(@"%@",self.userInfoModel.user.fansCount) subTitle:@"粉丝" atIndex:2];
+            [tableViewHeader setTitle:LC_NSSTRING_FORMAT(@"%@",self.userInfoModel.user.postCount) subTitle:LC_LO(@"照片") atIndex:0];
+            [tableViewHeader setTitle:LC_NSSTRING_FORMAT(@"%@",self.userInfoModel.user.followCount) subTitle:LC_LO(@"关注") atIndex:1];
+            [tableViewHeader setTitle:LC_NSSTRING_FORMAT(@"%@",self.userInfoModel.user.fansCount) subTitle:LC_LO(@"粉丝") atIndex:2];
 
         }
     };
@@ -331,9 +331,9 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     tableViewHeader.viewFrameWidth = LC_DEVICE_WIDTH;
     tableViewHeader.viewFrameHeight = 52;
     
-    [tableViewHeader addTitle:[NSString stringWithFormat:@"%@", @(self.user.postCount.integerValue)] subTitle:@"照片"];
-    [tableViewHeader addTitle:[NSString stringWithFormat:@"%@", @(self.user.followCount.integerValue)] subTitle:@"关注"];
-    [tableViewHeader addTitle:[NSString stringWithFormat:@"%@", @(self.user.fansCount.integerValue)] subTitle:@"粉丝"];
+    [tableViewHeader addTitle:[NSString stringWithFormat:@"%@", @(self.user.postCount.integerValue)] subTitle:LC_LO(@"照片")];
+    [tableViewHeader addTitle:[NSString stringWithFormat:@"%@", @(self.user.followCount.integerValue)] subTitle:LC_LO(@"关注")];
+    [tableViewHeader addTitle:[NSString stringWithFormat:@"%@", @(self.user.fansCount.integerValue)] subTitle:LC_LO(@"粉丝")];
     
     @weakly(self);
     
@@ -362,7 +362,7 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     
     self.inputView = LKInputView.view;
     self.inputView.viewFrameY = self.view.viewFrameHeight;
-    self.inputView.textField.placeholder = @"输入新昵称";
+    self.inputView.textField.placeholder = LC_LO(@"输入新昵称");
     self.view.ADD(self.inputView);
     
     self.inputView.sendAction = ^(NSString * string){

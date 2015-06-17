@@ -15,7 +15,7 @@
 {
     if (![QQApiInterface isQQInstalled]) {
         
-        [LCUIAlertView showWithTitle:@"提示" message:@"您未安装QQ客户端，无法分享" cancelTitle:@"知道了" otherTitle:nil didTouchedBlock:^(NSInteger integerValue) {
+        [LCUIAlertView showWithTitle:LC_LO(@"提醒") message:LC_LO(@"您未安装QQ客户端，无法分享") cancelTitle:LC_LO(@"好的") otherTitle:nil didTouchedBlock:^(NSInteger integerValue) {
             
             ;
             

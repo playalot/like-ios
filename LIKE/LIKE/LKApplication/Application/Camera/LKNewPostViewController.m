@@ -142,7 +142,7 @@ LC_PROPERTY(strong) LKInputView * inputView;
     self.recommendLabel.viewFrameY = self.selectedTags.viewBottomY;
     self.recommendLabel.viewFrameWidth = LC_DEVICE_WIDTH - self.recommendLabel.viewFrameX * 2;
     self.recommendLabel.viewFrameHeight = 15;
-    self.recommendLabel.text = @"点击添加标签，让更多同类发现你";
+    self.recommendLabel.text = LC_LO(@"点击添加标签，让更多同类发现你");
     self.recommendLabel.font = LK_FONT(13);
     self.recommendLabel.textColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
     self.recommendLabel.contentMode = UIViewContentModeBottom;
@@ -182,7 +182,7 @@ LC_PROPERTY(strong) LKInputView * inputView;
     self.inputView.viewFrameY = self.view.viewFrameHeight - self.inputView.viewFrameHeight;
     self.inputView.dismissButton.image = nil;
     self.inputView.dismissButton.buttonImage = nil;
-    self.inputView.dismissButton.title = @"添加";
+    self.inputView.dismissButton.title = LC_LO(@"添加");
     self.inputView.dismissButton.titleFont = LK_FONT(13);
     self.inputView.dismissButton.titleColor = LC_RGBA(0, 0, 0, 0.5);
     self.view.ADD(self.inputView);
@@ -193,7 +193,7 @@ LC_PROPERTY(strong) LKInputView * inputView;
         
         if ([self checkOnSelectedTags:string]) {
             
-            [self showTopMessageErrorHud:@"该标签已经存在"];
+            [self showTopMessageErrorHud:LC_LO(@"该标签已经存在")];
         }
         else{
             
@@ -237,13 +237,13 @@ LC_PROPERTY(strong) LKInputView * inputView;
 {
     if (tagString.trim.length == 0) {
         
-        [self showTopMessageErrorHud:@"标签不能为空"];
+        [self showTopMessageErrorHud:LC_LO(@"标签不能为空")];
         return;
     }
     
     if (tagString.length > 12) {
         
-        [self showTopMessageErrorHud:@"标签长度不能大于12位"];
+        [self showTopMessageErrorHud:LC_LO(@"标签长度不能大于12位")];
         return;
     }
     

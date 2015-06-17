@@ -324,13 +324,13 @@ LC_PROPERTY(copy) NSString * bigContentURL;
         
         if (string.trim.length == 0) {
             
-            [self showTopMessageErrorHud:@"标签不能为空"];
+            [self showTopMessageErrorHud:LC_LO(@"标签不能为空")];
             return;
         }
         
         if (string.length > 12) {
             
-            [self showTopMessageErrorHud:@"标签长度不能大于12位"];
+            [self showTopMessageErrorHud:LC_LO(@"标签长度不能大于12位")];
             return;
         }
         
@@ -340,7 +340,7 @@ LC_PROPERTY(copy) NSString * bigContentURL;
         }
         else{
             
-            [self showTopMessageErrorHud:@"该标签已存在"];
+            [self showTopMessageErrorHud:LC_LO(@"该标签已存在")];
         }
     };
     
@@ -457,7 +457,7 @@ LC_PROPERTY(copy) NSString * bigContentURL;
 
     if (self.post.user.id.integerValue == LKLocalUser.singleton.user.id.integerValue) {
         
-        [LKActionSheet showWithTitle:@"更多" buttonTitles:@[@"举报",@"删除",@"保存图片"] didSelected:^(NSInteger index) {
+        [LKActionSheet showWithTitle:LC_LO(@"更多") buttonTitles:@[LC_LO(@"举报"),LC_LO(@"删除"),LC_LO(@"保存图片")] didSelected:^(NSInteger index) {
             
             @normally(self);
 
@@ -484,7 +484,7 @@ LC_PROPERTY(copy) NSString * bigContentURL;
     }
     else{
         
-        [LKActionSheet showWithTitle:@"更多" buttonTitles:@[@"举报",@"保存图片"] didSelected:^(NSInteger index) {
+        [LKActionSheet showWithTitle:LC_LO(@"更多") buttonTitles:@[LC_LO(@"举报"),LC_LO(@"保存图片")] didSelected:^(NSInteger index) {
             
             @normally(self);
 
@@ -580,7 +580,7 @@ LC_PROPERTY(copy) NSString * bigContentURL;
         
         if (result.state == LKHttpRequestStateFinished) {
             
-            [LCUIAlertView showWithTitle:nil message:@"感谢您的举报！" cancelTitle:@"好的" otherTitle:nil didTouchedBlock:^(NSInteger integerValue) {
+            [LCUIAlertView showWithTitle:nil message:LC_LO(@"感谢您的举报！") cancelTitle:LC_LO(@"好的") otherTitle:nil didTouchedBlock:^(NSInteger integerValue) {
                 
             }];
         }
@@ -596,7 +596,7 @@ LC_PROPERTY(copy) NSString * bigContentURL;
 {
     @weakly(self);
 
-    [LCUIAlertView showWithTitle:@"提醒" message:@"确定要删除这个照片吗？" cancelTitle:@"取消" otherTitle:@"删除" didTouchedBlock:^(NSInteger integerValue) {
+    [LCUIAlertView showWithTitle:LC_LO(@"提醒") message:LC_LO(@"确定要删除这个照片吗？") cancelTitle:LC_LO(@"取消") otherTitle:LC_LO(@"删除") didTouchedBlock:^(NSInteger integerValue) {
        
         @normally(self);
 

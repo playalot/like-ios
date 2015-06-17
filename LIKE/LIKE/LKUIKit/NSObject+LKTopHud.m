@@ -12,12 +12,12 @@
 
 - (RKDropdownAlert *)showTopMessageErrorHud:(NSString *)message
 {
-    return [RKDropdownAlert title:message backgroundColor:LC_RGBA(255, 66, 75, 1) textColor:[UIColor whiteColor] time:3];
+    return [RKDropdownAlert title:message backgroundColor:LKColor.color textColor:[UIColor whiteColor] time:3];
 }
 
 - (RKDropdownAlert *)showTopLoadingMessageHud:(NSString *)message
 {
-    return [RKDropdownAlert title:message backgroundColor:[[UIColor whiteColor] colorWithAlphaComponent:0.9] textColor:LC_RGBA(255, 66, 75, 1) time:10000];
+    return [RKDropdownAlert title:message backgroundColor:[[UIColor whiteColor] colorWithAlphaComponent:0.9] textColor:LKColor.color time:10000];
 }
 
 

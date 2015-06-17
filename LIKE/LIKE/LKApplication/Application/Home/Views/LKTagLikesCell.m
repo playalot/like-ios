@@ -109,7 +109,7 @@ LC_PROPERTY(strong) UIView * usersView;
     self.userName.FIT();
     self.userName.viewFrameHeight = 58;
     
-    self.tagName.text = [NSString stringWithFormat:@"添加了该标签"];
+    self.tagName.text = LC_LO(@"添加了该标签");
     self.tagName.FIT();
     self.tagName.viewFrameHeight = 58;
     self.tagName.viewFrameX = self.userName.viewRightX + self.userHead.viewFrameX;
@@ -120,7 +120,7 @@ LC_PROPERTY(strong) UIView * usersView;
 
 -(void) setLikes:(NSArray *)likes
 {
-    self.likesLabel.text = [NSString stringWithFormat:@"%@人赞了这个标签", @(likes.count)];
+    self.likesLabel.text = [NSString stringWithFormat:@"%@%@", @(likes.count), LC_LO(@"人赞了这个标签")];
     self.likesLabel.hidden = likes.count == 0;
     
     CGFloat padding = 10;

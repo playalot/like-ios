@@ -70,7 +70,7 @@ LC_PROPERTY(strong) LKSearchPlaceholderView * placeholderView;
 
 
     self.searchBar = [[LKSearchBar alloc] initWithFrame:LC_RECT(backButton.viewRightX, 20 + (22 - 90 / 3 / 2), LC_DEVICE_WIDTH - backButton.viewFrameWidth - backButton.viewMidWidth, 30)];
-    self.searchBar.searchField.placeholder = @"搜索标签";
+    self.searchBar.searchField.placeholder = LC_LO(@"搜索标签");
     self.searchBar.delegate = self;
     self.ADD(self.searchBar);
 

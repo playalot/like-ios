@@ -152,7 +152,7 @@ LC_PROPERTY(assign) NSInteger currentFilter;
             LKFilterScrollView * filterScrollView = LKFilterScrollView.view;
             filterScrollView.viewFrameWidth = self.view.viewFrameWidth;
             
-            [filterScrollView addFilterName:@"默认" filterImage:[UIImage imageNamed:@"FilterPreview.jpg" useCache:YES]];
+            [filterScrollView addFilterName:LC_LO(@"默认") filterImage:[UIImage imageNamed:@"FilterPreview.jpg" useCache:YES]];
 
             for (NSInteger i = 1; i< filterNames.count ; i++) {
                 
@@ -263,7 +263,7 @@ LC_PROPERTY(assign) NSInteger currentFilter;
     picker.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     picker.navigationBar.tintColor = [UIColor whiteColor];
 
-    [picker.navigationBar setBackgroundImage:[UIImage imageWithColor:[LKColor.color colorWithAlphaComponent:0.98] andSize:LC_SIZE(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
+    [picker.navigationBar setBackgroundImage:[UIImage imageWithColor:[LKColor.color colorWithAlphaComponent:1] andSize:LC_SIZE(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
    
     NSMutableDictionary * dictText = [NSMutableDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,LK_FONT_B(18),NSFontAttributeName,nil];
     [picker.navigationBar setTitleTextAttributes:dictText];

@@ -180,7 +180,7 @@ LC_PROPERTY(strong) UIView * fromView;
         
         [self reloadData];
         
-        [self showTopMessageErrorHud:@"上传失败啦！请检查您的网络稍后再试Orz～"];
+        [self showTopMessageErrorHud:LC_LO(@"上传失败啦！请检查您的网络稍后再试Orz～")];
     };
     
     LKNewPostUploadCenter.singleton.stateChanged = ^(id value){
@@ -309,13 +309,13 @@ LC_PROPERTY(strong) UIView * fromView;
         
         if (string.trim.length == 0) {
             
-            [self showTopMessageErrorHud:@"标签不能为空"];
+            [self showTopMessageErrorHud:LC_LO(@"标签不能为空")];
             return;
         }
         
         if (string.length > 12) {
             
-            [self showTopMessageErrorHud:@"标签长度不能大于12位"];
+            [self showTopMessageErrorHud:LC_LO(@"标签长度不能大于12位")];
             return;
         }
         
@@ -328,7 +328,7 @@ LC_PROPERTY(strong) UIView * fromView;
         }
         else{
             
-            [self.view showTopMessageErrorHud:@"该标签已存在"];
+            [self.view showTopMessageErrorHud:LC_LO(@"该标签已存在")];
             [self.inputView resignFirstResponder];
             self.inputView.textField.text = @"";
         }

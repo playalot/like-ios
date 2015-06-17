@@ -187,27 +187,27 @@
     switch (notification.type) {
         case LKNotificationTypeNewTag:
             
-            return [NSString stringWithFormat:@" 为你图片添加了标签#%@#", notification.tag];
+            return [NSString stringWithFormat:@" %@#%@#", LC_LO(@"为你图片添加了标签"), notification.tag];
             
             break;
         case LKNotificationTypeFocus:
             
-            return @" 关注了你";
+            return [NSString stringWithFormat:@" %@", LC_LO(@"关注了你")];
 
             break;
         case LKNotificationTypeLikeTag:
             
-            return [NSString stringWithFormat:@" 赞了标签#%@#", notification.tag];
+            return [NSString stringWithFormat:@" %@#%@#", LC_LO(@"赞了标签"), notification.tag];
 
             break;
         case LKNotificationTypeReply:
             
-            return [NSString stringWithFormat:@" 在#%@#中回复了你", notification.tag];
+            return [[NSString stringWithFormat:@" %@", LC_LO(@"在#%@#中回复了你")] stringByReplacingOccurrencesOfString:@"%@" withString:notification.tag];;
 
             break;
         case LKNotificationTypeComment:
             
-            return [NSString stringWithFormat:@" 评论了#%@#", notification.tag];
+            return [NSString stringWithFormat:@" %@#%@#", LC_LO(@"评论了"), notification.tag];
 
             break;
         default:

@@ -16,7 +16,7 @@
     
     [interface addParameter:name key:@"nickname"];
     
-    [LC_KEYWINDOW showTopLoadingMessageHud:@"修改中..."];
+    [LC_KEYWINDOW showTopLoadingMessageHud:LC_LO(@"修改中...")];
     
     [self request:interface complete:^(LKHttpRequestResult *result) {
         
@@ -36,5 +36,7 @@
         
     }];
 }
+
+
 
 @end

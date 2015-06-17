@@ -116,12 +116,12 @@ typedef void(^LKSaveImageCompletion)(NSError * error);
             
             if (!error) {
                 
-                RKDropdownAlert * alertView = [LC_KEYWINDOW showTopLoadingMessageHud:@"图片保存成功"];
+                RKDropdownAlert * alertView = [LC_KEYWINDOW showTopLoadingMessageHud:LC_LO(@"图片保存成功")];
                 [alertView performSelector:@selector(viewWasTapped:) withObject:alertView afterDelay:3];
             }
             else{
                 
-                [LCUIAlertView showWithTitle:nil message:@"图片保存失败，可能是因为您拒绝了相册的访问权限" cancelTitle:@"知道了" otherTitle:nil didTouchedBlock:^(NSInteger integerValue) {
+                [LCUIAlertView showWithTitle:nil message:LC_LO(@"图片保存失败，可能是因为您拒绝了相册的访问权限") cancelTitle:LC_LO(@"好的") otherTitle:nil didTouchedBlock:^(NSInteger integerValue) {
                     
                 }];
             }

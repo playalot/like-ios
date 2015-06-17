@@ -114,7 +114,7 @@
         tipLabel.viewFrameHeight = moreView.viewFrameHeight;
         tipLabel.font = LK_FONT(12);
         tipLabel.textColor = [UIColor blackColor];
-        tipLabel.text = [NSString stringWithFormat:@"阅读全部%@条评论", @(tagValue.totalComments.integerValue)];
+        tipLabel.text = [NSString stringWithFormat:@"%@%@%@", LC_LO(@"阅读全部"), @(tagValue.totalComments.integerValue), LC_LO(@"条评论")];
         moreView.ADD(tipLabel);
         
         [self lineInView:moreView];

@@ -21,6 +21,8 @@ LC_PROPERTY(strong) LCUITableView * tableView;
 LC_PROPERTY(strong) LCUIImageView * head;
 LC_PROPERTY(strong) LCUITextField * nickField;
 
+LC_PROPERTY(assign) CGFloat cacheSize;
+
 @end
 
 @implementation LKSettingsViewController
@@ -89,6 +91,20 @@ LC_PROPERTY(strong) LCUITextField * nickField;
     version.textAlignment = UITextAlignmentCenter;
     version.text = [NSString stringWithFormat:@"Version %@ Build %@\n© 2015 Like Co. Ltd", [LCSystemInfo appVersion], [LCSystemInfo appBuildVersion]];
     self.tableView.ADD(version);
+    
+    self.cacheSize = 0;
+    
+    
+    [LCGCD dispatchAsync:LCGCDPriorityDefault block:^{
+        
+        self.cacheSize = [self getCacheSize];
+
+        [LCGCD dispatchAsyncInMainQueue:^{
+            
+            [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:2 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+
+        }];
+    }];
 }
 
 
@@ -148,7 +164,7 @@ LC_PROPERTY(strong) LCUITextField * nickField;
             label.font = LK_FONT(13);
             label.textColor = LC_RGB(51, 51, 51);
             label.tag = 1002;
-            label.text = @"修改头像";
+            label.text = LC_LO(@"修改头像");
             configurationCell.ADD(label);
             
             
@@ -199,7 +215,7 @@ LC_PROPERTY(strong) LCUITextField * nickField;
             label.font = LK_FONT(13);
             label.textColor = LC_RGB(51, 51, 51);
             label.tag = 1002;
-            label.text = @"修改昵称";
+            label.text = LC_LO(@"修改昵称");
             configurationCell.ADD(label);
             
             
@@ -301,8 +317,8 @@ LC_PROPERTY(strong) LCUITextField * nickField;
         LCUILabel * subLabel = cell.FIND(1003);
         
         NSArray * icons = @[@"DeleteCache.png" ,@"Appstore.png", @"Feedback.png"];
-        NSArray * titles = @[@"清除缓存",@"求鼓励", @"@CEO"];
-        NSArray * subTitles = @[ [NSString stringWithFormat:@"共缓存%@张图片", @([self getCacheCount])] ,@"Backend-关关\niOS-红果果" ,@"无所不能的王果果"];
+        NSArray * titles = @[LC_LO(@"清除缓存"), LC_LO(@"求鼓励"), @"@CEO"];
+        NSArray * subTitles = @[ [NSString stringWithFormat:@"%.2fMB", self.cacheSize], @"Backend-关关\niOS-红果果", LC_LO(@"无所不能的王果果")];
 
         icon.buttonImage = [UIImage imageNamed:icons[indexPath.row - 2] useCache:YES];
         label.text = titles[indexPath.row - 2];
@@ -313,12 +329,14 @@ LC_PROPERTY(strong) LCUITextField * nickField;
         
         cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Exit" andClass:[LCUITableViewCell class] configurationCell:^(LCUITableViewCell * configurationCell) {
             
+            configurationCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
             LCUIButton * logoutButton = LCUIButton.view;
             logoutButton.viewFrameX = 50;
-            logoutButton.viewFrameY = 100 - 20;
+            logoutButton.viewFrameY = 50 - 20;
             logoutButton.viewFrameWidth = LC_DEVICE_WIDTH - 100;
             logoutButton.viewFrameHeight = 40;
-            logoutButton.title = @"退出登录";
+            logoutButton.title = LC_LO(@"退出登录");
             logoutButton.titleColor = [UIColor whiteColor];
             logoutButton.titleFont = LK_FONT(13);
             logoutButton.backgroundColor = LKColor.color;
@@ -336,7 +354,7 @@ LC_PROPERTY(strong) LCUITextField * nickField;
 {
     if (indexPath.row == 5) {
         
-        return 150;
+        return 100;
     }
     
     return 200 / 3;
@@ -387,10 +405,6 @@ LC_PROPERTY(strong) LCUITextField * nickField;
     // 反馈
     else if (indexPath.row == 4){
         
-        
-        [self hide];
-        
-        
         LKInputTextViewController * input = [LKInputTextViewController viewController];
         
         @weakly(self);
@@ -399,30 +413,7 @@ LC_PROPERTY(strong) LCUITextField * nickField;
             
             @normally(self);
             
-            [self showTopLoadingMessageHud:@"提交中..."];
-            
-            LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"feedback"].AUTO_SESSION().POST_METHOD();
-            [interface addParameter:string key:@"feedback"];
-            
-            [self request:interface complete:^(LKHttpRequestResult *result) {
-                
-                if (result.state == LKHttpRequestStateFinished) {
-                    
-                    [RKDropdownAlert dismissAllAlert];
-                    
-                    [LCUIAlertView showWithTitle:nil message:@"感谢您的反馈！" cancelTitle:@"好的" otherTitle:nil didTouchedBlock:^(NSInteger integerValue) {
-                        
-                        
-                    }];
-                }
-                else if (result.state == LKHttpRequestStateFailed){
-                    
-                    [RKDropdownAlert dismissAllAlert];
-                    [self showTopMessageErrorHud:result.error];
-                }
-                
-            }];
-            
+            [self uploadFeedback:string];
         };
         
         input.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
@@ -480,11 +471,70 @@ LC_PROPERTY(strong) LCUITextField * nickField;
     [self.fromViewController.navigationController popToRootViewControllerAnimated:YES];
 }
 
--(NSInteger) getCacheCount
+-(void) uploadFeedback:(NSString *)feedback
 {
-    NSArray * count = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:LCUIImageCache.singleton.fileCache.cachePath error:nil];
+    [self showTopLoadingMessageHud:LC_LO(@"提交中...")];
     
-    return count.count;
+    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"feedback"].AUTO_SESSION().POST_METHOD();
+    [interface addParameter:feedback key:@"feedback"];
+    
+    [self request:interface complete:^(LKHttpRequestResult *result) {
+        
+        if (result.state == LKHttpRequestStateFinished) {
+            
+            [RKDropdownAlert dismissAllAlert];
+            
+            [LCUIAlertView showWithTitle:nil message:LC_LO(@"感谢您的反馈！") cancelTitle:LC_LO(@"好的") otherTitle:nil didTouchedBlock:^(NSInteger integerValue) {
+                
+            }];
+        }
+        else if (result.state == LKHttpRequestStateFailed){
+            
+            [RKDropdownAlert dismissAllAlert];
+            [self showTopMessageErrorHud:result.error];
+        }
+        
+    }];
+
+}
+
+// MB
+-(CGFloat) getCacheSize
+{
+    return [self folderSizeAtPath:LCUIImageCache.singleton.fileCache.cachePath];
+}
+
+- (long long) fileSizeAtPath:(NSString *) filePath
+{
+    NSFileManager * manager = [NSFileManager defaultManager];
+    
+    if ([manager fileExistsAtPath:filePath]){
+        
+        return [[manager attributesOfItemAtPath:filePath error:nil] fileSize];
+    }
+    return 0;
+}
+
+//遍历文件夹获得文件夹大小，返回多少M
+- (CGFloat) folderSizeAtPath:(NSString *)folderPath
+{
+    NSFileManager * manager = [NSFileManager defaultManager];
+    
+    if (![manager fileExistsAtPath:folderPath]) return 0;
+    
+    NSEnumerator * childFilesEnumerator = [[manager subpathsAtPath:folderPath] objectEnumerator];
+    
+    NSString * fileName;
+    
+    long long folderSize = 0;
+    
+    while ((fileName = [childFilesEnumerator nextObject]) != nil){
+        
+        NSString * fileAbsolutePath = [folderPath stringByAppendingPathComponent:fileName];
+        folderSize += [self fileSizeAtPath:fileAbsolutePath];
+    }
+    
+    return folderSize / (1024.0 * 1024.0);
 }
 
 @end

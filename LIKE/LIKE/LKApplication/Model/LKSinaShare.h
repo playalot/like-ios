@@ -7,9 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WeiboSDK.h"
 
-@interface LKSinaShare : NSObject
+LC_BLOCK(void, LKSinaLoginComplete, (NSString * uid, NSString * accessToken, NSString * error));
+
+@interface LKSinaShare : NSObject <WeiboSDKDelegate>
 
 +(BOOL) shareImage:(UIImage *)image;
+
+-(void)login:(LKSinaLoginComplete)complete;
 
 @end

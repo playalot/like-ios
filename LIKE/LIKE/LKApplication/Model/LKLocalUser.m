@@ -134,7 +134,7 @@ LC_PROPERTY(strong) LKUser * user;
 +(void) regetSessionTokenAndUseLoadingTip:(BOOL)useLoadingTip
 {
     if (useLoadingTip) {
-        [LC_KEYWINDOW showTopLoadingMessageHud:@"重新登录中..."];
+        [LC_KEYWINDOW showTopLoadingMessageHud:LC_LO(@"重新登录中...")];
     }
     
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"user/%@/refreshtoken", LKLocalUser.singleton.user.id]].PUT_METHOD();

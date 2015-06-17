@@ -16,7 +16,7 @@
 
 +(void) chooseAvatorImage:(LKUploadAvatarModelRequestFinished)uploadFinished
 {
-    [LKActionSheet showWithTitle:@"更换头像" buttonTitles:@[@"拍摄新图片",@"从相册选择"] didSelected:^(NSInteger index) {
+    [LKActionSheet showWithTitle:LC_LO(@"更换头像") buttonTitles:@[LC_LO(@"拍摄新图片"),LC_LO(@"从相册选择")] didSelected:^(NSInteger index) {
         
         if (index == 0) {
             
@@ -31,7 +31,7 @@
 
 +(void) chooseCoverImage:(LKUploadAvatarModelRequestFinished)uploadFinished
 {
-    [LKActionSheet showWithTitle:@"更换封面" buttonTitles:@[@"拍摄新图片",@"从相册选择"] didSelected:^(NSInteger index) {
+    [LKActionSheet showWithTitle:LC_LO(@"更换封面") buttonTitles:@[LC_LO(@"拍摄新图片"),LC_LO(@"从相册选择")] didSelected:^(NSInteger index) {
        
         if (index == 0) {
             
@@ -54,7 +54,7 @@
     
     camera.didFinishedPickImage = ^(UIImage * image){
       
-        [LC_KEYWINDOW showTopLoadingMessageHud:@"上传中..."];
+        [LC_KEYWINDOW showTopLoadingMessageHud:LC_LO(@"上传中...")];
         
         if (imageType == 0) {
          
@@ -103,7 +103,7 @@
     picker.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     picker.navigationBar.tintColor = [UIColor whiteColor];
     
-    [picker.navigationBar setBackgroundImage:[UIImage imageWithColor:[LKColor.color colorWithAlphaComponent:0.98] andSize:LC_SIZE(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
+    [picker.navigationBar setBackgroundImage:[UIImage imageWithColor:[LKColor.color colorWithAlphaComponent:1] andSize:LC_SIZE(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
     
     NSMutableDictionary * dictText = [NSMutableDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,LK_FONT_B(18),NSFontAttributeName,nil];
     
@@ -124,7 +124,7 @@
         
         cropper.didFinishedPickImage = ^(UIImage * image){
             
-            [LC_KEYWINDOW showTopLoadingMessageHud:@"上传中..."];
+            [LC_KEYWINDOW showTopLoadingMessageHud:LC_LO(@"上传中...")];
 
             if (imageType == 0) {
                 

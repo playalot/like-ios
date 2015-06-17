@@ -7,7 +7,12 @@
 //
 
 #import "LKSinaShare.h"
-#import "WeiboSDK.h"
+
+@interface LKSinaShare ()
+
+LC_PROPERTY(copy) LKSinaLoginComplete complete;
+
+@end
 
 @implementation LKSinaShare
 
@@ -15,7 +20,7 @@
 {
     if (![WeiboSDK isWeiboAppInstalled]) {
         
-        [LCUIAlertView showWithTitle:@"提示" message:@"您未安装微博客户端，无法分享" cancelTitle:@"知道了" otherTitle:nil didTouchedBlock:^(NSInteger integerValue) {
+        [LCUIAlertView showWithTitle:LC_LO(@"提醒") message:LC_LO(@"您未安装微博客户端，无法分享") cancelTitle:LC_LO(@"好的") otherTitle:nil didTouchedBlock:^(NSInteger integerValue) {
             
             ;
             
@@ -38,6 +43,53 @@
     WBSendMessageToWeiboRequest * request = [WBSendMessageToWeiboRequest requestWithMessage:object];
     
     return [WeiboSDK sendRequest:request];    
+}
+
+-(void)login:(LKSinaLoginComplete)complete
+{
+    if (![WeiboSDK isWeiboAppInstalled]) {
+        
+        [LCUIAlertView showWithTitle:LC_LO(@"提醒") message:LC_LO(@"您未安装微博客户端，无法分享") cancelTitle:LC_LO(@"好的") otherTitle:nil didTouchedBlock:^(NSInteger integerValue) {
+            
+            ;
+            
+        }];
+        return;
+    }
+    
+    self.complete = complete;
+    
+    WBAuthorizeRequest * request = [WBAuthorizeRequest request];
+
+    request.redirectURI = @"http://www.likeorz.com";
+
+    request.scope = @"all";
+
+    [WeiboSDK sendRequest:request];
+}
+
+-(void)didReceiveWeiboResponse:(WBBaseResponse *)response
+{
+    if ([response isKindOfClass:WBAuthorizeResponse.class])
+    {
+        if (response.statusCode == 0) {
+
+            if (self.complete) {
+                self.complete([(WBAuthorizeResponse *)response userID], [(WBAuthorizeResponse *)response accessToken], nil);
+            }
+        }
+        else{
+            
+            if (self.complete) {
+                self.complete(nil, nil, LC_LO(@"发生错误"));
+            }
+        }
+    }
+}
+
+-(void) didReceiveWeiboRequest:(WBBaseRequest *)request
+{
+
 }
 
 @end

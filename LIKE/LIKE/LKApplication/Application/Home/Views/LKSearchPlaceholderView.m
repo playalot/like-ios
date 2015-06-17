@@ -100,7 +100,7 @@
     
     if (indexPath.section == 0) {
         
-        label.text = [NSString stringWithFormat:@"搜索“%@”相关内容" ,self.searchString];
+        label.text = [NSString stringWithFormat:@"%@“%@”%@", LC_LO(@"搜索"), self.searchString, LC_LO(@"相关内容")];
     }
     else{
   

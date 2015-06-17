@@ -57,7 +57,7 @@ LC_PROPERTY(strong) NSMutableArray * datasource;
     self.header.textAlignment = UITextAlignmentCenter;
     self.header.font = LK_FONT_B(16);
     self.header.textColor = [UIColor whiteColor];
-    self.header.text = @"评论详情";
+    self.header.text = LC_LO(@"评论详情");
     [self.header addTapGestureRecognizer:self selector:@selector(hide)];
     self.ADD(self.header);
     
@@ -112,8 +112,8 @@ LC_PROPERTY(strong) NSMutableArray * datasource;
     
     self.inputView = LKInputView.view;
     self.inputView.viewFrameY = self.viewFrameHeight - self.inputView.viewFrameHeight;
-    self.inputView.dismissButton.title = @"发布";
-    self.inputView.textField.placeholder = @"发表评论（最多300个字）";
+    self.inputView.dismissButton.title = LC_LO(@"发布");
+    self.inputView.textField.placeholder = LC_LO(@"发表评论（最多300个字）");
     self.ADD(self.inputView);
     
     self.inputView.sendAction = ^(NSString * string){
@@ -122,13 +122,13 @@ LC_PROPERTY(strong) NSMutableArray * datasource;
         
         if (string.trim.length == 0) {
             
-            [self showTopMessageErrorHud:@"评论不能为空"];
+            [self showTopMessageErrorHud:LC_LO(@"评论不能为空")];
             return;
         }
         
         if (string.length > 300) {
             
-            [self showTopMessageErrorHud:@"评论长度不能大于300位"];
+            [self showTopMessageErrorHud:LC_LO(@"评论长度不能大于300位")];
             return;
         }
         
@@ -141,7 +141,7 @@ LC_PROPERTY(strong) NSMutableArray * datasource;
         @normally(self);
         
         self.replyUser = nil;
-        self.inputView.textField.placeholder = @"发表评论（最多300个字）";
+        self.inputView.textField.placeholder = LC_LO(@"发表评论（最多300个字）");
     };
 }
 
@@ -188,13 +188,13 @@ LC_PROPERTY(strong) NSMutableArray * datasource;
     [self.inputView resignFirstResponder];
     self.inputView.textField.text = @"";
     self.replyUser = nil;
-    self.inputView.textField.placeholder = @"发表评论（最多300个字）";
+    self.inputView.textField.placeholder = LC_LO(@"发表评论（最多300个字）");
 
 }
 
 -(void) inputBecomeFirstResponder
 {
-    self.inputView.textField.placeholder = @"发表评论（最多300个字）";
+    self.inputView.textField.placeholder = LC_LO(@"发表评论（最多300个字）");
     [self.inputView becomeFirstResponder];
 }
 

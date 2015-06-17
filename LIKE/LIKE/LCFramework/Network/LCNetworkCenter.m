@@ -195,16 +195,22 @@ LC_PROPERTY(strong) NSLock * lock;
 
 -(void) cancelRequestsWithObject:(NSObject *)object
 {
+    NSString * p = LC_NSSTRING_FORMAT(@"LCNetworkCenter-%p",object);
+
     [self.lock lock];
-    NSURLSessionDataTask * task = [self getTaskWithSender:object];
+    NSArray * tasks = [self getTaskWithSender:object];
     [self.lock unlock];
     
-    if (task) {
-        [task cancel];
+    for(NSURLSessionDataTask * task in tasks) {
+        
+        if ([task._TagString_ isEqualToString:p]) {
+            
+            [task cancel];
+        }
     }
 }
 
--(NSURLSessionDataTask *) getTaskWithSender:(NSObject *)sender
+-(NSArray *) getTaskWithSender:(NSObject *)sender
 {
     NSString * p = LC_NSSTRING_FORMAT(@"LCNetworkCenter-%p",sender);
     
@@ -212,13 +218,7 @@ LC_PROPERTY(strong) NSLock * lock;
     
     if (subArray && subArray.count) {
         
-        for(NSURLSessionDataTask * task in subArray) {
-            
-            if ([task._TagString_ isEqualToString:p]) {
-                
-                return task;
-            }
-        }
+        return subArray;
     }
     
     return nil;
@@ -283,7 +283,7 @@ LC_PROPERTY(strong) NSLock * lock;
 {
     LCHTTPRequestResult * result = [[LCHTTPRequestResult alloc] init];
     
-    NSDictionary * userInfo = [NSDictionary dictionaryWithObject:@"请求失败...请检查您的网络后重试"                                                                      forKey:NSLocalizedDescriptionKey];
+    NSDictionary * userInfo = [NSDictionary dictionaryWithObject:LC_LO(@"请求失败...请检查您的网络后重试")                                                                      forKey:NSLocalizedDescriptionKey];
     
     NSError * newError = [NSError errorWithDomain:@"LCNetworkCenter" code:-1 userInfo:userInfo];
     

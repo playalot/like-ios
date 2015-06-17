@@ -36,7 +36,7 @@
         [self.dismissButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
         self.dismissButton.image = nil;
         self.dismissButton.buttonImage = nil;
-        self.dismissButton.title = @"添加";
+        self.dismissButton.title = LC_LO(@"添加");
         self.dismissButton.titleFont = LK_FONT(13);
         self.dismissButton.titleColor = LC_RGBA(99, 99, 99, 1);
         self.ADD(self.dismissButton);

@@ -17,10 +17,9 @@
         self.cornerRadius = 4;
         self.layer.masksToBounds = NO;
         self.backgroundColor = LC_RGB(245, 240, 236);
-        self.tagLabel.textColor = [LC_RGB(74, 74, 74) colorWithAlphaComponent:0.9];
         
         self.tagLabel = LCUILabel.view;
-        self.tagLabel.font = LK_FONT_B(11);
+        self.tagLabel.font = LK_FONT(11);
         self.tagLabel.textColor = [UIColor whiteColor];
         self.ADD(self.tagLabel);
         

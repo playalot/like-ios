@@ -7,9 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WXApi.h"
 
-@interface LKWeChatShare : NSObject
+LC_BLOCK(void, LKWeChatLoginComplete, (NSString * uid, NSString * accessToken, NSString * error));
+
+@interface LKWeChatShare : NSObject <WXApiDelegate>
 
 +(BOOL) shareImage:(UIImage *)image timeLine:(BOOL)timeLine;
+
+-(void)login:(LKWeChatLoginComplete)complete;
 
 @end

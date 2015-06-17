@@ -9,11 +9,25 @@
 #import "LKLoginViewController.h"
 #import "LKUserInfoModel.h"
 #import "LKWelcome.h"
+#import "LKCountryCodeViewController.h"
+#import "LKSinaShare.h"
+#import "LKWeChatShare.h"
+#import "LKFacebookShare.h"
+
+typedef NS_ENUM(NSInteger, LKOtherLoginType)
+{
+    LKOtherLoginTypeWechat = 0,
+    LKOtherLoginTypeWebo,
+    LKOtherLoginTypeQQ,
+    LKOtherLoginTypeFacebook,
+};
 
 @interface LKLoginViewController ()
 
 LC_PROPERTY(assign) NSInteger timeInterval;
 
+LC_PROPERTY(strong) LCUILabel * countryCode;
+LC_PROPERTY(strong) LCUILabel * countryName;
 LC_PROPERTY(strong) LCUITextField * phoneField;
 LC_PROPERTY(strong) LCUITextField * codeField;
 LC_PROPERTY(strong) LCUIButton * codeButton;
@@ -180,6 +194,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     };
     
     
+    
     self.backgroundView = [LCUIImageView viewWithImage:[[LKWelcome image] imageWithBlurValue:15]];
     self.backgroundView.viewFrameWidth = LC_DEVICE_WIDTH * 1.5;
     self.backgroundView.viewFrameHeight = (LC_DEVICE_HEIGHT + 20) * 1.5;
@@ -194,36 +209,67 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     
     LCUIImageView * icon = [LCUIImageView viewWithImage:UIImage.IMAGE(@"LikeIcon.png")];
     icon.viewFrameX = self.view.viewMidWidth - icon.viewMidWidth;
-    icon.viewFrameY = 60;
+    icon.viewFrameY = 50;
     self.view.ADD(icon);
 
     
     
-    UIView * phoneBack = UIView.view.Y(icon.viewBottomY + 40).WIDTH(LC_DEVICE_WIDTH).HEIGHT(47).COLOR([[UIColor whiteColor] colorWithAlphaComponent:0.05]);
+    // country.
+    UIView * countryBack = UIView.view.Y(icon.viewBottomY + 30).WIDTH(LC_DEVICE_WIDTH).HEIGHT(35).COLOR([[UIColor whiteColor] colorWithAlphaComponent:0.05]);
+    [countryBack addTapGestureRecognizer:self selector:@selector(chooseCountryCode)];
+    self.view.ADD(countryBack);
+    
+    
+    self.countryCode = LCUILabel.view;
+    self.countryCode.viewFrameWidth = 80;
+    self.countryCode.viewFrameHeight = countryBack.viewFrameHeight;
+    self.countryCode.font = LK_FONT(13);
+    self.countryCode.textColor = [UIColor whiteColor];
+    self.countryCode.textAlignment = UITextAlignmentCenter;
+    countryBack.ADD(self.countryCode);
+    
+    
+    self.countryName = LCUILabel.view;
+    self.countryName.viewFrameX = self.countryCode.viewRightX + 30;
+    self.countryName.viewFrameWidth = 200;
+    self.countryName.viewFrameHeight = countryBack.viewFrameHeight;
+    self.countryName.font = LK_FONT(13);
+    self.countryName.textColor = [[UIColor whiteColor] colorWithAlphaComponent:0.6];
+    countryBack.ADD(self.countryName);
+    
+    
+    LCUIImageView * countryMore = [LCUIImageView viewWithImage:[[[UIImage imageNamed:@"PullLoaderSmallArrow.png" useCache:YES] imageWithTintColor:LKColor.color] scaleToWidth:15]];
+    countryMore.viewFrameY = countryBack.viewMidHeight - countryMore.viewMidHeight;
+    countryMore.viewFrameX = LC_DEVICE_WIDTH - countryMore.viewFrameWidth - 15;
+    countryBack.ADD(countryMore);
+    
+    
+    // phone.
+    UIView * phoneBack = UIView.view.Y(countryBack.viewBottomY + 1).WIDTH(LC_DEVICE_WIDTH).HEIGHT(40).COLOR([[UIColor whiteColor] colorWithAlphaComponent:0.05]);
     self.view.ADD(phoneBack);
     
     
     UIImageView * phoneIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PhoneIcon.png" useCache:YES]];
+    phoneIcon.viewFrameX = 30;
     phoneIcon.viewFrameY = phoneBack.viewMidHeight - phoneIcon.viewMidHeight;
     phoneBack.ADD(phoneIcon);
     
     
-    CGFloat allWidth = phoneIcon.viewFrameWidth + 270 / 3 + 24;
-    CGFloat phoneX = LC_DEVICE_WIDTH / 2 - allWidth / 2;
-    phoneIcon.viewFrameX = phoneX;
+    self.countryCode.viewCenterX = phoneIcon.viewCenterX;
     
 
     self.phoneField = LCUITextField.view;
     self.phoneField.viewFrameY = 0;
-    self.phoneField.viewFrameWidth = 270 / 3 + 50;
-    self.phoneField.viewFrameHeight = 47;
-    self.phoneField.viewFrameX = phoneIcon.viewRightX + 24;
-    self.phoneField.font = LK_FONT(15);
+    self.phoneField.viewFrameX = phoneIcon.viewRightX + 30;
+    self.phoneField.viewFrameWidth = LC_DEVICE_WIDTH - self.phoneField.viewFrameX - 30;
+    self.phoneField.viewFrameHeight = 40;
+    self.phoneField.font = LK_FONT(13);
     self.phoneField.textColor = [[UIColor whiteColor] colorWithAlphaComponent:0.8];
     self.phoneField.placeholder = LC_LO(@"输入手机号码");
     self.phoneField.placeholderColor = [[UIColor whiteColor] colorWithAlphaComponent:0.6];
     self.phoneField.returnKeyType = UIReturnKeyNext;
     self.phoneField.keyboardType = UIKeyboardTypeNumberPad;
+    self.phoneField.clearButtonMode = UITextFieldViewModeWhileEditing;
     phoneBack.ADD(self.phoneField);
     
     self.phoneField.shouldReturn = ^ BOOL (id value){
@@ -235,31 +281,31 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     };
     
     
-    UIView * codeBack = UIView.view.Y(phoneBack.viewBottomY + 1).WIDTH(LC_DEVICE_WIDTH).HEIGHT(47).COLOR([[UIColor whiteColor] colorWithAlphaComponent:0.05]);
+    self.countryName.viewFrameX = self.phoneField.viewFrameX;
+    
+    
+    // code.
+    UIView * codeBack = UIView.view.Y(phoneBack.viewBottomY + 1).WIDTH(LC_DEVICE_WIDTH).HEIGHT(40).COLOR([[UIColor whiteColor] colorWithAlphaComponent:0.05]);
     self.view.ADD(codeBack);
     
     
     UIImageView * codeIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"CodeIcon.png" useCache:YES]];
+    codeIcon.viewFrameX = 30;
     codeIcon.viewFrameY = codeBack.viewMidHeight - codeIcon.viewMidHeight;
     codeBack.ADD(codeIcon);
     
     
-    CGFloat allWidth1 = codeIcon.viewFrameWidth + 270 / 3 + 24;
-    CGFloat codeX = LC_DEVICE_WIDTH / 2 - allWidth1 / 2;
-    codeIcon.viewFrameX = codeX;
-
-    
-    
     self.codeField = LCUITextField.view;
-    self.codeField.viewFrameWidth = 270 / 3;
-    self.codeField.viewFrameHeight = 47;
-    self.codeField.viewFrameX = codeIcon.viewRightX + 24;
-    self.codeField.font = LK_FONT(15);
+    self.codeField.viewFrameX = codeIcon.viewRightX + 30;
+    self.codeField.viewFrameWidth = LC_DEVICE_WIDTH - self.codeField.viewFrameX - 100;
+    self.codeField.viewFrameHeight = 40;
+    self.codeField.font = LK_FONT(13);
     self.codeField.textColor = [[UIColor whiteColor] colorWithAlphaComponent:0.8];
     self.codeField.placeholder = LC_LO(@"输入验证码");
     self.codeField.placeholderColor = [[UIColor whiteColor] colorWithAlphaComponent:0.6];
     self.codeField.returnKeyType = UIReturnKeyJoin;
     self.codeField.keyboardType = UIKeyboardTypeNumberPad;
+    self.codeField.clearButtonMode = UITextFieldViewModeWhileEditing;
     codeBack.ADD(self.codeField);
     
     self.codeField.shouldReturn = ^ BOOL (id value){
@@ -273,35 +319,37 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     
     
     self.codeButton = LCUIButton.view;
-    self.codeButton.viewFrameY = codeBack.viewBottomY + 25;
-    self.codeButton.viewFrameWidth = 200;
-    self.codeButton.viewFrameHeight = 25;
-    self.codeButton.viewFrameX = LC_DEVICE_WIDTH / 2 - 100;
+    self.codeButton.viewFrameWidth = 100;
+    self.codeButton.viewFrameHeight = 40;
+    self.codeButton.viewFrameX = LC_DEVICE_WIDTH - self.codeButton.viewFrameWidth;
     self.codeButton.title = LC_LO(@"获取验证码");
     self.codeButton.titleColor = [UIColor whiteColor];
     self.codeButton.titleFont = LK_FONT(13);
     self.codeButton.showsTouchWhenHighlighted = YES;
     [self.codeButton addTarget:self action:@selector(getCode) forControlEvents:UIControlEventTouchUpInside];
-    self.view.ADD(self.codeButton);
+    codeBack.ADD(self.codeButton);
     
     
+    // login.
     self.loginButton = LCUIButton.view;
-    self.loginButton.viewFrameWidth = 132;
-    self.loginButton.viewFrameHeight = 35;
-    self.loginButton.viewFrameX = self.view.viewMidWidth - self.loginButton.viewMidWidth;
-    self.loginButton.viewFrameY = self.codeButton.viewBottomY + 25;
-    self.loginButton.cornerRadius = 35 / 2;
+    self.loginButton.viewFrameWidth = 110;
+    self.loginButton.viewFrameHeight = 30;
+    self.loginButton.viewFrameY = codeBack.viewBottomY + 30;
+    self.loginButton.viewCenterX = self.view.viewMidWidth;
+    self.loginButton.cornerRadius = 30 / 2;
     self.loginButton.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.2];
     self.loginButton.title = LC_LO(@"进入like");
-    self.loginButton.titleFont = LK_FONT(15);
+    self.loginButton.titleFont = LK_FONT(13);
     self.loginButton.titleColor = [UIColor whiteColor];
     self.loginButton.showsTouchWhenHighlighted = YES;
     [self.loginButton addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
     self.view.ADD(self.loginButton);
     
     
+    
+    
     LCUILabel * agreement = LCUILabel.view;
-    agreement.viewFrameY = self.view.viewFrameHeight - 60;
+    agreement.viewFrameY = self.loginButton.viewBottomY + 20;
     agreement.viewFrameWidth = self.view.viewFrameWidth;
     agreement.viewFrameHeight = 20;
     agreement.viewFrameX = LC_DEVICE_WIDTH / 2 - agreement.viewMidWidth;
@@ -313,10 +361,46 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     self.view.ADD(agreement);
     
     
+    
+    // third login.
+    LCUILabel * thirdLoginTip = LCUILabel.view;
+    thirdLoginTip.font = LK_FONT(10);
+    thirdLoginTip.textColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5];
+    thirdLoginTip.text = LC_LO(@"社交账号快速登录");
+    thirdLoginTip.FIT();
+    thirdLoginTip.viewCenterX = self.view.viewMidWidth;
+    thirdLoginTip.viewCenterY = self.view.viewFrameHeight - 115;
+    self.view.ADD(thirdLoginTip);
+    
+    
+    
+    
+    
+    NSArray * loginImages = @[@"WeChatLogin.png", @"WeiboLogin.png", @"FacebookLogin.png"];
+    //NSArray * loginNames = @[LC_LO(@"微信"), LC_LO(@"微博"), LC_LO(@"QQ")];
+
+    CGFloat loginButtonX = (LC_DEVICE_WIDTH - (85 * loginImages.count)) / 2;
+    
+    for (NSInteger i = 0; i<loginImages.count; i++) {
+        
+        LCUIButton * loginButton = LCUIButton.view;
+        loginButton.viewFrameWidth = 85;
+        loginButton.viewFrameHeight = 35;
+        loginButton.viewFrameX = loginButtonX + loginButton.viewFrameWidth * i;
+        loginButton.viewFrameY = thirdLoginTip.viewBottomY + 20;
+        loginButton.buttonImage = [[UIImage imageNamed:loginImages[i] useCache:YES] scaleToWidth:35];
+        loginButton.showsTouchWhenHighlighted = YES;
+        loginButton.tag = i;
+        [loginButton addTarget:self action:@selector(otherLogin:) forControlEvents:UIControlEventTouchUpInside];
+        self.view.ADD(loginButton);
+        
+    }
+    
+    
     LCUIButton * visitor = LCUIButton.view;
     visitor.viewFrameWidth = 100;
-    visitor.viewFrameX = self.view.viewFrameWidth - 5 - visitor.viewFrameWidth;
-    visitor.viewFrameY = self.view.viewFrameHeight - 10 - 20;
+    visitor.viewCenterX = self.view.viewMidWidth - 15;
+    visitor.viewFrameY = self.view.viewFrameHeight - 40;
     visitor.viewFrameHeight = 20;
     visitor.title = LC_LO(@"游客访问     ");
     visitor.titleFont = LK_FONT(10);
@@ -334,6 +418,9 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     self.view.ADD(self.maskView);
     
     
+    [self setTheLocalAreaCode];
+    
+    
     
     for (UIView * view in self.view.subviews) {
         
@@ -345,6 +432,107 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     
     [self performSelector:@selector(beginAnimation) withObject:0 afterDelay:0.01];
 }
+
+-(void) chooseCountryCode
+{
+    LKCountryCodeViewController * countryCode = [LKCountryCodeViewController viewController];
+    
+    @weakly(self);
+    
+    countryCode.didSelectedRow = ^(NSString * countryCode){
+      
+        @normally(self);
+        
+        NSArray * subString = [countryCode componentsSeparatedByString:@"+"];
+        
+        self.countryName.text = subString[0];
+        self.countryCode.text = [NSString stringWithFormat:@"+%@", subString[1]];
+    };
+    
+    [self presentViewController:LC_UINAVIGATION(countryCode) animated:YES completion:nil];
+}
+
+-(void)setTheLocalAreaCode
+{
+    NSLocale * locale = [NSLocale currentLocale];
+    
+    NSDictionary *dictCodes = [NSDictionary dictionaryWithObjectsAndKeys:@"972", @"IL",
+                               @"93", @"AF", @"355", @"AL", @"213", @"DZ", @"1", @"AS",
+                               @"376", @"AD", @"244", @"AO", @"1", @"AI", @"1", @"AG",
+                               @"54", @"AR", @"374", @"AM", @"297", @"AW", @"61", @"AU",
+                               @"43", @"AT", @"994", @"AZ", @"1", @"BS", @"973", @"BH",
+                               @"880", @"BD", @"1", @"BB", @"375", @"BY", @"32", @"BE",
+                               @"501", @"BZ", @"229", @"BJ", @"1", @"BM", @"975", @"BT",
+                               @"387", @"BA", @"267", @"BW", @"55", @"BR", @"246", @"IO",
+                               @"359", @"BG", @"226", @"BF", @"257", @"BI", @"855", @"KH",
+                               @"237", @"CM", @"1", @"CA", @"238", @"CV", @"345", @"KY",
+                               @"236", @"CF", @"235", @"TD", @"56", @"CL", @"86", @"CN",
+                               @"61", @"CX", @"57", @"CO", @"269", @"KM", @"242", @"CG",
+                               @"682", @"CK", @"506", @"CR", @"385", @"HR", @"53", @"CU",
+                               @"537", @"CY", @"420", @"CZ", @"45", @"DK", @"253", @"DJ",
+                               @"1", @"DM", @"1", @"DO", @"593", @"EC", @"20", @"EG",
+                               @"503", @"SV", @"240", @"GQ", @"291", @"ER", @"372", @"EE",
+                               @"251", @"ET", @"298", @"FO", @"679", @"FJ", @"358", @"FI",
+                               @"33", @"FR", @"594", @"GF", @"689", @"PF", @"241", @"GA",
+                               @"220", @"GM", @"995", @"GE", @"49", @"DE", @"233", @"GH",
+                               @"350", @"GI", @"30", @"GR", @"299", @"GL", @"1", @"GD",
+                               @"590", @"GP", @"1", @"GU", @"502", @"GT", @"224", @"GN",
+                               @"245", @"GW", @"595", @"GY", @"509", @"HT", @"504", @"HN",
+                               @"36", @"HU", @"354", @"IS", @"91", @"IN", @"62", @"ID",
+                               @"964", @"IQ", @"353", @"IE", @"972", @"IL", @"39", @"IT",
+                               @"1", @"JM", @"81", @"JP", @"962", @"JO", @"77", @"KZ",
+                               @"254", @"KE", @"686", @"KI", @"965", @"KW", @"996", @"KG",
+                               @"371", @"LV", @"961", @"LB", @"266", @"LS", @"231", @"LR",
+                               @"423", @"LI", @"370", @"LT", @"352", @"LU", @"261", @"MG",
+                               @"265", @"MW", @"60", @"MY", @"960", @"MV", @"223", @"ML",
+                               @"356", @"MT", @"692", @"MH", @"596", @"MQ", @"222", @"MR",
+                               @"230", @"MU", @"262", @"YT", @"52", @"MX", @"377", @"MC",
+                               @"976", @"MN", @"382", @"ME", @"1", @"MS", @"212", @"MA",
+                               @"95", @"MM", @"264", @"NA", @"674", @"NR", @"977", @"NP",
+                               @"31", @"NL", @"599", @"AN", @"687", @"NC", @"64", @"NZ",
+                               @"505", @"NI", @"227", @"NE", @"234", @"NG", @"683", @"NU",
+                               @"672", @"NF", @"1", @"MP", @"47", @"NO", @"968", @"OM",
+                               @"92", @"PK", @"680", @"PW", @"507", @"PA", @"675", @"PG",
+                               @"595", @"PY", @"51", @"PE", @"63", @"PH", @"48", @"PL",
+                               @"351", @"PT", @"1", @"PR", @"974", @"QA", @"40", @"RO",
+                               @"250", @"RW", @"685", @"WS", @"378", @"SM", @"966", @"SA",
+                               @"221", @"SN", @"381", @"RS", @"248", @"SC", @"232", @"SL",
+                               @"65", @"SG", @"421", @"SK", @"386", @"SI", @"677", @"SB",
+                               @"27", @"ZA", @"500", @"GS", @"34", @"ES", @"94", @"LK",
+                               @"249", @"SD", @"597", @"SR", @"268", @"SZ", @"46", @"SE",
+                               @"41", @"CH", @"992", @"TJ", @"66", @"TH", @"228", @"TG",
+                               @"690", @"TK", @"676", @"TO", @"1", @"TT", @"216", @"TN",
+                               @"90", @"TR", @"993", @"TM", @"1", @"TC", @"688", @"TV",
+                               @"256", @"UG", @"380", @"UA", @"971", @"AE", @"44", @"GB",
+                               @"1", @"US", @"598", @"UY", @"998", @"UZ", @"678", @"VU",
+                               @"681", @"WF", @"967", @"YE", @"260", @"ZM", @"263", @"ZW",
+                               @"591", @"BO", @"673", @"BN", @"61", @"CC", @"243", @"CD",
+                               @"225", @"CI", @"500", @"FK", @"44", @"GG", @"379", @"VA",
+                               @"852", @"HK", @"98", @"IR", @"44", @"IM", @"44", @"JE",
+                               @"850", @"KP", @"82", @"KR", @"856", @"LA", @"218", @"LY",
+                               @"853", @"MO", @"389", @"MK", @"691", @"FM", @"373", @"MD",
+                               @"258", @"MZ", @"970", @"PS", @"872", @"PN", @"262", @"RE",
+                               @"7", @"RU", @"590", @"BL", @"290", @"SH", @"1", @"KN",
+                               @"1", @"LC", @"590", @"MF", @"508", @"PM", @"1", @"VC",
+                               @"239", @"ST", @"252", @"SO", @"47", @"SJ", @"963", @"SY",
+                               @"886", @"TW", @"255", @"TZ", @"670", @"TL", @"58", @"VE",
+                               @"84", @"VN", @"1", @"VG", @"1", @"VI", nil];
+    
+    NSString * tt = [locale objectForKey:NSLocaleCountryCode];
+    NSString * defaultCode = [dictCodes objectForKey:tt];
+    NSString * defaultCountryName = [locale displayNameForKey:NSLocaleCountryCode value:tt];
+    
+    if (!defaultCode || !defaultCountryName) {
+        
+        defaultCode = @"86";
+        defaultCountryName = @"China";
+    }
+    
+    self.countryCode.text = [NSString stringWithFormat:@"+%@", defaultCode];
+    self.countryName.text = defaultCountryName;
+
+}
+
 
 -(void) dismissAction
 {
@@ -370,7 +558,29 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     [self cancelAllRequests];
     
     self.codeButton.userInteractionEnabled = NO;
-    self.codeButton.title = @"获取中...";
+    self.codeButton.title = LC_LO(@"获取中...");
+    
+    
+//    [SMS_SDK getVerificationCodeBySMSWithPhone:self.phoneField.text
+//                                          zone:[self.countryCode.text stringByReplacingOccurrencesOfString:@"+" withString:@""]
+//                                        result:^(SMS_SDKError * error)
+//     {
+//         if (!error) {
+//             
+//             [self $beginTimer];
+//             
+//             self.codeButton.userInteractionEnabled = YES;
+//         }
+//         else {
+//             
+//             [self showTopMessageErrorHud:error.localizedDescription];
+//             
+//             self.codeButton.title = @"获取验证码";
+//             self.codeButton.userInteractionEnabled = YES;
+//         }
+//     }];
+
+    
     
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"user/sendcode"].POST_METHOD();
     [interface addParameter:self.phoneField.text key:@"mobile"];
@@ -391,7 +601,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
             
             [self showTopMessageErrorHud:result.error];
             
-            self.codeButton.title = @"获取验证码";
+            self.codeButton.title = LC_LO(@"获取验证码");
             self.codeButton.userInteractionEnabled = YES;
         }
     }];
@@ -404,7 +614,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     }
 
     self.maskView.hidden = NO;
-    self.loginButton.title = @"登录中...";
+    self.loginButton.title = LC_LO(@"登录中...");
     self.loginButton.userInteractionEnabled = NO;
     
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"user"].POST_METHOD();
@@ -431,11 +641,113 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
         else if (result.state == LKHttpRequestStateFailed){
             
             self.loginButton.userInteractionEnabled = YES;
-            self.loginButton.title = @"进入like";
+            self.loginButton.title = LC_LO(@"进入like");
 
             self.maskView.hidden = YES;
             [self showTopMessageErrorHud:result.error];
         }
+    }];
+}
+
+-(void) otherLogin:(UIView *)view
+{
+    @weakly(self);
+
+    if (view.tag == 0) {
+        
+        [LKWeChatShare.singleton login:^(NSString *uid, NSString *accessToken, NSString *error) {
+            
+            @normally(self);
+            
+            if (!error) {
+                
+                [self loginWithUID:uid accessToken:accessToken type:LKOtherLoginTypeWechat];
+            }
+            else{
+                
+                [self showTopMessageErrorHud:error];
+            }
+            
+        }];
+
+    }
+    else if (view.tag == 1) {
+        
+        [LKSinaShare.singleton login:^(NSString *uid, NSString *accessToken, NSString *error) {
+            
+            @normally(self);
+            
+            if (!error) {
+                
+                [self loginWithUID:uid accessToken:accessToken type:LKOtherLoginTypeWebo];
+            }
+            else{
+                
+                [self showTopMessageErrorHud:error];
+            }
+            
+        }];
+    }
+    else if (view.tag == 2){
+      
+        [LKFacebookShare.singleton login:^(NSString *uid, NSString *accessToken, NSString *error) {
+            
+            @normally(self);
+            
+            if (!error) {
+                
+                [self loginWithUID:uid accessToken:accessToken type:LKOtherLoginTypeFacebook];
+            }
+            else{
+                
+                [self showTopMessageErrorHud:error];
+            }
+            
+        }];
+
+        
+    };
+}
+
+-(void) loginWithUID:(NSString *)uid accessToken:(NSString *)accessToken type:(LKOtherLoginType)type
+{
+    NSString * typeString = @"";
+    
+    if (type == LKOtherLoginTypeWebo) {
+        typeString = @"weibo";
+    }
+    else if (type == LKOtherLoginTypeWechat){
+        typeString = @"wechat";
+    }
+    else if (type == LKOtherLoginTypeFacebook){
+        typeString = @"facebook";
+    }
+    
+    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"authenticate/%@",typeString]].POST_METHOD();
+    interface.customAPIURL = @"http://192.168.2.14:9000/v1/";
+    interface.jsonFormat = YES;
+    [interface addParameter:uid key:@"uid"];
+    [interface addParameter:accessToken key:@"access_token"];
+    
+    @weakly(self);
+    
+    [self request:interface complete:^(LKHttpRequestResult * result) {
+
+        @normally(self);
+        
+        if (result.state == LKHttpRequestStateFinished) {
+            
+            self.sesstionToken = result.json[@"data"][@"session_token"];
+            self.refreshToken = result.json[@"data"][@"refresh_token"];
+            self.expiresIn = result.json[@"data"][@"expires_in"];
+            
+            [self.userInfoModel getUserInfo:result.json[@"data"][@"user_id"]];
+        }
+        else if (result.state == LKHttpRequestStateFailed){
+            
+            [self showTopMessageErrorHud:result.error];
+        }
+        
     }];
 }
 
@@ -451,7 +763,7 @@ LC_HANDLE_TIMER(timer)
             return;
         }
         
-        self.codeButton.title = LC_NSSTRING_FORMAT(@"%@秒后重新发送", @(self.timeInterval));
+        self.codeButton.title = LC_NSSTRING_FORMAT(@"%@%@", @(self.timeInterval), LC_LO(@"s'后重新发送"));
     }
 }
 
@@ -461,7 +773,7 @@ LC_HANDLE_TIMER(timer)
     
     self.codeButton.userInteractionEnabled = NO;
     
-    self.codeButton.title = @"60秒后重新发送";
+    self.codeButton.title = [NSString stringWithFormat:@"60%@", LC_LO(@"s'后重新发送")];
     [self fireTimer:@"CodeTimer" timeInterval:1 repeat:YES];
 }
 
@@ -480,13 +792,13 @@ LC_HANDLE_TIMER(timer)
     
     if (self.phoneField.text.length == 0) {
         
-        [self showTopMessageErrorHud:@"请输入手机号码"];
+        [self showTopMessageErrorHud:LC_LO(@"请输入手机号码")];
         return NO;
     }
     
-    if (self.phoneField.text.length <= 5) {
+    if (self.phoneField.text.length <= 4) {
         
-        [self showTopMessageErrorHud:@"手机号码格式不正确"];
+        [self showTopMessageErrorHud:LC_LO(@"手机号码格式不正确")];
         return NO;
     }
     
@@ -494,7 +806,7 @@ LC_HANDLE_TIMER(timer)
         
         if (self.codeField.text.length <= 0) {
             
-            [self showTopMessageErrorHud:@"请输入手机验证码"];
+            [self showTopMessageErrorHud:LC_LO(@"请输入手机验证码")];
             return NO;
         }
     }

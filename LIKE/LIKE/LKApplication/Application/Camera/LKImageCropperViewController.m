@@ -199,7 +199,7 @@ LC_PROPERTY(assign) BOOL recordNavigationBarHidden;
             // filters...
             LKFilterScrollView * filterScrollView = LKFilterScrollView.view;
             
-            [filterScrollView addFilterName:@"默认" filterImage:[UIImage imageNamed:@"FilterPreview.jpg" useCache:YES]];
+            [filterScrollView addFilterName:LC_LO(@"默认") filterImage:[UIImage imageNamed:@"FilterPreview.jpg" useCache:YES]];
             
             for (NSInteger i = 1; i< filterNames.count ; i++) {
                 

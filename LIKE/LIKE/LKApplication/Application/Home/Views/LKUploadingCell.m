@@ -49,7 +49,7 @@ LC_PROPERTY(strong) LCUIButton * cancelButton;
     self.tipLabel.font = LK_FONT(13);
     self.tipLabel.textColor = LC_RGB(180, 180, 180);
     self.tipLabel.textAlignment = UITextAlignmentCenter;
-    self.tipLabel.text = @"点击此处重新上传";
+    self.tipLabel.text = LC_LO(@"点击此处重新上传");
     [self.tipLabel addTapGestureRecognizer:self selector:@selector(reupload)];
     self.ADD(self.tipLabel);
     

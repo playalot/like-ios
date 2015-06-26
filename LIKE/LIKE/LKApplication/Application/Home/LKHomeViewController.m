@@ -24,7 +24,6 @@
 #import "LKUploadAvatarAndCoverModel.h"
 #import "LKUserInfoModel.h"
 #import "LKPushAnimation.h"
-#import "UITableView+SPXRevealAdditions.h"
 #import "LKTime.h"
 #import "LKAssistiveTouchButton.h"
 #import "LKSearchViewController.h"
@@ -41,7 +40,6 @@ LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
 LC_PROPERTY(strong) LCUIButton * searchButton;
 LC_PROPERTY(strong) LCUIButton * notificationButton;
 
-LC_PROPERTY(assign) NSInteger page;
 LC_PROPERTY(strong) NSMutableArray * datasource;
 
 LC_PROPERTY(strong) LKInputView * inputView;
@@ -53,13 +51,16 @@ LC_PROPERTY(strong) NSNumber * canResignFirstResponder;
 
 LC_PROPERTY(strong) UIView * fromView;
 
+LC_PROPERTY(copy) NSString * next;
+
 @end
 
 @implementation LKHomeViewController
 
 -(void) dealloc
 {
-    
+    [self cancelAllRequests];
+    [self unobserveAllNotifications];
 }
 
 -(void) viewWillAppear:(BOOL)animated
@@ -80,7 +81,6 @@ LC_PROPERTY(strong) UIView * fromView;
     
     // show bar.
     [LC_APPDELEGATE.tabBarController showBar];
-    
     
     //
     [LKNotificationCount startCheck];
@@ -468,13 +468,12 @@ LC_PROPERTY(strong) UIView * fromView;
     
     LC_APPDELEGATE.tabBarController.loading = YES;
     
-    NSInteger page = 0;
+    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"homefeeds"].AUTO_SESSION();
     
-    if (diretion == LCUIPullLoaderDiretionBottom) {
-        page = _page + 1;
+    if (!LC_NSSTRING_IS_INVALID(self.next) && diretion == LCUIPullLoaderDiretionBottom) {
+        
+        [interface addParameter:self.next key:@"ts"];
     }
-    
-    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:LC_NSSTRING_FORMAT(@"home/%@", @(page))].AUTO_SESSION();
     
     @weakly(self);
     
@@ -483,6 +482,10 @@ LC_PROPERTY(strong) UIView * fromView;
         @normally(self);
         
         if (result.state == LKHttpRequestStateFinished) {
+            
+            
+            self.next = result.json[@"data"][@"next"] ? result.json[@"data"][@"next"] : @"";
+
             
             NSArray * resultData = result.json[@"data"][@"posts"];
             NSMutableArray * datasource = [NSMutableArray array];
@@ -503,8 +506,6 @@ LC_PROPERTY(strong) UIView * fromView;
                 
                 [self.datasource addObjectsFromArray:datasource];
             }
-            
-            self.page = page;
             
             [self.pullLoader endRefresh];
             [self reloadData];

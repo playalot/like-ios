@@ -17,6 +17,11 @@ LC_PROPERTY(strong) NSMutableDictionary * associatedTagsDic;
 
 @implementation LKPostTagsDetailModel
 
+-(void) dealloc
+{
+    [self cancelAllRequests];
+}
+
 -(void) setAssociatedTags:(NSMutableArray *)associatedTags
 {
     _associatedTags = associatedTags;
@@ -38,7 +43,6 @@ LC_PROPERTY(strong) NSMutableDictionary * associatedTagsDic;
     }
     
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"post/%@/marks/%@", postID, @(page)]].AUTO_SESSION();
-    interface.customAPIURL = LK_API2;
     
     // post/1/ma
     

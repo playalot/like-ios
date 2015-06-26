@@ -111,11 +111,10 @@
     
     [LCUIApplication presentViewController:picker animation:YES];
     
+    
     picker.finalizationBlock = ^(id picker, NSDictionary * imageInfo){
         
-        LKImageCropperViewController * cropper = [[LKImageCropperViewController alloc] initWithImage:imageInfo[@"UIImagePickerControllerOriginalImage"]
-                                                                                           cropFrame:CGRectMake(0, (LC_DEVICE_HEIGHT + 20) / 2 - LC_DEVICE_WIDTH / 2, LC_DEVICE_WIDTH, LC_DEVICE_WIDTH)
-                                                                                     limitScaleRatio:3];
+        LKImageCropperViewController * cropper = [[LKImageCropperViewController alloc] initWithImage:imageInfo[@"UIImagePickerControllerOriginalImage"]];
         cropper.squareImage = YES;
         cropper.dontSaveToAblum = YES;
         

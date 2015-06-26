@@ -1,0 +1,15 @@
+/* 
+  Localizable.strings
+  LIKE
+
+  Created by Licheng Guo ( http://nsobjet.me ) on 15/6/26.
+  Copyright (c) 2015年 Beijing Like Technology Co.Ltd . ( http://www.likeorz.com ). All rights reserved.
+*/
+
+
+"APNS_NewLike" = "你有了%@个新的赞！";
+"APNS_NewTag" = "%@为你的图片添加了#%@#";
+"APNS_NewComment" = "%@评论了#%@#";
+"APNS_CommentReply" = "%@在#%@#中回复了你";
+"APNS_NewFans" = "%@开始关注你啦！";
+"APNS_Notice" = "官方酱又出来卖萌惹，快去调戏一下她！๑乛◡乛๑";

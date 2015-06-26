@@ -29,8 +29,14 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
 @implementation AppDelegate
 
 
--(void) load
+-(void) load:(NSDictionary *)launchOptions
 {
+//    NSString * loc = NSLocalizedString(@"APNS_NewLike", nil);
+//    
+//    NSString * string = [NSString stringWithFormat:loc, @"xxx"];
+//    
+//    //printf("%s", [ UTF8String]);
+    
     // 全局容错
     [LCSwizzle beginFaultTolerant];
     
@@ -39,15 +45,19 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
     [LCDebugger sharedInstance];
     
     
-    //微信
+    // 微信
     [WXApi registerApp:@"wxa3f301de2a84df8b"];
     
     
-    //qq
+    // qq
     self.tencentOAuth = [[TencentOAuth alloc] initWithAppId:@"1104653828" andDelegate:nil];
     
     
-    //微博
+    // facebook
+    [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
+
+    
+    // 微博
     [WeiboSDK registerApp:@"2142262721"];
     
     
@@ -65,6 +75,7 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
     [self observeNotification:LKSessionError];
     [self observeNotification:LCUIApplicationDidRegisterRemoteNotification];
     [self observeNotification:LCUIApplicationDidRegisterRemoteFailNotification];
+    [self observeNotification:LCUIApplicationDidReceiveRemoteNotification];
     
     
     self.home = [LKHomeViewController viewController];
@@ -93,6 +104,49 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
     }
     
+    
+    // 判断是否为推送打开
+    if (LKLocalUser.singleton.isLogin && launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
+        
+        [self.home performSelector:@selector(notificationAction) withObject:nil afterDelay:0.5];
+    }
+}
+
+- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+{
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+- (UIViewController *) getCurrentViewController
+{
+    UIViewController * result = nil;
+    
+    UIWindow * window = [[UIApplication sharedApplication] keyWindow];
+    
+    if (window.windowLevel != UIWindowLevelNormal){
+        
+        NSArray *windows = [[UIApplication sharedApplication] windows];
+        
+        for(UIWindow * tmpWin in windows){
+            
+            if (tmpWin.windowLevel == UIWindowLevelNormal){
+                
+                window = tmpWin;
+                break;
+            }
+        }
+    }
+    
+    UIView * frontView = [[window subviews] objectAtIndex:0];
+    
+    id nextResponder = [frontView nextResponder];
+    
+    if ([nextResponder isKindOfClass:[UIViewController class]])
+        result = nextResponder;
+    else
+        result = window.rootViewController;
+    
+    return result;
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -175,21 +229,32 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
     
         if (LKLocalUser.singleton.isLogin) {
             
+            
             LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"installation"].AUTO_SESSION().POST_METHOD();
             
             [interface addParameter:@"ios" key:@"device_type"];
             [interface addParameter:notification.object key:@"device_token"];
             
-            [self request:interface complete:^(LKHttpRequestResult *result) {
+            [self request:interface complete:^(LKHttpRequestResult * result) {
                 
-                ;
-                
+//                if (result.state == LKHttpRequestStateFinished) {
+//                    
+//                    [LCUIAlertView showWithTitle:@"" message:notification.object cancelTitle:@"ok" otherTitle:nil didTouchedBlock:^(NSInteger integerValue) {
+//                        
+//                    }];
+//                }
             }];
 
         }
     }
     else if ([notification is:LCUIApplicationDidRegisterRemoteFailNotification]){
         
+    }
+    else if ([notification is:LCUIApplicationDidReceiveRemoteNotification]){
+        
+//        [LCUIAlertView showWithTitle:@"" message:[notification.object description] cancelTitle:@"ok" otherTitle:nil didTouchedBlock:^(NSInteger integerValue) {
+//            
+//        }];
     }
 }
 

@@ -169,9 +169,6 @@ LC_PROPERTY(strong) NSMutableArray * datasource;
     
     [interface addParameter:comment key:@"content"];
     
-    interface.jsonFormat = YES;
-    interface.customAPIURL = LK_API2;
-    
     [self request:interface complete:^(LKHttpRequestResult *result) {
        
         if (result.state == LKHttpRequestStateFinished) {
@@ -209,7 +206,6 @@ LC_PROPERTY(strong) NSMutableArray * datasource;
 -(void) loadData:(LCUIPullLoaderDiretion)diretion
 {
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"mark/%@/comment", self.tagValue.id]].AUTO_SESSION().GET_METHOD();
-    interface.customAPIURL = LK_API2;
     
     
     [self request:interface complete:^(LKHttpRequestResult *result) {

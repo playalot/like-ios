@@ -17,14 +17,10 @@
     if (!tag.isLiked) {
         
         interface = [LKHttpRequestInterface interfaceType:LC_NSSTRING_FORMAT(@"mark/%@/like", tag.id)].AUTO_SESSION().DELETE_METHOD();
-        interface.jsonFormat = YES;
-        interface.customAPIURL = LK_API2;
     }
     else{
         
         interface = [LKHttpRequestInterface interfaceType:LC_NSSTRING_FORMAT(@"mark/%@/like", tag.id)].AUTO_SESSION().POST_METHOD();
-        interface.jsonFormat = YES;
-        interface.customAPIURL = LK_API2;
     }
     
     [self request:interface complete:^(LKHttpRequestResult *result) {

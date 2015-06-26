@@ -23,7 +23,8 @@ LC_PROPERTY(assign) BOOL dontSaveToAblum;
 
 LC_PROPERTY(copy) LKImageCropperDidFinishedPickImage didFinishedPickImage;
 
-- (id)initWithImage:(UIImage *)originalImage cropFrame:(CGRect)cropFrame limitScaleRatio:(NSInteger)limitRatio;
+- (id)initWithImage:(UIImage *)originalImage;
+- (id)initWithImage:(UIImage *)originalImage filterIndex:(NSInteger)filterIndex;
 
 -(void) showBackButton;
 -(void) showDismissButton;

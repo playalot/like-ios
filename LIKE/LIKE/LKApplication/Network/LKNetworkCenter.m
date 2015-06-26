@@ -16,8 +16,6 @@
 
 @interface LKNetworkCenter ()
 
-LC_PROPERTY(strong) AFHTTPSessionManager * api2Manager;
-
 @end
 
 @implementation LKNetworkCenter
@@ -26,10 +24,6 @@ LC_PROPERTY(strong) AFHTTPSessionManager * api2Manager;
 {
     if (self = [super init]) {
         
-        self.api2Manager = [[AFHTTPSessionManager alloc] init];
-        self.api2Manager.requestSerializer = [AFJSONRequestSerializer serializer];
-        
-        [self addDefaultHeaderForURLSessionManager:self.api2Manager];
         [self addDefaultHeaderForURLSessionManager:LCNetworkCenter.singleton.sessionManager];
     }
     
@@ -46,15 +40,14 @@ LC_PROPERTY(strong) AFHTTPSessionManager * api2Manager;
     NSString * sesstionToken = LKLocalUser.singleton.sessionToken;
 
     [LCNetworkCenter.singleton.sessionManager.requestSerializer setValue:sesstionToken forHTTPHeaderField:@"LIKE-SESSION-TOKEN"];
-    [self.api2Manager.requestSerializer setValue:sesstionToken forHTTPHeaderField:@"LIKE-SESSION-TOKEN"];
-    [self.api2Manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [LCNetworkCenter.singleton.sessionManager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
 
     
-    NSString * url = [interface.customAPIURL ? interface.customAPIURL : LK_API stringByAppendingString:interface.type];
+    NSString * url = [LK_API stringByAppendingString:interface.type];
     
     [LCNetworkCenter requestURL:url
                          method:interface.methodType
-                  customManager:interface.customAPIURL ? self.api2Manager : nil
+                  customManager:nil
                      parameters:interface.interfaceParameters
                          sender:sender
                     updateBlock:^(LCHTTPRequestResult *result) {
@@ -62,10 +55,6 @@ LC_PROPERTY(strong) AFHTTPSessionManager * api2Manager;
         [self handleUpdate:result complete:complete];
         
     }];
-    
-    
-    
-    
     
 //    switch (request.methodType) {
 //            

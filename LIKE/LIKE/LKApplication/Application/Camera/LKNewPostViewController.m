@@ -14,6 +14,7 @@
 #import "LKHomeViewController.h"
 #import "LKCameraViewController.h"
 #import "LKNewPostUploadCenter.h"
+#import "LKCameraRollViewController.h"
 
 @interface LKNewPostViewController ()
 
@@ -28,16 +29,14 @@ LC_PROPERTY(strong) LKRecommendTagsView * recommendTags;
 
 LC_PROPERTY(strong) LKInputView * inputView;
 
-
-// Upload
-//LC_PROPERTY(assign) BOOL uploading;
-//LC_PROPERTY(assign) BOOL uploadFinished;
-//LC_PROPERTY(copy) NSString * imagekey;
-
-
 @end
 
 @implementation LKNewPostViewController
+
+-(void) dealloc
+{
+    
+}
 
 -(instancetype) initWithImage:(UIImage *)image
 {
@@ -52,22 +51,6 @@ LC_PROPERTY(strong) LKInputView * inputView;
 -(void) viewDidLoad
 {
     [super viewDidLoad];
-    
-//    self.uploading = YES;
-//    self.uploadFinished = NO;
-//
-//    @weakly(self);
-//    
-//    [LKFileUploader uploadFileData:self.image suffix:@"jpg" completeBlock:^(BOOL completed, NSString *uploadedKey, NSString *error) {
-//       
-//        @normally(self);
-//        
-//        // ...
-//        self.uploadFinished = completed;
-//        self.uploading = NO;
-//        self.imagekey = uploadedKey;
-//    }];
-    
 }
 
 -(void) buildUI
@@ -86,19 +69,12 @@ LC_PROPERTY(strong) LKInputView * inputView;
     self.view.ADD(self.preview);
     
     
-//    LCUIImageView * navigationBar = [LCUIImageView viewWithImage:[UIImage imageNamed:@"PostNavigationBar.png" useCache:YES]];
-//    navigationBar.viewFrameHeight = LC_DEVICE_WIDTH / navigationBar.viewFrameWidth * navigationBar.viewFrameHeight;
-//    navigationBar.viewFrameWidth = LC_DEVICE_WIDTH;
-//    navigationBar.userInteractionEnabled = YES;
-//    self.view.ADD(navigationBar);
-    
-    
     LCUIButton * dismissButton = LCUIButton.view;
-    dismissButton.viewFrameWidth = 50 / 3 + 40;
-    dismissButton.viewFrameHeight = 50 / 3 + 40;
-    dismissButton.buttonImage = [UIImage imageNamed:@"PostDismiss.png" useCache:YES];
+    dismissButton.viewFrameWidth = 37 / 3 + 40;
+    dismissButton.viewFrameHeight = 61 / 3 + 40;
+    dismissButton.buttonImage = [UIImage imageNamed:@"NavigationBarBackShadow.png" useCache:YES];
     dismissButton.showsTouchWhenHighlighted = YES;
-    [dismissButton addTarget:self action:@selector(dismissAction) forControlEvents:UIControlEventTouchUpInside];
+    [dismissButton addTarget:self action:@selector(pop) forControlEvents:UIControlEventTouchUpInside];
     self.view.ADD(dismissButton);
     
     
@@ -156,8 +132,10 @@ LC_PROPERTY(strong) LKInputView * inputView;
     self.recommendTags.highlight = NO;
     self.scrollView.ADD(self.recommendTags);
     
+    
     // 加载推荐数据
     [self.recommendTags loadRecommendTags];
+    
     
     // 点击之后把item加到selectedTags上 然后重新布局
     self.recommendTags.itemDidTap = ^(LKRecommendTagItem * item){
@@ -221,17 +199,6 @@ LC_PROPERTY(strong) LKInputView * inputView;
     });
 }
 
--(NSString *) jsonStringFromSelectedTags
-{
-    NSMutableArray * array = [NSMutableArray array];
-    
-    for (LKTag * oTag in self.selectedTags.tags) {
-        
-        [array addObject:oTag.tag];
-    }
-    
-    return [array JSONString];
-}
 
 -(void) addNewTag:(NSString *)tagString
 {
@@ -291,34 +258,6 @@ LC_PROPERTY(strong) LKInputView * inputView;
     [LKNewPostUploadCenter uploadImage:self.image tags:self.selectedTags.tags];
     
     [self dismissAction];
-
-    
-//    [self showTopLoadingMessageHud:@"发布中..."];
-//    
-//    if (self.uploadFinished && self.uploading == NO && self.imagekey) {
-//        
-//        // post...
-//        [self post];
-//    }
-//    else{
-//        
-//        [LKFileUploader.singleton cancelAllRequests];
-//        
-//        [LKFileUploader uploadFileData:self.image suffix:@"jpg" completeBlock:^(BOOL completed, NSString *uploadedKey, NSString *error) {
-//            
-//            if (!completed) {
-//                
-//                [RKDropdownAlert dismissAllAlert];
-//                [self showTopMessageErrorHud:@"上传失败..."];
-//            }
-//            else{
-//                
-//                self.imagekey = uploadedKey;
-//                [self post];
-//            }
-//        }];
-//
-//    }
 }
 
 -(void) previewTapAction
@@ -326,43 +265,17 @@ LC_PROPERTY(strong) LKInputView * inputView;
     [self.inputView resignFirstResponder];
 }
 
+-(void) pop
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 -(void) dismissAction
 {
     [self dismissViewControllerAnimated:NO completion:nil];
 
     [self postNotification:LKCameraViewControllerDismiss];
-}
-
--(void) post
-{
-//    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"post"].AUTO_SESSION().POST_METHOD();
-//    [interface addParameter:self.imagekey key:@"content"];
-//    [interface addParameter:@"PHOTO"  key:@"type"];
-//    [interface addParameter:[self jsonStringFromSelectedTags] key:@"tags"];
-//    
-//    
-//    @weakly(self);
-//    
-//    [self request:interface complete:^(LKHttpRequestResult *result) {
-//       
-//        @normally(self);
-//        
-//        if (result.state == LKHttpRequestStateFinished) {
-//            
-//            [RKDropdownAlert dismissAllAlert];
-//            [self dismissAction];
-//            
-//            LKPost * post = [LKPost objectFromDictionary:result.json[@"data"]];
-//            
-//            [self postNotification:LKHomeViewControllerAddNewPost withObject:post];
-//        }
-//        else if(result.state == LKHttpRequestStateFailed){
-//        
-//            [RKDropdownAlert dismissAllAlert];
-//            [self showTopMessageErrorHud:result.error];
-//        }
-//    }];
-    
+    [self postNotification:LKCameraRollViewControllerDismiss];
 }
 
 @end

@@ -65,8 +65,6 @@ LC_PROPERTY(strong) UIView * bindView;
 -(void) checkRequest
 {
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"notification/count"].AUTO_SESSION();
-    interface.customAPIURL = LK_API2;
-    
     
     @weakly(self);
     
@@ -76,7 +74,9 @@ LC_PROPERTY(strong) UIView * bindView;
         
         if (result.state == LKHttpRequestStateFinished) {
             
-            [self setBadgeCount:[result.json[@"data"][@"count"] integerValue]];
+            NSInteger count = [result.json[@"data"][@"count"] integerValue];
+            
+            [self setBadgeCount:count];
         }
         else if(result.state == LKHttpRequestStateFailed){
             
@@ -91,6 +91,8 @@ LC_PROPERTY(strong) UIView * bindView;
     badge.valueString = LC_NSSTRING_FROM_INT(badgeCount);
     
     LKUserDefaults.singleton[self.class.description] = LC_NSSTRING_FROM_INT(badgeCount);
+    
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:badgeCount];
 }
 
 -(void) setBindView:(UIView *)bindView

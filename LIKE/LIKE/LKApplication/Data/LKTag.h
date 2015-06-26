@@ -19,5 +19,6 @@ LC_PROPERTY(strong) NSNumber * createTime;
 LC_PROPERTY(strong) LKUser * user;
 LC_PROPERTY(strong) NSMutableArray * comments;
 LC_PROPERTY(strong) NSNumber * totalComments;
+LC_PROPERTY(copy) NSString * image;
 
 @end

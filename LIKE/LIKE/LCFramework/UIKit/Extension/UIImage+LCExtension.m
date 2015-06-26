@@ -182,13 +182,12 @@ LCUIImageNamed IMAGE(NSString * imageName)
 
 - (UIImage *) imageWithTintColor:(UIColor *)tintColor
 {
-    //We want to keep alpha, set opaque to NO; Use 0.0f for scale to use the scale factor of the device’s main screen.
-    UIGraphicsBeginImageContextWithOptions(self.size, NO, 0.0f);
+    UIGraphicsBeginImageContextWithOptions(self.size, NO, self.scale);
     [tintColor setFill];
+    
     CGRect bounds = CGRectMake(0, 0, self.size.width, self.size.height);
     UIRectFill(bounds);
     
-    //Draw the tinted image in context
     [self drawInRect:bounds blendMode:kCGBlendModeDestinationIn alpha:1.0f];
     
     UIImage * tintedImage = UIGraphicsGetImageFromCurrentImageContext();
@@ -427,6 +426,27 @@ LCUIImageNamed IMAGE(NSString * imageName)
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return newImage;
+}
+
+-(UIImage *) magic
+{
+    CIImage * ciImage = [[CIImage alloc] initWithCGImage:self.CGImage];
+    
+    // Get the filters and apply them to the image
+    NSArray * filters = [ciImage autoAdjustmentFilters];
+    
+    for (CIFilter * filter in filters){
+        
+        [filter setValue:ciImage forKey:kCIInputImageKey];
+        ciImage = filter.outputImage;
+    }
+    
+    // Create the corrected image
+    CIContext* ctx = [CIContext contextWithOptions:nil];
+    CGImageRef cgImage = [ctx createCGImage:ciImage fromRect:[ciImage extent]];
+    UIImage* final = [UIImage imageWithCGImage:cgImage];
+    CGImageRelease(cgImage);
+    return final;
 }
 
 @end

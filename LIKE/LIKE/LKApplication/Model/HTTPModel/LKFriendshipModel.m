@@ -35,8 +35,6 @@
 +(void) focusUser:(LKUser *)user requestFinished:(LKFriendshipModelRequestFinished)requestFinished
 {
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"user/%@/follow", user.id]].AUTO_SESSION().POST_METHOD();
-    interface.customAPIURL = LK_API2;
-    interface.jsonFormat = YES;
     
     [self request:interface complete:^(LKHttpRequestResult *result) {
        

@@ -54,6 +54,7 @@ LC_PROPERTY(assign) BOOL isLocalUser;
 -(void) dealloc
 {
     self.tableView.delegate = nil;
+    [self unobserveAllNotifications];
 }
 
 -(void) viewWillAppear:(BOOL)animated
@@ -152,6 +153,8 @@ LC_PROPERTY(assign) BOOL isLocalUser;
             [tableViewHeader setTitle:LC_NSSTRING_FORMAT(@"%@",self.userInfoModel.user.postCount) subTitle:LC_LO(@"照片") atIndex:0];
             [tableViewHeader setTitle:LC_NSSTRING_FORMAT(@"%@",self.userInfoModel.user.followCount) subTitle:LC_LO(@"关注") atIndex:1];
             [tableViewHeader setTitle:LC_NSSTRING_FORMAT(@"%@",self.userInfoModel.user.fansCount) subTitle:LC_LO(@"粉丝") atIndex:2];
+            
+            [self updateFriendButton];
 
         }
     };
@@ -205,43 +208,28 @@ LC_PROPERTY(assign) BOOL isLocalUser;
                 
                 @normally(self);
 
-//                if (self.isLocalUser) {
-//                    
-//                    // upload head.
-//                    [LKUploadAvatarAndCoverModel chooseAvatorImage:^(NSString *error, UIImage * image) {
-//                        
-//                        if (!error) {
-//                            
-//                            self.header.headImageView.image = image;
-//                            [self.userInfoModel getUserInfo:self.user.id];
-//                        }
-//                    }];
-//                }
-//                else{
+                JTSImageInfo * info = [[JTSImageInfo alloc] init];
                 
-                    JTSImageInfo * info = [[JTSImageInfo alloc] init];
+                if (LC_NSSTRING_IS_INVALID(self.user.originAvatar)) {
                     
-                    if (LC_NSSTRING_IS_INVALID(self.user.originAvatar)) {
-                        
-                        info.imageURL = [NSURL URLWithString:self.user.avatar];
-                    }
-                    else{
-                        
-                        info.imageURL = [NSURL URLWithString:self.user.originAvatar];
-                    }
+                    info.imageURL = [NSURL URLWithString:self.user.avatar];
+                }
+                else{
                     
-                    info.referenceRect = imageView.frame;
-                    info.referenceView = imageView.superview;
-                    info.referenceCornerRadius = 65 / 2;
-                    
-                    // Setup view controller
-                    JTSImageViewController * imageViewer = [[JTSImageViewController alloc]
-                                                           initWithImageInfo:info
-                                                           mode:JTSImageViewControllerMode_Image
-                                                           backgroundStyle:JTSImageViewControllerBackgroundOption_Blurred];
-                    // Present the view controller.
-                    [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOriginalPosition];
-//                }
+                    info.imageURL = [NSURL URLWithString:self.user.originAvatar];
+                }
+                
+                info.referenceRect = imageView.frame;
+                info.referenceView = imageView.superview;
+                info.referenceCornerRadius = 65 / 2;
+                
+                // Setup view controller
+                JTSImageViewController * imageViewer = [[JTSImageViewController alloc]
+                                                       initWithImageInfo:info
+                                                       mode:JTSImageViewControllerMode_Image
+                                                       backgroundStyle:JTSImageViewControllerBackgroundOption_Blurred];
+                // Present the view controller.
+                [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOriginalPosition];
             };
             
             

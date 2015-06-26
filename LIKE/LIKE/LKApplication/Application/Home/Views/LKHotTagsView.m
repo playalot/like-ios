@@ -15,6 +15,7 @@
 {
     if (self = [super init]) {
         
+        self.userInteractionEnabled = YES;
         self.cornerRadius = 4;
         self.layer.masksToBounds = NO;
         self.backgroundColor = LC_RGB(245, 240, 236);
@@ -99,7 +100,6 @@
     self.alpha = 0;
     
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"tag/hot"].AUTO_SESSION();
-    interface.customAPIURL = LK_API2;
     
     @weakly(self);
     
@@ -170,6 +170,12 @@
         
         item.tag = i;
         item.tagString = tag.tag;
+        
+        if (LC_NSSTRING_IS_INVALID(tag.image)) {
+            
+            item.url = tag.image;
+        }
+        
         item.selected = self.highlight;
         
         @weakly(self);

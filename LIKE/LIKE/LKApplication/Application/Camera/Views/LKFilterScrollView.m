@@ -17,18 +17,17 @@ LC_PROPERTY(strong) LCUILabel * filterNameLabel;
 
 @implementation __LKFilterItem
 
-#define ITEM_WIDTH 56
+#define ITEM_WIDTH 57
 
 -(instancetype) init
 {
     if (self = [super initWithFrame:LC_RECT(0, 0, ITEM_WIDTH, ITEM_WIDTH + 20)]) {
         
         self.imageView = UIImageView.view;
+        self.imageView.contentMode = UIViewContentModeScaleAspectFill;
         self.imageView.viewFrameWidth = ITEM_WIDTH;
         self.imageView.viewFrameHeight = ITEM_WIDTH;
         self.imageView.cornerRadius = 5;
-        self.imageView.borderWidth = 1;
-        self.imageView.borderColor = [UIColor whiteColor];
         self.ADD(self.imageView);
         
         
@@ -60,11 +59,9 @@ LC_PROPERTY(strong) UIView * line;
 {
     if (self = [super init]) {
         
-        
         self.showsHorizontalScrollIndicator = NO;
         self.showsVerticalScrollIndicator = NO;
-        self.bounces = NO;
-        self.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.2];
+        self.backgroundColor = [UIColor clearColor];
         
         
         self.line = UIView.view;
@@ -128,6 +125,23 @@ LC_PROPERTY(strong) UIView * line;
     }
     
     self.contentSize = LC_SIZE(tmp.viewRightX + padding, tmp.viewBottomY + padding);
+}
+
+-(void) setSelectIndex:(NSInteger)selectIndex
+{
+    LC_FAST_ANIMATIONS(0.25, ^{
+        
+        if (selectIndex == 0) {
+            
+            self.line.viewFrameX = 10;
+        }
+        else{
+            
+            self.line.viewCenterX = ((UIView *)self.FIND(selectIndex)).viewCenterX;
+        }
+    });
+
+
 }
 
 -(void) didSelectedItemAction:(UITapGestureRecognizer *)tap

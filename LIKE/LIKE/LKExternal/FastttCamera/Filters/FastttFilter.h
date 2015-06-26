@@ -16,6 +16,7 @@
 @interface FastttFilter : NSObject
 
 @property (readonly, nonatomic, strong) GPUImageOutput<GPUImageInput> *filter;
+@property (readonly, nonatomic, strong) GPUImageOutput<GPUImageInput> *originalFilter;
 
 + (instancetype)filterWithLookupImage:(UIImage *)lookupImage;
 

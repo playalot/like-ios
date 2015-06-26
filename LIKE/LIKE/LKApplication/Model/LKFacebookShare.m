@@ -9,6 +9,7 @@
 #import "LKFacebookShare.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 @interface LKFacebookShare ()
 
@@ -17,6 +18,24 @@ LC_PROPERTY(copy) LKFacebookLoginComplete complete;
 @end
 
 @implementation LKFacebookShare
+
+
+-(void) dealloc
+{
+    [self unobserveAllNotifications];
+}
+
+-(instancetype) init
+{
+    if (self = [super init]) {
+        
+        
+        [self observeNotification:FBSDKProfileDidChangeNotification];
+
+    }
+    
+    return self;
+}
 
 -(void)login:(LKFacebookLoginComplete)complete
 {
@@ -30,7 +49,7 @@ LC_PROPERTY(copy) LKFacebookLoginComplete complete;
        
         if (error) {
 
-            self.complete(nil, nil, LC_LO(@"发生错误"));
+            self.complete(nil, nil, nil,LC_LO(@"发生错误"));
             
         } else if (result.isCancelled) {
             // Handle cancellations
@@ -39,21 +58,29 @@ LC_PROPERTY(copy) LKFacebookLoginComplete complete;
             // If you ask for multiple permissions at once, you
             // should check if specific permissions missing
             FBSDKAccessToken * token = [FBSDKAccessToken currentAccessToken];
-            
-            if (token) {
+            FBSDKProfile * profile = [FBSDKProfile currentProfile];
+
+            if (token && profile) {
                 
-                NSLog(@"%@",token.tokenString);
-                NSLog(@"%@",token.userID);
-                
-                self.complete(token.userID, token.tokenString, nil);
+                self.complete(token.userID, token.tokenString, profile.name, nil);
             }
-            else{
+            else if(!token){
                 
-                self.complete(nil, nil, LC_LO(@"发生错误"));
+                self.complete(nil, nil, nil, LC_LO(@"发生错误"));
             }
         }
         
     }];
 }
+
+-(void) handleNotification:(NSNotification *)notification
+{
+    FBSDKAccessToken * token = [FBSDKAccessToken currentAccessToken];
+    FBSDKProfile * profile = [FBSDKProfile currentProfile];
+    
+    self.complete(token.userID, token.tokenString, profile.name, nil);
+    
+}
+
 
 @end

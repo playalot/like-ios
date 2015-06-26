@@ -13,6 +13,7 @@ LC_BLOCK(void, LKFilterScrollViewDidSelectedItem, (NSInteger index));
 @interface LKFilterScrollView : UIScrollView
 
 LC_PROPERTY(copy) LKFilterScrollViewDidSelectedItem didSelectedItem;
+LC_PROPERTY(assign) NSInteger selectIndex;
 
 -(void) addFilterName:(NSString *)filterName filterImage:(UIImage *)filterImage;
 

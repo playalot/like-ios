@@ -53,6 +53,7 @@ LC_PROPERTY(copy) NSString * bigContentURL;
 -(void) dealloc
 {
     self.tableView.delegate = nil;
+    [self cancelAllRequests];
 }
 
 -(void) viewWillAppear:(BOOL)animated

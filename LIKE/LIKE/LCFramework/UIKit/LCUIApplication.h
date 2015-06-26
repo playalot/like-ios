@@ -23,7 +23,7 @@ LC_PROPERTY(strong) UIWindow * window;
 
 + (LCUIApplication *) sharedInstance;
 
-- (void) load;
+- (void) load:(NSDictionary *)launchOptions;
 
 +(void) presentViewController:(UIViewController *)viewController;
 +(void) presentViewController:(UIViewController *)viewController animation:(BOOL)animation;

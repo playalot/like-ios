@@ -214,7 +214,7 @@ typedef void (^LKFileUploadConfigUpdateCompleted) (BOOL completed, NSString * er
  */
 -(void) updateFileUploaderConfig:(LKFileUploadConfigUpdateCompleted)completed
 {
-    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"upload/token"].AUTO_SESSION();
+    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"post/uploadToken"].AUTO_SESSION();
     
     [self request:interface complete:^(LKHttpRequestResult *result) {
         

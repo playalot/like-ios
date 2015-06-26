@@ -15,6 +15,8 @@
 #import "LKImageCropperViewController.h"
 #import "AppDelegate.h"
 #import "LKUIImagePickerViewController.h"
+#import "GPUImageView.h"
+#import "LKPhotoAlbum.h"
 
 @interface LKCameraViewController () <FastttCameraDelegate>
 
@@ -26,10 +28,16 @@ LC_PROPERTY(strong) LCUIButton * switchCameraButton;
 LC_PROPERTY(strong) LCUIButton * photosButton;
 LC_PROPERTY(strong) LCUIButton * finishedButton;
 
-LC_PROPERTY(strong) LCUIButton * filterButton;
+LC_PROPERTY(strong) UIView * bottomView;
+
 LC_PROPERTY(strong) LKFilterScrollView * filterScrollView;
 
 LC_PROPERTY(assign) NSInteger currentFilter;
+
+LC_PROPERTY(assign) NSInteger filterIndex;
+
+LC_PROPERTY(assign)  UIDeviceOrientation deviceOrientation;
+
 
 @end
 
@@ -37,6 +45,7 @@ LC_PROPERTY(assign) NSInteger currentFilter;
 
 -(void) dealloc
 {
+    [self unobserveAllNotifications];
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:YES];
 }
 
@@ -47,16 +56,18 @@ LC_PROPERTY(assign) NSInteger currentFilter;
     [self setNavigationBarHidden:YES animated:NO];
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:animated];
-    
-    self.takePhotoButton.buttonImage = [UIImage imageNamed:@"CameraCapture.png" useCache:YES];
 }
 
 -(void) viewDidLoad
 {
     [super viewDidLoad];
     
+    self.deviceOrientation = UIDeviceOrientationPortrait;
+    
     [self observeNotification:LKCameraViewControllerDismiss];
+    [self observeNotification:UIDeviceOrientationDidChangeNotification];
 }
+
 
 -(void) handleNotification:(NSNotification *)notification
 {
@@ -64,6 +75,60 @@ LC_PROPERTY(assign) NSInteger currentFilter;
         
         [self.navigationController popToRootViewControllerAnimated:NO];
         [self dismissViewControllerAnimated:YES completion:nil];
+    }
+    else if ([notification is:UIDeviceOrientationDidChangeNotification]){
+        
+        self.deviceOrientation = [UIDevice currentDevice].orientation;
+        
+        [UIView animateWithDuration:0.25 animations:^{
+            
+            switch (self.deviceOrientation){
+                    
+                case UIDeviceOrientationPortrait:
+                    
+                    self.fastCamera.view.viewFrameHeight = self.view.viewFrameWidth;
+                    self.fastCamera.previewView.frame = self.fastCamera.view.bounds;
+                    self.filterScrollView.viewFrameY = self.bottomView.viewFrameY - self.filterScrollView.viewFrameHeight;
+                    
+                    [self viewTransformMakeRotation:@[self.flashButton, self.switchCameraButton, self.photosButton, self.finishedButton] rotation:0];
+                    break;
+                    
+                case UIDeviceOrientationLandscapeLeft:
+                case UIDeviceOrientationLandscapeRight:
+                    
+                    self.fastCamera.view.viewFrameHeight = self.view.viewFrameWidth / 3 * 4;
+                    self.fastCamera.previewView.frame = self.fastCamera.view.bounds;
+                    self.filterScrollView.viewFrameY = self.bottomView.viewFrameY;
+                    
+                    CGFloat rotation = self.deviceOrientation == UIDeviceOrientationLandscapeLeft ? 90.f : -90.f;
+                    
+                    [self viewTransformMakeRotation:@[self.flashButton, self.switchCameraButton, self.photosButton] rotation:(rotation * M_PI) / 180.0f];
+                    break;
+                    
+                default:
+                    
+                    break;
+            }
+            
+        } completion:^(BOOL finished) {
+            
+            
+        }];
+    }
+}
+
+-(void) viewTransformMakeRotation:(NSArray *)views rotation:(CGFloat)rotation
+{
+    for (UIView * view in views) {
+        
+        if (rotation == 0) {
+            
+            view.transform = CGAffineTransformIdentity;
+        }
+        else{
+            
+            view.transform = CGAffineTransformRotate(CGAffineTransformIdentity, rotation);
+        }
     }
 }
 
@@ -77,6 +142,8 @@ LC_PROPERTY(assign) NSInteger currentFilter;
     self.fastCamera.delegate = self;
     self.fastCamera.maxScaledDimension = 600.f;
     self.fastCamera.view.backgroundColor = [UIColor blackColor];
+    self.fastCamera.view.viewFrameY = 64;
+    self.fastCamera.view.viewFrameHeight = LC_DEVICE_WIDTH;
     
     [self fastttAddChildViewController:self.fastCamera];
     
@@ -86,23 +153,11 @@ LC_PROPERTY(assign) NSInteger currentFilter;
     [self.fastCamera setCameraTorchMode:FastttCameraTorchModeOff];
     [self.fastCamera setCameraFlashMode:FastttCameraFlashModeOff];
 
-    
-    self.takePhotoButton = LCUIButton.view;
-    self.takePhotoButton.viewFrameWidth = 263 / 3;
-    self.takePhotoButton.viewFrameHeight = 155 / 3;
-    self.takePhotoButton.viewFrameX = LC_DEVICE_WIDTH / 2 - self.takePhotoButton.viewMidWidth;
-    self.takePhotoButton.viewFrameY = self.view.viewFrameHeight - 25 - self.takePhotoButton.viewFrameHeight;
-    self.takePhotoButton.buttonImage = [UIImage imageNamed:@"CameraCapture.png" useCache:YES];
-    self.takePhotoButton.showsTouchWhenHighlighted = YES;
-    [self.takePhotoButton addTarget:self action:@selector(capture) forControlEvents:UIControlEventTouchUpInside];
-    self.view.ADD(self.takePhotoButton);
-    
 
     self.flashButton = LCUIButton.view;
-    self.flashButton.viewFrameX = 0;
-    self.flashButton.viewFrameY = 0;
-    self.flashButton.viewFrameWidth = 45 / 3 + 50;
-    self.flashButton.viewFrameHeight = 75 / 3 + 50;
+    self.flashButton.viewFrameY = - 10;
+    self.flashButton.viewFrameWidth = 64;
+    self.flashButton.viewFrameHeight = 80;
     [self.flashButton setImage:[UIImage imageNamed:@"CameraFlash.png" useCache:YES] forState:UIControlStateNormal];
     [self.flashButton setImage:[[UIImage imageNamed:@"CameraFlash.png" useCache:YES] imageWithTintColor:LKColor.color] forState:UIControlStateSelected];
     self.flashButton.selected = NO;
@@ -112,8 +167,8 @@ LC_PROPERTY(assign) NSInteger currentFilter;
     
 
     self.switchCameraButton = LCUIButton.view;
-    self.switchCameraButton.viewFrameWidth = 30 + 50;
-    self.switchCameraButton.viewFrameHeight = 68 / 3 + 50;
+    self.switchCameraButton.viewFrameWidth = 80;
+    self.switchCameraButton.viewFrameHeight = 64;
     self.switchCameraButton.viewFrameX = LC_DEVICE_WIDTH - self.switchCameraButton.viewFrameWidth;
     self.switchCameraButton.viewFrameY = 0;
     self.switchCameraButton.buttonImage = [UIImage imageNamed:@"CameraChange.png" useCache:YES];
@@ -121,90 +176,80 @@ LC_PROPERTY(assign) NSInteger currentFilter;
     [self.switchCameraButton addTarget:self action:@selector(switchCamera) forControlEvents:UIControlEventTouchUpInside];
     self.view.ADD(self.switchCameraButton);
 
+
+    self.bottomView = UIView.view.COLOR(LC_RGB(34, 34, 34));
+    self.bottomView.viewFrameWidth = LC_DEVICE_WIDTH;
+    self.bottomView.viewFrameHeight = 54;
+    self.bottomView.viewFrameY = self.view.viewFrameHeight - self.bottomView.viewFrameHeight;
+    self.view.ADD(self.bottomView);
+    
+    
+    self.takePhotoButton = LCUIButton.view;
+    self.takePhotoButton.viewFrameWidth = 80;
+    self.takePhotoButton.viewFrameHeight = 54;
+    self.takePhotoButton.viewCenterX = self.bottomView.viewMidWidth;
+    self.takePhotoButton.viewCenterY = self.bottomView.viewMidHeight;
+    self.takePhotoButton.buttonImage = [UIImage imageNamed:@"CameraCapture.png" useCache:YES];
+    self.takePhotoButton.showsTouchWhenHighlighted = YES;
+    [self.takePhotoButton addTarget:self action:@selector(capture) forControlEvents:UIControlEventTouchUpInside];
+    self.bottomView.ADD(self.takePhotoButton);
+    
     
     self.photosButton = LCUIButton.view;
-    self.photosButton.viewFrameWidth = 70 / 3 + 50;
-    self.photosButton.viewFrameHeight = 60 / 3 + 50;
-    self.photosButton.viewFrameX = 0;
-    self.photosButton.viewCenterY = self.takePhotoButton.viewCenterY;
+    self.photosButton.viewFrameWidth = 80;
+    self.photosButton.viewFrameHeight = 54;
     self.photosButton.buttonImage = [UIImage imageNamed:@"CameraPhotos.png" useCache:YES];
     self.photosButton.showsTouchWhenHighlighted = YES;
     [self.photosButton addTarget:self action:@selector(photos) forControlEvents:UIControlEventTouchUpInside];
-    self.view.ADD(self.photosButton);
+    self.bottomView.ADD(self.photosButton);
     
     
     self.finishedButton = LCUIButton.view;
-    self.finishedButton.viewFrameWidth = 64 / 3 + 50;
-    self.finishedButton.viewFrameHeight = 64 / 3 + 50;
+    self.finishedButton.viewFrameWidth = 80;
+    self.finishedButton.viewFrameHeight = 54;
     self.finishedButton.viewFrameX = LC_DEVICE_WIDTH - self.finishedButton.viewFrameWidth;
-    self.finishedButton.viewCenterY = self.takePhotoButton.viewCenterY;
     self.finishedButton.buttonImage = [UIImage imageNamed:@"CameraClose.png" useCache:YES];
     self.finishedButton.showsTouchWhenHighlighted = YES;
     [self.finishedButton addTarget:self action:@selector(finished) forControlEvents:UIControlEventTouchUpInside];
-    self.view.ADD(self.finishedButton);
+    self.bottomView.ADD(self.finishedButton);
     
     
-    {
-        {
-            NSArray * filterNames = LKFilterManager.singleton.allFilterNames;
-            
-            // filters...
-            LKFilterScrollView * filterScrollView = LKFilterScrollView.view;
-            filterScrollView.viewFrameWidth = self.view.viewFrameWidth;
-            
-            [filterScrollView addFilterName:LC_LO(@"默认") filterImage:[UIImage imageNamed:@"FilterPreview.jpg" useCache:YES]];
+    
+    NSArray * filterNames = LKFilterManager.singleton.allFilterNames;
+    
+    // filters...
+    LKFilterScrollView * filterScrollView = LKFilterScrollView.view;
+    filterScrollView.viewFrameWidth = self.view.viewFrameWidth;
+    
+    [filterScrollView addFilterName:LC_LO(@"默认") filterImage:[UIImage imageNamed:@"FilterPreview.jpg" useCache:YES]];
 
-            for (NSInteger i = 1; i< filterNames.count ; i++) {
-                
-                FastttFilter * fastFilter = [FastttFilter filterWithLookupImage:LKFilterManager.singleton.allFilterImage[i - 1]];
-                
-                UIImage * image = [fastFilter.filter imageByFilteringImage:[UIImage imageNamed:@"FilterPreview.jpg" useCache:YES]];
-                
-                [filterScrollView addFilterName:filterNames[i - 1] filterImage:image];
-            }
-            
-            filterScrollView.viewFrameHeight = filterScrollView.contentSize.height;
-            filterScrollView.viewFrameY = self.takePhotoButton.viewFrameY - 25 - filterScrollView.viewFrameHeight;
-            self.filterScrollView = filterScrollView;
-            self.view.ADD(self.filterScrollView);
-
-            
-            @weakly(self);
-            
-            filterScrollView.didSelectedItem = ^(NSInteger index){
-                
-                @normally(self);
-                
-                [self switchFilterAtIndex:index];
-            };
-
-            
-            self.filterButton = LCUIButton.view;
-            self.filterButton.viewFrameX = self.view.viewFrameWidth - 76;
-            self.filterButton.viewFrameWidth = 31 + 50;
-            self.filterButton.viewFrameHeight = 31 + 50;
-            self.filterButton.viewCenterY = self.filterScrollView.viewCenterY;
-            self.filterButton.buttonImage = [UIImage imageNamed:@"CameraFilter.png" useCache:YES];
-            [self.filterButton addTarget:self action:@selector(switchFilter) forControlEvents:UIControlEventTouchUpInside];
-            self.filterButton.showsTouchWhenHighlighted = YES;
-            self.filterButton.pop_spring.center = LC_POINT(self.filterButton.viewCenterX, self.filterScrollView.viewCenterY + 40);
-            self.view.ADD(self.filterButton);
-            
-
-            self.filterScrollView.viewFrameX = self.view.viewFrameWidth;
-            
-            
-            [self performSelector:@selector(switchFilter) withObject:nil afterDelay:1];
-        }
+    for (NSInteger i = 1; i< filterNames.count ; i++) {
+        
+        FastttFilter * fastFilter = [FastttFilter filterWithLookupImage:LKFilterManager.singleton.allFilterImage[i - 1]];
+        
+        UIImage * image = [fastFilter.filter imageByFilteringImage:[UIImage imageNamed:@"FilterPreview.jpg" useCache:YES]];
+        
+        [filterScrollView addFilterName:filterNames[i - 1] filterImage:image];
     }
+    
+    filterScrollView.viewFrameHeight = filterScrollView.contentSize.height;
+    filterScrollView.viewFrameY = self.bottomView.viewFrameY - filterScrollView.viewFrameHeight;
+    self.filterScrollView = filterScrollView;
+    [self.view insertSubview:self.filterScrollView belowSubview:self.bottomView];
+
+    
+    @weakly(self);
+    
+    filterScrollView.didSelectedItem = ^(NSInteger index){
+        
+        @normally(self);
+        
+        [self switchFilterAtIndex:index];
+    };
 }
 
 -(void) capture
 {
-    self.takePhotoButton.buttonImage = [UIImage imageNamed:@"CameraCaptureClose.png" useCache:YES];
-
-    self.takePhotoButton.userInteractionEnabled = NO;
-    
     [self.fastCamera takePicture];
 }
 
@@ -270,15 +315,14 @@ LC_PROPERTY(assign) NSInteger currentFilter;
     
     [self presentViewController:picker animated:YES completion:nil];
     
+    @weakly(self);
+
     picker.finalizationBlock = ^(id picker, NSDictionary * imageInfo){
       
-        LKImageCropperViewController * cropper = [[LKImageCropperViewController alloc] initWithImage:imageInfo[@"UIImagePickerControllerOriginalImage"]
-                                                                                           cropFrame:CGRectMake(0, (LC_DEVICE_HEIGHT + 20) / 2 - LC_DEVICE_WIDTH / 2, LC_DEVICE_WIDTH, LC_DEVICE_WIDTH)
-                                                                                     limitScaleRatio:3];
+        @normally(self);
         
-        cropper.buttonFrame = self.takePhotoButton.frame;
-        cropper.filterFrame = self.filterButton.frame;
-        cropper.filterScrollFrame = self.filterScrollView.frame;
+        LKImageCropperViewController * cropper = [[LKImageCropperViewController alloc] initWithImage:imageInfo[@"UIImagePickerControllerOriginalImage"]];
+        
         cropper.squareImage = self.squareImage;
         [cropper showBackButton];
         
@@ -291,43 +335,18 @@ LC_PROPERTY(assign) NSInteger currentFilter;
         [picker dismissViewControllerAnimated:YES completion:nil];
         
     };
-
-//   @weakly(picker);
-//    
-//    picker.didFinishPicking = ^(NSDictionary * imageInfo){
-//      
-//        @normally(picker);
-//        
-//        NSLog(@"imageinfo = %@",imageInfo);
-//        
-//    };
 }
 
 
 -(void) finished
 {
-    [self dismissViewControllerAnimated:NO completion:nil];
-}
-
--(void) switchFilter
-{
-    if (self.filterScrollView.viewFrameX <= 0) {
-        
-        // hide...
-        self.filterScrollView.pop_spring.center = LC_POINT(self.view.viewFrameWidth + self.view.viewMidWidth, self.filterScrollView.viewCenterY);
-        self.filterButton.pop_spring.center = LC_POINT(self.filterButton.viewCenterX, self.filterScrollView.viewCenterY + 40);
-    }
-    else{
-        
-        // show...
-        self.filterScrollView.pop_spring.center = LC_POINT(self.view.viewMidWidth, self.filterScrollView.viewCenterY);
-        self.filterButton.pop_spring.center = LC_POINT(self.filterButton.viewCenterX, self.filterScrollView.viewCenterY - 70);
-
-    }
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)switchFilterAtIndex:(NSInteger)index
 {
+    self.filterIndex = index;
+    
     if (index == 0) {
         self.fastCamera.filterImage = nil;
         return;
@@ -340,18 +359,24 @@ LC_PROPERTY(assign) NSInteger currentFilter;
 
 - (void)cameraController:(id<FastttCameraInterface>)cameraController didFinishCapturingImage:(FastttCapturedImage *)capturedImage
 {
-    LKImageCropperViewController * cropper = [[LKImageCropperViewController alloc] initWithImage:capturedImage.fullImage cropFrame:CGRectMake(0, (LC_DEVICE_HEIGHT + 20) / 2 - LC_DEVICE_WIDTH / 2, LC_DEVICE_WIDTH, LC_DEVICE_WIDTH) limitScaleRatio:3];
-    cropper.buttonFrame = self.takePhotoButton.frame;
-    cropper.filterFrame = self.filterButton.frame;
-    cropper.filterScrollFrame = self.filterScrollView.frame;
+    UIImage * image = capturedImage.fullImage;
+ 
+    
+    [LKPhotoAlbum saveImage:image showTip:NO];
+    
+    
+    if (self.deviceOrientation == UIDeviceOrientationLandscapeLeft || self.deviceOrientation == UIDeviceOrientationLandscapeRight) {
+        
+        image = [UIImage imageWithCGImage:image.CGImage scale:image.scale orientation:self.deviceOrientation == UIDeviceOrientationLandscapeLeft ? UIImageOrientationLeft : UIImageOrientationRight];
+    }
+    
+    LKImageCropperViewController * cropper = [[LKImageCropperViewController alloc] initWithImage:image filterIndex:self.filterIndex];
+
     cropper.squareImage = self.squareImage;
     
-    [self.navigationController pushViewController:cropper animated:NO];
-    
+    [self.navigationController pushViewController:cropper animated:YES];
     
     cropper.didFinishedPickImage = self.didFinishedPickImage;
-    
-    self.takePhotoButton.userInteractionEnabled = YES;
 }
 
 @end

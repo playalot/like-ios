@@ -128,7 +128,7 @@
         UIButton *cancelBtn = [[UIButton alloc] init];
         [cancelBtn setTag:titles.count];
         [cancelBtn setBackgroundColor:[UIColor whiteColor]];
-        [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
+        [cancelBtn setTitle:LC_LO(@"取消") forState:UIControlStateNormal];
         [[cancelBtn titleLabel] setFont:[UIFont systemFontOfSize:16.0f]];
         [cancelBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [cancelBtn setBackgroundImage:[UIImage imageNamed:@"bgImage_HL"] forState:UIControlStateHighlighted];

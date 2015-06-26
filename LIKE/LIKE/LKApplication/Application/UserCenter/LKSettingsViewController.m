@@ -12,6 +12,7 @@
 #import "LKUploadAvatarAndCoverModel.h"
 #import "LKModifyUserInfoModel.h"
 #import "LKUserInfoModel.h"
+#import "LKLinkAccountsViewController.h"
 
 @interface LKSettingsViewController () <UITableViewDataSource,UITableViewDelegate>
 
@@ -84,7 +85,7 @@ LC_PROPERTY(assign) CGFloat cacheSize;
     LCUILabel * version = LCUILabel.view;
     version.viewFrameHeight = 28;
     version.viewFrameWidth = LC_DEVICE_WIDTH;
-    version.viewFrameY = self.tableView.viewFrameHeight - 25 - 10;
+    version.viewFrameY = self.tableView.viewFrameHeight + 20;
     version.numberOfLines = 0;
     version.textColor = LC_RGB(51, 51, 51);
     version.font = LK_FONT(10);
@@ -101,7 +102,7 @@ LC_PROPERTY(assign) CGFloat cacheSize;
 
         [LCGCD dispatchAsyncInMainQueue:^{
             
-            [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:2 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:3 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
 
         }];
     }];
@@ -118,7 +119,7 @@ LC_PROPERTY(assign) CGFloat cacheSize;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 6;
+    return 7;
 }
 
 //-(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -266,7 +267,7 @@ LC_PROPERTY(assign) CGFloat cacheSize;
         
         
     }
-    else if (indexPath.row < 5){
+    else if (indexPath.row < 6){
         
         cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Action" andClass:[LCUITableViewCell class] configurationCell:^(LCUITableViewCell * configurationCell) {
             
@@ -316,9 +317,9 @@ LC_PROPERTY(assign) CGFloat cacheSize;
         LCUILabel * label = cell.FIND(1002);
         LCUILabel * subLabel = cell.FIND(1003);
         
-        NSArray * icons = @[@"DeleteCache.png" ,@"Appstore.png", @"Feedback.png"];
-        NSArray * titles = @[LC_LO(@"清除缓存"), LC_LO(@"求鼓励"), @"@CEO"];
-        NSArray * subTitles = @[ [NSString stringWithFormat:@"%.2fMB", self.cacheSize], @"Backend-关关\niOS-红果果", LC_LO(@"无所不能的王果果")];
+        NSArray * icons = @[@"SettingBinding.png", @"DeleteCache.png", @"Appstore.png", @"Feedback.png"];
+        NSArray * titles = @[LC_LO(@"账号绑定"), LC_LO(@"清除缓存"), LC_LO(@"求鼓励"), @"@CEO"];
+        NSArray * subTitles = @[@" ", self.cacheSize ? [NSString stringWithFormat:@"%.2fMB", self.cacheSize] : @" ", @"Backend-关关\niOS-红果果", LC_LO(@"无所不能的王果果")];
 
         icon.buttonImage = [UIImage imageNamed:icons[indexPath.row - 2] useCache:YES];
         label.text = titles[indexPath.row - 2];
@@ -352,7 +353,7 @@ LC_PROPERTY(assign) CGFloat cacheSize;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 5) {
+    if (indexPath.row == 6) {
         
         return 100;
     }
@@ -391,19 +392,24 @@ LC_PROPERTY(assign) CGFloat cacheSize;
         
         [self.nickField becomeFirstResponder];
     }
+    // 账号绑定
+    else if (indexPath.row == 2){
+        
+        [self.fromViewController.navigationController pushViewController:[LKLinkAccountsViewController viewController] animated:YES];
+    }
     // 清除缓存
-    else if (indexPath.row == 2) {
+    else if (indexPath.row == 3) {
         
         [LCUIImageCache.singleton deleteAllImages];
         [self.tableView reloadData];
     }
     // 评价
-    else if (indexPath.row == 3){
+    else if (indexPath.row == 4){
         
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=975648403&pageNumber=0&sortOrdering=2&type=Purple+Software&mt=8"]];
     }
     // 反馈
-    else if (indexPath.row == 4){
+    else if (indexPath.row == 5){
         
         LKInputTextViewController * input = [LKInputTextViewController viewController];
         

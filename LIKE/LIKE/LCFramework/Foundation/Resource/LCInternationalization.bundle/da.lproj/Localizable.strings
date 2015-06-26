@@ -5,12 +5,12 @@
 "确定" = "OK";
 "取消" = "Cancel";
 "完成" = "Done";
-"发生错误" = "Error";
+"发生错误" = "Unknow error";
 
 /** LCAppVersion */
-"马上更新" = "Update now.";
-"下次再说" = "Later will be fine.";
-"发现新版本" = "A new version can be updated.";
+"马上更新" = "Update now";
+"下次再说" = "Later will be fine";
+"发现新版本" = "A new version can be updated";
 
 /** LCIAP */
 "请检查网络" = "请检查网络";
@@ -27,55 +27,60 @@
 /** Application */
 
 // LKCommentsView
-"阅读全部" = "Read all";
-"条评论" = "comments.";
+"阅读全部" = "Read all ";
+"条评论" = " comments";
 
 // LKHomepageHeader
 "游客" = "Tourist";
 
 // Alert
 "更多" = "More";
-"举报" = "Report this post.";
+"举报" = "Report";
 "删除" = "Delete";
-"保存图片" = "Save Photo";
+"保存图片" = "Save";
 "感谢您的举报！" = "Thank you for your report!";
 "提醒" = "Attention";
-"确定要删除这个照片吗？" = "Are you sure to remove this post?";
-"您未安装微博客户端，无法分享" = "Share failed. Your account haven't login.";
-"您未安装QQ客户端，无法分享" = "Share failed. Your account haven't login.";
-"您未安装微信客户端，无法分享" = "Share failed. Your account haven't login.";
-"更换头像" = "Edit your avatar.";
-"拍摄新图片" = "Take picture.";
-"从相册选择" = "Choose picture.";
+"确定要删除这个照片吗？" = "Are you sure to delete the photo?";
+"确定要删除这个标签吗？" = "Are you sure to delete the tag?";
+"您未安装微博客户端，无法分享" = "You haven't installed Weibo yet";
+"您未安装QQ客户端，无法分享" = "You haven't installed QQ yet";
+"您未安装微信客户端，无法分享" = "You haven't installed Wechat yet";
+"更换头像" = "Edit your avatar";
+"拍摄新图片" = "Take a photo";
+"从相册选择" = "Select from album";
 
 // Tip
-"上传失败啦！请检查您的网络稍后再试Orz～" = "Upload failed! Please check your network status.";
-"标签不能为空" = "You can not post an empty tag.";
-"标签长度不能大于12位" = "Post too long, 12 characters or fewer.";
-"该标签已存在" = "This tag already exist.";
-"请输入手机号码" = "Please enter your phone number.";
-"手机号码格式不正确" = "The phone number format is incorrect.";
-"请输入手机验证码" = "Please enter the code.";
-"该标签已经存在" = "This tag already exist.";
-"评论不能为空" = "Empty comment is not allowed.";
-"评论长度不能大于300位" = "Post too long, 300 characters or fewer.";
-"发表评论（最多300个字）" = "Comment (maximum 300 words)";
+"上传失败啦！请检查您的网络稍后再试Orz～" = "Upload failed! Please check your internet connection";
+"标签不能为空" = "Empty tag is not allowed";
+"标签长度不能大于12位" = "Post too long, 12 characters or fewer";
+"该标签已存在" = "This tag already exist";
+"请输入手机号码" = "Please enter your phone number";
+"手机号码格式不正确" = "The phone number format is incorrect";
+"请输入手机验证码" = "Please enter the code";
+"该标签已经存在" = "This tag already exist";
+"评论不能为空" = "Empty comment is not allowed";
+"评论长度不能大于300位" = "Post too long, 300 characters or fewer";
+"发表评论（最多300个字）" = "Comment (300-character limit)";
 
 "提交中..." = "Sending...";
 "感谢您的反馈！" = "Thank you for your feedback!";
-"登录中..." = "Landing...";
-"重新登录中..." = "Relanding...";
+"登录中..." = "Loading...";
+"重新登录中..." = "Reloading...";
 "修改中..." = "Uploading...";
 "上传中..." = "Uploading...";
 "获取中..." = "Sending...";
-"图片保存成功" = "Picture saved.";
+"图片保存成功" = "Save Success";
 "图片保存失败，可能是因为您拒绝了相册的访问权限" = "The app does ont have access to your photos. You can enable access in Privacy Settings.";
+"无法访问相册，可能是因为您拒绝了相册的访问权限" = "The app does ont have access to your photos. You can enable access in Privacy Settings.";
 "好的" = "OK";
+"发生了一个错误，但是这个错误没有详细的描述。" = "Unknow error";
+"请求失败...请检查您的网络后重试" = "Request failed, please check your internet connection and try again";
+
 
 // LKUserCenterViewController
-"照片" = "posts";
-"关注" = "following";
-"粉丝" = "followers";
+"照片" = "Posts";
+"关注" = "Following";
+"粉丝" = "Followers";
 "输入新昵称" = "Enter your new name";
 
 
@@ -86,42 +91,45 @@
 "微博" = "Weibo";
 "QQ" = "QQ";
 "用户使用协议" = "Terms of Use and Privacy Policy";
-"游客访问     " = "guest";
+"游客访问     " = "Guest";
 "获取验证码" = "Get the code";
-"后重新发送" = "S";
+"s'后重新发送" = "s'";
 "输入手机号码" = "Phone";
 "输入验证码" = "Code";
 
 // LKNewPostViewController
-"点击添加标签，让更多同类发现你" = "More tags, more popular.";
+"点击添加标签，让更多同类发现你" = "More tags, more popular";
 
 // LKInputView
-"添加" = "send";
+"添加" = "Send";
+"添加标签（最多12个字）" = "New tag (12-character limit)";
 
 // LKSearchPlaceHolderView
-"搜索" = "Related tags";
+"搜索" = "Related tags ";
 "相关内容" = " ";
 
 // LKSearchViewController
-"搜索标签" = "Search Photos";
+"搜索标签" = "Search";
 
 // LKSettingViewController
-"修改头像" = "Edit your avatar.";
-"修改昵称" = "Edit your name.";
-"清除缓存" = "Clean Cache";
-"求鼓励" = "Rate LIKE on App Store";
+"修改头像" = "Edit your avatar";
+"修改昵称" = "Edit your name";
+"更换封面" = "Eidt your cover";
+"清除缓存" = "Clean cache";
+"求鼓励" = "Rate LIKE";
 "共缓存" = " ";
-"M图片" = "M pictures";
-"无所不能的王果果" = "WangGuoguo";
-"退出登录" = "Logout";
+"M图片" = "MB";
+"无所不能的王果果" = "王果果";
+"退出登录" = "Log out";
+"账号绑定" = "Link accounts";
 
 // LKShareTools
 "分享" = "Share";
 
 // LKTagCommentsViewController
 "评论详情" = "Comments";
-"发布" = "publish";
-"发表评论（最多300个字）" = "Comment (maximum 300 words)";
+"发布" = "Send";
+"发表评论（最多300个字）" = "Comment (300-character limit)";
 
 // LKTagLikesCell
 "添加了该标签" = "added this tag";
@@ -137,21 +145,33 @@
 "默认" = "Original";
 
 // LKNotificationViewController
-"为你图片添加了标签" = "tagged your photo";
+"为你图片添加了标签" = "tagged ";
 "关注了你" = "started following you";
-"赞了标签" = "liked";
+"赞了标签" = "liked ";
 "在#%@#中回复了你" = "reply you at #%@#";
-"评论了" = "commented on";
+"评论了" = "commented on ";
 
 
+// LKLinkAccountsViewController
+"绑定" = "Link";
+"解绑" = "Unlink";
+"修改" = "Change";
+"已绑定" = "Linked ";
+"手机号" = "Phone Number";
+"绑定账号后可以使用它们登录like，如遇问题请发送邮件至support@likeorz.com" = "Bind your other Like account to these other services. If you have any problem, please send email to support@likeorz.com";
+
+// LKRebindPhoneViewController
+"确定修改手机号" = "OK";
 
 
+// LKCameraRollViewController
+"相机相册" = "Camera Roll";
+"相册" = "Album";
 
-
-
-
-
-
+// LKCropperImageViewController
+"重拍" = "Retake";
+"保存" = "Save";
+"  滤镜" = "  Filters";
 
 
 

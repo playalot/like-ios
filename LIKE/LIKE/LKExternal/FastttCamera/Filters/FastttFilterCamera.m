@@ -16,6 +16,7 @@
 #import "FastttFocus.h"
 #import "FastttFilter.h"
 #import "FastttCapturedImage+Process.h"
+#import "FastttEmptyFilter.h"
 
 @interface FastttFilterCamera () <FastttFocusDelegate>
 
@@ -23,7 +24,6 @@
 @property (nonatomic, strong) FastttFocus *fastFocus;
 @property (nonatomic, strong) GPUImageStillCamera *stillCamera;
 @property (nonatomic, strong) FastttFilter *fastFilter;
-@property (nonatomic, strong) GPUImageView *previewView;
 @property (nonatomic, assign) BOOL deviceAuthorized;
 @property (nonatomic, assign) BOOL pause;
 
@@ -48,6 +48,8 @@
 - (instancetype)init
 {
     if ((self = [super init])) {
+        
+        self.view.backgroundColor = [UIColor orangeColor];
         
         [self _setupCaptureSession];
         
@@ -83,6 +85,12 @@
                                                  selector:@selector(applicationDidEnterBackground:)
                                                      name:UIApplicationDidEnterBackgroundNotification
                                                    object:nil];
+        
+        
+//        [[NSNotificationCenter defaultCenter] addObserver:self
+//                                                 selector:@selector(_setPreviewVideoOrientation)
+//                                                     name:UIDeviceOrientationDidChangeNotification
+//                                                   object:nil];
     }
     
     return self;
@@ -119,6 +127,8 @@
     _fastFocus = [FastttFocus fastttFocusWithView:self.view];
     self.fastFocus.delegate = self;
     
+    self.handlesTapFocus = YES;
+    
     if (!self.handlesTapFocus) {
         self.fastFocus.detectsTaps = NO;
     }
@@ -145,6 +155,10 @@
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
+    
+    if (CGRectEqualToRect(_previewView.frame, self.view.bounds)) {
+        return;
+    }
     _previewView.frame = self.view.bounds;
 }
 
@@ -309,6 +323,11 @@
     _cameraTorchMode = FastttCameraTorchModeOff;
 }
 
+-(void) setHandlesTapFocus:(BOOL)handlesTapFocus
+{
+    _handlesTapFocus = handlesTapFocus;
+}
+
 #pragma mark - Filtering
 
 - (FastttFilter *)fastFilter
@@ -350,7 +369,7 @@
 - (void)_stopRunning
 {
     self.pause = YES;
-    [_stillCamera pauseCameraCapture];
+    [_stillCamera stopCameraCapture];
 }
 
 - (void)_insertPreviewLayer
@@ -369,20 +388,25 @@
         _previewView = [[GPUImageView alloc] init];
         [self.view addSubview:_previewView];
         _previewView.frame = self.view.bounds;
+        _previewView.userInteractionEnabled = YES;
         _previewView.fillMode = kGPUImageFillModePreserveAspectRatioAndFill;
     }
     
     [_stillCamera removeAllTargets];
     [self.fastFilter.filter removeAllTargets];
+    [self.fastFilter.originalFilter removeAllTargets];
     
     [_stillCamera addTarget:self.fastFilter.filter];
     [self.fastFilter.filter addTarget:_previewView];
+    [_stillCamera addTarget:self.fastFilter.originalFilter];
+    //[self.fastFilter.originalFilter addTarget:_previewView];
 }
 
 - (void)_removePreviewLayer
 {
     [_stillCamera removeAllTargets];
     [self.fastFilter.filter removeAllTargets];
+    [self.fastFilter.originalFilter removeAllTargets];
     
     [_previewView removeFromSuperview];
     _previewView = nil;
@@ -493,7 +517,8 @@
 
     UIImageOrientation outputImageOrientation = [self _outputImageOrientation];
 
-    [_stillCamera capturePhotoAsImageProcessedUpToFilter:self.fastFilter.filter withOrientation:UIImageOrientationUp withCompletionHandler:^(UIImage *processedImage, NSError *error){
+    
+    [_stillCamera capturePhotoAsImageProcessedUpToFilter:[self.fastFilter.filter isKindOfClass:[FastttEmptyFilter class]] ? self.fastFilter.filter : self.fastFilter.originalFilter withOrientation:UIImageOrientationUp withCompletionHandler:^(UIImage *processedImage, NSError *error){
         
         [self _processCameraPhoto:processedImage needsPreviewRotation:needsPreviewRotation imageOrientation:outputImageOrientation previewOrientation:previewOrientation];
     }];

@@ -16,6 +16,8 @@ LC_PROPERTY(copy) NSString * searchString;
 LC_PROPERTY(strong) NSMutableArray * datasource;
 LC_PROPERTY(assign) NSInteger page;
 
+LC_PROPERTY(strong) NSDictionary * info;
+
 @end
 
 @implementation LKSearchResultsViewController
@@ -29,6 +31,7 @@ LC_PROPERTY(assign) NSInteger page;
 {
     if (self = [super init]) {
         
+        self.initTableViewStyle = UITableViewStyleGrouped;
         self.searchString = searchString;
     }
     
@@ -42,34 +45,11 @@ LC_PROPERTY(assign) NSInteger page;
     // hide status bar.
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:animated];
     
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
-    
     
     // hide navigation bar.
     [self setNavigationBarHidden:NO animated:animated];
     
 }
-
-//-(void) viewWillDisappear:(BOOL)animated
-//{
-//    [super viewWillDisappear:animated];
-//
-//    ((LCUINavigationController *)self.navigationController).animationHandler = nil;
-//}
-//
-//- (void)viewDidAppear:(BOOL)animated
-//{
-//    [super viewDidAppear:animated];
-//    
-//    ((LCUINavigationController *)self.navigationController).animationHandler = ^id(UINavigationControllerOperation operation, UIViewController * fromVC, UIViewController * toVC){
-//        
-//        if (operation == UINavigationControllerOperationPush && [toVC isKindOfClass:[LKPostDetailViewController class]]) {
-//            return [[LKPushAnimation alloc] init];
-//        }
-//        
-//        return nil;
-//    };
-//}
 
 
 -(void) buildUI
@@ -108,7 +88,6 @@ LC_PROPERTY(assign) NSInteger page;
     }
     
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"tag/search/%@/%@", self.searchString.URLCODE(), @(page)]].AUTO_SESSION();
-    interface.customAPIURL = LK_API2;
     
     @weakly(self);
     
@@ -118,9 +97,22 @@ LC_PROPERTY(assign) NSInteger page;
         
         if (result.state == LKHttpRequestStateFinished) {
             
-            NSArray * datasource = result.json[@"data"];
-            
+            id tmp = result.json[@"data"];
+        
+            NSArray * datasource = nil;
+        
             NSMutableArray * resultData = [NSMutableArray array];
+            
+            if ([tmp isKindOfClass:[NSDictionary class]]) {
+                
+                datasource = tmp[@"posts"];
+                
+                self.info = tmp[@"info"];
+            }
+            else{
+                
+                datasource = tmp;
+            }
             
             for (NSDictionary * tmp in datasource) {
                 
@@ -152,6 +144,79 @@ LC_PROPERTY(assign) NSInteger page;
 }
 
 #pragma mark -
+
+-(UIView *) buildHeader
+{
+    if (!self.info) {
+        return nil;
+    }
+    
+    
+    NSString * avatar = self.info[@"avatar"];
+    NSString * description = self.info[@"description"];
+    
+    UIView * view = [UIView view];
+
+    LCUIImageView * head = LCUIImageView.view;
+    head.viewFrameWidth = 66;
+    head.viewFrameHeight = 66;
+    head.viewFrameX = 15;
+    head.viewFrameY = 15;
+    head.backgroundColor = [UIColor lightGrayColor];
+    head.url = avatar;
+    head.cornerRadius = 4;
+    view.ADD(head);
+    
+    
+    LCUILabel * label = LCUILabel.view;
+    label.viewFrameX = head.viewRightX + 15;
+    label.viewFrameY = 15;
+    label.viewFrameWidth = LC_DEVICE_WIDTH - label.viewFrameX - 15;
+    label.numberOfLines = 0;
+    label.text = description;
+    label.font = LK_FONT(12);
+    label.textColor = LC_RGB(140, 133, 126);
+    label.FIT();
+    view.ADD(label);
+    
+    
+    view.viewFrameWidth = LC_DEVICE_WIDTH;
+    view.viewFrameHeight = label.viewBottomY + 15 < 96 ? 96 : label.viewBottomY + 15;
+    
+    
+    return view;
+}
+
+-(CGFloat) headerHeight
+{
+    if (!self.info) {
+        return 0.01;
+    }
+    
+    return [self buildHeader].viewFrameHeight;
+}
+
+#pragma mark -
+
+-(CGFloat) tableView:(LCUITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return [self headerHeight];
+}
+
+-(CGFloat) tableView:(LCUITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.01;
+}
+
+-(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    return [self buildHeader];
+}
+
+-(UIView *) tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    return nil;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -207,9 +272,10 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
     
     LKPostDetailViewController * postDetail = [[LKPostDetailViewController alloc] initWithPost:post];
     UINavigationController * nav = LC_UINAVIGATION(postDetail);
-    nav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    //nav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     
-    [self.navigationController presentViewController:nav animated:YES completion:nil];
+    //[self.navigationController pushViewController:postDetail animated:YES];
+    [self.navigationController  presentViewController:nav animated:YES completion:nil];
 }
 
 @end

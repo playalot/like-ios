@@ -83,13 +83,13 @@
 
 - (void)setNavigationBarButton:(LCUINavigationBarButtonType)type title:(NSString *)title titleColor:(UIColor *)titleColor;
 {
-    CGSize size = [title sizeWithFont:[UIFont systemFontOfSize:14] byWidth:999];
+    CGSize size = [title sizeWithFont:LK_FONT_B(15) byWidth:999];
     
     LCUIButton * button = LCUIButton.view;
     button.frame =  LC_RECT_CREATE(0, 0, size.width, size.height);
     button.contentMode = UIViewContentModeScaleAspectFit;
     button.showsTouchWhenHighlighted = YES;
-    button.titleFont = [UIFont systemFontOfSize:14];
+    button.titleFont = LK_FONT_B(15);
     button.titleColor = titleColor;
     button.title = title;
     

@@ -65,7 +65,7 @@ static LCUIApplication * __skeleton = nil;
 	__skeleton = self;
     
 	[self initializeWindow];
-	[self load];
+    [self load:launchOptions];
 	
 	if (self.window.rootViewController){
         

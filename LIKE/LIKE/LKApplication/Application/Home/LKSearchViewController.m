@@ -194,7 +194,6 @@ LC_PROPERTY(strong) LKSearchPlaceholderView * placeholderView;
     [self.placeholderView cancelAllRequests];
 
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"tag/guess/%@" ,searchString.URLCODE()]].AUTO_SESSION();
-    interface.customAPIURL = LK_API2;
     
     @weakly(self);
     

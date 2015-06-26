@@ -19,6 +19,11 @@ LC_PROPERTY(assign) NSInteger fansPage;
 
 @implementation LKUserCenterModel
 
+-(void) dealloc
+{
+    [self cancelAllRequests];
+}
+
 -(void) getDataAtFirstPage:(BOOL)isFirstPage type:(LKUserCenterModelType)type uid:(NSNumber *)uid
 {
     NSInteger page = 0;

@@ -10,6 +10,11 @@
 
 @implementation LKNotificationModel
 
+-(void) dealloc
+{
+    [self cancelAllRequests];
+}
+
 -(instancetype) init
 {
     if (self = [super init]) {
@@ -30,7 +35,6 @@
 -(void) getNotificationsAtFirstPage:(BOOL)firstPage requestFinished:(LKNotificationModelRequestFinished)requestFinished
 {
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"notification"].AUTO_SESSION();
-    interface.customAPIURL = LK_API2;
     
     if (!firstPage) {
         [interface addParameter:@(self.timestamp) key:@"ts"];

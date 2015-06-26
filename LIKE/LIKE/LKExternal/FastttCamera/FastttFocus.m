@@ -75,7 +75,7 @@ CGFloat const kFocusSquareSize = 50.f;
     LC_FAST_ANIMATIONS_F(0.3, ^{
     
         focusView.alpha = 1;
-        focusView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.5, 0.5);
+        focusView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.7, 0.7);
     
     }, ^(BOOL finished){
     

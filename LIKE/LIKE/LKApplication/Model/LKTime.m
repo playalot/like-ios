@@ -7,6 +7,7 @@
 //
 
 #import "LKTime.h"
+#import "NSDate+TimeAgo.h"
 
 @implementation LKTime
 
@@ -20,6 +21,7 @@
     
     NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
     
+    [dateFormatter setTimeZone:[NSTimeZone systemTimeZone]];
     [dateFormatter setDateFormat:format];
     
     NSString * destDateString = [dateFormatter stringFromDate:date];
@@ -35,6 +37,11 @@
 
 + (NSString *) dateNearByTimestamp:(NSNumber *)timestamp
 {
+    NSDate * date = [NSDate dateWithTimeIntervalSince1970:timestamp.integerValue];
+    
+    return [date timeAgo];
+    
+    /*
     NSString * dateStr = [self dateStringByTimestamp:timestamp];
     
     if (dateStr.length < 19) {
@@ -57,29 +64,30 @@
     
     if (timeInterval < 60) {
         
-        result = [NSString stringWithFormat:@"刚刚"];
+        result = LC_LO(@"刚刚");
     }
     else if((temp = timeInterval/60) <60){
-        result = [NSString stringWithFormat:@"%@分钟前", @(temp)];
+        result = [NSString stringWithFormat:@"%@%@", @(temp), LC_LO(@"分钟前")];
     }
     
     else if((temp = temp/60) <24){
-        result = [NSString stringWithFormat:@"%@小时前", @(temp)];
+        result = [NSString stringWithFormat:@"%@%@", @(temp), LC_LO(@"小时前")];
     }
     
     else if((temp = temp/24) < 30){
-        result = [NSString stringWithFormat:@"%@天前", @(temp)];
+        result = [NSString stringWithFormat:@"%@%@", @(temp), LC_LO(@"天前")];
     }
     
     else if((temp = temp/30) <12){
-        result = [NSString stringWithFormat:@"%@月前", @(temp)];
+        result = [NSString stringWithFormat:@"%@%@", @(temp), LC_LO(@"月前")];
     }
     else{
         temp = temp/12;
-        result = [NSString stringWithFormat:@"%@年前", @(temp)];
+        result = [NSString stringWithFormat:@"%@%@", @(temp), LC_LO(@"年前")];
     }
     
     return  result;
+     */
 }
 
 @end

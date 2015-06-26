@@ -17,4 +17,6 @@ LC_NOTIFICATION_SET(LKHomeViewControllerReloadingData);
 
 LC_PROPERTY(strong) LKHomepageHeader * header;
 
+-(void) notificationAction;
+
 @end

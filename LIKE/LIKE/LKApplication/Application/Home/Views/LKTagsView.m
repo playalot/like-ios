@@ -63,7 +63,28 @@ LC_PROPERTY(assign) BOOL custom;
         
         return;
     };
- 
+    
+    if (self.tagValue.isLiked && self.tagValue.likes.integerValue == 1) {
+        
+        [LCUIAlertView showWithTitle:LC_LO(@"提醒") message:LC_LO(@"确定要删除这个标签吗？") cancelTitle:LC_LO(@"取消") otherTitle:LC_LO(@"确定") didTouchedBlock:^(NSInteger integerValue) {
+            
+            if (integerValue == 1) {
+                
+                [self likeAction];
+            }
+        }];
+        
+        return;
+    }
+    else{
+        
+        [self likeAction];
+    }
+}
+
+
+-(void) likeAction
+{
     @weakly(self);
     
     if (self.willRequest) {
@@ -105,9 +126,9 @@ LC_PROPERTY(assign) BOOL custom;
             if (self.requestFinished) {
                 self.requestFinished(self);
             }
-
+            
             if (self.tagValue.likes.integerValue <= 0) {
-
+                
                 if (self.didRemoved) {
                     self.didRemoved(self);
                 }
@@ -116,7 +137,7 @@ LC_PROPERTY(assign) BOOL custom;
     });
     
     [LKTagLikeModel likeOrUnLike:self.tagValue requestFinished:^(LKHttpRequestResult *result, NSString *error) {
-       
+        
         @normally(self);
         
         if (error) {
@@ -125,47 +146,8 @@ LC_PROPERTY(assign) BOOL custom;
         }
         else{
             
-//            self.userInteractionEnabled = NO;
-//
-//
-//            // 动画
-//            [@[self] pop_sequenceWithInterval:0 animations:^(id object, NSInteger index) {
-//                
-//                self.pop_springBounciness = 0;
-//                self.pop_springSpeed = 120;
-//                self.pop_duration = 0.1;
-//                self.pop_spring.pop_scaleXY = CGPointMake(1.2, 1.2);
-//                
-//            } completion:^(BOOL finished) {
-//                
-//                [@[self] pop_sequenceWithInterval:0 animations:^(id object, NSInteger index) {
-//                    
-//                    self.pop_springBounciness = 0;
-//                    self.pop_springSpeed = 150;
-//                    self.pop_duration = 0.1;
-//                    self.pop_spring.pop_scaleXY = self.tagValue.likes.integerValue <= 0 ? CGPointMake(0, 0) : CGPointMake(1.0, 1.0);
-//                    
-//                } completion:^(BOOL finished) {
-//                    
-//                    self.userInteractionEnabled = YES;
-//
-//                    if (self.requestFinished) {
-//                        self.requestFinished(self);
-//                    }
-//                    
-//                    if (self.tagValue.likes.integerValue <= 0) {
-//                        
-//                        if (self.didRemoved) {
-//                            self.didRemoved(self);
-//                        }
-//                    }
-//                }];
-//            }];
-            
         }
     }];
-
-    
 }
 
 
@@ -183,7 +165,7 @@ LC_PROPERTY(assign) BOOL custom;
     _tagValue = tagValue;
     
     
-    self.tagLabel.text = customTag ? customTag : tagValue.tag;
+    self.tagLabel.text = customTag ? customTag : tagValue.tag.description;
     self.tagLabel.FIT();
     
     

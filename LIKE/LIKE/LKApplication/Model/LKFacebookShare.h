@@ -8,7 +8,7 @@
 
 #import "LCUITableViewCell.h"
 
-LC_BLOCK(void, LKFacebookLoginComplete, (NSString * uid, NSString * accessToken, NSString * error));
+LC_BLOCK(void, LKFacebookLoginComplete, (NSString * uid, NSString * accessToken, NSString * nickName, NSString * error));
 
 @interface LKFacebookShare : LCUITableViewCell
 

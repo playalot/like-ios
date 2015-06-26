@@ -205,6 +205,8 @@ static void (*__sendEvent)( id, SEL, UIEvent * );
                         indicator.center = [touch locationInView:keyWindow];
 						[keyWindow addSubview:indicator];
 						[indicator startAnimation];
+                        
+                        NSLog(@"%@",touch.view);
                     }
                 }
             }

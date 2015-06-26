@@ -13,6 +13,8 @@
 #import "LKSinaShare.h"
 #import "LKWeChatShare.h"
 #import "LKFacebookShare.h"
+#import "LKTimestampEncryption.h"
+#import "LKISOCountryCodes.h"
 
 typedef NS_ENUM(NSInteger, LKOtherLoginType)
 {
@@ -45,6 +47,11 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
 @end
 
 @implementation LKLoginViewController
+
+-(void) dealloc
+{
+    [self cancelAllRequests];
+}
 
 +(BOOL) needLoginOnViewController:(UIViewController *)viewController
 {
@@ -456,7 +463,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
 {
     NSLocale * locale = [NSLocale currentLocale];
     
-    NSDictionary *dictCodes = [NSDictionary dictionaryWithObjectsAndKeys:@"972", @"IL",
+    NSDictionary * dictCodes = [NSDictionary dictionaryWithObjectsAndKeys:@"972", @"IL",
                                @"93", @"AF", @"355", @"AL", @"213", @"DZ", @"1", @"AS",
                                @"376", @"AD", @"244", @"AO", @"1", @"AI", @"1", @"AG",
                                @"54", @"AR", @"374", @"AM", @"297", @"AW", @"61", @"AU",
@@ -561,30 +568,12 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     self.codeButton.title = LC_LO(@"获取中...");
     
     
-//    [SMS_SDK getVerificationCodeBySMSWithPhone:self.phoneField.text
-//                                          zone:[self.countryCode.text stringByReplacingOccurrencesOfString:@"+" withString:@""]
-//                                        result:^(SMS_SDKError * error)
-//     {
-//         if (!error) {
-//             
-//             [self $beginTimer];
-//             
-//             self.codeButton.userInteractionEnabled = YES;
-//         }
-//         else {
-//             
-//             [self showTopMessageErrorHud:error.localizedDescription];
-//             
-//             self.codeButton.title = @"获取验证码";
-//             self.codeButton.userInteractionEnabled = YES;
-//         }
-//     }];
-
+    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"sendSmsCode"].POST_METHOD();
     
-    
-    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"user/sendcode"].POST_METHOD();
+    [interface addParameter:[LKTimestampEncryption encryption:[[NSDate date] timeIntervalSince1970]] key:@"token"];
     [interface addParameter:self.phoneField.text key:@"mobile"];
-    
+    [interface addParameter:[LKISOCountryCodes countryWithCode:self.countryCode.text] key:@"zone"];
+
     @weakly(self);
     
     [self request:interface complete:^(LKHttpRequestResult * result) {
@@ -612,12 +601,14 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     if (![self $check:NO]) {
         return;
     }
-
+    
     self.maskView.hidden = NO;
     self.loginButton.title = LC_LO(@"登录中...");
     self.loginButton.userInteractionEnabled = NO;
     
-    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"user"].POST_METHOD();
+    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"authenticate/mobile"].POST_METHOD();
+
+    [interface addParameter:[LKISOCountryCodes countryWithCode:self.countryCode.text] key:@"zone"];
     [interface addParameter:self.phoneField.text key:@"mobile"];
     [interface addParameter:self.codeField.text key:@"code"];
 
@@ -661,7 +652,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
             
             if (!error) {
                 
-                [self loginWithUID:uid accessToken:accessToken type:LKOtherLoginTypeWechat];
+                [self loginWithUID:uid accessToken:accessToken nick:@"" type:LKOtherLoginTypeWechat];
             }
             else{
                 
@@ -679,7 +670,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
             
             if (!error) {
                 
-                [self loginWithUID:uid accessToken:accessToken type:LKOtherLoginTypeWebo];
+                [self loginWithUID:uid accessToken:accessToken nick:@"" type:LKOtherLoginTypeWebo];
             }
             else{
                 
@@ -690,13 +681,13 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     }
     else if (view.tag == 2){
       
-        [LKFacebookShare.singleton login:^(NSString *uid, NSString *accessToken, NSString *error) {
+        [LKFacebookShare.singleton login:^(NSString *uid, NSString *accessToken, NSString * nick, NSString *error) {
             
             @normally(self);
             
             if (!error) {
                 
-                [self loginWithUID:uid accessToken:accessToken type:LKOtherLoginTypeFacebook];
+                [self loginWithUID:uid accessToken:accessToken nick:nick ? nick : @"" type:LKOtherLoginTypeFacebook];
             }
             else{
                 
@@ -709,7 +700,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     };
 }
 
--(void) loginWithUID:(NSString *)uid accessToken:(NSString *)accessToken type:(LKOtherLoginType)type
+-(void) loginWithUID:(NSString *)uid accessToken:(NSString *)accessToken nick:(NSString *)nick type:(LKOtherLoginType)type
 {
     NSString * typeString = @"";
     
@@ -724,10 +715,12 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     }
     
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"authenticate/%@",typeString]].POST_METHOD();
-    interface.customAPIURL = @"http://192.168.2.14:9000/v1/";
-    interface.jsonFormat = YES;
+
     [interface addParameter:uid key:@"uid"];
     [interface addParameter:accessToken key:@"access_token"];
+    [interface addParameter:[LKTimestampEncryption encryption:[[NSDate date] timeIntervalSince1970]] key:@"token"];
+    [interface addParameter:nick key:@"nickname"];
+
     
     @weakly(self);
     

@@ -14,6 +14,7 @@
 @interface FastttFilter ()
 
 @property (readwrite, nonatomic, strong) GPUImageOutput<GPUImageInput> *filter;
+@property (readwrite, nonatomic, strong) GPUImageOutput<GPUImageInput> *originalFilter;
 
 @end
 
@@ -26,9 +27,13 @@
     if (lookupImage) {
         FastttLookupFilter *lookupFilter = [[FastttLookupFilter alloc] initWithLookupImage:lookupImage];
         fastFilter.filter = lookupFilter;
+        FastttEmptyFilter *emptyFilter = [[FastttEmptyFilter alloc] init];
+        fastFilter.originalFilter = emptyFilter;
     } else {
         FastttEmptyFilter *emptyFilter = [[FastttEmptyFilter alloc] init];
         fastFilter.filter = emptyFilter;
+        FastttEmptyFilter *emptyFilter1 = [[FastttEmptyFilter alloc] init];
+        fastFilter.originalFilter = emptyFilter1;
     }
     
     return fastFilter;

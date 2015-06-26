@@ -107,10 +107,6 @@ extern "C" void LCInfo( NSObject * format, ... )
 
 extern "C" void LCError( NSString * file, const char * function , int line, NSObject * format, ... )
 {
-    if (!LCLogEnable) {
-        return;
-    }
-    
     va_list args;
 	va_start( args, format );
 	

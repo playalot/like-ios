@@ -52,7 +52,6 @@ LC_PROPERTY(strong) NSMutableDictionary * parameters;
 
 -(instancetype) init
 {
-    
     if (self = [super init]) {
         
         self.parameters = [NSMutableDictionary dictionary];
@@ -72,7 +71,7 @@ LC_PROPERTY(strong) NSMutableDictionary * parameters;
     
     NSString * des = [NSString stringWithFormat:@"%@",value];
     
-    if ([value isKindOfClass:[NSNumber class]]) {
+    if ([value isKindOfClass:[NSNumber class]] || [value isKindOfClass:[NSArray class]]) {
         
         self.parameters[key] = value;
         return;

@@ -13,8 +13,6 @@
 +(void) addTagString:(NSString *)tag onPost:(LKPost *)post requestFinished:(LKTagAddModelRequestFinished)requestFinished
 {
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:LC_NSSTRING_FORMAT(@"post/%@/mark", post.id)].AUTO_SESSION().POST_METHOD();
-    interface.jsonFormat = YES;
-    interface.customAPIURL = LK_API2;
     
     [interface addParameter:tag key:@"tag"];
     

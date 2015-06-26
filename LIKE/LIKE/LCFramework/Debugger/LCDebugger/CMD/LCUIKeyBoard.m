@@ -71,9 +71,9 @@
 {
     NSDictionary * userInfo = [notification userInfo];
     
-	if ( userInfo )
-	{
-        _animationCurve =[[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] integerValue];
+	if (userInfo){
+        
+        _animationCurve = [[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] integerValue];
 		_animationDuration = [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
 	}
     
@@ -167,11 +167,7 @@
     if ( nil == _accessor )
 		return;
     
-    
-    LC_FAST_ANIMATIONS(self.animationDuration, ^{
-    
-        [UIView setAnimationCurve:self.animationCurve];
-        [UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView animateKeyframesWithDuration:self.animationDuration delay:0 options:self.animationCurve animations:^{
         
         if (_isShowing){
             CGFloat containerHeight = _accessor.superview.bounds.size.height;
@@ -182,8 +178,13 @@
         else{
             _accessor.frame = _accessorFrame;
         }
-    
-    });
+
+        
+    } completion:^(BOOL finished) {
+       
+        ;
+        
+    }];
 }
 
 

@@ -161,7 +161,6 @@ LC_PROPERTY(strong) UIView * line;
             NSArray * array = result.json[@"data"][@"likes"];
             
             NSMutableArray * users = [NSMutableArray array];
-            [users insertObject:self.user atIndex:0];
             
             for (NSDictionary * dic in array) {
                 

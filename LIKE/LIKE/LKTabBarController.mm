@@ -12,6 +12,7 @@
 #import "LKLoginViewController.h"
 #import "LKAssistiveTouchButton.h"
 #import "MMMaterialDesignSpinner.h"
+#import "LKCameraRollViewController.h"
 
 @interface LKTabBarController () <RDVTabBarControllerDelegate>
 
@@ -41,7 +42,7 @@
         
         
         MMMaterialDesignSpinner * tip = [[MMMaterialDesignSpinner alloc] initWithFrame:CGRectZero];
-        tip.bounds = CGRectMake(0, 0, 212. / 3. - 4., 212. / 3. - 4.);//LC_RGB(255, 59, 54)
+        tip.bounds = CGRectMake(0, 0, 212. / 3. - 4., 212. / 3. - 4.); //LC_RGB(255, 59, 54)
         tip.tintColor = LKColor.color;
         tip.center = LC_POINT(self.assistiveTouchButton.viewMidWidth, self.assistiveTouchButton.viewMidHeight);
         tip.tag = 100;
@@ -103,7 +104,7 @@
 
 -(void) setLoading:(BOOL)loading
 {
-    MMMaterialDesignSpinner * tip = self.assistiveTouchButton.FIND(100);
+    MMMaterialDesignSpinner * tip = (MMMaterialDesignSpinner *)[self.assistiveTouchButton viewWithTag:100];
 
     if (loading) {
         
@@ -130,17 +131,16 @@
     }
 }
 
+//-(BOOL) loading
+//{
+//    return _loading;
+//}
+
 -(void) didTap
 {
     if(![LKLoginViewController needLoginOnViewController:self]){
 
-        static LCUINavigationController * __camera = nil;
-        
-        if (!__camera) {
-            __camera = LC_UINAVIGATION([LKCameraViewController viewController]);
-        }
-        
-        [LCUIApplication presentViewController:__camera animation:NO];
+        [LCUIApplication presentViewController:LC_UINAVIGATION([LKCameraRollViewController viewController]) animation:YES];
     }
 }
 

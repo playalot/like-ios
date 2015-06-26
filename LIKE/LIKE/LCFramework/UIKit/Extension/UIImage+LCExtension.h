@@ -29,12 +29,13 @@ LC_BLOCK(UIImage *, LCUIImageNamed, (NSString * name));
 
 +(UIImage *) imageWithColor:(UIColor *)color andSize:(CGSize)size;
 
-- (UIImage *) autoOrientation;
+-(UIImage *) autoOrientation;
 
-- (UIImage *) addMarkString:(NSString *)markString inRect:(CGRect)rect color:(UIColor *)color font:(UIFont *)font textAlignment:(UITextAlignment)textAlignment;
+-(UIImage *) addMarkString:(NSString *)markString inRect:(CGRect)rect color:(UIColor *)color font:(UIFont *)font textAlignment:(UITextAlignment)textAlignment;
 
-- (UIImage *) addMaskImage:(UIImage *)maskImage imageSize:(CGSize)imageSize inRect:(CGRect)rect;
+-(UIImage *) addMaskImage:(UIImage *)maskImage imageSize:(CGSize)imageSize inRect:(CGRect)rect;
 
-- (UIImage *)imageWithAlpha:(CGFloat)alpha;
+-(UIImage *) imageWithAlpha:(CGFloat)alpha;
+-(UIImage *) magic;
 
 @end

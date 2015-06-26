@@ -20,6 +20,7 @@
 {
     [self cancelAllRequests];
     [self cancelAllTimers];
+    [self unobserveAllNotifications];
 }
 
 - (void)viewDidLoad
@@ -29,6 +30,13 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self buildUI];
+    
+    
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation{
+    
+    return NO;
 }
 
 -(void) buildUI

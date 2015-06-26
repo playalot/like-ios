@@ -102,46 +102,49 @@ LC_PROPERTY(copy) LKWeChatLoginComplete complete;
  */
 -(void) onResp:(BaseResp*)resp
 {
-    SendAuthResp * aresp = (SendAuthResp *)resp;
-    
-    if (aresp.errCode == 0) {
+    if ([resp isKindOfClass:[SendAuthResp class]]) {
         
-        NSString * code = aresp.code;
-
-        NSString * url = [NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/access_token?appid=%@&secret=%@&code=%@&grant_type=authorization_code", @"wxa3f301de2a84df8b", @"d96c9dcc1e6a04890b794a4e5398b293", code];
+        SendAuthResp * aresp = (SendAuthResp *)resp;
         
-        [LCGCD dispatchAsync:LCGCDPriorityDefault block:^{
-           
-            NSString * result = [NSString stringWithContentsOfURL:[NSURL URLWithString:url] encoding:NSUTF8StringEncoding error:nil];
+        if (aresp.errCode == 0) {
             
-            NSData * data = [result dataUsingEncoding:NSUTF8StringEncoding];
+            NSString * code = aresp.code;
             
-            NSDictionary * resultDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+            NSString * url = [NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/access_token?appid=%@&secret=%@&code=%@&grant_type=authorization_code", @"wxa3f301de2a84df8b", @"d96c9dcc1e6a04890b794a4e5398b293", code];
             
-            [LCGCD dispatchAsyncInMainQueue:^{
-               
+            [LCGCD dispatchAsync:LCGCDPriorityDefault block:^{
                 
-                if (resultDic) {
+                NSString * result = [NSString stringWithContentsOfURL:[NSURL URLWithString:url] encoding:NSUTF8StringEncoding error:nil];
+                
+                NSData * data = [result dataUsingEncoding:NSUTF8StringEncoding];
+                
+                NSDictionary * resultDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+                
+                [LCGCD dispatchAsyncInMainQueue:^{
                     
-                    NSString * accessToken = resultDic[@"access_token"];
-                    NSString * openID = resultDic[@"openid"];
                     
-                    if (self.complete) {
-                        self.complete(openID, accessToken, nil);
+                    if (resultDic) {
+                        
+                        NSString * accessToken = resultDic[@"access_token"];
+                        NSString * openID = resultDic[@"openid"];
+                        
+                        if (self.complete) {
+                            self.complete(openID, accessToken, nil);
+                        }
                     }
-                }
-                else{
-                    
-                    if (self.complete) {
-                        self.complete(nil, nil, LC_LO(@"发生错误"));
+                    else{
+                        
+                        if (self.complete) {
+                            self.complete(nil, nil, LC_LO(@"发生错误"));
+                        }
                     }
-                }
+                }];
             }];
-        }];
-    }
-    else{
-        
-        self.complete(nil, nil, LC_LO(@"发生错误"));
+        }
+        else{
+            
+            self.complete(nil, nil, LC_LO(@"发生错误"));
+        }
     }
 }
 

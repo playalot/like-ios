@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 IFTTT. All rights reserved.
 //
 
+@class GPUImageView;
+
 @import UIKit;
 #import "FastttCameraInterface.h"
 
@@ -50,5 +52,10 @@
  *  @return An instance of FastttFilterCamera.
  */
 + (instancetype)cameraWithFilterImage:(UIImage *)filterImage;
+
+- (void)_startRunning;
+- (void)_stopRunning;
+
+@property (nonatomic, strong) GPUImageView *previewView;
 
 @end

@@ -68,6 +68,8 @@ LC_PROPERTY(strong) NSLock * lock;
         [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
         
         self.sessionManager = [AFHTTPSessionManager manager];
+        self.sessionManager.requestSerializer = [AFJSONRequestSerializer serializer];
+
         self.requests = [NSMutableDictionary dictionary];
         self.lock = [[NSLock alloc] init];
     }
@@ -180,6 +182,7 @@ LC_PROPERTY(strong) NSLock * lock;
             break;
     }
     
+    [self postNotification:AFNetworkingOperationDidStartNotification withObject:task];
     
     [self.lock lock];
     [self addTask:task withSender:sender];

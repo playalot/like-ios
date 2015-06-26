@@ -13,7 +13,7 @@
 
 LC_BLOCK(void, LKHotTagItemDidTap, (LKHotTagItem * item));
 
-@interface LKHotTagItem : UIView
+@interface LKHotTagItem : LCUIImageView
 
 LC_PROPERTY(strong) LCUILabel * tagLabel;
 LC_PROPERTY(strong) NSString * tagString;

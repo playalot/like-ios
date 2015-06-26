@@ -20,7 +20,8 @@
         self.isLiked = [dict[@"is_liked"] boolValue];
         self.createTime = dict[@"created"];
         self.user = [LKUser objectFromDictionary:dict[@"user"]];
-        
+        self.image = dict[@"image"];
+
         self.comments = [NSMutableArray array];
         
         NSArray * comments = dict[@"comments"];

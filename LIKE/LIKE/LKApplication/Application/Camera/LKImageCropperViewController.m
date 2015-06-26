@@ -13,6 +13,10 @@
 #import "LKNewPostViewController.h"
 #import "LKPhotoAlbum.h"
 #import "LKCameraViewController.h"
+#import "GPUImagePicture.h"
+#import "GPUImageLookupFilter.h"
+#import "GPUImageVignetteFilter.h"
+#import "GPUImageSepiaFilter.h"
 
 #define SCALE_FRAME_Y 100.0f
 #define BOUNDCE_DURATION 0.3f
@@ -32,11 +36,9 @@ LC_PROPERTY(assign) CGFloat limitRatio;
 
 LC_PROPERTY(assign) CGRect latestFrame;
 
-LC_PROPERTY(strong) LCUIButton * takePhotoButton;
 LC_PROPERTY(strong) LCUIButton * cutButton;
 LC_PROPERTY(assign) BOOL needCut;
 
-LC_PROPERTY(assign) BOOL filterIndex;
 
 LC_PROPERTY(strong) UIPinchGestureRecognizer * pinchGestureRecognizer;
 LC_PROPERTY(strong) UIPanGestureRecognizer * panGestureRecognizer;
@@ -46,11 +48,19 @@ LC_PROPERTY(strong) LKFilterScrollView * filterScrollView;
 
 LC_PROPERTY(assign) BOOL recordNavigationBarHidden;
 
+LC_PROPERTY(strong) UISlider * slider1;
+LC_PROPERTY(strong) UISlider * slider2;
+
+
+LC_PROPERTY(assign) NSInteger filterIndex;
+LC_PROPERTY(assign) BOOL magic;
+
 @end
 
 @implementation LKImageCropperViewController
 
-- (void)dealloc {
+- (void)dealloc
+{
     self.originalImage = nil;
     self.showImgView = nil;
     self.editedImage = nil;
@@ -64,12 +74,7 @@ LC_PROPERTY(assign) BOOL recordNavigationBarHidden;
     
     self.squareImage = self.squareImage;
     
-    self.takePhotoButton.buttonImage = [UIImage imageNamed:@"CameraCaptureClose.png" useCache:YES];
-    
-    [self setNavigationBarHidden:YES animated:NO];
-    
-    // hide status bar.
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:animated];
+    [self setNavigationBarHidden:YES animated:animated];    
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -79,26 +84,50 @@ LC_PROPERTY(assign) BOOL recordNavigationBarHidden;
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:animated];
 }
 
-
-- (id)initWithImage:(UIImage *)originalImage cropFrame:(CGRect)cropFrame limitScaleRatio:(NSInteger)limitRatio {
+- (id)initWithImage:(UIImage *)originalImage
+{
     self = [super init];
+    
     if (self) {
         
-        self.cropFrame = cropFrame;
-        self.limitRatio = limitRatio;
-        self.originalImage = [[self fixOrientation:originalImage] scaleToWidth:1280];
+        self.cropFrame =  CGRectMake(0, (LC_DEVICE_HEIGHT + 20 - 54) / 2 - LC_DEVICE_WIDTH / 2, LC_DEVICE_WIDTH, LC_DEVICE_WIDTH);
+        self.limitRatio = 3;
+        self.originalImage = [[originalImage autoOrientation] scaleToWidth:1280];
+        self.filterIndex = 0;
     }
+
+    return self;
+}
+
+
+- (id)initWithImage:(UIImage *)originalImage filterIndex:(NSInteger)filterIndex
+{
+    self = [super init];
+    
+    if (self) {
+        
+        self.cropFrame = CGRectMake(0, (LC_DEVICE_HEIGHT + 20 - 54) / 2 - LC_DEVICE_WIDTH / 2, LC_DEVICE_WIDTH, LC_DEVICE_WIDTH);
+        self.limitRatio = 3;
+        self.originalImage = [[originalImage autoOrientation] scaleToWidth:1280];
+        self.filterIndex = filterIndex;
+    }
+    
     return self;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     [self initView];
     [self initControlBtn];
+    
+    [self.filterScrollView setSelectIndex:self.filterIndex];
+    [self switchFilterAtIndex:self.filterIndex];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
     return NO;
 }
 
@@ -107,11 +136,10 @@ LC_PROPERTY(assign) BOOL recordNavigationBarHidden;
     self.view.backgroundColor = [UIColor blackColor];
     
     self.showImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, LC_DEVICE_WIDTH, LC_DEVICE_HEIGHT + 20)];
-    [self.showImgView setMultipleTouchEnabled:YES];
-    [self.showImgView setUserInteractionEnabled:YES];
-    [self.showImgView setImage:self.originalImage];
-    [self.showImgView setUserInteractionEnabled:YES];
-    [self.showImgView setMultipleTouchEnabled:YES];
+    self.showImgView.multipleTouchEnabled = YES;
+    self.showImgView.userInteractionEnabled = YES;
+    self.showImgView.image = self.originalImage;
+    
     
     // scale to fit the screen
     CGFloat oriWidth = self.cropFrame.size.width;
@@ -145,122 +173,144 @@ LC_PROPERTY(assign) BOOL recordNavigationBarHidden;
     
 }
 
-- (void)initControlBtn {
+- (void)initControlBtn
+{
+    UIView * bottomView = UIView.view.COLOR(LC_RGB(34, 34, 34));
+    bottomView.viewFrameWidth = LC_DEVICE_WIDTH;
+    bottomView.viewFrameHeight = 54;
+    bottomView.viewFrameY = self.view.viewFrameHeight - bottomView.viewFrameHeight;
+    self.view.ADD(bottomView);
     
-    self.takePhotoButton = LCUIButton.view;
     
     
-    if (self.buttonFrame.size.width) {
+    NSArray * bottomToolsIcon = @[@"CameraMagic.png", @"CameraCut.png"];
+    
+    
+    UIView * bottonTools = UIView.view.WIDTH(bottomToolsIcon.count * 57 + ((bottomToolsIcon.count - 1) * 20)).HEIGHT(57);
+    bottonTools.viewCenterX = bottomView.viewMidWidth;
+    bottomView.ADD(bottonTools);
+    
+    for (NSInteger i = 0; i<bottomToolsIcon.count; i++) {
         
-        self.takePhotoButton.frame = self.buttonFrame;
+        LCUIButton * button = LCUIButton.view;
+        button.viewFrameWidth = 54;
+        button.viewFrameHeight = 54;
+        button.viewFrameX = 20 * i + 54 * i;
+        button.buttonImage = [UIImage imageNamed:bottomToolsIcon[i] useCache:YES];
+        [button setImage:[button.buttonImage imageWithTintColor:LKColor.color] forState:UIControlStateSelected];
+        button.tag = i;
+        [button addTarget:self action:@selector(buttonToolsAction:) forControlEvents:UIControlEventTouchUpInside];
+        bottonTools.ADD(button);
+    }
+    
+    
+    // 查询上一个viewcontroller是不是拍照，如果是拍照就显示重拍，否则就是取消
+    
+    BOOL fromCamera = NO;
+    
+    UIViewController * lastViewController = nil;
+    
+    for (UIViewController * vc in self.navigationController.viewControllers) {
+        
+        if (!lastViewController) {
+            
+            lastViewController = vc;
+            continue;
+        }
+        
+        if (vc == self) {
+            
+            if ([lastViewController isKindOfClass:[LKCameraViewController class]]) {
+                
+                fromCamera = YES;
+            }
+        }
+        
+        lastViewController = vc;
+    }
+    
+    
+    
+    LCUIButton * retakeButton = LCUIButton.view;
+    retakeButton.viewFrameWidth = 80;
+    retakeButton.viewFrameHeight = 54;
+    retakeButton.showsTouchWhenHighlighted = YES;
+    retakeButton.titleFont = LK_FONT(15);
+    retakeButton.titleColor = [UIColor whiteColor];
+    [retakeButton addTarget:self action:@selector(popAction) forControlEvents:UIControlEventTouchUpInside];
+    
+    if (fromCamera) {
+        
+        retakeButton.title = LC_LO(@"重拍");
     }
     else{
         
-        self.takePhotoButton.viewFrameWidth = 234 / 3;
-        self.takePhotoButton.viewFrameHeight = 83 / 3;
-        self.takePhotoButton.viewFrameX = LC_DEVICE_WIDTH / 2 - self.takePhotoButton.viewMidWidth;
-        self.takePhotoButton.viewFrameY = self.view.viewFrameHeight - 25 - self.takePhotoButton.viewFrameHeight - 10;
+        retakeButton.title = LC_LO(@"取消");
     }
-    
-    
-    self.takePhotoButton.buttonImage = [UIImage imageNamed:@"CameraCaptureClose.png" useCache:YES];
-    self.takePhotoButton.showsTouchWhenHighlighted = YES;
-    [self.takePhotoButton addTarget:self action:@selector(cancel:) forControlEvents:UIControlEventTouchUpInside];
-    self.view.ADD(self.takePhotoButton);
-    
-    
-    self.cutButton = LCUIButton.view;
-    self.cutButton.viewFrameWidth = 70 / 3 + 50;
-    self.cutButton.viewFrameHeight = 69 / 3 + 50;
-    self.cutButton.viewFrameX = 0;
-    self.cutButton.viewCenterY = self.takePhotoButton.viewCenterY - 4;
-    self.cutButton.buttonImage = [UIImage imageNamed:@"CameraCut.png" useCache:YES];
-    self.cutButton.showsTouchWhenHighlighted = YES;
-    [self.cutButton addTarget:self action:@selector(cutAction) forControlEvents:UIControlEventTouchUpInside];
-    self.view.ADD(self.cutButton);
+
+    bottomView.ADD(retakeButton);
     
     
     LCUIButton * finishedButton = LCUIButton.view;
-    finishedButton.viewFrameWidth = 71 / 3 + 50;
-    finishedButton.viewFrameHeight = 71 / 3 + 50;
+    finishedButton.viewFrameWidth = 80;
+    finishedButton.viewFrameHeight = 54;
     finishedButton.viewFrameX = LC_DEVICE_WIDTH - finishedButton.viewFrameWidth;
-    finishedButton.viewCenterY = self.takePhotoButton.viewCenterY;
-    finishedButton.buttonImage = [UIImage imageNamed:@"CameraFinished.png" useCache:YES];
     finishedButton.showsTouchWhenHighlighted = YES;
+    finishedButton.title = LC_LO(@"保存");
+    finishedButton.titleColor = LKColor.color;
+    finishedButton.titleFont = LK_FONT(15);
     [finishedButton addTarget:self action:@selector(confirm) forControlEvents:UIControlEventTouchUpInside];
-    self.view.ADD(finishedButton);
+    bottomView.ADD(finishedButton);
     
     
-    {
-        {
-            NSArray * filterNames = LKFilterManager.singleton.allFilterNames;
-            
-            
-            // filters...
-            LKFilterScrollView * filterScrollView = LKFilterScrollView.view;
-            
-            [filterScrollView addFilterName:LC_LO(@"默认") filterImage:[UIImage imageNamed:@"FilterPreview.jpg" useCache:YES]];
-            
-            for (NSInteger i = 1; i< filterNames.count ; i++) {
-                
-                FastttFilter * fastFilter = [FastttFilter filterWithLookupImage:LKFilterManager.singleton.allFilterImage[i - 1]];
-                
-                UIImage * image = [fastFilter.filter imageByFilteringImage:[UIImage imageNamed:@"FilterPreview.jpg" useCache:YES]];
-                
-                [filterScrollView addFilterName:filterNames[i - 1] filterImage:image];
-            }
-            
-            if (self.filterScrollFrame.size.width) {
-                filterScrollView.frame = self.filterScrollFrame;
-            }
-            else{
-                filterScrollView.viewFrameWidth = self.view.viewFrameWidth;
-                filterScrollView.viewFrameHeight = filterScrollView.contentSize.height;
-                filterScrollView.viewFrameY = self.takePhotoButton.viewFrameY - 25 - filterScrollView.viewFrameHeight;
-            }
-            
-            self.filterScrollView = filterScrollView;
-            self.view.ADD(self.filterScrollView);
-            
-            
-            @weakly(self);
-            
-            filterScrollView.didSelectedItem = ^(NSInteger index){
-                
-                @normally(self);
-                
-                [self switchFilterAtIndex:index];
-            };
-            
-            
-            self.filterButton = LCUIButton.view;
-            self.filterButton.viewFrameX = self.view.viewFrameWidth - 76;
-            self.filterButton.viewFrameWidth = 31 + 50;
-            self.filterButton.viewFrameHeight = 31 + 50;
-            self.filterButton.viewCenterY = self.filterScrollView.viewCenterY;
-            self.filterButton.buttonImage = [UIImage imageNamed:@"CameraFilter.png" useCache:YES];
-            [self.filterButton addTarget:self action:@selector(switchFilter) forControlEvents:UIControlEventTouchUpInside];
-            self.filterButton.showsTouchWhenHighlighted = YES;
-            
-            if (self.filterFrame.size.width) {
-                self.filterButton.frame = self.filterFrame;
-            }
-            else{
-                self.filterButton.pop_spring.center = LC_POINT(self.filterButton.viewCenterX, self.filterScrollView.viewCenterY + 40);
-            }
-
-            self.view.ADD(self.filterButton);
-            
-            [self hideFilter];
-            self.filterScrollView.viewFrameX = self.view.viewFrameWidth;
-            
-            
-//            self.filterButton.pop_spring.center = LC_POINT(self.filterButton.viewCenterX, self.filterScrollView.viewCenterY - 70);
-//            self.filterScrollView.pop_spring.frame = CGRectMake(0, self.filterScrollView.viewFrameY, self.filterScrollView.viewFrameWidth, self.filterScrollView.viewFrameHeight);
-
-        }
+    NSArray * filterNames = LKFilterManager.singleton.allFilterNames;
+    
+    
+    // filters...
+    LKFilterScrollView * filterScrollView = LKFilterScrollView.view;
+    
+    UIImage * preview = [self.originalImage scaleToWidth:100];//[UIImage imageNamed:@"FilterPreview.jpg" useCache:YES];
+    
+    [filterScrollView addFilterName:LC_LO(@"默认") filterImage:preview];
+    
+    for (NSInteger i = 1; i< filterNames.count ; i++) {
+        
+        UIImage * image = [self lookkupImageFilterWithImage:LKFilterManager.singleton.allFilterImage[i - 1] originImage:preview];
+        
+        [filterScrollView addFilterName:filterNames[i - 1] filterImage:image];
     }
+    
 
+    filterScrollView.viewFrameWidth = self.view.viewFrameWidth;
+    filterScrollView.viewFrameHeight = filterScrollView.contentSize.height;
+    filterScrollView.viewFrameY = bottomView.viewFrameY;
+    
+    self.filterScrollView = filterScrollView;
+    [self.view insertSubview:filterScrollView belowSubview:bottomView];
+    
+    
+    @weakly(self);
+    
+    filterScrollView.didSelectedItem = ^(NSInteger index){
+        
+        @normally(self);
+        
+        [self switchFilterAtIndex:index];
+    };
+    
+    
+    self.filterButton = LCUIButton.view;
+    self.filterButton.viewFrameWidth = 80;
+    self.filterButton.viewFrameHeight = 40;
+    self.filterButton.viewFrameX = self.view.viewFrameWidth - self.filterButton.viewFrameWidth;
+    self.filterButton.viewFrameY = bottomView.viewFrameY - self.filterButton.viewFrameHeight;
+    self.filterButton.buttonImage = [UIImage imageNamed:@"CameraFilter.png" useCache:YES];
+    self.filterButton.title = LC_LO(@"  滤镜");
+    self.filterButton.titleFont = LK_FONT(13);
+    self.filterButton.titleColor = [UIColor whiteColor];
+    [self.filterButton addTarget:self action:@selector(switchFilter) forControlEvents:UIControlEventTouchUpInside];
+    self.filterButton.showsTouchWhenHighlighted = YES;
+    self.view.ADD(self.filterButton);
     
     
     self.overlayView.alpha = 0;
@@ -268,6 +318,22 @@ LC_PROPERTY(assign) BOOL recordNavigationBarHidden;
     
     self.panGestureRecognizer.enabled = NO;
     self.pinchGestureRecognizer.enabled = NO;
+    
+    
+//    self.slider1 = [[UISlider alloc] initWithFrame:CGRectMake(0, 0, 150, 20)];
+//    self.slider1.viewCenterX = LC_DEVICE_WIDTH / 2;
+//    self.slider1.minimumValue = 0;
+//    self.slider1.maximumValue = 1;
+//    [self.slider1 addTarget:self action:@selector(valueChange:) forControlEvents:UIControlEventValueChanged];
+//    bottomView.ADD(self.slider1);
+//
+//
+//    self.slider2 = [[UISlider alloc] initWithFrame:CGRectMake(0, 30, 150, 20)];
+//    self.slider2.viewCenterX = LC_DEVICE_WIDTH / 2;
+//    self.slider2.minimumValue = 0;
+//    self.slider2.maximumValue = 1;
+//    [self.slider2 addTarget:self action:@selector(valueChange:) forControlEvents:UIControlEventValueChanged];
+//    bottomView.ADD(self.slider2);
 }
 
 -(void) showDismissButton
@@ -284,14 +350,13 @@ LC_PROPERTY(assign) BOOL recordNavigationBarHidden;
 
 -(void) showBackButton
 {
-    LCUIButton * backButton = LCUIButton.view;
-    backButton.viewFrameWidth = 50;
-    backButton.viewFrameHeight = 54 / 3 + 40;
-    backButton.viewFrameY = 10;
-    backButton.buttonImage = [UIImage imageNamed:@"NavigationBarBackShadow.png" useCache:YES];
-    backButton.showsTouchWhenHighlighted = YES;
-    [backButton addTarget:self action:@selector(popAction) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:backButton];
+//    LCUIButton * backButton = LCUIButton.view;
+//    backButton.viewFrameWidth = 80;
+//    backButton.viewFrameHeight = 64;
+//    backButton.buttonImage = [UIImage imageNamed:@"NavigationBarBack.png" useCache:YES];
+//    backButton.showsTouchWhenHighlighted = YES;
+//    [backButton addTarget:self action:@selector(popAction) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:backButton];
 
 }
 
@@ -324,52 +389,118 @@ LC_PROPERTY(assign) BOOL recordNavigationBarHidden;
     self.needCut = !self.needCut;
 }
 
--(void) hideFilter
-{
-    if (self.filterScrollView.viewFrameX <= 0) {
-
-        self.filterScrollView.pop_spring.center = LC_POINT(self.view.viewFrameWidth + self.view.viewMidWidth, self.filterScrollView.viewCenterY);
-        self.filterButton.pop_spring.center = LC_POINT(self.filterButton.viewCenterX, self.filterScrollView.viewCenterY + 40);
-    }
-}
-
 -(void) switchFilter
 {
-    if (self.filterScrollView.viewFrameX <= 0) {
+    LC_FAST_ANIMATIONS(0.25, ^{
+       
+        if (self.filterScrollView.viewFrameY >= self.view.viewFrameHeight - 54.) {
+            
+            self.filterScrollView.viewFrameY = self.view.viewFrameHeight - 54 - self.filterScrollView.viewFrameHeight;
+            self.filterButton.viewFrameY = self.filterScrollView.viewFrameY - self.filterButton.viewFrameHeight;
+        }
+        else{
+            
+            self.filterScrollView.viewFrameY = self.view.viewFrameHeight - 54;
+            self.filterButton.viewFrameY = self.filterScrollView.viewFrameY - self.filterButton.viewFrameHeight;
+        }
         
-        // hide...
-        self.filterScrollView.pop_spring.center = LC_POINT(self.view.viewFrameWidth + self.view.viewMidWidth, self.filterScrollView.viewCenterY);
-        self.filterButton.pop_spring.center = LC_POINT(self.filterButton.viewCenterX, self.filterScrollView.viewCenterY + 40);
-    }
-    else{
-        
-        // show...
-        self.filterScrollView.pop_spring.center = LC_POINT(self.view.viewMidWidth, self.filterScrollView.viewCenterY);
-        self.filterButton.pop_spring.center = LC_POINT(self.filterButton.viewCenterX, self.filterScrollView.viewCenterY - 70);
-        
-    }
+    });
 }
 
 - (void)switchFilterAtIndex:(NSInteger)index
 {
     self.filterIndex = index;
 
-    if (index == 0) {
-        
-        self.showImgView.image = self.originalImage;
-        return;
-    }
-    
+    [self update];
+}
+
+-(void) update
+{
     @autoreleasepool {
         
-        FastttFilter * fastFilter = [FastttFilter filterWithLookupImage:LKFilterManager.singleton.allFilterImage[index - 1]];
+        UIImage * image = self.originalImage;
         
-        UIImage * image = [fastFilter.filter imageByFilteringImage:self.originalImage];
+        if (self.filterIndex != 0) {
+            
+            image = [self lookkupImageFilterWithImage:LKFilterManager.singleton.allFilterImage[self.filterIndex - 1] originImage:self.originalImage];
+        }
+        
+        if (self.magic) {
+            
+            image = [image magic];
+        }
         
         self.showImgView.image = image;
     }
-   
 }
+
+-(void) valueChange:(UISlider *)slider
+{
+    GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:self.originalImage];
+    GPUImagePicture * lookupImageSource = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"Vivid.png" useCache:YES]];
+    GPUImageLookupFilter * lookupFilter = [[GPUImageLookupFilter alloc] init];
+    
+    [stillImageSource addTarget:lookupFilter];
+    [lookupImageSource addTarget:lookupFilter];
+    [lookupFilter useNextFrameForImageCapture];
+    
+    GPUImageVignetteFilter * vignettefilter = [[GPUImageVignetteFilter alloc] init];
+    vignettefilter.vignetteStart = self.slider1.value; // 0.256 // 0.356 // 0.569 // 0.550
+    vignettefilter.vignetteEnd = self.slider2.value;   // 0.806 // 0.803 // 0.899 // 1
+    
+    [lookupFilter addTarget:vignettefilter];
+    [stillImageSource processImage];
+    [lookupImageSource processImage];
+    [vignettefilter useNextFrameForImageCapture];
+    UIImage * filteredimage = [vignettefilter imageFromCurrentFramebuffer];
+    
+    self.showImgView.image = filteredimage;
+}
+
+-(void) buttonToolsAction:(UIButton *)button
+{
+    button.selected = !button.selected;
+
+    if (button.tag == 0) {
+        
+        self.magic = button.selected;
+        
+        [self update];
+    }
+    else if (button.tag == 1){
+    
+        [self cutAction];
+        
+    }
+}
+
+-(UIImage *)lookkupImageFilterWithImage:(UIImage *)filterImage originImage:(UIImage *)originImage
+{
+    GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:originImage];
+    GPUImagePicture * lookupImageSource = [[GPUImagePicture alloc] initWithImage:filterImage];
+    GPUImageLookupFilter * lookupFilter = [[GPUImageLookupFilter alloc] init];
+    
+    GPUImageVignetteFilter * vignettefilter = [[GPUImageVignetteFilter alloc] init];
+    vignettefilter.vignetteStart = 0.569;
+    vignettefilter.vignetteEnd =  0.899;
+    
+    [lookupFilter addTarget:vignettefilter];
+    [stillImageSource addTarget:lookupFilter];
+    [lookupImageSource addTarget:lookupFilter];
+    
+    [stillImageSource processImage];
+    [lookupImageSource processImage];
+    
+    [vignettefilter useNextFrameForImageCapture];
+    [lookupFilter useNextFrameForImageCapture];
+    
+    UIImage * filteredimage = [vignettefilter imageFromCurrentFramebuffer];
+    
+    filteredimage = [UIImage imageWithCGImage:filteredimage.CGImage scale:filteredimage.scale orientation:originImage.imageOrientation];
+    
+    return filteredimage;
+}
+
 
 -(void) setNeedCut:(BOOL)needCut
 {
@@ -415,8 +546,6 @@ LC_PROPERTY(assign) BOOL recordNavigationBarHidden;
         
         if ([viewController isKindOfClass:[LKCameraViewController class]]) {
             
-            self.takePhotoButton.buttonImage = [UIImage imageNamed:@"CameraCapture.png" useCache:YES];
-
             [self performSelector:@selector(delayPop:) withObject:viewController afterDelay:0.01];
         }
     }
@@ -511,17 +640,25 @@ LC_PROPERTY(assign) BOOL recordNavigationBarHidden;
 // pan gesture handler
 - (void) panView:(UIPanGestureRecognizer *)panGestureRecognizer
 {
-    UIView *view = self.showImgView;
+    UIView * view = self.showImgView;
+    
     if (panGestureRecognizer.state == UIGestureRecognizerStateBegan || panGestureRecognizer.state == UIGestureRecognizerStateChanged) {
-        // calculate accelerator
-        CGFloat absCenterX = self.cropFrame.origin.x + self.cropFrame.size.width / 2;
-        CGFloat absCenterY = self.cropFrame.origin.y + self.cropFrame.size.height / 2;
-        CGFloat scaleRatio = self.showImgView.frame.size.width / self.cropFrame.size.width;
-        CGFloat acceleratorX = 1 - ABS(absCenterX - view.center.x) / (scaleRatio * absCenterX);
-        CGFloat acceleratorY = 1 - ABS(absCenterY - view.center.y) / (scaleRatio * absCenterY);
-        CGPoint translation = [panGestureRecognizer translationInView:view.superview];
-        [view setCenter:(CGPoint){view.center.x + translation.x * acceleratorX, view.center.y + translation.y * acceleratorY}];
-        [panGestureRecognizer setTranslation:CGPointZero inView:view.superview];
+        
+        CGPoint point = [panGestureRecognizer translationInView:self.view];
+
+        view.center = CGPointMake(view.center.x + point.x, view.center.y + point.y);
+        [panGestureRecognizer setTranslation:CGPointMake(0, 0) inView:view.superview];
+        
+//        // calculate accelerator
+//        CGFloat absCenterX = self.cropFrame.origin.x + self.cropFrame.size.width / 2;
+//        CGFloat absCenterY = self.cropFrame.origin.y + self.cropFrame.size.height / 2;
+//        CGFloat scaleRatio = self.showImgView.frame.size.width / self.cropFrame.size.width;
+//        CGFloat acceleratorX = 1 - ABS(absCenterX - view.center.x) / (scaleRatio * absCenterX);
+//        CGFloat acceleratorY = 1 - ABS(absCenterY - view.center.y) / (scaleRatio * absCenterY);
+//        CGPoint translation = [panGestureRecognizer translationInView:view.superview];
+//        
+//        [view setCenter:(CGPoint){view.center.x + translation.x * acceleratorX, view.center.y + translation.y * acceleratorY}];
+//        [panGestureRecognizer setTranslation:CGPointZero inView:view.superview];
     }
     else if (panGestureRecognizer.state == UIGestureRecognizerStateEnded) {
         // bounce to original frame

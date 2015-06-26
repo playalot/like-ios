@@ -19,6 +19,11 @@
 
 @implementation LKNewPostUploadCenter
 
+-(void) dealloc
+{
+    [self cancelAllRequests];
+}
+
 -(instancetype) init
 {
     if (self = [super init]) {
@@ -87,7 +92,7 @@
                 [array addObject:oTag.tag];
             }
             
-            [self post:uploadedKey jsonTags:[array JSONString] posting:posing];
+            [self post:uploadedKey jsonTags:array posting:posing];
         }
         else{
             
@@ -98,9 +103,10 @@
     } option:option];
 }
 
--(void) post:(NSString *)imageKey jsonTags:(NSString *)jsonTags posting:(LKPosting *)posting
+-(void) post:(NSString *)imageKey jsonTags:(NSArray *)jsonTags posting:(LKPosting *)posting
 {
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"post"].AUTO_SESSION().POST_METHOD();
+    
     [interface addParameter:imageKey key:@"content"];
     [interface addParameter:@"PHOTO"  key:@"type"];
     [interface addParameter:jsonTags key:@"tags"];

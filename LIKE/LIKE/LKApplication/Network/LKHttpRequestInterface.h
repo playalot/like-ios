@@ -44,8 +44,6 @@ LC_BLOCK(LKHttpRequestInterface *, LKHttpRequestInterfaceType, ());
 LC_PROPERTY(assign) LCHTTPRequestMethod methodType;
 LC_PROPERTY(copy) NSString * type;
 LC_PROPERTY(readonly) NSDictionary * interfaceParameters;
-LC_PROPERTY(copy) NSString * customAPIURL;
-LC_PROPERTY(assign) BOOL jsonFormat;
 LC_PROPERTY(copy) NSString * sessionToken;
 
 

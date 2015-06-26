@@ -43,6 +43,13 @@
     self.view = self.tableView;
     
     [self buildUI];
+    
+    
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    return NO;
 }
 
 -(void) buildUI

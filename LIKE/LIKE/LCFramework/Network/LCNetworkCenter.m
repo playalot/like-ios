@@ -208,6 +208,7 @@ LC_PROPERTY(strong) NSLock * lock;
         
         if ([task._TagString_ isEqualToString:p]) {
             
+            [self postNotification:AFNetworkingTaskDidCompleteNotification withObject:task];
             [task cancel];
         }
     }
@@ -267,6 +268,10 @@ LC_PROPERTY(strong) NSLock * lock;
 
 -(void) handleSuccessTask:(NSURLSessionDataTask *)task responseOjbect:(id)responseObject updateBlock:(LCNetworkCenterBlock)updateBlock sender:(NSObject *)sender
 {
+    
+    [self postNotification:AFNetworkingTaskDidCompleteNotification withObject:task];
+
+    
     LCHTTPRequestResult * result = [[LCHTTPRequestResult alloc] init];
     result.responseObject = responseObject;
     result.task = task;
@@ -284,6 +289,9 @@ LC_PROPERTY(strong) NSLock * lock;
                     error:(NSError *)error
               updateBlock:(LCNetworkCenterBlock)updateBlock sender:(NSObject *)sender
 {
+    [self postNotification:AFNetworkingTaskDidCompleteNotification withObject:task];
+
+    
     LCHTTPRequestResult * result = [[LCHTTPRequestResult alloc] init];
     
     NSDictionary * userInfo = [NSDictionary dictionaryWithObject:LC_LO(@"请求失败...请检查您的网络后重试")                                                                      forKey:NSLocalizedDescriptionKey];

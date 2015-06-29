@@ -129,7 +129,7 @@ static unsigned int runningRequestCount = 0;
 // You can use [ASIHTTPRequest setShouldUpdateNetworkActivityIndicator:NO] if you want to manage it yourself
 // Alternatively, override showNetworkActivityIndicator / hideNetworkActivityIndicator
 // By default this does nothing on Mac OS X, but again override the above methods for a different behaviour
-static BOOL shouldUpdateNetworkActivityIndicator = YES;
+static BOOL shouldUpdateNetworkActivityIndicator = NO;
 
 // The thread all requests will run on
 // Hangs around forever, but will be blocked unless there are requests underway

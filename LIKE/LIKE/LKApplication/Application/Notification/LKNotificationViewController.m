@@ -179,6 +179,7 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
         
     } completion:^(BOOL finished) {
         
+        
     }];
     
 }

@@ -42,6 +42,7 @@
 "提醒" = "Attention";
 "确定要删除这个照片吗？" = "Are you sure to delete the photo?";
 "确定要删除这个标签吗？" = "Are you sure to delete the tag?";
+"确定要清除缓存吗？" = "Are you sure to remove caches?";
 "您未安装微博客户端，无法分享" = "You haven't installed Weibo yet";
 "您未安装QQ客户端，无法分享" = "You haven't installed QQ yet";
 "您未安装微信客户端，无法分享" = "You haven't installed Wechat yet";

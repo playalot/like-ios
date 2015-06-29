@@ -9,21 +9,35 @@
 #import "LKHotTagsView.h"
 #import "LKTag.h"
 
+@interface LKHotTagItem ()
+
+LC_PROPERTY(strong) UIView * maskView;
+
+@end
+
 @implementation LKHotTagItem
 
 -(instancetype) init
 {
     if (self = [super init]) {
         
+        self.contentMode = UIViewContentModeScaleAspectFill;
         self.userInteractionEnabled = YES;
-        self.cornerRadius = 4;
         self.layer.masksToBounds = NO;
         self.backgroundColor = LC_RGB(245, 240, 236);
+
+        
+        self.maskView = UIView.view.COLOR([[UIColor blackColor] colorWithAlphaComponent:0.12]);
+        self.ADD(self.maskView);
+        
         
         self.tagLabel = LCUILabel.view;
         self.tagLabel.font = LK_FONT_B(11);
         self.tagLabel.textColor = [UIColor whiteColor];
         self.ADD(self.tagLabel);
+
+        
+        self.maskView.hidden = YES;
         
         
         [self addTapGestureRecognizer:self selector:@selector(didTapAction)];
@@ -57,7 +71,14 @@
 
     
     self.cornerRadius = self.viewMidHeight;
-    self.layer.masksToBounds = NO;
+    self.maskView.frame = self.bounds;
+}
+
+-(void) setUrl:(NSString *)url
+{
+    [super setUrl:url];
+    
+    self.maskView.hidden = NO;
 }
 
 -(void) setSelected:(BOOL)selected
@@ -171,7 +192,7 @@
         item.tag = i;
         item.tagString = tag.tag;
         
-        if (LC_NSSTRING_IS_INVALID(tag.image)) {
+        if (!LC_NSSTRING_IS_INVALID(tag.image)) {
             
             item.url = tag.image;
         }

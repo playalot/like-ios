@@ -87,7 +87,7 @@ LC_PROPERTY(strong) NSDictionary * info;
         page = self.page + 1;
     }
     
-    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"tag/search/%@/%@", self.searchString.URLCODE(), @(page)]].AUTO_SESSION();
+    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"search/tag/%@/%@", self.searchString.URLCODE(), @(page)]].AUTO_SESSION();
     
     @weakly(self);
     

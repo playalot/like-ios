@@ -400,8 +400,15 @@ LC_PROPERTY(assign) CGFloat cacheSize;
     // 清除缓存
     else if (indexPath.row == 3) {
         
-        [LCUIImageCache.singleton deleteAllImages];
-        [self.tableView reloadData];
+        [LCUIAlertView showWithTitle:LC_LO(@"提醒") message:LC_LO(@"确定要清除缓存吗？") cancelTitle:LC_LO(@"取消") otherTitle:LC_LO(@"确定") didTouchedBlock:^(NSInteger integerValue) {
+           
+            if (integerValue == 1) {
+                
+                [LCUIImageCache.singleton deleteAllImages];
+                [self.tableView reloadData];
+            }
+            
+        }];
     }
     // 评价
     else if (indexPath.row == 4){

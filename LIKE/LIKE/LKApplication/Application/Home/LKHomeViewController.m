@@ -525,33 +525,44 @@ LC_PROPERTY(copy) NSString * next;
 
 -(void) searchAction
 {
+    
     if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
         
-        LC_FAST_ANIMATIONS(0.25, ^{
+        LC_FAST_ANIMATIONS_F(0.2, ^{
             
             self.searchButton.alpha = 0;
             self.notificationButton.alpha = 0;
             self.header.headImageView.alpha = 0;
+            self.header.nameLabel.alpha = 0;
             LC_APPDELEGATE.tabBarController.assistiveTouchButton.hidden = YES;
             
+        }, ^(BOOL finished){
+            
+            LKSearchViewController * view = LKSearchViewController.view;
+            
+            [view showInViewController:self];
+            
+            @weakly(self);
+            
+            view.willHide = ^(){
+                
+                @normally(self);
+                
+                [UIView animateWithDuration:0.2 delay:0.25 options:UIViewAnimationOptionCurveLinear animations:^{
+                    
+                    self.searchButton.alpha = 1;
+                    self.notificationButton.alpha = 1;
+                    [self.header layoutSubviews];
+                    LC_APPDELEGATE.tabBarController.assistiveTouchButton.hidden = NO;
+                    
+                } completion:^(BOOL finished) {
+                    
+                }];
+
+            };
+
         });
         
-        LKSearchViewController * view = LKSearchViewController.view;
-        
-        [view showInViewController:self];
-        
-        @weakly(self);
-        
-        view.willHide = ^(){
-            
-            @normally(self);
-            
-            self.searchButton.alpha = 1;
-            self.notificationButton.alpha = 1;
-            self.header.headImageView.alpha = 1;
-            [self scrollViewDidScroll:self.tableView];
-            LC_APPDELEGATE.tabBarController.assistiveTouchButton.hidden = NO;
-        };
     }
 
 }
@@ -560,30 +571,38 @@ LC_PROPERTY(copy) NSString * next;
 {
     if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
         
-        LC_FAST_ANIMATIONS(0.25, ^{
+        
+        LC_FAST_ANIMATIONS_F(0.2, ^{
             
             self.searchButton.alpha = 0;
             self.header.headImageView.alpha = 0;
+            self.header.nameLabel.alpha = 0;
             LC_APPDELEGATE.tabBarController.assistiveTouchButton.hidden = YES;
             
-        });
+        }, ^(BOOL finished){
         
-        LKNotificationViewController * view = LKNotificationViewController.view;
-        
-        [view showInViewController:self];
-        
-        @weakly(self);
-        
-        view.willHide = ^(){
-        
-            @normally(self);
+            LKNotificationViewController * view = LKNotificationViewController.view;
             
-            self.searchButton.alpha = 1;
-            self.header.headImageView.alpha = 1;
-            [self scrollViewDidScroll:self.tableView];
-            LC_APPDELEGATE.tabBarController.assistiveTouchButton.hidden = NO;
-
-        };
+            [view showInViewController:self];
+            
+            @weakly(self);
+            
+            view.willHide = ^(){
+                
+                @normally(self);
+                
+                [UIView animateWithDuration:0.2 delay:0.25 options:UIViewAnimationOptionCurveLinear animations:^{
+                    
+                    self.searchButton.alpha = 1;
+                    self.notificationButton.alpha = 1;
+                    [self.header layoutSubviews];
+                    LC_APPDELEGATE.tabBarController.assistiveTouchButton.hidden = NO;
+                    
+                } completion:^(BOOL finished) {
+                    
+                }];
+            };
+        });
     }
 }
 

@@ -102,6 +102,7 @@ LC_PROPERTY(strong) NSMutableArray * datasource;
     label.font = LK_FONT(13);
     label.textColor = LC_RGB(84, 79, 73);
     label.text = LC_LO(@"绑定账号后可以使用它们登录like，如遇问题请发送邮件至support@likeorz.com");
+    label.textAlignment = UITextAlignmentCenter;
     label.FIT();
     label.viewCenterX = self.view.viewMidWidth;
     self.view.ADD(label);

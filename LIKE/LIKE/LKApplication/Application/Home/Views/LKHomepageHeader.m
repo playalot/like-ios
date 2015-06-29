@@ -341,6 +341,7 @@ LC_PROPERTY(assign) CGPoint point;
     
     self.viewFrameHeight = newHeight;
     self.backgroundView.viewFrameHeight = newHeight;
+
     
     if(scrollView.contentOffset.y < -self.maximumBarHeight){
         

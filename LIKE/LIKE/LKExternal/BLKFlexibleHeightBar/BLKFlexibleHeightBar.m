@@ -212,6 +212,7 @@
 - (void)setProgress:(CGFloat)progress
 {
     _progress = fmin(progress, 1.0);
+    
     if((self.behaviorDefiner && !self.behaviorDefiner.isElasticMaximumHeightAtTop) || !self.behaviorDefiner)
     {
         _progress = fmax(_progress, 0.0);

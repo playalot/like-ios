@@ -35,6 +35,10 @@ static NSString *kMMRingRotationAnimationKey = @"mmmaterialdesignspinner.rotatio
 }
 
 - (void)initialize {
+    
+    
+    self.userInteractionEnabled = YES;
+    
     _timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     
     [self.layer addSublayer:self.progressLayer];

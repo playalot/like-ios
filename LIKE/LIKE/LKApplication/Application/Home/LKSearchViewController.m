@@ -75,7 +75,7 @@ LC_PROPERTY(strong) LKSearchPlaceholderView * placeholderView;
     self.ADD(self.searchBar);
 
     
-    [self.searchBar.searchField performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0];
+    [self.searchBar.searchField performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0.5];
 
     
     self.placeholderView = LKSearchPlaceholderView.view;
@@ -173,18 +173,29 @@ LC_PROPERTY(strong) LKSearchPlaceholderView * placeholderView;
     UIView * view = self.FIND(1002);
     self.userInteractionEnabled = NO;
     
-    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:3 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        
+    LC_FAST_ANIMATIONS_F(0.25, ^{
+    
         view.alpha = 0;
         self.searchBar.alpha = 0;
-        self.blur.viewFrameY = self.viewFrameHeight;
-        self.placeholderView.viewFrameY = self.viewFrameHeight;
+        ((UIView *)self.FIND(1002)).alpha = 0;
+        
+    }, ^(BOOL finished){
+        
+        [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:3 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            
+            view.alpha = 0;
+            self.searchBar.alpha = 0;
+            self.blur.viewFrameY = self.viewFrameHeight;
+            self.placeholderView.viewFrameY = self.viewFrameHeight;
+            
+            
+        } completion:^(BOOL finished) {
+            
+            [self removeFromSuperview];
+        }];
 
-        
-    } completion:^(BOOL finished) {
-        
-        [self removeFromSuperview];
-    }];
+    });
+    
 }
 
 #pragma mark -

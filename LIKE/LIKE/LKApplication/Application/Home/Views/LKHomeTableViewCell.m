@@ -56,10 +56,6 @@ LC_PROPERTY(strong) LCUIActivityIndicatorView * loadingActivity;
     
     self.contentBack = UIView.view;
     self.contentBack.clipsToBounds = YES;
-//    self.contentBack.layer.shadowColor = [UIColor lightGrayColor].CGColor;
-//    self.contentBack.layer.shadowOffset = CGSizeMake(0, 0);
-//    self.contentBack.layer.opacity = 1;
-//    self.contentBack.layer.shadowRadius = 2;
     self.ADD(self.contentBack);
     
     

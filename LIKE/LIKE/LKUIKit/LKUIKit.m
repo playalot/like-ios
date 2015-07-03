@@ -69,7 +69,7 @@
 //获得图片裁剪后的高度
 + (CGSize)getContentImageConstScaleSize
 {
-    CGSize imageSize = CGSizeMake(640., 640. * 1.25);
+    CGSize imageSize = CGSizeMake(LC_DEVICE_WIDTH * 2, LC_DEVICE_WIDTH * 2 * 1.25);
     
     if (UI_IS_IPHONE4) {
         imageSize = kContentImageSize_IPHONE4;

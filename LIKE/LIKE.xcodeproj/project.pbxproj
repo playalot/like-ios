@@ -82,6 +82,14 @@
 		135DBAF51AE5193E004AD150 /* LKPostDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 135DBAF41AE5193E004AD150 /* LKPostDetailCell.m */; };
 		135DBAF71AE60577004AD150 /* NavigationBarMore@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 135DBAF61AE60577004AD150 /* NavigationBarMore@3x.png */; };
 		135DBAF91AE60590004AD150 /* NavigationBarBack@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 135DBAF81AE60590004AD150 /* NavigationBarBack@3x.png */; };
+		135E8A921B43FA1A00C2270C /* LKLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 135E8A911B43FA1A00C2270C /* LKLocationManager.m */; };
+		135E8A951B450C3A00C2270C /* LKNearPlacesSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 135E8A941B450C3A00C2270C /* LKNearPlacesSearch.m */; };
+		135E8A991B450DA200C2270C /* AMapSearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 135E8A971B450DA200C2270C /* AMapSearchKit.framework */; };
+		135E8A9A1B450DA200C2270C /* MAMapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 135E8A981B450DA200C2270C /* MAMapKit.framework */; };
+		135E8A9C1B45112300C2270C /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 135E8A9B1B45112300C2270C /* libstdc++.dylib */; };
+		135E8A9E1B45114600C2270C /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 135E8A9D1B45114600C2270C /* libstdc++.6.0.9.dylib */; };
+		135E8AA01B4511B900C2270C /* AMap.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 135E8A9F1B4511B900C2270C /* AMap.bundle */; };
+		135E8AA31B4549BD00C2270C /* LKSearchPlacesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 135E8AA21B4549BD00C2270C /* LKSearchPlacesViewController.m */; };
 		1369AFEC1AEA612F00364602 /* LKWelcome.m in Sources */ = {isa = PBXBuildFile; fileRef = 1369AFEB1AEA612F00364602 /* LKWelcome.m */; };
 		137750F11B2AB185006AA43D /* LKNewPostUploadCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 137750F01B2AB185006AA43D /* LKNewPostUploadCenter.m */; };
 		137750F41B2AD1CE006AA43D /* LKUploadingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 137750F31B2AD1CE006AA43D /* LKUploadingCell.m */; };
@@ -850,6 +858,17 @@
 		135DBAF41AE5193E004AD150 /* LKPostDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKPostDetailCell.m; sourceTree = "<group>"; };
 		135DBAF61AE60577004AD150 /* NavigationBarMore@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NavigationBarMore@3x.png"; sourceTree = "<group>"; };
 		135DBAF81AE60590004AD150 /* NavigationBarBack@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NavigationBarBack@3x.png"; sourceTree = "<group>"; };
+		135E8A901B43FA1A00C2270C /* LKLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKLocationManager.h; sourceTree = "<group>"; };
+		135E8A911B43FA1A00C2270C /* LKLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKLocationManager.m; sourceTree = "<group>"; };
+		135E8A931B450C3A00C2270C /* LKNearPlacesSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKNearPlacesSearch.h; sourceTree = "<group>"; };
+		135E8A941B450C3A00C2270C /* LKNearPlacesSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKNearPlacesSearch.m; sourceTree = "<group>"; };
+		135E8A971B450DA200C2270C /* AMapSearchKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AMapSearchKit.framework; sourceTree = "<group>"; };
+		135E8A981B450DA200C2270C /* MAMapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MAMapKit.framework; sourceTree = "<group>"; };
+		135E8A9B1B45112300C2270C /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
+		135E8A9D1B45114600C2270C /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
+		135E8A9F1B4511B900C2270C /* AMap.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AMap.bundle; sourceTree = "<group>"; };
+		135E8AA11B4549BD00C2270C /* LKSearchPlacesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKSearchPlacesViewController.h; sourceTree = "<group>"; };
+		135E8AA21B4549BD00C2270C /* LKSearchPlacesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKSearchPlacesViewController.m; sourceTree = "<group>"; };
 		1369AFEA1AEA612F00364602 /* LKWelcome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKWelcome.h; sourceTree = "<group>"; };
 		1369AFEB1AEA612F00364602 /* LKWelcome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKWelcome.m; sourceTree = "<group>"; };
 		137750EF1B2AB185006AA43D /* LKNewPostUploadCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKNewPostUploadCenter.h; sourceTree = "<group>"; };
@@ -2046,6 +2065,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				135E8A9E1B45114600C2270C /* libstdc++.6.0.9.dylib in Frameworks */,
+				135E8A9C1B45112300C2270C /* libstdc++.dylib in Frameworks */,
 				135735191B2EC6FC0032515C /* libicucore.dylib in Frameworks */,
 				138EDEC71AD7B1DA0020957C /* libxml2.dylib in Frameworks */,
 				1387C33F1B313B5300B065A7 /* FBSDKLoginKit.framework in Frameworks */,
@@ -2054,8 +2075,10 @@
 				13F504EF1B0AF4EA00D8D484 /* libWeChatSDK.a in Frameworks */,
 				13F21F3B1B0F1D6200124291 /* libWeiboSDK.a in Frameworks */,
 				138EDEC31AD7B1CB0020957C /* libsqlite3.dylib in Frameworks */,
+				135E8A991B450DA200C2270C /* AMapSearchKit.framework in Frameworks */,
 				138EDE8D1AD7B0A30020957C /* libleveldb.a in Frameworks */,
 				13F5051C1B0CA05600D8D484 /* TencentOpenAPI.framework in Frameworks */,
+				135E8A9A1B450DA200C2270C /* MAMapKit.framework in Frameworks */,
 				13DA0FCB1AEB8D8E005B9476 /* libMobClickLibrary.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2274,6 +2297,16 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		135E8A961B450DA200C2270C /* MKMap */ = {
+			isa = PBXGroup;
+			children = (
+				135E8A9F1B4511B900C2270C /* AMap.bundle */,
+				135E8A971B450DA200C2270C /* AMapSearchKit.framework */,
+				135E8A981B450DA200C2270C /* MAMapKit.framework */,
+			);
+			path = MKMap;
+			sourceTree = "<group>";
+		};
 		1387C33B1B3139B700B065A7 /* Facebook */ = {
 			isa = PBXGroup;
 			children = (
@@ -2314,6 +2347,8 @@
 		138EDBE41AD7B08A0020957C = {
 			isa = PBXGroup;
 			children = (
+				135E8A9D1B45114600C2270C /* libstdc++.6.0.9.dylib */,
+				135E8A9B1B45112300C2270C /* libstdc++.dylib */,
 				135735181B2EC6FC0032515C /* libicucore.dylib */,
 				138EDEC61AD7B1DA0020957C /* libxml2.dylib */,
 				138EDEC41AD7B1D20020957C /* libz.dylib */,
@@ -3313,6 +3348,7 @@
 		138EDECC1AD7B70F0020957C /* LKExternal */ = {
 			isa = PBXGroup;
 			children = (
+				135E8A961B450DA200C2270C /* MKMap */,
 				1387C33B1B3139B700B065A7 /* Facebook */,
 				13892C641B1DD2B50053303E /* MMMaterialDesignSpinner */,
 				13925A711B146BD1004D0656 /* INSSearchBar */,
@@ -3406,6 +3442,10 @@
 				1387C3541B32AE4B00B065A7 /* LKTimestampEncryption.m */,
 				1387C3591B32C45700B065A7 /* LKISOCountryCodes.h */,
 				1387C35A1B32C45700B065A7 /* LKISOCountryCodes.m */,
+				135E8A901B43FA1A00C2270C /* LKLocationManager.h */,
+				135E8A911B43FA1A00C2270C /* LKLocationManager.m */,
+				135E8A931B450C3A00C2270C /* LKNearPlacesSearch.h */,
+				135E8A941B450C3A00C2270C /* LKNearPlacesSearch.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -3485,6 +3525,8 @@
 				135D5C921AE1013100811B06 /* LKImageCropperViewController.m */,
 				1347652E1AE24AEA0055D099 /* LKNewPostViewController.h */,
 				1347652F1AE24AEA0055D099 /* LKNewPostViewController.m */,
+				135E8AA11B4549BD00C2270C /* LKSearchPlacesViewController.h */,
+				135E8AA21B4549BD00C2270C /* LKSearchPlacesViewController.m */,
 				135D586C1ADFC3B700811B06 /* LKFilterManager.h */,
 				135D586D1ADFC3B700811B06 /* LKFilterManager.m */,
 			);
@@ -4593,6 +4635,7 @@
 				13B6C19F1AE8FFBE008912C0 /* 1136.jpg in Resources */,
 				1387C3521B31703300B065A7 /* MobileIcon@3x.png in Resources */,
 				13DEEC191AE789E6005E01A6 /* LC_WebReload.png in Resources */,
+				135E8AA01B4511B900C2270C /* AMap.bundle in Resources */,
 				13E27EED1AF8A67200C17362 /* VisitorIcon@3x.png in Resources */,
 				138EDEF91AD7DAD20020957C /* TabBarCamera@3x.png in Resources */,
 				13D9BF261AEB997E0020C94F /* Dawn.png in Resources */,
@@ -4717,6 +4760,7 @@
 				138EDDF81AD7B0A30020957C /* NSObject+ViewTree.m in Sources */,
 				13D2AD071AFB18E40068C0CD /* GPUImageKuwaharaRadius3Filter.m in Sources */,
 				138EDE391AD7B0A30020957C /* HTTPDataResponse.m in Sources */,
+				135E8AA31B4549BD00C2270C /* LKSearchPlacesViewController.m in Sources */,
 				13B5B4EB1B15EE1300252A78 /* LKComment.m in Sources */,
 				138EDE501AD7B0A30020957C /* ASICloudFilesContainerRequest.m in Sources */,
 				13BCD8C21ADBA93000A0CBF5 /* MCBasicAnimation.m in Sources */,
@@ -4797,6 +4841,7 @@
 				138EDE0C1AD7B0A30020957C /* LCDeviceTableView.m in Sources */,
 				13D2AD181AFB18E40068C0CD /* GPUImageMonochromeFilter.m in Sources */,
 				138EDE4E1AD7B0A30020957C /* ASICloudFilesCDNRequest.m in Sources */,
+				135E8A951B450C3A00C2270C /* LKNearPlacesSearch.m in Sources */,
 				138EDEAA1AD7B0A30020957C /* LCUIBlurView.m in Sources */,
 				13D2ACFF1AFB18E40068C0CD /* GPUImageHistogramGenerator.m in Sources */,
 				13D63ADF1AEA2DB3001587C0 /* JTSAnimatedGIFUtility.m in Sources */,
@@ -5101,6 +5146,7 @@
 				138EDE7F1AD7B0A30020957C /* LCKeychain.m in Sources */,
 				13BCD88A1ADBA92200A0CBF5 /* POPAnimatableProperty.mm in Sources */,
 				13D2ACCA1AFB18E40068C0CD /* GPUImageBilateralFilter.m in Sources */,
+				135E8A921B43FA1A00C2270C /* LKLocationManager.m in Sources */,
 				13BCD8DC1ADBCD1000A0CBF5 /* LKUserInfoCache.m in Sources */,
 				1387C34E1B3166C500B065A7 /* LKLinkAccountsViewController.m in Sources */,
 				13D2AD561AFB18E40068C0CD /* GPUImageTransformFilter.m in Sources */,
@@ -5357,6 +5403,7 @@
 					"$(PROJECT_DIR)/LIKE/LKExternal/Tencent",
 					"$(PROJECT_DIR)/LIKE/LKExternal/SMS_SDK",
 					"$(PROJECT_DIR)/LIKE/LKExternal/Facebook",
+					"$(PROJECT_DIR)/LIKE/LKExternal/MKMap",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/LIKE/LIKE.pch";
 				HEADER_SEARCH_PATHS = (
@@ -5377,7 +5424,7 @@
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "aa713228-579f-4fb3-94ec-34f1f86ba5fe";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -5392,6 +5439,7 @@
 					"$(PROJECT_DIR)/LIKE/LKExternal/Tencent",
 					"$(PROJECT_DIR)/LIKE/LKExternal/SMS_SDK",
 					"$(PROJECT_DIR)/LIKE/LKExternal/Facebook",
+					"$(PROJECT_DIR)/LIKE/LKExternal/MKMap",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/LIKE/LIKE.pch";
 				HEADER_SEARCH_PATHS = (
@@ -5412,7 +5460,7 @@
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "aa713228-579f-4fb3-94ec-34f1f86ba5fe";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

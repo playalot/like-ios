@@ -32,8 +32,9 @@ LC_PROPERTY(copy) LKRecommendTagsViewDidTap itemDidTap;
 LC_PROPERTY(copy) LKRecommendTagsViewDidLoad itemDidLoad;
 
 LC_PROPERTY(assign) BOOL highlight;
+LC_PROPERTY(assign) BOOL tapRemove;
 
 -(void) loadRecommendTags;
--(void) reloadData;
+-(void) reloadData:(BOOL)animation;
 
 @end

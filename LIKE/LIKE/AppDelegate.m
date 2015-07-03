@@ -18,6 +18,8 @@
 #import <TencentOpenAPI/TencentOAuth.h>
 #import "LKNotificationCount.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import "LKLocationManager.h"
+#import <MAMapKit/MAMapKit.h>
 
 @interface AppDelegate () <LC_CMD_IMP>
 
@@ -31,11 +33,9 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
 
 -(void) load:(NSDictionary *)launchOptions
 {
-//    NSString * loc = NSLocalizedString(@"APNS_NewLike", nil);
-//    
-//    NSString * string = [NSString stringWithFormat:loc, @"xxx"];
-//    
-//    //printf("%s", [ UTF8String]);
+    
+    [MAMapServices sharedServices].apiKey = @"4c0db296d4f4d092fdaa9004ee8c959a";
+
     
     // 全局容错
     [LCSwizzle beginFaultTolerant];

@@ -114,6 +114,8 @@
             
             self.tags = tags;
             
+            [self reloadData:YES];
+
             if (self.itemDidLoad) {
                 self.itemDidLoad();
             }
@@ -137,15 +139,24 @@
 -(void) setTags:(NSMutableArray *)tags
 {
     _tags = tags;
-    
-    [self reloadData];
 }
 
--(void) reloadData
+-(void) reloadData:(BOOL)animation
 {
+    
     CGFloat padding = 10;
     
-    [self removeAllSubviews];
+    
+    NSArray * subViews = self.subviews;
+    
+    for (UIView * view in subViews) {
+        
+        if ([view isKindOfClass:[LKRecommendTagItem class]]) {
+            
+            [view removeFromSuperview];
+        }
+    }
+    
     
     LC_FAST_ANIMATIONS(0.15, ^{
        
@@ -171,12 +182,15 @@
             
             @normally(self);
             
-            // 重新构建
-            [self.tags removeObjectAtIndex:cache.tag];
-            
             LKRecommendTagItem * tmp = cache;
-            
-            [self reloadData];
+
+            if (self.tapRemove) {
+                
+                // 重新构建
+                [self.tags removeObjectAtIndex:cache.tag];
+                
+                [self reloadData:NO];
+            }
             
             if (self.itemDidTap) {
                 self.itemDidTap(tmp);
@@ -193,7 +207,7 @@
         }
         else{
             
-            if (preItem.viewRightX + padding * 2 + item.viewFrameWidth > self.viewFrameWidth) {
+            if (preItem.viewRightX + padding + item.viewFrameWidth > self.viewFrameWidth) {
                 
                 item.viewFrameX = padding;
                 item.viewFrameY = preItem.viewBottomY + padding;
@@ -203,6 +217,21 @@
                 item.viewFrameX = preItem.viewRightX + padding;
                 item.viewFrameY = preItem.viewFrameY;
             }
+        }
+        
+        if (animation) {
+            
+            item.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.01, 0.01);
+            item.alpha = 0;
+            
+            [UIView animateWithDuration:0.5 delay:0.001 * i usingSpringWithDamping:0.7 initialSpringVelocity:3 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                
+                item.transform = CGAffineTransformIdentity;
+                item.alpha = 1;
+                
+            } completion:^(BOOL finished) {
+                
+            }];
         }
         
         preItem = item;

@@ -574,6 +574,8 @@ LC_PROPERTY(assign) BOOL magic;
     }
     else{
         
+//        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
+
         [self.navigationController pushViewController:[[LKNewPostViewController alloc] initWithImage:image] animated:YES];
     }
 }

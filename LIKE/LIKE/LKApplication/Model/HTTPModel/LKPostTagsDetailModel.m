@@ -42,7 +42,7 @@ LC_PROPERTY(strong) NSMutableDictionary * associatedTagsDic;
         page = _page + 1;
     }
     
-    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"post/%@/marks/%@", postID, @(page)]].AUTO_SESSION();
+    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"post/%@/marks/%@", @(postID.integerValue), @(page)]].AUTO_SESSION();
     
     // post/1/ma
     

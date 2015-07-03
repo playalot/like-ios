@@ -571,7 +571,6 @@ LC_PROPERTY(copy) NSString * next;
 {
     if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
         
-        
         LC_FAST_ANIMATIONS_F(0.2, ^{
             
             self.searchButton.alpha = 0;

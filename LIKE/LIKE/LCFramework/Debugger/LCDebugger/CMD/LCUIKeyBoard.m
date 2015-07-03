@@ -76,10 +76,15 @@
         _animationCurve = [[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] integerValue];
 		_animationDuration = [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
 	}
+    else{
+        
+        _animationDuration = 0;
+    }
     
     if ([notification.name isEqualToString:UIKeyboardDidShowNotification]) {
         
         if (NO == _isShowing){
+            
 			_isShowing = YES;
             // Is showing.
 		}
@@ -91,11 +96,8 @@
 			CGRect keyboardEndFrame = [value CGRectValue];
 			CGFloat	keyboardHeight = keyboardEndFrame.size.height;
 			
-			if ( keyboardHeight != _height )
-			{
-				_height = keyboardHeight;
-                // Height changed.
-			}
+            _height = keyboardHeight;
+            // Height changed.
 		}
 
 
@@ -110,21 +112,18 @@
 			CGRect rect2 = [value2 CGRectValue];
             
 			if (rect1.origin.y >= [UIScreen mainScreen].bounds.size.height){
+                
 				if (NO == _isShowing){
 					_isShowing = YES;
 					// Is showing.
 				}
                 
-				if ( rect2.size.height != _height ){
-					_height = rect2.size.height;
-					// Height changed.
-				}
+                _height = rect2.size.height;
+                // Height changed.
 			}
 			else if (rect2.origin.y >= [UIScreen mainScreen].bounds.size.height){
-				if (rect2.size.height != _height){
-					_height = rect2.size.height;
-					// Height changed.
-				}
+                
+                _height = rect2.size.height;
                 
 				if (_isShowing){
 					_isShowing = NO;
@@ -142,9 +141,7 @@
 
 			CGFloat	keyboardHeight = keyboardEndFrame.size.height;
 			
-			if (keyboardHeight != _height){
-				_height = keyboardHeight;
-			}
+            _height = keyboardHeight;
 		}
         
 		if (_isShowing){
@@ -167,24 +164,26 @@
     if ( nil == _accessor )
 		return;
     
-    [UIView animateKeyframesWithDuration:self.animationDuration delay:0 options:self.animationCurve animations:^{
+    
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:self.animationDuration];
+    [UIView setAnimationCurve:self.animationCurve];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    
+    if (_isShowing){
         
-        if (_isShowing){
-            CGFloat containerHeight = _accessor.superview.bounds.size.height;
-            CGRect newFrame = _accessorFrame;
-            newFrame.origin.y = containerHeight - (_accessorFrame.size.height + _height);
-            _accessor.frame = newFrame;
-        }
-        else{
-            _accessor.frame = _accessorFrame;
-        }
-
+        CGFloat containerHeight = _accessor.superview.bounds.size.height;
+        CGRect newFrame = _accessorFrame;
+        newFrame.origin.y = containerHeight - (_accessorFrame.size.height + _height);
+        _accessor.frame = newFrame;
         
-    } completion:^(BOOL finished) {
-       
-        ;
+    }
+    else{
         
-    }];
+        _accessor.frame = _accessorFrame;
+    }
+    
+    [UIView commitAnimations];
 }
 
 

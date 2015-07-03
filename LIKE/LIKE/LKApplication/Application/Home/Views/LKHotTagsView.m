@@ -108,7 +108,7 @@ LC_PROPERTY(strong) UIView * maskView;
 {
     if (self = [super init]) {
         
-        _tags = [NSMutableArray array];
+        self.tags = [NSMutableArray array];
         
         self.highlight = YES;
     }
@@ -118,8 +118,6 @@ LC_PROPERTY(strong) UIView * maskView;
 
 -(void) loadHotTags
 {
-    self.alpha = 0;
-    
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"tag/hot"].AUTO_SESSION();
     
     @weakly(self);
@@ -146,17 +144,9 @@ LC_PROPERTY(strong) UIView * maskView;
                 self.itemDidLoad();
             }
             
-            LC_FAST_ANIMATIONS(1, ^{
-                
-                self.alpha = 1;
-            });
         }
         else if (result.state == LKHttpRequestStateFailed){
             
-            LC_FAST_ANIMATIONS(1, ^{
-                
-                self.alpha = 1;
-            });
         }
         
     }];
@@ -231,6 +221,19 @@ LC_PROPERTY(strong) UIView * maskView;
                 item.viewFrameY = preItem.viewFrameY;
             }
         }
+        
+        item.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.5, 0.5);
+        item.alpha = 0;
+        
+        [UIView animateWithDuration:0.25 delay:0.001 * i usingSpringWithDamping:0.7 initialSpringVelocity:3 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            
+            item.transform = CGAffineTransformIdentity;
+            item.alpha = 1;
+            
+        } completion:^(BOOL finished) {
+            
+        }];
+
         
         preItem = item;
     }

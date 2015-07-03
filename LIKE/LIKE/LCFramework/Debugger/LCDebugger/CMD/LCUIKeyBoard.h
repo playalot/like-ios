@@ -36,8 +36,8 @@
 @interface LCUIKeyBoard : NSObject
 
 @property (nonatomic,readonly) NSInteger animationCurve;
-@property (nonatomic,readonly) float animationDuration;
-@property (nonatomic,readonly) float height;
+@property (nonatomic,readonly) CGFloat animationDuration;
+@property (nonatomic,readonly) CGFloat height;
 @property (nonatomic,readonly) BOOL isShowing;
 
 - (void)setAccessor:(UIView *)view;

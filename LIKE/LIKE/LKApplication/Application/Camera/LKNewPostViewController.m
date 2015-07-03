@@ -15,19 +15,28 @@
 #import "LKCameraViewController.h"
 #import "LKNewPostUploadCenter.h"
 #import "LKCameraRollViewController.h"
+#import "LKLocationManager.h"
+#import "JTSImageViewController.h"
+#import "LKTime.h"
+#import "LCObserver.h"
+#import "LKSearchPlacesViewController.h"
 
 @interface LKNewPostViewController ()
 
 LC_PROPERTY(strong) LCUIImageView * preview;
 LC_PROPERTY(strong) UIImage * image;
 
-LC_PROPERTY(strong) UIScrollView * scrollView;
-
 LC_PROPERTY(strong) LKRecommendTagsView * selectedTags;
 LC_PROPERTY(strong) LCUILabel * recommendLabel;
 LC_PROPERTY(strong) LKRecommendTagsView * recommendTags;
 
 LC_PROPERTY(strong) LKInputView * inputView;
+
+LC_PROPERTY(strong) LCObserver * frameObserver;
+LC_PROPERTY(strong) LCUIButton * locationButton;
+
+LC_PROPERTY(strong) CLLocation * location;
+LC_PROPERTY(strong) NSString * locationName;
 
 @end
 
@@ -38,11 +47,34 @@ LC_PROPERTY(strong) LKInputView * inputView;
     
 }
 
+-(void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self setNavigationBarHidden:NO animated:animated];
+    
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
+}
+
+-(void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [self.inputView resignFirstResponder];
+}
+
+-(void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+}
+
 -(instancetype) initWithImage:(UIImage *)image
 {
     if (self = [super init]) {
         
         self.image = image;
+        
+        [LKLocationManager new];
     }
     
     return self;
@@ -55,13 +87,29 @@ LC_PROPERTY(strong) LKInputView * inputView;
 
 -(void) buildUI
 {
-    self.view.backgroundColor = LKColor.whiteColor;
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    formatter.dateStyle = kCFDateFormatterMediumStyle;
+    
+    self.title = [formatter stringFromDate:[NSDate date]];
+    
+    
+    self.tableView.backgroundColor = [UIColor whiteColor];
+    self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
+    self.tableView.bounces = NO;
+    [self.tableView addTapGestureRecognizer:self selector:@selector(dismissKeyboard)];
+    
+    
+    [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[UIImage imageNamed:@"NavigationBarBack.png" useCache:YES] selectImage:nil];
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
     
     
     self.preview = LCUIImageView.view;
     self.preview.contentMode = UIViewContentModeScaleAspectFill;
-    self.preview.viewFrameWidth = LC_DEVICE_WIDTH;
-    self.preview.viewFrameHeight = LC_DEVICE_WIDTH * (3. / 4.);
+    self.preview.viewFrameWidth = 100;
+    self.preview.viewFrameHeight = 100;
+    self.preview.viewFrameX = LC_DEVICE_WIDTH - self.preview.viewFrameWidth - 10;
+    self.preview.viewFrameY = 10;
     self.preview.clipsToBounds = YES;
     self.preview.image = self.image;
     self.preview.userInteractionEnabled = YES;
@@ -69,39 +117,38 @@ LC_PROPERTY(strong) LKInputView * inputView;
     self.view.ADD(self.preview);
     
     
-    LCUIButton * dismissButton = LCUIButton.view;
-    dismissButton.viewFrameWidth = 37 / 3 + 40;
-    dismissButton.viewFrameHeight = 61 / 3 + 40;
-    dismissButton.buttonImage = [UIImage imageNamed:@"NavigationBarBackShadow.png" useCache:YES];
-    dismissButton.showsTouchWhenHighlighted = YES;
-    [dismissButton addTarget:self action:@selector(pop) forControlEvents:UIControlEventTouchUpInside];
-    self.view.ADD(dismissButton);
+    [self setNavigationBarButton:LCUINavigationBarButtonTypeRight title:LC_LO(@"发布") titleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.8]];
     
     
-    LCUIButton * finishButton = LCUIButton.view;
-    finishButton.viewFrameWidth = 75 / 3 + 40;
-    finishButton.viewFrameHeight = 52 / 3 + 40;
-    finishButton.viewFrameX = LC_DEVICE_WIDTH - finishButton.viewFrameWidth;
-    finishButton.buttonImage = [UIImage imageNamed:@"PostDidFinish.png" useCache:YES];
-    finishButton.showsTouchWhenHighlighted = YES;
-    [finishButton addTarget:self action:@selector(finishIt) forControlEvents:UIControlEventTouchUpInside];
-    self.view.ADD(finishButton);
+    self.recommendLabel = LCUILabel.view;
+    self.recommendLabel.viewFrameX = 10;
+    self.recommendLabel.viewFrameY = 10;
+    self.recommendLabel.viewFrameWidth = LC_DEVICE_WIDTH - self.recommendLabel.viewFrameX * 2;
+    self.recommendLabel.viewFrameHeight = 15;
+    self.recommendLabel.text = LC_LO(@"点击添加标签，让更多同类发现你");
+    self.recommendLabel.font = LK_FONT(13);
+    self.recommendLabel.textColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
+    self.recommendLabel.contentMode = UIViewContentModeBottom;
+    [self.recommendLabel addTapGestureRecognizer:self selector:@selector(becomeFirstResponserAction)];
+    self.view.ADD(self.recommendLabel);
     
     
-    self.scrollView = UIScrollView.view;
-    self.scrollView.viewFrameY = self.preview.viewBottomY;
-    self.scrollView.viewFrameWidth = self.view.viewFrameWidth;
-    self.scrollView.viewFrameHeight = self.view.viewFrameHeight - self.scrollView.viewFrameY - 44;
-    self.scrollView.contentSize = LC_SIZE(self.view.viewFrameWidth, self.scrollView.viewFrameHeight * 2);
-    self.view.ADD(self.scrollView);
+    UIView * becomeFirstResponser = UIView.view;
+    becomeFirstResponser.viewFrameX = 10;
+    becomeFirstResponser.viewFrameY = self.recommendLabel.viewBottomY;
+    becomeFirstResponser.viewFrameWidth = self.recommendLabel.viewFrameWidth;
+    becomeFirstResponser.viewFrameHeight = 120;
+    [becomeFirstResponser addTapGestureRecognizer:self selector:@selector(becomeFirstResponserAction)];
+    self.view.ADD(becomeFirstResponser);
     
     
     // 选择列表
     self.selectedTags = LKRecommendTagsView.view;
-    self.selectedTags.viewFrameWidth = LC_DEVICE_WIDTH;
-    self.selectedTags.backgroundColor = LKColor.backgroundColor;
+    self.selectedTags.viewFrameY = self.recommendLabel.viewBottomY;
+    self.selectedTags.viewFrameWidth = LC_DEVICE_WIDTH - 20 - self.preview.viewFrameWidth;
     self.selectedTags.highlight = YES;
-    self.scrollView.ADD(self.selectedTags);
+    self.selectedTags.tapRemove = YES;
+    self.view.ADD(self.selectedTags);
     
     @weakly(self);
     
@@ -109,20 +156,8 @@ LC_PROPERTY(strong) LKInputView * inputView;
       
         @normally(self);
         
-        [self updateScrollSubviewsLayout];
+        [self updateSubviewsLayout];
     };
-    
-    
-    self.recommendLabel = LCUILabel.view;
-    self.recommendLabel.viewFrameX = 10;
-    self.recommendLabel.viewFrameY = self.selectedTags.viewBottomY;
-    self.recommendLabel.viewFrameWidth = LC_DEVICE_WIDTH - self.recommendLabel.viewFrameX * 2;
-    self.recommendLabel.viewFrameHeight = 15;
-    self.recommendLabel.text = LC_LO(@"点击添加标签，让更多同类发现你");
-    self.recommendLabel.font = LK_FONT(13);
-    self.recommendLabel.textColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
-    self.recommendLabel.contentMode = UIViewContentModeBottom;
-    self.scrollView.ADD(self.recommendLabel);
     
     
     // 推荐列表
@@ -130,7 +165,13 @@ LC_PROPERTY(strong) LKInputView * inputView;
     self.recommendTags.viewFrameY = self.selectedTags.viewBottomY;
     self.recommendTags.viewFrameWidth = LC_DEVICE_WIDTH;
     self.recommendTags.highlight = NO;
-    self.scrollView.ADD(self.recommendTags);
+    self.view.ADD(self.recommendTags);
+    
+    
+    UIView * line = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
+    line.viewFrameWidth = LC_DEVICE_WIDTH;
+    line.tag = 100;
+    self.recommendTags.ADD(line);
     
     
     // 加载推荐数据
@@ -142,22 +183,29 @@ LC_PROPERTY(strong) LKInputView * inputView;
       
         @normally(self);
         
-        [self addNewTag:item.tagLabel.text];
+        if ([self checkOnSelectedTags:item.tagString]) {
+            
+            [self showTopMessageErrorHud:LC_LO(@"该标签已经存在")];
+        }
+        else{
+            
+            [self addNewTag:item.tagLabel.text];
+        }
     };
     
     self.recommendTags.itemDidLoad = ^(){
         
         @normally(self);
         
-        [self updateScrollSubviewsLayout];
+        [self updateSubviewsLayout];
     };
     
     
-    [self updateScrollSubviewsLayout];
+    [self updateSubviewsLayout];
 
     
     self.inputView = LKInputView.view;
-    self.inputView.viewFrameY = self.view.viewFrameHeight - self.inputView.viewFrameHeight;
+    self.inputView.viewFrameY = self.view.viewFrameHeight - 64 - self.inputView.viewFrameHeight;
     self.inputView.dismissButton.image = nil;
     self.inputView.dismissButton.buttonImage = nil;
     self.inputView.dismissButton.title = LC_LO(@"添加");
@@ -186,16 +234,85 @@ LC_PROPERTY(strong) LKInputView * inputView;
     self.inputView.willDismiss = ^(NSString * string){
         
     };
+    
+    
+    UIView * locationBackground = UIView.view;
+    locationBackground.backgroundColor = [UIColor whiteColor];
+    locationBackground.viewFrameY = self.inputView.viewFrameY - 53;
+    locationBackground.viewFrameWidth = LC_DEVICE_WIDTH;
+    locationBackground.viewFrameHeight = 53;
+    self.view.ADD(locationBackground);
+    
+    
+    self.locationButton = LCUIButton.view;
+    self.locationButton.viewFrameX = 10;
+    self.locationButton.viewFrameY = 10;
+    self.locationButton.viewFrameWidth = LC_DEVICE_WIDTH / 2 - 10;
+    self.locationButton.viewFrameHeight = 33;
+    self.locationButton.backgroundColor = LKColor.backgroundColor;
+    self.locationButton.cornerRadius = 4;
+    self.locationButton.titleFont = LK_FONT(13);
+    self.locationButton.titleColor = LC_RGB(153, 153, 153);
+    self.locationButton.title = LC_LO(@"我的位置...");
+    self.locationButton.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 5);
+    self.locationButton.titleLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
+    [self.locationButton addTarget:self action:@selector(choosePlaces) forControlEvents:UIControlEventTouchUpInside];
+    locationBackground.ADD(self.locationButton);
+    
+    
+    self.frameObserver = [LCObserver observerForObject:self.inputView keyPath:@"frame" block:^{
+       
+        @normally(self);
+        
+        LC_FAST_ANIMATIONS(0.15, ^{
+            
+            locationBackground.viewFrameY = self.inputView.viewFrameY - 53;
+        });
+    }];
 }
 
--(void) updateScrollSubviewsLayout
-{
-    LC_FAST_ANIMATIONS(0.25, ^{
-    
-        self.recommendLabel.viewFrameY = self.selectedTags.viewBottomY + 10;
-        self.recommendTags.viewFrameY = self.recommendLabel.viewBottomY;
-        self.scrollView.contentSize = LC_SIZE(LC_DEVICE_WIDTH, self.recommendTags.viewBottomY);
+#pragma mark -
 
+-(void) setLocation:(CLLocation *)location andName:(NSString *)name
+{
+    self.locationButton.title = name;
+    self.location = location;
+    self.locationName = name;
+}
+
+-(void) removeLocation
+{
+    self.locationButton.title = LC_LO(@"我的位置...");
+    self.location = nil;
+    self.locationName = nil;
+}
+
+#pragma mark -
+
+-(void) becomeFirstResponserAction
+{
+    [self.inputView becomeFirstResponder];
+}
+
+-(void) handleNavigationBarButton:(LCUINavigationBarButtonType)type
+{
+    if (type == LCUINavigationBarButtonTypeLeft) {
+        
+        [self pop];
+    }
+    else{
+        
+        [self finishIt];
+    }
+}
+
+-(void) updateSubviewsLayout
+{
+    LC_FAST_ANIMATIONS(0.15, ^{
+    
+        CGFloat y = self.selectedTags.viewBottomY + 15;
+        
+        self.recommendTags.viewFrameY = y < self.preview.viewBottomY + 15 ? self.preview.viewBottomY + 15 : y;
     });
 }
 
@@ -224,18 +341,15 @@ LC_PROPERTY(strong) LKInputView * inputView;
         
         LC_FAST_ANIMATIONS(0.25, ^{
             
-            [self.selectedTags reloadData];
+            [self.selectedTags reloadData:NO];
         });
     }
     else{
         
-        [self.selectedTags reloadData];
+        [self.selectedTags reloadData:NO];
     }
 
-    
-    
-    [self updateScrollSubviewsLayout];
-    
+    [self updateSubviewsLayout];
     
     [self.inputView resignFirstResponder];
 }
@@ -263,6 +377,20 @@ LC_PROPERTY(strong) LKInputView * inputView;
 -(void) previewTapAction
 {
     [self.inputView resignFirstResponder];
+    
+    
+    JTSImageInfo * info = [[JTSImageInfo alloc] init];
+    info.image = self.image;
+    info.referenceRect = self.preview.frame;
+    info.referenceView = self.preview.superview;
+    info.fromView = self.preview;
+    
+
+    JTSImageViewController *imageViewer = [[JTSImageViewController alloc] initWithImageInfo:info
+                                                                                       mode:JTSImageViewControllerMode_Image
+                                                                            backgroundStyle:JTSImageViewControllerBackgroundOption_Blurred];
+    
+    [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOriginalPosition];
 }
 
 -(void) pop
@@ -276,6 +404,55 @@ LC_PROPERTY(strong) LKInputView * inputView;
 
     [self postNotification:LKCameraViewControllerDismiss];
     [self postNotification:LKCameraRollViewControllerDismiss];
+}
+
+-(void) dismissKeyboard
+{
+    [self.inputView resignFirstResponder];
+}
+
+-(void) choosePlaces
+{
+    @weakly(self);
+
+    if (self.location) {
+        
+        [LKActionSheet showWithTitle:nil buttonTitles:@[LC_LO(@"更改位置") ,LC_LO(@"移除位置")] didSelected:^(NSInteger index) {
+         
+            @normally(self);
+
+            if (index == 0) {
+                
+                LKSearchPlacesViewController * search = [LKSearchPlacesViewController viewController];
+                
+                search.didSelected = ^(NSString * name, CLLocation * location){
+                    
+                    @normally(self);
+                    
+                    [self setLocation:location andName:name];
+                };
+                
+                [self presentViewController:LC_UINAVIGATION(search) animated:YES completion:nil];
+            }
+            else if (index == 1){
+                
+                [self removeLocation];
+            }
+        }];
+    }
+    else{
+        
+        LKSearchPlacesViewController * search = [LKSearchPlacesViewController viewController];
+        
+        search.didSelected = ^(NSString * name, CLLocation * location){
+            
+            @normally(self);
+            
+            [self setLocation:location andName:name];
+        };
+        
+        [self presentViewController:LC_UINAVIGATION(search) animated:YES completion:nil];
+    }
 }
 
 @end

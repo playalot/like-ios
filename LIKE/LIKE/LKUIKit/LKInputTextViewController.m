@@ -39,7 +39,8 @@ LC_PROPERTY(strong) LCUITextView * textView;
     self.title = @"意见与建议";
     
     [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[UIImage imageNamed:@"NavigationBarBack.png" useCache:YES] selectImage:nil];
-    [self setNavigationBarButton:LCUINavigationBarButtonTypeRight title:@"完成" titleColor:[UIColor whiteColor]];
+    
+    [self setNavigationBarButton:LCUINavigationBarButtonTypeRight title:@"完成" titleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.8]];
 
     
     self.view.backgroundColor = LKColor.backgroundColor;

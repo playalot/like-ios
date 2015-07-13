@@ -71,6 +71,7 @@ LC_PROPERTY(strong) NSMutableDictionary * associatedTagsDic;
                     oldTag.createTime = newTag.createTime;
                     oldTag.comments = newTag.comments;
                     oldTag.totalComments = newTag.totalComments;
+                    oldTag.likers = newTag.likers;
                     
                     [array addObject:oldTag];
 

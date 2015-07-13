@@ -26,7 +26,12 @@ LC_PROPERTY(strong) AVCaptureVideoPreviewLayer * prevLayer;
             AVCaptureDeviceInput * captureInput = [AVCaptureDeviceInput deviceInputWithDevice:[AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo] error:nil];
             
             self.captureSession = [[AVCaptureSession alloc] init];
-            [self.captureSession addInput:captureInput];
+            
+            if(captureInput && [self.captureSession canAddInput:captureInput]){
+                
+                [self.captureSession addInput:captureInput];
+            }
+            
             [self.captureSession startRunning];
             
             self.prevLayer = [AVCaptureVideoPreviewLayer layerWithSession: self.captureSession];

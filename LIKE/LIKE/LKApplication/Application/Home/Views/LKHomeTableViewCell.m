@@ -15,13 +15,16 @@
 LC_PROPERTY(strong) LCUIImageView * head;
 LC_PROPERTY(strong) LCUILabel * title;
 LC_PROPERTY(strong) LCUILabel * likes;
-LC_PROPERTY(strong) LKTagsView * tagsView;
 LC_PROPERTY(strong) LCUIButton * friendshipButton;
 LC_PROPERTY(strong) LCUIActivityIndicatorView * loadingActivity;
 
 @end
 
 @implementation LKHomeTableViewCell
+
+LC_IMP_SIGNAL(PushUserCenter);
+LC_IMP_SIGNAL(PushPostDetail);
+
 
 +(CGFloat) height:(LKPost *)post
 {
@@ -94,7 +97,7 @@ LC_PROPERTY(strong) LCUIActivityIndicatorView * loadingActivity;
     self.title = LCUILabel.view;
     self.title.viewFrameX = self.head.viewRightX + 10;
     self.title.viewFrameY = 5;
-    self.title.viewFrameWidth = LC_DEVICE_WIDTH - 55 - 10;
+    self.title.viewFrameWidth = LC_DEVICE_WIDTH - 150;
     self.title.viewFrameHeight = 55;
     self.title.font = LK_FONT(13);
     self.title.textColor = LC_RGB(51, 51, 51);

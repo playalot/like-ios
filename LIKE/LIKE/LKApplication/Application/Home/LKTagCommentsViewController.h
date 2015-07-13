@@ -21,6 +21,8 @@ LC_PROPERTY(copy) LKTagCommentsViewControllerWillHide willHide;
 
 -(instancetype) initWithTag:(LKTag *)tag;
 
+-(void) update;
+
 -(void) inputBecomeFirstResponder;
 -(void) replyUserAction:(LKUser *)user;
 

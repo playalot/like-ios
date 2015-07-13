@@ -26,7 +26,7 @@
         
         NSArray * comments = dict[@"comments"];
         
-        if (comments) {
+        if (comments && [comments isKindOfClass:[NSArray class]]) {
             
             for (NSDictionary * tmp in comments) {
                 
@@ -35,6 +35,19 @@
         }
         
         self.totalComments = dict[@"total_comments"];
+        
+        
+        self.likers = [NSMutableArray array];
+        
+        NSArray * likers = dict[@"likers"];
+
+        if (likers && [likers isKindOfClass:[NSArray class]]) {
+
+            for (NSDictionary * tmp in likers) {
+                
+                [self.likers addObject:[LKUser objectFromDictionary:tmp]];
+            }
+        }
 
     }
     

@@ -122,20 +122,6 @@ LC_PROPERTY(assign) CGFloat cacheSize;
     return 7;
 }
 
-//-(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
-//    UIView * view = UIView.view;
-//    view.viewFrameWidth = LC_DEVICE_WIDTH;
-//    view.viewFrameHeight = 20;
-//    
-//    return view;
-//}
-//
-//-(CGFloat) tableView:(LCUITableView *)tableView heightForHeaderInSection:(NSInteger)section
-//{
-//    return 0;
-//}
-
 - (UITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     LCUITableViewCell * cell = nil;
@@ -404,8 +390,21 @@ LC_PROPERTY(assign) CGFloat cacheSize;
            
             if (integerValue == 1) {
                 
-                [LCUIImageCache.singleton deleteAllImages];
-                [self.tableView reloadData];
+                [self showTopLoadingMessageHud:LC_LO(@"删除中...")];
+                
+                [LCGCD dispatchAsync:LCGCDPriorityHigh block:^{
+                    
+                    [LCUIImageCache.singleton deleteAllImages];
+                    self.cacheSize = 0;
+                    
+                    [LCGCD dispatchAsyncInMainQueue:^{
+                        
+                        [RKDropdownAlert dismissAllAlert];
+                        
+                        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:3 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+
+                    }];
+                }];
             }
             
         }];

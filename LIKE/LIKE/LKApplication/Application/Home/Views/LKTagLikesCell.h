@@ -17,6 +17,7 @@ LC_PROPERTY(strong) NSArray * likes;
 
 -(void) setTagValue:(LKTag *)tagValue andLikes:(NSArray *)likes;
 
+LC_ST_SIGNAL(PushUserInfo);
+
 @end
 
-LC_ST_SIGNAL(LKTagLikesCell, PushUserInfo);

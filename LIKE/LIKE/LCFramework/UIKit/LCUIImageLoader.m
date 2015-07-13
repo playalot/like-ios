@@ -81,32 +81,30 @@
 {
 	LCImageLoadConnection * connection = [self loadingConnectionForURL:url];
     
-	[NSObject cancelPreviousPerformRequestsWithTarget:connection selector:@selector(start) object:nil];
-    
-	[connection cancel];
-    
-	[self cleanUpConnection:connection];
+    if (connection) {
+     
+        [NSObject cancelPreviousPerformRequestsWithTarget:connection selector:@selector(startDownload) object:nil];
+        
+        [connection cancel];
+        
+        [self cleanUpConnection:connection];
+    }
 }
 
-- (LCImageLoadConnection *)loadImageForURL:(NSString *)url
+- (void)loadImageForURL:(NSString *)url
 {
-	LCImageLoadConnection * connection;
-	
-	if((connection = [self loadingConnectionForURL:url])){
+	if([self loadingConnectionForURL:url]){
         
-		return connection;
+	}
+    else {
         
-	} else {
-        
-		connection = [[LCImageLoadConnection alloc] initWithImageURL:url delegate:self];
-	
-		[self.connectionsLock lock];
-		[self.currentConnections setObject:connection forKey:url];
-		[self.connectionsLock unlock];
-        
-		[connection performSelector:@selector(start) withObject:nil afterDelay:0];
-		
-		return connection;
+            LCImageLoadConnection * connection = [[LCImageLoadConnection alloc] initWithImageURL:url delegate:self];
+            
+            [self.connectionsLock lock];
+            [self.currentConnections setObject:connection forKey:url];
+            [self.connectionsLock unlock];
+            
+            [connection performSelector:@selector(startDownload) withObject:nil afterDelay:0];
 	}
 }
 
@@ -173,15 +171,15 @@
 
 - (void)imageLoadConnectionDidFinishLoading:(LCImageLoadConnection *)connection
 {
-    if (![self checkResult:connection.request]) {
+    if (![self checkResult:connection]) {
         
-        [self imageLoadConnection:connection didFailWithError:connection.request.error];
+        [self imageLoadConnection:connection didFailWithError:nil];
         return;
     }
         
-    NSString * fullPath = [LCUIImageCache.singleton.fileCache fileNameForKey:[connection.imageURL MD5]];
+    //NSString * fullPath = [LCUIImageCache.singleton.fileCache fileNameForKey:[connection.imageURL MD5]];
 
-    UIImage * anImage = [UIImage imageWithContentsOfFile:fullPath];
+    UIImage * anImage = connection.responseImage;
     
 	if(!anImage) {
         
@@ -209,17 +207,17 @@
 	[self cleanUpConnection:connection];
 }
 
--(BOOL) checkResult:(ASIHTTPRequest *)request
+-(BOOL) checkResult:(LCImageLoadConnection *)request
 {
-    NSInteger length = [request.responseHeaders[@"Content-Length"] integerValue];
-
-    NSInteger dataLength = request.responseData.length;
-
-    if(dataLength < length && dataLength != 0){
-
-        ERROR(@"Image is broken! ( ContentLength:%d, ActualLength:%d )",length,dataLength);
-        return NO;
-    }
+//    NSInteger length = [request.responseHeaders[@"Content-Length"] integerValue];
+//
+//    NSInteger dataLength = request.responseData.length;
+//
+//    if(dataLength < length && dataLength != 0){
+//
+//        ERROR(@"Image is broken! ( ContentLength:%d, ActualLength:%d )",length,dataLength);
+//        return NO;
+//    }
 
     return YES;
 }

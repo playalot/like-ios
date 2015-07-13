@@ -20,7 +20,7 @@
         self.content = dict[@"content"];
         self.timestamp = dict[@"created"];
         self.user = [LKUser objectFromDictionary:dict[@"user"]];
-        
+        self.place = [dict[@"place"] isKindOfClass:[NSString class]] && [dict[@"place"] length] ? dict[@"place"] : nil;
         self.tags = [NSMutableArray array];
         
         NSArray * tags = dict[@"marks"];

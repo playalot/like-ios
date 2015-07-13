@@ -24,7 +24,9 @@ LC_PROPERTY(strong) LKNotification * notification;
 
 +(CGFloat) height:(LKNotification *)notification;
 
+
+LC_ST_SIGNAL(PushPostDetail);
+
 @end
 
-LC_ST_SIGNAL(LKNotificationCell, PushPostDetail);
 

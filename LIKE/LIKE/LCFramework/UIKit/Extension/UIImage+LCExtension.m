@@ -8,6 +8,7 @@
 
 #import "UIImage+LCExtension.h"
 #import "LCUIImageCache.h"
+#import <ImageIO/ImageIO.h>
 
 @implementation UIImage (LCExtension)
 
@@ -431,6 +432,8 @@ LCUIImageNamed IMAGE(NSString * imageName)
 -(UIImage *) magic
 {
     CIImage * ciImage = [[CIImage alloc] initWithCGImage:self.CGImage];
+    
+   // NSDictionary *options = @{CIDetectorImageOrientation : [[ciImage properties] valueForKey:(NSString *)kCGImagePropertyOrientation]};
     
     // Get the filters and apply them to the image
     NSArray * filters = [ciImage autoAdjustmentFilters];

@@ -11,6 +11,7 @@
 #import "LKTagsView.h"
 #import "LKTime.h"
 #import "LKInputView.h"
+#import "LKLocationManager.h"
 
 @interface LKTagCommentsViewController () <UITableViewDataSource,UITableViewDelegate>
 
@@ -26,6 +27,8 @@ LC_PROPERTY(strong) LKUser * replyUser;
 
 LC_PROPERTY(strong) NSMutableArray * datasource;
 
+LC_PROPERTY(strong) LKLocationManager * locationManager;
+
 @end
 
 @implementation LKTagCommentsViewController
@@ -36,6 +39,7 @@ LC_PROPERTY(strong) NSMutableArray * datasource;
     [self cancelAllRequests];
 }
 
+static NSString * __LKUserAddress = nil;
 
 -(instancetype) initWithTag:(LKTag *)tag
 {
@@ -43,6 +47,22 @@ LC_PROPERTY(strong) NSMutableArray * datasource;
         
         self.tagValue = tag;
         self.datasource = [self.tagValue.comments mutableCopy];
+        
+        self.locationManager = [LKLocationManager new];
+        
+        [self.locationManager requestCurrentLocationWithBlock:^(CLLocation *location, AMapReGeocode *regeocode, NSError *error) {
+            
+            if (!error) {
+                
+                __LKUserAddress = regeocode.addressComponent.province;
+            }
+            
+        }];
+        
+        if (!self.tagValue.user) {
+            
+            [self update];
+        }
         
         [self buildUI];
     }
@@ -145,6 +165,31 @@ LC_PROPERTY(strong) NSMutableArray * datasource;
     };
 }
 
+-(void) update
+{
+    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"mark/%@", self.tagValue.id]].AUTO_SESSION().GET_METHOD();
+    
+    @weakly(self);
+    
+    [self request:interface complete:^(LKHttpRequestResult *result) {
+        
+        @normally(self);
+        
+        if (result.state == LKHttpRequestStateFinished) {
+            
+            LKTag * tag = [LKTag objectFromDictionary:result.json[@"data"]];
+            
+            self.tagValue = tag;
+            
+            [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+        }
+        else if (result.state == LKHttpRequestStateFailed){
+            
+            [self showTopMessageErrorHud:result.error];
+        }
+    }];
+}
+
 -(void) sendNewComment:(NSString *)comment
 {
     LKComment * commentObject = [[LKComment alloc] init];
@@ -152,6 +197,7 @@ LC_PROPERTY(strong) NSMutableArray * datasource;
     commentObject.replyUser = self.replyUser;
     commentObject.content = comment;
     commentObject.timestamp = @([[NSDate date] timeIntervalSince1970]);
+    commentObject.place = __LKUserAddress;
     
     self.tagValue.totalComments = @(self.tagValue.totalComments.integerValue + 1);
     [self.tagValue.comments insertObject:commentObject atIndex:0];
@@ -163,6 +209,11 @@ LC_PROPERTY(strong) NSMutableArray * datasource;
     
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"mark/%@/comment", self.tagValue.id]].AUTO_SESSION().POST_METHOD();
     
+    if (__LKUserAddress) {
+        
+        [interface addParameter:__LKUserAddress key:@"place"];
+    }
+    
     if (self.replyUser) {
         [interface addParameter:self.replyUser.id key:@"reply_id"];
     }
@@ -173,14 +224,13 @@ LC_PROPERTY(strong) NSMutableArray * datasource;
        
         if (result.state == LKHttpRequestStateFinished) {
             
+            
         }
         else if (result.state == LKHttpRequestStateFailed){
             
         };
         
     }];
-    
-    
     
     [self.inputView resignFirstResponder];
     self.inputView.textField.text = @"";
@@ -224,9 +274,6 @@ LC_PROPERTY(strong) NSMutableArray * datasource;
             if (diretion == LCUIPullLoaderDiretionTop) {
                 self.datasource = resultArray;
             }
-//            else{
-//                [self.datasource addObjectsFromArray:resultArray];
-//            }
             
             [self.pullLoader endRefresh];
             [self.tableView reloadData];
@@ -318,12 +365,13 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
 {
     if (indexPath.section == 0) {
         
+        CGFloat padding = 10;
+
         LCUITableViewCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Header" andClass:[LCUITableViewCell class] configurationCell:^(LCUITableViewCell * configurationCell) {
             
             configurationCell.backgroundColor = [UIColor whiteColor];
             configurationCell.selectionStyle = UITableViewCellSelectionStyleNone;
             
-            CGFloat padding = 10;
             
             LCUIImageView * headImageView = LCUIImageView.view;
             headImageView.viewFrameX = padding;
@@ -331,16 +379,9 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             headImageView.viewFrameWidth = 33;
             headImageView.viewFrameHeight = 33;
             headImageView.cornerRadius = headImageView.viewMidWidth;
-            headImageView.backgroundColor = [UIColor whiteColor];
-            headImageView.url = self.tagValue.user.avatar;
+            headImageView.backgroundColor = [UIColor lightGrayColor];
+            headImageView.tag = 1001;
             configurationCell.ADD(headImageView);
-
-            
-            LKTagItem * tagItem = LKTagItem.view;
-            tagItem.tagValue = self.tagValue;
-            tagItem.viewFrameX = headImageView.viewRightX + padding;
-            tagItem.viewFrameY = 53 / 2 - tagItem.viewMidHeight;
-            configurationCell.ADD(tagItem);
             
             
             LCUILabel * timeLabel = LCUILabel.view;
@@ -350,7 +391,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             timeLabel.font = LK_FONT(13);
             timeLabel.textAlignment = UITextAlignmentRight;
             timeLabel.textColor = LC_RGB(171, 164, 157);
-            timeLabel.text = [LKTime dateNearByTimestamp:self.tagValue.createTime];
+            timeLabel.tag = 1003;
             configurationCell.ADD(timeLabel);
             
             
@@ -366,6 +407,30 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             configurationCell.ADD(line1);
         }];
         
+        
+        LCUIImageView * head = cell.FIND(1001);
+        LKTagItem * item = cell.FIND(1002);
+        LCUILabel * time = cell.FIND(1003);
+        
+        if (item) {
+            
+            [item removeFromSuperview];
+            item = nil;
+        }
+        
+        if (self.tagValue.tag.length) {
+        
+            item = LKTagItem.view;
+            item.tag = 1002;
+            cell.ADD(item);
+        }
+        
+        head.url = self.tagValue.user.avatar;
+        item.tagValue = self.tagValue;
+        item.viewFrameX = head.viewRightX + padding;
+        item.viewFrameY = 53 / 2 - item.viewMidHeight;
+        time.text = [LKTime dateNearByTimestamp:self.tagValue.createTime];
+
         return cell;
     }
     else{

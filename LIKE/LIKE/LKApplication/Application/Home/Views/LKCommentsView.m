@@ -24,74 +24,6 @@
     UIView * lastView = nil;
     
     
-    NSInteger count = tagValue.comments.count < maxComments ? tagValue.comments.count : maxComments;
-    
-    for (NSInteger i = 0; i < count; i++) {
-        
-        LKComment * comment = tagValue.comments[i];
-        
-        
-        UIView * contentView = UIView.view;
-        contentView.viewFrameY = lastView.viewBottomY;
-        contentView.viewFrameWidth = self.viewFrameWidth;
-        contentView.viewFrameHeight = 53;
-        contentView.backgroundColor = [UIColor whiteColor];
-        self.ADD(contentView);
-        
-        
-        LCUIImageView * head = LCUIImageView.view;
-        head.viewFrameX = 10;
-        head.viewFrameY = 10;
-        head.viewFrameWidth = 33;
-        head.viewFrameHeight = 33;
-        head.cornerRadius = 33 / 2;
-        head.url = comment.user.avatar;
-        head.userInteractionEnabled = YES;
-        [head addTapGestureRecognizer:self selector:@selector(headTapAction:)];
-        head.tag = i + 100;
-        contentView.ADD(head);
-        
-        
-        LCUILabel * contentLabel = LCUILabel.view;
-        contentLabel.viewFrameX = head.viewRightX + 10;
-        contentLabel.viewFrameY = 10;
-        contentLabel.viewFrameWidth = self.viewFrameWidth - contentLabel.viewFrameX - 10;
-        contentLabel.font = LK_FONT(12);
-        contentLabel.textColor = LC_RGB(51, 51, 51);
-        
-        NSString * content = [NSString stringWithFormat:@"%@：%@%@" ,comment.user.name, comment.replyUser ? [NSString stringWithFormat:@"@%@ ", comment.replyUser.name] : @"",comment.content];
-
-        contentLabel.text = content;
-        contentLabel.numberOfLines = 0;
-        contentLabel.FIT();
-        contentView.ADD(contentLabel);
-        
-        
-        LCUILabel * timeLabel = LCUILabel.view;
-        timeLabel.viewFrameX = contentLabel.viewFrameX;
-        timeLabel.viewFrameY = contentLabel.viewBottomY + 3;
-        timeLabel.viewFrameWidth = self.viewFrameWidth;
-        timeLabel.font = LK_FONT(10);
-        timeLabel.textColor = LC_RGB(180, 180, 180);
-        timeLabel.text = [LKTime dateNearByTimestamp:comment.timestamp];
-        timeLabel.FIT();
-        contentView.ADD(timeLabel);
-        
-        contentView.viewFrameHeight = timeLabel.viewBottomY + 7;
-        contentView.tag = i + 100;
-        [contentView addTapGestureRecognizer:self selector:@selector(replyAction:)];
-        
-        
-        if (i == count - 1) {
-            
-        }
-        
-        
-        [self lineInView:contentView];
-        
-        lastView = contentView;
-    }
-    
     if (tagValue.totalComments.integerValue > maxComments) {
         
         UIView * moreView = UIView.view;
@@ -123,6 +55,83 @@
         
         
         lastView = moreView;
+    }
+    
+    
+    NSInteger count = tagValue.comments.count < maxComments ? tagValue.comments.count : maxComments;
+    
+    for (NSInteger i = 0; i < count; i++) {
+        
+        LKComment * comment = tagValue.comments[i];
+        
+        
+        UIView * contentView = UIView.view;
+        contentView.viewFrameY = lastView.viewBottomY;
+        contentView.viewFrameWidth = self.viewFrameWidth;
+        contentView.viewFrameHeight = 53;
+        contentView.backgroundColor = [UIColor whiteColor];
+        self.ADD(contentView);
+        
+        
+        LCUIImageView * head = LCUIImageView.view;
+        head.viewFrameX = 10;
+        head.viewFrameY = 10;
+        head.viewFrameWidth = 33;
+        head.viewFrameHeight = 33;
+        head.cornerRadius = 33 / 2;
+        head.url = comment.user.avatar;
+        head.userInteractionEnabled = YES;
+        [head addTapGestureRecognizer:self selector:@selector(headTapAction:)];
+        head.tag = i + 100;
+        contentView.ADD(head);
+        
+        
+        LCUILabel * contentLabel = LCUILabel.view;
+        contentLabel.viewFrameX = head.viewRightX + 10;
+        contentLabel.viewFrameY = 11;
+        contentLabel.viewFrameWidth = self.viewFrameWidth - contentLabel.viewFrameX - 10;
+        contentLabel.font = LK_FONT(12);
+        contentLabel.textColor = LC_RGB(51, 51, 51);
+        
+        NSString * content = [NSString stringWithFormat:@"%@：%@%@" ,comment.user.name, comment.replyUser ? [NSString stringWithFormat:@"@%@ ", comment.replyUser.name] : @"",comment.content];
+
+        contentLabel.text = content;
+        
+        
+        NSMutableAttributedString * attString = [[NSMutableAttributedString alloc] initWithString:content];
+        [attString addAttribute:NSFontAttributeName value:LK_FONT_B(12) range:[content rangeOfString:comment.user.name]];
+        
+        contentLabel.attributedText = attString;
+        
+        
+        contentLabel.numberOfLines = 0;
+        contentLabel.FIT();
+        contentView.ADD(contentLabel);
+        
+        
+        LCUILabel * timeLabel = LCUILabel.view;
+        timeLabel.viewFrameX = contentLabel.viewFrameX;
+        timeLabel.viewFrameY = contentLabel.viewBottomY + 2;
+        timeLabel.viewFrameWidth = contentLabel.viewFrameWidth;
+        timeLabel.font = LK_FONT(12);
+        timeLabel.textColor = LC_RGB(180, 180, 180);
+        timeLabel.text = [NSString stringWithFormat:@"%@ %@ %@", [LKTime dateNearByTimestamp:comment.timestamp], comment.place ? LC_LO(@"来自") : @"", comment.place ? comment.place : @""];
+        timeLabel.FIT();
+        contentView.ADD(timeLabel);
+        
+        contentView.viewFrameHeight = timeLabel.viewBottomY + 7;
+        contentView.tag = i + 100;
+        [contentView addTapGestureRecognizer:self selector:@selector(replyAction:)];
+        
+        
+        if (i == count - 1) {
+            
+        }
+        
+        
+        [self lineInView:contentView];
+        
+        lastView = contentView;
     }
     
     [self roundCorners:UIRectCornerBottomLeft | UIRectCornerBottomRight forView:lastView];

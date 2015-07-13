@@ -207,19 +207,19 @@ LC_PROPERTY(strong) UICollectionView * collectionView;
     [self presentViewController:picker animated:YES completion:nil];
     
     
-    picker.finalizationBlock = ^(id picker, NSDictionary * imageInfo){
+    picker.finalizationBlock = ^(id _picker, NSDictionary * imageInfo){
         
         LKImageCropperViewController * cropper = [[LKImageCropperViewController alloc] initWithImage:imageInfo[@"UIImagePickerControllerOriginalImage"]];
         
         [cropper showBackButton];
         
-        [picker pushViewController:cropper animated:YES];
+        [_picker pushViewController:cropper animated:YES];
         
     };
     
-    picker.cancellationBlock = ^(UIImagePickerController * picker){
+    picker.cancellationBlock = ^(UIImagePickerController * _picker){
         
-        [picker dismissViewControllerAnimated:YES completion:nil];
+        [_picker dismissViewControllerAnimated:YES completion:nil];
         
     };
 }

@@ -14,6 +14,8 @@ LC_PROPERTY(assign) BOOL uploading;
 LC_PROPERTY(assign) CGFloat progress;
 LC_PROPERTY(strong) UIImage * image;
 LC_PROPERTY(strong) NSArray * tags;
+LC_PROPERTY(strong) NSArray * location;
+LC_PROPERTY(copy) NSString * place;
 LC_PROPERTY(copy) LKValueChanged updateProgress;
 
 @end
@@ -27,7 +29,7 @@ LC_PROPERTY(copy) LKValueChangedM uploadFinished;
 LC_PROPERTY(copy) LKValueChanged uploadFailed;
 LC_PROPERTY(copy) LKValueChanged stateChanged;
 
-+(void) uploadImage:(UIImage *)image tags:(NSArray *)tags;
++(void) uploadImage:(UIImage *)image tags:(NSArray *)tags location:(NSArray *)location place:(NSString *)place;
 
 -(void) reuploadPosting:(LKPosting *)posting;
 -(void) cancelPosting:(LKPosting *)posting;

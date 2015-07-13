@@ -23,7 +23,7 @@
         
         self.content = dict[@"content"];
         self.timestamp = dict[@"created"];
-        self.location = dict[@"location"];
+        self.place = [dict[@"place"] isKindOfClass:[NSString class]] ? dict[@"place"] : nil;
     }
     
     return self;

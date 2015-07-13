@@ -24,7 +24,7 @@ LC_PROPERTY(assign) BOOL custom;
         
         self.cornerRadius = 4;
         self.layer.masksToBounds = NO;
-        
+        self.showNumber = YES;
 
         self.tagLabel = LCUILabel.view;
         self.tagLabel.font = LK_FONT(11);
@@ -172,22 +172,30 @@ LC_PROPERTY(assign) BOOL custom;
     CGFloat topPadding = 2.;
     CGFloat leftPadding = 9.;
     
-
     self.tagLabel.viewFrameX = leftPadding;
     self.tagLabel.viewFrameY = topPadding + 1.5;
     
-    self.likesLabel.text = LC_NSSTRING_FORMAT(@"%@", customCount ? customCount : tagValue.likes);
-    self.likesLabel.FIT();
+    if (self.showNumber) {
+        
+        self.likesLabel.text = LC_NSSTRING_FORMAT(@"%@", customCount ? customCount : tagValue.likes);
+        self.likesLabel.FIT();
+        
+        self.likesLabel.viewFrameX = self.tagLabel.viewRightX + leftPadding - 2;
+        self.likesLabel.viewFrameY = topPadding / 2. + 1;
+        self.likesLabel.viewFrameHeight = (self.tagLabel.viewFrameHeight + topPadding * 2.) - topPadding;
+        self.likesLabel.viewFrameWidth = self.likesLabel.viewFrameWidth < self.likesLabel.viewFrameHeight ? self.likesLabel.viewFrameHeight : self.likesLabel.viewFrameWidth;
+        self.likesLabel.cornerRadius = self.likesLabel.viewMidHeight;
+        
+        
+        self.viewFrameWidth = self.likesLabel.viewRightX + topPadding;
+        self.viewFrameHeight = self.likesLabel.viewBottomY + topPadding;
+    }
+    else{
+        
+        self.viewFrameWidth = self.tagLabel.viewRightX + leftPadding;
+        self.viewFrameHeight = self.tagLabel.viewBottomY + topPadding;
+    }
     
-    self.likesLabel.viewFrameX = self.tagLabel.viewRightX + leftPadding - 2;
-    self.likesLabel.viewFrameY = topPadding / 2. + 1;
-    self.likesLabel.viewFrameHeight = (self.tagLabel.viewFrameHeight + topPadding * 2.) - topPadding;
-    self.likesLabel.viewFrameWidth = self.likesLabel.viewFrameWidth < self.likesLabel.viewFrameHeight ? self.likesLabel.viewFrameHeight : self.likesLabel.viewFrameWidth;
-    self.likesLabel.cornerRadius = self.likesLabel.viewMidHeight;
-
-
-    self.viewFrameWidth = self.likesLabel.viewRightX + topPadding;
-    self.viewFrameHeight = self.likesLabel.viewBottomY + topPadding;
     
     self.cornerRadius = self.viewMidHeight;
     self.layer.masksToBounds = NO;

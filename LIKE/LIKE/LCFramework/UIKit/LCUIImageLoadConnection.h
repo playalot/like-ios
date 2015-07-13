@@ -25,7 +25,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ASIHTTPRequest.h"
 
 @protocol LCImageLoadConnectionDelegate;
 
@@ -33,13 +32,14 @@
 
 - (id)initWithImageURL:(NSString *)url delegate:(id)delegate;
 
-- (void)start;
+- (void)startDownload;
 - (void)cancel;
 
-LC_PROPERTY(readonly) NSData * responseData;
+LC_PROPERTY(strong) NSData * responseData;
+LC_PROPERTY(strong) UIImage * responseImage;
 
-LC_PROPERTY(strong) NSString       * imageURL;
-LC_PROPERTY(strong) ASIHTTPRequest * request;
+LC_PROPERTY(strong) NSString * imageURL;
+LC_PROPERTY(strong) AFHTTPRequestOperation * requestOperation;
 
 LC_PROPERTY(weak) id<LCImageLoadConnectionDelegate> delegate;
 LC_PROPERTY(assign) NSTimeInterval timeoutInterval; // Default is 30 seconds

@@ -13,7 +13,9 @@
 
 LC_PROPERTY(strong) LKPosting * posting;
 
-@end
 
-LC_ST_SIGNAL(LKUploadingCell, LKUploadingCellCancel);
-LC_ST_SIGNAL(LKUploadingCell, LKUploadingCellReupload);
+LC_ST_SIGNAL(LKUploadingCellCancel);
+LC_ST_SIGNAL(LKUploadingCellReupload);
+
+
+@end

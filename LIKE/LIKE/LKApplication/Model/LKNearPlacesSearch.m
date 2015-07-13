@@ -88,9 +88,8 @@ LC_PROPERTY(strong) AMapSearchAPI * searchAPI;
     AMapPlaceSearchRequest * request = [[AMapPlaceSearchRequest alloc] init];
     request.searchType = AMapSearchType_PlaceAround;
     request.location = [AMapGeoPoint locationWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude];
-    request.sortrule = 1;
     request.requireExtension = YES;
-    request.offset = 100;
+    request.offset = 10;
     request.keywords = name;
     
     [self.searchAPI AMapPlaceSearch:request];

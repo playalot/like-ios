@@ -10,6 +10,7 @@
 #import "LKTagsView.h"
 #import "LKTime.h"
 #import "LKCommentsView.h"
+#import "LKLikesScrollView.h"
 
 @interface LKPostDetailCell ()
 
@@ -18,10 +19,14 @@ LC_PROPERTY(strong) LKTagItem * tagItem;
 LC_PROPERTY(strong) LCUILabel * timeLabel;
 LC_PROPERTY(strong) UIView * cellBackgroundView;
 LC_PROPERTY(strong) LKCommentsView * commentsView;
+LC_PROPERTY(strong) LKLikesScrollView * likesView;
 
 @end
 
 @implementation LKPostDetailCell
+
+LC_IMP_SIGNAL(PushUserCenter);
+
 
 -(void) buildUI
 {
@@ -53,6 +58,7 @@ LC_PROPERTY(strong) LKCommentsView * commentsView;
     self.ADD(tip);
     
     
+    
     self.cellBackgroundView = UIView.view.X(tip.viewRightX).Y(padding);
     self.cellBackgroundView.viewFrameWidth = LC_DEVICE_WIDTH - self.cellBackgroundView.viewFrameX - 10;
     self.cellBackgroundView.viewFrameHeight = 33;
@@ -62,28 +68,34 @@ LC_PROPERTY(strong) LKCommentsView * commentsView;
     
     
     self.tagItem = LKTagItem.view;
+    self.tagItem.showNumber = YES;
+    
     self.cellBackgroundView.ADD(self.tagItem);
     
     
+//    self.likesView = LKLikesScrollView.view;
+//    self.likesView.viewFrameX = self.cellBackgroundView.viewFrameX;
+//    self.likesView.viewFrameWidth = self.cellBackgroundView.viewFrameWidth;
+//    self.likesView.viewFrameHeight = 33;
+//    self.likesView.viewFrameY = self.cellBackgroundView.viewBottomY;
+//    self.likesView.backgroundColor = [UIColor whiteColor];
+//    self.ADD(self.likesView);
+    
     
     LCUIButton * commentButton = LCUIButton.view;
-    commentButton.viewFrameWidth = 30;
-    commentButton.viewFrameHeight = 33;
-    commentButton.viewFrameX = self.cellBackgroundView.viewFrameWidth - commentButton.viewFrameWidth;
     commentButton.buttonImage = [UIImage imageNamed:@"TalkIcon.png" useCache:YES];
+    commentButton.viewFrameHeight = 33;
+    commentButton.titleFont = LK_FONT(10);
+    commentButton.title = LC_LO(@"评论");
+    commentButton.titleColor = LC_RGB(140, 133, 126);
+    commentButton.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0);
+    commentButton.imageEdgeInsets = UIEdgeInsetsMake(2, 0, 0, 0);
+    commentButton.FIT();
+    commentButton.viewFrameWidth += 10;
+    commentButton.viewFrameX = self.cellBackgroundView.viewFrameWidth - commentButton.viewFrameWidth - 3;
+    commentButton.viewFrameY = 33 / 2 - commentButton.viewMidHeight;
     [commentButton addTarget:self action:@selector(commentTapAction) forControlEvents:UIControlEventTouchUpInside];
     self.cellBackgroundView.ADD(commentButton);
-    
-    
-//    self.timeLabel = LCUILabel.view;
-//    self.timeLabel.viewFrameWidth = 100;
-//    self.timeLabel.viewFrameX = self.cellBackgroundView.viewFrameWidth - self.timeLabel.viewFrameWidth - commentButton.viewFrameWidth;
-//    self.timeLabel.viewFrameHeight = 33;
-//    self.timeLabel.viewCenterY = 33 / 2;
-//    self.timeLabel.font = LK_FONT(10);
-//    self.timeLabel.textAlignment = UITextAlignmentRight;
-//    self.timeLabel.textColor = LC_RGB(180, 180, 180);
-//    self.cellBackgroundView.ADD(self.timeLabel);
 
     
     self.commentsView = LKCommentsView.view;
@@ -106,6 +118,11 @@ LC_PROPERTY(strong) LKCommentsView * commentsView;
     self.SEND(self.PushUserCenter).object = self.tagDetail.user;
 }
 
+-(void) userHeadTap:(LKUser *)user
+{
+    self.SEND(self.PushUserCenter).object = user;
+}
+
 -(void) setTagDetail:(LKTag *)tagDetail
 {
     _tagDetail = tagDetail;
@@ -117,13 +134,13 @@ LC_PROPERTY(strong) LKCommentsView * commentsView;
     if (!self.tagItem) {
         
         self.tagItem = LKTagItem.view;
+        self.tagItem.showNumber = YES;
         self.cellBackgroundView.ADD(self.tagItem);
     }
     
     self.tagItem.tagValue = tagDetail;
     self.tagItem.viewFrameX = 8;
     self.tagItem.viewCenterY = 33 / 2;
-    
     
     @weakly(self);
     
@@ -151,13 +168,41 @@ LC_PROPERTY(strong) LKCommentsView * commentsView;
     self.timeLabel.text = [LKTime dateNearByTimestamp:_tagDetail.createTime];
     
     
-    self.cellBackgroundView.layer.mask = nil;
-    
-    
+//    [self.likesView setLikers:self.tagDetail.likers allLikersNumber:@(self.tagDetail.likes.integerValue - 1)];
+//    
+//    self.likesView.didSelectUser = ^(LKUser * user){
+//    
+//        @normally(self);
+//        
+//        [self userHeadTap:user];
+//    };
 
+    self.cellBackgroundView.layer.mask = nil;
+    self.commentsView.viewFrameY = self.cellBackgroundView.viewBottomY;
+    
+//    if (self.tagDetail.likers.count > 0) {
+//        
+//        self.commentsView.viewFrameY = self.likesView.viewBottomY;
+//    }
+//    else{
+    
+        self.commentsView.viewFrameY = self.cellBackgroundView.viewBottomY;
+//    }
+    
+    
+    // 添加圆角
     if (self.tagDetail.comments.count == 0) {
         
-        [self roundCorners:UIRectCornerAllCorners forView:self.cellBackgroundView];
+//        //
+//        if (self.tagDetail.likers.count > 0) {
+//            
+//            [self roundCorners:UIRectCornerTopLeft | UIRectCornerTopRight forView:self.cellBackgroundView];
+//            [self roundCorners:UIRectCornerBottomLeft | UIRectCornerBottomRight forView:self.likesView];
+//        }
+//        else{
+//            
+            [self roundCorners:UIRectCornerAllCorners forView:self.cellBackgroundView];
+//        }
     }
     else{
         
@@ -220,15 +265,24 @@ LC_PROPERTY(strong) LKCommentsView * commentsView;
 +(CGFloat) height:(LKTag *)tag
 {
     static LKCommentsView * commentsView = nil;
-    
+    //static LKLikesScrollView * likesView = nil;
+
+    // 以下数字仅用于计算 不用细究
     if (!commentsView) {
         commentsView = LKCommentsView.view;
         commentsView.viewFrameWidth = LC_DEVICE_WIDTH - (10 + 33 + 10 + 16 / 3) - 10;
     }
     
+//    if (!likesView) {
+//        likesView = LKLikesScrollView.view;
+//        likesView.viewFrameWidth = commentsView.viewFrameWidth;
+//    }
+//    
+//    [likesView setLikers:tag.likers allLikersNumber:@(tag.likes.integerValue - 1)];
+    
     commentsView.tagValue = tag;
     
-    return 33 + 10 + commentsView.viewFrameHeight;
+    return 33 + 10 + commentsView.viewFrameHeight;// + (tag.likers.count > 0 ? 33 : 0);
 }
 
 @end

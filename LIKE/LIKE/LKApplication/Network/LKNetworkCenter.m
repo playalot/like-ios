@@ -25,6 +25,7 @@
     if (self = [super init]) {
         
         [self addDefaultHeaderForURLSessionManager:LCNetworkCenter.singleton.sessionManager];
+        
     }
     
     return self;
@@ -249,7 +250,6 @@
             
             complete(result);
             
-            
             // 授权过期
             if (errCode == 4016 || errCode == 4013) {
                 
@@ -280,6 +280,9 @@
     
     [manager.requestSerializer setValue:@(width).description forHTTPHeaderField:@"LIKE-SCREEN-WIDTH"];
     [manager.requestSerializer setValue:country forHTTPHeaderField:@"LIKE-LANGUAGE"];
+    
+    [manager.requestSerializer setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
+    
 }
 
 @end

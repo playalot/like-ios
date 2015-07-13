@@ -234,14 +234,14 @@ return [NSString stringWithFormat:@"%s", #__name]; \
 
 #define LC_CATEGORY_PROPERTY(__class, __name) \
 \
-@interface __class (LCCategory$##__name) \
+@interface __class (LCCategory$##__class$##__name) \
 \
 - (NSString *)__name; \
 + (NSString *)__name; \
 \
 @end \
 \
-@implementation __class (LCCategory$##__name) \
+@implementation __class (LCCategory$##__class$##__name) \
 \
 - (NSString *)__name \
 { \

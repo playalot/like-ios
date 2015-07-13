@@ -29,6 +29,7 @@
 #import "LKSearchViewController.h"
 #import "LKNewPostUploadCenter.h"
 #import "LKUploadingCell.h"
+#import "LCUIKeyBoard.h"
 
 @interface LKHomeViewController () <UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate>
 
@@ -160,7 +161,6 @@ LC_PROPERTY(copy) NSString * next;
     LKNewPostUploadCenter.singleton.uploadFinished = ^(LKPost * value, NSNumber * index){
         
         @normally(self);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
-        
     
         [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index.integerValue inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
         
@@ -305,8 +305,6 @@ LC_PROPERTY(copy) NSString * next;
         
         @normally(self);
         
-        
-        
         if (string.trim.length == 0) {
             
             [self showTopMessageErrorHud:LC_LO(@"标签不能为空")];
@@ -332,19 +330,19 @@ LC_PROPERTY(copy) NSString * next;
             [self.inputView resignFirstResponder];
             self.inputView.textField.text = @"";
         }
-        
     };
     
     self.inputView.didShow = ^(){
       
         @normally(self);
         
+        self.canResignFirstResponder = @(NO);
+
         // scroll...
         LKHomeTableViewCell * cell = (LKHomeTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:1]];
         
-        [self.tableView setContentOffset: LC_POINT(0, cell.viewFrameY - 62) animated:YES];
+        [self.tableView setContentOffset:LC_POINT(0, cell.viewFrameY - 64 + 55 + cell.contentBack.viewFrameHeight - LCUIKeyBoard.singleton.height + (cell.tagsView.viewFrameHeight - 55) + 16) animated:YES];
         
-        self.canResignFirstResponder = @(NO);
         [self performSelector:@selector(setCanResignFirstResponder:) withObject:@(YES) afterDelay:1];
     };
     
@@ -525,6 +523,7 @@ LC_PROPERTY(copy) NSString * next;
 
 -(void) searchAction
 {
+    [self.inputView resignFirstResponder];
     
     if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
         
@@ -569,6 +568,8 @@ LC_PROPERTY(copy) NSString * next;
 
 -(void) notificationAction
 {
+    [self.inputView resignFirstResponder];
+
     if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
         
         LC_FAST_ANIMATIONS_F(0.2, ^{
@@ -627,6 +628,16 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
     LKPostDetailViewController * detail = [[LKPostDetailViewController alloc] initWithPost:signal.object];
     
     [self.navigationController pushViewController:[LKTabBarController hiddenBottomBarWhenPushed:detail] animated:YES];
+    
+    LKPost * post = signal.object;
+    
+    if ([post.tagString rangeOfString:@"Comment-"].length) {
+        
+        LKTag * tag = [[LKTag alloc] init];
+        tag.id = @([post.tagString stringByReplacingOccurrencesOfString:@"Comment-" withString:@""].integerValue);
+        
+        [detail performSelector:@selector(openCommentsView:) withObject:tag afterDelay:0.35];
+    }
 }
 
 LC_HANDLE_UI_SIGNAL(LKUploadingCellCancel, signal)

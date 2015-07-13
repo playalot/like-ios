@@ -30,6 +30,8 @@ LC_PROPERTY(copy) LKTagItemRequest customAction;
 
 LC_PROPERTY(copy) LKTagItemDidRemoved didRemoved;
 
+LC_PROPERTY(assign) BOOL showNumber;
+
 @end
 
 

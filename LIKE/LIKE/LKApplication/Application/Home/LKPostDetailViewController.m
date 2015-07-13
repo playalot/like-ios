@@ -28,6 +28,7 @@
 #import "LKShareTagsView.h"
 #import "LCUIImageLoadConnection.h"
 #import "LKTagCommentsViewController.h"
+#import "LKTime.h"
 
 @interface LKPostDetailViewController ()<UITableViewDataSource,UITableViewDelegate,JTSImageViewControllerDismissalDelegate,UINavigationControllerDelegate>
 
@@ -39,12 +40,13 @@ LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
 
 LC_PROPERTY(strong) LCUIImageView * userHead;
 LC_PROPERTY(strong) LCUILabel * userName;
-
+LC_PROPERTY(strong) LCUILabel * postTime;
 
 
 LC_PROPERTY_MODEL(LKPostTagsDetailModel, tagsListModel);
 
 LC_PROPERTY(copy) NSString * bigContentURL;
+LC_PROPERTY(strong) AFHTTPRequestOperation * bigImageRequestOperation;
 
 @end
 
@@ -52,6 +54,9 @@ LC_PROPERTY(copy) NSString * bigContentURL;
 
 -(void) dealloc
 {
+    [self.bigImageRequestOperation cancel];
+    self.bigImageRequestOperation = nil;
+    
     self.tableView.delegate = nil;
     [self cancelAllRequests];
 }
@@ -61,13 +66,14 @@ LC_PROPERTY(copy) NSString * bigContentURL;
     [super viewWillAppear:animated];
     
     [self setNavigationBarHidden:YES animated:animated];
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:animated];
+
     
-    
+    //
     [self.header.headImageView removeFromSuperview];
     [self.header.nameLabel removeFromSuperview];
     [self.header.icon removeFromSuperview];
     
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:animated];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -111,7 +117,7 @@ LC_PROPERTY(copy) NSString * bigContentURL;
 }
 
 
-#pragma mask UINavigationControllerDelegate
+#pragma mark -
 
 - (id <UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC
 {
@@ -121,6 +127,8 @@ LC_PROPERTY(copy) NSString * bigContentURL;
     
     return nil;
 }
+
+#pragma mark -
 
 -(instancetype) initWithPost:(LKPost *)post
 {
@@ -259,7 +267,7 @@ LC_PROPERTY(copy) NSString * bigContentURL;
                     NSArray * contents = [self.post.content componentsSeparatedByString:@"?"];
                     
                     if (contents.count) {
-                        content = contents[0];
+                        content = [contents[0] stringByAppendingString:@"?imageView2/4/q/85"];
                     }
                 }
                 
@@ -296,7 +304,7 @@ LC_PROPERTY(copy) NSString * bigContentURL;
         backButton.viewFrameX = -15;
         backButton.buttonImage = [UIImage imageNamed:@"NavigationBarBack.png" useCache:YES];
         backButton.showsTouchWhenHighlighted = YES;
-        [backButton addTarget:self action:@selector(dismissAction) forControlEvents:UIControlEventTouchUpInside];
+        [backButton addTarget:self action:@selector(_dismissAction) forControlEvents:UIControlEventTouchUpInside];
         backButton.tag = 1002;
         [self.header addSubview:backButton];
         
@@ -308,7 +316,7 @@ LC_PROPERTY(copy) NSString * bigContentURL;
         moreButton.viewFrameY = 10;
         moreButton.buttonImage = [UIImage imageNamed:@"NavigationBarMore.png" useCache:YES];
         moreButton.showsTouchWhenHighlighted = YES;
-        [moreButton addTarget:self action:@selector(moreAction) forControlEvents:UIControlEventTouchUpInside];
+        [moreButton addTarget:self action:@selector(_moreAction) forControlEvents:UIControlEventTouchUpInside];
         moreButton.tag = 1003;
         [self.header addSubview:moreButton];
     }
@@ -335,9 +343,9 @@ LC_PROPERTY(copy) NSString * bigContentURL;
             return;
         }
         
-        if ([self checkTag:string onTags:self.post.tags]) {
+        if ([self _checkTag:string onTags:self.post.tags]) {
             
-            [self addTag:string onPost:self.post];
+            [self _addTag:string onPost:self.post];
         }
         else{
             
@@ -360,22 +368,9 @@ LC_PROPERTY(copy) NSString * bigContentURL;
     };
 }
 
-#pragma mark - 
+#pragma mark -
 
--(BOOL) checkTag:(NSString *)tag onTags:(NSArray *)onTags
-{
-    for (LKTag * oTag in onTags) {
-        
-        if ([oTag.tag isEqualToString:tag]) {
-            
-            return NO;
-        }
-    }
-    
-    return YES;
-}
-
-- (void)imageViewerDidDismiss:(JTSImageViewController *)imageViewer
+- (void) imageViewerDidDismiss:(JTSImageViewController *)imageViewer
 {
     UIView * nav = self.header.FIND(1001);
     UIView * back = self.header.FIND(1002);
@@ -391,7 +386,27 @@ LC_PROPERTY(copy) NSString * bigContentURL;
 
 #pragma mark -
 
--(void) addTag:(NSString *)tag onPost:(LKPost *)post
+-(void) openCommentsView:(LKTag *)tag
+{
+    [self _beginComment:tag];
+}
+
+#pragma mark -
+
+-(BOOL) _checkTag:(NSString *)tag onTags:(NSArray *)onTags
+{
+    for (LKTag * oTag in onTags) {
+        
+        if ([oTag.tag isEqualToString:tag]) {
+            
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
+-(void) _addTag:(NSString *)tag onPost:(LKPost *)post
 {
     if([LKLoginViewController needLoginOnViewController:self.navigationController]){
         
@@ -445,12 +460,12 @@ LC_PROPERTY(copy) NSString * bigContentURL;
 }
 
 
--(void) dismissAction
+-(void) _dismissAction
 {
     [self dismissOrPopViewController];
 }
 
--(void) moreAction
+-(void) _moreAction
 {
     [self.inputView resignFirstResponder];
     
@@ -465,12 +480,12 @@ LC_PROPERTY(copy) NSString * bigContentURL;
             if (index == 0) {
                 
                 // 举报
-                [self report];
+                [self _report];
             }
             else if (index == 1){
                 
                 // 删除
-                [self delete];
+                [self _delete];
             }
             else if (index == 2){
                 
@@ -492,7 +507,7 @@ LC_PROPERTY(copy) NSString * bigContentURL;
             if (index == 0) {
                 
                 // 举报
-                [self report];
+                [self _report];
             }
             else if (index == 1){
                 
@@ -520,6 +535,12 @@ LC_PROPERTY(copy) NSString * bigContentURL;
         
         if (result.state == LKHttpRequestStateFinished) {
             
+            if ([self.post.content isEqualToString:result.json[@"data"][@"content"]]) {
+                return;
+            }
+            
+            self.post.place = [result.json[@"data"][@"place"] isKindOfClass:[NSString class]] ? result.json[@"data"][@"place"] : nil;
+            self.post.timestamp = result.json[@"data"][@"created"];
             self.post.content = result.json[@"data"][@"content"];
             self.bigContentURL = self.post.content;
             
@@ -527,22 +548,28 @@ LC_PROPERTY(copy) NSString * bigContentURL;
             
             if (!image) {
                 
-                ASIHTTPRequest * request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:self.post.content]];
-                request.downloadDestinationPath = [LCUIImageCache.singleton.fileCache fileNameForKey:[self.post.content MD5]];
+                self.bigImageRequestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.post.content]]];
+                self.bigImageRequestOperation.responseSerializer = [AFImageResponseSerializer serializer];
                 
-                [request setCompletionBlock:^{
-                
+                [self.bigImageRequestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * operation, id responseObject) {
+                    
+                    @normally(self);
+                    
+                    NSString * fullPath = [LCUIImageCache.singleton.fileCache fileNameForKey:[self.bigContentURL MD5]];
+                    
+                    [self.bigImageRequestOperation.responseData writeToFile:fullPath atomically:YES];
+                    
                     CATransition * animation = [CATransition animation];
                     [animation setDuration:0.25];
                     [animation setType:kCATransitionFade];
                     [animation setSubtype:kCATransitionFromRight];
                     [self.header.backgroundView.layer addAnimation:animation forKey:@"transition"];
                     
-                    self.header.backgroundView.image = [LCUIImageCache.singleton imageWithKey:self.post.content];
-                }];
-                
-                [request setFailedBlock:^{}];
-                [request startAsynchronous];
+                    self.header.backgroundView.image = responseObject;
+                    
+                } failure:nil];
+
+                [self.bigImageRequestOperation start];
             }
             else{
                 
@@ -554,6 +581,9 @@ LC_PROPERTY(copy) NSString * bigContentURL;
                 
                 self.header.backgroundView.image = [LCUIImageCache.singleton imageWithKey:self.post.content];
             }
+            
+            [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+
         }
         else if (result.state == LKHttpRequestStateFailed){
             
@@ -562,7 +592,7 @@ LC_PROPERTY(copy) NSString * bigContentURL;
     }];
 }
 
--(void) report
+-(void) _report
 {
     if ([LKLoginViewController needLoginOnViewController:self.navigationController]) {
         return;
@@ -593,7 +623,7 @@ LC_PROPERTY(copy) NSString * bigContentURL;
     }];
 }
 
--(void) delete
+-(void) _delete
 {
     @weakly(self);
 
@@ -625,7 +655,31 @@ LC_PROPERTY(copy) NSString * bigContentURL;
     }];
 }
 
-#pragma mark - 
+-(void) _beginComment:(LKTag *)tag
+{
+    // check
+    if(![LKLoginViewController needLoginOnViewController:self]){
+        
+        [self.inputView resignFirstResponder];
+        
+        LKTagCommentsViewController * comments = [[LKTagCommentsViewController alloc] initWithTag:tag];
+        
+        [comments showInViewController:self];
+        [comments inputBecomeFirstResponder];
+        
+        [self hideMoreButton:YES];
+        
+        comments.willHide = ^(){
+            
+            [self hideMoreButton:NO];
+            [self.tableView reloadData];
+            
+        };
+    }
+
+}
+
+#pragma mark -
 
 LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
 {
@@ -659,10 +713,12 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
      
         LCUITableViewCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"User" andClass:[LCUITableViewCell class] configurationCell:^(LCUITableViewCell * configurationCell) {
             
-            configurationCell.backgroundColor = [UIColor whiteColor];
-            configurationCell.contentView.backgroundColor = [UIColor whiteColor];
+            
+            configurationCell.backgroundColor = [UIColor clearColor];
+            configurationCell.contentView.backgroundColor = [UIColor clearColor];
             configurationCell.selectionStyle = UITableViewCellSelectionStyleNone;
 
+            
             self.userHead = LCUIImageView.view;
             self.userHead.viewFrameX = 10;
             self.userHead.viewFrameY = 10;
@@ -670,21 +726,31 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             self.userHead.viewFrameHeight = 33;
             self.userHead.cornerRadius = 33. / 2.;
             self.userHead.backgroundColor = [UIColor lightGrayColor];
-            self.userHead.tag = 1001;
             configurationCell.ADD(self.userHead);
             
             
             self.userName = LCUILabel.view;
-            self.userName.viewFrameY = 0;
-            self.userName.viewFrameX = self.userHead.viewRightX + 40 / 3;
-            self.userName.viewFrameWidth = 200;
-            self.userName.viewFrameHeight = 33 + 20;
+            self.userName.viewFrameY = 11;
+            self.userName.viewFrameX = self.userHead.viewRightX + 10;
+            self.userName.viewFrameWidth = LC_DEVICE_WIDTH - self.userName.viewFrameX - 65;
+            self.userName.viewFrameHeight = 15;
             self.userName.textAlignment = UITextAlignmentLeft;
             self.userName.font = LK_FONT(13);
-            self.userName.numberOfLines = 2;
+            self.userName.lineBreakMode = NSLineBreakByTruncatingMiddle;
             self.userName.textColor = LC_RGB(51, 51, 51);
-            self.userName.tag = 1002;
             configurationCell.ADD(self.userName);
+            
+            
+            self.postTime = LCUILabel.view;
+            self.postTime.viewFrameY = self.userName.viewBottomY + 5;
+            self.postTime.viewFrameX = self.userHead.viewRightX + 10;
+            self.postTime.viewFrameWidth = self.userName.viewFrameWidth;
+            self.postTime.viewFrameHeight = 14;
+            self.postTime.textAlignment = UITextAlignmentLeft;
+            self.postTime.font = LK_FONT(12);
+            self.postTime.lineBreakMode = NSLineBreakByTruncatingMiddle;
+            self.postTime.textColor = LC_RGB(140, 133, 126);
+            configurationCell.ADD(self.postTime);
             
             
             LKShareTools * tools = LKShareTools.view;
@@ -706,6 +772,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
                 
                 self.userName.alpha = 0;
                 self.userHead.alpha = 0;
+                self.postTime.alpha = 0;
                 
             });
         };
@@ -718,6 +785,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
                 
                 self.userName.alpha = 1;
                 self.userHead.alpha = 1;
+                self.postTime.alpha = 1;
                 
             });
         };
@@ -731,7 +799,14 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         
         
         self.userHead.url = self.post.user.avatar;
-        self.userName.text = LC_NSSTRING_FORMAT(@"%@\n%@ likes", self.post.user.name, self.post.user.likes);
+        self.userName.text = LC_NSSTRING_FORMAT(@"%@ %@ likes", self.post.user.name, self.post.user.likes);
+        
+        NSMutableAttributedString * attString = [[NSMutableAttributedString alloc] initWithString:self.userName.text];
+        [attString addAttribute:NSFontAttributeName value:LK_FONT_B(13) range:[self.userName.text rangeOfString:self.post.user.name]];
+        
+        self.userName.attributedText = attString;
+        
+        self.postTime.text = [NSString stringWithFormat:@"%@ %@ %@", [LKTime dateNearByTimestamp:self.post.timestamp], self.post.place ? LC_LO(@"来自") : @"", self.post.place ? self.post.place : @""];
         
         return cell;
     }
@@ -762,6 +837,8 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             if (tag.isLiked) {
                 
                 self.post.user.likes = @(self.post.user.likes.integerValue + 1);
+                [tag.likers insertObject:LKLocalUser.singleton.user atIndex:0];
+                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
             }
             else{
                 
@@ -775,6 +852,10 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         cell.showLikesAction = ^(LKTag * tag){
             
             @normally(self);
+            
+            //[self _beginComment:tag];
+            
+            
 
             UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
             
@@ -810,6 +891,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
                 
                 [LKUserCenterViewController pushUserCenterWithUser:user navigationController:self.navigationController];
             };
+            
 
         };
         
@@ -819,25 +901,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             
             @normally(self);
             
-            // check
-            if(![LKLoginViewController needLoginOnViewController:self]){
-
-                [self.inputView resignFirstResponder];
-
-                LKTagCommentsViewController * comments = [[LKTagCommentsViewController alloc] initWithTag:tag];
-                
-                [comments showInViewController:self];
-                [comments inputBecomeFirstResponder];
-                
-                [self hideMoreButton:YES];
-                
-                comments.willHide = ^(){
-                    
-                    [self hideMoreButton:NO];
-                    [self.tableView reloadData];
-                    
-                };
-            }
+            [self _beginComment:tag];
         };
         
         

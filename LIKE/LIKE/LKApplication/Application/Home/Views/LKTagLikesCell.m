@@ -24,6 +24,10 @@ LC_PROPERTY(strong) UIView * usersView;
 
 @implementation LKTagLikesCell
 
+
+LC_IMP_SIGNAL(PushUserInfo);
+
+
 -(void) buildUI
 {
     

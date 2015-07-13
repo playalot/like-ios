@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "LKPost.h"
-
+#import "LKTagsView.h"
 
 LC_BLOCK(void, LKHomeCellAddTag, (LKPost * post));
 LC_BLOCK(void, LKHomeCellRemovedTag, (LKPost * post));
@@ -16,10 +16,14 @@ LC_BLOCK(void, LKHomeCellCustomAction, (LKPost * post));
 
 @interface LKHomeTableViewCell : LCUITableViewCell
 
+LC_ST_SIGNAL(PushUserCenter);
+LC_ST_SIGNAL(PushPostDetail);
+
 LC_PROPERTY(strong) LKPost * post;
 LC_PROPERTY(copy) LKHomeCellAddTag addTag;
 LC_PROPERTY(copy) LKHomeCellRemovedTag removedTag;
 LC_PROPERTY(copy) LKHomeCellCustomAction customAction;
+
 
 +(CGFloat) height:(LKPost *)post;
 
@@ -30,8 +34,7 @@ LC_PROPERTY(copy) LKHomeCellCustomAction customAction;
 //
 LC_PROPERTY(strong) LCUIImageView * contentImage;
 LC_PROPERTY(strong) UIView * contentBack;
+LC_PROPERTY(strong) LKTagsView * tagsView;
 
 @end
 
-LC_ST_SIGNAL(LKHomeTableViewCell, PushUserCenter);
-LC_ST_SIGNAL(LKHomeTableViewCell, PushPostDetail);

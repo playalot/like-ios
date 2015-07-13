@@ -42,12 +42,12 @@
     return self;
 }
 
-+(void) uploadImage:(UIImage *)image tags:(NSArray *)tags
++(void) uploadImage:(UIImage *)image tags:(NSArray *)tags location:(NSArray *)location place:(NSString *)place
 {
-    [LKNewPostUploadCenter.singleton uploadImage:image tags:tags];
+    [LKNewPostUploadCenter.singleton uploadImage:image tags:tags location:location place:place];
 }
 
--(void) uploadImage:(UIImage *)image tags:(NSArray *)tags
+-(void) uploadImage:(UIImage *)image tags:(NSArray *)tags location:(NSArray *)location place:(NSString *)place;
 {
     if (!image || !tags) {
         return;
@@ -56,6 +56,8 @@
     LKPosting * posting = [[LKPosting alloc] init];
     posting.image = image;
     posting.tags = tags;
+    posting.location = location;
+    posting.place = place;
     posting.uploading = YES;
 
     [self.uploadingImages addObject:posting];
@@ -111,7 +113,16 @@
     [interface addParameter:@"PHOTO"  key:@"type"];
     [interface addParameter:jsonTags key:@"tags"];
     
+    if (posting.location) {
+     
+        [interface addParameter:posting.location key:@"location"];
+    }
     
+    if (posting.place) {
+        
+        [interface addParameter:posting.place key:@"place"];
+    }
+
     @weakly(self);
     
     [self request:interface complete:^(LKHttpRequestResult *result) {

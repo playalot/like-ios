@@ -16,6 +16,6 @@ LC_PROPERTY(strong) LKUser * user;
 LC_PROPERTY(strong) LKUser * replyUser;
 LC_PROPERTY(strong) NSString * content;
 LC_PROPERTY(strong) NSNumber * timestamp;
-LC_PROPERTY(strong) NSString * location;
+LC_PROPERTY(strong) NSString * place;
 
 @end

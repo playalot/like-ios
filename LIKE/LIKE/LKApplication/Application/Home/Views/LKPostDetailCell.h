@@ -29,6 +29,8 @@ LC_PROPERTY(strong) LKTag * tagDetail;
 
 +(CGFloat) height:(LKTag *)tag;
 
+
+LC_ST_SIGNAL(PushUserCenter);
+
 @end
 
-LC_ST_SIGNAL(LKPostDetailCell, PushUserCenter);

@@ -20,6 +20,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import "LKLocationManager.h"
 #import <MAMapKit/MAMapKit.h>
+#import "LCUIImageLoadConnection.h"
 
 @interface AppDelegate () <LC_CMD_IMP>
 
@@ -112,7 +113,7 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
     }
 }
 
-- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
 {
     return UIInterfaceOrientationMaskPortrait;
 }
@@ -272,6 +273,18 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
                                                 annotation:annotation];
 
     return YES;
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    [super application:application didReceiveRemoteNotification:userInfo];
+    
+    if ( application.applicationState == UIApplicationStateActive ){
+        // app was already in the foreground
+    }else{
+        
+        [self.home performSelector:@selector(notificationAction) withObject:nil afterDelay:0.5];
+    }
 }
 
 @end

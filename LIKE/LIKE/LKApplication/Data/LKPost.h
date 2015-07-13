@@ -20,6 +20,7 @@ LC_PROPERTY(assign) NSInteger type;
 LC_PROPERTY(strong) NSString * content;
 LC_PROPERTY(strong) NSNumber * timestamp;
 LC_PROPERTY(strong) NSMutableArray * tags;
+LC_PROPERTY(copy)   NSString * place;
 
 
 @end

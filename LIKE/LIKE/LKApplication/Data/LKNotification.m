@@ -53,6 +53,7 @@
         self.post = dict[@"post"] ? [LKPost objectFromDictionary:dict[@"post"]] : nil;
         
         self.tag = dict[@"tag"];
+        self.tagID = dict[@"mark_id"];
     }
     
     return self;

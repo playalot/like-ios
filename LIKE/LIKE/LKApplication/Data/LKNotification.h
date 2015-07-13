@@ -28,5 +28,6 @@ LC_PROPERTY(strong) NSMutableArray * posts;
 
 LC_PROPERTY(strong) NSNumber * timestamp;
 LC_PROPERTY(copy) NSString * tag;
+LC_PROPERTY(strong) NSNumber * tagID;
 
 @end

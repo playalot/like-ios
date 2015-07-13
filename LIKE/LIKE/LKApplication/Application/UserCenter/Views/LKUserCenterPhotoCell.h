@@ -15,6 +15,7 @@ LC_PROPERTY(strong) NSArray * posts; // Count : 3
 
 +(CGFloat) height;
 
+LC_ST_SIGNAL(PushPostDetail);
+
 @end
 
-LC_ST_SIGNAL(LKUserCenterPhotoCell, PushPostDetail);

@@ -27,12 +27,39 @@
 #import "LCUIImageLoadConnection.h"
 #import "LCUIImageCache.h"
 
-@interface LCImageLoadConnection ()<ASIHTTPRequestDelegate,ASIProgressDelegate>
+@interface LCImageLoadConnection ()
 
 @end
 
 @implementation LCImageLoadConnection
 
+
++(NSOperationQueue *) sharedImageRequestOperationQueue
+{
+    static NSOperationQueue * __sharedImageRequestOperationQueue = nil;
+    static dispatch_once_t onceToken;
+    
+    dispatch_once(&onceToken, ^{
+        
+        __sharedImageRequestOperationQueue = [[NSOperationQueue alloc] init];
+        __sharedImageRequestOperationQueue.maxConcurrentOperationCount = NSOperationQueueDefaultMaxConcurrentOperationCount;
+    });
+    
+    return __sharedImageRequestOperationQueue;
+}
+
++(AFImageResponseSerializer *) sharedImageResponseSerializer
+{
+    static AFImageResponseSerializer * __sharedImageResponseSerializer = nil;
+    static dispatch_once_t onceToken;
+    
+    dispatch_once(&onceToken, ^{
+        
+        __sharedImageResponseSerializer = [AFImageResponseSerializer serializer];
+    });
+    
+    return __sharedImageResponseSerializer;
+}
 
 - (id)initWithImageURL:(NSString *)url delegate:(id)delegate
 {
@@ -46,49 +73,76 @@
 	return self;
 }
 
-- (void)start
+- (void)startDownload
 {
-    self.request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:self.imageURL]];
-    self.request.downloadDestinationPath = [LCUIImageCache.singleton.fileCache fileNameForKey:[self.imageURL MD5]];
-    self.request.timeOutSeconds = self.timeoutInterval;
-    self.request.delegate = self;
-    self.request.downloadProgressDelegate = self;
+    NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:self.imageURL]];
+    request.timeoutInterval = self.timeoutInterval;
     
-    [self.request startAsynchronous];
+    self.requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    self.requestOperation.responseSerializer = [AFImageResponseSerializer serializer];
+    
+    __strong typeof(self) strongSelf = self;
+    
+    @weakly(self);
+    
+    [strongSelf.requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * operation, id responseObject) {
+
+        @normally(self);
+        
+        self.responseImage = responseObject;
+        self.responseData = self.requestOperation.responseData;
+        
+        [self requestFinished];
+        
+    } failure:^(AFHTTPRequestOperation * operation, NSError * error) {
+        
+        @normally(self);
+
+        [self requestFailed:error];
+    }];
+    
+    
+    [strongSelf.requestOperation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+       
+        @normally(self);
+
+        CGFloat progress = ((CGFloat)totalBytesRead) / totalBytesExpectedToRead;
+        
+        [self setProgress:progress];
+        
+    }];
+    
+    
+    //[self.requestOperation start];
+    [[[self class] sharedImageRequestOperationQueue] addOperation:self.requestOperation];
 }
 
 - (void)cancel
 {
-	[self.request clearDelegatesAndCancel];
+	[self.requestOperation cancel];
 }
 
--(NSData *) responseData
+- (void)requestFinished
 {
-    if (self.request){
-        
-        return self.request.responseData;
-    }
+    NSString * fullPath = [LCUIImageCache.singleton.fileCache fileNameForKey:[self.imageURL MD5]];
+
+    [self.responseData writeToFile:fullPath atomically:YES];
     
-    return nil;
-}
-
-- (void)requestFinished:(ASIHTTPRequest *)request
-{
     if([self.delegate respondsToSelector:@selector(imageLoadConnectionDidFinishLoading:)]){
         
         [self.delegate imageLoadConnectionDidFinishLoading:self];
     }
 }
 
-- (void)requestFailed:(ASIHTTPRequest *)request
+- (void)requestFailed:(NSError *)error
 {
     if([self.delegate respondsToSelector:@selector(imageLoadConnection:didFailWithError:)]){
         
-        [self.delegate imageLoadConnection:self didFailWithError:request.error];
+        [self.delegate imageLoadConnection:self didFailWithError:error];
     }
 }
 
-- (void)setProgress:(float)newProgress
+- (void)setProgress:(CGFloat)newProgress
 {
     if ([self.delegate respondsToSelector:@selector(imageLoadConnectionDidReciveDataWithProgress:connection:)]) {
         
@@ -100,8 +154,8 @@
 {
 	_delegate = nil;
     
-    _request.delegate = nil;
-    [_request clearDelegatesAndCancel];
+    [self.requestOperation cancel];
+    self.requestOperation = nil;
 }
 
 @end

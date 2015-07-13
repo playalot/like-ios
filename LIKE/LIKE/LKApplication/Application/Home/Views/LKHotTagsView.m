@@ -57,7 +57,7 @@ LC_PROPERTY(strong) UIView * maskView;
 {
     _tagString = tagString;
     
-    CGFloat topPadding = 5.;
+    CGFloat topPadding = 6;
     CGFloat leftPadding = 12.;
     
     self.tagLabel.text = _tagString;

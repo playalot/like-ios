@@ -272,7 +272,7 @@ typedef void (^LKFileUploadConfigUpdateCompleted) (BOOL completed, NSString * er
 - (NSString *)cf_md5_16byte:(NSData *)data
 {
     unsigned char result[16];
-    CC_MD5( data.bytes, data.length, result ); // This is the md5 call
+    CC_MD5( data.bytes, (CC_LONG)data.length, result ); // This is the md5 call
     return [NSString stringWithFormat:
             @"%02x%02x%02x%02x%02x%02x%02x%02x",
             result[4], result[5], result[6], result[7],

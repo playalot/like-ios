@@ -33,7 +33,10 @@
 @class LCSignal;
 
 #undef  LC_ST_SIGNAL
-#define LC_ST_SIGNAL(__class, __name)	 LC_CATEGORY_PROPERTY(__class, __name)
+#define LC_ST_SIGNAL(__name)	 LC_ST_PROPERTY( __name)
+
+#undef  LC_IMP_SIGNAL
+#define LC_IMP_SIGNAL(__name)	 LC_IMP_PROPERTY( __name)
 
 LC_BLOCK(LCSignal *, LCSignalSend, (NSString * name));
 LC_BLOCK(LCSignal *, LCSignalSendTo, (NSString * name, id to));

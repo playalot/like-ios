@@ -19,7 +19,7 @@ static LCUIApplication * __skeleton = nil;
 	return __skeleton;
 }
 
-- (void) load
+- (void) load:(NSDictionary *)launchOptions
 {
     ;
 }

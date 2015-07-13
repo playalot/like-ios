@@ -20,4 +20,6 @@ LC_PROPERTY(strong) LKPost * post;
 
 -(instancetype) initWithPost:(LKPost *)post;
 
+-(void) openCommentsView:(LKTag *)tag;
+
 @end

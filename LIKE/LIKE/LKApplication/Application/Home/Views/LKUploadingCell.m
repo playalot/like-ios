@@ -19,6 +19,10 @@ LC_PROPERTY(strong) LCUIButton * cancelButton;
 
 @implementation LKUploadingCell
 
+LC_IMP_SIGNAL(LKUploadingCellCancel);
+LC_IMP_SIGNAL(LKUploadingCellReupload);
+
+
 -(void) buildUI
 {
     self.selectionStyle = UITableViewCellSelectionStyleNone;

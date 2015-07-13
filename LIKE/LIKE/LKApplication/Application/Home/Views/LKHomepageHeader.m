@@ -148,7 +148,7 @@ LC_PROPERTY(assign) CGPoint point;
 
     
     BLKFlexibleHeightBarSubviewLayoutAttributes *initialNameLabelLayoutAttributes = [[BLKFlexibleHeightBarSubviewLayoutAttributes alloc] init];
-    initialNameLabelLayoutAttributes.size = CGSizeMake(LC_DEVICE_WIDTH - 200, 50);
+    initialNameLabelLayoutAttributes.size = CGSizeMake(LC_DEVICE_WIDTH - 20, 50);
     initialNameLabelLayoutAttributes.center = CGPointMake(self.frame.size.width*0.5, self.maximumBarHeight-50.0);
     initialNameLabelLayoutAttributes.alpha = 1;
     [self.nameLabel addLayoutAttributes:initialNameLabelLayoutAttributes forProgress:0.0];

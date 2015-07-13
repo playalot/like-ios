@@ -21,4 +21,6 @@ LC_PROPERTY(strong) NSMutableArray * comments;
 LC_PROPERTY(strong) NSNumber * totalComments;
 LC_PROPERTY(copy) NSString * image;
 
+LC_PROPERTY(strong) NSMutableArray * likers; // 赞过的人
+
 @end

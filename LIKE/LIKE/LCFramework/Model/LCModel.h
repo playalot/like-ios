@@ -19,4 +19,6 @@ LC_PROPERTY(readonly) NSMutableArray * observers;
 
 LC_PROPERTY(readonly) LCModelObserver OBSERVER;
 
+LC_PROPERTY(copy) NSString * tagString;
+
 @end

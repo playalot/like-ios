@@ -50,7 +50,7 @@ LC_PROPERTY(strong) UIImageView * line;
     
     self.timeLabel = LCUILabel.view;
     self.timeLabel.viewFrameX = self.contentLabel.viewFrameX;
-    self.timeLabel.viewFrameWidth = LC_DEVICE_WIDTH;
+    self.timeLabel.viewFrameWidth = self.contentLabel.viewFrameWidth;
     self.timeLabel.font = LK_FONT(12);
     self.timeLabel.textColor = LC_RGB(171, 164, 157);
     self.ADD(self.timeLabel);
@@ -77,11 +77,18 @@ LC_PROPERTY(strong) UIImageView * line;
 
     self.contentLabel.viewFrameWidth = LC_DEVICE_WIDTH - self.contentLabel.viewFrameX - 10;
     self.contentLabel.text = content;
+    
+
+    NSMutableAttributedString * attString = [[NSMutableAttributedString alloc] initWithString:content];
+    [attString addAttribute:NSFontAttributeName value:LK_FONT_B(13) range:[content rangeOfString:comment.user.name]];
+    
+    self.contentLabel.attributedText = attString;
+    
+    
     self.contentLabel.FIT();
     
     self.timeLabel.viewFrameY = self.contentLabel.viewBottomY + 3;
-    self.timeLabel.text = [LKTime dateNearByTimestamp:comment.timestamp];
-    self.timeLabel.viewFrameWidth = 100;
+    self.timeLabel.text = [NSString stringWithFormat:@"%@ %@ %@", [LKTime dateNearByTimestamp:comment.timestamp], comment.place ? LC_LO(@"来自") : @"", comment.place ? comment.place : @""];
     self.timeLabel.FIT();
     
     

@@ -15,6 +15,10 @@
 
 @implementation LKNotificationCell
 
+
+LC_IMP_SIGNAL(PushPostDetail);
+
+
 -(instancetype) initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {

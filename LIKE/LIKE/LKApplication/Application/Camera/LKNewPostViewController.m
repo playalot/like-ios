@@ -123,7 +123,7 @@ LC_PROPERTY(strong) NSString * locationName;
     self.recommendLabel = LCUILabel.view;
     self.recommendLabel.viewFrameX = 10;
     self.recommendLabel.viewFrameY = 10;
-    self.recommendLabel.viewFrameWidth = LC_DEVICE_WIDTH - self.recommendLabel.viewFrameX * 2;
+    self.recommendLabel.viewFrameWidth = LC_DEVICE_WIDTH - self.recommendLabel.viewFrameX * 2 - 120;
     self.recommendLabel.viewFrameHeight = 15;
     self.recommendLabel.text = LC_LO(@"点击添加标签，让更多同类发现你");
     self.recommendLabel.font = LK_FONT(13);
@@ -223,12 +223,11 @@ LC_PROPERTY(strong) NSString * locationName;
         }
         else{
             
-            [self addNewTag:string];
-            
-            self.inputView.textField.text = @"";
+            if([self addNewTag:string]){
+                
+                self.inputView.textField.text = @"";
+            }
         }
-        
-        
     };
     
     self.inputView.willDismiss = ^(NSString * string){
@@ -291,7 +290,14 @@ LC_PROPERTY(strong) NSString * locationName;
 
 -(void) becomeFirstResponserAction
 {
-    [self.inputView becomeFirstResponder];
+    if (self.inputView.isFirstResponder) {
+        
+        [self.inputView resignFirstResponder];
+    }
+    else{
+        
+        [self.inputView becomeFirstResponder];
+    }
 }
 
 -(void) handleNavigationBarButton:(LCUINavigationBarButtonType)type
@@ -317,18 +323,18 @@ LC_PROPERTY(strong) NSString * locationName;
 }
 
 
--(void) addNewTag:(NSString *)tagString
+-(BOOL) addNewTag:(NSString *)tagString
 {
     if (tagString.trim.length == 0) {
         
         [self showTopMessageErrorHud:LC_LO(@"标签不能为空")];
-        return;
+        return NO;
     }
     
     if (tagString.length > 12) {
         
         [self showTopMessageErrorHud:LC_LO(@"标签长度不能大于12位")];
-        return;
+        return NO;
     }
     
     LKTag * tag = [[LKTag alloc] init];
@@ -352,6 +358,8 @@ LC_PROPERTY(strong) NSString * locationName;
     [self updateSubviewsLayout];
     
     [self.inputView resignFirstResponder];
+    
+    return YES;
 }
 
 -(BOOL) checkOnSelectedTags:(NSString *)tag
@@ -369,7 +377,14 @@ LC_PROPERTY(strong) NSString * locationName;
 
 -(void) finishIt
 {
-    [LKNewPostUploadCenter uploadImage:self.image tags:self.selectedTags.tags];
+    NSMutableArray * location = [NSMutableArray array];
+    
+    if (self.location) {
+        [location addObject:[NSNumber numberWithDouble:self.location.coordinate.latitude]];
+        [location addObject:[NSNumber numberWithDouble:self.location.coordinate.longitude]];
+    }
+    
+    [LKNewPostUploadCenter uploadImage:self.image tags:self.selectedTags.tags location:location place:self.locationName];
     
     [self dismissAction];
 }

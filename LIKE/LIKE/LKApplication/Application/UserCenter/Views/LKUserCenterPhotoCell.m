@@ -54,6 +54,9 @@ LC_PROPERTY(strong) NSMutableArray * items;
 
 @implementation LKUserCenterPhotoCell
 
+
+LC_IMP_SIGNAL(PushPostDetail);
+
 -(void) buildUI
 {
     self.selectionStyle = UITableViewCellSelectionStyleNone;

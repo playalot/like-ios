@@ -245,6 +245,13 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
     }
     else{
      
+        
+        if ((notification.type == LKNotificationTypeComment ||
+            notification.type == LKNotificationTypeReply) && [notification.tagID isKindOfClass:[NSNumber class]]) {
+            
+            notification.post.tagString = [NSString stringWithFormat:@"Comment-%@",notification.tagID];
+        }
+        
         self.SEND(@"PushPostDetail").object = notification.post;
     }
 }

@@ -9,6 +9,11 @@
 #import "LKTime.h"
 #import "NSDate+TimeAgo.h"
 
+#ifndef NSDateTimeAgoLocalizedStrings
+#define NSDateTimeAgoLocalizedStrings(key) \
+NSLocalizedStringFromTableInBundle(key, @"NSDateTimeAgo", [NSBundle bundleWithPath:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"NSDateTimeAgo.bundle"]], nil)
+#endif
+
 @implementation LKTime
 
 + (NSString *) dateStringByTimestamp:(NSNumber *)timeStamp format:(NSString *)format
@@ -37,6 +42,11 @@
 
 + (NSString *) dateNearByTimestamp:(NSNumber *)timestamp
 {
+    if (timestamp.integerValue == 0) {
+        
+        return NSDateTimeAgoLocalizedStrings(@"Just now");
+    }
+
     NSDate * date = [NSDate dateWithTimeIntervalSince1970:timestamp.integerValue];
     
     return [date timeAgo];

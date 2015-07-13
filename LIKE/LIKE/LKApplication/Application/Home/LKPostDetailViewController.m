@@ -395,7 +395,14 @@ LC_PROPERTY(strong) AFHTTPRequestOperation * bigImageRequestOperation;
 
 -(BOOL) _checkTag:(NSString *)tag onTags:(NSArray *)onTags
 {
-    for (LKTag * oTag in onTags) {
+    NSArray * tmp = onTags;
+    
+    if (onTags.count == 0) {
+        
+        tmp = self.tagsListModel.tags;
+    }
+    
+    for (LKTag * oTag in tmp) {
         
         if ([oTag.tag isEqualToString:tag]) {
             
@@ -541,14 +548,14 @@ LC_PROPERTY(strong) AFHTTPRequestOperation * bigImageRequestOperation;
             
             self.post.place = [result.json[@"data"][@"place"] isKindOfClass:[NSString class]] ? result.json[@"data"][@"place"] : nil;
             self.post.timestamp = result.json[@"data"][@"created"];
-            self.post.content = result.json[@"data"][@"content"];
+            //self.post.content = result.json[@"data"][@"content"];
             self.bigContentURL = self.post.content;
             
-            UIImage * image = [LCUIImageCache.singleton imageWithKey:self.post.content];
+            UIImage * image = [LCUIImageCache.singleton imageWithKey:self.bigContentURL];
             
             if (!image) {
                 
-                self.bigImageRequestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.post.content]]];
+                self.bigImageRequestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.bigContentURL]]];
                 self.bigImageRequestOperation.responseSerializer = [AFImageResponseSerializer serializer];
                 
                 [self.bigImageRequestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * operation, id responseObject) {
@@ -579,7 +586,7 @@ LC_PROPERTY(strong) AFHTTPRequestOperation * bigImageRequestOperation;
                 [animation setSubtype:kCATransitionFromRight];
                 [self.header.backgroundView.layer addAnimation:animation forKey:@"transition"];
                 
-                self.header.backgroundView.image = [LCUIImageCache.singleton imageWithKey:self.post.content];
+                self.header.backgroundView.image = [LCUIImageCache.singleton imageWithKey:self.bigContentURL];
             }
             
             [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
@@ -1018,8 +1025,12 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
 //    }
     
     
-    UIImage * image = [LCUIImageCache.singleton imageWithKey:self.post.content];
+    UIImage * image = [LCUIImageCache.singleton imageWithKey:self.bigContentURL];
     
+    if (!image) {
+        
+        image = [LCUIImageCache.singleton imageWithKey:self.post.content];
+    }
     
     if (image.size.width < 640) {
         

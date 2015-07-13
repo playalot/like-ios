@@ -162,7 +162,7 @@ LC_PROPERTY(strong) NSDictionary * info;
     head.viewFrameHeight = 66;
     head.viewFrameX = 15;
     head.viewFrameY = 15;
-    head.backgroundColor = [UIColor lightGrayColor];
+    head.backgroundColor = LKColor.backgroundColor;
     head.url = avatar;
     head.cornerRadius = 4;
     view.ADD(head);

@@ -200,10 +200,11 @@ static NSString * __LKUserAddress = nil;
     commentObject.place = __LKUserAddress;
     
     self.tagValue.totalComments = @(self.tagValue.totalComments.integerValue + 1);
-    [self.tagValue.comments insertObject:commentObject atIndex:0];
-    [self.datasource insertObject:commentObject atIndex:0];
+    [self.tagValue.comments addObject:commentObject];
+    [self.datasource addObject:commentObject];
     
     [self.tableView reloadData];
+    [self.tableView scrollToBottomAnimated:YES];
     
     
     
@@ -379,7 +380,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             headImageView.viewFrameWidth = 33;
             headImageView.viewFrameHeight = 33;
             headImageView.cornerRadius = headImageView.viewMidWidth;
-            headImageView.backgroundColor = [UIColor lightGrayColor];
+            headImageView.backgroundColor = LKColor.backgroundColor;
             headImageView.tag = 1001;
             configurationCell.ADD(headImageView);
             

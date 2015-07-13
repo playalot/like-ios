@@ -63,6 +63,7 @@
 "评论长度不能大于300位" = "Post too long, 300 characters or fewer";
 "发表评论（最多300个字）" = "Comment (300-character limit)";
 
+"删除中..." = "Deleting...";
 "提交中..." = "Sending...";
 "感谢您的反馈！" = "Thank you for your feedback!";
 "登录中..." = "Loading...";
@@ -100,6 +101,13 @@
 
 // LKNewPostViewController
 "点击添加标签，让更多同类发现你" = "More tags, more popular";
+"我的位置..." = "My location...";
+
+
+// LKPostDetailViewController
+"来自" = "from";
+"评论" = "Comment";
+
 
 // LKInputView
 "添加" = "Send";
@@ -175,6 +183,12 @@
 "  滤镜" = "  Filters";
 
 
-
-
+// LKNearPlacesViewController
+"地点" = "Places";
+"搜索附近位置" = "Where are your?";
+"没有找到你的位置？" = "Not Found?";
+"创建新的地点：" = "Add a new place here:";
+"更改位置" = "Change Place";
+"移除位置" = "Remove Place";
+"创建" = "Create";
 

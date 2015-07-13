@@ -144,7 +144,7 @@ LC_PROPERTY(assign) CGPoint point;
     self.nameLabel.numberOfLines = 0;
     self.nameLabel.textAlignment = UITextAlignmentCenter;
     self.nameLabel.text = [NSString stringWithFormat:@"%@\n %@ likes",LKLocalUser.singleton.user.name, @(LKLocalUser.singleton.user.likes.integerValue)];
-    [self.nameLabel addTapGestureRecognizer:self selector:@selector(labelTapAction)];
+    //[self.nameLabel addTapGestureRecognizer:self selector:@selector(labelTapAction)];
 
     
     BLKFlexibleHeightBarSubviewLayoutAttributes *initialNameLabelLayoutAttributes = [[BLKFlexibleHeightBarSubviewLayoutAttributes alloc] init];

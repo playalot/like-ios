@@ -36,7 +36,7 @@ LC_PROPERTY(strong) AVCaptureVideoPreviewLayer * prevLayer;
             
             self.prevLayer = [AVCaptureVideoPreviewLayer layerWithSession: self.captureSession];
             self.prevLayer.frame = LC_RECT(2.5, 2.5, frame.size.width - 5, frame.size.height - 5);
-            self.prevLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
+            self.prevLayer.backgroundColor = LKColor.backgroundColor.CGColor;
             self.prevLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
             [self.layer addSublayer:self.prevLayer];
             
@@ -57,7 +57,7 @@ LC_PROPERTY(strong) AVCaptureVideoPreviewLayer * prevLayer;
             
             self.prevLayer = [AVCaptureVideoPreviewLayer layerWithSession: self.captureSession];
             self.prevLayer.frame = LC_RECT(2.5, 2.5, frame.size.width - 5, frame.size.height - 5);
-            self.prevLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
+            self.prevLayer.backgroundColor = LKColor.backgroundColor.CGColor;
             self.prevLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
             [self.layer addSublayer:self.prevLayer];
             

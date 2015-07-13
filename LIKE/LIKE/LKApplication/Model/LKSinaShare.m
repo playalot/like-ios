@@ -38,7 +38,13 @@ LC_PROPERTY(copy) LKSinaLoginComplete complete;
     
     WBMessageObject * object = [[WBMessageObject alloc] init];
     object.imageObject = imageObject;
-    object.text = @"分享自 #like-你的新玩具# http://www.likeorz.com";
+    
+    /*
+     
+     我从like分享了一张玩具照片，有玩具的也都一起晒出来吧！\(^ω^)/ @like-你的新玩具
+     */
+    
+    object.text = @"我从like分享了一张玩具照片，有玩具的也都一起晒出来吧！\(^ω^)/  @like-你的新玩具";
     
     WBSendMessageToWeiboRequest * request = [WBSendMessageToWeiboRequest requestWithMessage:object];
     

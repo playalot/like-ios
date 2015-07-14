@@ -549,7 +549,7 @@ LC_PROPERTY(strong) AFHTTPRequestOperation * bigImageRequestOperation;
             self.post.place = [result.json[@"data"][@"place"] isKindOfClass:[NSString class]] ? result.json[@"data"][@"place"] : nil;
             self.post.timestamp = result.json[@"data"][@"created"];
             //self.post.content = result.json[@"data"][@"content"];
-            self.bigContentURL = self.post.content;
+            self.bigContentURL = result.json[@"data"][@"content"];
             
             UIImage * image = [LCUIImageCache.singleton imageWithKey:self.bigContentURL];
             
@@ -739,7 +739,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             self.userName = LCUILabel.view;
             self.userName.viewFrameY = 11;
             self.userName.viewFrameX = self.userHead.viewRightX + 10;
-            self.userName.viewFrameWidth = LC_DEVICE_WIDTH - self.userName.viewFrameX - 65;
+            self.userName.viewFrameWidth = LC_DEVICE_WIDTH - self.userName.viewFrameX - 75;
             self.userName.viewFrameHeight = 15;
             self.userName.textAlignment = UITextAlignmentLeft;
             self.userName.font = LK_FONT(13);

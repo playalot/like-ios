@@ -12,6 +12,8 @@
 
 @interface LCUIViewController : UIViewController
 
+LC_PROPERTY(assign) BOOL isCurrentDisplayController;
+
 -(void) buildUI;
 
 @end

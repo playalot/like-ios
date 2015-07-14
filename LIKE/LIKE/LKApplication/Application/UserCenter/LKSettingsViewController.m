@@ -259,6 +259,7 @@ LC_PROPERTY(assign) CGFloat cacheSize;
             
             configurationCell.backgroundColor = [UIColor clearColor];
             configurationCell.contentView.backgroundColor = [UIColor clearColor];
+            configurationCell.selectedViewColor = LKColor.backgroundColor;
             
             LCUIButton * icon = LCUIButton.view;
             icon.viewFrameX = 40;

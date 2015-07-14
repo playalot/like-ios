@@ -37,7 +37,7 @@ LC_PROPERTY(strong) LCUIButton * button;
     
     self.titleLabel = LCUILabel.view;
     self.titleLabel.viewFrameX = self.userHead.viewFrameX + self.userHead.viewRightX;
-    self.titleLabel.viewFrameWidth = LC_DEVICE_WIDTH - self.titleLabel.viewFrameX * 2;
+    self.titleLabel.viewFrameWidth = LC_DEVICE_WIDTH - self.titleLabel.viewFrameX * 2 - 40;
     self.titleLabel.viewFrameHeight = 58;
     self.titleLabel.font = LK_FONT(13);
     self.titleLabel.numberOfLines = 0;

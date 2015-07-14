@@ -232,7 +232,7 @@ LC_PROPERTY(assign) NSInteger timeInterval;
     self.sureButton.title = LC_LO(@"修改中...");
     self.sureButton.userInteractionEnabled = NO;
     
-    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"link/mobile"].POST_METHOD();
+    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"account/link/mobile"].AUTO_SESSION().POST_METHOD();
     
     [interface addParameter:[LKISOCountryCodes countryWithCode:self.countryCode.text] key:@"zone"];
     [interface addParameter:self.phoneField.text key:@"mobile"];

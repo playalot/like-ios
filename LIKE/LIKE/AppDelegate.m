@@ -9,7 +9,6 @@
 #import "AppDelegate.h"
 #import "LKLoginViewController.h"
 #import "LCCMD.h"
-#import "LKAssistiveTouchButton.h"
 #import "LKWelcome.h"
 #import "MobClick.h"
 #import "LKWeChatShare.h"
@@ -18,9 +17,7 @@
 #import <TencentOpenAPI/TencentOAuth.h>
 #import "LKNotificationCount.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
-#import "LKLocationManager.h"
 #import <MAMapKit/MAMapKit.h>
-#import "LCUIImageLoadConnection.h"
 
 @interface AppDelegate () <LC_CMD_IMP>
 
@@ -113,7 +110,7 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
     }
 }
 
-- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
 {
     return UIInterfaceOrientationMaskPortrait;
 }
@@ -238,12 +235,6 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
             
             [self request:interface complete:^(LKHttpRequestResult * result) {
                 
-//                if (result.state == LKHttpRequestStateFinished) {
-//                    
-//                    [LCUIAlertView showWithTitle:@"" message:notification.object cancelTitle:@"ok" otherTitle:nil didTouchedBlock:^(NSInteger integerValue) {
-//                        
-//                    }];
-//                }
             }];
 
         }
@@ -253,9 +244,6 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
     }
     else if ([notification is:LCUIApplicationDidReceiveRemoteNotification]){
         
-//        [LCUIAlertView showWithTitle:@"" message:[notification.object description] cancelTitle:@"ok" otherTitle:nil didTouchedBlock:^(NSInteger integerValue) {
-//            
-//        }];
     }
 }
 
@@ -283,7 +271,10 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
         // app was already in the foreground
     }else{
         
-        [self.home performSelector:@selector(notificationAction) withObject:nil afterDelay:0.5];
+        if (LKLocalUser.singleton.isLogin) {
+            
+            [self.home performSelector:@selector(notificationAction) withObject:nil afterDelay:0.5];
+        }
     }
 }
 

@@ -240,7 +240,11 @@
             
             if (!errMessage || errMessage.length == 0) {
                 
-                errMessage = LC_NSSTRING_FORMAT(@"发生了一个错误，但是这个错误没有详细的描述。");
+                errMessage = LC_NSSTRING_FORMAT(@"Some error occurred%@, but there's no description about it.", returnObject[@"code"] ? [NSString stringWithFormat:@"(%@)", returnObject[@"code"]] : @"");
+            }
+            else{
+                
+                //errMessage = [NSString stringWithFormat:@"%@ (%@)",returnObject[@"message"], returnObject[@"code"]];
             }
             
             result.state = LKHttpRequestStateFailed;

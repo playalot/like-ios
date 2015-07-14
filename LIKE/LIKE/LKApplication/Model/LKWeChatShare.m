@@ -7,6 +7,7 @@
 //
 
 #import "LKWeChatShare.h"
+#import "MobClick.h"
 
 @interface LKWeChatShare ()
 
@@ -52,10 +53,12 @@ LC_PROPERTY(copy) LKWeChatLoginComplete complete;
     
     message.mediaObject = ext;
     
-    SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
+    SendMessageToWXReq * req = [[SendMessageToWXReq alloc] init];
     req.bText = NO;
     req.message = message;
     req.scene = timeLine ? WXSceneTimeline : WXSceneSession;
+    
+    [MobClick event:timeLine ? @"2" : @"3"];
     
     return [WXApi sendReq:req];
 }

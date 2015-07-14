@@ -326,6 +326,7 @@
 		139B06A51ADBF50F006A260F /* SquareCashStyleBehaviorDefiner.m in Sources */ = {isa = PBXBuildFile; fileRef = 139B069D1ADBF50F006A260F /* SquareCashStyleBehaviorDefiner.m */; };
 		139B06A61ADBF50F006A260F /* UIView+BLKFlexibleHeightBarSubview.m in Sources */ = {isa = PBXBuildFile; fileRef = 139B069F1ADBF50F006A260F /* UIView+BLKFlexibleHeightBarSubview.m */; };
 		139B06A91ADBF577006A260F /* LKHomepageHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 139B06A81ADBF577006A260F /* LKHomepageHeader.m */; };
+		139C712A1B54CAE60051B2C3 /* NSNull+LCExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 139C71291B54CAE60051B2C3 /* NSNull+LCExtension.m */; };
 		13A951A01B4CE528002B73ED /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A9518E1B4CE528002B73ED /* AFHTTPRequestOperation.m */; };
 		13A951A11B4CE528002B73ED /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A951901B4CE528002B73ED /* AFHTTPRequestOperationManager.m */; };
 		13A951A21B4CE528002B73ED /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A951921B4CE528002B73ED /* AFHTTPSessionManager.m */; };
@@ -1307,6 +1308,8 @@
 		139B069F1ADBF50F006A260F /* UIView+BLKFlexibleHeightBarSubview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+BLKFlexibleHeightBarSubview.m"; sourceTree = "<group>"; };
 		139B06A71ADBF577006A260F /* LKHomepageHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKHomepageHeader.h; sourceTree = "<group>"; };
 		139B06A81ADBF577006A260F /* LKHomepageHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKHomepageHeader.m; sourceTree = "<group>"; };
+		139C71281B54CAE60051B2C3 /* NSNull+LCExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNull+LCExtension.h"; sourceTree = "<group>"; };
+		139C71291B54CAE60051B2C3 /* NSNull+LCExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNull+LCExtension.m"; sourceTree = "<group>"; };
 		13A9518D1B4CE528002B73ED /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		13A9518E1B4CE528002B73ED /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
 		13A9518F1B4CE528002B73ED /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
@@ -2868,6 +2871,8 @@
 				138EDD461AD7B0A30020957C /* NSString+LCExtension.m */,
 				138EDD471AD7B0A30020957C /* UIView+LCUIAnimation.h */,
 				138EDD481AD7B0A30020957C /* UIView+LCUIAnimation.m */,
+				139C71281B54CAE60051B2C3 /* NSNull+LCExtension.h */,
+				139C71291B54CAE60051B2C3 /* NSNull+LCExtension.m */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -3440,6 +3445,27 @@
 				139B069F1ADBF50F006A260F /* UIView+BLKFlexibleHeightBarSubview.m */,
 			);
 			path = BLKFlexibleHeightBar;
+			sourceTree = "<group>";
+		};
+		139C712C1B55195A0051B2C3 /* Views(UserCenter) */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Views(UserCenter)";
+			sourceTree = "<group>";
+		};
+		139C712D1B5519760051B2C3 /* Views(Link) */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Views(Link)";
+			sourceTree = "<group>";
+		};
+		139C712F1B55198D0051B2C3 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Extension;
 			sourceTree = "<group>";
 		};
 		13B6C19A1AE8FFBE008912C0 /* Welcome */ = {
@@ -4202,7 +4228,10 @@
 		13FCC06E1ADE16C00008DB41 /* UserCenter */ = {
 			isa = PBXGroup;
 			children = (
-				13FCC0861ADE40790008DB41 /* Views */,
+				139C712F1B55198D0051B2C3 /* Extension */,
+				139C712D1B5519760051B2C3 /* Views(Link) */,
+				139C712C1B55195A0051B2C3 /* Views(UserCenter) */,
+				13FCC0861ADE40790008DB41 /* Views(Cell) */,
 				13FCC06F1ADE16DD0008DB41 /* LKUserCenterViewController.h */,
 				13FCC0701ADE16DD0008DB41 /* LKUserCenterViewController.m */,
 				13DEEBFF1AE7723F005E01A6 /* LKSettingsViewController.h */,
@@ -4223,7 +4252,7 @@
 			path = Pullloader;
 			sourceTree = "<group>";
 		};
-		13FCC0861ADE40790008DB41 /* Views */ = {
+		13FCC0861ADE40790008DB41 /* Views(Cell) */ = {
 			isa = PBXGroup;
 			children = (
 				13FCC0871ADE40AC0008DB41 /* LKUserCenterPhotoCell.h */,
@@ -4231,6 +4260,7 @@
 				13E1A2C91AE6439F00E24C3C /* LKUserCenterUserCell.h */,
 				13E1A2CA1AE6439F00E24C3C /* LKUserCenterUserCell.m */,
 			);
+			name = "Views(Cell)";
 			path = Views;
 			sourceTree = "<group>";
 		};
@@ -4905,6 +4935,7 @@
 				13D2ACD11AFB18E40068C0CD /* GPUImageChromaKeyBlendFilter.m in Sources */,
 				138EDE9E1AD7B0A30020957C /* UIView+LCFrameLayout.m in Sources */,
 				13D2AD3B1AFB18E40068C0CD /* GPUImageSaturationFilter.m in Sources */,
+				139C712A1B54CAE60051B2C3 /* NSNull+LCExtension.m in Sources */,
 				13D2ACCD1AFB18E40068C0CD /* GPUImageBuffer.m in Sources */,
 				138EDE7F1AD7B0A30020957C /* LCKeychain.m in Sources */,
 				13BCD88A1ADBA92200A0CBF5 /* POPAnimatableProperty.mm in Sources */,
@@ -5184,7 +5215,7 @@
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "aa713228-579f-4fb3-94ec-34f1f86ba5fe";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -5220,7 +5251,7 @@
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "aa713228-579f-4fb3-94ec-34f1f86ba5fe";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

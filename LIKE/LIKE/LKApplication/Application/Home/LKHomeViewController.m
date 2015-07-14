@@ -54,6 +54,12 @@ LC_PROPERTY(strong) UIView * fromView;
 
 LC_PROPERTY(copy) NSString * next;
 
+
+// - - - - - - -
+LC_PROPERTY(strong) LKSearchViewController * searchViewController;
+LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
+
+
 @end
 
 @implementation LKHomeViewController
@@ -336,13 +342,25 @@ LC_PROPERTY(copy) NSString * next;
       
         @normally(self);
         
-        self.canResignFirstResponder = @(NO);
-
         // scroll...
         LKHomeTableViewCell * cell = (LKHomeTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:1]];
         
-        [self.tableView setContentOffset:LC_POINT(0, cell.viewFrameY - 64 + 55 + cell.contentBack.viewFrameHeight - LCUIKeyBoard.singleton.height + (cell.tagsView.viewFrameHeight - 55) + 16) animated:YES];
+//        CGRect originRect = cell.frame;
+//        
+//
+        CGFloat height1 = LC_DEVICE_HEIGHT - cell.viewFrameHeight;
+        CGFloat height2 = LCUIKeyBoard.singleton.height + self.inputView.viewFrameHeight - height1;
         
+//        CGFloat y = LC_DEVICE_HEIGHT + 20 - self.inputView.viewFrameHeight - LCUIKeyBoard.singleton.height - cell.viewFrameHeight;
+//        
+//        CGRect rect = [self.view convertRect:CGRectMake(0, y, cell.viewFrameWidth, cell.viewFrameHeight) toView:self.tableView];
+        
+        //CGRect rect = [cell convertRect:originRect toView:self.view];
+        //CGFloat height = (LC_DEVICE_HEIGHT + 64) - (originRect.size.height + self.inputView.viewFrameHeight + LCUIKeyBoard.singleton.height);
+        
+        [self.tableView setContentOffset:LC_POINT(0, cell.viewFrameY + height2 - 25 + 10) animated:YES];
+        
+        self.canResignFirstResponder = @(NO);
         [self performSelector:@selector(setCanResignFirstResponder:) withObject:@(YES) afterDelay:1];
     };
     
@@ -539,6 +557,8 @@ LC_PROPERTY(copy) NSString * next;
             
             LKSearchViewController * view = LKSearchViewController.view;
             
+            self.searchViewController = view;
+            
             [view showInViewController:self];
             
             @weakly(self);
@@ -556,6 +576,7 @@ LC_PROPERTY(copy) NSString * next;
                     
                 } completion:^(BOOL finished) {
                     
+                    self.searchViewController = nil;
                 }];
 
             };
@@ -568,6 +589,14 @@ LC_PROPERTY(copy) NSString * next;
 
 -(void) notificationAction
 {
+    if (!self.isCurrentDisplayController) {
+        return;
+    }
+    
+    if (self.searchViewController) {
+        [self.searchViewController hide];
+    }
+    
     [self.inputView resignFirstResponder];
 
     if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){

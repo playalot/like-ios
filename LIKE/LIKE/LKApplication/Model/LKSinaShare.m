@@ -7,6 +7,7 @@
 //
 
 #import "LKSinaShare.h"
+#import "MobClick.h"
 
 @interface LKSinaShare ()
 
@@ -48,7 +49,9 @@ LC_PROPERTY(copy) LKSinaLoginComplete complete;
     
     WBSendMessageToWeiboRequest * request = [WBSendMessageToWeiboRequest requestWithMessage:object];
     
-    return [WeiboSDK sendRequest:request];    
+    [MobClick event:@"1"];
+
+    return [WeiboSDK sendRequest:request];
 }
 
 -(void)login:(LKSinaLoginComplete)complete

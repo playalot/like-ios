@@ -16,6 +16,21 @@
 
 @implementation LCUIViewController
 
+-(void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.isCurrentDisplayController = YES;
+}
+
+-(void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    self.isCurrentDisplayController = NO;
+}
+
+
 -(void) dealloc
 {
     [self cancelAllRequests];

@@ -45,6 +45,7 @@ LC_IMP_SIGNAL(PushUserCenter);
     self.headImageView.cornerRadius = self.headImageView.viewMidWidth;
     self.headImageView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5];
     self.headImageView.userInteractionEnabled = YES;
+    self.headImageView.contentMode = UIViewContentModeScaleAspectFill;
     [self.headImageView addTapGestureRecognizer:self selector:@selector(handleHeadTap)];
     self.ADD(self.headImageView);
     

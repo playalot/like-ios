@@ -33,7 +33,7 @@
 #import "LCUIKeyBoard.h"
 #import "LCDebuggerImport.h"
 
-#define	DEFAULT_KEYBOARD_HEIGHT	(216.0f)
+#define	DEFAULT_KEYBOARD_HEIGHT	(258.0f)
 
 @interface LCUIKeyBoard ()
 {
@@ -63,6 +63,9 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:UIKeyboardDidShowNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:UIKeyboardDidHideNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:UIKeyboardWillChangeFrameNotification object:nil];
+        
+        UITextField * field = [[UITextField alloc] init];
+        [field becomeFirstResponder];
     });
 }
 

@@ -8,6 +8,7 @@
 
 #import "LKTencentShare.h"
 #import <TencentOpenAPI/QQApiInterface.h>
+#import "MobClick.h"
 
 @implementation LKTencentShare
 
@@ -48,6 +49,8 @@
     //将内容分享到qq
     [QQApiInterface sendReq:req];
     
+    [MobClick event:@"4"];
+
     return YES;
 }
 

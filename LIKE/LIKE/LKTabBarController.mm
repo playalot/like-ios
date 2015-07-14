@@ -8,7 +8,6 @@
 
 #import "LKTabBarController.h"
 #import "AppDelegate.h"
-#import "LKCameraViewController.h"
 #import "LKLoginViewController.h"
 #import "LKAssistiveTouchButton.h"
 #import "MMMaterialDesignSpinner.h"

@@ -55,8 +55,9 @@ LC_PROPERTY(strong) UIToolbar * toolbar;
 - (void)initSelf
 {
     // If we don't clip to bounds the toolbar draws a thin shadow on top
-    [self setClipsToBounds:YES];
-    
+    self.opaque = NO;
+    self.clipsToBounds = YES;
+        
     if (!self.toolbar)
     {
         self.toolbar =  [[UIToolbar alloc] initWithFrame:[self bounds]];

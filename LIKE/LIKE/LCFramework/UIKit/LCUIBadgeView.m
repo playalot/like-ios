@@ -48,7 +48,7 @@
                 [strClassName isEqualToString:@"_UIBadgeView"])
             {
                 self.badgeView = subview;
-                
+
                 //从原视图上移除
                 [subview removeFromSuperview];
                 break;

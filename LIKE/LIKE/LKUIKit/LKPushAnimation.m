@@ -30,7 +30,7 @@
         
     } completion:^(BOOL finished) {
         
-        fromViewController.header.alpha = 1;
+        //fromViewController.header.alpha = 1;
         
         fromViewController.view.transform = CGAffineTransformIdentity;
         [transitionContext completeTransition:![transitionContext transitionWasCancelled]];

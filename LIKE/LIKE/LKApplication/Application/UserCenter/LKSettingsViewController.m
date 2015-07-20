@@ -66,7 +66,7 @@ LC_PROPERTY(assign) CGFloat cacheSize;
     self.blur.viewFrameY = 64;
     self.blur.viewFrameWidth = self.viewFrameWidth;
     self.blur.viewFrameHeight = self.viewFrameHeight - 64;
-    self.blur.tintColor = [UIColor whiteColor];
+    //self.blur.tintColor = [UIColor whiteColor];
     self.ADD(self.blur);
     
     
@@ -82,17 +82,6 @@ LC_PROPERTY(assign) CGFloat cacheSize;
     self.blur.ADD(self.tableView);
     
     
-    LCUILabel * version = LCUILabel.view;
-    version.viewFrameHeight = 28;
-    version.viewFrameWidth = LC_DEVICE_WIDTH;
-    version.viewFrameY = self.tableView.viewFrameHeight + 20;
-    version.numberOfLines = 0;
-    version.textColor = LC_RGB(51, 51, 51);
-    version.font = LK_FONT(10);
-    version.textAlignment = UITextAlignmentCenter;
-    version.text = [NSString stringWithFormat:@"Version %@ Build %@\n© 2015 Like Co. Ltd", [LCSystemInfo appVersion], [LCSystemInfo appBuildVersion]];
-    self.tableView.ADD(version);
-    
     self.cacheSize = 0;
     
     
@@ -106,9 +95,23 @@ LC_PROPERTY(assign) CGFloat cacheSize;
 
         }];
     }];
+    
+    [self performSelector:@selector(buildTip) withObject:nil afterDelay:1];
 }
 
-
+-(void) buildTip
+{
+    LCUILabel * version = LCUILabel.view;
+    version.viewFrameHeight = 28;
+    version.viewFrameWidth = LC_DEVICE_WIDTH;
+    version.viewFrameY = self.tableView.contentSize.height + 20;
+    version.numberOfLines = 0;
+    version.textColor = LC_RGB(51, 51, 51);
+    version.font = LK_FONT(10);
+    version.textAlignment = UITextAlignmentCenter;
+    version.text = [NSString stringWithFormat:@"Version %@ Build %@\n© 2015 Like Co. Ltd", [LCSystemInfo appVersion], [LCSystemInfo appBuildVersion]];
+    self.tableView.ADD(version);
+}
 
 #pragma mark -
 
@@ -170,7 +173,7 @@ LC_PROPERTY(assign) CGFloat cacheSize;
             UIView * line = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
             line.viewFrameWidth = LC_DEVICE_WIDTH - 40;
             line.viewFrameX = 20;
-            line.viewFrameY = 200 / 3 - line.viewFrameHeight;
+            line.viewFrameY = 200. / 3. - line.viewFrameHeight;
             configurationCell.ADD(line);
 
         }];
@@ -208,11 +211,11 @@ LC_PROPERTY(assign) CGFloat cacheSize;
             
             
             self.nickField = LCUITextField.view;
-            self.nickField.viewFrameX = LC_DEVICE_WIDTH / 2;
-            self.nickField.viewFrameWidth = LC_DEVICE_WIDTH / 2 - 40;
+            self.nickField.viewFrameX = LC_DEVICE_WIDTH / 2 + 10;
+            self.nickField.viewFrameWidth = LC_DEVICE_WIDTH / 2 - 50;
             self.nickField.viewFrameHeight = 200 / 3;
-            self.nickField.font = LK_FONT(11);
-            self.nickField.textColor = LC_RGB(180, 180, 180);
+            self.nickField.font = LK_FONT(12);
+            self.nickField.textColor = LC_RGB(112, 112, 112);
             self.nickField.textAlignment = UITextAlignmentRight;
             self.nickField.text = LKLocalUser.singleton.user.name;
             self.nickField.returnKeyType = UIReturnKeyDone;
@@ -246,7 +249,7 @@ LC_PROPERTY(assign) CGFloat cacheSize;
             UIView * line = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
             line.viewFrameWidth = LC_DEVICE_WIDTH - 40;
             line.viewFrameX = 20;
-            line.viewFrameY = 200 / 3 - line.viewFrameHeight;
+            line.viewFrameY = 200. / 3. - line.viewFrameHeight;
             configurationCell.ADD(line);
             
         }];
@@ -285,7 +288,7 @@ LC_PROPERTY(assign) CGFloat cacheSize;
             subLabel.viewFrameWidth = LC_DEVICE_WIDTH - 60;
             subLabel.viewFrameHeight = 200 / 3;
             subLabel.font = LK_FONT(12);
-            subLabel.textColor = LC_RGB(180, 180, 180);
+            subLabel.textColor = LC_RGB(112, 112, 112);
             subLabel.textAlignment = UITextAlignmentRight;
             subLabel.tag = 1003;
             subLabel.numberOfLines = 0;
@@ -295,7 +298,7 @@ LC_PROPERTY(assign) CGFloat cacheSize;
             UIView * line = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
             line.viewFrameWidth = LC_DEVICE_WIDTH - 40;
             line.viewFrameX = 20;
-            line.viewFrameY = 200 / 3 - line.viewFrameHeight;
+            line.viewFrameY = 200. / 3. - line.viewFrameHeight;
             configurationCell.ADD(line);
         }];
         

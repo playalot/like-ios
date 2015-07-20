@@ -8,8 +8,11 @@
 
 #import "LKSearchPlaceholderView.h"
 #import "LKTag.h"
+#import "LKSearchHistory.h"
 
 @interface LKSearchPlaceholderView () <UITableViewDataSource,UITableViewDelegate>
+
+LC_PROPERTY(strong) NSArray * history;
 
 @end
 
@@ -41,13 +44,30 @@
 -(void) setSearchString:(NSString *)searchString
 {
     _searchString = searchString;
-    
+        
     [self reloadData];
 }
 
 -(void) setTags:(NSArray *)tags
 {
     _tags = tags;
+    
+    if (tags == nil) {
+        
+        NSArray * history = [LKSearchHistory history];
+        
+        NSMutableArray * result = [NSMutableArray array];
+        
+        for (NSString * tagString in history) {
+            
+            LKTag * tag = [[LKTag alloc] init];
+            tag.tag = tagString;
+            
+            [result addObject:tag];
+        }
+        
+        self.history = result;
+    }
     
     [self reloadData];
 }
@@ -72,6 +92,11 @@
         return 1;
     }
     
+    if (!self.tags) {
+        
+        return self.history.count;
+    }
+    
     return self.tags.count;
 }
 
@@ -82,16 +107,16 @@
         LCUILabel * label = LCUILabel.view;
         label.viewFrameX = 20;
         label.viewFrameWidth = self.viewFrameWidth;
-        label.viewFrameHeight = 117 / 3;
+        label.viewFrameHeight = 117. / 3.;
         label.font = LK_FONT(13);
-        label.textColor = [LC_RGB(84, 79, 73) colorWithAlphaComponent:0.8];
+        label.textColor = LC_RGB(79, 62, 56);
         label.tag = 1000;
         configurationCell.ADD(label);
         
         
         UIView * line = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
         line.viewFrameWidth = LC_DEVICE_WIDTH;
-        line.viewFrameY = 117 / 3 - line.viewFrameHeight;
+        line.viewFrameY = 117. / 3. - line.viewFrameHeight;
         configurationCell.ADD(line);
         
     }];
@@ -100,11 +125,27 @@
     
     if (indexPath.section == 0) {
         
-        label.text = [NSString stringWithFormat:@"%@“%@”%@", LC_LO(@"搜索"), self.searchString, LC_LO(@"相关内容")];
+        if (self.tags == nil) {
+            
+            label.text = LC_LO(@"最近搜索过的标签");
+        }
+        else{
+        
+            label.text = [NSString stringWithFormat:@"%@\"%@\"%@", LC_LO(@"搜索"), self.searchString, LC_LO(@"相关内容")];
+        }
     }
     else{
   
-        LKTag * tag = self.tags[indexPath.row];
+        LKTag * tag = nil ;
+        
+        if (self.tags == nil) {
+            
+            tag = self.history[indexPath.row];
+        }
+        else{
+        
+            tag = self.tags[indexPath.row];
+        }
         
         label.text = tag.tag;
     }
@@ -123,7 +164,16 @@
     
     if (indexPath.section == 1) {
         
-        LKTag * tag = self.tags[indexPath.row];
+        LKTag * tag = nil ;
+        
+        if (self.tags == nil) {
+            
+            tag = self.history[indexPath.row];
+        }
+        else{
+            
+            tag = self.tags[indexPath.row];
+        }
         
         if (self.didSelectRow) {
             self.didSelectRow(tag.tag);

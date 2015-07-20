@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LKSearchBar.h"
+#import "LKSearchPlaceholderView.h"
 
-LC_BLOCK(void, LKSearchViewControllerWillHide, ());
+@interface LKSearchViewController : UIView <INSSearchBarDelegate>
 
-@interface LKSearchViewController : UIView
-
-LC_PROPERTY(copy) LKSearchViewControllerWillHide willHide;
+LC_PROPERTY(copy) LKValueChanged willShow;
+LC_PROPERTY(copy) LKValueChanged willHide;
+LC_PROPERTY(strong) LKSearchPlaceholderView * placeholderView;
 
 -(void) showInViewController:(UIViewController *)viewController;
 -(void) hide;

@@ -84,10 +84,10 @@ LC_IMP_SIGNAL(PushPostDetail);
     
     self.head = LCUIImageView.view;
     self.head.viewFrameX = 15;
-    self.head.viewFrameY = 55 / 2 - 33 / 2 + 5;
-    self.head.viewFrameWidth = 33;
-    self.head.viewFrameHeight = 33;
-    self.head.cornerRadius = 33 / 2;
+    self.head.viewFrameY = 55 / 2 - 35 / 2 + 5;
+    self.head.viewFrameWidth = 35;
+    self.head.viewFrameHeight = 35;
+    self.head.cornerRadius = 35 / 2;
     self.head.backgroundColor = LKColor.backgroundColor;
     self.head.userInteractionEnabled = YES;
     [self.head addTapGestureRecognizer:self selector:@selector(handleHeadTap:)];
@@ -95,7 +95,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     
     
     self.title = LCUILabel.view;
-    self.title.viewFrameX = self.head.viewRightX + 10;
+    self.title.viewFrameX = self.head.viewRightX + 14;
     self.title.viewFrameY = 5;
     self.title.viewFrameWidth = LC_DEVICE_WIDTH - 150;
     self.title.viewFrameHeight = 55;
@@ -174,13 +174,12 @@ LC_IMP_SIGNAL(PushPostDetail);
 
 -(void) handleHeadTap:(UITapGestureRecognizer *)tap
 {
-    LCSignal * signal = self.SEND(self.PushUserCenter);
-    signal.object = self.post.user;
+    self.SEND(self.PushUserCenter).object = self.post.user;
 }
 
 -(void) contentImageTapAction
 {
-    self.contentImage.SEND(self.PushPostDetail).object = self.post;
+    self.SEND(self.PushPostDetail).object = self.post;
 }
 
 -(void) setPost:(LKPost *)post

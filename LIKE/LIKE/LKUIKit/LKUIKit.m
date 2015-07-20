@@ -12,6 +12,7 @@
 
 +(void) load
 {
+    [[UINavigationBar appearance] setShadowImage:[UIImage imageWithColor:[UIColor clearColor] andSize:CGSizeMake(LC_DEVICE_WIDTH, 1)]];
     [[UITextField appearance] setTintColor:LKColor.color];
 }
 

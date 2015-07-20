@@ -169,6 +169,8 @@ static NSString * __LKUserAddress = nil;
 {
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"mark/%@", self.tagValue.id]].AUTO_SESSION().GET_METHOD();
     
+    //[interface addParameter:@"asc" key:@"order"];
+    
     @weakly(self);
     
     [self request:interface complete:^(LKHttpRequestResult *result) {
@@ -256,7 +258,7 @@ static NSString * __LKUserAddress = nil;
 
 -(void) loadData:(LCUIPullLoaderDiretion)diretion
 {
-    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"mark/%@/comment", self.tagValue.id]].AUTO_SESSION().GET_METHOD();
+    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"mark/%@/comment?order=asc", self.tagValue.id]].AUTO_SESSION().GET_METHOD();
     
     
     [self request:interface complete:^(LKHttpRequestResult *result) {

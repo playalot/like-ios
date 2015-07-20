@@ -116,9 +116,12 @@
 // LKSearchPlaceHolderView
 "搜索" = "Related tags ";
 "相关内容" = " ";
+"最近搜索过的标签" = "Search history";
 
 // LKSearchViewController
 "搜索标签" = "Search";
+"查看关于#%@#的全部内容" = "Search for #%@# related tags";
+"热门用户" = "Popular Users";
 
 // LKSettingViewController
 "修改头像" = "Edit your avatar";
@@ -184,6 +187,7 @@
 
 
 // LKNearPlacesViewController
+"定位失败，请您打开定位开关后重试。" = "Location services is disabled, please open it and try again.";
 "地点" = "Places";
 "搜索附近位置" = "Where are your?";
 "没有找到你的位置？" = "Not Found?";

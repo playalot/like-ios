@@ -13,6 +13,7 @@
 #import "LKNotificationCount.h"
 #import "LKUserCenterViewController.h"
 #import "AppDelegate.h"
+#import "FXBlurView.h"
 
 @interface LKNotificationViewController () <UITableViewDataSource,UITableViewDelegate>
 
@@ -80,8 +81,15 @@ LC_PROPERTY(strong) LCUIBlurView * blur;
 
 -(void) buildUI
 {
-    UIView * header = UIView.view;
+    LCUILabel * header = LCUILabel.view;
+    header.backgroundColor = LKColor.color;
     header.frame = CGRectMake(0, 0, self.viewFrameWidth, 64);
+    header.tag = 1002;
+    header.textColor = [UIColor whiteColor];
+    header.font = LK_FONT_B(16);
+    header.text = LC_LO(@"\n通知");
+    header.numberOfLines = 0;
+    header.textAlignment = UITextAlignmentCenter;
     [header addTapGestureRecognizer:self selector:@selector(hide)];
     self.ADD(header);
     
@@ -93,14 +101,13 @@ LC_PROPERTY(strong) LCUIBlurView * blur;
     backButton.buttonImage = [UIImage imageNamed:@"NavigationBarDismiss.png" useCache:YES];
     backButton.showsTouchWhenHighlighted = YES;
     [backButton addTarget:self action:@selector(hide) forControlEvents:UIControlEventTouchUpInside];
-    backButton.tag = 1002;
     [self addSubview:backButton];
     
     
     self.blur = LCUIBlurView.view;
     self.blur.viewFrameY = 64;
     self.blur.viewFrameWidth = self.viewFrameWidth;
-    self.blur.viewFrameHeight = self.viewFrameHeight - 64;
+    self.blur.viewFrameHeight = self.viewFrameHeight;
     self.blur.tintColor = [UIColor whiteColor];
     self.ADD(self.blur);
     
@@ -171,14 +178,15 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
     
     [viewController.view addSubview:self];
     
-    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:3 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    self.blur.pop_springBounciness = 2;
+    self.blur.pop_springSpeed = 5;
+    self.blur.pop_spring.frame = CGRectMake(0, 64, self.blur.viewFrameWidth, self.blur.viewFrameHeight);
+    
+    [UIView animateWithDuration:0.5 animations:^{
         
         view.alpha = 1;
         
-        self.blur.viewFrameY = 64;
-        
     } completion:^(BOOL finished) {
-        
         
     }];
     
@@ -193,16 +201,26 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
     UIView * view = self.FIND(1002);
     self.userInteractionEnabled = NO;
     
-    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:3 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:0.25 animations:^{
         
-        view.alpha = 0;
+        view.viewFrameY = -view.viewFrameHeight * 2;
+        
+        
+    } completion:^(BOOL finished) {
+        
+    }];
+    
+    [UIView animateWithDuration:0.5 animations:^{
         
         self.blur.viewFrameY = self.viewFrameHeight;
         
     } completion:^(BOOL finished) {
         
         [self removeFromSuperview];
+        
     }];
+    
+    
 }
 
 #pragma mark - 

@@ -34,17 +34,14 @@ LC_PROPERTY(assign) CGPoint beginPoint;
         self.view = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HomepageIcon.png" useCache:YES]];
         self.view.userInteractionEnabled = YES;
         self.view.center = LC_POINT(frame.size.width / 2, frame.size.height / 2);
-        //[self.view addTapGestureRecognizer:self selector:@selector(didTapAction)];
-        self.ADD(self.view);
         
-//        self.tapGestureRecognizer=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapGestureRecognizer:)];
-//        self.tapGestureRecognizer.numberOfTapsRequired=1;
-//        self.tapGestureRecognizer.numberOfTouchesRequired=1;
-//        [self addGestureRecognizer:self.tapGestureRecognizer];
-//        
-//        UITapGestureRecognizer * tap = [self addTapGestureRecognizer:self selector:@selector(didTapAction)];
-//        tap.numberOfTapsRequired = 1;
-//        tap.numberOfTouchesRequired = 1;
+//        LCUIBlurView * blur = LCUIBlurView.view;
+//        blur.frame = CGRectMake(0, 0, self.view.viewFrameWidth - 2, self.view.viewFrameHeight - 2);
+//        blur.cornerRadius = blur.viewMidHeight;
+//        blur.center = LC_POINT(frame.size.width / 2, frame.size.height / 2);
+//        self.ADD(blur);
+        
+        self.ADD(self.view);
     }
     return self;
 }
@@ -61,9 +58,6 @@ LC_PROPERTY(assign) CGPoint beginPoint;
     if (self.touchDown) {
         self.touchDown();
     }
-    
-    //self.interval = 0;
-    //[self fireTimer:@"start" timeInterval:0.01 repeat:YES];
     
     self.moved = NO;
     

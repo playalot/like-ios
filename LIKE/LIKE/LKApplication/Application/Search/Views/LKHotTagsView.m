@@ -106,7 +106,7 @@ LC_PROPERTY(strong) UIView * maskView;
 
 -(instancetype) init
 {
-    if (self = [super init]) {
+    if (self = [super initWithFrame:CGRectMake(0, 0, LC_DEVICE_WIDTH, 44)]) {
         
         self.tags = [NSMutableArray array];
         

@@ -21,6 +21,8 @@ LC_PROPERTY(assign) CGRect filterScrollFrame;
 LC_PROPERTY(assign) BOOL squareImage;
 LC_PROPERTY(assign) BOOL dontSaveToAblum;
 
+LC_PROPERTY(strong) NSString * fromPreviewFrameString;
+
 LC_PROPERTY(copy) LKImageCropperDidFinishedPickImage didFinishedPickImage;
 
 - (id)initWithImage:(UIImage *)originalImage;

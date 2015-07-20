@@ -29,8 +29,9 @@
 #import "LCUIImageLoadConnection.h"
 #import "LKTagCommentsViewController.h"
 #import "LKTime.h"
+#import "LKPresentAnimation.h"
 
-@interface LKPostDetailViewController ()<UITableViewDataSource,UITableViewDelegate,JTSImageViewControllerDismissalDelegate,UINavigationControllerDelegate>
+@interface LKPostDetailViewController ()<UITableViewDataSource,UITableViewDelegate,JTSImageViewControllerDismissalDelegate,UINavigationControllerDelegate,UIViewControllerTransitioningDelegate>
 
 LC_PROPERTY(strong) BLKDelegateSplitter * delegateSplitter;
 LC_PROPERTY(strong) LKInputView * inputView;
@@ -47,6 +48,8 @@ LC_PROPERTY_MODEL(LKPostTagsDetailModel, tagsListModel);
 
 LC_PROPERTY(copy) NSString * bigContentURL;
 LC_PROPERTY(strong) AFHTTPRequestOperation * bigImageRequestOperation;
+
+LC_PROPERTY(strong) LKPresentAnimation * animator;
 
 @end
 
@@ -80,15 +83,15 @@ LC_PROPERTY(strong) AFHTTPRequestOperation * bigImageRequestOperation;
 {
     [super viewDidAppear:animated];
     
-    ((LCUINavigationController *)self.navigationController).animationHandler = ^id(UINavigationControllerOperation operation, UIViewController * fromVC, UIViewController * toVC){
-        
-        if (operation == UINavigationControllerOperationPop) {
-            
-            return [[LKPopAnimation alloc] init];
-        }
-        
-        return nil;
-    };
+//    ((LCUINavigationController *)self.navigationController).animationHandler = ^id(UINavigationControllerOperation operation, UIViewController * fromVC, UIViewController * toVC){
+//        
+//        if (operation == UINavigationControllerOperationPop) {
+//            
+//            return [[LKPopAnimation alloc] init];
+//        }
+//        
+//        return nil;
+//    };
     
     
     if (self.tableView.viewFrameY != 0) {
@@ -111,22 +114,21 @@ LC_PROPERTY(strong) AFHTTPRequestOperation * bigImageRequestOperation;
 {
     [super viewWillDisappear:animated];
     
-    ((LCUINavigationController *)self.navigationController).animationHandler = nil;
+    //((LCUINavigationController *)self.navigationController).animationHandler = nil;
     
     [self.inputView resignFirstResponder];
 }
 
-
 #pragma mark -
 
-- (id <UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC
-{
-    if (operation == UINavigationControllerOperationPop) {
-        return [[LKPopAnimation alloc] init];
-    }
-    
-    return nil;
-}
+//- (id <UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC
+//{
+//    if (operation == UINavigationControllerOperationPop) {
+//        return [[LKPopAnimation alloc] init];
+//    }
+//    
+//    return nil;
+//}
 
 #pragma mark -
 
@@ -143,11 +145,20 @@ LC_PROPERTY(strong) AFHTTPRequestOperation * bigImageRequestOperation;
             if(!self.post.user.likes && user){
                 
                 self.post.user = user;
-            }
+            }            
         }
     }
     
     return self;
+}
+
+-(void) setPresendModelAnimationOpen
+{
+    self.navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
+
+    self.animator = [[LKPresentAnimation alloc] init];
+    
+    self.navigationController.transitioningDelegate = self.animator;
 }
 
 -(void) viewDidLoad
@@ -845,14 +856,18 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
                 
                 self.post.user.likes = @(self.post.user.likes.integerValue + 1);
                 [tag.likers insertObject:LKLocalUser.singleton.user atIndex:0];
-                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
             }
             else{
                 
                 self.post.user.likes = @(self.post.user.likes.integerValue - 1);
             }
             
-            self.userName.text = LC_NSSTRING_FORMAT(@"%@\n%@ likes", self.post.user.name, self.post.user.likes);
+            self.userName.text = LC_NSSTRING_FORMAT(@"%@ %@ likes", self.post.user.name, self.post.user.likes);
+            
+            NSMutableAttributedString * attString = [[NSMutableAttributedString alloc] initWithString:self.userName.text];
+            [attString addAttribute:NSFontAttributeName value:LK_FONT_B(13) range:[self.userName.text rangeOfString:self.post.user.name]];
+            
+            self.userName.attributedText = attString;
         };
         
         // 显示点赞的人

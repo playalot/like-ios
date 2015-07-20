@@ -171,6 +171,42 @@ LC_PROPERTY(assign) BOOL magic;
     [self overlayClipping];
     
     
+    
+    if (self.fromPreviewFrameString) {
+        
+        CGRect rect = CGRectFromString(self.fromPreviewFrameString);
+        
+        CGRect oldRect = self.showImgView.frame;
+        
+        self.showImgView.frame = rect;
+        
+        LC_FAST_ANIMATIONS(0.25, ^{
+        
+            self.showImgView.frame = oldRect;
+        
+        });
+    }
+    
+    
+    for (UIView * view in self.view.subviews) {
+        
+        if (view != self.overlayView && view != self.ratioView) {
+         
+            view.alpha = 0.5;
+        }
+    }
+    
+    LC_FAST_ANIMATIONS(0.25, ^{
+    
+        for (UIView * view in self.view.subviews) {
+            
+            if (view != self.overlayView && view != self.ratioView) {
+
+                view.alpha = 1;
+            }
+        }
+        
+    });
 }
 
 - (void)initControlBtn

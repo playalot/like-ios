@@ -509,7 +509,13 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
     post.user = self.user;
     
     LKPostDetailViewController * postDetail = [[LKPostDetailViewController alloc] initWithPost:post];
-    [self.navigationController pushViewController:postDetail animated:YES];
+    
+    LCUINavigationController * nav = LC_UINAVIGATION(postDetail);
+    
+    [postDetail setPresendModelAnimationOpen];
+
+    [self.navigationController presentViewController:nav animated:YES completion:nil];
+    
 }
 
 #pragma mark - 

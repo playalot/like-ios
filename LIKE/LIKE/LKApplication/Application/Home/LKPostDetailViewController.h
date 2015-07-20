@@ -22,4 +22,6 @@ LC_PROPERTY(strong) LKPost * post;
 
 -(void) openCommentsView:(LKTag *)tag;
 
+-(void) setPresendModelAnimationOpen;
+
 @end

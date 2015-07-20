@@ -361,7 +361,6 @@ LC_PROPERTY(assign)  UIDeviceOrientation deviceOrientation;
 {
     UIImage * image = capturedImage.fullImage;
  
-    
     [LKPhotoAlbum saveImage:image showTip:NO];
     
     
@@ -370,11 +369,21 @@ LC_PROPERTY(assign)  UIDeviceOrientation deviceOrientation;
         image = [UIImage imageWithCGImage:image.CGImage scale:image.scale orientation:self.deviceOrientation == UIDeviceOrientationLandscapeLeft ? UIImageOrientationLeft : UIImageOrientationRight];
     }
     
-    LKImageCropperViewController * cropper = [[LKImageCropperViewController alloc] initWithImage:image filterIndex:self.filterIndex];
-
-    cropper.squareImage = self.squareImage;
     
-    [self.navigationController pushViewController:cropper animated:YES];
+    
+    UIView *flashView = [UIView new];
+    flashView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.5];
+    flashView.alpha = 0.f;
+    [self.view addSubview:flashView];
+    
+    flashView.frame = self.fastCamera.view.frame;
+    
+    LKImageCropperViewController * cropper = [[LKImageCropperViewController alloc] initWithImage:image filterIndex:self.filterIndex];
+    
+    cropper.squareImage = self.squareImage;
+    cropper.fromPreviewFrameString = NSStringFromCGRect(self.fastCamera.view.frame);
+    
+    [self.navigationController pushViewController:cropper animated:NO];
     
     cropper.didFinishedPickImage = self.didFinishedPickImage;
 }

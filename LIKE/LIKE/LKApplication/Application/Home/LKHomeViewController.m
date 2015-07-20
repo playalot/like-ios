@@ -7,9 +7,6 @@
 //
 
 #import "LKHomeViewController.h"
-#import "LKHomepageHeader.h"
-#import "SquareCashStyleBehaviorDefiner.h"
-#import "BLKDelegateSplitter.h"
 #import "LKUserCenterViewController.h"
 #import "LKHomeTableViewCell.h"
 #import "AppDelegate.h"
@@ -30,18 +27,16 @@
 #import "LKNewPostUploadCenter.h"
 #import "LKUploadingCell.h"
 #import "LCUIKeyBoard.h"
+#import "LKHomeHeader.h"
+#import "LKSearchBar.h"
+#import "FXBlurView.h"
 
 @interface LKHomeViewController () <UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate>
 
-LC_PROPERTY(strong) BLKDelegateSplitter * delegateSplitter;
+LC_PROPERTY(strong) LKHomeHeader * header;
 
 LC_PROPERTY(strong) LCUITableView * tableView;
 LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
-
-LC_PROPERTY(strong) LCUIButton * searchButton;
-LC_PROPERTY(strong) LCUIButton * notificationButton;
-
-LC_PROPERTY(strong) NSMutableArray * datasource;
 
 LC_PROPERTY(strong) LKInputView * inputView;
 
@@ -81,7 +76,14 @@ LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
 
     
     // hide navigation bar.
-    [self setNavigationBarHidden:YES animated:animated];
+    if (self.searchViewController || self.notificationViewController) {
+        
+        [self setNavigationBarHidden:YES animated:animated];
+    }
+    else{
+        
+        [self setNavigationBarHidden:NO animated:animated];
+    }
     
     // update header.
     [self.header updateWithUser:LKLocalUser.singleton.user];
@@ -106,23 +108,6 @@ LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
     [super viewWillDisappear:animated];
     
     [self.inputView resignFirstResponder];
-    
-    ((LCUINavigationController *)self.navigationController).animationHandler = nil;
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    ((LCUINavigationController *)self.navigationController).animationHandler = ^id(UINavigationControllerOperation operation, UIViewController * fromVC, UIViewController * toVC){
-        
-        if (operation == UINavigationControllerOperationPush && [toVC isKindOfClass:[LKPostDetailViewController class]]) {
-            
-            return [[LKPushAnimation alloc] init];
-        }
-        
-        return nil;
-    };
 }
 
 -(void) viewDidLoad
@@ -197,8 +182,33 @@ LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
     };
 }
 
+-(void) handleNavigationBarButton:(LCUINavigationBarButtonType)type
+{
+    if (type == LCUINavigationBarButtonTypeRight) {
+        
+        [self notificationAction];
+    }
+}
+
 -(void) buildUI
 {
+    // Bar item.
+    [self setNavigationBarButton:LCUINavigationBarButtonTypeRight image:[[UIImage imageNamed:@"NotificationIcon.png" useCache:YES] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]] selectImage:nil];
+    [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[[UIImage imageNamed:@"CollectionIcon.png"] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]] selectImage:nil];
+    
+    
+    // Bind badge.
+    [LKNotificationCount bindView:self.navigationItem.rightBarButtonItem.customView];
+
+
+    //
+    self.titleView = [LCUIImageView viewWithImage:[UIImage imageNamed:@"HomeLikeIcon.png" useCache:YES]];
+    
+    //
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
+
+    
+    //
     self.tableView = [[LCUITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -209,86 +219,61 @@ LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
 
     @weakly(self);
     
-    {
-        {
-            // Header
-            self.header = [[LKHomepageHeader alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.frame), 100)];
-            self.header.scrollView = self.tableView;
-            
-            SquareCashStyleBehaviorDefiner *behaviorDefiner = [[SquareCashStyleBehaviorDefiner alloc] init];
-            [behaviorDefiner addSnappingPositionProgress:0.0 forProgressRangeStart:0.0 end:0.5];
-            [behaviorDefiner addSnappingPositionProgress:1.0 forProgressRangeStart:0.5 end:1.0];
-            behaviorDefiner.snappingEnabled = NO;
-            behaviorDefiner.elasticMaximumHeightAtTop = NO;
-            self.header.behaviorDefiner = behaviorDefiner;
-            
-            self.delegateSplitter = [[BLKDelegateSplitter alloc] initWithFirstDelegate:behaviorDefiner secondDelegate:self];
-            self.tableView.delegate = (id<UITableViewDelegate>)self.delegateSplitter;
-            
-            [self.view addSubview:self.header];
-            
-            self.tableView.contentInset = UIEdgeInsetsMake(self.header.maximumBarHeight - 20, 0.0, 0.0, 0.0);
-            
-            
-            //
-            self.header.headAction = ^(id value){
-                
-                @normally(self);
-                
-                if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
-                    
-                    [self.navigationController pushViewController:[LKTabBarController hiddenBottomBarWhenPushed:[[LKUserCenterViewController alloc] initWithUser:LKLocalUser.singleton.user]] animated:YES];
-
-                };
-            };
-            
-            self.header.backgroundAction = ^(id value){
-                
-                // upload cover.
-                @normally(self);
-                
-                if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
-                    
-                    [LKUploadAvatarAndCoverModel chooseCoverImage:^(NSString *error, UIImage * image) {
-                        
-                        if (!error) {
-                            
-                            self.header.backgroundView.image = image;
-                            [self.userInfoModel getUserInfo:LKLocalUser.singleton.user.id];
-                        }
-                    }];
-                }
-            };
-            
-            
-            self.searchButton = LCUIButton.view;
-            self.searchButton.viewFrameWidth = 42;
-            self.searchButton.viewFrameHeight = 78 / 3 + 35;
-            self.searchButton.viewFrameY = 10;
-            self.searchButton.viewFrameX = 4;
-            self.searchButton.buttonImage = [UIImage imageNamed:@"SearchIcon.png" useCache:YES];
-            self.searchButton.showsTouchWhenHighlighted = YES;
-            [self.searchButton addTarget:self action:@selector(searchAction) forControlEvents:UIControlEventTouchUpInside];
-            [self.header addSubview:self.searchButton];
-
-            
-            self.notificationButton = LCUIButton.view;
-            self.notificationButton.viewFrameWidth = 44 / 3 + 100 - 8;
-            self.notificationButton.viewFrameHeight = 51 / 3 + 100;
-            self.notificationButton.viewFrameX = LC_DEVICE_WIDTH - self.notificationButton.viewFrameWidth + 30 - 4;
-            self.notificationButton.viewFrameY = - 18;
-            self.notificationButton.buttonImage = [UIImage imageNamed:@"NotificationIcon.png" useCache:YES];
-            self.notificationButton.showsTouchWhenHighlighted = YES;
-            [self.notificationButton addTarget:self action:@selector(notificationAction) forControlEvents:UIControlEventTouchUpInside];
-            [self.header addSubview:self.notificationButton];
-            
-            
-            
-            //
-            [LKNotificationCount bindView:self.notificationButton];
-        }
-    }
     
+    self.header = [[LKHomeHeader alloc] initWithCGSize:CGSizeMake(LC_DEVICE_WIDTH, 150)];
+    
+    self.header.headAction = ^(id value){
+      
+        @normally(self);
+
+        if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
+            
+            [self.navigationController pushViewController:[LKTabBarController hiddenBottomBarWhenPushed:[[LKUserCenterViewController alloc] initWithUser:LKLocalUser.singleton.user]] animated:YES];
+            
+        };
+
+    };
+    
+    self.header.willBeginSearch = ^(id value){
+      
+        @normally(self);
+        
+        [self searchAction];
+        
+        self.tableView.scrollEnabled = NO;
+    };
+    
+    self.header.willEndSearch = ^(id value){
+      
+        @normally(self);
+        
+        [self setNavigationBarHidden:NO animated:YES];
+        
+        LC_FAST_ANIMATIONS(0.25, ^{
+            
+            self.tableView.contentOffset = CGPointMake(0, 0);
+            
+        });
+        
+        LC_APPDELEGATE.tabBarController.assistiveTouchButton.hidden = NO;
+
+        LC_FAST_ANIMATIONS_F(0.25, ^{
+            
+            self.searchViewController.alpha = 0;
+
+        }, ^(BOOL finished){
+            
+            [self.searchViewController removeFromSuperview];
+            self.searchViewController = nil;
+            
+        });
+        
+        self.tableView.scrollEnabled = YES;
+    };
+    
+    self.tableView.tableHeaderView = self.header;
+
+
     
     //
     self.pullLoader = [LCUIPullLoader pullLoaderWithScrollView:self.tableView pullStyle:LCUIPullLoaderStyleFooter];
@@ -345,18 +330,8 @@ LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
         // scroll...
         LKHomeTableViewCell * cell = (LKHomeTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:1]];
         
-//        CGRect originRect = cell.frame;
-//        
-//
         CGFloat height1 = LC_DEVICE_HEIGHT - cell.viewFrameHeight;
         CGFloat height2 = LCUIKeyBoard.singleton.height + self.inputView.viewFrameHeight - height1;
-        
-//        CGFloat y = LC_DEVICE_HEIGHT + 20 - self.inputView.viewFrameHeight - LCUIKeyBoard.singleton.height - cell.viewFrameHeight;
-//        
-//        CGRect rect = [self.view convertRect:CGRectMake(0, y, cell.viewFrameWidth, cell.viewFrameHeight) toView:self.tableView];
-        
-        //CGRect rect = [cell convertRect:originRect toView:self.view];
-        //CGFloat height = (LC_DEVICE_HEIGHT + 64) - (originRect.size.height + self.inputView.viewFrameHeight + LCUIKeyBoard.singleton.height);
         
         [self.tableView setContentOffset:LC_POINT(0, cell.viewFrameY + height2 - 25 + 10) animated:YES];
         
@@ -406,14 +381,15 @@ LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
 
 -(void) scrollViewScrollToTop
 {
-    [self.tableView setContentOffset:LC_POINT(0, -self.header.maximumBarHeight) animated:YES];
-    [self scrollViewDidScroll:self.tableView];
+    [self.tableView setContentOffset:LC_POINT(0, 0) animated:YES];
 }
 
 -(void) reloadData
 {
-    [self.tableView reloadData];
-    [self scrollViewDidScroll:self.tableView];
+    LC_FAST_ANIMATIONS(0.25, ^{
+        
+        [self.tableView reloadData];
+    });
 }
 
 #pragma mark -
@@ -466,8 +442,6 @@ LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
             
             //
             self.inputView.textField.text = @"";
-            
-            [self scrollViewDidScroll:self.tableView];
         }
         
     }];
@@ -475,10 +449,12 @@ LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
 
 -(void) loadData:(LCUIPullLoaderDiretion)diretion
 {
-    
     if (LC_APPDELEGATE.tabBarController.loading) {
         
-        [self.pullLoader endRefresh];
+        if (diretion == LCUIPullLoaderDiretionBottom) {
+
+            [self.pullLoader endRefresh];
+        }
         return;
     }
     
@@ -523,7 +499,11 @@ LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
                 [self.datasource addObjectsFromArray:datasource];
             }
             
-            [self.pullLoader endRefresh];
+            if (diretion == LCUIPullLoaderDiretionBottom) {
+                
+                [self.pullLoader endRefresh];
+            }
+            
             [self reloadData];
             
             LC_APPDELEGATE.tabBarController.loading = NO;
@@ -539,49 +519,41 @@ LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
 
 }
 
+
 -(void) searchAction
 {
     [self.inputView resignFirstResponder];
     
     if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
         
-        LC_FAST_ANIMATIONS_F(0.2, ^{
+        [self setNavigationBarHidden:YES animated:YES];
+        
+        LC_FAST_ANIMATIONS(0.25, ^{
             
-            self.searchButton.alpha = 0;
-            self.notificationButton.alpha = 0;
-            self.header.headImageView.alpha = 0;
-            self.header.nameLabel.alpha = 0;
-            LC_APPDELEGATE.tabBarController.assistiveTouchButton.hidden = YES;
+            self.tableView.contentOffset = CGPointMake(0, (self.header.viewFrameHeight - 35) - 20 - 10);
             
-        }, ^(BOOL finished){
-            
-            LKSearchViewController * view = LKSearchViewController.view;
-            
-            self.searchViewController = view;
-            
-            [view showInViewController:self];
-            
-            @weakly(self);
-            
-            view.willHide = ^(){
-                
-                @normally(self);
-                
-                [UIView animateWithDuration:0.2 delay:0.25 options:UIViewAnimationOptionCurveLinear animations:^{
-                    
-                    self.searchButton.alpha = 1;
-                    self.notificationButton.alpha = 1;
-                    [self.header layoutSubviews];
-                    LC_APPDELEGATE.tabBarController.assistiveTouchButton.hidden = NO;
-                    
-                } completion:^(BOOL finished) {
-                    
-                    self.searchViewController = nil;
-                }];
-
-            };
-
         });
+        
+        LC_APPDELEGATE.tabBarController.assistiveTouchButton.hidden = YES;
+
+        LKSearchViewController * view = LKSearchViewController.view;
+        
+        self.header.searchViewController = view;
+        self.searchViewController = view;
+        
+        view.viewFrameY = self.header.viewBottomY;
+        view.alpha = 0;
+        
+        self.tableView.ADD(view);
+        
+        LC_FAST_ANIMATIONS(0.5, ^{
+           
+            view.alpha = 1;
+        });
+        
+        view.willHide = ^(id value){
+            
+        };
         
     }
 
@@ -601,36 +573,42 @@ LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
 
     if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
         
-        LC_FAST_ANIMATIONS_F(0.2, ^{
+        [self setNavigationBarHidden:YES animated:YES];
+
+        LKNotificationViewController * view = LKNotificationViewController.view;
+        
+        self.notificationViewController = view;
+        
+        [view showInViewController:self];
+        
+        view.willHide = ^(){
             
-            self.searchButton.alpha = 0;
+            [self setNavigationBarHidden:NO animated:YES];
+            
+            [UIView animateWithDuration:0.25 delay:0.25 options:UIViewAnimationOptionCurveLinear animations:^{
+                
+                LC_APPDELEGATE.tabBarController.assistiveTouchButton.hidden = NO;
+                self.header.headImageView.alpha = 1;
+                self.header.nameLabel.alpha = 1;
+                self.header.blurView.alpha = 1;
+                
+            } completion:^(BOOL finished) {
+                
+                self.notificationViewController = nil;
+            }];
+        };
+
+        
+        LC_FAST_ANIMATIONS_F(0.25, ^{
+            
             self.header.headImageView.alpha = 0;
             self.header.nameLabel.alpha = 0;
+            self.header.blurView.alpha = 0;
+            
             LC_APPDELEGATE.tabBarController.assistiveTouchButton.hidden = YES;
             
         }, ^(BOOL finished){
         
-            LKNotificationViewController * view = LKNotificationViewController.view;
-            
-            [view showInViewController:self];
-            
-            @weakly(self);
-            
-            view.willHide = ^(){
-                
-                @normally(self);
-                
-                [UIView animateWithDuration:0.2 delay:0.25 options:UIViewAnimationOptionCurveLinear animations:^{
-                    
-                    self.searchButton.alpha = 1;
-                    self.notificationButton.alpha = 1;
-                    [self.header layoutSubviews];
-                    LC_APPDELEGATE.tabBarController.assistiveTouchButton.hidden = NO;
-                    
-                } completion:^(BOOL finished) {
-                    
-                }];
-            };
         });
     }
 }
@@ -656,7 +634,12 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
     
     LKPostDetailViewController * detail = [[LKPostDetailViewController alloc] initWithPost:signal.object];
     
-    [self.navigationController pushViewController:[LKTabBarController hiddenBottomBarWhenPushed:detail] animated:YES];
+    LCUINavigationController * nav = LC_UINAVIGATION(detail);
+    
+    [detail setPresendModelAnimationOpen];
+
+    [self.navigationController presentViewController:nav animated:YES completion:nil];
+
     
     LKPost * post = signal.object;
     
@@ -762,10 +745,10 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
 
 -(void) scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [self.header handleScrollDidScroll:scrollView];
+    [self.header layoutHeaderViewForScrollViewOffset:scrollView.contentOffset];
     
     
-    if (scrollView.contentOffset.y < -280) {
+    if (scrollView.contentOffset.y < -80) {
         
         [self loadData:LCUIPullLoaderDiretionTop];
     }

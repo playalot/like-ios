@@ -91,7 +91,7 @@ LC_PROPERTY(strong) NSDictionary * info;
     
     @weakly(self);
     
-    [self request:interface complete:^(LKHttpRequestResult *result) {
+    [self request:interface complete:^(LKHttpRequestResult * result) {
         
         @normally(self);
         
@@ -271,10 +271,11 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
     LKPost * post = signal.object;
     
     LKPostDetailViewController * postDetail = [[LKPostDetailViewController alloc] initWithPost:post];
-    UINavigationController * nav = LC_UINAVIGATION(postDetail);
-    //nav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     
-    //[self.navigationController pushViewController:postDetail animated:YES];
+    UINavigationController * nav = LC_UINAVIGATION(postDetail);
+    
+    [postDetail setPresendModelAnimationOpen];
+    
     [self.navigationController  presentViewController:nav animated:YES completion:nil];
 }
 

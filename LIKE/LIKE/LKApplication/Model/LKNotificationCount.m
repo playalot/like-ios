@@ -110,9 +110,10 @@ LC_PROPERTY(strong) UIView * bindView;
     badge = [[LCUIBadgeView alloc] initWithFrame:CGRectZero valueString:@"99"];
     badge.hiddenWhenEmpty = YES;
     badge.valueString = LC_NSSTRING_FROM_INGERGER(cache.integerValue);
-    badge.viewFrameX = bindView.viewFrameWidth - badge.viewMidWidth - 50 + 4;
-    badge.viewFrameY = - badge.viewMidHeight + 50;
+    badge.viewFrameX = bindView.viewFrameWidth - badge.viewMidWidth;
+    badge.viewFrameY = - badge.viewMidHeight;
     badge.tag = 100100;
+//    badge.alpha = 0.7;
     bindView.ADD(badge);
 }
 

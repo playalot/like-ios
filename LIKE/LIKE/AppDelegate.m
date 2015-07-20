@@ -31,7 +31,6 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
 
 -(void) load:(NSDictionary *)launchOptions
 {
-    
     [MAMapServices sharedServices].apiKey = @"4c0db296d4f4d092fdaa9004ee8c959a";
 
     
@@ -101,6 +100,9 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
         UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
     }
+    
+    
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     
     
     // 判断是否为推送打开

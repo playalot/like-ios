@@ -43,6 +43,20 @@ LC_PROPERTY(strong) NSMutableArray * searchResultDatasource;
 
 -(void) buildUI
 {
+    if ([CLLocationManager locationServicesEnabled] &&
+        ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized
+         || [CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined)) {
+       
+        }
+    else if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied){
+
+        [LCUIAlertView showWithTitle:LC_LO(@"提醒") message:LC_LO(@"定位失败，请您打开定位开关后重试。") cancelTitle:LC_LO(@"确定") otherTitle:nil didTouchedBlock:^(NSInteger integerValue) {
+                         
+         }];
+        
+        [self performSelector:@selector(dismissOrPopViewController) withObject:nil afterDelay:1];
+    }
+    
     self.title = LC_LO(@"地点");
     
     [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft title:LC_LO(@"取消") titleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.8]];

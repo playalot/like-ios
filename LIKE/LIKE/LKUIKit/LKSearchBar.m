@@ -14,7 +14,7 @@
 {
     [super setFrame:frame];
     
-    self.layer.cornerRadius = frame.size.height / 2;
+    self.layer.cornerRadius = 4;
     self.layer.masksToBounds = YES;
     
 //    self.layer.borderColor = LKColor.color.CGColor;

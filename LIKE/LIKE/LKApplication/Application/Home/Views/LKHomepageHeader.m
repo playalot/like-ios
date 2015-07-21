@@ -112,6 +112,11 @@ LC_PROPERTY(assign) CGPoint point;
     [self addSubview:self.backgroundView];
     [self sendSubviewToBack:self.backgroundView];
     
+//    UIView * view = UIView.view;
+//    view.frame = CGRectMake(0, 0, self.viewFrameWidth, 1500);
+//    view.viewCenterY = self.backgroundView.viewCenterY;
+//    view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.05];
+//    self.ADD(view);
     
     self.maskView = UIView.view;
     self.maskView.frame = self.backgroundView.bounds;
@@ -126,12 +131,12 @@ LC_PROPERTY(assign) CGPoint point;
     
     BLKFlexibleHeightBarSubviewLayoutAttributes *midwayMaskViewLayoutAttributes = [[BLKFlexibleHeightBarSubviewLayoutAttributes alloc] initWithExistingLayoutAttributes:initialMaskViewLayoutAttributes];
     initialMaskViewLayoutAttributes.center = CGPointMake(self.frame.size.width*0.5, self.maximumBarHeight * 0.5);
-    midwayMaskViewLayoutAttributes.alpha = 0.6;
+    midwayMaskViewLayoutAttributes.alpha = 0.5;
     [self.maskView addLayoutAttributes:midwayMaskViewLayoutAttributes forProgress:0.6];
     
     BLKFlexibleHeightBarSubviewLayoutAttributes *finalMaskViewLayoutAttributes = [[BLKFlexibleHeightBarSubviewLayoutAttributes alloc] initWithExistingLayoutAttributes:midwayMaskViewLayoutAttributes];
     initialMaskViewLayoutAttributes.center = CGPointMake(self.frame.size.width*0.5, self.maximumBarHeight * 0.5);
-    finalMaskViewLayoutAttributes.alpha = 01;
+    finalMaskViewLayoutAttributes.alpha = 1;
     [self.maskView addLayoutAttributes:finalMaskViewLayoutAttributes forProgress:1.0];
     
     [self addSubview:self.maskView];

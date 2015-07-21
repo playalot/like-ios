@@ -103,6 +103,8 @@
 
 -(void) setLoading:(BOOL)loading
 {
+    _loading = loading;
+
     MMMaterialDesignSpinner * tip = (MMMaterialDesignSpinner *)[self.assistiveTouchButton viewWithTag:100];
 
     if (loading) {
@@ -114,7 +116,6 @@
             
         }, ^(BOOL finished){
         
-            _loading = loading;
         });
     }
     else{
@@ -125,7 +126,6 @@
             
         } completion:^(BOOL finished) {
             
-            _loading = loading;
         }];
     }
 }

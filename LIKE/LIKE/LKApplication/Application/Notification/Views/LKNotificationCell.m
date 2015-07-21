@@ -11,6 +11,16 @@
 
 @interface LKNotificationCell ()
 
+LC_PROPERTY(strong) LCUIImageView * headImageView;
+LC_PROPERTY(strong) LCUIImageView * icon;
+LC_PROPERTY(strong) LCUILabel * nameLabel;
+LC_PROPERTY(strong) LCUILabel * titleLabel;
+LC_PROPERTY(strong) LCUILabel * timeLabel;
+LC_PROPERTY(strong) UIView * line;
+
+LC_PROPERTY(strong) LCUIImageView * preview;
+LC_PROPERTY(strong) UIScrollView * morePreview;
+
 @end
 
 @implementation LKNotificationCell
@@ -40,8 +50,16 @@ LC_IMP_SIGNAL(PushPostDetail);
         self.ADD(self.headImageView);
         
         
+        self.icon = LCUIImageView.view;
+        self.icon.viewFrameX = self.headImageView.viewRightX + 10;
+        self.icon.viewFrameWidth = 22;
+        self.icon.viewFrameHeight = 22;
+        self.icon.viewCenterY = self.headImageView.viewCenterY;
+        self.ADD(self.icon);
+        
+        
         self.nameLabel = LCUILabel.view;
-        self.nameLabel.viewFrameX = self.headImageView.viewRightX + 10;
+        self.nameLabel.viewFrameX = self.icon.viewRightX + 10;
         self.nameLabel.viewFrameY = 10;
         self.nameLabel.viewFrameWidth = LC_DEVICE_WIDTH - self.nameLabel.viewFrameX - 35 - 20;
         self.nameLabel.viewFrameHeight = 15;
@@ -105,7 +123,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     
     self.nameLabel.attributedText = attString;
     
-    self.nameLabel.viewFrameX = self.headImageView.viewRightX + 10;
+    self.nameLabel.viewFrameX = self.icon.viewRightX + 10;
     self.nameLabel.viewFrameWidth = LC_DEVICE_WIDTH - self.nameLabel.viewFrameX - 35 - ((self.preview.viewFrameY) * 2);
     self.nameLabel.viewFrameHeight = 1000;
     self.nameLabel.FIT();
@@ -113,8 +131,11 @@ LC_IMP_SIGNAL(PushPostDetail);
 
     self.timeLabel.text = [LKTime dateNearByTimestamp:notification.timestamp];
     self.timeLabel.FIT();
-    self.timeLabel.viewFrameX = self.headImageView.viewRightX + 10;
+    self.timeLabel.viewFrameX = self.nameLabel.viewFrameX;
     self.timeLabel.viewFrameY = self.nameLabel.viewBottomY + 5;
+    
+    
+    self.icon.image = [LKNotificationCell getIcon:notification];
     
     
     // images...
@@ -219,6 +240,39 @@ LC_IMP_SIGNAL(PushPostDetail);
     }
 }
 
++(UIImage *) getIcon:(LKNotification *)notification
+{
+    switch (notification.type) {
+        case LKNotificationTypeNewTag:
+            
+            return [UIImage imageNamed:@"NotificationTagIcon.png" useCache:YES];
+            
+            break;
+        case LKNotificationTypeFocus:
+            
+            return [UIImage imageNamed:@"NotificationFocusIcon.png" useCache:YES];
+            
+            break;
+        case LKNotificationTypeLikeTag:
+            
+            return [UIImage imageNamed:@"NotificationLikeIcon.png" useCache:YES];
+            
+            break;
+        case LKNotificationTypeReply:
+            
+            return [UIImage imageNamed:@"NotificationCommentIcon.png" useCache:YES];
+            
+            break;
+        case LKNotificationTypeComment:
+            
+            return [UIImage imageNamed:@"NotificationCommentIcon.png" useCache:YES];
+            
+            break;
+        default:
+            break;
+    }
+}
+
 +(CGFloat) height:(LKNotification *)notification
 {
     static LCUILabel * label = nil;
@@ -236,7 +290,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     
     label.attributedText = attString;
     
-    label.viewFrameWidth = LC_DEVICE_WIDTH - 55 - 35 - 20;
+    label.viewFrameWidth = LC_DEVICE_WIDTH - 55 - 35 - 20 - 22 - 10;
     label.viewFrameHeight = 1000;
     label.FIT();
     

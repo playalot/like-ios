@@ -91,6 +91,14 @@
 		137106A31B58FBE7008BCD66 /* LKMoreContentButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 137106A21B58FBE7008BCD66 /* LKMoreContentButton.m */; };
 		137750F11B2AB185006AA43D /* LKNewPostUploadCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 137750F01B2AB185006AA43D /* LKNewPostUploadCenter.m */; };
 		137750F41B2AD1CE006AA43D /* LKUploadingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 137750F31B2AD1CE006AA43D /* LKUploadingCell.m */; };
+		1377F03A1B5E1240008E21BC /* NotificationCommentIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1377F0361B5E1240008E21BC /* NotificationCommentIcon@3x.png */; };
+		1377F03B1B5E1240008E21BC /* NotificationFocusIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1377F0371B5E1240008E21BC /* NotificationFocusIcon@3x.png */; };
+		1377F03C1B5E1240008E21BC /* NotificationLikeIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1377F0381B5E1240008E21BC /* NotificationLikeIcon@3x.png */; };
+		1377F03D1B5E1240008E21BC /* NotificationTagIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1377F0391B5E1240008E21BC /* NotificationTagIcon@3x.png */; };
+		1377F0401B5E1702008E21BC /* LKAttentionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1377F03F1B5E1702008E21BC /* LKAttentionViewController.m */; };
+		1377F04B1B5E35D8008E21BC /* UIKit+Doppelganger.m in Sources */ = {isa = PBXBuildFile; fileRef = 1377F0451B5E35D8008E21BC /* UIKit+Doppelganger.m */; };
+		1377F04C1B5E35D8008E21BC /* WMLArrayDiff.m in Sources */ = {isa = PBXBuildFile; fileRef = 1377F0481B5E35D8008E21BC /* WMLArrayDiff.m */; };
+		1377F04D1B5E35D8008E21BC /* WMLArrayDiffUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 1377F04A1B5E35D8008E21BC /* WMLArrayDiffUtility.m */; };
 		1387C33D1B3139B700B065A7 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1387C33C1B3139B700B065A7 /* FBSDKCoreKit.framework */; };
 		1387C33F1B313B5300B065A7 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1387C33E1B313B5300B065A7 /* FBSDKLoginKit.framework */; };
 		1387C3421B313B7500B065A7 /* LKFacebookShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 1387C3411B313B7500B065A7 /* LKFacebookShare.m */; };
@@ -648,7 +656,6 @@
 		13E27F061AF9CBB700C17362 /* LKPopAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13E27F051AF9CBB700C17362 /* LKPopAnimation.m */; };
 		13E27F0C1AFA03FE00C17362 /* LKTimestampView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13E27F0B1AFA03FE00C17362 /* LKTimestampView.xib */; };
 		13E27F0E1AFA1A4900C17362 /* HomeLikeIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13E27F0D1AFA1A4900C17362 /* HomeLikeIcon@3x.png */; };
-		13EE16261AF234590054E182 /* NavigationBarBackShadow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13EE16251AF234590054E182 /* NavigationBarBackShadow@3x.png */; };
 		13F21F3B1B0F1D6200124291 /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 13F21F301B0F1D6200124291 /* libWeiboSDK.a */; };
 		13F21F3C1B0F1D6200124291 /* WeiboSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 13F21F381B0F1D6200124291 /* WeiboSDK.bundle */; };
 		13F504EF1B0AF4EA00D8D484 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 13F504EB1B0AF4EA00D8D484 /* libWeChatSDK.a */; };
@@ -858,6 +865,20 @@
 		137750F01B2AB185006AA43D /* LKNewPostUploadCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKNewPostUploadCenter.m; sourceTree = "<group>"; };
 		137750F21B2AD1CE006AA43D /* LKUploadingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKUploadingCell.h; sourceTree = "<group>"; };
 		137750F31B2AD1CE006AA43D /* LKUploadingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKUploadingCell.m; sourceTree = "<group>"; };
+		1377F0361B5E1240008E21BC /* NotificationCommentIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationCommentIcon@3x.png"; sourceTree = "<group>"; };
+		1377F0371B5E1240008E21BC /* NotificationFocusIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationFocusIcon@3x.png"; sourceTree = "<group>"; };
+		1377F0381B5E1240008E21BC /* NotificationLikeIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationLikeIcon@3x.png"; sourceTree = "<group>"; };
+		1377F0391B5E1240008E21BC /* NotificationTagIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationTagIcon@3x.png"; sourceTree = "<group>"; };
+		1377F03E1B5E1702008E21BC /* LKAttentionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKAttentionViewController.h; sourceTree = "<group>"; };
+		1377F03F1B5E1702008E21BC /* LKAttentionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKAttentionViewController.m; sourceTree = "<group>"; };
+		1377F0421B5E35D8008E21BC /* Doppelganger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Doppelganger.h; sourceTree = "<group>"; };
+		1377F0441B5E35D8008E21BC /* UIKit+Doppelganger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIKit+Doppelganger.h"; sourceTree = "<group>"; };
+		1377F0451B5E35D8008E21BC /* UIKit+Doppelganger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIKit+Doppelganger.m"; sourceTree = "<group>"; };
+		1377F0461B5E35D8008E21BC /* WMLArrayDiff+Creation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WMLArrayDiff+Creation.h"; sourceTree = "<group>"; };
+		1377F0471B5E35D8008E21BC /* WMLArrayDiff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMLArrayDiff.h; sourceTree = "<group>"; };
+		1377F0481B5E35D8008E21BC /* WMLArrayDiff.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMLArrayDiff.m; sourceTree = "<group>"; };
+		1377F0491B5E35D8008E21BC /* WMLArrayDiffUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMLArrayDiffUtility.h; sourceTree = "<group>"; };
+		1377F04A1B5E35D8008E21BC /* WMLArrayDiffUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMLArrayDiffUtility.m; sourceTree = "<group>"; };
 		1387C33C1B3139B700B065A7 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		1387C33E1B313B5300B065A7 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		1387C3401B313B7500B065A7 /* LKFacebookShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKFacebookShare.h; sourceTree = "<group>"; };
@@ -1957,7 +1978,6 @@
 		13EE16151AEF72210054E182 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		13EE16171AEF72210054E182 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		13EE16191AEF72210054E182 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		13EE16251AF234590054E182 /* NavigationBarBackShadow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NavigationBarBackShadow@3x.png"; sourceTree = "<group>"; };
 		13F21F301B0F1D6200124291 /* libWeiboSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeiboSDK.a; sourceTree = "<group>"; };
 		13F21F311B0F1D6200124291 /* WBHttpRequest+WeiboShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBHttpRequest+WeiboShare.h"; sourceTree = "<group>"; };
 		13F21F321B0F1D6200124291 /* WBHttpRequest+WeiboToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBHttpRequest+WeiboToken.h"; sourceTree = "<group>"; };
@@ -2181,7 +2201,6 @@
 		135D5BF91ADFD21400811B06 /* Camera */ = {
 			isa = PBXGroup;
 			children = (
-				13EE16251AF234590054E182 /* NavigationBarBackShadow@3x.png */,
 				13DA0FC51AEB8AFE005B9476 /* CameraFocus@3x.png */,
 				134765311AE2564D0055D099 /* PostDidFinish@3x.png */,
 				134765321AE2564D0055D099 /* PostDismiss@3x.png */,
@@ -2248,6 +2267,29 @@
 				1371069C1B58E0E9008BCD66 /* CHTCollectionViewWaterfallLayout.m */,
 			);
 			path = CHTCollectionViewWaterfallLayout;
+			sourceTree = "<group>";
+		};
+		1377F0411B5E35D8008E21BC /* Doppelganger */ = {
+			isa = PBXGroup;
+			children = (
+				1377F0421B5E35D8008E21BC /* Doppelganger.h */,
+				1377F0431B5E35D8008E21BC /* iOS */,
+				1377F0461B5E35D8008E21BC /* WMLArrayDiff+Creation.h */,
+				1377F0471B5E35D8008E21BC /* WMLArrayDiff.h */,
+				1377F0481B5E35D8008E21BC /* WMLArrayDiff.m */,
+				1377F0491B5E35D8008E21BC /* WMLArrayDiffUtility.h */,
+				1377F04A1B5E35D8008E21BC /* WMLArrayDiffUtility.m */,
+			);
+			path = Doppelganger;
+			sourceTree = "<group>";
+		};
+		1377F0431B5E35D8008E21BC /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				1377F0441B5E35D8008E21BC /* UIKit+Doppelganger.h */,
+				1377F0451B5E35D8008E21BC /* UIKit+Doppelganger.m */,
+			);
+			path = iOS;
 			sourceTree = "<group>";
 		};
 		1387C33B1B3139B700B065A7 /* Facebook */ = {
@@ -3235,6 +3277,7 @@
 		138EDECC1AD7B70F0020957C /* LKExternal */ = {
 			isa = PBXGroup;
 			children = (
+				1377F0411B5E35D8008E21BC /* Doppelganger */,
 				13BCA6651B5CE43D00DC0549 /* FXBlurView */,
 				1371069A1B58E0E9008BCD66 /* CHTCollectionViewWaterfallLayout */,
 				135E8A961B450DA200C2270C /* MKMap */,
@@ -3441,6 +3484,8 @@
 				13B5B4F21B170DE600252A78 /* LKTagCommentsViewController.m */,
 				13E1A2C11AE61DCB00E24C3C /* LKTagLikesViewController.h */,
 				13E1A2C21AE61DCB00E24C3C /* LKTagLikesViewController.m */,
+				1377F03E1B5E1702008E21BC /* LKAttentionViewController.h */,
+				1377F03F1B5E1702008E21BC /* LKAttentionViewController.m */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -4376,6 +4421,10 @@
 		13FCC0911ADF5E930008DB41 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				1377F0361B5E1240008E21BC /* NotificationCommentIcon@3x.png */,
+				1377F0371B5E1240008E21BC /* NotificationFocusIcon@3x.png */,
+				1377F0381B5E1240008E21BC /* NotificationLikeIcon@3x.png */,
+				1377F0391B5E1240008E21BC /* NotificationTagIcon@3x.png */,
 				133A31841B5D0D3400AB74A4 /* SearchPlaceholderIcon@3x.png */,
 				133A31821B5D09C500AB74A4 /* CollectionIcon@3x.png */,
 				13892C3A1B1C31E30053303E /* HomepageIcon@3x.png */,
@@ -4508,6 +4557,7 @@
 				13F505101B0C5EAC00D8D484 /* QQIcon@3x.png in Resources */,
 				13DA0FC61AEB8AFE005B9476 /* CameraFocus@3x.png in Resources */,
 				135D5C951AE113BA00811B06 /* CameraClose@3x.png in Resources */,
+				1377F03B1B5E1240008E21BC /* NotificationFocusIcon@3x.png in Resources */,
 				138EDE8C1AD7B0A30020957C /* LCInternationalization.bundle in Resources */,
 				13B5B4E61B15CB6800252A78 /* TalkIcon@3x.png in Resources */,
 				13DFCECF1B3D105000DC0CF7 /* Localizable.strings in Resources */,
@@ -4542,9 +4592,12 @@
 				1357352D1B2EF44E0032515C /* WeiboLogin@3x.png in Resources */,
 				138EDE431AD7B0A30020957C /* web.bundle in Resources */,
 				13DEEBF91AE75585005E01A6 /* AlreadyFocusWrite@3x.png in Resources */,
+				1377F03D1B5E1240008E21BC /* NotificationTagIcon@3x.png in Resources */,
+				1377F03A1B5E1240008E21BC /* NotificationCommentIcon@3x.png in Resources */,
 				1387C3441B31508A00B065A7 /* FacebookLogin@3x.png in Resources */,
 				1388B4FE1B01EFFB006F36AB /* FocusLG@3x.png in Resources */,
 				13F505151B0C5EAC00D8D484 /* WeChatFriendIcon@3x.png in Resources */,
+				1377F03C1B5E1240008E21BC /* NotificationLikeIcon@3x.png in Resources */,
 				1388B4F71B00C0DD006F36AB /* SettingHead@3x.png in Resources */,
 				13E27EF51AF8B7D000C17362 /* cellLine@2x.png in Resources */,
 				134765361AE2564D0055D099 /* PostNavigationBar@3x.png in Resources */,
@@ -4561,7 +4614,6 @@
 				13B6C1961AE8E8EA008912C0 /* NotificationIcon@3x.png in Resources */,
 				13D9BF271AEB997E0020C94F /* Diana.png in Resources */,
 				135DBAF71AE60577004AD150 /* NavigationBarMore@3x.png in Resources */,
-				13EE16261AF234590054E182 /* NavigationBarBackShadow@3x.png in Resources */,
 				133A31851B5D0D3400AB74A4 /* SearchPlaceholderIcon@3x.png in Resources */,
 				13D9BF251AEB997E0020C94F /* Ansel.png in Resources */,
 				13B6C19F1AE8FFBE008912C0 /* 1136.jpg in Resources */,
@@ -4836,6 +4888,7 @@
 				1347655F1AE25EA40055D099 /* QNAsyncRun.m in Sources */,
 				138EDE131AD7B0A30020957C /* LCGLCommon.m in Sources */,
 				138EDE781AD7B0A30020957C /* LCAudio.m in Sources */,
+				1377F04B1B5E35D8008E21BC /* UIKit+Doppelganger.m in Sources */,
 				138EDE421AD7B0A30020957C /* LCWebServerConnection.m in Sources */,
 				138EDE991AD7B0A30020957C /* NSObject+LCUIHud.m in Sources */,
 				13BCD8951ADBA92200A0CBF5 /* POPGeometry.mm in Sources */,
@@ -4992,6 +5045,7 @@
 				13D2AD511AFB18E40068C0CD /* GPUImageThresholdedNonMaximumSuppressionFilter.m in Sources */,
 				13E1A4EC1AE65FE300E24C3C /* FastttFilter.m in Sources */,
 				138EDEA61AD7B0A30020957C /* LCUIActionSheet.m in Sources */,
+				1377F04D1B5E35D8008E21BC /* WMLArrayDiffUtility.m in Sources */,
 				13D2AD1B1AFB18E40068C0CD /* GPUImageMotionDetector.m in Sources */,
 				13BCD8911ADBA92200A0CBF5 /* POPBasicAnimation.mm in Sources */,
 				138EDE9F1AD7B0A30020957C /* UIView+LCGestureRecognizer.m in Sources */,
@@ -5019,6 +5073,7 @@
 				13BCD88F1ADBA92200A0CBF5 /* POPAnimationTracer.mm in Sources */,
 				137106991B576212008BCD66 /* LKHotTagDetail.m in Sources */,
 				13D2AD4E1AFB18E40068C0CD /* GPUImageTextureOutput.m in Sources */,
+				1377F04C1B5E35D8008E21BC /* WMLArrayDiff.m in Sources */,
 				138EDE3E1AD7B0A30020957C /* HTTPServer.m in Sources */,
 				13D2ACC31AFB18E40068C0CD /* GPUImage3x3TextureSamplingFilter.m in Sources */,
 				138EDDFD1AD7B0A30020957C /* LCCMDInput.m in Sources */,
@@ -5145,6 +5200,7 @@
 				138EDEAE1AD7B0A30020957C /* LCUIImageLoadConnection.m in Sources */,
 				138EDE361AD7B0A30020957C /* HTTPAsyncFileResponse.m in Sources */,
 				138EDEA71AD7B0A30020957C /* LCUIActivityIndicatorView.m in Sources */,
+				1377F0401B5E1702008E21BC /* LKAttentionViewController.m in Sources */,
 				13BCD8C81ADBA93000A0CBF5 /* MCAnimationGroup.m in Sources */,
 				138EDE9A1AD7B0A30020957C /* UIColor+LCExtension.m in Sources */,
 				13D2AD361AFB18E40068C0CD /* GPUImageRGBDilationFilter.m in Sources */,

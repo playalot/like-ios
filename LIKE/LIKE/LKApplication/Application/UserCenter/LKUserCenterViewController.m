@@ -182,7 +182,8 @@ LC_PROPERTY(assign) BOOL isLocalUser;
             self.header = [[LKHomepageHeader alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.frame), 100.0)];
             self.header.scrollView = self.tableView;
             [self.header.maskView removeFromSuperview];
-
+            self.header.maskView = nil;
+            
             SquareCashStyleBehaviorDefiner *behaviorDefiner = [[SquareCashStyleBehaviorDefiner alloc] init];
             [behaviorDefiner addSnappingPositionProgress:0.0 forProgressRangeStart:0.0 end:0.5];
             [behaviorDefiner addSnappingPositionProgress:1.0 forProgressRangeStart:0.5 end:1.0];

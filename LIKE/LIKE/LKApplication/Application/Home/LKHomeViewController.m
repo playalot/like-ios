@@ -30,8 +30,21 @@
 #import "LKHomeHeader.h"
 #import "LKSearchBar.h"
 #import "FXBlurView.h"
+#import "LKAttentionViewController.h"
+#import "Doppelganger.h"
+
+#define FOCUS_FEED_CACHE_KEY [NSString stringWithFormat:@"LKFocusFeedKey-%@", LKLocalUser.singleton.user.id]
+
+typedef NS_ENUM(NSInteger, LKHomepageFeedType)
+{
+    LKHomepageFeedTypeMain,
+    LKHomepageFeedTypeFocus,
+    LKHomepageFeedTypeNotification,
+};
 
 @interface LKHomeViewController () <UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate>
+
+LC_PROPERTY(assign) LKHomepageFeedType feedType;
 
 LC_PROPERTY(strong) LKHomeHeader * header;
 
@@ -48,11 +61,13 @@ LC_PROPERTY(strong) NSNumber * canResignFirstResponder;
 LC_PROPERTY(strong) UIView * fromView;
 
 LC_PROPERTY(copy) NSString * next;
+LC_PROPERTY(copy) NSNumber * focusNext;
 
 
 // - - - - - - -
 LC_PROPERTY(strong) LKSearchViewController * searchViewController;
 LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
+LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
 
 
 @end
@@ -76,7 +91,7 @@ LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
 
     
     // hide navigation bar.
-    if (self.searchViewController || self.notificationViewController) {
+    if (self.searchViewController) {
         
         [self setNavigationBarHidden:YES animated:animated];
     }
@@ -139,6 +154,22 @@ LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
         self.datasource = datasource;
     }
     
+    
+    NSArray * focusCache = LKUserDefaults.singleton[FOCUS_FEED_CACHE_KEY];
+    
+    NSMutableArray * focusDatasource = [NSMutableArray array];
+    
+    for (NSDictionary * tmp in focusCache) {
+        
+        [focusDatasource addObject:[LKPost objectFromDictionary:tmp]];
+    }
+    
+    if (focusDatasource.count) {
+        
+        self.focusDatasource = datasource;
+    }
+    
+    
     @weakly(self);
     
     LKNewPostUploadCenter.singleton.addedNewValue = ^(LKPosting * posting, NSNumber * index){
@@ -182,16 +213,12 @@ LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
     };
 }
 
--(void) handleNavigationBarButton:(LCUINavigationBarButtonType)type
-{
-    if (type == LCUINavigationBarButtonTypeRight) {
-        
-        [self notificationAction];
-    }
-}
+
 
 -(void) buildUI
 {
+    self.view.backgroundColor = LKColor.backgroundColor;
+    
     // Bar item.
     [self setNavigationBarButton:LCUINavigationBarButtonTypeRight image:[[UIImage imageNamed:@"NotificationIcon.png" useCache:YES] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]] selectImage:nil];
     [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[[UIImage imageNamed:@"CollectionIcon.png"] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]] selectImage:nil];
@@ -207,9 +234,9 @@ LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
     //
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
 
-    
+        
     //
-    self.tableView = [[LCUITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    self.tableView = [[LCUITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.viewFrameWidth, self.view.viewFrameHeight - 64) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.backgroundViewColor = LC_RGB(245, 240, 236);
@@ -231,6 +258,25 @@ LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
             [self.navigationController pushViewController:[LKTabBarController hiddenBottomBarWhenPushed:[[LKUserCenterViewController alloc] initWithUser:LKLocalUser.singleton.user]] animated:YES];
             
         };
+
+    };
+    
+    self.header.backgroundAction = ^(id value){
+        
+        // upload cover.
+        @normally(self);
+        
+        if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
+            
+            [LKUploadAvatarAndCoverModel chooseCoverImage:^(NSString *error, UIImage * image) {
+                
+                if (!error) {
+                    
+                    self.header.backgroundView.image = image;
+                    [self.userInfoModel getUserInfo:LKLocalUser.singleton.user.id];
+                }
+            }];
+        }
 
     };
     
@@ -260,6 +306,7 @@ LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
         LC_FAST_ANIMATIONS_F(0.25, ^{
             
             self.searchViewController.alpha = 0;
+            self.tableView.viewFrameHeight -= 64;
 
         }, ^(BOOL finished){
             
@@ -333,7 +380,7 @@ LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
         CGFloat height1 = LC_DEVICE_HEIGHT - cell.viewFrameHeight;
         CGFloat height2 = LCUIKeyBoard.singleton.height + self.inputView.viewFrameHeight - height1;
         
-        [self.tableView setContentOffset:LC_POINT(0, cell.viewFrameY + height2 - 25 + 10) animated:YES];
+        [self.tableView setContentOffset:LC_POINT(0, cell.viewFrameY + height2 - 25 + 10 + 63) animated:YES];
         
         self.canResignFirstResponder = @(NO);
         [self performSelector:@selector(setCanResignFirstResponder:) withObject:@(YES) afterDelay:1];
@@ -343,6 +390,43 @@ LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
 }
 
 #pragma mark - 
+
+-(void) handleNavigationBarButton:(LCUINavigationBarButtonType)type
+{
+    if (type == LCUINavigationBarButtonTypeLeft) {
+        
+        if (self.feedType == LKHomepageFeedTypeMain) {
+            
+            if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
+
+                self.feedType = LKHomepageFeedTypeFocus;
+                
+            }
+        }
+        else{
+
+            if (self.feedType == LKHomepageFeedTypeFocus) {
+                
+                LC_APPDELEGATE.tabBarController.loading = NO;
+                [self cancelAllRequests];
+                
+                self.feedType = LKHomepageFeedTypeMain;
+
+                [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+            }
+            else{
+             
+                self.feedType = LKHomepageFeedTypeMain;
+
+            }
+        }
+        
+    }
+    else if (type == LCUINavigationBarButtonTypeRight) {
+        
+        [self notificationAction];
+    }
+}
 
 -(BOOL) checkTag:(NSString *)tag onTags:(NSArray *)onTags
 {
@@ -386,10 +470,7 @@ LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
 
 -(void) reloadData
 {
-    LC_FAST_ANIMATIONS(0.25, ^{
-        
-        [self.tableView reloadData];
-    });
+    [self.tableView reloadData];
 }
 
 #pragma mark -
@@ -451,20 +532,27 @@ LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
 {
     if (LC_APPDELEGATE.tabBarController.loading) {
         
-        if (diretion == LCUIPullLoaderDiretionBottom) {
-
-            [self.pullLoader endRefresh];
-        }
+        [self.pullLoader endRefresh];
         return;
     }
     
     LC_APPDELEGATE.tabBarController.loading = YES;
     
-    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"homefeeds"].AUTO_SESSION();
+    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:self.feedType == LKHomepageFeedTypeFocus ? @"friendfeeds" : @"homefeeds" ].AUTO_SESSION();
     
-    if (!LC_NSSTRING_IS_INVALID(self.next) && diretion == LCUIPullLoaderDiretionBottom) {
+    if (self.feedType == LKHomepageFeedTypeFocus) {
         
-        [interface addParameter:self.next key:@"ts"];
+        if (self.focusNext && diretion == LCUIPullLoaderDiretionBottom) {
+            
+            [interface addParameter:self.focusNext key:@"ts"];
+        }
+    }
+    else{
+        
+        if (!LC_NSSTRING_IS_INVALID(self.next) && diretion == LCUIPullLoaderDiretionBottom) {
+            
+            [interface addParameter:self.next key:@"ts"];
+        }
     }
     
     @weakly(self);
@@ -475,9 +563,14 @@ LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
         
         if (result.state == LKHttpRequestStateFinished) {
             
-            
-            self.next = result.json[@"data"][@"next"] ? result.json[@"data"][@"next"] : @"";
-
+            if (self.feedType == LKHomepageFeedTypeFocus) {
+                
+                self.focusNext = result.json[@"data"][@"next"] ? result.json[@"data"][@"next"] : nil;
+            }
+            else{
+                
+                self.next = result.json[@"data"][@"next"] ? result.json[@"data"][@"next"] : @"";
+            }
             
             NSArray * resultData = result.json[@"data"][@"posts"];
             NSMutableArray * datasource = [NSMutableArray array];
@@ -489,14 +582,31 @@ LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
             
             if (diretion == LCUIPullLoaderDiretionTop) {
                 
-                // save cache...
-                LKUserDefaults.singleton[self.class.description] = resultData;
                 
-                self.datasource = datasource;
+                // Change datasource and save cache...
+                if (self.feedType == LKHomepageFeedTypeFocus) {
+                    
+                    self.focusDatasource = datasource;
+                    LKUserDefaults.singleton[FOCUS_FEED_CACHE_KEY] = resultData;
+
+                }
+                else{
+                    
+                    self.datasource = datasource;
+                    LKUserDefaults.singleton[self.class.description] = resultData;
+                }
+                
             }
             else{
                 
-                [self.datasource addObjectsFromArray:datasource];
+                if (self.feedType == LKHomepageFeedTypeFocus) {
+
+                    [self.focusDatasource addObjectsFromArray:datasource];
+                }
+                else{
+
+                    [self.datasource addObjectsFromArray:datasource];
+                }
             }
             
             if (diretion == LCUIPullLoaderDiretionBottom) {
@@ -520,6 +630,126 @@ LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
 }
 
 
+-(void) setFeedType:(LKHomepageFeedType)feedType
+{
+    _feedType = feedType;
+    
+    LCUIButton * left = (LCUIButton *)self.navigationItem.leftBarButtonItem.customView;
+    LCUIButton * right = (LCUIButton *)self.navigationItem.rightBarButtonItem.customView;
+    UIView * title = self.titleView;
+    
+    if (feedType == LKHomepageFeedTypeMain) {
+        
+        LC_FAST_ANIMATIONS_F(0.25, ^{
+           
+            left.alpha = 0;
+            right.alpha = 0;
+            title.alpha = 0;
+            self.notificationViewController.alpha = 0;
+            
+        }, ^(BOOL finished){
+            
+            [self.notificationViewController removeFromSuperview];
+            self.notificationViewController = nil;
+            
+            UIImage * leftImage = [[UIImage imageNamed:@"CollectionIcon.png"] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]];
+            UIImage * rightImage = [[UIImage imageNamed:@"NotificationIcon.png" useCache:YES] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]];
+            
+            left.buttonImage = leftImage;
+            right.buttonImage = rightImage;
+            
+            self.titleView = [LCUIImageView viewWithImage:[UIImage imageNamed:@"HomeLikeIcon.png" useCache:YES]];
+            self.titleView.alpha = 0;
+            
+            LC_FAST_ANIMATIONS(0.25, ^{
+               
+                left.alpha = 1;
+                right.alpha = 1;
+                self.tableView.alpha = 1;
+                self.titleView.alpha = 1;
+                
+            });
+
+        });
+    }
+    else if (feedType == LKHomepageFeedTypeNotification){
+      
+        LKNotificationViewController * notification = LKNotificationViewController.view;
+        notification.alpha = 0;
+        self.view.ADD(notification);
+        
+        self.notificationViewController = notification;
+        
+        LC_FAST_ANIMATIONS_F(0.25, ^{
+            
+            left.alpha = 0;
+            right.alpha = 0;
+            title.alpha = 0;
+            self.tableView.alpha = 0;
+            
+        }, ^(BOOL finished){
+            
+            UIImage * leftImage = [[UIImage imageNamed:@"NavigationBarDismiss.png" useCache:YES] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]];
+            
+            left.buttonImage = leftImage;
+            
+            LCUILabel * header = LCUILabel.view;
+            header.frame = CGRectMake(0, 0, 200, 44);
+            header.textAlignment = UITextAlignmentCenter;
+            header.font = LK_FONT_B(16);
+            header.textColor = [UIColor whiteColor];
+            header.text = LC_LO(@"通知");
+            self.titleView = header;
+            self.titleView.alpha = 0;
+
+            LC_FAST_ANIMATIONS(0.25, ^{
+                
+                left.alpha = 1;
+                notification.alpha = 1;
+                self.titleView.alpha = 1;
+            });
+        });
+    }
+    else if (feedType == LKHomepageFeedTypeFocus){
+      
+        LC_APPDELEGATE.tabBarController.loading = NO;
+        [self cancelAllRequests];
+        
+        [self loadData:LCUIPullLoaderDiretionTop];
+        
+        [UIView animateWithDuration:0.25 animations:^{
+            
+            left.alpha = 0;
+            //right.alpha = 0;
+            title.alpha = 0;
+            
+        } completion:^(BOOL finished) {
+            
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+
+            UIImage * leftImage = [[UIImage imageNamed:@"CollectionIcon.png"] imageWithTintColor:[UIColor whiteColor]];
+            
+            left.buttonImage = leftImage;
+            
+            LCUILabel * header = LCUILabel.view;
+            header.frame = CGRectMake(0, 0, 200, 44);
+            header.textAlignment = UITextAlignmentCenter;
+            header.font = LK_FONT_B(16);
+            header.textColor = [UIColor whiteColor];
+            header.text = LC_LO(@"关注的人");
+            self.titleView = header;
+            self.titleView.alpha = 0;
+
+            [UIView animateWithDuration:0.25 animations:^{
+                
+                left.alpha = 1;
+                self.titleView.alpha = 1;
+            }];
+        }];
+    };
+}
+
+
 -(void) searchAction
 {
     [self.inputView resignFirstResponder];
@@ -540,6 +770,7 @@ LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
         
         self.header.searchViewController = view;
         self.searchViewController = view;
+        self.tableView.viewFrameHeight += 64;
         
         view.viewFrameY = self.header.viewBottomY;
         view.alpha = 0;
@@ -565,51 +796,11 @@ LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
         return;
     }
     
-    if (self.searchViewController) {
-        [self.searchViewController hide];
-    }
-    
     [self.inputView resignFirstResponder];
 
     if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
         
-        [self setNavigationBarHidden:YES animated:YES];
-
-        LKNotificationViewController * view = LKNotificationViewController.view;
-        
-        self.notificationViewController = view;
-        
-        [view showInViewController:self];
-        
-        view.willHide = ^(){
-            
-            [self setNavigationBarHidden:NO animated:YES];
-            
-            [UIView animateWithDuration:0.25 delay:0.25 options:UIViewAnimationOptionCurveLinear animations:^{
-                
-                LC_APPDELEGATE.tabBarController.assistiveTouchButton.hidden = NO;
-                self.header.headImageView.alpha = 1;
-                self.header.nameLabel.alpha = 1;
-                self.header.blurView.alpha = 1;
-                
-            } completion:^(BOOL finished) {
-                
-                self.notificationViewController = nil;
-            }];
-        };
-
-        
-        LC_FAST_ANIMATIONS_F(0.25, ^{
-            
-            self.header.headImageView.alpha = 0;
-            self.header.nameLabel.alpha = 0;
-            self.header.blurView.alpha = 0;
-            
-            LC_APPDELEGATE.tabBarController.assistiveTouchButton.hidden = YES;
-            
-        }, ^(BOOL finished){
-        
-        });
+        self.feedType = LKHomepageFeedTypeNotification;
     }
 }
 
@@ -677,6 +868,11 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
     }
     else{
         
+        if (self.feedType == LKHomepageFeedTypeFocus) {
+            
+            return self.focusDatasource.count;
+        }
+        
         return self.datasource.count;
     }
 }
@@ -694,7 +890,16 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
     
     LKHomeTableViewCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Content" andClass:[LKHomeTableViewCell class]];
 
-    LKPost * post = self.datasource[indexPath.row];
+    LKPost * post = nil;
+    
+    if (self.feedType == LKHomepageFeedTypeFocus) {
+        
+        post = self.focusDatasource[indexPath.row];
+    }
+    else{
+        
+        post = self.datasource[indexPath.row];
+    }
     
     cell.post = post;
     cell.tableView = self.tableView;
@@ -735,7 +940,15 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
         return 38;
     }
     
-    return [LKHomeTableViewCell height:self.datasource[indexPath.row]];
+    if (self.feedType == LKHomepageFeedTypeFocus) {
+        
+        return [LKHomeTableViewCell height:self.focusDatasource[indexPath.row]];
+    }
+    else{
+    
+        return [LKHomeTableViewCell height:self.datasource[indexPath.row]];
+    }
+    
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -746,12 +959,6 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
 -(void) scrollViewDidScroll:(UIScrollView *)scrollView
 {
     [self.header layoutHeaderViewForScrollViewOffset:scrollView.contentOffset];
-    
-    
-    if (scrollView.contentOffset.y < -80) {
-        
-        [self loadData:LCUIPullLoaderDiretionTop];
-    }
     
     if (self.canResignFirstResponder.boolValue) {
         
@@ -765,6 +972,17 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
 //        
 //        [cell cellOnTableView:self.tableView didScrollOnView:self.view];
 //    }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (decelerate) {
+        
+        if (scrollView.contentOffset.y < -80) {
+            
+            [self loadData:LCUIPullLoaderDiretionTop];
+        }
+    }
 }
 
 @end

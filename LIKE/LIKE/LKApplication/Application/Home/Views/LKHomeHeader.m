@@ -10,6 +10,7 @@
 #import "LCBlurSearchBar.h"
 #import "FXBlurView.h"
 #import "LKSearchBar.h"
+#import "LKLoginViewController.h"
 
 #define kDefaultHeaderFrame CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)
 
@@ -18,7 +19,6 @@ static CGFloat kParallaxDeltaFactor = 0.5f;
 @interface LKHomeHeader ()
 
 LC_PROPERTY(strong) UIScrollView * scrollView;
-LC_PROPERTY(strong) LCUIImageView * backgroundView;
 
 LC_PROPERTY(strong) LCUIButton * searchTip;
 LC_PROPERTY(strong) LCUIButton * doneButton;
@@ -39,7 +39,12 @@ LC_PROPERTY(strong) LCUIButton * doneButton;
 
 - (void) buildUI
 {
+    [self addTapGestureRecognizer:self selector:@selector(backgroundViewTapAction)];
+
+    
     self.scrollView = [UIScrollView viewWithFrame:self.bounds];
+    self.scrollView.userInteractionEnabled = YES;
+    self.scrollView.scrollsToTop = NO;
     self.ADD(self.scrollView);
     
     
@@ -47,6 +52,7 @@ LC_PROPERTY(strong) LCUIButton * doneButton;
     self.backgroundView.frame = self.scrollView.bounds;
     self.backgroundView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     self.backgroundView.contentMode = UIViewContentModeScaleAspectFill;
+    self.backgroundView.userInteractionEnabled = YES;
     self.scrollView.ADD(self.backgroundView);
     
     
@@ -74,6 +80,13 @@ LC_PROPERTY(strong) LCUIButton * doneButton;
     self.textField.frame = self.searchTip.frame;
     self.textField.alpha = 0;
     self.ADD(self.textField);
+    
+    
+//    UIView * view = UIView.view;
+//    view.frame = CGRectMake(0, 0, self.viewFrameWidth, 1500);
+//    view.viewCenterY = self.scrollView.viewMidHeight;
+//    view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.05];
+//    self.scrollView.ADD(view);
     
     
     self.doneButton = LCUIButton.view;
@@ -115,6 +128,13 @@ LC_PROPERTY(strong) LCUIButton * doneButton;
     self.ADD(self.nameLabel);
 }
 
+-(void) backgroundViewTapAction
+{
+    if (self.backgroundAction) {
+        self.backgroundAction(nil);
+    }
+}
+
 -(void) setSearchViewController:(LKSearchViewController *)searchViewController
 {
     _searchViewController = searchViewController;
@@ -124,6 +144,11 @@ LC_PROPERTY(strong) LCUIButton * doneButton;
 
 -(void) beginSearch
 {
+    if([LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
+       
+        return;
+    }
+    
     self.blurView.dynamic = NO;
     
     LC_FAST_ANIMATIONS_F(0.1, ^{
@@ -240,9 +265,8 @@ LC_PROPERTY(strong) LCUIButton * doneButton;
 {
     if (user) {
         
-//        self.nameLabel.text = [NSString stringWithFormat:@"%@\n %@ likes", user.name, @(user.likes.integerValue)];
+        self.nameLabel.text = [NSString stringWithFormat:@"%@\n%@ likes",LKLocalUser.singleton.user.name, @(LKLocalUser.singleton.user.likes.integerValue)];
         self.headImageView.url = user.avatar;
-//        self.nameLabelOnShowing.text = user.name;
         
         if (!LC_NSSTRING_IS_INVALID(user.cover)) {
             
@@ -260,8 +284,8 @@ LC_PROPERTY(strong) LCUIButton * doneButton;
     }
     else{
         
-        //self.nameLabel.text = LC_LO(@"游客");
-        //self.headImageView.url = @"http://cdn.likeorz.com/default_avatar.jpg?imageView2/1/w/120/h/120/q/100";
+        self.nameLabel.text = LC_LO(@"游客");
+        self.headImageView.url = @"http://cdn.likeorz.com/default_avatar.jpg?imageView2/1/w/120/h/120/q/100";
         self.backgroundView.url = @"http://cdn.likeorz.com/default_cover.jpg?imageView2/1/w/750/h/750/q/85";
     }
 }

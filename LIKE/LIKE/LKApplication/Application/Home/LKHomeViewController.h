@@ -16,6 +16,7 @@ LC_NOTIFICATION_SET(LKHomeViewControllerReloadingData);
 @interface LKHomeViewController : LCUIViewController
 
 LC_PROPERTY(strong) NSMutableArray * datasource;
+LC_PROPERTY(strong) NSMutableArray * focusDatasource;
 
 -(void) notificationAction;
 

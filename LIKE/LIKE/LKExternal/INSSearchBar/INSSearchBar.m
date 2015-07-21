@@ -112,27 +112,27 @@ static NSTimeInterval const kINSSearchBarAnimationStepDuration = 0.25;
 		
 		self.searchImageViewOn = [[UIImageView alloc] initWithFrame:searchImageViewOnContainerView.bounds];
 		self.searchImageViewOn.alpha = 0.0;
-		self.searchImageViewOn.image = [[UIImage imageNamed:@"NavBarIconSearch_blue"] imageWithTintColor:[LKColor.color colorWithAlphaComponent:1]];
+		self.searchImageViewOn.image = [[UIImage imageNamed:@"NavBarIconSearch_blue"] imageWithTintColor:LC_RGB(216, 216, 216)];
         self.searchImageViewOn.contentMode = UIViewContentModeScaleAspectFit;
 		[searchImageViewOnContainerView addSubview:self.searchImageViewOn];
 		
 		self.searchImageCircle = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, 0.0, 18.0, 18.0)];
 		self.searchImageCircle.alpha = 0.0;
-        self.searchImageCircle.image = [[UIImage imageNamed:@"NavBarIconSearchCircle_blue"] imageWithTintColor:[LKColor.color colorWithAlphaComponent:1]];
+        self.searchImageCircle.image = [[UIImage imageNamed:@"NavBarIconSearchCircle_blue"] imageWithTintColor:LC_RGB(216, 216, 216)];
         self.searchImageCircle.contentMode = UIViewContentModeScaleAspectFit;
 
 		[searchImageViewOnContainerView addSubview:self.searchImageCircle];
 		
 		self.searchImageCrossLeft = [[UIImageView alloc] initWithFrame:CGRectMake(14.0, 14.0, 8.0, 8.0)];
 		self.searchImageCrossLeft.alpha = 0.0;
-		self.searchImageCrossLeft.image = [[UIImage imageNamed:@"NavBarIconSearchBar_blue"] imageWithTintColor:[LKColor.color colorWithAlphaComponent:1]];
+		self.searchImageCrossLeft.image = [[UIImage imageNamed:@"NavBarIconSearchBar_blue"] imageWithTintColor:LC_RGB(216, 216, 216)];
         self.searchImageCrossLeft.contentMode = UIViewContentModeScaleAspectFit;
 
 		[searchImageViewOnContainerView addSubview:self.searchImageCrossLeft];
 
 		self.searchImageCrossRight = [[UIImageView alloc] initWithFrame:CGRectMake(7.0, 5.0, 8.0, 8.0)];
 		self.searchImageCrossRight.alpha = 0.0;
-		self.searchImageCrossRight.image = [[UIImage imageNamed:@"NavBarIconSearchBar2_blue"] imageWithTintColor:[LKColor.color colorWithAlphaComponent:1]];
+		self.searchImageCrossRight.image = [[UIImage imageNamed:@"NavBarIconSearchBar2_blue"] imageWithTintColor:LC_RGB(216, 216, 216)];
         self.searchImageCrossRight.contentMode = UIViewContentModeScaleAspectFit;
 
 		[searchImageViewOnContainerView addSubview:self.searchImageCrossRight];

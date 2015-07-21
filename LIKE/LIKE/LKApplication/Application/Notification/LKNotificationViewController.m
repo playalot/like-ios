@@ -66,7 +66,7 @@ LC_PROPERTY(strong) LCUIBlurView * blur;
 
 -(instancetype) init
 {
-    if (self = [super initWithFrame:CGRectMake(0, 0, LC_DEVICE_WIDTH, LC_DEVICE_HEIGHT + 20)]) {
+    if (self = [super initWithFrame:CGRectMake(0, 0, LC_DEVICE_WIDTH, LC_DEVICE_HEIGHT + 20 - 64)]) {
         
         self.notificationModel = [[LKNotificationModel alloc] init];
         
@@ -81,34 +81,11 @@ LC_PROPERTY(strong) LCUIBlurView * blur;
 
 -(void) buildUI
 {
-    LCUILabel * header = LCUILabel.view;
-    header.backgroundColor = LKColor.color;
-    header.frame = CGRectMake(0, 0, self.viewFrameWidth, 64);
-    header.tag = 1002;
-    header.textColor = [UIColor whiteColor];
-    header.font = LK_FONT_B(16);
-    header.text = LC_LO(@"\n通知");
-    header.numberOfLines = 0;
-    header.textAlignment = UITextAlignmentCenter;
-    [header addTapGestureRecognizer:self selector:@selector(hide)];
-    self.ADD(header);
-    
-    
-    LCUIButton * backButton = LCUIButton.view;
-    backButton.viewFrameWidth = 48;
-    backButton.viewFrameHeight = 55 / 3 + 44;
-    backButton.viewFrameY = 10;
-    backButton.buttonImage = [UIImage imageNamed:@"NavigationBarDismiss.png" useCache:YES];
-    backButton.showsTouchWhenHighlighted = YES;
-    [backButton addTarget:self action:@selector(hide) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:backButton];
-    
-    
     self.blur = LCUIBlurView.view;
-    self.blur.viewFrameY = 64;
+    self.blur.viewFrameY = 0;
     self.blur.viewFrameWidth = self.viewFrameWidth;
     self.blur.viewFrameHeight = self.viewFrameHeight;
-    self.blur.tintColor = [UIColor whiteColor];
+    //self.blur.tintColor = [UIColor whiteColor];
     self.ADD(self.blur);
     
     
@@ -171,6 +148,8 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
 
 -(void) showInViewController:(UIViewController *)viewController
 {
+    self.userInteractionEnabled = NO;
+
     UIView * view = self.FIND(1002);
     view.alpha = 0;
     
@@ -188,6 +167,7 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
         
     } completion:^(BOOL finished) {
         
+        self.userInteractionEnabled = YES;
     }];
     
 }
@@ -201,7 +181,7 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
     UIView * view = self.FIND(1002);
     self.userInteractionEnabled = NO;
     
-    [UIView animateWithDuration:0.25 animations:^{
+    [UIView animateWithDuration:0.4 animations:^{
         
         view.viewFrameY = -view.viewFrameHeight * 2;
         

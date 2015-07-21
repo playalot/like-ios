@@ -11,14 +11,6 @@
 
 @interface LKNotificationCell : LCUITableViewCell
 
-LC_PROPERTY(strong) LCUIImageView * headImageView;
-LC_PROPERTY(strong) LCUILabel * nameLabel;
-LC_PROPERTY(strong) LCUILabel * titleLabel;
-LC_PROPERTY(strong) LCUILabel * timeLabel;
-LC_PROPERTY(strong) UIView * line;
-
-LC_PROPERTY(strong) LCUIImageView * preview;
-LC_PROPERTY(strong) UIScrollView * morePreview;
 
 LC_PROPERTY(strong) LKNotification * notification;
 

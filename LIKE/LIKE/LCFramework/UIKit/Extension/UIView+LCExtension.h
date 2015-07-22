@@ -24,6 +24,7 @@ LC_PROPERTY(readonly) LCUIViewColor COLOR;
 LC_PROPERTY(assign) CGFloat cornerRadius;
 LC_PROPERTY(assign) CGFloat borderWidth;
 LC_PROPERTY(strong) UIColor * borderColor;
+LC_PROPERTY(assign) BOOL roundMask;
 
 + (LCUIViewCreate) CREATE;
 

@@ -87,6 +87,7 @@ LC_IMP_SIGNAL(PushPostDetail);
         self.preview.viewFrameY = 55 / 2 - 35 / 2;
         self.preview.viewFrameX = LC_DEVICE_WIDTH - 35 - self.preview.viewFrameY;
         self.preview.backgroundColor = [UIColor whiteColor];
+        self.preview.contentMode = UIViewContentModeScaleAspectFill;
         self.ADD(self.preview);
         
         self.nameLabel.viewFrameWidth = LC_DEVICE_WIDTH - self.nameLabel.viewFrameX - self.preview.viewFrameWidth - ((self.preview.viewFrameY) * 2);
@@ -153,7 +154,6 @@ LC_IMP_SIGNAL(PushPostDetail);
         
         CGFloat padding = 5;
         
-        LCUIImageView * lastImage = nil;
         
         // add subviews..
         for (NSInteger i = 0; i<notification.posts.count; i++) {
@@ -169,8 +169,6 @@ LC_IMP_SIGNAL(PushPostDetail);
             image.tag = i;
             image.userInteractionEnabled = YES;
             [self.morePreview addSubview:image];
-            
-            lastImage = image;
         }
         
         self.morePreview.contentSize = LC_SIZE(35 * notification.posts.count + padding * notification.posts.count, 55);

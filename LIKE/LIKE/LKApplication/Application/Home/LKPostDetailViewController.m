@@ -1005,41 +1005,6 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
 // 估计以后还得改
 -(UIImage *) buildShareImage:(NSInteger)shareIndex
 {
-//
-//    
-//    NSInteger i = 0;
-//    
-//    for (LKTag * tag in self.post.tags) {
-//        
-//        i += tag.likes.integerValue;
-//    }
-//    
-//    
-//    NSString * markString = nil;
-//    
-//    if (i != 0) {
-//        markString = [NSString stringWithFormat:@"like - 你的新玩具\n%@ tags, %@ likes, %@", @(self.post.tags.count), @(i), self.post.user.name];
-//    }
-//    else{
-//        markString = [NSString stringWithFormat:@"like - 你的新玩具\n%@", self.post.user.name];
-//    }
-//    
-//    
-//    CGSize size = [markString sizeWithFont:LK_FONT(20) byHeight:9999];
-//    
-//    
-//    if (shareIndex == 3) {
-//        
-//        CGRect rect = CGRectMake(10, image.size.height - size.height - 10, size.width, size.height);
-//        image = [image addMarkString:markString inRect:rect color:[UIColor whiteColor] font:LK_FONT(20) textAlignment:UITextAlignmentLeft];
-//    }
-//    else{
-//        
-//        CGRect rect = CGRectMake(image.size.width - size.width - 10, image.size.height - size.height - 10, size.width, size.height);
-//        image = [image addMarkString:markString inRect:rect color:[UIColor whiteColor] font:LK_FONT(20) textAlignment:UITextAlignmentRight];
-//    }
-    
-    
     UIImage * image = [LCUIImageCache.singleton imageWithKey:self.bigContentURL];
     
     if (!image) {

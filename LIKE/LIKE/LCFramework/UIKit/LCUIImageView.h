@@ -33,6 +33,8 @@ LC_PROPERTY(copy) LCUIImageViewLoadFinishedBlock loadImageFinishedBlock;
 LC_PROPERTY(copy) LCUIImageViewDownloadProgressUpdatedBlock downloadProgressUpdateBlock;
 LC_PROPERTY(readonly) LCUIImageViewGetURL URL;
 
+LC_PROPERTY(assign) BOOL autoMask;
+
 + (instancetype)viewWithImage:(UIImage *)image;
 
 -(void) loadURL:(NSString *)url placeHolder:(UIImage *)image;

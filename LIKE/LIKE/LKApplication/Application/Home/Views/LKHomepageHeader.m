@@ -109,6 +109,7 @@ LC_PROPERTY(assign) CGPoint point;
     self.backgroundView.contentMode = UIViewContentModeScaleAspectFill;
     self.backgroundView.userInteractionEnabled = YES;
     self.backgroundView.clipsToBounds = YES;
+    self.backgroundView.autoMask = YES;
     [self addSubview:self.backgroundView];
     [self sendSubviewToBack:self.backgroundView];
     

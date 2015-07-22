@@ -114,4 +114,24 @@
     return [UIColor colorWithCGColor:self.layer.borderColor];
 }
 
+-(BOOL) roundMask
+{
+    return self.layer.mask ? YES : NO;
+}
+
+- (void) setRoundMask:(BOOL)roundMask
+{
+    if (roundMask) {
+        
+        CAShapeLayer * circle = [CAShapeLayer layer];
+        circle.path = [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:self.viewMidHeight].CGPath;
+        circle.fillColor = [UIColor blackColor].CGColor;
+        self.layer.mask = circle;
+    }
+    else{
+        
+        self.layer.mask = nil;
+    }
+}
+
 @end

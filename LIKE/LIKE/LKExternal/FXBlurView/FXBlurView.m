@@ -418,7 +418,7 @@
 - (void)setUpdateInterval:(NSTimeInterval)updateInterval
 {
     _updateInterval = updateInterval;
-    if (_updateInterval <= 0) _updateInterval = 1.0/60;
+    if (_updateInterval <= 0) _updateInterval = 1.0 / 60.;
 }
 
 - (void)setTintColor:(UIColor *)tintColor

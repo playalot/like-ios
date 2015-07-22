@@ -32,6 +32,8 @@
 
 // LKHomepageHeader
 "游客" = "Tourist";
+"关注的人" = "Following";
+
 
 // Alert
 "更多" = "More";
@@ -117,6 +119,8 @@
 "搜索" = "Related tags ";
 "相关内容" = " ";
 "最近搜索过的标签" = "Search history";
+"  发现更多有趣内容" = "  Search & Explore";
+
 
 // LKSearchViewController
 "搜索标签" = "Search";
@@ -162,6 +166,7 @@
 "赞了标签" = "liked ";
 "在#%@#中回复了你" = "reply you at #%@#";
 "评论了" = "commented on ";
+"通知" = "Notifications";
 
 
 // LKLinkAccountsViewController

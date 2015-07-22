@@ -53,13 +53,25 @@ LC_PROPERTY(strong) LCUIButton * doneButton;
     self.backgroundView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     self.backgroundView.contentMode = UIViewContentModeScaleAspectFill;
     self.backgroundView.userInteractionEnabled = YES;
+    self.backgroundView.autoMask = YES;
     self.scrollView.ADD(self.backgroundView);
     
     
-    self.blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(5, 5, self.viewFrameWidth - 10, 30)];
-    self.blurView.cornerRadius = 4;
+    
+//    if (IOS8_OR_LATER) {
+//        
+//        self.blurView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
+//        self.blurView.frame = CGRectMake(5, 5, self.viewFrameWidth - 10, 30);
+//        self.blurView.alpha = 0.8;
+//    }
+//    else{
+    
+        self.blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(5, 5, self.viewFrameWidth - 10, 30)];
+        ((FXBlurView *)self.blurView).blurRadius = 10;
+//    }
+    
     self.blurView.tintColor = [[UIColor whiteColor] colorWithAlphaComponent:0.15];
-    self.blurView.blurRadius = 10;
+    self.blurView.cornerRadius = 4;
     self.blurView.layer.masksToBounds = YES;
     self.ADD(self.blurView);
     
@@ -149,7 +161,10 @@ LC_PROPERTY(strong) LCUIButton * doneButton;
         return;
     }
     
-    self.blurView.dynamic = NO;
+    if ([self.blurView respondsToSelector:@selector(setDynamic:)]) {
+        
+        ((FXBlurView *)self.blurView).dynamic = NO;
+    }
     
     LC_FAST_ANIMATIONS_F(0.1, ^{
        
@@ -206,8 +221,11 @@ LC_PROPERTY(strong) LCUIButton * doneButton;
         self.willEndSearch(nil);
     }
     
-    self.blurView.dynamic = YES;
-
+    if ([self.blurView respondsToSelector:@selector(setDynamic:)]) {
+        
+        ((FXBlurView *)self.blurView).dynamic = YES;
+    }
+    
     LC_FAST_ANIMATIONS_F(0.25, ^{
         
         self.textField.viewFrameWidth = self.viewFrameWidth - 10;

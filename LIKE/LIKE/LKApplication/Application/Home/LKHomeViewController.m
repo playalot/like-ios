@@ -220,10 +220,10 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     self.view.backgroundColor = LKColor.backgroundColor;
     
     // Bar item.
+    [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image: [[UIImage imageNamed:@"CollectionIcon.png" useCache:YES] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]] selectImage:nil];
+    
     [self setNavigationBarButton:LCUINavigationBarButtonTypeRight image:[[UIImage imageNamed:@"NotificationIcon.png" useCache:YES] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]] selectImage:nil];
-    [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[[UIImage imageNamed:@"CollectionIcon.png"] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]] selectImage:nil];
-    
-    
+
     // Bind badge.
     [LKNotificationCount bindView:self.navigationItem.rightBarButtonItem.customView];
 
@@ -411,7 +411,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
                 [self cancelAllRequests];
                 
                 self.feedType = LKHomepageFeedTypeMain;
-
+                
                 [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
             }
             else{
@@ -614,7 +614,11 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
                 [self.pullLoader endRefresh];
             }
             
-            [self reloadData];
+            LC_FAST_ANIMATIONS(0.25, ^{
+                
+                [self reloadData];
+
+            });
             
             LC_APPDELEGATE.tabBarController.loading = NO;
         }
@@ -652,7 +656,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
             [self.notificationViewController removeFromSuperview];
             self.notificationViewController = nil;
             
-            UIImage * leftImage = [[UIImage imageNamed:@"CollectionIcon.png"] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]];
+            UIImage * leftImage = [[UIImage imageNamed:@"CollectionIcon.png" useCache:YES] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]];
             UIImage * rightImage = [[UIImage imageNamed:@"NotificationIcon.png" useCache:YES] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]];
             
             left.buttonImage = leftImage;
@@ -727,7 +731,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
             
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
 
-            UIImage * leftImage = [[UIImage imageNamed:@"CollectionIcon.png"] imageWithTintColor:[UIColor whiteColor]];
+            UIImage * leftImage = [[UIImage imageNamed:@"CollectionIcon.png" useCache:YES] imageWithTintColor:[UIColor whiteColor]];
             
             left.buttonImage = leftImage;
             

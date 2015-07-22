@@ -157,7 +157,7 @@ LC_IMP_SIGNAL(PushUserInfo);
         LCUIImageView * userHead = LCUIImageView.view;
         userHead.viewFrameWidth = 33;
         userHead.viewFrameHeight = 33;
-        userHead.viewFrameX = inv * (i%maxCount) + inv + 33 * (i%maxCount);
+        userHead.viewFrameX = inv * (i % maxCount) + inv + 33 * (i % maxCount);
         userHead.viewFrameY = inv * (i/maxCount) + 33 * (i/maxCount);
         userHead.cornerRadius = 33 / 2;
         userHead.url = user.avatar;

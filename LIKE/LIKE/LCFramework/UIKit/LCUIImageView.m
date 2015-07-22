@@ -11,6 +11,7 @@
 #import "LCUIImageView.h"
 #import "LCUIImageCache.h"
 #import "LCUIImageLoader.h"
+#import "UIImage+MostColor.h"
 
 @interface LCUIImageView ()
 {
@@ -115,7 +116,7 @@
     
     if (![url hasPrefix:@"http://"]){
         
-        url = [NSString stringWithFormat:@"http://%@", url];
+        _url = [NSString stringWithFormat:@"http://%@", url];
     }
     
     if (image) {
@@ -160,6 +161,36 @@
             
         }
         
+        if (self.autoMask) {
+            
+            UIColor * mostColor = [image mostColor];
+            
+//            const CGFloat * components1 = CGColorGetComponents(mostColor.CGColor);
+//            const CGFloat * components2 = CGColorGetComponents([UIColor whiteColor].CGColor);
+//
+//            CGFloat red1, red2, green1, green2, blue1, blue2;
+//            CGFloat value0 = components1[0];
+//            red1 = components1[1] * 255;
+//            green1 = components1[2] * 255;
+//            blue1 = components1[3] * 255;
+//
+//            red2 = components2[1] * 255;
+//            green2 = components2[2] * 255;
+//            blue2 = components2[3] * 255;
+            
+            //向量比较
+            BOOL result = [self color:mostColor isEqualToColor:[UIColor whiteColor] withTolerance:0.2];
+            
+            if (result) {
+                
+                UIImage * maskImage = [UIImage imageWithColor:[[UIColor blackColor] colorWithAlphaComponent:0.1] andSize:image.size];
+                
+                image = [image addMaskImage:maskImage imageSize:image.size inRect:CGRectMake(0, 0, image.size.width, image.size.height)];
+            }
+        }
+        
+       
+        
         CGAffineTransform transform = self.transform;
         
         UIImageOrientation orientation = image.imageOrientation;
@@ -189,6 +220,18 @@
         
         [super setImage:image];
     }
+}
+
+- (BOOL)color:(UIColor *)color1 isEqualToColor:(UIColor *)color2 withTolerance:(CGFloat)tolerance {
+    
+    CGFloat r1, g1, b1, a1, r2, g2, b2, a2;
+    [color1 getRed:&r1 green:&g1 blue:&b1 alpha:&a1];
+    [color2 getRed:&r2 green:&g2 blue:&b2 alpha:&a2];
+    return
+    fabs(r1 - r2) <= tolerance &&
+    fabs(g1 - g2) <= tolerance &&
+    fabs(b1 - b2) <= tolerance &&
+    fabs(a1 - a2) <= tolerance;
 }
 
 -(void) cancelImageLoad

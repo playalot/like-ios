@@ -656,6 +656,7 @@
 		13E27F061AF9CBB700C17362 /* LKPopAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13E27F051AF9CBB700C17362 /* LKPopAnimation.m */; };
 		13E27F0C1AFA03FE00C17362 /* LKTimestampView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13E27F0B1AFA03FE00C17362 /* LKTimestampView.xib */; };
 		13E27F0E1AFA1A4900C17362 /* HomeLikeIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13E27F0D1AFA1A4900C17362 /* HomeLikeIcon@3x.png */; };
+		13E3EDF91B5F4BD100A48E76 /* UIImage+MostColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 13E3EDF81B5F4BD100A48E76 /* UIImage+MostColor.m */; };
 		13F21F3B1B0F1D6200124291 /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 13F21F301B0F1D6200124291 /* libWeiboSDK.a */; };
 		13F21F3C1B0F1D6200124291 /* WeiboSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 13F21F381B0F1D6200124291 /* WeiboSDK.bundle */; };
 		13F504EF1B0AF4EA00D8D484 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 13F504EB1B0AF4EA00D8D484 /* libWeChatSDK.a */; };
@@ -1968,6 +1969,8 @@
 		13E27F051AF9CBB700C17362 /* LKPopAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKPopAnimation.m; sourceTree = "<group>"; };
 		13E27F0B1AFA03FE00C17362 /* LKTimestampView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LKTimestampView.xib; sourceTree = "<group>"; };
 		13E27F0D1AFA1A4900C17362 /* HomeLikeIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HomeLikeIcon@3x.png"; sourceTree = "<group>"; };
+		13E3EDF71B5F4BD100A48E76 /* UIImage+MostColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MostColor.h"; sourceTree = "<group>"; };
+		13E3EDF81B5F4BD100A48E76 /* UIImage+MostColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+MostColor.m"; sourceTree = "<group>"; };
 		13EE16031AEF72200054E182 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		13EE16041AEF72200054E182 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
 		13EE16051AEF72200054E182 /* InterfaceController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InterfaceController.h; sourceTree = "<group>"; };
@@ -3262,6 +3265,8 @@
 				13E27EF81AF8B80700C17362 /* LKActionSheet.m */,
 				13E27F011AF9CB2700C17362 /* LKPushAnimation.h */,
 				13E27F021AF9CB2700C17362 /* LKPushAnimation.m */,
+				13E3EDF71B5F4BD100A48E76 /* UIImage+MostColor.h */,
+				13E3EDF81B5F4BD100A48E76 /* UIImage+MostColor.m */,
 				13E27F041AF9CBB700C17362 /* LKPopAnimation.h */,
 				13E27F051AF9CBB700C17362 /* LKPopAnimation.m */,
 				13BCA65C1B5CB28F00DC0549 /* LKPresentAnimation.h */,
@@ -5119,6 +5124,7 @@
 				139C712A1B54CAE60051B2C3 /* NSNull+LCExtension.m in Sources */,
 				13D2ACCD1AFB18E40068C0CD /* GPUImageBuffer.m in Sources */,
 				137106A31B58FBE7008BCD66 /* LKMoreContentButton.m in Sources */,
+				13E3EDF91B5F4BD100A48E76 /* UIImage+MostColor.m in Sources */,
 				138EDE7F1AD7B0A30020957C /* LCKeychain.m in Sources */,
 				13BCD88A1ADBA92200A0CBF5 /* POPAnimatableProperty.mm in Sources */,
 				13D2ACCA1AFB18E40068C0CD /* GPUImageBilateralFilter.m in Sources */,

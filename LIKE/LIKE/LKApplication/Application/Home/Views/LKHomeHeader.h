@@ -17,7 +17,7 @@
 LC_PROPERTY(strong) LCUIImageView * headImageView;
 LC_PROPERTY(strong) LCUILabel * nameLabel;
 LC_PROPERTY(strong) LKSearchBar * textField;
-LC_PROPERTY(strong) FXBlurView * blurView;
+LC_PROPERTY(strong) UIView * blurView;
 LC_PROPERTY(strong) LCUIImageView * backgroundView;
 
 LC_PROPERTY(copy) LKValueChanged willBeginSearch;

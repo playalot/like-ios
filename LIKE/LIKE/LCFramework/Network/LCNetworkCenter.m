@@ -292,6 +292,23 @@ LC_PROPERTY(strong) NSLock * lock;
     [self postNotification:AFNetworkingTaskDidCompleteNotification withObject:task];
 
     
+    if (error.code == -999) {
+        
+        LCHTTPRequestResult * result = [[LCHTTPRequestResult alloc] init];
+        
+        result.error = error;
+        result.task = task;
+
+        if (updateBlock) {
+            updateBlock(result);
+        }
+
+        [self.lock lock];
+        [self removeTask:task withSender:sender];
+        [self.lock unlock];
+        return;
+    }
+    
     LCHTTPRequestResult * result = [[LCHTTPRequestResult alloc] init];
     
     NSDictionary * userInfo = [NSDictionary dictionaryWithObject:LC_LO(@"请求失败...请检查您的网络后重试")                                                                      forKey:NSLocalizedDescriptionKey];

@@ -85,7 +85,7 @@ LC_PROPERTY(strong) LCUIBlurView * blur;
     self.blur.viewFrameY = 0;
     self.blur.viewFrameWidth = self.viewFrameWidth;
     self.blur.viewFrameHeight = self.viewFrameHeight;
-    //self.blur.tintColor = [UIColor whiteColor];
+    self.blur.tintColor = [UIColor whiteColor];
     self.ADD(self.blur);
     
     

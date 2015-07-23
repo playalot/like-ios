@@ -9,6 +9,7 @@
 //
 
 #import "LCLocalized.h"
+#import "NCChineseConverter.h"
 
 @implementation LCLocalized
 
@@ -16,6 +17,8 @@
 {
     return [LCLocalized localizedStringForKey:key defaultString:key];
 }
+
+static NSString * __currentLangueage = nil;
 
 + (NSString *)localizedStringForKey:(NSString *)key defaultString:(NSString *)defaultString
 {
@@ -40,7 +43,25 @@
         }
     }
     
+    if (!__currentLangueage) {
+        
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        
+        NSArray * allLanguages = [defaults objectForKey:@"AppleLanguages"];
+        
+        __currentLangueage =  [allLanguages objectAtIndex:0];
+    }
+    
     defaultString = [bundle localizedStringForKey:key value:defaultString table:nil];
+    
+    if ([__currentLangueage isEqualToString:@"zh-Hant"]) {
+        
+        defaultString = [[NCChineseConverter sharedInstance] convert:defaultString withDict:NCChineseConverterDictTypezh2TW];
+    }
+    else if ([__currentLangueage isEqualToString:@"zh-HK"]){
+        
+        defaultString = [[NCChineseConverter sharedInstance] convert:defaultString withDict:NCChineseConverterDictTypezh2HK];
+    }
     
     return [[NSBundle mainBundle] localizedStringForKey:key value:defaultString table:nil];
 }

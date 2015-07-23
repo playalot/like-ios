@@ -20,4 +20,6 @@ LC_PROPERTY(strong) NSMutableArray * focusDatasource;
 
 -(void) notificationAction;
 
+-(void) loadData:(LCUIPullLoaderDiretion)diretion;
+
 @end

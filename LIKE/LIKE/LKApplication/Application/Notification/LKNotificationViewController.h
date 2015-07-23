@@ -12,6 +12,7 @@ LC_BLOCK(void, LKNotificationViewControllerWillHide, ());
 
 @interface LKNotificationViewController : UIView
 
+LC_PROPERTY(assign) NSInteger fromType;
 LC_PROPERTY(copy) LKNotificationViewControllerWillHide willHide;
 
 -(void) showInViewController:(UIViewController *)viewController;

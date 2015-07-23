@@ -659,7 +659,7 @@ LC_PROPERTY(strong) LKPresentAnimation * animator;
                 
                 if (result.state == LKHttpRequestStateFinished) {
                     
-                    [self.navigationController popViewControllerAnimated:YES];
+                    [self dismissOrPopViewController];
                     //
                     [self postNotification:LKHomeViewControllerReloadingData];
                     [self postNotification:LKUserCenterViewControllerReloadingData];

@@ -86,9 +86,9 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     
     // hide status bar.
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:animated];
-
+    
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
-
+    
     
     // hide navigation bar.
     if (self.searchViewController) {
@@ -137,11 +137,11 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     [self observeNotification:LKHomeViewControllerAddNewPost];
     [self observeNotification:LKHomeViewControllerUpdateHeader];
     [self observeNotification:LKHomeViewControllerReloadingData];
-
+    
     
     // read cache...
     NSArray * cache = LKUserDefaults.singleton[self.class.description];
-
+    
     NSMutableArray * datasource = [NSMutableArray array];
     
     for (NSDictionary * tmp in cache) {
@@ -176,19 +176,24 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
         
         @normally(self);
         
+        if (self.feedType == LKHomepageFeedTypeFocus) {
+            
+            [self handleNavigationBarButton:LCUINavigationBarButtonTypeLeft];
+        }
+        
         [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index.integerValue inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
         [self performSelector:@selector(scrollViewScrollToTop) withObject:nil afterDelay:0.5];
     };
     
     LKNewPostUploadCenter.singleton.uploadFinished = ^(LKPost * value, NSNumber * index){
         
-        @normally(self);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
-    
+        @normally(self);
+        
         [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index.integerValue inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
         
         
         if (value) {
-         
+            
             [self.datasource insertObject:value atIndex:0];
             
             [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
@@ -208,7 +213,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     LKNewPostUploadCenter.singleton.stateChanged = ^(id value){
         
         @normally(self);
-
+        
         [self reloadData];
     };
 }
@@ -223,42 +228,48 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image: [[UIImage imageNamed:@"CollectionIcon.png" useCache:YES] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]] selectImage:nil];
     
     [self setNavigationBarButton:LCUINavigationBarButtonTypeRight image:[[UIImage imageNamed:@"NotificationIcon.png" useCache:YES] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]] selectImage:nil];
-
+    
     // Bind badge.
     [LKNotificationCount bindView:self.navigationItem.rightBarButtonItem.customView];
-
-
+    
+    
     //
     self.titleView = [LCUIImageView viewWithImage:[UIImage imageNamed:@"HomeLikeIcon.png" useCache:YES]];
     
     //
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
-
-        
+    
+    
+    self.attentionViewController = LKAttentionViewController.view;
+    self.attentionViewController.delegate = self;
+    self.attentionViewController.tableView.scrollsToTop = NO;
+    self.attentionViewController.hidden = YES;
+    self.view.ADD(self.attentionViewController);
+    
     //
     self.tableView = [[LCUITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.viewFrameWidth, self.view.viewFrameHeight - 64) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.backgroundViewColor = LC_RGB(245, 240, 236);
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.backgroundColor = [UIColor clearColor];
     self.view.ADD(self.tableView);
     
-
+    
     @weakly(self);
     
     
     self.header = [[LKHomeHeader alloc] initWithCGSize:CGSizeMake(LC_DEVICE_WIDTH, 150)];
     
     self.header.headAction = ^(id value){
-      
+        
         @normally(self);
-
+        
         if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
             
             [self.navigationController pushViewController:[LKTabBarController hiddenBottomBarWhenPushed:[[LKUserCenterViewController alloc] initWithUser:LKLocalUser.singleton.user]] animated:YES];
             
         };
-
+        
     };
     
     self.header.backgroundAction = ^(id value){
@@ -277,37 +288,52 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
                 }
             }];
         }
-
+        
     };
     
     self.header.willBeginSearch = ^(id value){
-      
+        
         @normally(self);
         
         [self searchAction];
         
         self.tableView.scrollEnabled = NO;
+        self.attentionViewController.tableView.scrollEnabled = NO;
     };
     
     self.header.willEndSearch = ^(id value){
-      
+        
         @normally(self);
         
         [self setNavigationBarHidden:NO animated:YES];
         
         LC_FAST_ANIMATIONS(0.25, ^{
             
-            self.tableView.contentOffset = CGPointMake(0, 0);
-            
+            if (self.feedType == LKHomepageFeedTypeFocus) {
+                
+                self.attentionViewController.tableView.contentOffset = CGPointMake(0, 0);
+            }
+            else{
+                
+                self.tableView.contentOffset = CGPointMake(0, 0);
+            }
         });
         
         LC_APPDELEGATE.tabBarController.assistiveTouchButton.hidden = NO;
-
+        
         LC_FAST_ANIMATIONS_F(0.25, ^{
             
             self.searchViewController.alpha = 0;
-            self.tableView.viewFrameHeight -= 64;
-
+            
+            if (self.feedType == LKHomepageFeedTypeFocus) {
+                
+                self.attentionViewController.tableView.viewFrameHeight -= 64;
+            }
+            else{
+                
+                self.tableView.viewFrameHeight -= 64;
+            }
+            
         }, ^(BOOL finished){
             
             [self.searchViewController removeFromSuperview];
@@ -316,18 +342,19 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
         });
         
         self.tableView.scrollEnabled = YES;
+        self.attentionViewController.tableView.scrollEnabled = YES;
     };
     
     self.tableView.tableHeaderView = self.header;
-
-
+    
+    
     
     //
     self.pullLoader = [LCUIPullLoader pullLoaderWithScrollView:self.tableView pullStyle:LCUIPullLoaderStyleFooter];
     self.pullLoader.indicatorViewStyle = UIActivityIndicatorViewStyleWhite;
     
     self.pullLoader.beginRefresh = ^(LCUIPullLoaderDiretion diretion){
-      
+        
         @normally(self);
         
         [self loadData:diretion];
@@ -355,8 +382,17 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
             return;
         }
         
-        LKHomeTableViewCell * cell = (LKHomeTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:1]];
+        LKHomeTableViewCell * cell = nil;
         
+        if (self.feedType == LKHomepageFeedTypeFocus) {
+            
+            cell = (LKHomeTableViewCell *)[self.attentionViewController.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:1]];;
+
+        }
+        else{
+            
+            cell = (LKHomeTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:1]];;
+        }
         
         if ([self checkTag:string onTags:((LKPost *)self.inputView.userInfo).tags]) {
             
@@ -371,16 +407,33 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     };
     
     self.inputView.didShow = ^(){
-      
+        
         @normally(self);
         
         // scroll...
-        LKHomeTableViewCell * cell = (LKHomeTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:1]];
+        LKHomeTableViewCell * cell = nil;
+        
+        if (self.feedType == LKHomepageFeedTypeFocus) {
+            
+            cell = (LKHomeTableViewCell *)[self.attentionViewController.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:1]];;
+            
+        }
+        else{
+            
+            cell = (LKHomeTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:1]];;
+        }
         
         CGFloat height1 = LC_DEVICE_HEIGHT - cell.viewFrameHeight;
         CGFloat height2 = LCUIKeyBoard.singleton.height + self.inputView.viewFrameHeight - height1;
         
-        [self.tableView setContentOffset:LC_POINT(0, cell.viewFrameY + height2 - 25 + 10 + 63) animated:YES];
+        if (self.feedType == LKHomepageFeedTypeFocus) {
+            
+            [self.attentionViewController.tableView setContentOffset:LC_POINT(0, cell.viewFrameY + height2 - 25 + 10 + 63) animated:YES];
+        }
+        else{
+            
+            [self.tableView setContentOffset:LC_POINT(0, cell.viewFrameY + height2 - 25 + 10 + 63) animated:YES];
+        }
         
         self.canResignFirstResponder = @(NO);
         [self performSelector:@selector(setCanResignFirstResponder:) withObject:@(YES) afterDelay:1];
@@ -389,7 +442,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     [self loadData:LCUIPullLoaderDiretionTop];
 }
 
-#pragma mark - 
+#pragma mark -
 
 -(void) handleNavigationBarButton:(LCUINavigationBarButtonType)type
 {
@@ -398,13 +451,12 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
         if (self.feedType == LKHomepageFeedTypeMain) {
             
             if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
-
-                self.feedType = LKHomepageFeedTypeFocus;
                 
+                self.feedType = LKHomepageFeedTypeFocus;
             }
         }
         else{
-
+            
             if (self.feedType == LKHomepageFeedTypeFocus) {
                 
                 LC_APPDELEGATE.tabBarController.loading = NO;
@@ -412,12 +464,85 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
                 
                 self.feedType = LKHomepageFeedTypeMain;
                 
-                [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+                
+                self.attentionViewController.tableView.tableHeaderView = UIView.view.WIDTH(LC_DEVICE_WIDTH).HEIGHT(150);
+                self.tableView.tableHeaderView = self.header;
+                
+                CGPoint point = self.attentionViewController.tableView.contentOffset;
+                
+                if (![self.tableView pointInside:point withEvent:nil]) {
+                    point.x = 0;
+                    if (point.y > self.tableView.contentSize.height - self.tableView.bounds.size.height)
+                        point.y = self.tableView.contentSize.height - self.tableView.bounds.size.height;
+                    [self.tableView setContentOffset:point animated:NO];
+                }
+                else{
+                    
+                    [self.tableView setContentOffset:self.attentionViewController.tableView.contentOffset animated:NO];
+                }
+                
+                
+                self.attentionViewController.tableView.scrollsToTop = NO;
+                self.tableView.scrollsToTop = YES;
+                self.tableView.hidden = NO;
+                [self.view bringSubviewToFront:self.tableView];
+                [self.view bringSubviewToFront:self.inputView];
+                
+                [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionShowHideTransitionViews |UIViewAnimationOptionCurveEaseIn animations:^{
+                    
+                    self.attentionViewController.alpha = 0;
+                    
+                    for (UIView * view in self.attentionViewController.tableView.subviews) {
+                        
+                        if ([view.class.description isEqualToString:@"UITableViewWrapperView"]) {
+                            
+                            for (UIView * subview in view.subviews) {
+                                
+                                if (subview != self.header && [subview isKindOfClass:[UITableViewCell class]]) {
+                                    
+                                    view.alpha = 0;
+                                }
+                            }
+                            break;
+                        }
+                    }
+                    
+                    for (UIView * view in self.tableView.subviews) {
+                        
+                        if ([view.class.description isEqualToString:@"UITableViewWrapperView"]) {
+                            
+                            for (UIView * subview in view.subviews) {
+                                
+                                if (subview != self.header && [subview isKindOfClass:[UITableViewCell class]]) {
+                                    
+                                    view.alpha = 1;
+                                }
+                            }
+                            break;
+                        }
+                    }
+                    
+                } completion:^(BOOL finished) {
+                    
+                    self.attentionViewController.alpha = 1;
+                    self.attentionViewController.hidden = YES;
+
+                }];
+                
+                [self scrollViewDidScroll:self.tableView];
             }
             else{
-             
-                self.feedType = LKHomepageFeedTypeMain;
-
+                
+                if (self.notificationViewController.fromType == LKHomepageFeedTypeMain) {
+                    
+                    self.feedType = LKHomepageFeedTypeMain;
+                }
+                else{
+                    
+                    self.feedType = LKHomepageFeedTypeFocus;
+                }
+                
+                
             }
         }
         
@@ -446,7 +571,12 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     if ([notification is:LKHomeViewControllerAddNewPost]) {
         
         if (notification.object) {
-         
+            
+            if (self.feedType == LKHomepageFeedTypeFocus) {
+                
+                [self handleNavigationBarButton:LCUINavigationBarButtonTypeLeft];
+            }
+            
             [self.datasource insertObject:notification.object atIndex:0];
             [self reloadData];
             
@@ -458,6 +588,11 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
         [self.header updateWithUser:LKLocalUser.singleton.user];
     }
     else if ([notification is:LKHomeViewControllerReloadingData]){
+        
+        if (self.feedType == LKHomepageFeedTypeFocus) {
+            
+            [self handleNavigationBarButton:LCUINavigationBarButtonTypeLeft];
+        }
         
         [self loadData:LCUIPullLoaderDiretionTop];
     }
@@ -482,7 +617,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     [self.inputView resignFirstResponder];
     
     [LKTagAddModel addTagString:tag onPost:post requestFinished:^(LKHttpRequestResult *result, NSString *error) {
-       
+        
         @normally(self);
         
         if (error) {
@@ -502,7 +637,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
             }
             
             [post.tags insertObject:tag atIndex:0];
-    
+            
             
             // reload tags...
             [cell reloadTags];
@@ -588,7 +723,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
                     
                     self.focusDatasource = datasource;
                     LKUserDefaults.singleton[FOCUS_FEED_CACHE_KEY] = resultData;
-
+                    
                 }
                 else{
                     
@@ -600,11 +735,11 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
             else{
                 
                 if (self.feedType == LKHomepageFeedTypeFocus) {
-
+                    
                     [self.focusDatasource addObjectsFromArray:datasource];
                 }
                 else{
-
+                    
                     [self.datasource addObjectsFromArray:datasource];
                 }
             }
@@ -617,7 +752,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
             LC_FAST_ANIMATIONS(0.25, ^{
                 
                 [self reloadData];
-
+                
             });
             
             LC_APPDELEGATE.tabBarController.loading = NO;
@@ -630,24 +765,33 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
             LC_APPDELEGATE.tabBarController.loading = NO;
         }
     }];
-
+    
 }
 
 
 -(void) setFeedType:(LKHomepageFeedType)feedType
 {
-    _feedType = feedType;
-    
     LCUIButton * left = (LCUIButton *)self.navigationItem.leftBarButtonItem.customView;
     LCUIButton * right = (LCUIButton *)self.navigationItem.rightBarButtonItem.customView;
     UIView * title = self.titleView;
     
+    
+    
     if (feedType == LKHomepageFeedTypeMain) {
         
+        LKHomepageFeedType old = _feedType;
+        
+        _feedType = feedType;
+        
         LC_FAST_ANIMATIONS_F(0.25, ^{
-           
+            
             left.alpha = 0;
-            right.alpha = 0;
+            
+            if (old != LKHomepageFeedTypeFocus) {
+
+                right.alpha = 0;
+            }
+            
             title.alpha = 0;
             self.notificationViewController.alpha = 0;
             
@@ -666,32 +810,34 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
             self.titleView.alpha = 0;
             
             LC_FAST_ANIMATIONS(0.25, ^{
-               
+                
                 left.alpha = 1;
                 right.alpha = 1;
                 self.tableView.alpha = 1;
                 self.titleView.alpha = 1;
                 
             });
-
+            
         });
     }
     else if (feedType == LKHomepageFeedTypeNotification){
-      
+        
         LKNotificationViewController * notification = LKNotificationViewController.view;
         notification.alpha = 0;
+        notification.fromType = self.feedType;
         self.view.ADD(notification);
         
         self.notificationViewController = notification;
         
-        LC_FAST_ANIMATIONS_F(0.25, ^{
+        
+        [UIView animateWithDuration:0.25 animations:^{
             
             left.alpha = 0;
             right.alpha = 0;
             title.alpha = 0;
-            self.tableView.alpha = 0;
+            //self.tableView.alpha = 0;
             
-        }, ^(BOOL finished){
+        } completion:^(BOOL finished) {
             
             UIImage * leftImage = [[UIImage imageNamed:@"NavigationBarDismiss.png" useCache:YES] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]];
             
@@ -705,32 +851,40 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
             header.text = LC_LO(@"通知");
             self.titleView = header;
             self.titleView.alpha = 0;
-
+            
             LC_FAST_ANIMATIONS(0.25, ^{
                 
                 left.alpha = 1;
                 notification.alpha = 1;
                 self.titleView.alpha = 1;
             });
-        });
+        }];
+        
+        _feedType = feedType;
     }
     else if (feedType == LKHomepageFeedTypeFocus){
-      
+        
+        _feedType = feedType;
+        
         LC_APPDELEGATE.tabBarController.loading = NO;
         [self cancelAllRequests];
+        
+        [self.attentionViewController.pullLoader endRefresh];
+        [self.pullLoader endRefresh];
         
         [self loadData:LCUIPullLoaderDiretionTop];
         
         [UIView animateWithDuration:0.25 animations:^{
             
             left.alpha = 0;
-            //right.alpha = 0;
             title.alpha = 0;
+            self.notificationViewController.alpha = 0;
             
         } completion:^(BOOL finished) {
             
-            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
-
+            [self.notificationViewController removeFromSuperview];
+            self.notificationViewController = nil;
+            
             UIImage * leftImage = [[UIImage imageNamed:@"CollectionIcon.png" useCache:YES] imageWithTintColor:[UIColor whiteColor]];
             
             left.buttonImage = leftImage;
@@ -743,12 +897,103 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
             header.text = LC_LO(@"关注的人");
             self.titleView = header;
             self.titleView.alpha = 0;
-
+            
+            
             [UIView animateWithDuration:0.25 animations:^{
                 
                 left.alpha = 1;
+                right.alpha = 1;
                 self.titleView.alpha = 1;
+                
+            } completion:^(BOOL finished) {
+                
             }];
+            
+            [self scrollViewDidScroll:self.attentionViewController.tableView];
+        }];
+        
+        
+        self.tableView.tableHeaderView = UIView.view.WIDTH(LC_DEVICE_WIDTH).HEIGHT(150);
+        self.attentionViewController.tableView.tableHeaderView = self.header;
+        
+        CGPoint point = self.tableView.contentOffset;
+        
+        if (![self.attentionViewController.tableView pointInside:point withEvent:nil]) {
+            point.x = 0;
+            if (point.y > self.attentionViewController.tableView.contentSize.height - self.attentionViewController.tableView.bounds.size.height)
+                point.y = self.attentionViewController.tableView.contentSize.height - self.attentionViewController.tableView.bounds.size.height;
+            [self.attentionViewController.tableView setContentOffset:point animated:NO];
+        }
+        else{
+            
+            [self.attentionViewController.tableView setContentOffset:self.tableView.contentOffset animated:NO];
+        }
+        
+        self.attentionViewController.tableView.scrollsToTop = YES;
+        self.tableView.scrollsToTop = NO;
+        self.attentionViewController.backgroundImageView.alpha = 0;
+        [self.view bringSubviewToFront:self.attentionViewController];
+        [self.view bringSubviewToFront:self.inputView];
+        
+        if (self.notificationViewController) {
+            
+            [self.view bringSubviewToFront:self.notificationViewController];
+        }
+        
+        for (UIView * view in self.attentionViewController.tableView.subviews) {
+            
+            if ([view.class.description isEqualToString:@"UITableViewWrapperView"]) {
+                
+                for (UIView * subview in view.subviews) {
+                    
+                    if (subview != self.header && [subview isKindOfClass:[UITableViewCell class]]) {
+                        
+                        view.alpha = 0;
+                    }
+                }
+                break;
+            }
+        }
+        
+        self.attentionViewController.hidden = NO;
+        
+        [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionShowHideTransitionViews |UIViewAnimationOptionCurveEaseIn animations:^{
+            
+            self.attentionViewController.backgroundImageView.alpha = 1;
+
+            for (UIView * view in self.tableView.subviews) {
+                
+                if ([view.class.description isEqualToString:@"UITableViewWrapperView"]) {
+                    
+                    for (UIView * subview in view.subviews) {
+                        
+                        if (subview != self.header && [subview isKindOfClass:[UITableViewCell class]]) {
+                            
+                            view.alpha = 0;
+                        }
+                    }
+                    break;
+                }
+            }
+            
+            for (UIView * view in self.attentionViewController.tableView.subviews) {
+                
+                if ([view.class.description isEqualToString:@"UITableViewWrapperView"]) {
+                    
+                    for (UIView * subview in view.subviews) {
+                        
+                        if (subview != self.header && [subview isKindOfClass:[UITableViewCell class]]) {
+                            
+                            view.alpha = 1;
+                        }
+                    }
+                    break;
+                }
+            }
+        } completion:^(BOOL finished) {
+            
+            self.tableView.hidden = YES;
+            
         }];
     };
 }
@@ -764,25 +1009,40 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
         
         LC_FAST_ANIMATIONS(0.25, ^{
             
-            self.tableView.contentOffset = CGPointMake(0, (self.header.viewFrameHeight - 35) - 20 - 10);
-            
+            if (self.feedType == LKHomepageFeedTypeFocus) {
+                
+                self.attentionViewController.tableView.contentOffset = CGPointMake(0, (self.header.viewFrameHeight - 35) - 20 - 10);
+                self.attentionViewController.tableView.viewFrameHeight += 64;
+            }
+            else{
+                
+                self.tableView.contentOffset = CGPointMake(0, (self.header.viewFrameHeight - 35) - 20 - 10);
+                self.tableView.viewFrameHeight += 64;
+            }
         });
         
         LC_APPDELEGATE.tabBarController.assistiveTouchButton.hidden = YES;
-
+        
         LKSearchViewController * view = LKSearchViewController.view;
         
         self.header.searchViewController = view;
         self.searchViewController = view;
-        self.tableView.viewFrameHeight += 64;
         
         view.viewFrameY = self.header.viewBottomY;
         view.alpha = 0;
         
-        self.tableView.ADD(view);
+        if (self.feedType == LKHomepageFeedTypeFocus) {
+            
+            self.attentionViewController.tableView.ADD(view);
+        }
+        else{
+            
+            self.tableView.ADD(view);
+        }
+        
         
         LC_FAST_ANIMATIONS(0.5, ^{
-           
+            
             view.alpha = 1;
         });
         
@@ -791,7 +1051,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
         };
         
     }
-
+    
 }
 
 -(void) notificationAction
@@ -801,7 +1061,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     }
     
     [self.inputView resignFirstResponder];
-
+    
     if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
         
         self.feedType = LKHomepageFeedTypeNotification;
@@ -832,9 +1092,9 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
     LCUINavigationController * nav = LC_UINAVIGATION(detail);
     
     [detail setPresendModelAnimationOpen];
-
+    
     [self.navigationController presentViewController:nav animated:YES completion:nil];
-
+    
     
     LKPost * post = signal.object;
     
@@ -872,7 +1132,7 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
     }
     else{
         
-        if (self.feedType == LKHomepageFeedTypeFocus) {
+        if (self.tableView != tableView) {
             
             return self.focusDatasource.count;
         }
@@ -888,15 +1148,15 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
         LKUploadingCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Upload" andClass:[LKUploadingCell class]];
         
         cell.posting = LKNewPostUploadCenter.singleton.uploadingImages[indexPath.row];
-                
+        
         return cell;
     }
     
     LKHomeTableViewCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Content" andClass:[LKHomeTableViewCell class]];
-
+    
     LKPost * post = nil;
     
-    if (self.feedType == LKHomepageFeedTypeFocus) {
+    if (self.tableView != tableView) {
         
         post = self.focusDatasource[indexPath.row];
     }
@@ -911,7 +1171,7 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
     @weakly(self);
     
     cell.addTag = ^(LKPost * value){
-      
+        
         @normally(self);
         
         if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
@@ -926,14 +1186,14 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
     cell.removedTag = ^(LKPost * value){
         
         @normally(self);
-
+        
         [self.tableView beginUpdates];
         [self reloadData];
         [self.tableView endUpdates];
     };
     
     [cell cellOnTableView:self.tableView didScrollOnView:self.view];
-
+    
     return cell;
 }
 
@@ -944,12 +1204,12 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
         return 38;
     }
     
-    if (self.feedType == LKHomepageFeedTypeFocus) {
+    if (self.tableView != tableView) {
         
         return [LKHomeTableViewCell height:self.focusDatasource[indexPath.row]];
     }
     else{
-    
+        
         return [LKHomeTableViewCell height:self.datasource[indexPath.row]];
     }
     
@@ -957,25 +1217,34 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-   
+    
 }
 
 -(void) scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [self.header layoutHeaderViewForScrollViewOffset:scrollView.contentOffset];
+    if (self.feedType == LKHomepageFeedTypeFocus) {
+        
+        [self.header layoutHeaderViewForScrollViewOffset:self.attentionViewController.tableView.contentOffset];
+    }
+    else{
+        
+        [self.header layoutHeaderViewForScrollViewOffset:self.tableView.contentOffset];
+    }
+    
+    
     
     if (self.canResignFirstResponder.boolValue) {
         
         [self.inputView resignFirstResponder];
     }
     
-//    // Get visible cells on table view.
-//    NSArray *visibleCells = [self.tableView visibleCells];
-//    
-//    for (LKHomeTableViewCell * cell in visibleCells) {
-//        
-//        [cell cellOnTableView:self.tableView didScrollOnView:self.view];
-//    }
+    //    // Get visible cells on table view.
+    //    NSArray *visibleCells = [self.tableView visibleCells];
+    //    
+    //    for (LKHomeTableViewCell * cell in visibleCells) {
+    //        
+    //        [cell cellOnTableView:self.tableView didScrollOnView:self.view];
+    //    }
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate

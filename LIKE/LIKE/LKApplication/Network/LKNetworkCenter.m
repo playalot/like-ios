@@ -264,7 +264,17 @@
     }else{
     
         LKHttpRequestResult * result = [LKHttpRequestResult result];
-        result.state = LKHttpRequestStateFailed;
+
+        if (requestResult.error.code == -999) {
+            
+            result.state = LKHttpRequestStateCanceled;
+        }
+        else{
+         
+            result.state = LKHttpRequestStateFailed;
+        }
+        
+ 
         result.json = nil;
         result.errorCode = @(requestResult.error.code);
         result.error = requestResult.error.localizedDescription;

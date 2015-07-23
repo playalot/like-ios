@@ -657,6 +657,10 @@
 		13E27F0C1AFA03FE00C17362 /* LKTimestampView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13E27F0B1AFA03FE00C17362 /* LKTimestampView.xib */; };
 		13E27F0E1AFA1A4900C17362 /* HomeLikeIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13E27F0D1AFA1A4900C17362 /* HomeLikeIcon@3x.png */; };
 		13E3EDF91B5F4BD100A48E76 /* UIImage+MostColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 13E3EDF81B5F4BD100A48E76 /* UIImage+MostColor.m */; };
+		13E3EE001B60955400A48E76 /* NCChineseConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 13E3EDFC1B60955400A48E76 /* NCChineseConverter.m */; };
+		13E3EE011B60955400A48E76 /* NSString+NCAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 13E3EDFE1B60955400A48E76 /* NSString+NCAddition.m */; };
+		13E3EE021B60955400A48E76 /* zh2TW.txt in Resources */ = {isa = PBXBuildFile; fileRef = 13E3EDFF1B60955400A48E76 /* zh2TW.txt */; };
+		13E3EE041B60996000A48E76 /* zh2HK.txt in Resources */ = {isa = PBXBuildFile; fileRef = 13E3EE031B60996000A48E76 /* zh2HK.txt */; };
 		13F21F3B1B0F1D6200124291 /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 13F21F301B0F1D6200124291 /* libWeiboSDK.a */; };
 		13F21F3C1B0F1D6200124291 /* WeiboSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 13F21F381B0F1D6200124291 /* WeiboSDK.bundle */; };
 		13F504EF1B0AF4EA00D8D484 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 13F504EB1B0AF4EA00D8D484 /* libWeChatSDK.a */; };
@@ -1971,6 +1975,12 @@
 		13E27F0D1AFA1A4900C17362 /* HomeLikeIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HomeLikeIcon@3x.png"; sourceTree = "<group>"; };
 		13E3EDF71B5F4BD100A48E76 /* UIImage+MostColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MostColor.h"; sourceTree = "<group>"; };
 		13E3EDF81B5F4BD100A48E76 /* UIImage+MostColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+MostColor.m"; sourceTree = "<group>"; };
+		13E3EDFB1B60955400A48E76 /* NCChineseConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NCChineseConverter.h; sourceTree = "<group>"; };
+		13E3EDFC1B60955400A48E76 /* NCChineseConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NCChineseConverter.m; sourceTree = "<group>"; };
+		13E3EDFD1B60955400A48E76 /* NSString+NCAddition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+NCAddition.h"; sourceTree = "<group>"; };
+		13E3EDFE1B60955400A48E76 /* NSString+NCAddition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+NCAddition.m"; sourceTree = "<group>"; };
+		13E3EDFF1B60955400A48E76 /* zh2TW.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = zh2TW.txt; sourceTree = "<group>"; };
+		13E3EE031B60996000A48E76 /* zh2HK.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = zh2HK.txt; sourceTree = "<group>"; };
 		13EE16031AEF72200054E182 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		13EE16041AEF72200054E182 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
 		13EE16051AEF72200054E182 /* InterfaceController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InterfaceController.h; sourceTree = "<group>"; };
@@ -3282,6 +3292,7 @@
 		138EDECC1AD7B70F0020957C /* LKExternal */ = {
 			isa = PBXGroup;
 			children = (
+				13E3EDFA1B60955400A48E76 /* NCChineseConverter */,
 				1377F0411B5E35D8008E21BC /* Doppelganger */,
 				13BCA6651B5CE43D00DC0549 /* FXBlurView */,
 				1371069A1B58E0E9008BCD66 /* CHTCollectionViewWaterfallLayout */,
@@ -4292,6 +4303,19 @@
 			path = Image;
 			sourceTree = "<group>";
 		};
+		13E3EDFA1B60955400A48E76 /* NCChineseConverter */ = {
+			isa = PBXGroup;
+			children = (
+				13E3EDFB1B60955400A48E76 /* NCChineseConverter.h */,
+				13E3EDFC1B60955400A48E76 /* NCChineseConverter.m */,
+				13E3EDFD1B60955400A48E76 /* NSString+NCAddition.h */,
+				13E3EDFE1B60955400A48E76 /* NSString+NCAddition.m */,
+				13E3EE031B60996000A48E76 /* zh2HK.txt */,
+				13E3EDFF1B60955400A48E76 /* zh2TW.txt */,
+			);
+			path = NCChineseConverter;
+			sourceTree = "<group>";
+		};
 		13EE16011AEF72200054E182 /* LIKE WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -4558,6 +4582,7 @@
 				138EDF0C1AD7E19D0020957C /* LoginBackground@3x.jpg in Resources */,
 				13925A911B1477D2004D0656 /* NavBarIconSearch_blue@2x.png in Resources */,
 				13F21F3C1B0F1D6200124291 /* WeiboSDK.bundle in Resources */,
+				13E3EE021B60955400A48E76 /* zh2TW.txt in Resources */,
 				13892C3B1B1C31E40053303E /* HomepageIcon@3x.png in Resources */,
 				13F505101B0C5EAC00D8D484 /* QQIcon@3x.png in Resources */,
 				13DA0FC61AEB8AFE005B9476 /* CameraFocus@3x.png in Resources */,
@@ -4582,6 +4607,7 @@
 				135D5C061ADFD21E00811B06 /* CameraFlash@3x.png in Resources */,
 				138EDEFB1AD7DBA00020957C /* TabBarNotification@3x.png in Resources */,
 				135D5C281AE0E37800811B06 /* CameraFilter@3x.png in Resources */,
+				13E3EE041B60996000A48E76 /* zh2HK.txt in Resources */,
 				1388B4FD1B01EFFB006F36AB /* EachOtherFocusLG@3x.png in Resources */,
 				13DEEC141AE789E6005E01A6 /* LC_navbar_bg@2x.png in Resources */,
 				1387C34B1B31643D00B065A7 /* SettingBinding@3x.png in Resources */,
@@ -4988,6 +5014,7 @@
 				13D2ACEE1AFB18E40068C0CD /* GPUImageFilterPipeline.m in Sources */,
 				138EDE341AD7B0A30020957C /* DDRange.m in Sources */,
 				138EDE5B1AD7B0A30020957C /* FMDatabase.m in Sources */,
+				13E3EE011B60955400A48E76 /* NSString+NCAddition.m in Sources */,
 				13D2ACE11AFB18E40068C0CD /* GPUImageDilationFilter.m in Sources */,
 				13A951AB1B4CE57C002B73ED /* AFNetworkActivityIndicatorManager.m in Sources */,
 				13D2ACDB1AFB18E40068C0CD /* GPUImageContrastFilter.m in Sources */,
@@ -5132,6 +5159,7 @@
 				13BCD8DC1ADBCD1000A0CBF5 /* LKUserInfoCache.m in Sources */,
 				1387C34E1B3166C500B065A7 /* LKLinkAccountsViewController.m in Sources */,
 				13D2AD561AFB18E40068C0CD /* GPUImageTransformFilter.m in Sources */,
+				13E3EE001B60955400A48E76 /* NCChineseConverter.m in Sources */,
 				138EDE761AD7B0A30020957C /* LCAppVersion.m in Sources */,
 				138EDE981AD7B0A30020957C /* LCUISignal.m in Sources */,
 				13BCD8CC1ADBA93000A0CBF5 /* CALayer+MCShorthand.m in Sources */,

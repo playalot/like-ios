@@ -52,10 +52,9 @@ LC_IMP_SIGNAL(PushPostDetail);
 
 -(void) buildUI
 {
-    self.backgroundColor = LC_RGB(245, 240, 236);
-    self.contentView.backgroundColor = LC_RGB(245, 240, 236);
+    self.backgroundColor = [UIColor clearColor];
+    self.contentView.backgroundColor = [UIColor clearColor];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
-    
     
     self.contentBack = UIView.view;
     self.contentBack.clipsToBounds = YES;

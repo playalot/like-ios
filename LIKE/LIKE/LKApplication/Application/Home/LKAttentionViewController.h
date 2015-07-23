@@ -10,4 +10,10 @@
 
 @interface LKAttentionViewController : UIView
 
+LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
+
+LC_PROPERTY(strong) LCUITableView * tableView;
+
+LC_PROPERTY(weak) id delegate;
+
 @end

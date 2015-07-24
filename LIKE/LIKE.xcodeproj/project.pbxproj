@@ -578,6 +578,10 @@
 		13D2AD621AFB18E40068C0CD /* GPUImageWhiteBalanceFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D2ACBA1AFB18E40068C0CD /* GPUImageWhiteBalanceFilter.m */; };
 		13D2AD631AFB18E40068C0CD /* GPUImageXYDerivativeFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D2ACBC1AFB18E40068C0CD /* GPUImageXYDerivativeFilter.m */; };
 		13D2AD641AFB18E40068C0CD /* GPUImageZoomBlurFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D2ACBE1AFB18E40068C0CD /* GPUImageZoomBlurFilter.m */; };
+		13D549DD1B60E90F00D3CA2C /* ADTickerLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D549DC1B60E90F00D3CA2C /* ADTickerLabel.m */; };
+		13D549E11B60FD9C00D3CA2C /* THLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D549E01B60FD9C00D3CA2C /* THLabel.m */; };
+		13D549E51B6104B900D3CA2C /* UIView+MaterialDesign.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D549E41B6104B900D3CA2C /* UIView+MaterialDesign.m */; };
+		13D549E71B61114B00D3CA2C /* LittleTag@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13D549E61B61114B00D3CA2C /* LittleTag@3x.png */; };
 		13D63AC81AE9FBFD001587C0 /* LKInputTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D63AC71AE9FBFD001587C0 /* LKInputTextViewController.m */; };
 		13D63ACB1AEA01F1001587C0 /* LKNotificationCount.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D63ACA1AEA01F1001587C0 /* LKNotificationCount.m */; };
 		13D63ACE1AEA026A001587C0 /* LCUIBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D63ACD1AEA026A001587C0 /* LCUIBadgeView.m */; };
@@ -1849,6 +1853,13 @@
 		13D2ACBC1AFB18E40068C0CD /* GPUImageXYDerivativeFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageXYDerivativeFilter.m; sourceTree = "<group>"; };
 		13D2ACBD1AFB18E40068C0CD /* GPUImageZoomBlurFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageZoomBlurFilter.h; sourceTree = "<group>"; };
 		13D2ACBE1AFB18E40068C0CD /* GPUImageZoomBlurFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageZoomBlurFilter.m; sourceTree = "<group>"; };
+		13D549DB1B60E90F00D3CA2C /* ADTickerLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTickerLabel.h; sourceTree = "<group>"; };
+		13D549DC1B60E90F00D3CA2C /* ADTickerLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADTickerLabel.m; sourceTree = "<group>"; };
+		13D549DF1B60FD9C00D3CA2C /* THLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THLabel.h; sourceTree = "<group>"; };
+		13D549E01B60FD9C00D3CA2C /* THLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THLabel.m; sourceTree = "<group>"; };
+		13D549E31B6104B900D3CA2C /* UIView+MaterialDesign.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MaterialDesign.h"; sourceTree = "<group>"; };
+		13D549E41B6104B900D3CA2C /* UIView+MaterialDesign.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MaterialDesign.m"; sourceTree = "<group>"; };
+		13D549E61B61114B00D3CA2C /* LittleTag@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LittleTag@3x.png"; sourceTree = "<group>"; };
 		13D63AC61AE9FBFD001587C0 /* LKInputTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKInputTextViewController.h; sourceTree = "<group>"; };
 		13D63AC71AE9FBFD001587C0 /* LKInputTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKInputTextViewController.m; sourceTree = "<group>"; };
 		13D63AC91AEA01F1001587C0 /* LKNotificationCount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKNotificationCount.h; sourceTree = "<group>"; };
@@ -3292,6 +3303,9 @@
 		138EDECC1AD7B70F0020957C /* LKExternal */ = {
 			isa = PBXGroup;
 			children = (
+				13D549E21B6104B900D3CA2C /* MaterialDesign */,
+				13D549DE1B60FD9C00D3CA2C /* THLabel */,
+				13D549DA1B60E90F00D3CA2C /* ADTickerAnimationLabel */,
 				13E3EDFA1B60955400A48E76 /* NCChineseConverter */,
 				1377F0411B5E35D8008E21BC /* Doppelganger */,
 				13BCA6651B5CE43D00DC0549 /* FXBlurView */,
@@ -3825,6 +3839,33 @@
 				13D2AB731AFB18E30068C0CD /* Info.plist */,
 			);
 			path = Framework;
+			sourceTree = "<group>";
+		};
+		13D549DA1B60E90F00D3CA2C /* ADTickerAnimationLabel */ = {
+			isa = PBXGroup;
+			children = (
+				13D549DB1B60E90F00D3CA2C /* ADTickerLabel.h */,
+				13D549DC1B60E90F00D3CA2C /* ADTickerLabel.m */,
+			);
+			path = ADTickerAnimationLabel;
+			sourceTree = "<group>";
+		};
+		13D549DE1B60FD9C00D3CA2C /* THLabel */ = {
+			isa = PBXGroup;
+			children = (
+				13D549DF1B60FD9C00D3CA2C /* THLabel.h */,
+				13D549E01B60FD9C00D3CA2C /* THLabel.m */,
+			);
+			path = THLabel;
+			sourceTree = "<group>";
+		};
+		13D549E21B6104B900D3CA2C /* MaterialDesign */ = {
+			isa = PBXGroup;
+			children = (
+				13D549E31B6104B900D3CA2C /* UIView+MaterialDesign.h */,
+				13D549E41B6104B900D3CA2C /* UIView+MaterialDesign.m */,
+			);
+			path = MaterialDesign;
 			sourceTree = "<group>";
 		};
 		13D63AD21AEA2DB3001587C0 /* JTSImageBrowser */ = {
@@ -4450,6 +4491,7 @@
 		13FCC0911ADF5E930008DB41 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				13D549E61B61114B00D3CA2C /* LittleTag@3x.png */,
 				1377F0361B5E1240008E21BC /* NotificationCommentIcon@3x.png */,
 				1377F0371B5E1240008E21BC /* NotificationFocusIcon@3x.png */,
 				1377F0381B5E1240008E21BC /* NotificationLikeIcon@3x.png */,
@@ -4569,6 +4611,7 @@
 				134765351AE2564D0055D099 /* PostDismiss@3x.png in Resources */,
 				13D9BF2B1AEB997E0020C94F /* Midway.png in Resources */,
 				13925A941B1477D2004D0656 /* NavBarIconSearchBar2_blue@2x.png in Resources */,
+				13D549E71B61114B00D3CA2C /* LittleTag@3x.png in Resources */,
 				1388B4FC1B01EFFB006F36AB /* AlreadyFocusLG@3x.png in Resources */,
 				13DEEBFB1AE75585005E01A6 /* FocusWirte@3x.png in Resources */,
 				13F505131B0C5EAC00D8D484 /* SinaIcon@3x.png in Resources */,
@@ -4787,6 +4830,7 @@
 				13E1A4E61AE65FE300E24C3C /* AVCaptureDevice+FastttCamera.m in Sources */,
 				13D2ACFA1AFB18E40068C0CD /* GPUImageHazeFilter.m in Sources */,
 				13B5B4EE1B16F0EB00252A78 /* LKCommentsView.m in Sources */,
+				13D549DD1B60E90F00D3CA2C /* ADTickerLabel.m in Sources */,
 				138EDEB61AD7B0A30020957C /* LCUIPullLoader.m in Sources */,
 				13D2ACD01AFB18E40068C0CD /* GPUImageCGAColorspaceFilter.m in Sources */,
 				133D3C801AE793D5008F303D /* LKNotificationViewController.m in Sources */,
@@ -4825,6 +4869,7 @@
 				138EDE101AD7B0A30020957C /* LCGLBubbleEffect.m in Sources */,
 				138EDE9B1AD7B0A30020957C /* UIImage+LCExtension.m in Sources */,
 				138EDE621AD7B0A30020957C /* JSONModelClassProperty.m in Sources */,
+				13D549E11B60FD9C00D3CA2C /* THLabel.m in Sources */,
 				13D2AD321AFB18E40068C0CD /* GPUImagePrewittEdgeDetectionFilter.m in Sources */,
 				134765691AE25EA40055D099 /* QNFileRecorder.m in Sources */,
 				138EDE301AD7B0A30020957C /* LCHandleViewHighlightRequest.m in Sources */,
@@ -5177,6 +5222,7 @@
 				138EDEBA1AD7B0A30020957C /* LCUITableViewCell.m in Sources */,
 				135D5C931AE1013100811B06 /* LKImageCropperViewController.m in Sources */,
 				13E1A2C31AE61DCB00E24C3C /* LKTagLikesViewController.m in Sources */,
+				13D549E51B6104B900D3CA2C /* UIView+MaterialDesign.m in Sources */,
 				13D2AD591AFB18E40068C0CD /* GPUImageTwoPassFilter.m in Sources */,
 				138EDE331AD7B0A30020957C /* DDNumber.m in Sources */,
 				13BCD8DF1ADBD0C700A0CBF5 /* LKUserInfoModel.m in Sources */,

@@ -88,6 +88,7 @@ LC_IMP_SIGNAL(PushPostDetail);
         self.preview.viewFrameX = LC_DEVICE_WIDTH - 35 - self.preview.viewFrameY;
         self.preview.backgroundColor = [UIColor whiteColor];
         self.preview.contentMode = UIViewContentModeScaleAspectFill;
+        self.preview.clipsToBounds = YES;
         self.ADD(self.preview);
         
         self.nameLabel.viewFrameWidth = LC_DEVICE_WIDTH - self.nameLabel.viewFrameX - self.preview.viewFrameWidth - ((self.preview.viewFrameY) * 2);

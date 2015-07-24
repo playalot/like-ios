@@ -125,10 +125,11 @@ LC_PROPERTY(strong) NSString * locationName;
     self.recommendLabel.viewFrameY = 10;
     self.recommendLabel.viewFrameWidth = LC_DEVICE_WIDTH - self.recommendLabel.viewFrameX * 2 - 120;
     self.recommendLabel.viewFrameHeight = 15;
-    self.recommendLabel.text = LC_LO(@"点击添加标签，让更多同类发现你");
+    self.recommendLabel.text = LC_LO(@"添加相应标签，只晒给懂你的人");
     self.recommendLabel.font = LK_FONT(13);
     self.recommendLabel.textColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
     self.recommendLabel.contentMode = UIViewContentModeBottom;
+    self.recommendLabel.adjustsFontSizeToFitWidth = YES;
     [self.recommendLabel addTapGestureRecognizer:self selector:@selector(becomeFirstResponserAction)];
     self.view.ADD(self.recommendLabel);
     

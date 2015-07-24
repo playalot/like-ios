@@ -183,7 +183,7 @@
             
             if (result) {
                 
-                UIImage * maskImage = [UIImage imageWithColor:[[UIColor blackColor] colorWithAlphaComponent:0.1] andSize:image.size];
+                UIImage * maskImage = [UIImage imageWithColor:[[UIColor blackColor] colorWithAlphaComponent:0.15] andSize:image.size];
                 
                 image = [image addMaskImage:maskImage imageSize:image.size inRect:CGRectMake(0, 0, image.size.width, image.size.height)];
             }

@@ -8,6 +8,7 @@
 
 #import "LKLocalUser.h"
 #import "AppDelegate.h"
+#import "LCKeychain.h"
 
 #define LK_CURRENT_USER @"LKCurrentUser.Key"
 #define LK_USER_CACHE(uid) LC_NSSTRING_FORMAT(@"LKUserCache.Key.%@",uid)
@@ -47,6 +48,8 @@ LC_PROPERTY(strong) LKUser * user;
 -(void) setSessionToken:(NSString *)sessionToken
 {
     self[LK_SESSION_TOKEN] = sessionToken;
+    
+    [LCKeychain setObject:self.sessionToken forKey:LK_SESSION_TOKEN];
 }
 
 -(NSString *) sessionToken
@@ -57,6 +60,8 @@ LC_PROPERTY(strong) LKUser * user;
 -(void) setRefreshToken:(NSString *)refreshToken
 {
     self[LK_REFRESH_TOKEN] = refreshToken;
+    
+    [LCKeychain setObject:self.refreshToken forKey:LK_REFRESH_TOKEN];
 }
 
 -(NSString *) refreshToken
@@ -67,6 +72,8 @@ LC_PROPERTY(strong) LKUser * user;
 -(void) setExpiresIn:(NSString *)expiresIn
 {
     self[LK_EXPIRES_IN] = expiresIn;
+    
+    [LCKeychain setObject:self.expiresIn forKey:LK_EXPIRES_IN];
 }
 
 -(NSString *) expiresIn
@@ -84,6 +91,33 @@ LC_PROPERTY(strong) LKUser * user;
             
             self.rawUserInfo = self[LK_USER_CACHE(uid)];
             self.user = [[LKUser alloc] initWithDictionary:self.rawUserInfo error:nil];
+            
+            // 如果keychain没存数据，先存上
+            id keyChainValue = [LCKeychain objectForKey:LK_CURRENT_USER];
+            
+            if (!keyChainValue) {
+                
+                [LCKeychain setObject:self.rawUserInfo forKey:LK_CURRENT_USER];
+                [LCKeychain setObject:self.expiresIn forKey:LK_EXPIRES_IN];
+                [LCKeychain setObject:self.sessionToken forKey:LK_SESSION_TOKEN];
+                [LCKeychain setObject:self.refreshToken forKey:LK_REFRESH_TOKEN];
+            }
+        }
+        else{
+            
+            // 如果没有uid，先看keychain有没有
+            NSString * keyChainValue = [LCKeychain objectForKey:LK_CURRENT_USER];
+            
+            // 如果有就取出来
+            if (keyChainValue) {
+                
+                self.rawUserInfo = [keyChainValue objectFromJSONString];
+                self.user = [[LKUser alloc] initWithDictionary:self.rawUserInfo error:nil];
+                self.expiresIn = [LCKeychain objectForKey:LK_EXPIRES_IN];
+                self.sessionToken = [LCKeychain objectForKey:LK_SESSION_TOKEN];
+                self.refreshToken = [LCKeychain objectForKey:LK_REFRESH_TOKEN];
+                self[LK_CURRENT_USER] = self.user.id.description;
+            }
         }
     }
     
@@ -98,6 +132,11 @@ LC_PROPERTY(strong) LKUser * user;
     
     self[LK_CURRENT_USER] = uid;
     self[LK_USER_CACHE(uid)] = rawUserInfo;
+    
+    if (rawUserInfo) {
+        // 更新keychain数据
+        [LCKeychain setObject:[rawUserInfo JSONString] forKey:LK_CURRENT_USER];
+    }
 }
 
 -(void) logoutCurrentUser
@@ -109,6 +148,8 @@ LC_PROPERTY(strong) LKUser * user;
     self[LK_REFRESH_TOKEN] = nil;
     self[LK_EXPIRES_IN] = nil;
     self[LK_CURRENT_USER] = nil;
+    
+    [LCKeychain removeObjectForKey:LK_CURRENT_USER];
 }
 
 -(void) setRawUserInfo:(NSDictionary *)rawUserInfo

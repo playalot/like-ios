@@ -36,5 +36,7 @@ LC_PROPERTY(strong) LCUIImageView * contentImage;
 LC_PROPERTY(strong) UIView * contentBack;
 LC_PROPERTY(strong) LKTagsView * tagsView;
 
+-(void) newTagAnimation;
+
 @end
 

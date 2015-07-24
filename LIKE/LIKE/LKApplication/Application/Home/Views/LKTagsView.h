@@ -47,6 +47,7 @@ LC_PROPERTY(strong) NSMutableArray * tags; // LKTag
 
 LC_PROPERTY(copy) LKTagItemRequest itemRequestFinished;
 LC_PROPERTY(copy) LKTagItemRequest customAction;
+LC_PROPERTY(copy) LKTagItemRequest willRequest;
 
 
 -(void) reloadData; // [self reloadDataAndRemoveAll:YES]

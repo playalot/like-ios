@@ -20,7 +20,7 @@
 LC_PROPERTY(strong) LKNotificationModel * notificationModel;
 LC_PROPERTY(strong) LCUITableView * tableView;
 LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
-LC_PROPERTY(strong) LCUIBlurView * blur;
+LC_PROPERTY(strong) UIView * blur;
 
 @end
 
@@ -81,11 +81,12 @@ LC_PROPERTY(strong) LCUIBlurView * blur;
 
 -(void) buildUI
 {
-    self.blur = LCUIBlurView.view;
+    self.blur = UIView.view;
     self.blur.viewFrameY = 0;
     self.blur.viewFrameWidth = self.viewFrameWidth;
     self.blur.viewFrameHeight = self.viewFrameHeight;
-    self.blur.tintColor = [UIColor whiteColor];
+    self.blur.backgroundColor = LKColor.backgroundColor;
+    //self.blur.tintColor = [UIColor whiteColor];
     self.ADD(self.blur);
     
     

@@ -84,6 +84,10 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
 {
     [super viewWillAppear:animated];
     
+    if([self.header.blurView respondsToSelector:@selector(setDynamic:)]){
+        ((FXBlurView *)self.header.blurView).dynamic = YES;
+    }
+    
     // hide status bar.
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:animated];
     
@@ -123,6 +127,10 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     [super viewWillDisappear:animated];
     
     [self.inputView resignFirstResponder];
+    
+    if([self.header.blurView respondsToSelector:@selector(setDynamic:)]){
+        ((FXBlurView *)self.header.blurView).dynamic = NO;
+    }
 }
 
 -(void) viewDidLoad
@@ -470,15 +478,18 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
                 
                 CGPoint point = self.attentionViewController.tableView.contentOffset;
                 
-                if (![self.tableView pointInside:point withEvent:nil]) {
-                    point.x = 0;
-                    if (point.y > self.tableView.contentSize.height - self.tableView.bounds.size.height)
-                        point.y = self.tableView.contentSize.height - self.tableView.bounds.size.height;
-                    [self.tableView setContentOffset:point animated:NO];
-                }
-                else{
+                if (self.focusDatasource.count != 0) {
                     
-                    [self.tableView setContentOffset:self.attentionViewController.tableView.contentOffset animated:NO];
+                    if (![self.tableView pointInside:point withEvent:nil]) {
+                        point.x = 0;
+                        if (point.y > self.tableView.contentSize.height - self.tableView.bounds.size.height)
+                            point.y = self.tableView.contentSize.height - self.tableView.bounds.size.height;
+                        [self.tableView setContentOffset:point animated:NO];
+                    }
+                    else{
+                        
+                        [self.tableView setContentOffset:self.attentionViewController.tableView.contentOffset animated:NO];
+                    }
                 }
                 
                 
@@ -526,6 +537,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
                     
                     self.attentionViewController.alpha = 1;
                     self.attentionViewController.hidden = YES;
+                    [self.tableView reloadData];
 
                 }];
                 
@@ -650,7 +662,9 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
                 
                 post.user.likes = @(post.user.likes.integerValue + 1);
                 
-                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                cell.post = post;
+                
+                [cell newTagAnimation];
             }
             
             // input view...
@@ -667,7 +681,14 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
 {
     if (LC_APPDELEGATE.tabBarController.loading) {
         
-        [self.pullLoader endRefresh];
+        if (self.feedType == LKHomepageFeedTypeFocus) {
+            
+            [self.attentionViewController.pullLoader endRefresh];
+        }
+        else{
+            
+            [self.pullLoader endRefresh];
+        }
         return;
     }
     
@@ -746,21 +767,55 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
             
             if (diretion == LCUIPullLoaderDiretionBottom) {
                 
-                [self.pullLoader endRefresh];
+                if (self.feedType == LKHomepageFeedTypeFocus) {
+                    
+                    [self.attentionViewController.pullLoader endRefresh];
+                }
+                else{
+                    
+                    [self.pullLoader endRefresh];
+                }
+                
             }
             
             LC_FAST_ANIMATIONS(0.25, ^{
                 
-                [self reloadData];
-                
+                if (self.feedType == LKHomepageFeedTypeMain) {
+                    
+                    [self.tableView reloadData];
+                }
+                else{
+                    [self.attentionViewController.tableView reloadData];
+                }
             });
             
             LC_APPDELEGATE.tabBarController.loading = NO;
         }
         else if (result.state == LKHttpRequestStateFailed){
             
-            [self.pullLoader endRefresh];
+            if (self.feedType == LKHomepageFeedTypeFocus) {
+                
+                [self.attentionViewController.pullLoader endRefresh];
+            }
+            else{
+                
+                [self.pullLoader endRefresh];
+            }
+            
             [self showTopMessageErrorHud:result.error];
+            
+            LC_APPDELEGATE.tabBarController.loading = NO;
+        }
+        else if (result.state == LKHttpRequestStateCanceled){
+            
+            if (self.feedType == LKHomepageFeedTypeFocus) {
+                
+                [self.attentionViewController.pullLoader endRefresh];
+            }
+            else{
+                
+                [self.pullLoader endRefresh];
+            }
             
             LC_APPDELEGATE.tabBarController.loading = NO;
         }
@@ -993,6 +1048,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
         } completion:^(BOOL finished) {
             
             self.tableView.hidden = YES;
+            [self.attentionViewController.tableView reloadData];
             
         }];
     };
@@ -1057,6 +1113,10 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
 -(void) notificationAction
 {
     if (!self.isCurrentDisplayController) {
+        return;
+    }
+    
+    if (self.feedType == LKHomepageFeedTypeNotification) {
         return;
     }
     
@@ -1166,7 +1226,6 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
     }
     
     cell.post = post;
-    cell.tableView = self.tableView;
     
     @weakly(self);
     

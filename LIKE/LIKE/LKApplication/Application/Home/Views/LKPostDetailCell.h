@@ -8,6 +8,7 @@
 
 #import "LCUITableViewCell.h"
 #import "LKTag.h"
+#import "LKTagsView.h"
 
 LC_BLOCK(void, LKPostDetailCellDidRemoved, (NSIndexPath * indexPath));
 LC_BLOCK(void, LKPostDetailCellTagLikeChanged, (LKTag * tag));
@@ -24,6 +25,8 @@ LC_PROPERTY(copy) LKValueChanged showMoreAction;
 
 LC_PROPERTY(copy) LKPostDetailCellTagLikeChanged didChanged;
 LC_PROPERTY(copy) LKPostDetailCellDidRemoved didRemoved;
+
+LC_PROPERTY(copy) LKTagItemRequest willRequest;
 
 LC_PROPERTY(strong) LKTag * tagDetail;
 

@@ -37,14 +37,14 @@
     }
 }
 
--(void) setTagString:(NSString *)tagString
+-(void) setTagValue:(__LKTagS *)tagValue
 {
-    _tagString = tagString;
+    _tagValue = tagValue;
     
     CGFloat topPadding = 5.;
     CGFloat leftPadding = 10.;
     
-    self.tagLabel.text = _tagString;
+    self.tagLabel.text = tagValue.tag;
     self.tagLabel.FIT();
     self.tagLabel.viewFrameX = leftPadding;
     self.tagLabel.viewFrameY = topPadding;
@@ -68,6 +68,10 @@
         self.tagLabel.textColor = [LC_RGB(74, 74, 74) colorWithAlphaComponent:0.9];
     }
 }
+
+@end
+
+@implementation __LKTagS
 
 @end
 
@@ -103,12 +107,21 @@
         if (result.state == LKHttpRequestStateFinished) {
             
             NSArray * array = result.json[@"data"][@"suggests"];
-            
+            NSArray * array1 = result.json[@"data"][@"recommends"];
+
             NSMutableArray * tags = [NSMutableArray array];
             
             for (NSDictionary * dic in array) {
                 
-                LKTag * tag = [LKTag objectFromDictionary:dic];
+                __LKTagS * tag = [__LKTagS objectFromDictionary:dic];
+                tag.type = 0;
+                [tags addObject:tag];
+            }
+            
+            for (NSDictionary * dic in array1) {
+                
+                __LKTagS * tag = [__LKTagS objectFromDictionary:dic];
+                tag.type = 1;
                 [tags addObject:tag];
             }
             
@@ -168,12 +181,12 @@
     
     for (NSInteger i = 0; i< self.tags.count; i++) {
         
-        LKTag * tag = self.tags[i];
+        __LKTagS * tag = self.tags[i];
         
         LKRecommendTagItem * item = LKRecommendTagItem.view;
         
         item.tag = i;
-        item.tagString = tag.tag;
+        item.tagValue = tag;
         item.selected = self.highlight;
         
         @weakly(self);
@@ -193,7 +206,7 @@
             }
             
             if (self.itemDidTap) {
-                self.itemDidTap(tmp);
+                self.itemDidTap(tmp, tmp.tagValue.type);
             }
             
         };

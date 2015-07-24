@@ -10,18 +10,26 @@
 
 @class LKRecommendTagItem;
 
+
+@interface __LKTagS : LKTag
+
+LC_PROPERTY(assign) NSInteger type;
+
+@end
+
+
 LC_BLOCK(void, LKRecommendTagItemDidTap, (__weak LKRecommendTagItem * item));
 
 @interface LKRecommendTagItem : UIView
 
 LC_PROPERTY(strong) LCUILabel * tagLabel;
-LC_PROPERTY(strong) NSString * tagString;
+LC_PROPERTY(strong) __LKTagS * tagValue;
 LC_PROPERTY(copy) LKRecommendTagItemDidTap didTap;
 
 @end
 
 
-LC_BLOCK(void, LKRecommendTagsViewDidTap, (LKRecommendTagItem * item));
+LC_BLOCK(void, LKRecommendTagsViewDidTap, (LKRecommendTagItem * item, NSInteger type));
 LC_BLOCK(void, LKRecommendTagsViewDidLoad, ());
 
 @interface LKRecommendTagsView : UIView

@@ -166,6 +166,15 @@ LC_IMP_SIGNAL(PushUserCenter);
         }
     };
     
+    self.tagItem.willRequest = ^(LKTagItem * item){
+      
+        @normally(self);
+        
+        if (self.willRequest) {
+            self.willRequest(item);
+        }
+    };
+    
     self.timeLabel.text = [LKTime dateNearByTimestamp:_tagDetail.createTime];
     
     

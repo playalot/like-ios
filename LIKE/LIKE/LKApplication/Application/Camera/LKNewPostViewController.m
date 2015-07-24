@@ -153,7 +153,7 @@ LC_PROPERTY(strong) NSString * locationName;
     
     @weakly(self);
     
-    self.selectedTags.itemDidTap = ^(LKRecommendTagItem * item){
+    self.selectedTags.itemDidTap = ^(LKRecommendTagItem * item, NSInteger type){
       
         @normally(self);
         
@@ -180,7 +180,7 @@ LC_PROPERTY(strong) NSString * locationName;
     
     
     // 点击之后把item加到selectedTags上 然后重新布局
-    self.recommendTags.itemDidTap = ^(LKRecommendTagItem * item){
+    self.recommendTags.itemDidTap = ^(LKRecommendTagItem * item, NSInteger type){
       
         @normally(self);
         
@@ -189,6 +189,38 @@ LC_PROPERTY(strong) NSString * locationName;
             [self showTopMessageErrorHud:LC_LO(@"该标签已经存在")];
         }
         else{
+            
+            if (type == 1) {
+                
+                [UIView animateWithDuration:0.25 animations:^{
+                    
+                    self.recommendTags.alpha = 0;
+                    
+                } completion:^(BOOL finished) {
+                    
+                    NSMutableArray * tags = [self.recommendTags.tags mutableCopy];
+                    
+                    for (NSInteger i = 0; i < self.recommendTags.tags.count; i++) {
+                        
+                        __LKTagS * tag = self.recommendTags.tags[i];
+                        
+                        if (tag.type == 1) {
+                            
+                            [tags removeObject:tag];
+                        }
+                    }
+                    
+                    self.recommendTags.tags = tags;
+                    [self.recommendTags reloadData:YES];
+                    
+                    [UIView animateWithDuration:0.25 animations:^{
+                       
+                        self.recommendTags.alpha = 1;
+                        
+                    }];
+                    
+                }];
+            }
             
             [self addNewTag:item.tagLabel.text];
         }
@@ -338,7 +370,7 @@ LC_PROPERTY(strong) NSString * locationName;
         return NO;
     }
     
-    LKTag * tag = [[LKTag alloc] init];
+    __LKTagS * tag = [[__LKTagS alloc] init];
     tag.tag = tagString;
     
     [self.selectedTags.tags addObject:tag];

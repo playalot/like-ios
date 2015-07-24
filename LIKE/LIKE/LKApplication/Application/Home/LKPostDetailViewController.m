@@ -50,6 +50,7 @@ LC_PROPERTY(copy) NSString * bigContentURL;
 LC_PROPERTY(strong) AFHTTPRequestOperation * bigImageRequestOperation;
 
 LC_PROPERTY(strong) LKPresentAnimation * animator;
+LC_PROPERTY(strong) UIView * blackMask;
 
 @end
 
@@ -472,6 +473,8 @@ LC_PROPERTY(strong) LKPresentAnimation * animator;
             
             //
             self.inputView.textField.text = @"";
+            
+            [self newTagAnimation];
         }
         
     }];
@@ -870,6 +873,16 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             self.userName.attributedText = attString;
         };
         
+        cell.willRequest = ^(LKTagItem * item){
+          
+            @normally(self);
+            
+            if (item.tagValue.isLiked == NO) {
+                
+                [self newTagAnimation];
+            }
+        };
+        
         // 显示点赞的人
         cell.showLikesAction = ^(LKTag * tag){
             
@@ -987,6 +1000,50 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     return nil;
 }
 
+-(void) newTagAnimation
+{
+    if (!self.blackMask) {
+        
+        self.blackMask = UIView.view;
+        self.blackMask.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
+        self.header.ADD(self.blackMask);
+    }
+    
+    self.blackMask.frame = self.header.bounds;
+    self.blackMask.alpha = 0;
+    
+    LCUILabel * label = [[LCUILabel alloc] init];
+    label.text = @"+1";
+    label.font = [UIFont fontWithName:@"AvenirNext-Bold" size:60];
+    label.textColor = [UIColor whiteColor];
+    label.FIT();
+    label.viewCenterX = self.header.viewMidWidth;
+    label.viewCenterY = self.header.viewMidHeight;
+    label.alpha = 0;
+    label.transform = CGAffineTransformScale(CGAffineTransformIdentity, 2, 2);
+    self.header.ADD(label);
+    
+    [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionAllowUserInteraction animations:^{
+        
+        label.alpha = 1;
+        label.transform = CGAffineTransformIdentity;
+        self.blackMask.alpha = 1;
+        
+    } completion:^(BOOL finished) {
+        
+        [UIView animateWithDuration:0.25 delay:0.5 options:UIViewAnimationOptionCurveLinear | UIViewAnimationOptionAllowUserInteraction animations:^{
+            
+            label.alpha = 0;
+            self.blackMask.alpha = 0;
+            
+        } completion:^(BOOL finished) {
+            
+            [label removeFromSuperview];
+            
+        }];
+    }];
+    
+}
 
 
 -(void) hideMoreButton:(BOOL)hide

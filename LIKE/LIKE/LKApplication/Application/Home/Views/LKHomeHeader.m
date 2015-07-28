@@ -278,6 +278,10 @@ LC_PROPERTY(strong) LCUIButton * doneButton;
         self.scrollView.frame = rect;
         self.clipsToBounds = NO;
     }
+        
+    
+    self.blurView.viewFrameY = offset.y < 0 ? offset.y + 5 : 5;
+    self.searchTip.frame = self.blurView.frame;
 }
 
 

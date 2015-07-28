@@ -99,11 +99,11 @@ LC_PROPERTY(strong) UIView * bindView;
 
 -(void) handleTimer:(NSTimer *)timer
 {
-    M13BadgeView * badge = self.bindView.FIND(100100);
-    
-    NSInteger count = LC_RANDOM(0, 999);
-    
-    badge.text = LC_NSSTRING_FROM_INT(count);
+//    M13BadgeView * badge = self.bindView.FIND(100100);
+//    
+//    NSInteger count = LC_RANDOM(0, 999);
+//    
+//    badge.text = LC_NSSTRING_FROM_INT(count);
 }
 
 -(void) setBindView:(UIView *)bindView

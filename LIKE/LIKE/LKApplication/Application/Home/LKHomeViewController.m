@@ -553,17 +553,18 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
                 
                 if (self.notificationViewController.fromType == LKHomepageFeedTypeMain) {
                     
+                    self.attentionViewController.tableView.scrollsToTop = NO;
+                    self.tableView.scrollsToTop = YES;
                     self.feedType = LKHomepageFeedTypeMain;
                 }
                 else{
                     
+                    self.attentionViewController.tableView.scrollsToTop = YES;
+                    self.tableView.scrollsToTop = NO;
                     self.feedType = LKHomepageFeedTypeFocus;
                 }
-                
-                
             }
         }
-        
     }
     
     // 右边只有消息按钮
@@ -917,6 +918,9 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     }
     else if (feedType == LKHomepageFeedTypeNotification){
         
+        self.attentionViewController.tableView.scrollsToTop = NO;
+        self.tableView.scrollsToTop = NO;
+
         LKNotificationViewController * notification = LKNotificationViewController.view;
         notification.alpha = 0;
         notification.fromType = self.feedType;

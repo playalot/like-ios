@@ -470,6 +470,24 @@ LC_PROPERTY(assign) BOOL magic;
     }
 }
 
+-(UIImage *) currentFilter:(UIImage *)image
+{
+    @autoreleasepool {
+        
+        if (self.filterIndex != 0) {
+            
+            image = [self lookkupImageFilterWithImage:LKFilterManager.singleton.allFilterImage[self.filterIndex - 1] originImage:image];
+        }
+        
+        if (self.magic) {
+            
+            image = [image magic];
+        }
+        
+        return image;
+    }
+}
+
 -(void) valueChange:(UISlider *)slider
 {
     GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:self.originalImage];
@@ -742,7 +760,7 @@ LC_PROPERTY(assign) BOOL magic;
 -(UIImage *) currentImage
 {
     if (self.needCut) {
-        return [self getSubImage];
+        return [self currentFilter:[self getSubImage]];
     }
     else{
         return self.showImgView.image;
@@ -750,26 +768,31 @@ LC_PROPERTY(assign) BOOL magic;
 }
 
 -(UIImage *)getSubImage{
+    
+    UIImageView * showImgView = [[UIImageView alloc] initWithImage:self.originalImage];
+    showImgView.frame = self.showImgView.frame;
+    
+    
     CGRect squareFrame = self.cropFrame;
-    CGFloat scaleRatio = self.latestFrame.size.width / self.showImgView.image.size.width;
+    CGFloat scaleRatio = self.latestFrame.size.width / showImgView.image.size.width;
     CGFloat x = (squareFrame.origin.x - self.latestFrame.origin.x) / scaleRatio;
     CGFloat y = (squareFrame.origin.y - self.latestFrame.origin.y) / scaleRatio;
     CGFloat w = squareFrame.size.width / scaleRatio;
     CGFloat h = squareFrame.size.height / scaleRatio;
     if (self.latestFrame.size.width < self.cropFrame.size.width) {
-        CGFloat newW = self.showImgView.image.size.width;
+        CGFloat newW = showImgView.image.size.width;
         CGFloat newH = newW * (self.cropFrame.size.height / self.cropFrame.size.width);
         x = 0; y = y + (h - newH) / 2;
         w = newH; h = newH;
     }
     if (self.latestFrame.size.height < self.cropFrame.size.height) {
-        CGFloat newH = self.showImgView.image.size.height;
+        CGFloat newH = showImgView.image.size.height;
         CGFloat newW = newH * (self.cropFrame.size.width / self.cropFrame.size.height);
         x = x + (w - newW) / 2; y = 0;
         w = newH; h = newH;
     }
     CGRect myImageRect = CGRectMake(x, y, w, h);
-    CGImageRef imageRef = self.showImgView.image.CGImage;
+    CGImageRef imageRef = showImgView.image.CGImage;
     CGImageRef subImageRef = CGImageCreateWithImageInRect(imageRef, myImageRect);
     CGSize size;
     size.width = myImageRect.size.width;

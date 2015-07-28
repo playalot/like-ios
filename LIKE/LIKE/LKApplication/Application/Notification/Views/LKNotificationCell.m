@@ -98,6 +98,7 @@ LC_IMP_SIGNAL(PushPostDetail);
         self.morePreview.bounces = NO;
         self.morePreview.showsHorizontalScrollIndicator = NO;
         self.morePreview.showsVerticalScrollIndicator = NO;
+        self.morePreview.scrollsToTop = NO;
         self.ADD(self.morePreview);
         
         

@@ -33,6 +33,15 @@
             }
         }
         
+        self.reason = [dict[@"reason"] integerValue];
+        
+        NSString * reasonTag = dict[@"reason_tag"];
+
+        if (!LC_NSSTRING_IS_INVALID(reasonTag)) {
+            
+            self.reasonTag = dict[@"reason_tag"];
+        }
+        
     }
     
     return self;

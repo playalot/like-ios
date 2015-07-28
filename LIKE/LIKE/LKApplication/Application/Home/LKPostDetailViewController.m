@@ -366,7 +366,7 @@ LC_PROPERTY(strong) UIView * blackMask;
     };
     
     
-    
+    /*
     self.pullLoader = [LCUIPullLoader pullLoaderWithScrollView:self.tableView pullStyle:LCUIPullLoaderStyleFooter];
     
     self.pullLoader.beginRefresh = ^(LCUIPullLoaderDiretion diretion){
@@ -378,6 +378,7 @@ LC_PROPERTY(strong) UIView * blackMask;
             [self.tagsListModel loadDataWithPostID:self.post.id getMore:YES];
         }
     };
+     */
 }
 
 #pragma mark -

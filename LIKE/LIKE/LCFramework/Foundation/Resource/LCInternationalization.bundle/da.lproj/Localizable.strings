@@ -76,6 +76,7 @@
 "图片保存成功" = "Save Success";
 "图片保存失败，可能是因为您拒绝了相册的访问权限" = "The app does ont have access to your photos. You can enable access in Privacy Settings.";
 "无法访问相册，可能是因为您拒绝了相册的访问权限" = "The app does ont have access to your photos. You can enable access in Privacy Settings.";
+"无法访问相机，可能是因为您拒绝了相机的访问权限" = "The app does ont have access to your camera. You can enable access in Privacy Settings.";
 "好的" = "OK";
 "发生了一个错误，但是这个错误没有详细的描述。" = "Unknow error";
 "请求失败...请检查您的网络后重试" = "Request failed, please check your internet connection and try again";
@@ -200,4 +201,9 @@
 "更改位置" = "Change Place";
 "移除位置" = "Remove Place";
 "创建" = "Create";
+
+
+"RecommentReason1" = "Based on tag";
+"RecommentReason2" = "Editor pick";
+"RecommentReason3" = "Mybe you like";
 

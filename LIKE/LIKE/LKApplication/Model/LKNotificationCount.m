@@ -7,6 +7,7 @@
 //
 
 #import "LKNotificationCount.h"
+#import "M13BadgeView.h"
 
 @interface LKNotificationCount ()
 
@@ -87,33 +88,47 @@ LC_PROPERTY(strong) UIView * bindView;
 
 -(void) setBadgeCount:(NSInteger)badgeCount
 {
-    LCUIBadgeView * badge = self.bindView.FIND(100100);
-    badge.valueString = LC_NSSTRING_FROM_INT(badgeCount);
+    M13BadgeView * badge = self.bindView.FIND(100100);
+    badge.text = LC_NSSTRING_FROM_INT(badgeCount);
+    //badge.viewFrameX = self.bindView.viewFrameWidth - badge.viewFrameWidth - self.bindView.viewMidWidth;
     
     LKUserDefaults.singleton[self.class.description] = LC_NSSTRING_FROM_INT(badgeCount);
     
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:badgeCount];
 }
 
+-(void) handleTimer:(NSTimer *)timer
+{
+    M13BadgeView * badge = self.bindView.FIND(100100);
+    
+    NSInteger count = LC_RANDOM(0, 999);
+    
+    badge.text = LC_NSSTRING_FROM_INT(count);
+}
+
 -(void) setBindView:(UIView *)bindView
 {
     _bindView = bindView;
     
-    LCUIBadgeView * badge = _bindView.FIND(100100);
+    M13BadgeView * badge = _bindView.FIND(100100);
     
     if (badge) {
         [badge removeFromSuperview];
     }
-    
+
     NSString * cache =  LKUserDefaults.singleton[self.class.description];
-    
-    badge = [[LCUIBadgeView alloc] initWithFrame:CGRectZero valueString:@"99"];
-    badge.hiddenWhenEmpty = YES;
-    badge.valueString = LC_NSSTRING_FROM_INGERGER(cache.integerValue);
-    badge.viewFrameX = bindView.viewFrameWidth - badge.viewMidWidth;
-    badge.viewFrameY = - badge.viewMidHeight;
+
+    badge = [[M13BadgeView alloc] init];
+    badge.animateChanges = NO;
+    badge.text = LC_NSSTRING_FROM_INGERGER(cache.integerValue);
+    badge.textColor = LKColor.color;
+    badge.badgeBackgroundColor = [UIColor whiteColor];
+    badge.font = LK_FONT(10);
+    badge.hidesWhenZero = YES;
     badge.tag = 100100;
-//    badge.alpha = 0.7;
+    badge.verticalAlignment = M13BadgeViewVerticalAlignmentNone;
+    badge.horizontalAlignment = M13BadgeViewHorizontalAlignmentLeft;
+    badge.viewFrameY = 0;
     bindView.ADD(badge);
 }
 

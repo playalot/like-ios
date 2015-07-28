@@ -54,7 +54,7 @@ ERROR(@"Init failed : %@",[self class]); } \
 #define LC_NSSTRING_FORMAT(s,...) [NSString stringWithFormat:s,##__VA_ARGS__]
 
 /** String is invalid */
-#define LC_NSSTRING_IS_INVALID(s) ( !s || s.length <= 0 || [s isEqualToString:@"(null)"] || [s isKindOfClass:[NSNull class]])
+#define LC_NSSTRING_IS_INVALID(string) ([string isKindOfClass:[NSNull class]] || !string || string.length <= 0 || [string isEqualToString:@"(null)"])
 
 /** String from number */
 #define LC_NSSTRING_FROM_NUMBER(number) [NSString stringWithFormat:@"%@",number]

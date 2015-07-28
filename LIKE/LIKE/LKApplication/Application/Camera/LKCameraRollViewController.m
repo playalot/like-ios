@@ -165,20 +165,20 @@ LC_PROPERTY(strong) UICollectionView * collectionView;
             
             if ([[result valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypePhoto]) {
                 
-                [self.datasource insertObject:result.defaultRepresentation.url atIndex:0];
+                [self.datasource insertObject:result atIndex:0];
             }
+        }
+        else{
+            
+            [self.collectionView reloadData];
         }
     };
     
     ALAssetsLibraryGroupsEnumerationResultsBlock libraryGroupsEnumeration = ^(ALAssetsGroup * group, BOOL* stop){
         
-        @normally(self);
-
         if (group != nil) {
             
             [group enumerateAssetsUsingBlock:groupEnumerAtion];
-
-            [self.collectionView reloadData];
         }
     };
     
@@ -249,16 +249,10 @@ LC_PROPERTY(strong) UICollectionView * collectionView;
         
         LKPhotoRollCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Photo" forIndexPath:indexPath];
         
-        NSURL * url = self.datasource[indexPath.row - 1];
-
-        [self.assetLibrary assetForURL:url resultBlock:^(ALAsset *asset){
-            
-            cell.image = [UIImage imageWithCGImage:asset.thumbnail];
-            
-        }failureBlock:^(NSError * error) {
-            
-        }];
+        ALAsset * asset = self.datasource[indexPath.row - 1];
         
+        cell.image = [UIImage imageWithCGImage:asset.thumbnail scale:asset.defaultRepresentation.scale orientation:(UIImageOrientation)asset.defaultRepresentation.orientation];
+
         return cell;
     }
 }
@@ -288,17 +282,19 @@ LC_PROPERTY(strong) UICollectionView * collectionView;
     }
     else{
         
-        NSURL * url = self.datasource[indexPath.row - 1];
+        ALAsset * asset = self.datasource[indexPath.row - 1];
         
-        [self.assetLibrary assetForURL:url resultBlock:^(ALAsset *asset){
-            
-            UIImage * image = [[UIImage alloc] initWithCGImage:asset.defaultRepresentation.fullResolutionImage scale:asset.defaultRepresentation.scale orientation:(UIImageOrientation)asset.defaultRepresentation.orientation];
-            
-            [self selectedImage:image];
-            
-        }failureBlock:^(NSError * error) {
-            
-        }];
+        UIImage * image = [[UIImage alloc] initWithCGImage:asset.defaultRepresentation.fullResolutionImage scale:asset.defaultRepresentation.scale orientation:(UIImageOrientation)asset.defaultRepresentation.orientation];
+        
+        [self selectedImage:image];
+        
+//        [self.assetLibrary assetForURL:url resultBlock:^(ALAsset *asset){
+//            
+//            
+//            
+//        }failureBlock:^(NSError * error) {
+//            
+//        }];
     }
 }
 

@@ -32,6 +32,7 @@
 #import "FXBlurView.h"
 #import "LKAttentionViewController.h"
 #import "Doppelganger.h"
+#import "LKBadgeView.h"
 
 #define FOCUS_FEED_CACHE_KEY [NSString stringWithFormat:@"LKFocusFeedKey-%@", LKLocalUser.singleton.user.id]
 
@@ -62,6 +63,7 @@ LC_PROPERTY(strong) UIView * fromView;
 
 LC_PROPERTY(copy) NSString * next;
 LC_PROPERTY(copy) NSNumber * focusNext;
+LC_PROPERTY(assign) NSTimeInterval lastFocusLoadTime;
 
 
 // - - - - - - -
@@ -274,7 +276,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
         
         if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
             
-            [self.navigationController pushViewController:[LKTabBarController hiddenBottomBarWhenPushed:[[LKUserCenterViewController alloc] initWithUser:LKLocalUser.singleton.user]] animated:YES];
+            [self.navigationController pushViewController:[LKTabBarController hiddenBottomBarWhenPushed:[[LKUserCenterViewController alloc] initWithUser:self.header.user]] animated:YES];
             
         };
         
@@ -355,8 +357,6 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     
     self.tableView.tableHeaderView = self.header;
     
-    
-    
     //
     self.pullLoader = [LCUIPullLoader pullLoaderWithScrollView:self.tableView pullStyle:LCUIPullLoaderStyleFooter];
     self.pullLoader.indicatorViewStyle = UIActivityIndicatorViewStyleWhite;
@@ -392,6 +392,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
         
         LKHomeTableViewCell * cell = nil;
         
+        // 判断当前的feed，看动哪个
         if (self.feedType == LKHomepageFeedTypeFocus) {
             
             cell = (LKHomeTableViewCell *)[self.attentionViewController.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:1]];;
@@ -402,6 +403,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
             cell = (LKHomeTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:1]];;
         }
         
+        // 调加标签接口
         if ([self checkTag:string onTags:((LKPost *)self.inputView.userInfo).tags]) {
             
             [self addTag:string onPost:self.inputView.userInfo onCell:cell];
@@ -421,6 +423,8 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
         // scroll...
         LKHomeTableViewCell * cell = nil;
         
+        
+        // 判断当前的feed，看动哪个，把底部挨上输入框
         if (self.feedType == LKHomepageFeedTypeFocus) {
             
             cell = (LKHomeTableViewCell *)[self.attentionViewController.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:1]];;
@@ -456,6 +460,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
 {
     if (type == LCUINavigationBarButtonTypeLeft) {
         
+        // 如果当前是主feed，那左上角就是关注的人按钮
         if (self.feedType == LKHomepageFeedTypeMain) {
             
             if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
@@ -465,6 +470,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
         }
         else{
             
+            // 如果当前是关注的人feed，那左上角就是主页按钮
             if (self.feedType == LKHomepageFeedTypeFocus) {
                 
                 LC_APPDELEGATE.tabBarController.loading = NO;
@@ -488,7 +494,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
                     }
                     else{
                         
-                        [self.tableView setContentOffset:self.attentionViewController.tableView.contentOffset animated:NO];
+                        //[self.tableView setContentOffset:self.attentionViewController.tableView.contentOffset animated:NO];
                     }
                 }
                 
@@ -559,6 +565,8 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
         }
         
     }
+    
+    // 右边只有消息按钮
     else if (type == LCUINavigationBarButtonTypeRight) {
         
         [self notificationAction];
@@ -654,8 +662,17 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
             // reload tags...
             [cell reloadTags];
             
+            NSIndexPath * indexPath = nil;
             
-            NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
+            if (self.feedType == LKHomepageFeedTypeFocus) {
+                
+                indexPath = [self.attentionViewController.tableView indexPathForCell:cell];
+            }
+            else{
+                
+                indexPath = [self.tableView indexPathForCell:cell];
+            }
+            
             
             // reload row...
             if (indexPath) {
@@ -663,6 +680,16 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
                 post.user.likes = @(post.user.likes.integerValue + 1);
                 
                 cell.post = post;
+                
+                if (self.feedType == LKHomepageFeedTypeFocus) {
+
+                    [self.attentionViewController.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                    
+                }
+                else{
+                    
+                    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                }
                 
                 [cell newTagAnimation];
             }
@@ -677,6 +704,8 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     }];
 }
 
+
+// 这个方法同时负责主页和关注的人列表的请求
 -(void) loadData:(LCUIPullLoaderDiretion)diretion
 {
     if (LC_APPDELEGATE.tabBarController.loading) {
@@ -690,6 +719,15 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
             [self.pullLoader endRefresh];
         }
         return;
+    }
+    
+    NSTimeInterval time = [[NSDate date] timeIntervalSince1970];
+    
+    if (self.feedType == LKHomepageFeedTypeFocus && diretion == LCUIPullLoaderDiretionTop) {
+        
+        if (time - self.lastFocusLoadTime < 30) {
+            return;
+        }
     }
     
     LC_APPDELEGATE.tabBarController.loading = YES;
@@ -744,6 +782,8 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
                     
                     self.focusDatasource = datasource;
                     LKUserDefaults.singleton[FOCUS_FEED_CACHE_KEY] = resultData;
+                    
+                    self.lastFocusLoadTime = time;
                     
                 }
                 else{
@@ -973,16 +1013,20 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
         
         CGPoint point = self.tableView.contentOffset;
         
-        if (![self.attentionViewController.tableView pointInside:point withEvent:nil]) {
-            point.x = 0;
-            if (point.y > self.attentionViewController.tableView.contentSize.height - self.attentionViewController.tableView.bounds.size.height)
-                point.y = self.attentionViewController.tableView.contentSize.height - self.attentionViewController.tableView.bounds.size.height;
-            [self.attentionViewController.tableView setContentOffset:point animated:NO];
-        }
-        else{
+        if (self.focusDatasource.count != 0) {
+
+            if (![self.attentionViewController.tableView pointInside:point withEvent:nil]) {
+                point.x = 0;
+                if (point.y > self.attentionViewController.tableView.contentSize.height - self.attentionViewController.tableView.bounds.size.height)
+                    point.y = self.attentionViewController.tableView.contentSize.height - self.attentionViewController.tableView.bounds.size.height;
+                [self.attentionViewController.tableView setContentOffset:point animated:NO];
+            }
             
-            [self.attentionViewController.tableView setContentOffset:self.tableView.contentOffset animated:NO];
         }
+//        else{
+//            
+//            [self.attentionViewController.tableView setContentOffset:self.tableView.contentOffset animated:NO];
+//        }
         
         self.attentionViewController.tableView.scrollsToTop = YES;
         self.tableView.scrollsToTop = NO;

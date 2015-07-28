@@ -9,8 +9,6 @@
 #import "LKTagsView.h"
 #import "LKTagLikeModel.h"
 #import "LKLoginViewController.h"
-#import "THLabel.h"
-#import "UIView+MaterialDesign.h"
 
 @interface LKTagItem ()
 
@@ -341,35 +339,6 @@ LC_PROPERTY(strong) UIView * tipLine;
     
     LKTagItem * lastItem = nil;
     
-
-    LKTagItem * newItem = self.FIND(-3);
-    
-    if (!newItem) {
-        
-        newItem = LKTagItem.view;
-    }
-
-    newItem.tag = -3;
-    [newItem setTagValue:[[LKTag alloc] init] customTag:@"New" customCount:@"+" customLiked:@(YES)];
-    newItem.frame = CGRectMake(leftPadding, topPadding, newItem.viewFrameWidth, newItem.viewFrameHeight);
-    
-    
-    @weakly(self);
-
-    newItem.customAction = ^(LKTagItem * item){
-      
-        @normally(self);
-
-        if (self.customAction) {
-            self.customAction(nil);
-        }
-    };
-
-    lastItem = newItem;
-    maxHeight = lastItem.viewBottomY + topPadding;
-
-    self.ADD(newItem);
-    
     
     NSInteger page = 0;
     NSInteger line = 0;
@@ -476,6 +445,75 @@ LC_PROPERTY(strong) UIView * tipLine;
         
     }
     
+    
+    
+    
+    
+    UIView * newItem = self.FIND(-3);
+    
+    if (!newItem) {
+        
+        newItem = [self buildNewActionTag];
+    }
+    
+    newItem.tag = -3;
+    //[newItem setTagValue:[[LKTag alloc] init] customTag:@"New" customCount:@"+" customLiked:@(YES)];
+    //newItem.frame = CGRectMake(leftPadding, topPadding, newItem.viewFrameWidth, newItem.viewFrameHeight);
+    
+    if (!lastItem){
+        
+        newItem.frame = CGRectMake(leftPadding, topPadding, newItem.viewFrameWidth, newItem.viewFrameHeight);
+        
+    }else{
+        
+        CGFloat test = lastItem.viewRightX + leftPadding * 2 + newItem.viewFrameWidth - (page * self.viewFrameWidth);
+        
+        if (test > self.viewFrameWidth) {
+            
+            if (line == 999) {
+                
+                page += 1;
+                line = 0;
+                
+            }else{
+                
+                line += 1;
+            }
+            
+            newItem.frame = CGRectMake(leftPadding + (page * self.viewFrameWidth), (line + 1) * topPadding + line * newItem.viewFrameHeight, newItem.viewFrameWidth, newItem.viewFrameHeight);
+            
+            
+        }else{
+            
+            newItem.frame = CGRectMake(lastItem.viewFrameX + lastItem.viewFrameWidth + leftPadding, (line + 1) * topPadding + line * newItem.viewFrameHeight, newItem.viewFrameWidth, newItem.viewFrameHeight);
+        }
+        
+    }
+    
+    newItem.viewFrameX = self.viewFrameWidth - newItem.viewFrameWidth - 10;
+    [newItem addTapGestureRecognizer:self selector:@selector(newTagAction)];
+    lastItem = (LKTagItem *)newItem;
+
+    
+    
+    
+    //    newItem.customAction = ^(LKTagItem * item){
+    //
+    //        @normally(self);
+    //
+    //        if (self.customAction) {
+    //            self.customAction(nil);
+    //        }
+    //    };
+    
+    lastItem = (LKTagItem *)newItem;
+
+    CGFloat height = lastItem.viewBottomY + topPadding;
+    maxHeight = height > maxHeight ? height : maxHeight;
+    
+    self.ADD(newItem);
+    
+    
     CGSize size = CGSizeMake((page + 1) * self.viewFrameWidth, maxHeight);
     
     self.contentSize = size;
@@ -499,6 +537,11 @@ LC_PROPERTY(strong) UIView * tipLine;
         
         [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
     }
+}
+
+-(void) addNewItem:(LKTagItem *)item
+{
+
 }
 
 -(void) removeFromSuperview
@@ -526,6 +569,46 @@ LC_PROPERTY(strong) UIView * tipLine;
         
     });
 
+}
+
+-(UIView *) buildNewActionTag
+{
+    UIView * newTagView = UIView.view;
+    
+    UIImage * icon = [[UIImage imageNamed:@"NotificationTagIcon.png" useCache:YES] imageWithTintColor:LKColor.color];
+    
+    LCUIImageView * imageView = [LCUIImageView viewWithImage:icon];
+    imageView.viewFrameHeight = 22;
+    imageView.viewFrameWidth = 22;
+    newTagView.ADD(imageView);
+    
+    
+    NSString * addNewTagString = LC_LO(@"添加标签");
+    
+    LCUILabel * tip = LCUILabel.view;
+    tip.font = LK_FONT(11);
+    tip.text = addNewTagString;
+    tip.textColor = LKColor.color;
+    tip.FIT();
+    tip.viewFrameX = imageView.viewRightX + 5;
+    tip.viewFrameY = imageView.viewMidHeight - tip.viewMidHeight + 0.5;
+    newTagView.ADD(tip);
+    
+    
+    newTagView.viewFrameWidth = imageView.viewFrameWidth + 5 + tip.viewFrameWidth + 10;
+    newTagView.viewFrameHeight = imageView.viewFrameHeight;
+    newTagView.cornerRadius = newTagView.viewMidHeight;
+    newTagView.borderColor = LKColor.color;
+    newTagView.borderWidth = 1;
+    
+    return newTagView;
+}
+
+-(void) newTagAction
+{
+    if (self.customAction) {
+        self.customAction(nil);
+    }
 }
 
 @end

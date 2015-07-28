@@ -28,6 +28,8 @@ LC_PROPERTY(copy) LKValueChanged backgroundAction;
 
 LC_PROPERTY(weak) LKSearchViewController * searchViewController;
 
+LC_PROPERTY(strong) LKUser * user;
+
 - (instancetype)initWithCGSize:(CGSize)size;
 
 - (void)layoutHeaderViewForScrollViewOffset:(CGPoint)offset;

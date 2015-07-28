@@ -22,5 +22,8 @@ LC_PROPERTY(strong) NSNumber * timestamp;
 LC_PROPERTY(strong) NSMutableArray * tags;
 LC_PROPERTY(copy)   NSString * place;
 
+LC_PROPERTY(assign) NSInteger reason;
+LC_PROPERTY(copy) NSString * reasonTag;
+
 
 @end

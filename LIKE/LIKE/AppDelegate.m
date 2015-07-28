@@ -182,7 +182,7 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
     
     if (self.enterBackgroundTimeInterval > 60 * 2) {
         
-        [self postNotification:LKHomeViewControllerReloadingData];
+        //[self postNotification:LKHomeViewControllerReloadingData];
     }
 }
 

@@ -92,6 +92,11 @@ LC_PROPERTY(strong) LKUser * user;
             self.rawUserInfo = self[LK_USER_CACHE(uid)];
             self.user = [[LKUser alloc] initWithDictionary:self.rawUserInfo error:nil];
             
+            if (!self.user.id) {
+                self.user = [[LKUser alloc] init];
+                self.user.id = @(uid.integerValue);
+            }
+            
             // 如果keychain没存数据，先存上
             id keyChainValue = [LCKeychain objectForKey:LK_CURRENT_USER];
             
@@ -111,12 +116,15 @@ LC_PROPERTY(strong) LKUser * user;
             // 如果有就取出来
             if (keyChainValue) {
                 
+
                 self.rawUserInfo = [keyChainValue objectFromJSONString];
                 self.user = [[LKUser alloc] initWithDictionary:self.rawUserInfo error:nil];
                 self.expiresIn = [LCKeychain objectForKey:LK_EXPIRES_IN];
                 self.sessionToken = [LCKeychain objectForKey:LK_SESSION_TOKEN];
                 self.refreshToken = [LCKeychain objectForKey:LK_REFRESH_TOKEN];
                 self[LK_CURRENT_USER] = self.user.id.description;
+                
+
             }
         }
     }

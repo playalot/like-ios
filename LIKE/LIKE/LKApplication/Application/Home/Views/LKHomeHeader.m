@@ -58,19 +58,19 @@ LC_PROPERTY(strong) LCUIButton * doneButton;
     
     
     
-    if (IOS8_OR_LATER) {
-        
-        self.blurView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
-        self.blurView.frame = CGRectMake(5, 5, self.viewFrameWidth - 10, 30);
-        UIView * view = UIView.view.COLOR([[UIColor whiteColor] colorWithAlphaComponent:0.35]);
-        view.frame = self.blurView.bounds;
-        self.blurView.ADD(view);
-    }
-    else{
+//    if (IOS8_OR_LATER) {
+//        
+//        self.blurView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
+//        self.blurView.frame = CGRectMake(5, 5, self.viewFrameWidth - 10, 30);
+//        UIView * view = UIView.view.COLOR([[UIColor whiteColor] colorWithAlphaComponent:0.35]);
+//        view.frame = self.blurView.bounds;
+//        self.blurView.ADD(view);
+//    }
+//    else{
     
         self.blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(5, 5, self.viewFrameWidth - 10, 30)];
         ((FXBlurView *)self.blurView).blurRadius = 10;
-    }
+//    }
     
     self.blurView.tintColor = [[UIColor whiteColor] colorWithAlphaComponent:0.15];
     self.blurView.cornerRadius = 4;
@@ -284,6 +284,8 @@ LC_PROPERTY(strong) LCUIButton * doneButton;
 -(void) updateWithUser:(LKUser *)user
 {
     if (user) {
+        
+        self.user = user;
         
         self.nameLabel.text = [NSString stringWithFormat:@"%@\n%@ likes",LKLocalUser.singleton.user.name, @(LKLocalUser.singleton.user.likes.integerValue)];
         self.headImageView.url = user.avatar;

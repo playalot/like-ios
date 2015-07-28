@@ -66,6 +66,18 @@ LC_PROPERTY(assign)  UIDeviceOrientation deviceOrientation;
     
     [self observeNotification:LKCameraViewControllerDismiss];
     [self observeNotification:UIDeviceOrientationDidChangeNotification];
+    
+    
+    NSString * mediaType = AVMediaTypeVideo;
+    
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
+    
+    if(authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied){
+        
+        [self showTopMessageErrorHud:LC_LO(@"无法访问相机，可能是因为您拒绝了相机的访问权限")];
+        return;
+        
+    }
 }
 
 

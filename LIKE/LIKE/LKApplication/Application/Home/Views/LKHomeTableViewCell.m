@@ -20,8 +20,8 @@ LC_PROPERTY(strong) LCUILabel * likesTip;
 LC_PROPERTY(strong) LCUIButton * friendshipButton;
 LC_PROPERTY(strong) LCUIActivityIndicatorView * loadingActivity;
 
-LC_PROPERTY(strong) LCUILabel * recommendedReason;
-LC_PROPERTY(strong) LCUIButton * recommendedReasonWithTag;
+LC_PROPERTY(strong) LCUIButton * recommendedReason;
+LC_PROPERTY(strong) LCUILabel * recommendedReasonWithTag;
 
 LC_PROPERTY(strong) UIView * blackMask;
 
@@ -136,27 +136,26 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.ADD(self.likesTip);
     
     
-    self.recommendedReason = LCUILabel.view;
-    self.recommendedReason.viewFrameWidth = LC_DEVICE_WIDTH / 2;
-    self.recommendedReason.viewFrameX = LC_DEVICE_WIDTH / 2 - 15;
+    self.recommendedReason = LCUIButton.view;
     self.recommendedReason.viewFrameY = self.title.viewFrameY + 2;
+    self.recommendedReason.title = LC_LO(@"共同兴趣");
+    self.recommendedReason.titleFont = LK_FONT(11);
+    self.recommendedReason.titleColor = LC_RGB(155, 155, 155);
+    self.recommendedReason.buttonImage = [UIImage imageNamed:@"LittleTag" useCache:YES];
     self.recommendedReason.viewFrameHeight = LK_FONT(11).lineHeight;
-    self.recommendedReason.text = LC_LO(@"共同兴趣");
-    self.recommendedReason.textColor = LC_RGB(155, 155, 155);
-    self.recommendedReason.font = LK_FONT(11);
-    self.recommendedReason.textAlignment = UITextAlignmentRight;
+    self.recommendedReason.viewFrameX = LC_DEVICE_WIDTH - self.recommendedReasonWithTag.viewFrameWidth - 15;
     self.ADD(self.recommendedReason);
     
     
-    self.recommendedReasonWithTag = LCUIButton.view;
+    self.recommendedReasonWithTag = LCUILabel.view;
+    self.recommendedReasonWithTag.viewFrameWidth = LC_DEVICE_WIDTH / 2;
+    self.recommendedReasonWithTag.viewFrameX = LC_DEVICE_WIDTH / 2 - 15;
     self.recommendedReasonWithTag.viewFrameY = self.likesTip.viewFrameY + 2;
-    self.recommendedReasonWithTag.title = @" 有故事的人";
-    self.recommendedReasonWithTag.titleFont = LK_FONT(11);
-    self.recommendedReasonWithTag.titleColor = LC_RGB(155, 155, 155);
-    self.recommendedReasonWithTag.buttonImage = [UIImage imageNamed:@"LittleTag" useCache:YES];
-    self.recommendedReasonWithTag.FIT();
     self.recommendedReasonWithTag.viewFrameHeight = LK_FONT(11).lineHeight;
-    self.recommendedReasonWithTag.viewFrameX = LC_DEVICE_WIDTH - self.recommendedReasonWithTag.viewFrameWidth - 15;
+    self.recommendedReasonWithTag.text = LC_LO(@"有故事的人");
+    self.recommendedReasonWithTag.textColor = LC_RGB(155, 155, 155);
+    self.recommendedReasonWithTag.font = LK_FONT(11);
+    self.recommendedReasonWithTag.textAlignment = UITextAlignmentRight;
     self.ADD(self.recommendedReasonWithTag);
     
     
@@ -223,6 +222,7 @@ LC_IMP_SIGNAL(PushPostDetail);
         post.user = LKLocalUser.singleton.user;
     }
     
+
     
     self.head.image = nil;
     self.head.url = post.user.avatar;
@@ -291,6 +291,24 @@ LC_IMP_SIGNAL(PushPostDetail);
         
         [self newTagAnimation];
     };
+    
+    NSString * reason = [NSString stringWithFormat:@"RecommentReason%@", @(post.reason)];
+    
+    self.recommendedReason.buttonImage = [self getIconImage:post.reason];
+    self.recommendedReason.viewFrameWidth = 2000;
+    self.recommendedReason.viewFrameY = self.title.viewFrameY + 2;
+    self.recommendedReason.title = [NSString stringWithFormat:@"  %@", LC_LO(reason)];
+    self.recommendedReason.FIT();
+    self.recommendedReason.viewFrameX = LC_DEVICE_WIDTH - self.recommendedReason.viewFrameWidth - 15;
+    self.recommendedReason.hidden = post.reason <= 0;
+    
+    self.recommendedReasonWithTag.text = post.reasonTag;
+    self.recommendedReasonWithTag.hidden = LC_NSSTRING_IS_INVALID(post.reasonTag);
+    
+    if (self.recommendedReasonWithTag.hidden == YES) {
+        
+        self.recommendedReason.viewFrameY = 55 / 2 - self.recommendedReason.viewMidHeight + 5;
+    }
 }
 
 -(void) newTagAnimation
@@ -376,5 +394,22 @@ LC_IMP_SIGNAL(PushPostDetail);
     view.layer.mask = maskLayer;
 }
 
+-(UIImage *) getIconImage:(NSInteger)type
+{
+    if (type == 1) {
+        
+        return [UIImage imageNamed:@"LittleTag.png" useCache:YES];
+    }
+    else if (type == 2){
+        
+        return [UIImage imageNamed:@"LittleSP.png" useCache:YES];
+    }
+    else if(type == 3){
+        
+        return [UIImage imageNamed:@"LittleYouLike.png" useCache:YES];
+    }
+    
+    return nil;
+}
 
 @end

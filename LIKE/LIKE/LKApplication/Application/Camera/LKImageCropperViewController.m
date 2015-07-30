@@ -624,7 +624,9 @@ LC_PROPERTY(assign) BOOL magic;
     
     if (self.didFinishedPickImage) {
         self.didFinishedPickImage(image);
+        
         [self dismissViewControllerAnimated:YES completion:nil];
+        [self postNotification:LKCameraViewControllerDismiss];
     }
     else{
         

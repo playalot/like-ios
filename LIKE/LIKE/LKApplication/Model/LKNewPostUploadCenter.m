@@ -11,6 +11,7 @@
 #import "LKTag.h"
 #import "QNUploadOption.h"
 #import "LKPost.h"
+#import "LCUIImageCache.h"
 
 @implementation LKPosting
 
@@ -132,7 +133,13 @@
         if (result.state == LKHttpRequestStateFinished) {
             
             LKPost * post = [LKPost objectFromDictionary:result.json[@"data"]];
-
+            
+            NSData * data = UIImageJPEGRepresentation(posting.image, 1);
+            
+            NSString * fullPath = [LCUIImageCache.singleton.fileCache fileNameForKey:[post.content MD5]];
+            
+            [data writeToFile:fullPath atomically:YES];
+            
             [self finised:posting post:post];
         }
         else if(result.state == LKHttpRequestStateFailed){

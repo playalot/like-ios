@@ -145,10 +145,11 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
 - (UIImage *)snapshotFromParentmostViewController:(UIViewController *)viewController
 {
     UIViewController *presentingViewController = viewController.view.window.rootViewController;
+    
     while (presentingViewController.presentedViewController) presentingViewController = presentingViewController.presentedViewController;
     
-    UIGraphicsBeginImageContextWithOptions(presentingViewController.view.bounds.size, YES, [UIScreen mainScreen].scale);
-    [presentingViewController.view drawViewHierarchyInRect:presentingViewController.view.bounds afterScreenUpdates:YES];
+    UIGraphicsBeginImageContextWithOptions(LC_KEYWINDOW.bounds.size, YES, [UIScreen mainScreen].scale);
+    [LC_KEYWINDOW drawViewHierarchyInRect:LC_KEYWINDOW.bounds afterScreenUpdates:YES];
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     

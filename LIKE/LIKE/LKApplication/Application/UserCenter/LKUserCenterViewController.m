@@ -335,7 +335,6 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     
     
     self.tableView.tableHeaderView = tableViewHeader;
-    self.currentType = LKUserCenterModelTypePhotos;
     
     
     //
@@ -368,6 +367,12 @@ LC_PROPERTY(assign) BOOL isLocalUser;
             }
         }];
     };
+    
+    
+    self.currentType = LKUserCenterModelTypePhotos;
+
+    [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFocus uid:self.user.id];
+    [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFans uid:self.user.id];
 }
 
 #pragma mark - 

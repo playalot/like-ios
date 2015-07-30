@@ -28,6 +28,10 @@
 
 -(void) setTagValue:(LKTag *)tag
 {
+    if (self.tagString) {
+        return;
+    }
+    
     self.tagString = tag.tag;
     
     LCUIButton * button = LCUIButton.view;

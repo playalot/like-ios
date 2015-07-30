@@ -86,7 +86,7 @@ LC_PROPERTY(assign)  UIDeviceOrientation deviceOrientation;
     if ([notification is:LKCameraViewControllerDismiss]) {
         
         [self.navigationController popToRootViewControllerAnimated:NO];
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:NO completion:nil];
     }
     else if ([notification is:UIDeviceOrientationDidChangeNotification]){
         
@@ -336,6 +336,8 @@ LC_PROPERTY(assign)  UIDeviceOrientation deviceOrientation;
         LKImageCropperViewController * cropper = [[LKImageCropperViewController alloc] initWithImage:imageInfo[@"UIImagePickerControllerOriginalImage"]];
         
         cropper.squareImage = self.squareImage;
+        cropper.didFinishedPickImage = self.didFinishedPickImage;
+        
         [cropper showBackButton];
         
         [picker pushViewController:cropper animated:YES];

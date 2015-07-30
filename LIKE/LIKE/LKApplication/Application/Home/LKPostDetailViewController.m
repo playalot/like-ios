@@ -225,6 +225,7 @@ LC_PROPERTY(strong) UIView * blackMask;
         self.header.backgroundView.url = self.post.content;
         self.header.backgroundView.frame = CGRectMake(0, 0, size.width, size.height);
         self.header.maskView.backgroundColor = [UIColor clearColor];
+        self.header.backgroundView.autoMask = NO;
         
         SquareCashStyleBehaviorDefiner * behaviorDefiner = [[SquareCashStyleBehaviorDefiner alloc] init];
         [behaviorDefiner addSnappingPositionProgress:0.0 forProgressRangeStart:0.0 end:0.5];
@@ -1177,7 +1178,14 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     
     LKTag * tag = self.tagsListModel.tags[indexPath.row];
     
-    return [LKPostDetailCell height:tag];
+    CGFloat height = [LKPostDetailCell height:tag];
+    
+    if (indexPath.row == self.tagsListModel.tags.count - 1) {
+        
+        height += 5;
+    }
+    
+    return height;
 }
 
 //- (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath

@@ -34,6 +34,7 @@
 #import "Doppelganger.h"
 #import "LKBadgeView.h"
 
+
 #define FOCUS_FEED_CACHE_KEY [NSString stringWithFormat:@"LKFocusFeedKey-%@", LKLocalUser.singleton.user.id]
 
 typedef NS_ENUM(NSInteger, LKHomepageFeedType)
@@ -65,6 +66,7 @@ LC_PROPERTY(copy) NSString * next;
 LC_PROPERTY(copy) NSNumber * focusNext;
 LC_PROPERTY(assign) NSTimeInterval lastFocusLoadTime;
 
+LC_PROPERTY(assign) BOOL needRefresh;
 
 // - - - - - - -
 LC_PROPERTY(strong) LKSearchViewController * searchViewController;
@@ -317,7 +319,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
         
         [self setNavigationBarHidden:NO animated:YES];
         
-        LC_FAST_ANIMATIONS(0.25, ^{
+        LC_FAST_ANIMATIONS(UINavigationControllerHideShowBarDuration, ^{
             
             if (self.feedType == LKHomepageFeedTypeFocus) {
                 
@@ -331,7 +333,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
         
         LC_APPDELEGATE.tabBarController.assistiveTouchButton.hidden = NO;
         
-        LC_FAST_ANIMATIONS_F(0.25, ^{
+        LC_FAST_ANIMATIONS_F(UINavigationControllerHideShowBarDuration, ^{
             
             self.searchViewController.alpha = 0;
             
@@ -418,6 +420,8 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     
     self.inputView.didShow = ^(){
         
+        LC_APPDELEGATE.tabBarController.assistiveTouchButton.hidden = YES;
+        
         @normally(self);
         
         // scroll...
@@ -449,6 +453,11 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
         
         self.canResignFirstResponder = @(NO);
         [self performSelector:@selector(setCanResignFirstResponder:) withObject:@(YES) afterDelay:1];
+    };
+    
+    self.inputView.willDismiss = ^(id value){
+        
+        LC_APPDELEGATE.tabBarController.assistiveTouchButton.hidden = NO;
     };
     
     [self loadData:LCUIPullLoaderDiretionTop];
@@ -550,6 +559,11 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
                 [self scrollViewDidScroll:self.tableView];
             }
             else{
+                
+                if (self.notificationViewController) {
+                    
+                    LC_APPDELEGATE.tabBarController.assistiveTouchButton.hidden = NO;
+                }
                 
                 if (self.notificationViewController.fromType == LKHomepageFeedTypeMain) {
                     
@@ -680,19 +694,35 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
                 
                 post.user.likes = @(post.user.likes.integerValue + 1);
                 
-                cell.post = post;
                 
                 if (self.feedType == LKHomepageFeedTypeFocus) {
 
-                    [self.attentionViewController.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-                    
+                    [self.attentionViewController.tableView beginUpdates];
+                    cell.post = post;
+                    [self.attentionViewController.tableView endUpdates];
+
                 }
                 else{
                     
-                    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                    [self.tableView beginUpdates];
+                    cell.post = post;
+                    [self.tableView endUpdates];
                 }
                 
-                [cell newTagAnimation];
+                [cell newTagAnimation:^(BOOL finished) {
+                    
+//                    if (self.feedType == LKHomepageFeedTypeFocus) {
+//
+//                        [self.attentionViewController.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//
+//                    }
+//                    else{
+//
+//                        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//                    }
+                    
+                }];
+
             }
             
             // input view...
@@ -928,6 +958,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
         
         self.notificationViewController = notification;
         
+        LC_APPDELEGATE.tabBarController.assistiveTouchButton.hidden = YES;
         
         [UIView animateWithDuration:0.25 animations:^{
             
@@ -1111,7 +1142,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
         
         [self setNavigationBarHidden:YES animated:YES];
         
-        LC_FAST_ANIMATIONS(0.25, ^{
+        LC_FAST_ANIMATIONS(UINavigationControllerHideShowBarDuration, ^{
             
             if (self.feedType == LKHomepageFeedTypeFocus) {
                 
@@ -1190,6 +1221,10 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
     if (self.inputView.isFirstResponder) {
         
         [self.inputView resignFirstResponder];
+        return;
+    }
+    
+    if ([LKLoginViewController needLoginOnViewController:self.navigationController]) {
         return;
     }
     
@@ -1360,8 +1395,18 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
         
         if (scrollView.contentOffset.y < -80) {
             
-            [self loadData:LCUIPullLoaderDiretionTop];
+            self.needRefresh = YES;
         }
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    if (self.needRefresh) {
+        
+        [self loadData:LCUIPullLoaderDiretionTop];
+        
+        self.needRefresh = NO;
     }
 }
 

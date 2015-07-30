@@ -38,10 +38,15 @@ static LCUIApplication * __skeleton = nil;
 {
     if(self.window.rootViewController.presentedViewController){
         
-        [self.window.rootViewController.presentedViewController dismissViewControllerAnimated:NO completion:nil];
+        [self.window.rootViewController.presentedViewController dismissViewControllerAnimated:YES completion:^{
+            
+            [self.window.rootViewController presentViewController:viewController animated:animation completion:nil];
+        }];
     }
-    
-    [self.window.rootViewController presentViewController:viewController animated:animation completion:nil];
+    else{
+        
+        [self.window.rootViewController presentViewController:viewController animated:animation completion:nil];
+    }
 }
 
 #pragma mark -

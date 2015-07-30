@@ -185,7 +185,7 @@ LC_PROPERTY(strong) LCUIButton * doneButton;
             self.nameLabel.alpha = 0;
         });
         
-        LC_FAST_ANIMATIONS(0.25, ^{
+        LC_FAST_ANIMATIONS(UINavigationControllerHideShowBarDuration, ^{
            
             self.textField.viewFrameWidth = self.viewFrameWidth - self.doneButton.viewFrameWidth - 10;
             self.blurView.viewFrameWidth = self.textField.viewFrameWidth;
@@ -201,13 +201,15 @@ LC_PROPERTY(strong) LCUIButton * doneButton;
 
         });
     });
+    
+    self.clipsToBounds = NO;
 }
 
 -(void) endSearch
 {
     if (self.searchViewController.placeholderView.alpha != 0) {
         
-        LC_FAST_ANIMATIONS(0.25, ^{
+        LC_FAST_ANIMATIONS(UINavigationControllerHideShowBarDuration, ^{
             
             self.searchViewController.placeholderView.alpha = 0;
             self.searchViewController.placeholderView.searchString = @"";
@@ -228,7 +230,7 @@ LC_PROPERTY(strong) LCUIButton * doneButton;
         ((FXBlurView *)self.blurView).dynamic = YES;
     }
     
-    LC_FAST_ANIMATIONS_F(0.25, ^{
+    LC_FAST_ANIMATIONS_F(UINavigationControllerHideShowBarDuration, ^{
         
         self.textField.viewFrameWidth = self.viewFrameWidth - 10;
         self.blurView.viewFrameWidth = self.textField.viewFrameWidth;
@@ -256,6 +258,8 @@ LC_PROPERTY(strong) LCUIButton * doneButton;
         self.headImageView.alpha = 1;
         self.nameLabel.alpha = 1;
     });
+    
+    self.clipsToBounds = YES;
 }
 
 - (void)layoutHeaderViewForScrollViewOffset:(CGPoint)offset

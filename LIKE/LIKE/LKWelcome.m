@@ -14,27 +14,32 @@
 +(void) welcome
 {
     if (!LKLocalUser.singleton.isLogin) {
-        
+    
         LCUIImageView * imageView = LCUIImageView.view;
         imageView.image = [LKWelcome image];
         imageView.viewFrameWidth = LC_DEVICE_WIDTH;
         imageView.viewFrameHeight = LC_DEVICE_HEIGHT + 20;
         imageView.contentMode = UIViewContentModeScaleAspectFit;
-        
         [LC_KEYWINDOW addSubview:imageView];
         
         [LCUIApplication presentViewController:LKLoginViewController.viewController];
+
         
-        LC_FAST_ANIMATIONS_F(1.5, ^{
+        [UIView animateWithDuration:1.5 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
             
             imageView.transform = CGAffineTransformMakeScale(1.5, 1.5);
             imageView.alpha = 0;
             
-        }, ^(BOOL finished){
-            
+        } completion:^(BOOL finished) {
+           
             [imageView removeFromSuperview];
-        });
+
+        }];
     }
+}
+
+-(void) presentLoginViewController
+{
 }
 
 +(UIImage *) image

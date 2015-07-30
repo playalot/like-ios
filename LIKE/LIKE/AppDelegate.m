@@ -83,10 +83,6 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
     self.window.rootViewController = self.tabBarController;
     
 
-    // welcom...
-    [LKWelcome welcome];
-    
-    
     
     if (IOS8_OR_LATER) {
         
@@ -110,6 +106,33 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
         
         [self.home performSelector:@selector(notificationAction) withObject:nil afterDelay:0.5];
     }
+
+    
+    if (!LKLocalUser.singleton.isLogin) {
+
+    LCUIImageView * imageView = LCUIImageView.view;
+    imageView.image = [LKWelcome image];
+    imageView.viewFrameWidth = LC_DEVICE_WIDTH;
+    imageView.viewFrameHeight = LC_DEVICE_HEIGHT + 20;
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [LC_KEYWINDOW addSubview:imageView];
+    
+    [LCUIApplication presentViewController:LKLoginViewController.viewController];
+        
+        [UIView animateWithDuration:1.5 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+            
+            imageView.transform = CGAffineTransformMakeScale(1.5, 1.5);
+            imageView.alpha = 0;
+            
+        } completion:^(BOOL finished) {
+            
+            [imageView removeFromSuperview];
+            
+        }];
+    }
+
+//    // welcom...
+//    [LKWelcome welcome];
 }
 
 - (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window

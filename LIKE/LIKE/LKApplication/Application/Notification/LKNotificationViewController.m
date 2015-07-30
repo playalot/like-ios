@@ -14,6 +14,7 @@
 #import "LKUserCenterViewController.h"
 #import "AppDelegate.h"
 #import "FXBlurView.h"
+#import "LKAssistiveTouchButton.h"
 
 @interface LKNotificationViewController () <UITableViewDataSource,UITableViewDelegate>
 
@@ -72,7 +73,7 @@ LC_PROPERTY(strong) UIView * blur;
         
         [LKNotificationCount stopCheck];
         
-        [self buildUI];
+        [self buildUI];        
     }
     
     return self;

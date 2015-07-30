@@ -54,7 +54,7 @@ static NSString * __LKUserAddress = nil;
             
             if (!error) {
                 
-                __LKUserAddress = regeocode.addressComponent.province;
+                __LKUserAddress = regeocode.addressComponent.city.length ? regeocode.addressComponent.city : regeocode.addressComponent.province;
             }
             
         }];

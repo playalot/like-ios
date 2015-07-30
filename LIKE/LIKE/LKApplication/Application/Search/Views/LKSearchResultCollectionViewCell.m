@@ -78,15 +78,31 @@ LC_PROPERTY(strong) LCUILabel * likes;
         self.contentImage.contentMode = UIViewContentModeScaleAspectFill;
         self.contentImage.userInteractionEnabled = YES;
         [self.contentImage addTapGestureRecognizer:self selector:@selector(handleImageTapAction:)];
+        
         self.ADD(self.contentImage);
         
         
         self.backgroundColor = [UIColor whiteColor];
         self.cornerRadius = 2;
-        self.clipsToBounds = YES;
     }
     
     return self;
+}
+
++ (void)roundCorners:(UIRectCorner)corners forView:(UIView *)view
+{
+    UIBezierPath * maskPath = [UIBezierPath bezierPathWithRoundedRect:view.bounds
+                               
+                                                    byRoundingCorners:corners
+                               
+                                                          cornerRadii:CGSizeMake(2, 2)];
+    CAShapeLayer * maskLayer = [CAShapeLayer layer];
+    
+    maskLayer.frame = view.bounds;
+    
+    maskLayer.path = maskPath.CGPath;
+    
+    view.layer.mask = maskLayer;
 }
 
 -(void) setPost:(LKPost *)post
@@ -120,6 +136,9 @@ LC_PROPERTY(strong) LCUILabel * likes;
     self.contentImage.viewFrameHeight = size.height;
     self.contentImage.image = nil;
     self.contentImage.url = post.content;
+    
+    
+    [LKSearchResultCollectionViewCell roundCorners:UIRectCornerBottomLeft | UIRectCornerBottomRight forView:self.contentImage];
 }
 
 -(void) handleHeadTap:(UITapGestureRecognizer *)tap

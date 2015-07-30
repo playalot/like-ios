@@ -62,8 +62,20 @@ LC_PROPERTY(assign) NSInteger page;
 //    backButton.tag = 1002;
 //    [self addSubview:backButton];
 //
-//    
-    self.blur = LCUIBlurView.view;
+//
+    UIView * view = nil;
+
+//    if (IOS8_OR_LATER) {
+//        
+//        view = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
+//    }
+//    else{
+    
+        view = UIView.view;
+        view.backgroundColor = LC_RGB(231, 231, 231);
+//    }
+    
+    self.blur = view;
     self.blur.viewFrameY = 0;
     self.blur.viewFrameWidth = self.viewFrameWidth;
     self.blur.viewFrameHeight = self.viewFrameHeight;
@@ -78,7 +90,7 @@ LC_PROPERTY(assign) NSInteger page;
     self.scrollView.delegate = self;
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.showsVerticalScrollIndicator = NO;
-    self.blur.ADD(self.scrollView);
+    self.ADD(self.scrollView);
     
     
 //    self.searchBar = [[LKSearchBar alloc] initWithFrame:LC_RECT(backButton.viewRightX, 20 + (22 - 90 / 3 / 2), LC_DEVICE_WIDTH - backButton.viewFrameWidth - backButton.viewMidWidth, 30)];
@@ -112,7 +124,7 @@ LC_PROPERTY(assign) NSInteger page;
 
     
     self.hotTags = LKHotTagsSegmentView.view;
-    self.blur.ADD(self.hotTags);
+    self.ADD(self.hotTags);
     
     
     self.hotTags.itemDidLoad = ^(NSArray * value){

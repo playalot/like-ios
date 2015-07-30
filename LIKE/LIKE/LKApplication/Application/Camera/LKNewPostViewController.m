@@ -448,10 +448,11 @@ LC_PROPERTY(strong) NSString * locationName;
 
 -(void) dismissAction
 {
-    [self dismissViewControllerAnimated:NO completion:nil];
-
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
     [self postNotification:LKCameraViewControllerDismiss];
     [self postNotification:LKCameraRollViewControllerDismiss];
+    
 }
 
 -(void) dismissKeyboard

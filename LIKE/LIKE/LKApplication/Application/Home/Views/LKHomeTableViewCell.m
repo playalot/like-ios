@@ -289,7 +289,7 @@ LC_IMP_SIGNAL(PushPostDetail);
             return;
         }
         
-        [self newTagAnimation];
+        [self newTagAnimation:nil];
     };
     
     NSString * reason = [NSString stringWithFormat:@"RecommentReason%@", @(post.reason)];
@@ -311,7 +311,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     }
 }
 
--(void) newTagAnimation
+-(void) newTagAnimation:(void (^)(BOOL finished))completion
 {
     if (!self.blackMask) {
         
@@ -351,6 +351,9 @@ LC_IMP_SIGNAL(PushPostDetail);
             
             [label removeFromSuperview];
             
+            if (completion) {
+                completion(YES);
+            }
         }];
     }];
 
@@ -358,10 +361,10 @@ LC_IMP_SIGNAL(PushPostDetail);
 
 -(void) reloadTags
 {
-    //    LC_FAST_ANIMATIONS(1, ^{
-    //
-    //        [self.tagsView reloadDataAndRemoveAll:NO];
-    //    });
+//    LC_FAST_ANIMATIONS(1, ^{
+//
+//        [self.tagsView reloadDataAndRemoveAll:NO];
+//    });
 }
 
 

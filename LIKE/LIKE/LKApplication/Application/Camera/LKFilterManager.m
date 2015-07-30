@@ -39,6 +39,8 @@
 
 -(void) defaultSettings
 {
+    [self addImageFilter:@"GtaTrevor"];
+    [self addImageFilter:@"GtaFranklin"];
     [self addImageFilter:@"Vivid"];
     [self addImageFilter:@"Ansel"];
     [self addImageFilter:@"Instant"];

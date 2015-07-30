@@ -34,4 +34,6 @@ LC_PROPERTY(assign) BOOL roundMask;
 
 - (void) removeAllSubviews;
 
+- (void) drawImage:(UIImage *)image inRect:(CGRect)rect;
+
 @end

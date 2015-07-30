@@ -220,12 +220,12 @@ LC_PROPERTY(strong) UIView * blackMask;
         
         self.header = [[LKHomepageHeader alloc] initWithFrame:CGRectMake(0.0, 0, CGRectGetWidth(self.view.frame), size.height) maxHeight:size.height minHeight:44];
         self.header.clipsToBounds = YES;
+        self.header.backgroundView.autoMask = NO;
         self.header.scrollView = self.tableView;
         self.header.backgroundView.showIndicator = YES;
         self.header.backgroundView.url = self.post.content;
         self.header.backgroundView.frame = CGRectMake(0, 0, size.width, size.height);
         self.header.maskView.backgroundColor = [UIColor clearColor];
-        self.header.backgroundView.autoMask = NO;
         
         SquareCashStyleBehaviorDefiner * behaviorDefiner = [[SquareCashStyleBehaviorDefiner alloc] init];
         [behaviorDefiner addSnappingPositionProgress:0.0 forProgressRangeStart:0.0 end:0.5];

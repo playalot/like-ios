@@ -407,7 +407,7 @@ LCUIImageNamed IMAGE(NSString * imageName)
     //水印文字
     [maskImage drawInRect:rect];
     
-    UIImage *newPic = UIGraphicsGetImageFromCurrentImageContext();
+    UIImage * newPic = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
     return newPic;

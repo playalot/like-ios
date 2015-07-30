@@ -38,6 +38,8 @@ LC_PROPERTY(assign) NSInteger filterIndex;
 
 LC_PROPERTY(assign)  UIDeviceOrientation deviceOrientation;
 
+LC_PROPERTY(strong) UIView * gtaView;
+
 
 @end
 
@@ -97,26 +99,62 @@ LC_PROPERTY(assign)  UIDeviceOrientation deviceOrientation;
             switch (self.deviceOrientation){
                     
                 case UIDeviceOrientationPortrait:
-                    
+                {
                     self.fastCamera.view.viewFrameHeight = self.view.viewFrameWidth;
                     self.fastCamera.previewView.frame = self.fastCamera.view.bounds;
                     self.filterScrollView.viewFrameY = self.bottomView.viewFrameY - self.filterScrollView.viewFrameHeight;
                     
-                    [self viewTransformMakeRotation:@[self.flashButton, self.switchCameraButton, self.photosButton, self.finishedButton] rotation:0];
-                    break;
+                    NSMutableArray * array = [@[self.flashButton, self.switchCameraButton, self.photosButton] mutableCopy];
+
+                    if (self.gtaView) {
+                        [array addObject:self.gtaView];
+                        
+                        LC_FAST_ANIMATIONS(0.25, ^{
+                            
+                            self.gtaView.viewFrameX = 20;
+                            self.gtaView.viewFrameY = self.fastCamera.view.viewFrameHeight - self.gtaView.viewFrameHeight;
+                            
+                        });
+                    }
                     
+                    [self viewTransformMakeRotation:array rotation:0];
+                    break;
+                }
                 case UIDeviceOrientationLandscapeLeft:
                 case UIDeviceOrientationLandscapeRight:
-                    
+                {
                     self.fastCamera.view.viewFrameHeight = self.view.viewFrameWidth / 3 * 4;
                     self.fastCamera.previewView.frame = self.fastCamera.view.bounds;
                     self.filterScrollView.viewFrameY = self.bottomView.viewFrameY;
                     
                     CGFloat rotation = self.deviceOrientation == UIDeviceOrientationLandscapeLeft ? 90.f : -90.f;
                     
-                    [self viewTransformMakeRotation:@[self.flashButton, self.switchCameraButton, self.photosButton] rotation:(rotation * M_PI) / 180.0f];
-                    break;
+                    NSMutableArray * array = [@[self.flashButton, self.switchCameraButton, self.photosButton] mutableCopy];
                     
+                    if (self.gtaView) {
+                        
+                        [array addObject:self.gtaView];
+                        
+                        LC_FAST_ANIMATIONS(0.25, ^{
+                            
+                            if (self.deviceOrientation == UIDeviceOrientationLandscapeLeft) {
+
+                                self.gtaView.viewFrameX = 0;
+                                self.gtaView.viewFrameY = 20;
+                            
+                            }
+                            else{
+                                
+                                self.gtaView.viewFrameX = self.fastCamera.view.viewFrameWidth - self.gtaView.viewFrameWidth;
+                                self.gtaView.viewFrameY = self.fastCamera.view.viewFrameHeight - self.gtaView.viewFrameHeight- 20;
+                            }
+                        });
+                    }
+                    
+                    [self viewTransformMakeRotation:array rotation:(rotation * M_PI) / 180.0f];
+                    
+                    break;
+                }
                 default:
                     
                     break;
@@ -361,9 +399,22 @@ LC_PROPERTY(assign)  UIDeviceOrientation deviceOrientation;
 {
     self.filterIndex = index;
     
+    if (self.gtaView) {
+        [self.gtaView removeFromSuperview];
+        self.gtaView = nil;
+    }
+    
     if (index == 0) {
         self.fastCamera.filterImage = nil;
         return;
+    }
+    
+    if (self.filterIndex == 1 || self.filterIndex == 2) {
+        
+        self.gtaView = [[UIImageView alloc] initWithImage:self.filterIndex == 1 ? [UIImage imageNamed:@"Gta-driving.png" useCache:YES] : [UIImage imageNamed:@"Gta-walking.png" useCache:YES]];
+        self.gtaView.viewFrameX = 10;
+        self.gtaView.viewFrameY = self.fastCamera.view.viewFrameHeight - self.gtaView.viewFrameHeight - 10;
+        self.fastCamera.view.ADD(self.gtaView);
     }
     
     self.fastCamera.filterImage = LKFilterManager.singleton.allFilterImage[index - 1];
@@ -374,8 +425,6 @@ LC_PROPERTY(assign)  UIDeviceOrientation deviceOrientation;
 - (void)cameraController:(id<FastttCameraInterface>)cameraController didFinishCapturingImage:(FastttCapturedImage *)capturedImage
 {
     UIImage * image = capturedImage.fullImage;
- 
-    [LKPhotoAlbum saveImage:image showTip:NO];
     
     
     if (self.deviceOrientation == UIDeviceOrientationLandscapeLeft || self.deviceOrientation == UIDeviceOrientationLandscapeRight) {
@@ -383,7 +432,8 @@ LC_PROPERTY(assign)  UIDeviceOrientation deviceOrientation;
         image = [UIImage imageWithCGImage:image.CGImage scale:image.scale orientation:self.deviceOrientation == UIDeviceOrientationLandscapeLeft ? UIImageOrientationLeft : UIImageOrientationRight];
     }
     
-    
+    [LKPhotoAlbum saveImage:image showTip:NO];
+
     
     UIView *flashView = [UIView new];
     flashView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.5];

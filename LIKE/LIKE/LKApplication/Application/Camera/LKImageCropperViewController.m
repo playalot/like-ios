@@ -55,6 +55,8 @@ LC_PROPERTY(strong) UISlider * slider2;
 LC_PROPERTY(assign) NSInteger filterIndex;
 LC_PROPERTY(assign) BOOL magic;
 
+LC_PROPERTY(strong) UIView * gtaView;
+
 @end
 
 @implementation LKImageCropperViewController
@@ -313,6 +315,18 @@ LC_PROPERTY(assign) BOOL magic;
         
         UIImage * image = [self lookkupImageFilterWithImage:LKFilterManager.singleton.allFilterImage[i - 1] originImage:preview];
         
+        
+        if (i == 1 || i == 2) {
+            
+            CGFloat width = (245. / 1020.) * image.size.width * 1.5;
+            CGFloat height = width / 245 * 172.;
+            CGFloat padding = (30. / 1020.) * image.size.width;
+            
+            image = [image addMaskImage:self.filterIndex == 1 ? [UIImage imageNamed:@"Gta-driving.png" useCache:YES] : [UIImage imageNamed:@"Gta-walking.png" useCache:YES] imageSize:image.size inRect:CGRectMake(padding, image.size.height - height - padding, width, height)];
+        }
+
+        
+        
         [filterScrollView addFilterName:filterNames[i - 1] filterImage:image];
     }
     
@@ -459,6 +473,21 @@ LC_PROPERTY(assign) BOOL magic;
         if (self.filterIndex != 0) {
             
             image = [self lookkupImageFilterWithImage:LKFilterManager.singleton.allFilterImage[self.filterIndex - 1] originImage:self.originalImage];
+            
+            
+            if (self.gtaView) {
+                [self.gtaView removeFromSuperview];
+                self.gtaView = nil;
+            }
+            
+            if (self.filterIndex == 1 || self.filterIndex == 2) {
+                
+                CGFloat width = (245. / 1020.) * image.size.width;
+                CGFloat height = width / 245 * 172.;
+                CGFloat padding = (30. / 1020.) * image.size.width;
+                
+                image = [image addMaskImage:self.filterIndex == 1 ? [UIImage imageNamed:@"Gta-driving.png" useCache:YES] : [UIImage imageNamed:@"Gta-walking.png" useCache:YES] imageSize:image.size inRect:CGRectMake(padding, image.size.height - height - padding, width, height)];
+            }
         }
         
         if (self.magic) {

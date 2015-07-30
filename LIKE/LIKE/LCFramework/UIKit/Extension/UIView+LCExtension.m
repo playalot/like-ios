@@ -134,4 +134,12 @@
     }
 }
 
+- (void) drawImage:(UIImage *)image inRect:(CGRect)rect
+{
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSaveGState(context);
+    
+    
+}
+
 @end

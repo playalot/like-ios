@@ -251,7 +251,7 @@ LC_PROPERTY(strong) UICollectionView * collectionView;
         
         ALAsset * asset = self.datasource[indexPath.row - 1];
         
-        cell.image = [UIImage imageWithCGImage:asset.thumbnail scale:asset.defaultRepresentation.scale orientation:(UIImageOrientation)asset.defaultRepresentation.orientation];
+        cell.image = [UIImage imageWithCGImage:asset.thumbnail];
 
         return cell;
     }

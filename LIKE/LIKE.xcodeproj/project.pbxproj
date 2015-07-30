@@ -61,6 +61,10 @@
 		1357352B1B2EF44E0032515C /* QQLogin@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 135735281B2EF44E0032515C /* QQLogin@3x.png */; };
 		1357352D1B2EF44E0032515C /* WeiboLogin@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1357352A1B2EF44E0032515C /* WeiboLogin@3x.png */; };
 		1357352F1B2EFF2B0032515C /* WeChatLogin@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1357352E1B2EFF2B0032515C /* WeChatLogin@3x.png */; };
+		1359F49F1B6A237400A0ABE9 /* GtaTrevor.png in Resources */ = {isa = PBXBuildFile; fileRef = 1359F49D1B6A237400A0ABE9 /* GtaTrevor.png */; };
+		1359F4A01B6A237400A0ABE9 /* GtaFranklin.png in Resources */ = {isa = PBXBuildFile; fileRef = 1359F49E1B6A237400A0ABE9 /* GtaFranklin.png */; };
+		1359F4A31B6A24B800A0ABE9 /* Gta-driving@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1359F4A11B6A24B800A0ABE9 /* Gta-driving@3x.png */; };
+		1359F4A41B6A24B800A0ABE9 /* Gta-walking@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1359F4A21B6A24B800A0ABE9 /* Gta-walking@3x.png */; };
 		135CF64E1B37E52500DB24D6 /* CameraMagic@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 135CF64D1B37E52500DB24D6 /* CameraMagic@3x.png */; };
 		135D58321ADFB15100811B06 /* LKCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 135D58311ADFB15100811B06 /* LKCameraViewController.m */; };
 		135D586E1ADFC3B700811B06 /* LKFilterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 135D586D1ADFC3B700811B06 /* LKFilterManager.m */; };
@@ -826,6 +830,10 @@
 		135735281B2EF44E0032515C /* QQLogin@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "QQLogin@3x.png"; sourceTree = "<group>"; };
 		1357352A1B2EF44E0032515C /* WeiboLogin@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WeiboLogin@3x.png"; sourceTree = "<group>"; };
 		1357352E1B2EFF2B0032515C /* WeChatLogin@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WeChatLogin@3x.png"; sourceTree = "<group>"; };
+		1359F49D1B6A237400A0ABE9 /* GtaTrevor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GtaTrevor.png; sourceTree = "<group>"; };
+		1359F49E1B6A237400A0ABE9 /* GtaFranklin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GtaFranklin.png; sourceTree = "<group>"; };
+		1359F4A11B6A24B800A0ABE9 /* Gta-driving@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Gta-driving@3x.png"; sourceTree = "<group>"; };
+		1359F4A21B6A24B800A0ABE9 /* Gta-walking@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Gta-walking@3x.png"; sourceTree = "<group>"; };
 		135CF64D1B37E52500DB24D6 /* CameraMagic@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraMagic@3x.png"; sourceTree = "<group>"; };
 		135D58301ADFB15100811B06 /* LKCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKCameraViewController.h; sourceTree = "<group>"; };
 		135D58311ADFB15100811B06 /* LKCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKCameraViewController.m; sourceTree = "<group>"; };
@@ -2258,6 +2266,8 @@
 		135D5C081ADFD52C00811B06 /* FilterImage */ = {
 			isa = PBXGroup;
 			children = (
+				1359F4A11B6A24B800A0ABE9 /* Gta-driving@3x.png */,
+				1359F4A21B6A24B800A0ABE9 /* Gta-walking@3x.png */,
 				135D5C251AE0DA9700811B06 /* FilterPreview@3x.jpg */,
 				13D9BF1C1AEB997E0020C94F /* Ansel.png */,
 				13D9BF1D1AEB997E0020C94F /* Dawn.png */,
@@ -2268,6 +2278,8 @@
 				13D9BF221AEB997E0020C94F /* Midway.png */,
 				13D9BF231AEB997E0020C94F /* Pro.png */,
 				13D9BF241AEB997E0020C94F /* Vivid.png */,
+				1359F49D1B6A237400A0ABE9 /* GtaTrevor.png */,
+				1359F49E1B6A237400A0ABE9 /* GtaFranklin.png */,
 			);
 			path = FilterImage;
 			sourceTree = "<group>";
@@ -4647,6 +4659,7 @@
 				138EDE0F1AD7B0A30020957C /* LCGLBubbleEffect.fsh in Resources */,
 				13925A921B1477D2004D0656 /* NavBarIconSearch_white@2x.png in Resources */,
 				13478CB71B6636770012EDA2 /* LittleSP@3x.png in Resources */,
+				1359F4A31B6A24B800A0ABE9 /* Gta-driving@3x.png in Resources */,
 				135D5C061ADFD21E00811B06 /* CameraFlash@3x.png in Resources */,
 				138EDEFB1AD7DBA00020957C /* TabBarNotification@3x.png in Resources */,
 				135D5C281AE0E37800811B06 /* CameraFilter@3x.png in Resources */,
@@ -4670,6 +4683,7 @@
 				1377F03A1B5E1240008E21BC /* NotificationCommentIcon@3x.png in Resources */,
 				1387C3441B31508A00B065A7 /* FacebookLogin@3x.png in Resources */,
 				1388B4FE1B01EFFB006F36AB /* FocusLG@3x.png in Resources */,
+				1359F4A41B6A24B800A0ABE9 /* Gta-walking@3x.png in Resources */,
 				13F505151B0C5EAC00D8D484 /* WeChatFriendIcon@3x.png in Resources */,
 				1377F03C1B5E1240008E21BC /* NotificationLikeIcon@3x.png in Resources */,
 				1388B4F71B00C0DD006F36AB /* SettingHead@3x.png in Resources */,
@@ -4693,6 +4707,7 @@
 				13B6C19F1AE8FFBE008912C0 /* 1136.jpg in Resources */,
 				1387C3521B31703300B065A7 /* MobileIcon@3x.png in Resources */,
 				13DEEC191AE789E6005E01A6 /* LC_WebReload.png in Resources */,
+				1359F49F1B6A237400A0ABE9 /* GtaTrevor.png in Resources */,
 				135E8AA01B4511B900C2270C /* AMap.bundle in Resources */,
 				13E27EED1AF8A67200C17362 /* VisitorIcon@3x.png in Resources */,
 				138EDEF91AD7DAD20020957C /* TabBarCamera@3x.png in Resources */,
@@ -4702,6 +4717,7 @@
 				13E27EEB1AF89BDD00C17362 /* PhoneIcon@3x.png in Resources */,
 				13FCC0931ADF5E9C0008DB41 /* TagAdd@3x.png in Resources */,
 				13D9BF281AEB997E0020C94F /* Holga.png in Resources */,
+				1359F4A01B6A237400A0ABE9 /* GtaFranklin.png in Resources */,
 				13D9BF2A1AEB997E0020C94F /* Luna.png in Resources */,
 				1357352B1B2EF44E0032515C /* QQLogin@3x.png in Resources */,
 				13E27F0E1AFA1A4900C17362 /* HomeLikeIcon@3x.png in Resources */,

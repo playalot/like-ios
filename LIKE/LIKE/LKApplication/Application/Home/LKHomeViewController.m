@@ -286,6 +286,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     
     self.header.backgroundAction = ^(id value){
         
+        /*
         // upload cover.
         @normally(self);
         
@@ -300,6 +301,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
                 }
             }];
         }
+         */
         
     };
     
@@ -624,10 +626,10 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     }
     else if ([notification is:LKHomeViewControllerReloadingData]){
         
-        if (self.feedType == LKHomepageFeedTypeFocus) {
-            
-            [self handleNavigationBarButton:LCUINavigationBarButtonTypeLeft];
-        }
+//        if (self.feedType == LKHomepageFeedTypeFocus) {
+//            
+//            [self handleNavigationBarButton:LCUINavigationBarButtonTypeLeft];
+//        }
         
         [self loadData:LCUIPullLoaderDiretionTop];
     }
@@ -649,7 +651,65 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
 {
     @weakly(self);
     
+    
+    LKTag * tagValue = [[LKTag alloc] init];
+    tagValue.tag = tag;
+    tagValue.likes = @1;
+    tagValue.createTime = @([[NSDate date] timeIntervalSince1970]);
+    tagValue.isLiked = YES;
+    tagValue.user = LKLocalUser.singleton.user;
+    tagValue.id = @99999999;
+    
+    [post.tags insertObject:tagValue atIndex:0];
+    
+    
+    // reload tags...
+    [cell reloadTags];
+    
+    NSIndexPath * indexPath = nil;
+    
+    if (self.feedType == LKHomepageFeedTypeFocus) {
+        
+        indexPath = [self.attentionViewController.tableView indexPathForCell:cell];
+    }
+    else{
+        
+        indexPath = [self.tableView indexPathForCell:cell];
+    }
+    
+    
+    // reload row...
+    if (indexPath) {
+        
+        post.user.likes = @(post.user.likes.integerValue + 1);
+        
+        
+        if (self.feedType == LKHomepageFeedTypeFocus) {
+            
+            [self.attentionViewController.tableView beginUpdates];
+            cell.post = post;
+            [self.attentionViewController.tableView endUpdates];
+            
+        }
+        else{
+            
+            [self.tableView beginUpdates];
+            cell.post = post;
+            [self.tableView endUpdates];
+        }
+        
+        [cell newTagAnimation:^(BOOL finished) {
+            
+        }];
+        
+    }
+    
+    // input view...
     [self.inputView resignFirstResponder];
+    
+    //
+    self.inputView.textField.text = @"";
+    
     
     [LKTagAddModel addTagString:tag onPost:post requestFinished:^(LKHttpRequestResult *result, NSString *error) {
         
@@ -664,72 +724,10 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
             // insert...
             LKTag * tag = [LKTag objectFromDictionary:result.json[@"data"]];
             
-            if (!tag) {
-                
-                [self.inputView resignFirstResponder];
-                self.inputView.textField.text = @"";
+            if (tag) {
+                tagValue.id = tag.id;
                 return;
             }
-            
-            [post.tags insertObject:tag atIndex:0];
-            
-            
-            // reload tags...
-            [cell reloadTags];
-            
-            NSIndexPath * indexPath = nil;
-            
-            if (self.feedType == LKHomepageFeedTypeFocus) {
-                
-                indexPath = [self.attentionViewController.tableView indexPathForCell:cell];
-            }
-            else{
-                
-                indexPath = [self.tableView indexPathForCell:cell];
-            }
-            
-            
-            // reload row...
-            if (indexPath) {
-                
-                post.user.likes = @(post.user.likes.integerValue + 1);
-                
-                
-                if (self.feedType == LKHomepageFeedTypeFocus) {
-
-                    [self.attentionViewController.tableView beginUpdates];
-                    cell.post = post;
-                    [self.attentionViewController.tableView endUpdates];
-
-                }
-                else{
-                    
-                    [self.tableView beginUpdates];
-                    cell.post = post;
-                    [self.tableView endUpdates];
-                }
-                
-                [cell newTagAnimation:^(BOOL finished) {
-                    
-//                    if (self.feedType == LKHomepageFeedTypeFocus) {
-//
-//                        [self.attentionViewController.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-//
-//                    }
-//                    else{
-//
-//                        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-//                    }
-                    
-                }];
-
-            }
-            
-            // input view...
-            [self.inputView resignFirstResponder];
-            
-            //
-            self.inputView.textField.text = @"";
         }
         
     }];

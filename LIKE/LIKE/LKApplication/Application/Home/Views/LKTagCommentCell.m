@@ -88,7 +88,7 @@ LC_PROPERTY(strong) UIImageView * line;
     self.contentLabel.FIT();
     
     self.timeLabel.viewFrameY = self.contentLabel.viewBottomY + 3;
-    self.timeLabel.text = [NSString stringWithFormat:@"%@ %@ %@", [LKTime dateNearByTimestamp:comment.timestamp], comment.place ? LC_LO(@"来自") : @"", comment.place ? comment.place : @""];
+    self.timeLabel.text = [NSString stringWithFormat:@"%@ %@ %@", [LKTime dateNearByTimestamp:comment.timestamp], comment.place.length ? LC_LO(@"来自") : @"", comment.place.length ? comment.place : @""];
     self.timeLabel.FIT();
     
     

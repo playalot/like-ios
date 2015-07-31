@@ -411,6 +411,10 @@ LC_IMP_SIGNAL(PushPostDetail);
         
         return [UIImage imageNamed:@"LittleYouLike.png" useCache:YES];
     }
+    else if(type == 4){
+        
+        return [UIImage imageNamed:@"LittleFollowing.png" useCache:YES];
+    }
     
     return nil;
 }

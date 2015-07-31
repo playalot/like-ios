@@ -30,6 +30,7 @@
 #import "LKTagCommentsViewController.h"
 #import "LKTime.h"
 #import "LKPresentAnimation.h"
+#import "ADTickerLabel.h"
 
 @interface LKPostDetailViewController ()<UITableViewDataSource,UITableViewDelegate,JTSImageViewControllerDismissalDelegate,UINavigationControllerDelegate,UIViewControllerTransitioningDelegate>
 
@@ -41,6 +42,8 @@ LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
 
 LC_PROPERTY(strong) LCUIImageView * userHead;
 LC_PROPERTY(strong) LCUILabel * userName;
+LC_PROPERTY(strong) ADTickerLabel * userLikes;
+LC_PROPERTY(strong) LCUILabel * likesTip;
 LC_PROPERTY(strong) LCUILabel * postTime;
 
 
@@ -758,10 +761,33 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             self.userName.viewFrameWidth = LC_DEVICE_WIDTH - self.userName.viewFrameX - 75;
             self.userName.viewFrameHeight = 15;
             self.userName.textAlignment = UITextAlignmentLeft;
-            self.userName.font = LK_FONT(13);
-            self.userName.lineBreakMode = NSLineBreakByTruncatingMiddle;
+            self.userName.font = LK_FONT_B(13);
+            self.userName.lineBreakMode = NSLineBreakByTruncatingTail;
             self.userName.textColor = LC_RGB(51, 51, 51);
             configurationCell.ADD(self.userName);
+            
+            
+            self.userLikes = ADTickerLabel.view;
+            self.userLikes.viewFrameWidth = LC_DEVICE_WIDTH / 2 - 10 - 5;
+            self.userLikes.viewFrameHeight = LK_FONT(13).lineHeight;
+            self.userLikes.viewFrameY = self.userName.viewFrameY;
+            self.userLikes.font = LK_FONT(13);
+            self.userLikes.textAlignment = UITextAlignmentLeft;
+            self.userLikes.textColor = LC_RGB(51, 51, 51);
+            self.userLikes.changeTextAnimationDuration = 0.25;
+            configurationCell.ADD(self.userLikes);
+            
+            
+            self.likesTip = LCUILabel.view;
+            self.likesTip.font = LK_FONT(13);
+            self.likesTip.textAlignment = UITextAlignmentLeft;
+            self.likesTip.textColor = LC_RGB(51, 51, 51);
+            self.likesTip.text = @"likes";
+            self.likesTip.FIT();
+            self.likesTip.viewFrameY = self.userName.viewFrameY;
+            self.likesTip.viewFrameHeight = LK_FONT(13).lineHeight;
+            configurationCell.ADD(self.likesTip);
+            
             
             
             self.postTime = LCUILabel.view;
@@ -822,14 +848,23 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         
         
         self.userHead.url = self.post.user.avatar;
-        self.userName.text = LC_NSSTRING_FORMAT(@"%@ %@ likes", self.post.user.name, self.post.user.likes);
+        self.userName.text = self.post.user.name;
+        [self.userLikes setText:self.post.user.likes.description animated:NO];
         
-        NSMutableAttributedString * attString = [[NSMutableAttributedString alloc] initWithString:self.userName.text];
-        [attString addAttribute:NSFontAttributeName value:LK_FONT_B(13) range:[self.userName.text rangeOfString:self.post.user.name]];
+        CGSize likeSize = [self.userLikes.text sizeWithFont:LK_FONT(13) byWidth:200];
+
+        self.userLikes.viewFrameWidth = likeSize.width;
+        self.likesTip.FIT();
         
-        self.userName.attributedText = attString;
+        CGFloat maxWidth = LC_DEVICE_WIDTH - self.userName.viewFrameX - 75 - self.likesTip.viewFrameWidth - self.userLikes.viewFrameWidth - 15;
         
-        self.postTime.text = [NSString stringWithFormat:@"%@ %@ %@", [LKTime dateNearByTimestamp:self.post.timestamp], self.post.place ? LC_LO(@"来自") : @"", self.post.place ? self.post.place : @""];
+        self.userName.viewFrameWidth = 1000;
+        self.userName.FIT();
+        self.userName.viewFrameWidth = self.userName.viewFrameWidth > maxWidth ? maxWidth : self.userName.viewFrameWidth;
+        self.userLikes.viewFrameX = self.userName.viewRightX + 5;
+        self.likesTip.viewFrameX = self.userLikes. viewRightX + 5;
+        
+        self.postTime.text = [NSString stringWithFormat:@"%@ %@ %@", [LKTime dateNearByTimestamp:self.post.timestamp], self.post.place.length ? LC_LO(@"来自") : @"", self.post.place.length ? self.post.place : @""];
         
         return cell;
     }
@@ -867,12 +902,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
                 self.post.user.likes = @(self.post.user.likes.integerValue - 1);
             }
             
-            self.userName.text = LC_NSSTRING_FORMAT(@"%@ %@ likes", self.post.user.name, self.post.user.likes);
-            
-            NSMutableAttributedString * attString = [[NSMutableAttributedString alloc] initWithString:self.userName.text];
-            [attString addAttribute:NSFontAttributeName value:LK_FONT_B(13) range:[self.userName.text rangeOfString:self.post.user.name]];
-            
-            self.userName.attributedText = attString;
+            self.userLikes.text = self.post.user.likes.description;
         };
         
         cell.willRequest = ^(LKTagItem * item){

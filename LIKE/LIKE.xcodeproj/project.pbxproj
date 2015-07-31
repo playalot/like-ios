@@ -132,6 +132,7 @@
 		13892C3B1B1C31E40053303E /* HomepageIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13892C3A1B1C31E30053303E /* HomepageIcon@3x.png */; };
 		13892C3D1B1C44780053303E /* NavigationBarDismiss@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13892C3C1B1C44780053303E /* NavigationBarDismiss@3x.png */; };
 		13892C671B1DD2B50053303E /* MMMaterialDesignSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = 13892C661B1DD2B50053303E /* MMMaterialDesignSpinner.m */; };
+		138C84771B6B650C00C2AC62 /* LittleFollowing@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 138C84761B6B650C00C2AC62 /* LittleFollowing@3x.png */; };
 		138EDBF31AD7B08A0020957C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 138EDBF21AD7B08A0020957C /* main.m */; };
 		138EDBF61AD7B08A0020957C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 138EDBF51AD7B08A0020957C /* AppDelegate.m */; };
 		138EDBFC1AD7B08A0020957C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 138EDBFA1AD7B08A0020957C /* Main.storyboard */; };
@@ -943,6 +944,7 @@
 		13892C5C1B1DC4D40053303E /* MainInterface.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
 		13892C651B1DD2B50053303E /* MMMaterialDesignSpinner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMMaterialDesignSpinner.h; sourceTree = "<group>"; };
 		13892C661B1DD2B50053303E /* MMMaterialDesignSpinner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMMaterialDesignSpinner.m; sourceTree = "<group>"; };
+		138C84761B6B650C00C2AC62 /* LittleFollowing@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LittleFollowing@3x.png"; sourceTree = "<group>"; };
 		138EDBED1AD7B08A0020957C /* LIKE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LIKE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		138EDBF21AD7B08A0020957C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		138EDBF41AD7B08A0020957C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -4502,6 +4504,7 @@
 				13478CB51B6636770012EDA2 /* LittleSP@3x.png */,
 				13478CB61B6636770012EDA2 /* LittleYouLike@3x.png */,
 				13D549E61B61114B00D3CA2C /* LittleTag@3x.png */,
+				138C84761B6B650C00C2AC62 /* LittleFollowing@3x.png */,
 				1377F0361B5E1240008E21BC /* NotificationCommentIcon@3x.png */,
 				1377F0371B5E1240008E21BC /* NotificationFocusIcon@3x.png */,
 				1377F0381B5E1240008E21BC /* NotificationLikeIcon@3x.png */,
@@ -4666,6 +4669,7 @@
 				13E3EE041B60996000A48E76 /* zh2HK.txt in Resources */,
 				1388B4FD1B01EFFB006F36AB /* EachOtherFocusLG@3x.png in Resources */,
 				13DEEC141AE789E6005E01A6 /* LC_navbar_bg@2x.png in Resources */,
+				138C84771B6B650C00C2AC62 /* LittleFollowing@3x.png in Resources */,
 				1387C34B1B31643D00B065A7 /* SettingBinding@3x.png in Resources */,
 				139C737F1B553EC20051B2C3 /* __LKFilterConsole.xib in Resources */,
 				13925A951B1477D2004D0656 /* NavBarIconSearchCircle_blue@2x.png in Resources */,

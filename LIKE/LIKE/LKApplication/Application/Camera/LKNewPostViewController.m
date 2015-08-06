@@ -184,7 +184,7 @@ LC_PROPERTY(strong) NSString * locationName;
       
         @normally(self);
         
-        if ([self checkOnSelectedTags:item.tagString]) {
+        if ([self checkOnSelectedTags:item.tagValue.tag]) {
             
             [self showTopMessageErrorHud:LC_LO(@"该标签已经存在")];
         }

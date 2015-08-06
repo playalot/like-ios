@@ -29,5 +29,6 @@ LC_PROPERTY(copy) LKUserCenterModelRequestFinished requestFinished;
 
 -(NSMutableArray *) dataWithType:(LKUserCenterModelType)type;
 
+-(BOOL) canLoadMoreWithType:(LKUserCenterModelType)type;
 
 @end

@@ -78,12 +78,6 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
     self.home = [LKHomeViewController viewController];
     
     
-    self.tabBarController = [[LKTabBarController alloc] initWithViewControllers:@[LC_UINAVIGATION(self.home)]];
-    
-    self.window.rootViewController = self.tabBarController;
-    
-
-    
     if (IOS8_OR_LATER) {
         
         UIUserNotificationSettings * settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeAlert) categories:nil];
@@ -108,27 +102,39 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
     }
 
     
+    self.tabBarController = [[LKTabBarController alloc] initWithViewControllers:@[LC_UINAVIGATION(self.home)]];
+    
+    self.window.rootViewController = self.tabBarController;
+    
+    
     if (!LKLocalUser.singleton.isLogin) {
 
-    LCUIImageView * imageView = LCUIImageView.view;
-    imageView.image = [LKWelcome image];
-    imageView.viewFrameWidth = LC_DEVICE_WIDTH;
-    imageView.viewFrameHeight = LC_DEVICE_HEIGHT + 20;
-    imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [LC_KEYWINDOW addSubview:imageView];
-    
-    [LCUIApplication presentViewController:LKLoginViewController.viewController];
+
+        LCUIImageView * imageView = LCUIImageView.view;
+        imageView.image = [LKWelcome image];
+        imageView.viewFrameWidth = LC_DEVICE_WIDTH;
+        imageView.viewFrameHeight = LC_DEVICE_HEIGHT + 20;
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
+        [LC_KEYWINDOW addSubview:imageView];
         
-        [UIView animateWithDuration:1.5 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+        LKLoginViewController * login = LKLoginViewController.viewController;
+        [login view];
+        
+        [self.tabBarController presentViewController:login animated:NO completion:^{
             
-            imageView.transform = CGAffineTransformMakeScale(1.5, 1.5);
-            imageView.alpha = 0;
-            
-        } completion:^(BOOL finished) {
-            
-            [imageView removeFromSuperview];
-            
+            [UIView animateWithDuration:1.5 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+                
+                imageView.transform = CGAffineTransformMakeScale(1.5, 1.5);
+                imageView.alpha = 0;
+                
+            } completion:^(BOOL finished) {
+                
+                [imageView removeFromSuperview];
+                
+            }];
         }];
+        
+        
     }
 
 //    // welcom...

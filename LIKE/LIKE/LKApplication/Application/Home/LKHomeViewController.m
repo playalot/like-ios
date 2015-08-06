@@ -194,6 +194,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
         }
         
         [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index.integerValue inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+        
         [self performSelector:@selector(scrollViewScrollToTop) withObject:nil afterDelay:0.5];
     };
     
@@ -513,6 +514,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
                 self.attentionViewController.tableView.scrollsToTop = NO;
                 self.tableView.scrollsToTop = YES;
                 self.tableView.hidden = NO;
+                
                 [self.view bringSubviewToFront:self.tableView];
                 [self.view bringSubviewToFront:self.inputView];
                 
@@ -637,7 +639,10 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
 
 -(void) scrollViewScrollToTop
 {
-    [self.tableView setContentOffset:LC_POINT(0, 0) animated:YES];
+    LC_FAST_ANIMATIONS(0.25, ^{
+        
+        [self.tableView setContentOffset:LC_POINT(0, 0) animated:NO];
+    });
 }
 
 -(void) reloadData
@@ -933,15 +938,22 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
             self.titleView = [LCUIImageView viewWithImage:[UIImage imageNamed:@"HomeLikeIcon.png" useCache:YES]];
             self.titleView.alpha = 0;
             
-            LC_FAST_ANIMATIONS(0.25, ^{
+            left.userInteractionEnabled = NO;
+            right.userInteractionEnabled = NO;
+
+            [UIView animateWithDuration:0.25 animations:^{
                 
                 left.alpha = 1;
                 right.alpha = 1;
                 self.tableView.alpha = 1;
                 self.titleView.alpha = 1;
                 
-            });
-            
+            } completion:^(BOOL finished) {
+                
+                left.userInteractionEnabled = YES;
+                right.userInteractionEnabled = YES;
+                
+            }];
         });
     }
     else if (feedType == LKHomepageFeedTypeNotification){
@@ -980,12 +992,19 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
             self.titleView = header;
             self.titleView.alpha = 0;
             
-            LC_FAST_ANIMATIONS(0.25, ^{
+            left.userInteractionEnabled = NO;
+            
+            [UIView animateWithDuration:0.25 animations:^{
                 
                 left.alpha = 1;
                 notification.alpha = 1;
                 self.titleView.alpha = 1;
-            });
+                
+            } completion:^(BOOL finished) {
+                
+                left.userInteractionEnabled = YES;
+                
+            }];
         }];
         
         _feedType = feedType;
@@ -1026,7 +1045,9 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
             self.titleView = header;
             self.titleView.alpha = 0;
             
-            
+            left.userInteractionEnabled = NO;
+            right.userInteractionEnabled = NO;
+
             [UIView animateWithDuration:0.25 animations:^{
                 
                 left.alpha = 1;
@@ -1035,6 +1056,8 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
                 
             } completion:^(BOOL finished) {
                 
+                left.userInteractionEnabled = YES;
+                right.userInteractionEnabled = YES;
             }];
             
             [self scrollViewDidScroll:self.attentionViewController.tableView];
@@ -1153,6 +1176,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
                 self.tableView.viewFrameHeight += 64;
             }
         });
+        
         
         LC_APPDELEGATE.tabBarController.assistiveTouchButton.hidden = YES;
         

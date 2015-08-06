@@ -34,6 +34,7 @@ LC_IMP_SIGNAL(LKUploadingCellReupload);
     self.postImageView.viewFrameWidth = 33;
     self.postImageView.viewFrameHeight = 33;
     self.postImageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.postImageView.clipsToBounds = YES;
     self.ADD(self.postImageView);
     
     

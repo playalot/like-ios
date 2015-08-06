@@ -108,7 +108,7 @@ LC_IMP_SIGNAL(PushUserCenter);
     
     self.alpha = 0;
     
-    LC_FAST_ANIMATIONS(0.6, ^{
+    LC_FAST_ANIMATIONS(0.4, ^{
        
         self.alpha = 1;
     });

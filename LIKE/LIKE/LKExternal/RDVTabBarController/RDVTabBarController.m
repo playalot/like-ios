@@ -44,6 +44,7 @@
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     
     [self.view addSubview:[self contentView]];
@@ -51,11 +52,17 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    
     [super viewWillAppear:animated];
     
     [self setSelectedIndex:[self selectedIndex]];
     
     [self setTabBarHidden:self.isTabBarHidden animated:NO];
+}
+
+-(void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

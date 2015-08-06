@@ -15,6 +15,10 @@ LC_PROPERTY(assign) NSInteger photoPage;
 LC_PROPERTY(assign) NSInteger focusPage;
 LC_PROPERTY(assign) NSInteger fansPage;
 
+LC_PROPERTY(assign) BOOL photoCanLoadMore;
+LC_PROPERTY(assign) BOOL focusCanLoadMore;
+LC_PROPERTY(assign) BOOL fansCanLoadMore;
+
 @end
 
 @implementation LKUserCenterModel
@@ -23,6 +27,19 @@ LC_PROPERTY(assign) NSInteger fansPage;
 {
     [self cancelAllRequests];
 }
+
+-(instancetype) init
+{
+    if (self = [super init]) {
+        
+        self.photoCanLoadMore = YES;
+        self.focusCanLoadMore = YES;
+        self.fansCanLoadMore = YES;
+    }
+    
+    return self;
+}
+
 
 -(void) getDataAtFirstPage:(BOOL)isFirstPage type:(LKUserCenterModelType)type uid:(NSNumber *)uid
 {
@@ -58,7 +75,7 @@ LC_PROPERTY(assign) NSInteger fansPage;
         if (result.state == LKHttpRequestStateFinished) {
             
             [self handleResultWithType:type isFirstPage:isFirstPage result:result];
-            
+        
             [self setPageWithType:type page:page];
             
             if (self.requestFinished) {
@@ -73,6 +90,32 @@ LC_PROPERTY(assign) NSInteger fansPage;
         }
     }];
 
+}
+
+-(BOOL) canLoadMoreWithType:(LKUserCenterModelType)type
+{
+    switch (type) {
+        case LKUserCenterModelTypePhotos:
+            
+            return self.photoCanLoadMore;
+            
+            break;
+        case LKUserCenterModelTypeFocus:
+            
+            return self.focusCanLoadMore;
+            
+            break;
+        case LKUserCenterModelTypeFans:
+            
+            return self.fansCanLoadMore;
+            
+            break;
+        default:
+            
+            return YES;
+            
+            break;
+    }
 }
 
 -(void) handleResultWithType:(LKUserCenterModelType)type isFirstPage:(BOOL)isFirstPage result:(LKHttpRequestResult *)result
@@ -98,6 +141,12 @@ LC_PROPERTY(assign) NSInteger fansPage;
                 
                 [self.photoArray addObjectsFromArray:resultData];
             }
+            
+            if (datasource.count < 21) {
+                
+                self.photoCanLoadMore = NO;
+            }
+            
         }
             break;
         case LKUserCenterModelTypeFocus:
@@ -119,6 +168,11 @@ LC_PROPERTY(assign) NSInteger fansPage;
                 
                 [self.focusArray addObjectsFromArray:resultData];
             }
+            
+            if (datasource.count < 20) {
+                
+                self.focusCanLoadMore = NO;
+            }
         }
             break;
         case LKUserCenterModelTypeFans:
@@ -139,6 +193,11 @@ LC_PROPERTY(assign) NSInteger fansPage;
             else{
                 
                 [self.fansArray addObjectsFromArray:resultData];
+            }
+            
+            if (datasource.count < 20) {
+                
+                self.fansCanLoadMore = NO;
             }
         }
             break;

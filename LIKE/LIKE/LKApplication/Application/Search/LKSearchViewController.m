@@ -17,7 +17,7 @@
 
 @interface LKSearchViewController ()<UIScrollViewDelegate>
 
-LC_PROPERTY(strong) LCUIBlurView * blur;
+LC_PROPERTY(strong) UIView * blur;
 LC_PROPERTY(assign) UIViewController * inViewController;
 LC_PROPERTY(strong) LKSearchBar * searchBar;
 LC_PROPERTY(strong) UIScrollView * scrollView;
@@ -99,34 +99,11 @@ LC_PROPERTY(assign) NSInteger page;
 //    self.ADD(self.searchBar);
 
     
-    self.placeholderView = LKSearchPlaceholderView.view;
-    self.placeholderView.viewFrameWidth = self.viewFrameWidth;
-    self.placeholderView.viewFrameHeight = self.viewFrameHeight;
-    self.placeholderView.viewFrameY = 0;
-    self.placeholderView.alpha = 0;
-    self.ADD(self.placeholderView);
-
-    @weakly(self);
-
-    self.placeholderView.didTap = ^(){
-      
-        @normally(self);
-
-        [self.searchBar.searchField resignFirstResponder];
-    };
-    
-    self.placeholderView.didSelectRow = ^(NSString * tagString){
-        
-        LKSearchResultsViewController * search = [[LKSearchResultsViewController alloc] initWithSearchString:tagString];
-        
-        [LC_APPDELEGATE.home.navigationController pushViewController:search animated:YES];
-    };
-
-    
     self.hotTags = LKHotTagsSegmentView.view;
     self.ADD(self.hotTags);
     
-    
+    @weakly(self);
+
     self.hotTags.itemDidLoad = ^(NSArray * value){
         
         @normally(self);
@@ -150,6 +127,28 @@ LC_PROPERTY(assign) NSInteger page;
     
     
     [self.hotTags performSelector:@selector(loadHotTags) withObject:nil afterDelay:0];
+    
+    
+    self.placeholderView = LKSearchPlaceholderView.view;
+    self.placeholderView.viewFrameWidth = self.viewFrameWidth;
+    self.placeholderView.viewFrameHeight = self.viewFrameHeight;
+    self.placeholderView.viewFrameY = 0;
+    self.placeholderView.alpha = 0;
+    self.ADD(self.placeholderView);
+    
+    self.placeholderView.didTap = ^(){
+        
+        @normally(self);
+        
+        [self.searchBar.searchField resignFirstResponder];
+    };
+    
+    self.placeholderView.didSelectRow = ^(NSString * tagString){
+        
+        LKSearchResultsViewController * search = [[LKSearchResultsViewController alloc] initWithSearchString:tagString];
+        
+        [LC_APPDELEGATE.home.navigationController pushViewController:search animated:YES];
+    };
 }
 
 #pragma mark -
@@ -315,7 +314,7 @@ LC_PROPERTY(assign) NSInteger page;
     }
     
     
-    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"tag/guess/%@" ,searchString.URLCODE()]].AUTO_SESSION();
+    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"search/topsearch/%@" ,searchString.URLCODE()]].AUTO_SESSION();
     
     @weakly(self);
     
@@ -325,7 +324,18 @@ LC_PROPERTY(assign) NSInteger page;
         
         if (result.state == LKHttpRequestStateFinished) {
             
-            NSArray * array = result.json[@"data"];
+            NSArray * array0 = result.json[@"data"][@"users"];
+            
+            NSMutableArray * users = [NSMutableArray array];
+            
+            for (NSDictionary * dic in array0) {
+                
+                [users addObject:[LKUser objectFromDictionary:dic]];
+            }
+            
+            self.placeholderView.users = users;
+            
+            NSArray * array = result.json[@"data"][@"tags"];
             
             NSMutableArray * tags = [NSMutableArray array];
             

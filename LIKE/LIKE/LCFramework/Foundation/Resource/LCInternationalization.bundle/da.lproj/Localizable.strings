@@ -117,8 +117,8 @@
 "添加标签（最多12个字）" = "New tag (12-character limit)";
 
 // LKSearchPlaceHolderView
-"搜索" = "Related tags ";
-"相关内容" = " ";
+"搜索相关内容" = "Related tags \"%@\"";
+"搜索相关用户" = "Related users \"%@\"";
 "最近搜索过的标签" = "Search history";
 "  发现更多有趣内容" = "  Search & Explore";
 

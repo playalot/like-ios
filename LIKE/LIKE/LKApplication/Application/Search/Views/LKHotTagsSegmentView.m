@@ -25,7 +25,7 @@ LC_PROPERTY(strong) UIView * line;
         
         self.itemArray = [NSMutableArray array];
         
-        self.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.8];
+        self.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:1];
         self.alpha = 0;
     }
     
@@ -76,6 +76,7 @@ LC_PROPERTY(strong) UIView * line;
 {
     self.scrollView = UIScrollView.view;
     self.scrollView.frame = self.bounds;
+    self.scrollView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:1];
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.ADD(self.scrollView);
     

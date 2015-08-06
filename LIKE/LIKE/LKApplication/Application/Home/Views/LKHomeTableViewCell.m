@@ -93,7 +93,8 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.head.viewFrameY = 55 / 2 - 35 / 2 + 5;
     self.head.viewFrameWidth = 35;
     self.head.viewFrameHeight = 35;
-    self.head.cornerRadius = 35 / 2;
+    self.head.cornerRadius = 35. / 2.;
+    self.head.layer.shouldRasterize = NO;
     self.head.backgroundColor = LKColor.backgroundColor;
     self.head.userInteractionEnabled = YES;
     [self.head addTapGestureRecognizer:self selector:@selector(handleHeadTap:)];
@@ -144,6 +145,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.recommendedReason.buttonImage = [UIImage imageNamed:@"LittleTag" useCache:YES];
     self.recommendedReason.viewFrameHeight = LK_FONT(11).lineHeight;
     self.recommendedReason.viewFrameX = LC_DEVICE_WIDTH - self.recommendedReasonWithTag.viewFrameWidth - 15;
+    self.recommendedReason.titleEdgeInsets = UIEdgeInsetsMake(1, 0, 0, 0);
     self.ADD(self.recommendedReason);
     
     

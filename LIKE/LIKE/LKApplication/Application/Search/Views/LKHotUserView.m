@@ -32,6 +32,7 @@ LC_PROPERTY(strong) UIScrollView * scrollView;
         self.scrollView.backgroundColor = [UIColor whiteColor];
         self.scrollView.cornerRadius = 2;
         self.ADD(self.scrollView);
+        
     }
     
     return self;

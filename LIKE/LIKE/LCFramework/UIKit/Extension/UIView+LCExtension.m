@@ -87,6 +87,12 @@
         
         self.layer.masksToBounds = YES;
     }
+    else{
+        
+        self.layer.shouldRasterize = YES;
+        self.layer.rasterizationScale = [UIScreen mainScreen].scale; // or [UIScreen mainScreen]
+    }
+    
 }
 
 -(CGFloat) cornerRadius

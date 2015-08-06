@@ -63,7 +63,18 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     else{
         
         LKLoginViewController * login = LKLoginViewController.viewController;
-        [login view];
+        
+        
+        for (UIView * view in login.view.subviews) {
+
+            if (view != login.backgroundView) {
+
+                view.alpha = 0;
+            }
+        }
+
+        [login performSelector:@selector(beginAnimation) withObject:0 afterDelay:0.01];
+        
         
         login.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         
@@ -440,18 +451,6 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     
     
     [self setTheLocalAreaCode];
-    
-    
-    
-    for (UIView * view in self.view.subviews) {
-        
-        if (view != self.backgroundView) {
-            
-            view.alpha = 0;
-        }
-    }
-    
-    [self performSelector:@selector(beginAnimation) withObject:0 afterDelay:0.01];
 }
 
 -(void) chooseCountryCode

@@ -482,6 +482,8 @@ LC_PROPERTY(assign) BOOL isLocalUser;
 {
     _currentType = currentType;
     
+    self.pullLoader.canLoadMore = [self.userCenterModel canLoadMoreWithType:currentType];
+    
     [self loadData:currentType diretion:LCUIPullLoaderDiretionTop];
 }
 
@@ -504,6 +506,8 @@ LC_PROPERTY(assign) BOOL isLocalUser;
             
             [self showTopMessageErrorHud:error];;
         }
+        
+        self.pullLoader.canLoadMore = [self.userCenterModel canLoadMoreWithType:type];
     };
 }
 
@@ -521,7 +525,6 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
     [postDetail setPresendModelAnimationOpen];
 
     [self.navigationController presentViewController:nav animated:YES completion:nil];
-    
 }
 
 #pragma mark - 

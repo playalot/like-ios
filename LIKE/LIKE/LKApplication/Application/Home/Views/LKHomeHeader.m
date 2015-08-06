@@ -58,22 +58,26 @@ LC_PROPERTY(strong) LCUIButton * doneButton;
     
     
     
-//    if (IOS8_OR_LATER) {
-//        
-//        self.blurView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
-//        self.blurView.frame = CGRectMake(5, 5, self.viewFrameWidth - 10, 30);
-//        UIView * view = UIView.view.COLOR([[UIColor whiteColor] colorWithAlphaComponent:0.35]);
-//        view.frame = self.blurView.bounds;
-//        self.blurView.ADD(view);
-//    }
-//    else{
+    if (IOS8_OR_LATER) {
+        
+        self.blurView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
+        self.blurView.frame = CGRectMake(5, 5, self.viewFrameWidth - 10, 30);
+        self.blurView.cornerRadius = 4;
+        self.blurView.layer.shouldRasterize = NO;
+        self.blurView.layer.rasterizationScale = 1;
+        
+        UIView * view = UIView.view.COLOR([[UIColor whiteColor] colorWithAlphaComponent:0.15]);
+        view.frame = self.blurView.bounds;
+        ((UIVisualEffectView *)self.blurView).contentView.ADD(view);
+    }
+    else{
     
         self.blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(5, 5, self.viewFrameWidth - 10, 30)];
         ((FXBlurView *)self.blurView).blurRadius = 10;
-//    }
+        self.blurView.cornerRadius = 4;
+    }
     
     self.blurView.tintColor = [[UIColor whiteColor] colorWithAlphaComponent:0.15];
-    self.blurView.cornerRadius = 4;
     self.blurView.layer.masksToBounds = YES;
     self.ADD(self.blurView);
     
@@ -86,6 +90,7 @@ LC_PROPERTY(strong) LCUIButton * doneButton;
     self.searchTip.titleColor = [[UIColor blackColor] colorWithAlphaComponent:0.35];
     self.searchTip.title = LC_LO(@"  发现更多有趣内容");
     self.searchTip.buttonImage = searchIcon;
+    self.searchTip.titleEdgeInsets = UIEdgeInsetsMake(2, 0, 0, 0);
     [self.searchTip addTarget:self action:@selector(beginSearch) forControlEvents:UIControlEventTouchUpInside];
     self.ADD(self.searchTip);
 

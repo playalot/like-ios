@@ -227,11 +227,11 @@ LC_PROPERTY(assign) BOOL custom;
         return;
     }
     
-    CATransition * animation = [CATransition animation];
-    [animation setDuration:0.25];
-    [animation setType:kCATransitionFade];
-    [animation setSubtype:kCATransitionFromRight];
-    [self.layer addAnimation:animation forKey:@"transition"];
+//    CATransition * animation = [CATransition animation];
+//    [animation setDuration:0.25];
+//    [animation setType:kCATransitionFade];
+//    [animation setSubtype:kCATransitionFromRight];
+//    [self.layer addAnimation:animation forKey:@"transition"];
     
     _tagValue = tagValue;
     
@@ -331,6 +331,7 @@ LC_PROPERTY(strong) UIView * tipLine;
         [self removeAllSubviews];
     }
     
+    self.viewFrameHeight = 0;
     
     CGFloat topPadding = 12;
     CGFloat leftPadding = 12;

@@ -23,7 +23,7 @@
 //        self.ADD(view);
         
         
-        self.tintColor = [UIColor whiteColor];
+        self.backgroundColor = [UIColor whiteColor];
         self.viewFrameWidth = LC_DEVICE_WIDTH;
         self.viewFrameHeight = 44;
         

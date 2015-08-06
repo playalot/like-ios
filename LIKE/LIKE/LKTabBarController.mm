@@ -47,6 +47,7 @@
         tip.tag = 100;
         tip.translatesAutoresizingMaskIntoConstraints = NO;
         tip.alpha = 0;
+        tip.userInteractionEnabled = NO;
         [tip startAnimating];
 
         self.assistiveTouchButton.ADD(tip);

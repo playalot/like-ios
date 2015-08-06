@@ -55,6 +55,8 @@ LC_PROPERTY(strong) AFHTTPRequestOperation * bigImageRequestOperation;
 LC_PROPERTY(strong) LKPresentAnimation * animator;
 LC_PROPERTY(strong) UIView * blackMask;
 
+LC_PROPERTY(strong) LKShareTools * shareTools;
+
 @end
 
 @implementation LKPostDetailViewController
@@ -73,6 +75,7 @@ LC_PROPERTY(strong) UIView * blackMask;
     [super viewWillAppear:animated];
     
     [self setNavigationBarHidden:YES animated:animated];
+    
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:animated];
 
     
@@ -87,16 +90,6 @@ LC_PROPERTY(strong) UIView * blackMask;
 {
     [super viewDidAppear:animated];
     
-//    ((LCUINavigationController *)self.navigationController).animationHandler = ^id(UINavigationControllerOperation operation, UIViewController * fromVC, UIViewController * toVC){
-//        
-//        if (operation == UINavigationControllerOperationPop) {
-//            
-//            return [[LKPopAnimation alloc] init];
-//        }
-//        
-//        return nil;
-//    };
-    
     
     if (self.tableView.viewFrameY != 0) {
     
@@ -105,22 +98,15 @@ LC_PROPERTY(strong) UIView * blackMask;
         self.tableView.pop_spring.center = LC_POINT(self.tableView.viewCenterX, self.tableView.viewCenterY - 30);
         self.tableView.pop_spring.alpha = 1;
     }
-    
-    
-    if (!self.bigContentURL) {
-     
-        // Big image...
-        [self loadBigImage];
-    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     
-    //((LCUINavigationController *)self.navigationController).animationHandler = nil;
-    
     [self.inputView resignFirstResponder];
+    
+    [self.shareTools hideTools];
 }
 
 #pragma mark -
@@ -186,7 +172,13 @@ LC_PROPERTY(strong) UIView * blackMask;
         }
         else{
             
-            [self.tableView reloadData];
+            [self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.25];
+            
+            if (!self.bigContentURL) {
+                
+                // Big image...
+                [self performSelector:@selector(loadBigImage) withObject:nil afterDelay:0.25];
+            }
         }
     };
     
@@ -249,6 +241,8 @@ LC_PROPERTY(strong) UIView * blackMask;
         self.header.backgroundAction = ^(id value){
             
             @normally(self);
+
+            [self.shareTools hideTools];
             
             if (self.inputView.isFirstResponder) {
                 
@@ -691,7 +685,8 @@ LC_PROPERTY(strong) UIView * blackMask;
         LKTagCommentsViewController * comments = [[LKTagCommentsViewController alloc] initWithTag:tag];
         
         [comments showInViewController:self];
-        [comments inputBecomeFirstResponder];
+        
+        [comments performSelector:@selector(inputBecomeFirstResponder) withObject:nil afterDelay:0.5];
         
         [self hideMoreButton:YES];
         
@@ -802,18 +797,15 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             configurationCell.ADD(self.postTime);
             
             
-            LKShareTools * tools = LKShareTools.view;
-            tools.tag = 1003;
-            configurationCell.ADD(tools);
+            self.shareTools = LKShareTools.view;
+            configurationCell.ADD(self.shareTools);
             
         }];
         
         
-        LKShareTools * tools = cell.FIND(1003);
-        
         @weakly(self);
         
-        tools.willShow = ^(id value){
+        self.shareTools.willShow = ^(id value){
             
             @normally(self);
             
@@ -822,11 +814,13 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
                 self.userName.alpha = 0;
                 self.userHead.alpha = 0;
                 self.postTime.alpha = 0;
+                self.likesTip.alpha = 0;
+                self.userLikes.alpha = 0;
                 
             });
         };
         
-        tools.willHide = ^(id value){
+        self.shareTools.willHide = ^(id value){
             
             @normally(self);
             
@@ -835,11 +829,13 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
                 self.userName.alpha = 1;
                 self.userHead.alpha = 1;
                 self.postTime.alpha = 1;
+                self.likesTip.alpha = 1;
+                self.userLikes.alpha = 1;
                 
             });
         };
         
-        tools.willShareImage = ^UIImage *(NSInteger index){
+        self.shareTools.willShareImage = ^UIImage *(NSInteger index){
             
             @normally(self);
             
@@ -862,7 +858,10 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         self.userName.FIT();
         self.userName.viewFrameWidth = self.userName.viewFrameWidth > maxWidth ? maxWidth : self.userName.viewFrameWidth;
         self.userLikes.viewFrameX = self.userName.viewRightX + 5;
-        self.likesTip.viewFrameX = self.userLikes. viewRightX + 5;
+        
+        CGFloat width = [self.post.user.likes.description sizeWithFont:self.userLikes.font byWidth:1000].width;
+        
+        self.likesTip.viewFrameX = self.userLikes.viewFrameX + width + 5;
         
         self.postTime.text = [NSString stringWithFormat:@"%@ %@ %@", [LKTime dateNearByTimestamp:self.post.timestamp], self.post.place.length ? LC_LO(@"来自") : @"", self.post.place.length ? self.post.place : @""];
         
@@ -903,6 +902,15 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             }
             
             self.userLikes.text = self.post.user.likes.description;
+            
+            [UIView animateWithDuration:0.25 animations:^{
+               
+                CGFloat width = [self.post.user.likes.description sizeWithFont:self.userLikes.font byWidth:1000].width;
+                
+                self.likesTip.viewFrameX = self.userLikes.viewFrameX + width + 5;
+            }];
+            
+            [self.shareTools hideTools];
         };
         
         cell.willRequest = ^(LKTagItem * item){
@@ -960,6 +968,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             };
             
 
+            [self.shareTools hideTools];
         };
         
         
@@ -968,6 +977,8 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             
             @normally(self);
             
+            [self.shareTools hideTools];
+
             [self _beginComment:tag];
         };
         
@@ -976,6 +987,8 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         cell.replyAction = ^(LKTag * tag, LKComment * comment){
         
             @normally(self);
+
+            [self.shareTools hideTools];
 
             if(![LKLoginViewController needLoginOnViewController:self]){
                 
@@ -1005,6 +1018,8 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         cell.showMoreAction = ^(LKTag * tag){
           
             @normally(self);
+
+            [self.shareTools hideTools];
 
             if(![LKLoginViewController needLoginOnViewController:self]){
 
@@ -1233,6 +1248,8 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [self.shareTools hideTools];
+
     if (indexPath.section == 0) {
         
         [LKUserCenterViewController pushUserCenterWithUser:self.post.user navigationController:self.navigationController];

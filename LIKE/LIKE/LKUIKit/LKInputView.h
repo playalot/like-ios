@@ -13,7 +13,7 @@ LC_BLOCK(void, LKInputViewWillDismiss, (NSString * text));
 
 LC_BLOCK(void, LKInputViewDidShow, ());
 
-@interface LKInputView : LCUIBlurView
+@interface LKInputView : UIView
 
 LC_PROPERTY(copy) LKInputViewWillDismiss willDismiss;
 LC_PROPERTY(copy) LKInputViewSend sendAction;

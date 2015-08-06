@@ -16,4 +16,6 @@ LC_PROPERTY(copy) LKValueChanged willShow;
 LC_PROPERTY(copy) LKValueChanged willHide;
 LC_PROPERTY(copy) LKShareToolsShareImage willShareImage;
 
+-(void) hideTools;
+
 @end

@@ -285,7 +285,7 @@
         self.ADD(_indicator);
     }
     
-    [_indicator setProgress:0 animated:YES];
+    [_indicator setProgress:0 animated:NO];
     
     return _indicator;
 }
@@ -318,7 +318,7 @@
         
         LC_FAST_ANIMATIONS(0.15, ^{
             
-            self.indicator.alpha = 0;
+            _indicator.alpha = 0;
         });
         
         
@@ -352,7 +352,7 @@
         
         LC_FAST_ANIMATIONS(0.15, ^{
             
-            self.indicator.alpha = 0;
+            _indicator.alpha = 0;
         });
         
     }
@@ -369,7 +369,7 @@
     
         if (self.showIndicator) {
                         
-            [self.indicator setProgress:[object doubleValue] animated:YES];
+            [_indicator setProgress:[object doubleValue] animated:YES];
         }
     }
     

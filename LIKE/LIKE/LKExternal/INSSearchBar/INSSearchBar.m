@@ -86,10 +86,7 @@ static NSTimeInterval const kINSSearchBarAnimationStepDuration = 0.25;
 		self.searchFrame.backgroundColor = [UIColor clearColor];
 		self.searchFrame.opaque = NO;
 		self.searchFrame.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-		self.searchFrame.layer.masksToBounds = YES;
-		self.searchFrame.layer.cornerRadius = CGRectGetHeight(self.bounds) / 2;
-		self.searchFrame.layer.borderWidth = 0.5;
-		self.searchFrame.layer.borderColor = [UIColor clearColor].CGColor;
+		self.searchFrame.cornerRadius = CGRectGetHeight(self.bounds) / 2;
 		self.searchFrame.contentMode = UIViewContentModeRedraw;
 		
 		[self addSubview:self.searchFrame];

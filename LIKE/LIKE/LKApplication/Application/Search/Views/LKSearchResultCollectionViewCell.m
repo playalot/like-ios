@@ -84,6 +84,7 @@ LC_PROPERTY(strong) LCUILabel * likes;
         
         self.backgroundColor = [UIColor whiteColor];
         self.cornerRadius = 2;
+        self.layer.masksToBounds = YES;
     }
     
     return self;
@@ -138,7 +139,7 @@ LC_PROPERTY(strong) LCUILabel * likes;
     self.contentImage.url = post.content;
     
     
-    [LKSearchResultCollectionViewCell roundCorners:UIRectCornerBottomLeft | UIRectCornerBottomRight forView:self.contentImage];
+    //[LKSearchResultCollectionViewCell roundCorners:UIRectCornerBottomLeft | UIRectCornerBottomRight forView:self.contentImage];
 }
 
 -(void) handleHeadTap:(UITapGestureRecognizer *)tap

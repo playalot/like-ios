@@ -12,6 +12,7 @@
 #import "LKTime.h"
 #import "LKInputView.h"
 #import "LKLocationManager.h"
+#import "LCUIKeyBoard.h"
 
 @interface LKTagCommentsViewController () <UITableViewDataSource,UITableViewDelegate>
 
@@ -28,6 +29,8 @@ LC_PROPERTY(strong) LKUser * replyUser;
 LC_PROPERTY(strong) NSMutableArray * datasource;
 
 LC_PROPERTY(strong) LKLocationManager * locationManager;
+
+LC_PROPERTY(strong) NSNumber * canFirstResponder;
 
 @end
 
@@ -162,6 +165,29 @@ static NSString * __LKUserAddress = nil;
         
         self.replyUser = nil;
         self.inputView.textField.placeholder = LC_LO(@"发表评论（最多300个字）");
+        
+        [UIView animateWithDuration:0.25 animations:^{
+
+            self.tableView.viewFrameHeight = self.blur.viewFrameHeight - 44;
+            
+        }];
+    };
+    
+    self.inputView.didShow = ^(id value){
+        
+        @normally(self);
+        
+        self.canFirstResponder = @(NO);
+        
+        [UIView animateWithDuration:0.25 animations:^{
+           
+            self.tableView.viewFrameHeight = LC_DEVICE_HEIGHT + 20 - self.inputView.viewFrameHeight - [LCUIKeyBoard.singleton height] - 44;
+            
+        }];
+        
+        [self.tableView scrollToBottomAnimated:YES];
+        
+        [self performSelector:@selector(setCanFirstResponder:) withObject:@(YES) afterDelay:0.5];
     };
 }
 
@@ -239,6 +265,8 @@ static NSString * __LKUserAddress = nil;
     self.inputView.textField.text = @"";
     self.replyUser = nil;
     self.inputView.textField.placeholder = LC_LO(@"发表评论（最多300个字）");
+    
+
 
 }
 
@@ -483,7 +511,10 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
 
 -(void) scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [self.inputView resignFirstResponder];
+    if (self.canFirstResponder.boolValue) {
+        
+        [self.inputView resignFirstResponder];
+    }
 }
 
 @end

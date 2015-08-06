@@ -9,11 +9,14 @@
 #import <UIKit/UIKit.h>
 
 LC_BLOCK(void, LKSearchPlaceholderViewDidSelectRow, (NSString * tagString));
+LC_BLOCK(void, LKSearchPlaceholderViewDidSelectRow, (NSString * tagString));
 
 @interface LKSearchPlaceholderView : LCUITableView
 
 LC_PROPERTY(strong) NSArray * tags;
 LC_PROPERTY(copy) NSString * searchString;
 LC_PROPERTY(copy) LKSearchPlaceholderViewDidSelectRow didSelectRow;
+
+LC_PROPERTY(strong) NSArray * users;
 
 @end

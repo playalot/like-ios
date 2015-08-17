@@ -11,7 +11,9 @@
 #import <UIKit/UIKit.h>
 
 @interface LCUIViewController : UIViewController
-
+/**
+ *  是否是当前显示的控制器
+ */
 LC_PROPERTY(assign) BOOL isCurrentDisplayController;
 
 -(void) buildUI;

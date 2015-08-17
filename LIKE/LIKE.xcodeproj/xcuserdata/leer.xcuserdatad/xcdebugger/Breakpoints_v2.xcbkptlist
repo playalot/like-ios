@@ -163,29 +163,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "LIKE/AppDelegate.m"
-            timestampString = "455536527.314557"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "196"
-            endingLineNumber = "196"
-            landmarkName = "-application:openURL:sourceApplication:annotation:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "LIKE/LKApplication/Application/Camera/LKNewPostViewController.m"
             timestampString = "455426493.19551"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "282"
             endingLineNumber = "282"
-            landmarkName = "-finishIt"
+            landmarkName = "-buildUI"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -201,7 +185,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "286"
             endingLineNumber = "286"
-            landmarkName = "-finishIt"
+            landmarkName = "-buildUI"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -217,7 +201,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "319"
             endingLineNumber = "319"
-            landmarkName = "-post"
+            landmarkName = "-removeLocation"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -233,7 +217,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "329"
             endingLineNumber = "329"
-            landmarkName = "-post"
+            landmarkName = "-becomeFirstResponserAction"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

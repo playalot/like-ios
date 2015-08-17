@@ -49,6 +49,9 @@
     
 }
 
+/**
+ *  iOS6以后不再使用
+ */
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation{
     
     return NO;

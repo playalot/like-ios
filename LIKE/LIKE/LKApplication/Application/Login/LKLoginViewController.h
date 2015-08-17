@@ -9,9 +9,13 @@
 #import "LCUITableViewController.h"
 
 @interface LKLoginViewController : LCUITableViewController
-
-
+/**
+ *  当前window背景虚化
+ */
 -(void) currentWindowBlur:(UIViewController *)viewController;
+/**
+ *  是否需要登录
+ */
 +(BOOL) needLoginOnViewController:(UIViewController *)viewController;
 
 @end

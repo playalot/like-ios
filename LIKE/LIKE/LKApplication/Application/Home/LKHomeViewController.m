@@ -39,9 +39,9 @@
 
 typedef NS_ENUM(NSInteger, LKHomepageFeedType)
 {
-    LKHomepageFeedTypeMain,
-    LKHomepageFeedTypeFocus,
-    LKHomepageFeedTypeNotification,
+    LKHomepageFeedTypeMain,         // 主页
+    LKHomepageFeedTypeFocus,        // 关注页
+    LKHomepageFeedTypeNotification, // 通知页
 };
 
 @interface LKHomeViewController () <UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate>
@@ -1221,6 +1221,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
         return;
     }
     
+    // inputView（导航栏）注销第一响应者
     [self.inputView resignFirstResponder];
     
     if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){

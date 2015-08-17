@@ -20,30 +20,60 @@
 
 typedef NS_ENUM(NSInteger, LKOtherLoginType)
 {
-    LKOtherLoginTypeWechat = 0,
-    LKOtherLoginTypeWebo,
-    LKOtherLoginTypeQQ,
-    LKOtherLoginTypeFacebook,
+    LKOtherLoginTypeWechat = 0,     // 微信登录
+    LKOtherLoginTypeWeibo,           // 微博登录
+    LKOtherLoginTypeQQ,             // QQ登录
+    LKOtherLoginTypeFacebook,       // Facebook登录
 };
 
 @interface LKLoginViewController ()
-
+/**
+ *  时间戳
+ */
 LC_PROPERTY(assign) NSInteger timeInterval;
 
+/**
+ *  国家代号
+ */
 LC_PROPERTY(strong) LCUILabel * countryCode;
+/**
+ *  国家名称
+ */
 LC_PROPERTY(strong) LCUILabel * countryName;
+/**
+ *  电话号码输入框
+ */
 LC_PROPERTY(strong) LCUITextField * phoneField;
+/**
+ *  验证码输入框
+ */
 LC_PROPERTY(strong) LCUITextField * codeField;
+/**
+ *  获取验证码按钮
+ */
 LC_PROPERTY(strong) LCUIButton * codeButton;
+/**
+ *  登录按钮
+ */
 LC_PROPERTY(strong) LCUIButton * loginButton;
+/**
+ *  遮罩层
+ */
 LC_PROPERTY(strong) LCUIButton * maskView;
 
 LC_PROPERTY(strong) NSString * sesstionToken;
 LC_PROPERTY(strong) NSString * refreshToken;
+/**
+ *  过期日期
+ */
 LC_PROPERTY(strong) NSNumber * expiresIn;
-
+/**
+ *  用户信息模型
+ */
 LC_PROPERTY_MODEL(LKUserInfoModel, userInfoModel);
-
+/**
+ *  背景图
+ */
 LC_PROPERTY(strong) LCUIImageView * backgroundView;
 
 @end
@@ -64,7 +94,6 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
         
         LKLoginViewController * login = LKLoginViewController.viewController;
         
-        
         for (UIView * view in login.view.subviews) {
 
             if (view != login.backgroundView) {
@@ -75,9 +104,9 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
 
         [login performSelector:@selector(beginAnimation) withObject:0 afterDelay:0.01];
         
-        
+        // 弹出时的动画风格为交叉溶解风格
         login.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-        
+        // 背景虚化
         [login currentWindowBlur:viewController];
         
         [[LCUIApplication sharedInstance] presentViewController:login animation:YES];
@@ -90,6 +119,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
 {
     if (self = [super init]) {
         
+        // 弹出时的动画风格为交叉溶解风格
         self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     }
     
@@ -214,33 +244,30 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
         [self.codeField resignFirstResponder];
     };
     
-    
-    
+    // 背景视图
     self.backgroundView = [LCUIImageView viewWithImage:[[LKWelcome image] imageWithBlurValue:15]];
     self.backgroundView.viewFrameWidth = LC_DEVICE_WIDTH * 1.5;
     self.backgroundView.viewFrameHeight = (LC_DEVICE_HEIGHT + 20) * 1.5;
     self.backgroundView.center = self.view.center;
     self.view.ADD(self.backgroundView);
     
-    
+    // 遮罩层
     UIView * mask = UIView.view.COLOR([[UIColor blackColor] colorWithAlphaComponent:0.35]);
     mask.frame = self.backgroundView.bounds;
     self.backgroundView.ADD(mask);
     
-    
+    // like logo
     LCUIImageView * icon = [LCUIImageView viewWithImage:UIImage.IMAGE(@"LikeIcon.png")];
     icon.viewFrameX = self.view.viewMidWidth - icon.viewMidWidth;
     icon.viewFrameY = 50;
     self.view.ADD(icon);
-    
-    
     
     // country.
     UIView * countryBack = UIView.view.Y(icon.viewBottomY + 30).WIDTH(LC_DEVICE_WIDTH).HEIGHT(35).COLOR([[UIColor whiteColor] colorWithAlphaComponent:0.05]);
     [countryBack addTapGestureRecognizer:self selector:@selector(chooseCountryCode)];
     self.view.ADD(countryBack);
     
-    
+    // 实质上就是创建label设置frame并添加到view中
     self.countryCode = LCUILabel.view;
     self.countryCode.viewFrameWidth = 80;
     self.countryCode.viewFrameHeight = countryBack.viewFrameHeight;
@@ -249,7 +276,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     self.countryCode.textAlignment = UITextAlignmentCenter;
     countryBack.ADD(self.countryCode);
     
-    
+    // 添加国家名称
     self.countryName = LCUILabel.view;
     self.countryName.viewFrameX = self.countryCode.viewRightX + 30;
     self.countryName.viewFrameWidth = 200;
@@ -258,7 +285,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     self.countryName.textColor = [[UIColor whiteColor] colorWithAlphaComponent:0.6];
     countryBack.ADD(self.countryName);
     
-    
+    // 更多国家
     LCUIImageView * countryMore = [LCUIImageView viewWithImage:[[[UIImage imageNamed:@"PullLoaderSmallArrow.png" useCache:YES] imageWithTintColor:LKColor.color] scaleToWidth:15]];
     countryMore.viewFrameY = countryBack.viewMidHeight - countryMore.viewMidHeight;
     countryMore.viewFrameX = LC_DEVICE_WIDTH - countryMore.viewFrameWidth - 15;
@@ -275,9 +302,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     phoneIcon.viewFrameY = phoneBack.viewMidHeight - phoneIcon.viewMidHeight;
     phoneBack.ADD(phoneIcon);
     
-    
     self.countryCode.viewCenterX = phoneIcon.viewCenterX;
-    
     
     self.phoneField = LCUITextField.view;
     self.phoneField.viewFrameY = 0;
@@ -301,9 +326,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
         return YES;
     };
     
-    
     self.countryName.viewFrameX = self.phoneField.viewFrameX;
-    
     
     // code.
     UIView * codeBack = UIView.view.Y(phoneBack.viewBottomY + 1).WIDTH(LC_DEVICE_WIDTH).HEIGHT(40).COLOR([[UIColor whiteColor] colorWithAlphaComponent:0.05]);
@@ -338,7 +361,6 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
         return YES;
     };
     
-    
     self.codeButton = LCUIButton.view;
     self.codeButton.viewFrameWidth = 100;
     self.codeButton.viewFrameHeight = 40;
@@ -349,7 +371,6 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     self.codeButton.showsTouchWhenHighlighted = YES;
     [self.codeButton addTarget:self action:@selector(getCode) forControlEvents:UIControlEventTouchUpInside];
     codeBack.ADD(self.codeButton);
-    
     
     // login.
     self.loginButton = LCUIButton.view;
@@ -366,9 +387,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     [self.loginButton addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
     self.view.ADD(self.loginButton);
     
-    
-    
-    
+    // 用户使用协议
     LCUILabel * agreement = LCUILabel.view;
     agreement.viewFrameY = self.loginButton.viewBottomY + 20;
     agreement.viewFrameWidth = self.view.viewFrameWidth;
@@ -381,8 +400,6 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     [agreement addTapGestureRecognizer:self selector:@selector(agreement)];
     self.view.ADD(agreement);
     
-    
-    
     // third login.
     LCUILabel * thirdLoginTip = LCUILabel.view;
     thirdLoginTip.font = LK_FONT(10);
@@ -393,7 +410,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     thirdLoginTip.viewCenterY = self.view.viewFrameHeight - 115;
     self.view.ADD(thirdLoginTip);
     
-    
+    // 第三方登录图片
     NSMutableArray * loginImages = [NSMutableArray array];
     
     if ([WXApi isWXAppInstalled]) {
@@ -405,7 +422,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
         
         [loginImages addObject:@"WeiboLogin"];
     }
-    
+    // 若安装了微博,默认会显示Facebook
     if ([WeiboSDK isWeiboAppInstalled]) {
         
         [loginImages addObject:@"FacebookLogin"];
@@ -428,7 +445,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
         
     }
     
-    
+    // 游客访问
     LCUIButton * visitor = LCUIButton.view;
     visitor.viewFrameWidth = 100;
     visitor.viewCenterX = self.view.viewMidWidth - 15;
@@ -442,17 +459,20 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     visitor.imageEdgeInsets = UIEdgeInsetsMake(0, 80, 0, 0);
     self.view.ADD(visitor);
     
-    
+    // 用button添加一个遮罩层
     self.maskView = LCUIButton.view;
     self.maskView.viewFrameWidth = LC_DEVICE_WIDTH;
     self.maskView.viewFrameHeight = LC_DEVICE_HEIGHT + 20;
     self.maskView.hidden = YES;
     self.view.ADD(self.maskView);
     
-    
+    // 设置本地化地区代码
     [self setTheLocalAreaCode];
 }
 
+/**
+ *  选择国家代号
+ */
 -(void) chooseCountryCode
 {
     LKCountryCodeViewController * countryCode = [LKCountryCodeViewController viewController];
@@ -472,6 +492,9 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     [self presentViewController:LC_UINAVIGATION(countryCode) animated:YES completion:nil];
 }
 
+/**
+ *  设置本地化地区代码
+ */
 -(void)setTheLocalAreaCode
 {
     NSLocale * locale = [NSLocale currentLocale];
@@ -553,22 +576,29 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     
 }
 
-
+/**
+ *  dismiss modal出的登录控制器
+ */
 -(void) dismissAction
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+/**
+ *  用户使用协议
+ */
 -(void) agreement
 {
     LCUIWebViewController * web = [[LCUIWebViewController alloc] initWithURL:[NSURL URLWithString:@"http://terms.likeorz.com"]];
     [self presentViewController:LC_UINAVIGATION(web) animated:YES completion:nil];
     
-    
+    // UIBarMetricsDefault：用竖着（拿手机）时UINavigationBar的标准的尺寸来显示UINavigationBar
     [web.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
-    
 }
 
+/**
+ *  获取验证码
+ */
 -(void) getCode
 {
     if (![self $check:YES]) {
@@ -609,6 +639,9 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     }];
 }
 
+/**
+ *  登录主界面
+ */
 -(void) login
 {
     if (![self $check:NO]) {
@@ -653,6 +686,9 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     }];
 }
 
+/**
+ *  第三方登录
+ */
 -(void) otherLogin:(UIView *)view
 {
     @weakly(self);
@@ -683,7 +719,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
             
             if (!error) {
                 
-                [self loginWithUID:uid accessToken:accessToken nick:@"" type:LKOtherLoginTypeWebo];
+                [self loginWithUID:uid accessToken:accessToken nick:@"" type:LKOtherLoginTypeWeibo];
             }
             else{
                 
@@ -713,11 +749,19 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     };
 }
 
+/**
+ *  给定uid/accessToken/nick/type进行第三方登录操作
+ *
+ *  @param uid         用户身份证明
+ *  @param accessToken 访问令牌
+ *  @param nick        昵称
+ *  @param type        登录的账户类型
+ */
 -(void) loginWithUID:(NSString *)uid accessToken:(NSString *)accessToken nick:(NSString *)nick type:(LKOtherLoginType)type
 {
     NSString * typeString = @"";
     
-    if (type == LKOtherLoginTypeWebo) {
+    if (type == LKOtherLoginTypeWeibo) {
         typeString = @"weibo";
     }
     else if (type == LKOtherLoginTypeWechat){
@@ -731,9 +775,9 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     
     [interface addParameter:uid key:@"uid"];
     [interface addParameter:accessToken key:@"access_token"];
+    // 对时间戳进行编码
     [interface addParameter:[LKTimestampEncryption encryption:[[NSDate date] timeIntervalSince1970]] key:@"token"];
     [interface addParameter:nick key:@"nickname"];
-    
     
     @weakly(self);
     
@@ -773,6 +817,9 @@ LC_HANDLE_TIMER(timer)
     }
 }
 
+/**
+ *  获取验证码开始计时
+ */
 -(void) $beginTimer
 {
     self.timeInterval = 60;
@@ -783,7 +830,9 @@ LC_HANDLE_TIMER(timer)
     [self fireTimer:@"CodeTimer" timeInterval:1 repeat:YES];
 }
 
-
+/**
+ *  重置计时
+ */
 -(void) $restoreTimer
 {
     self.codeButton.userInteractionEnabled = YES;
@@ -791,6 +840,9 @@ LC_HANDLE_TIMER(timer)
     [self cancelAllTimers];
 }
 
+/**
+ *  检查格式是否正确
+ */
 -(BOOL) $check:(BOOL)codeOrLogin
 {
     [self.phoneField resignFirstResponder];

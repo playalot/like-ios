@@ -260,6 +260,9 @@ LC_PROPERTY(assign) NSInteger timeInterval;
     }];
 }
 
+/**
+ *  获取验证码
+ */
 -(void) getCode
 {
     if (![self $check:YES]) {

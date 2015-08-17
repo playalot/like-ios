@@ -28,7 +28,9 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
 
 @implementation AppDelegate
 
-
+/**
+ *  应用程序启动就会调用此方法
+ */
 -(void) load:(NSDictionary *)launchOptions
 {
     [MAMapServices sharedServices].apiKey = @"4c0db296d4f4d092fdaa9004ee8c959a";
@@ -68,10 +70,13 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
     [LCCMD addObjectCMD:@"refreshtoken" CMDType:LC_CMD_TYPE_SEE IMPObject:self CMDDescription:@"Refresh token."];
 
     
-    
+    // 会话错误通知
     [self observeNotification:LKSessionError];
+    // 应用程序远程登录通知
     [self observeNotification:LCUIApplicationDidRegisterRemoteNotification];
+    // 应用程序远程登录失败通知
     [self observeNotification:LCUIApplicationDidRegisterRemoteFailNotification];
+    // 应用程序接收到远程通知
     [self observeNotification:LCUIApplicationDidReceiveRemoteNotification];
     
     
@@ -80,6 +85,7 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
     
     if (IOS8_OR_LATER) {
         
+        // 若系统为iOS 8以后的版本,需要注册通知
         UIUserNotificationSettings * settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeAlert) categories:nil];
         
         [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
@@ -91,7 +97,7 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
     }
     
-    
+    // Please notify the application each time the orientation is changed.
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     
     
@@ -101,7 +107,7 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
         [self.home performSelector:@selector(notificationAction) withObject:nil afterDelay:0.5];
     }
 
-    
+    // tabbarCtrl只放了一个主页控制器
     self.tabBarController = [[LKTabBarController alloc] initWithViewControllers:@[LC_UINAVIGATION(self.home)]];
     
     self.window.rootViewController = self.tabBarController;
@@ -141,11 +147,17 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
 //    [LKWelcome welcome];
 }
 
+/**
+ *  禁止屏幕转向
+ */
 - (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
 {
     return UIInterfaceOrientationMaskPortrait;
 }
 
+/**
+ *  获取当前的控制器
+ */
 - (UIViewController *) getCurrentViewController
 {
     UIViewController * result = nil;
@@ -178,21 +190,32 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
     return result;
 }
 
+/**
+ *  应用程序已经进入后台的时候调用
+ */
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     [self cancelAllTimers];
     
+    // 重置进入后台时间
     self.enterBackgroundTimeInterval = 0;
     
+    // 启动定时器
     [self fireTimer:@"Timing" timeInterval:1 repeat:YES];
 }
 
+/**
+ *  应用程序将要进入前台的时候调用
+ */
 -(void) applicationWillEnterForeground:(UIApplication *)application
 {
+    // 取消所有的定时器操作
     [self cancelAllTimers];
     
+    // 是否登录
     if (LKLocalUser.singleton.isLogin) {
      
+        // 是否过期
         if (LKLocalUser.singleton.expiresIn) {
             
             // 判断是否授权过期
@@ -202,24 +225,31 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
             
             if (nowInterval - beforeInterval < 86400 * 2) {
                 
+                // 过期,重新登录,并设置badge
                 [LKLocalUser regetSessionTokenAndUseLoadingTip:NO];
             }
         }
         
+        // 检查通知数量
         [LKNotificationCount startCheck];
     }
     
     if (self.enterBackgroundTimeInterval > 60 * 5) {
         
+        // 进入后台超过5分钟,发送重新加载数据的通知
         [self postNotification:LKHomeViewControllerReloadingData];
     }
 }
 
+/**
+ *  进入后台时间累加1s
+ */
 -(void) handleTimer:(NSTimer *)timer
 {
     self.enterBackgroundTimeInterval += 1.0;
 }
 
+#pragma mark - ***** LC_CMD_IMP *****
 -(NSString *) CMDSee:(NSString *)cmd
 {
     if ([cmd isEqualToString:@"session"]) {
@@ -238,6 +268,9 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
     return @"";
 }
 
+/**
+ *  根据通知类型处理对应的操作
+ */
 -(void) handleNotification:(NSNotification *)notification
 {
     if ([notification is:LKSessionError]) {
@@ -266,6 +299,7 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
             
             [self request:interface complete:^(LKHttpRequestResult * result) {
                 
+                // TODO
             }];
 
         }
@@ -278,6 +312,16 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
     }
 }
 
+/**
+ *  应用回调时调用此方法
+ *
+ *  @param application       应用程序
+ *  @param url               url
+ *  @param sourceApplication 源应用程序
+ *  @param annotation        注释
+ *
+ *  @return YES
+ */
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
     [QQApiInterface handleOpenURL:url delegate:nil];
@@ -294,14 +338,18 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
     return YES;
 }
 
+/**
+ *  接收到远程通知的时候调用
+ */
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     [super application:application didReceiveRemoteNotification:userInfo];
     
+    // 判断是否是活动状态
     if ( application.applicationState == UIApplicationStateActive ){
         // app was already in the foreground
     }else{
-        
+        // 判断本地用户是否是登录状态
         if (LKLocalUser.singleton.isLogin) {
             
             [self.home performSelector:@selector(notificationAction) withObject:nil afterDelay:0.5];

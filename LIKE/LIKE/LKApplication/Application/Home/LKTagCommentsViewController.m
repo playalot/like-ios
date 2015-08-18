@@ -32,6 +32,19 @@ LC_PROPERTY(strong) LKLocationManager * locationManager;
 
 LC_PROPERTY(strong) NSNumber * canFirstResponder;
 
+/**
+ *  删除标签
+ */
+LC_PROPERTY(copy) LKTagsViewDidRemoveTag didRemoveTag;
+
+/**
+ *  记录要删除的cell
+ */
+@property (nonatomic, strong) NSMutableArray *deleteCell;
+
+LC_PROPERTY(strong) LKTagItem * tagItem;
+
+
 @end
 
 @implementation LKTagCommentsViewController
@@ -95,7 +108,7 @@ static NSString * __LKUserAddress = nil;
     backButton.tag = 1002;
     [self addSubview:backButton];
     
-    
+    // 除去导航栏的view
     self.blur = LCUIBlurView.view;
     self.blur.viewFrameY = 44;
     self.blur.viewFrameWidth = self.viewFrameWidth;
@@ -103,7 +116,7 @@ static NSString * __LKUserAddress = nil;
     self.blur.tintColor = [UIColor whiteColor];
     self.ADD(self.blur);
     
-    
+    // 在blur中添加tableView
     self.tableView = [[LCUITableView alloc] initWithFrame:CGRectZero];
     self.tableView.frame = self.blur.bounds;
     self.tableView.viewFrameHeight -= 44;
@@ -117,7 +130,7 @@ static NSString * __LKUserAddress = nil;
     
     @weakly(self);
     
-    
+    // 下拉刷新
     self.pullLoader = [[LCUIPullLoader alloc] initWithScrollView:self.tableView pullStyle:LCUIPullLoaderStyleHeader];
     
     [self.pullLoader setBeginRefresh:^(LCUIPullLoaderDiretion diretion) {
@@ -132,7 +145,7 @@ static NSString * __LKUserAddress = nil;
     [self loadData:LCUIPullLoaderDiretionTop];
     
     
-    
+    // 添加输入框
     self.inputView = LKInputView.view;
     self.inputView.viewFrameY = self.viewFrameHeight - self.inputView.viewFrameHeight;
     self.inputView.dismissButton.title = LC_LO(@"发布");
@@ -218,6 +231,11 @@ static NSString * __LKUserAddress = nil;
     }];
 }
 
+/**
+ *  发送新评论
+ *
+ *  @param comment 评论内容
+ */
 -(void) sendNewComment:(NSString *)comment
 {
     LKComment * commentObject = [[LKComment alloc] init];
@@ -270,20 +288,35 @@ static NSString * __LKUserAddress = nil;
 
 }
 
+/**
+ *  输入框成为第一响应者
+ */
 -(void) inputBecomeFirstResponder
 {
     self.inputView.textField.placeholder = LC_LO(@"发表评论（最多300个字）");
     [self.inputView becomeFirstResponder];
 }
 
+/**
+ *  回复用户的评论
+ *
+ *  @param user 用户信息
+ */
 -(void) replyUserAction:(LKUser *)user
 {
     self.replyUser = user;
     
     self.inputView.textField.placeholder = [NSString stringWithFormat:@"回复：%@" ,user.name];
+    // 增加@用户的功能
+    self.inputView.textField.text = [NSString stringWithFormat:@"@%@:", user.name];
     [self.inputView becomeFirstResponder];
 }
 
+/**
+ *  加载数据
+ *
+ *  @param diretion 拖动的方向
+ */
 -(void) loadData:(LCUIPullLoaderDiretion)diretion
 {
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"mark/%@/comment?order=asc", self.tagValue.id]].AUTO_SESSION().GET_METHOD();
@@ -348,6 +381,9 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     
 }
 
+/**
+ *  点击header或后退按钮后执行,移除当前控制器
+ */
 -(void) hide
 {
     if (self.willHide) {
@@ -415,15 +451,28 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             configurationCell.ADD(headImageView);
             
             
-            LCUILabel * timeLabel = LCUILabel.view;
-            timeLabel.viewFrameWidth = 100;
-            timeLabel.viewFrameX = LC_DEVICE_WIDTH - timeLabel.viewFrameWidth - 10;
-            timeLabel.viewFrameHeight = 53;
-            timeLabel.font = LK_FONT(13);
-            timeLabel.textAlignment = UITextAlignmentRight;
-            timeLabel.textColor = LC_RGB(171, 164, 157);
-            timeLabel.tag = 1003;
-            configurationCell.ADD(timeLabel);
+//            LCUILabel * timeLabel = LCUILabel.view;
+//            timeLabel.viewFrameWidth = 100;
+//            timeLabel.viewFrameX = LC_DEVICE_WIDTH - timeLabel.viewFrameWidth - 10;
+//            timeLabel.viewFrameHeight = 53;
+//            timeLabel.font = LK_FONT(13);
+//            timeLabel.textAlignment = UITextAlignmentRight;
+//            timeLabel.textColor = LC_RGB(171, 164, 157);
+//            timeLabel.tag = 1003;
+//            configurationCell.ADD(timeLabel);
+            
+            
+            // 删除按钮
+            LCUIButton *deleteBtn = LCUIButton.view;
+            [deleteBtn setTitle:@"删除" forState:UIControlStateNormal];
+            [deleteBtn sizeToFit];
+            deleteBtn.viewFrameX = LC_DEVICE_WIDTH - deleteBtn.viewFrameWidth - 14;
+            deleteBtn.viewCenterY = headImageView.viewCenterY;
+            [deleteBtn setTitleFont:LK_FONT(10)];
+            deleteBtn.titleLabel.textAlignment = UITextAlignmentRight;
+            [deleteBtn setTitleColor:LC_RGB(180, 180, 180) forState:UIControlStateNormal];
+            [deleteBtn addTarget:self action:@selector(deleteBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+            configurationCell.ADD(deleteBtn);
             
             
             
@@ -438,9 +487,14 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             configurationCell.ADD(line1);
         }];
         
+        // 把cell添加到数组中
+        [self.deleteCell addObject:cell];
         
         LCUIImageView * head = cell.FIND(1001);
         LKTagItem * item = cell.FIND(1002);
+//        self.tagItem = item;
+        // 设置tagItem的tagValue
+//        self.tagItem.tagValue = self.tagValue;
         LCUILabel * time = cell.FIND(1003);
         
         if (item) {
@@ -461,6 +515,16 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         item.viewFrameX = head.viewRightX + padding;
         item.viewFrameY = 53 / 2 - item.viewMidHeight;
         time.text = [LKTime dateNearByTimestamp:self.tagValue.createTime];
+        
+        
+        // 标签被移除
+//        __weak typeof(self) weakSelf = self;
+//        self.didRemoved = ^(NSIndexPath * _indexPath){
+//            
+//            [weakSelf.datasource removeObjectAtIndex:_indexPath.row];
+//            
+//            weakSelf.PERFORM_DELAY(@selector(reloadDataAndUpdate), nil, 0);
+//        };
 
         return cell;
     }
@@ -475,6 +539,55 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     
 }
 
+-(void) reloadDataAndUpdate
+{
+    [self.tableView reloadData];
+}
+
+- (void)deleteBtnClick:(LCUIButton *)deleteBtn {
+
+    // 注销第一响应者
+    [self.inputView resignFirstResponder];
+    // 弹窗提示
+    [LCUIAlertView showWithTitle:nil message:@"删除该标签后，你的like数也会相应减少，确认删除吗？" cancelTitle:@"确定" otherTitle:@"取消" didTouchedBlock:^(NSInteger integerValue) {
+
+        
+        switch (integerValue) {
+            case 0:
+            {
+                printf("确定");
+                // 删除标签
+                // 获取当前标签
+//                LCUIButton *tagBtn = self.FIND(1002);
+                
+//                __weak typeof(self) weakSelf = self;
+//                self.tagItem.didRemoved = ^(id value){
+//                    
+//                    [weakSelf.tagItem removeFromSuperview];
+//                    weakSelf.tagItem = nil;
+//                    
+//                    if (weakSelf.didRemoved) {
+//                        weakSelf.didRemoved(0);
+//                    }
+//                };
+                
+
+                // 回到上一页
+//                [self hide];
+                break;
+            }
+                
+            case 1:
+                printf("取消");
+                break;
+                
+            default:
+                break;
+        }
+    }];
+}
+
+#pragma mark - ***** tableView的代理方法 *****
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.section == 0){
@@ -515,6 +628,15 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         
         [self.inputView resignFirstResponder];
     }
+}
+
+#pragma mark - ***** 懒加载 *****
+- (NSMutableArray *)deleteCell {
+    
+    if (_deleteCell == nil) {
+        _deleteCell = [NSMutableArray array];
+    }
+    return _deleteCell;
 }
 
 @end

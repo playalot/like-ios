@@ -79,7 +79,6 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:animated];
 
     
-    //
     [self.header.headImageView removeFromSuperview];
     [self.header.nameLabel removeFromSuperview];
     [self.header.icon removeFromSuperview];
@@ -142,6 +141,9 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
     return self;
 }
 
+/**
+ *  设置打开页面的动画样式
+ */
 -(void) setPresendModelAnimationOpen
 {
     self.navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
@@ -212,7 +214,7 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
             size.width = LC_DEVICE_WIDTH;
         }
 
-        
+        // 图片详情页header
         self.header = [[LKHomepageHeader alloc] initWithFrame:CGRectMake(0.0, 0, CGRectGetWidth(self.view.frame), size.height) maxHeight:size.height minHeight:44];
         self.header.clipsToBounds = YES;
         self.header.backgroundView.autoMask = NO;
@@ -305,8 +307,7 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
         };
         
         
-        
-        //
+        // 导航栏返回上一级按钮
         LCUIButton * backButton = LCUIButton.view;
         backButton.viewFrameWidth = 80;
         backButton.viewFrameHeight = 80;
@@ -318,7 +319,7 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
         backButton.tag = 1002;
         [self.header addSubview:backButton];
         
-        
+        // 导航栏更多按钮
         LCUIButton * moreButton = LCUIButton.view;
         moreButton.viewFrameWidth = 50 / 3 + 40;
         moreButton.viewFrameHeight = 11 / 3 + 20;
@@ -331,6 +332,8 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
         [self.header addSubview:moreButton];
     }
     
+    
+    // 输入框
     self.inputView = LKInputView.view;
     self.inputView.viewFrameY = self.view.viewFrameHeight - self.inputView.viewFrameHeight;
     self.view.ADD(self.inputView);
@@ -379,7 +382,7 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
      */
 }
 
-#pragma mark -
+#pragma mark - ***** 放大后的headerView dismiss的时候调用 *****
 
 - (void) imageViewerDidDismiss:(JTSImageViewController *)imageViewer
 {
@@ -395,7 +398,7 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
     });
 }
 
-#pragma mark -
+#pragma mark - ***** 评论View *****
 
 -(void) openCommentsView:(LKTag *)tag
 {
@@ -403,7 +406,9 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
 }
 
 #pragma mark -
-
+/**
+ *  检查标签的tag
+ */
 -(BOOL) _checkTag:(NSString *)tag onTags:(NSArray *)onTags
 {
     NSArray * tmp = onTags;
@@ -424,6 +429,9 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
     return YES;
 }
 
+/**
+ *  添加tag
+ */
 -(void) _addTag:(NSString *)tag onPost:(LKPost *)post
 {
     if([LKLoginViewController needLoginOnViewController:self.navigationController]){
@@ -541,7 +549,7 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
     }
 }
 
-#pragma mark -
+#pragma mark - ***** 加载大图 *****
 
 -(void) loadBigImage
 {
@@ -612,6 +620,9 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
     }];
 }
 
+/**
+ *  举报
+ */
 -(void) _report
 {
     if ([LKLoginViewController needLoginOnViewController:self.navigationController]) {
@@ -643,6 +654,9 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
     }];
 }
 
+/**
+ *  删除
+ */
 -(void) _delete
 {
     @weakly(self);
@@ -675,6 +689,9 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
     }];
 }
 
+/**
+ *  开启评论页
+ */
 -(void) _beginComment:(LKTag *)tag
 {
     // check
@@ -732,6 +749,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
 {
     if (indexPath.section == 0) {
      
+        // 用户信息cell
         LCUITableViewCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"User" andClass:[LCUITableViewCell class] configurationCell:^(LCUITableViewCell * configurationCell) {
             
             
@@ -739,7 +757,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             configurationCell.contentView.backgroundColor = [UIColor clearColor];
             configurationCell.selectionStyle = UITableViewCellSelectionStyleNone;
 
-            
+            // 用户头像
             self.userHead = LCUIImageView.view;
             self.userHead.viewFrameX = 10;
             self.userHead.viewFrameY = 10;
@@ -749,7 +767,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             self.userHead.backgroundColor = [UIColor lightGrayColor];
             configurationCell.ADD(self.userHead);
             
-            
+            // 用户昵称
             self.userName = LCUILabel.view;
             self.userName.viewFrameY = 11;
             self.userName.viewFrameX = self.userHead.viewRightX + 10;
@@ -761,7 +779,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             self.userName.textColor = LC_RGB(51, 51, 51);
             configurationCell.ADD(self.userName);
             
-            
+            // 用户like数量
             self.userLikes = ADTickerLabel.view;
             self.userLikes.viewFrameWidth = LC_DEVICE_WIDTH / 2 - 10 - 5;
             self.userLikes.viewFrameHeight = LK_FONT(13).lineHeight;
@@ -772,7 +790,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             self.userLikes.changeTextAnimationDuration = 0.25;
             configurationCell.ADD(self.userLikes);
             
-            
+            // like标识,用于和数量拼接
             self.likesTip = LCUILabel.view;
             self.likesTip.font = LK_FONT(13);
             self.likesTip.textAlignment = UITextAlignmentLeft;
@@ -783,8 +801,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             self.likesTip.viewFrameHeight = LK_FONT(13).lineHeight;
             configurationCell.ADD(self.likesTip);
             
-            
-            
+            // 发布时间
             self.postTime = LCUILabel.view;
             self.postTime.viewFrameY = self.userName.viewBottomY + 5;
             self.postTime.viewFrameX = self.userHead.viewRightX + 10;
@@ -796,7 +813,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             self.postTime.textColor = LC_RGB(140, 133, 126);
             configurationCell.ADD(self.postTime);
             
-            
+            // 分享工具
             self.shareTools = LKShareTools.view;
             configurationCell.ADD(self.shareTools);
             
@@ -855,7 +872,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         CGFloat maxWidth = LC_DEVICE_WIDTH - self.userName.viewFrameX - 75 - self.likesTip.viewFrameWidth - self.userLikes.viewFrameWidth - 15;
         
         self.userName.viewFrameWidth = 1000;
-        self.userName.FIT();
+        self.userName.FIT();    // sizeToFit
         self.userName.viewFrameWidth = self.userName.viewFrameWidth > maxWidth ? maxWidth : self.userName.viewFrameWidth;
         self.userLikes.viewFrameX = self.userName.viewRightX + 5;
         

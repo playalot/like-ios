@@ -1283,7 +1283,7 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
     [LKNewPostUploadCenter.singleton reuploadPosting:signal.object];
 }
 
-#pragma mark -
+#pragma mark - ***** 数据源方法 *****
 
 -(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -1362,6 +1362,9 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
     return cell;
 }
 
+/**
+ *  根据cell计算行高
+ */
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
@@ -1393,6 +1396,7 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
     }
     else{
         
+        // 根据scrollview的offset重新布局headerView
         [self.header layoutHeaderViewForScrollViewOffset:self.tableView.contentOffset];
     }
     
@@ -1415,7 +1419,7 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     if (decelerate) {
-        
+        // 减速的时候调用
         if (scrollView.contentOffset.y < -80) {
             
             self.needRefresh = YES;

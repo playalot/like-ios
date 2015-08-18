@@ -64,7 +64,10 @@ LC_IMP_SIGNAL(PushUserCenter);
     self.cellBackgroundView.viewFrameWidth = LC_DEVICE_WIDTH - self.cellBackgroundView.viewFrameX - 10;
     self.cellBackgroundView.viewFrameHeight = 33;
     self.cellBackgroundView.backgroundColor = [UIColor whiteColor];
-    [self.cellBackgroundView addTapGestureRecognizer:self selector:@selector(likesTapAction)];
+    
+    // 取消cell的原本点击手势
+//    [self.cellBackgroundView addTapGestureRecognizer:self selector:@selector(likesTapAction)];
+    [self.cellBackgroundView addTapGestureRecognizer:self selector:@selector(commentTapAction)];
     self.ADD(self.cellBackgroundView);
     
     
@@ -84,10 +87,11 @@ LC_IMP_SIGNAL(PushUserCenter);
     
     
     LCUIButton * commentButton = LCUIButton.view;
-    commentButton.buttonImage = [UIImage imageNamed:@"TalkIcon.png" useCache:YES];
+    // 修改了评论的图片
+    commentButton.buttonImage = [UIImage imageNamed:@"more.png" useCache:YES];
     commentButton.viewFrameHeight = 33;
     commentButton.titleFont = LK_FONT(10);
-    commentButton.title = LC_LO(@"评论");
+//    commentButton.title = LC_LO(@"评论");
     commentButton.titleColor = LC_RGB(140, 133, 126);
     commentButton.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0);
     commentButton.imageEdgeInsets = UIEdgeInsetsMake(2, 0, 0, 0);
@@ -242,6 +246,9 @@ LC_IMP_SIGNAL(PushUserCenter);
     };
 }
 
+/**
+ *  点击评论的时候调用
+ */
 -(void) commentTapAction
 {
     if (self.commentAction) {

@@ -62,6 +62,7 @@ LC_PROPERTY(strong) UICollectionView * collectionView;
 -(void) dealloc
 {
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:YES];
+    // 取消所有的通知监听
     [self unobserveAllNotifications];
 }
 
@@ -79,14 +80,19 @@ LC_PROPERTY(strong) UICollectionView * collectionView;
 {
     if (self = [super init]) {
         
+        // 交叉溶解样式
         self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         
+        // 监听相机相册控制器dismiss的通知
         [self observeNotification:LKCameraRollViewControllerDismiss];
     }
     
     return self;
 }
 
+/**
+ *  处理通知
+ */
 -(void) handleNotification:(NSNotification *)notification
 {
     if ([notification is:LKCameraRollViewControllerDismiss]) {
@@ -101,7 +107,7 @@ LC_PROPERTY(strong) UICollectionView * collectionView;
 {
     [super viewDidLoad];
     
-
+    // 通过创建ALAssetsLibrary 的实例可以访问系统Photos里的图片与视频
     self.assetLibrary = [[ALAssetsLibrary alloc] init];
     self.datasource = [NSMutableArray array];
     

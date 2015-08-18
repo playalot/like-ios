@@ -11,7 +11,9 @@
 @class LKAssistiveTouchButton;
 
 @interface LKTabBarController : RDVTabBarController
-
+/**
+ *  是否正在加载
+ */
 LC_PROPERTY(assign) BOOL loading;
 LC_PROPERTY(strong) LKAssistiveTouchButton * assistiveTouchButton;
 
@@ -20,6 +22,9 @@ LC_PROPERTY(strong) LKAssistiveTouchButton * assistiveTouchButton;
 -(void) showBar;
 -(void) hideBar;
 
+/**
+ *  push控制器的时候隐藏bottomBar
+ */
 +(UIViewController *) hiddenBottomBarWhenPushed:(UIViewController *)viewController;
 
 @end

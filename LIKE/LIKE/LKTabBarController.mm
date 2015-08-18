@@ -39,7 +39,7 @@
             self.assistiveTouchButton.frame = frame;
         }
         
-        
+        // 相机按钮周围线圈动画
         MMMaterialDesignSpinner * tip = [[MMMaterialDesignSpinner alloc] initWithFrame:CGRectZero];
         tip.bounds = CGRectMake(0, 0, 212. / 3. - 4., 212. / 3. - 4.); //LC_RGB(255, 59, 54)
         tip.tintColor = LKColor.color;
@@ -55,6 +55,7 @@
         
         @weakly(self);
         
+        // 按下状态按钮放大1.2倍显示
         self.assistiveTouchButton.touchDown = ^(){
             
             @normally(self);
@@ -63,6 +64,7 @@
             [self touchDown:self.assistiveTouchButton.view];
         };
         
+        // 点击结束还原状态
         self.assistiveTouchButton.touchEnd = ^(){
             
             @normally(self);
@@ -71,6 +73,7 @@
             [self touchEnd:self.assistiveTouchButton.view];
         };
         
+        // 选中的状态modal出相机相册控制器
         self.assistiveTouchButton.didSelected = ^(){
           
             @normally(self);
@@ -79,9 +82,10 @@
         };
     }
     
+    // 隐藏tabBar
     [self setTabBarHidden:YES];
 
-    
+    // 设置状态栏为淡色样式
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
 }
 
@@ -102,6 +106,9 @@
     return self;
 }
 
+/**
+ *  重写加载状态的set方法,设置按钮周围线条动画
+ */
 -(void) setLoading:(BOOL)loading
 {
     _loading = loading;
@@ -136,6 +143,9 @@
 //    return _loading;
 //}
 
+/**
+ *  选中了相机按钮就会执行
+ */
 -(void) didTap
 {
     if(![LKLoginViewController needLoginOnViewController:self]){

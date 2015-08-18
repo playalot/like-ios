@@ -46,6 +46,9 @@ LC_PROPERTY(assign) CGPoint beginPoint;
     return self;
 }
 
+/**
+ *  点击选中
+ */
 -(void) didTapAction
 {
     if (self.didSelected) {
@@ -53,6 +56,9 @@ LC_PROPERTY(assign) CGPoint beginPoint;
     }
 }
 
+/**
+ *  按下状态
+ */
 -(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     if (self.touchDown) {
@@ -66,6 +72,9 @@ LC_PROPERTY(assign) CGPoint beginPoint;
     self.beginPoint = [touch locationInView:self.superview];
 }
 
+/**
+ *  移动的时候计算按钮的位置
+ */
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
     // 1. 得到当前手指的位置
@@ -85,8 +94,9 @@ LC_PROPERTY(assign) CGPoint beginPoint;
         
     //}];
     
+    // 计算在父view中的位置
     CGPoint moveLocation = [touch locationInView:self.superview];
-
+    // 计算偏移量
     CGPoint moveOffset = CGPointMake(moveLocation.x - self.beginPoint.x, moveLocation.y - self.beginPoint.y);
     
     if (moveOffset.x < 5 && moveOffset.x > -5 && moveOffset.y < 5 && moveOffset.y > -5) {
@@ -99,6 +109,9 @@ LC_PROPERTY(assign) CGPoint beginPoint;
     }
 }
 
+/**
+ *  点击结束状态
+ */
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     if (self.touchEnd) {
@@ -114,16 +127,18 @@ LC_PROPERTY(assign) CGPoint beginPoint;
         }
     }
     
+    // 移动时计算边界值
     [self sliding];
     
-    
+    // 0.5秒后更新frame
     [self performSelector:@selector(delayUpdateLocalFrame) withObject:nil afterDelay:0.5];
 }
 
 -(void) delayUpdateLocalFrame
 {
     NSString * frameString = NSStringFromCGRect(self.frame);
-
+    
+    // 把frameString保存到偏好设置中
     [LKUserDefaults.singleton setObject:frameString forKey:@"LKAssistiveTouchButton"];
 }
 
@@ -149,7 +164,6 @@ LC_PROPERTY(assign) CGPoint beginPoint;
     
     float right = self.inView.bounds.size.width -   self.center.x - (self.bounds.size.width)/2;
     
-    
     /**
      *  view距离上边的距离
      */
@@ -167,6 +181,7 @@ LC_PROPERTY(assign) CGPoint beginPoint;
     [self move:end WhitLeft:left WhitRight:right WhitTop:top WhitBottom:bottom];
     
 }
+
 /**
  *  将各个边界的值排序
  *
@@ -200,6 +215,7 @@ LC_PROPERTY(assign) CGPoint beginPoint;
     return end;
     
 }
+
 /**
  *  开始移动
  *

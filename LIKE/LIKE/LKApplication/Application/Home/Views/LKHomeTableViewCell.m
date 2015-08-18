@@ -209,6 +209,9 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.SEND(self.PushUserCenter).object = self.post.user;
 }
 
+/**
+ *  点击主页cell里面的图片就会执行此方法
+ */
 -(void) contentImageTapAction
 {
     self.SEND(self.PushPostDetail).object = self.post;
@@ -225,7 +228,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     }
     
 
-    
+    // 设置cell内容
     self.head.image = nil;
     self.head.url = post.user.avatar;
     self.title.text = LC_NSSTRING_FORMAT(@"%@", post.user.name);
@@ -244,7 +247,7 @@ LC_IMP_SIGNAL(PushPostDetail);
         size.width = (LC_DEVICE_WIDTH - 10);
     }
     
-    
+    // 设置图片的frame
     self.contentBack.viewFrameX = 5 + (LC_DEVICE_WIDTH - 10) / 2 - size.width / 2;
     self.contentBack.viewFrameY = 55;
     self.contentBack.viewFrameWidth = size.width;
@@ -256,7 +259,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.contentImage.url = post.content;
     
     
-    
+    // 设置标签的frame
     self.tagsView.tags = post.tags;
     self.tagsView.viewFrameY = self.contentBack.viewBottomY;
     
@@ -294,6 +297,7 @@ LC_IMP_SIGNAL(PushPostDetail);
         [self newTagAnimation:nil];
     };
     
+    // 设置'推荐理由'相关属性
     NSString * reason = [NSString stringWithFormat:@"RecommentReason%@", @(post.reason)];
     
     self.recommendedReason.buttonImage = [self getIconImage:post.reason];
@@ -313,6 +317,9 @@ LC_IMP_SIGNAL(PushPostDetail);
     }
 }
 
+/**
+ *  点击标签就会执行动画
+ */
 -(void) newTagAnimation:(void (^)(BOOL finished))completion
 {
     if (!self.blackMask) {
@@ -372,17 +379,20 @@ LC_IMP_SIGNAL(PushPostDetail);
 
 - (void)cellOnTableView:(UITableView *)tableView didScrollOnView:(UIView *)view
 {
-    //    CGRect rectInSuperview = [tableView convertRect:self.frame toView:view];
-    //
-    //    CGFloat distanceFromCenter = CGRectGetHeight(view.frame)/2 - CGRectGetMinY(rectInSuperview);
-    //    CGFloat difference = CGRectGetHeight(self.contentImage.frame) - CGRectGetHeight(self.frame);
-    //    CGFloat move = (distanceFromCenter / CGRectGetHeight(view.frame)) * difference;
-    //
-    //    CGRect imageRect = self.contentImage.frame;
-    //    imageRect.origin.y = -(difference/2)+move;
-    //    self.contentImage.frame = imageRect;
+//        CGRect rectInSuperview = [tableView convertRect:self.frame toView:view];
+//    
+//        CGFloat distanceFromCenter = CGRectGetHeight(view.frame)/2 - CGRectGetMinY(rectInSuperview);
+//        CGFloat difference = CGRectGetHeight(self.contentImage.frame) - CGRectGetHeight(self.frame);
+//        CGFloat move = (distanceFromCenter / CGRectGetHeight(view.frame)) * difference;
+//    
+//        CGRect imageRect = self.contentImage.frame;
+//        imageRect.origin.y = -(difference/2)+move;
+//        self.contentImage.frame = imageRect;
 }
 
+/**
+ *  裁剪圆角
+ */
 + (void)roundCorners:(UIRectCorner)corners forView:(UIView *)view
 {
     UIBezierPath * maskPath = [UIBezierPath bezierPathWithRoundedRect:view.bounds
@@ -399,6 +409,9 @@ LC_IMP_SIGNAL(PushPostDetail);
     view.layer.mask = maskLayer;
 }
 
+/**
+ *  获取推荐理由图片
+ */
 -(UIImage *) getIconImage:(NSInteger)type
 {
     if (type == 1) {

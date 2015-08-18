@@ -45,6 +45,9 @@
     [NSNotificationDefaultCenter addObserver:self selector:@selector(handleNotification:) name:notificationName object:object];
 }
 
+/**
+ *  取消所有的通知监听
+ */
 - (void)unobserveAllNotifications
 {
     [NSNotificationDefaultCenter removeObserver:self];

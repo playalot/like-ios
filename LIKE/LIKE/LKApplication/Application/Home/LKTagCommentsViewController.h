@@ -8,8 +8,11 @@
 
 #import "LCUITableViewController.h"
 #import "LKTag.h"
+#import "LKPost.h"
+#import "LKTagsView.h"
 
 LC_BLOCK(void, LKTagCommentsViewControllerWillHide, ());
+LC_BLOCK(void, EZCommentDetailCellDidRemoved, (NSIndexPath * indexPath));
 
 @interface LKTagCommentsViewController : UIView
 
@@ -25,5 +28,8 @@ LC_PROPERTY(copy) LKTagCommentsViewControllerWillHide willHide;
 
 -(void) inputBecomeFirstResponder;
 -(void) replyUserAction:(LKUser *)user;
+
+LC_PROPERTY(copy) EZCommentDetailCellDidRemoved didRemoved;
+LC_PROPERTY(strong) LKTagsView * tagsView;
 
 @end

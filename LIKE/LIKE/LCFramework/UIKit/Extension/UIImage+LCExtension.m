@@ -436,7 +436,7 @@ LCUIImageNamed IMAGE(NSString * imageName)
    // NSDictionary *options = @{CIDetectorImageOrientation : [[ciImage properties] valueForKey:(NSString *)kCGImagePropertyOrientation]};
     
     // Get the filters and apply them to the image
-    NSArray * filters = [ciImage autoAdjustmentFilters];
+    NSArray * filters = [ciImage autoAdjustmentFiltersWithOptions:nil];
     
     for (CIFilter * filter in filters){
         

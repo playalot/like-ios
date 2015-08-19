@@ -12,7 +12,8 @@
 #import "LKTagsView.h"
 
 LC_BLOCK(void, LKTagCommentsViewControllerWillHide, ());
-LC_BLOCK(void, EZCommentDetailCellDidRemoved, (NSIndexPath * indexPath));
+
+@protocol LKTagCommentsViewControllerDelegate;
 
 @interface LKTagCommentsViewController : UIView
 
@@ -29,7 +30,12 @@ LC_PROPERTY(copy) LKTagCommentsViewControllerWillHide willHide;
 -(void) inputBecomeFirstResponder;
 -(void) replyUserAction:(LKUser *)user;
 
-LC_PROPERTY(copy) EZCommentDetailCellDidRemoved didRemoved;
-LC_PROPERTY(strong) LKTagsView * tagsView;
+@property (nonatomic, weak) id <LKTagCommentsViewControllerDelegate> delegate;
+
+@end
+
+@protocol LKTagCommentsViewControllerDelegate <NSObject>
+
+- (void)tagCommentsViewController:(LKTagCommentsViewController *)ctrl didClickedDeleteBtn:(LCUIButton *)deleteBtn;
 
 @end

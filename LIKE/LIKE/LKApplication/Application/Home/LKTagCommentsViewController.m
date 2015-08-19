@@ -13,6 +13,14 @@
 #import "LKInputView.h"
 #import "LKLocationManager.h"
 #import "LCUIKeyBoard.h"
+#import "LKLikesPage.h"
+#import "LKUserCenterViewController.h"
+#import "LKHotUserView.h"
+#import "UIImageView+WebCache.h"
+
+#define iconWH 33
+// 当前用户id
+#define LOCAL_USER_ID LKLocalUser.singleton.user.id
 
 @interface LKTagCommentsViewController () <UITableViewDataSource,UITableViewDelegate>
 
@@ -31,18 +39,26 @@ LC_PROPERTY(strong) NSMutableArray * datasource;
 LC_PROPERTY(strong) LKLocationManager * locationManager;
 
 LC_PROPERTY(strong) NSNumber * canFirstResponder;
-
 /**
- *  删除标签
+ *  用于显示给标签点赞的用户
  */
-LC_PROPERTY(copy) LKTagsViewDidRemoveTag didRemoveTag;
-
+@property (nonatomic, strong) UIScrollView *tagUserView;
 /**
- *  记录要删除的cell
+ *  存放给标签点赞的用户的数组
  */
-@property (nonatomic, strong) NSMutableArray *deleteCell;
-
-LC_PROPERTY(strong) LKTagItem * tagItem;
+@property (nonatomic, strong) NSMutableArray *tagUsers;
+/**
+ *  点赞用户的头像X值
+ */
+@property (nonatomic, assign) CGFloat iconX;
+/**
+ *  存放用户头像的数组
+ */
+@property (nonatomic, strong) NSMutableArray *iconViews;
+/**
+ *  记录调用的次数
+ */
+@property (nonatomic, assign) NSInteger index;
 
 
 @end
@@ -430,6 +446,9 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
 
 - (UITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    self.index++;
+    
     if (indexPath.section == 0) {
         
         CGFloat padding = 10;
@@ -474,6 +493,14 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             [deleteBtn addTarget:self action:@selector(deleteBtnClick:) forControlEvents:UIControlEventTouchUpInside];
             configurationCell.ADD(deleteBtn);
             
+            // 判断是否是用户或者标签所有者
+            BOOL canDelete = [self userOrTagOwner];
+            
+            if (canDelete) {
+                deleteBtn.hidden = NO;
+            } else {
+                deleteBtn.hidden = YES;
+            }
             
             
             UIImageView * line = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
@@ -482,19 +509,13 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             
             
             UIImageView * line1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
-            line1.viewFrameY = 53 - line1.viewFrameHeight;
+            line1.viewFrameY = 53 + 33 - line1.viewFrameHeight;
             line1.viewFrameWidth = LC_DEVICE_WIDTH;
             configurationCell.ADD(line1);
         }];
         
-        // 把cell添加到数组中
-        [self.deleteCell addObject:cell];
-        
         LCUIImageView * head = cell.FIND(1001);
         LKTagItem * item = cell.FIND(1002);
-//        self.tagItem = item;
-        // 设置tagItem的tagValue
-//        self.tagItem.tagValue = self.tagValue;
         LCUILabel * time = cell.FIND(1003);
         
         if (item) {
@@ -517,14 +538,54 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         time.text = [LKTime dateNearByTimestamp:self.tagValue.createTime];
         
         
-        // 标签被移除
-//        __weak typeof(self) weakSelf = self;
-//        self.didRemoved = ^(NSIndexPath * _indexPath){
-//            
-//            [weakSelf.datasource removeObjectAtIndex:_indexPath.row];
-//            
-//            weakSelf.PERFORM_DELAY(@selector(reloadDataAndUpdate), nil, 0);
-//        };
+        // 添加一个scrollView用来显示标签用户
+        UIScrollView *tagUserView = [[UIScrollView alloc] init];
+//        tagUserView.backgroundColor = [UIColor redColor];
+        tagUserView.viewFrameX = item.viewFrameX;
+        tagUserView.viewFrameY = CGRectGetMaxY(item.frame) + 8;
+        tagUserView.viewFrameWidth = LC_DEVICE_WIDTH - tagUserView.viewFrameX - 20;
+        tagUserView.viewFrameHeight = 33;
+        self.tagUserView = tagUserView;
+        cell.ADD(tagUserView);
+        
+        // 去掉水平滚动条
+        tagUserView.showsHorizontalScrollIndicator = NO;
+    
+        
+        LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"mark/%@/likes",self.tagValue.id]].AUTO_SESSION();
+        
+        @weakly(self);
+        
+        [self request:interface complete:^(LKHttpRequestResult *result) {
+            
+            @normally(self);
+            
+            if (result.state == LKHttpRequestStateFinished) {
+                
+                NSArray *usersDic = result.json[@"data"][@"likes"];
+                
+                NSMutableArray *users = [NSMutableArray array];
+                
+                for (NSDictionary *dict in usersDic) {
+                    
+                    [users addObject:[LKUser objectFromDictionary:dict[@"user"]]];
+                }
+                
+                
+                // 添加子控件
+                self.tagUsers = users;
+
+                if (self.index == 2) {
+                    
+                    [self addChildViews:tagUserView];
+                }
+
+            }
+            else if (result.state == LKHttpRequestStateFailed){
+                
+            }
+            
+        }];
 
         return cell;
     }
@@ -539,6 +600,79 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     
 }
 
+/**
+ *  判断是否是用户或者标签所有者
+ */
+- (BOOL)userOrTagOwner {
+    
+    // 获取标签所有者
+    LKUser *user = [self.tagUsers lastObject];
+    // 获取发布者
+    LKUser *publisher = self.tagValue.user;
+    
+    // 和当前用户的id进行比较
+//    if ([user.id isEqualToNumber:LOCAL_USER_ID] || [publisher.id isEqualToNumber:LOCAL_USER_ID]) {
+    
+//        return YES;
+//    }
+    
+    return NO;
+}
+
+#pragma mark - ***** 添加子控件 *****
+- (void)addChildViews:(UIScrollView *)tagUserView {
+    
+    // 头像间距
+    CGFloat margin = 8;
+    
+    for (int i = 0; i < self.tagUsers.count; i++) {
+        
+        LKUser *user = self.tagUsers[i];
+        
+        LCUIImageView *iconView = LCUIImageView.view;
+        iconView.viewFrameX = (iconWH + margin) * i;
+        iconView.viewFrameY = 0;
+        iconView.viewFrameWidth = iconWH;
+        iconView.viewFrameHeight = iconWH;
+        
+        [self.tagUserView addSubview:iconView];
+        [self.iconViews addObject:iconView];
+        
+        iconView.tag = i;
+        
+        // 记录下iconX
+        self.iconX = iconView.viewFrameX;
+        
+        [iconView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", user.avatar]]];
+        
+        // 裁剪
+        iconView.layer.cornerRadius = iconWH * 0.5;
+        iconView.layer.masksToBounds = YES;
+        
+    }
+    
+    for (LCUIImageView *iconView in self.iconViews) {
+    
+        // 启用和用户的交互
+        iconView.userInteractionEnabled = YES;
+        [iconView addTapGestureRecognizer:self selector:@selector(iconViewClick:)];
+
+        // 设置scrollView的contentSize
+        self.tagUserView.contentSize = CGSizeMake(self.iconX + iconWH, 0);
+        self.tagUserView.scrollEnabled = YES;
+    }
+    
+}
+
+/**
+ *  点击头像执行
+ */
+- (void)iconViewClick:(UITapGestureRecognizer *)tapGes {
+    
+    LKUser *user = self.tagUsers[tapGes.view.tag];
+    self.SEND(@"PushUserCenter").object = user;
+}
+
 -(void) reloadDataAndUpdate
 {
     [self.tableView reloadData];
@@ -549,36 +683,24 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     // 注销第一响应者
     [self.inputView resignFirstResponder];
     // 弹窗提示
-    [LCUIAlertView showWithTitle:nil message:@"删除该标签后，你的like数也会相应减少，确认删除吗？" cancelTitle:@"确定" otherTitle:@"取消" didTouchedBlock:^(NSInteger integerValue) {
+    [LCUIAlertView showWithTitle:@"提醒" message:@"删除该标签后，你的like数也会相应减少，确认删除吗？" cancelTitle:@"确定" otherTitle:@"取消" didTouchedBlock:^(NSInteger integerValue) {
 
-        
         switch (integerValue) {
-            case 0:
+            case 0:     // 确定
             {
-                printf("确定");
-                // 删除标签
-                // 获取当前标签
-//                LCUIButton *tagBtn = self.FIND(1002);
+                // 删除标签,使用代理
+                if ([self.delegate respondsToSelector:@selector(tagCommentsViewController:didClickedDeleteBtn:)]) {
+                    
+                    [self.delegate tagCommentsViewController:self didClickedDeleteBtn:deleteBtn];
+                }
                 
-//                __weak typeof(self) weakSelf = self;
-//                self.tagItem.didRemoved = ^(id value){
-//                    
-//                    [weakSelf.tagItem removeFromSuperview];
-//                    weakSelf.tagItem = nil;
-//                    
-//                    if (weakSelf.didRemoved) {
-//                        weakSelf.didRemoved(0);
-//                    }
-//                };
-                
-
                 // 回到上一页
-//                [self hide];
+                [self hide];
+                
                 break;
             }
                 
             case 1:
-                printf("取消");
                 break;
                 
             default:
@@ -592,7 +714,8 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
 {
     if(indexPath.section == 0){
         
-        return 53;
+        // 待修改
+        return 53 + 33;
     }
     else{
         
@@ -631,12 +754,20 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
 }
 
 #pragma mark - ***** 懒加载 *****
-- (NSMutableArray *)deleteCell {
+- (NSMutableArray *)tagUsers {
     
-    if (_deleteCell == nil) {
-        _deleteCell = [NSMutableArray array];
+    if (_tagUsers == nil) {
+        _tagUsers = [NSMutableArray array];
     }
-    return _deleteCell;
+    return _tagUsers;
+}
+
+- (NSMutableArray *)iconViews {
+    
+    if (_iconViews == nil) {
+        _iconViews = [NSMutableArray array];
+    }
+    return _iconViews;
 }
 
 @end

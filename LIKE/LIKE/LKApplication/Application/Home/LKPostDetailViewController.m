@@ -32,7 +32,7 @@
 #import "LKPresentAnimation.h"
 #import "ADTickerLabel.h"
 
-@interface LKPostDetailViewController ()<UITableViewDataSource,UITableViewDelegate,JTSImageViewControllerDismissalDelegate,UINavigationControllerDelegate,UIViewControllerTransitioningDelegate>
+@interface LKPostDetailViewController ()<UITableViewDataSource,UITableViewDelegate,JTSImageViewControllerDismissalDelegate,UINavigationControllerDelegate,UIViewControllerTransitioningDelegate, LKTagCommentsViewControllerDelegate>
 
 LC_PROPERTY(strong) BLKDelegateSplitter * delegateSplitter;
 LC_PROPERTY(strong) LKInputView * inputView;
@@ -56,6 +56,11 @@ LC_PROPERTY(strong) LKPresentAnimation * animator;
 LC_PROPERTY(strong) UIView * blackMask;
 
 LC_PROPERTY(strong) LKShareTools * shareTools;
+
+/**
+ *  记录下当前的标签
+ */
+@property (nonatomic, strong) LKTag *tag;
 
 @end
 
@@ -701,6 +706,10 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
         
         LKTagCommentsViewController * comments = [[LKTagCommentsViewController alloc] initWithTag:tag];
         
+        // 设置代理
+        comments.delegate = self;
+        self.tag = tag;
+        
         [comments showInViewController:self];
         
         [comments performSelector:@selector(inputBecomeFirstResponder) withObject:nil afterDelay:0.5];
@@ -715,6 +724,27 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
         };
     }
 
+}
+
+#pragma mark - ***** LKTagCommentsViewControllerDelegate *****
+- (void)tagCommentsViewController:(LKTagCommentsViewController *)ctrl didClickedDeleteBtn:(LCUIButton *)deleteBtn {
+    
+    for (LKTag *tag in self.tagsListModel.tags) {
+        
+        if ([self.tag.tag isEqualToString:tag.tag]) {
+            
+            [self.tagsListModel.tags removeObject:tag];
+            
+            // 调用代理
+            if ([self.delegate respondsToSelector:@selector(postDetailViewController:didDeletedTag:)]) {
+                
+                [self.delegate postDetailViewController:self didDeletedTag:tag];
+            }
+            
+            // 刷新数据
+            [self.tableView reloadData];
+        }
+    }
 }
 
 #pragma mark -

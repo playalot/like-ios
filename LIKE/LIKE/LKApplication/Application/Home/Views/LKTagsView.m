@@ -66,9 +66,9 @@ LC_PROPERTY(assign) BOOL custom;
     
     if (self.tagValue.isLiked && self.tagValue.likes.integerValue == 1) {
         
-        [LCUIAlertView showWithTitle:LC_LO(@"提醒") message:LC_LO(@"确定要删除这个标签吗？") cancelTitle:LC_LO(@"取消") otherTitle:LC_LO(@"确定") didTouchedBlock:^(NSInteger integerValue) {
+        [LCUIAlertView showWithTitle:LC_LO(@"提醒") message:LC_LO(@"确定要删除这个标签吗？") cancelTitle:LC_LO(@"确定") otherTitle:LC_LO(@"取消") didTouchedBlock:^(NSInteger integerValue) {
             
-            if (integerValue == 1) {
+            if (integerValue == 0) {
                 
                 [self likeAction];
             }

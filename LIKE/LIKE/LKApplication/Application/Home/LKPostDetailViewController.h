@@ -10,6 +10,7 @@
 #import "LKPost.h"
 #import "LKHomepageHeader.h"
 
+@protocol LKPostDetailViewControllerDelegate;
 
 @interface LKPostDetailViewController : LCUIViewController
 
@@ -23,5 +24,13 @@ LC_PROPERTY(strong) LKPost * post;
 -(void) openCommentsView:(LKTag *)tag;
 
 -(void) setPresendModelAnimationOpen;
+
+@property (nonatomic, weak) id <LKPostDetailViewControllerDelegate> delegate;
+
+@end
+
+@protocol LKPostDetailViewControllerDelegate <NSObject>
+
+- (void)postDetailViewController:(LKPostDetailViewController *)ctrl didDeletedTag:(LKTag *)deleteTag;
 
 @end

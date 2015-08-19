@@ -44,7 +44,7 @@ typedef NS_ENUM(NSInteger, LKHomepageFeedType)
     LKHomepageFeedTypeNotification, // 通知页
 };
 
-@interface LKHomeViewController () <UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate>
+@interface LKHomeViewController () <UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate, LKPostDetailViewControllerDelegate>
 
 LC_PROPERTY(assign) LKHomepageFeedType feedType;
 
@@ -1255,6 +1255,9 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
     
     LKPostDetailViewController * detail = [[LKPostDetailViewController alloc] initWithPost:signal.object];
     
+    // 设置代理
+    detail.delegate = self;
+    
     LCUINavigationController * nav = LC_UINAVIGATION(detail);
     
     [detail setPresendModelAnimationOpen];
@@ -1281,6 +1284,25 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellCancel, signal)
 LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
 {
     [LKNewPostUploadCenter.singleton reuploadPosting:signal.object];
+}
+
+#pragma mark - ***** LKPostDetailViewControllerDelegate *****
+- (void)postDetailViewController:(LKPostDetailViewController *)ctrl didDeletedTag:(LKTag *)deleteTag {
+    
+    for (LKPost *post in self.datasource) {
+        for (LKTag *tag in post.tags) {
+            
+            if ([tag.tag isEqualToString:deleteTag.tag]) {
+                
+                // 删除标签
+                [post.tags removeObject:tag];
+                
+                [self.tableView reloadData];
+                
+                break;
+            }
+        }
+    }
 }
 
 #pragma mark - ***** 数据源方法 *****

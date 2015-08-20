@@ -31,6 +31,11 @@ LC_PROPERTY(copy) LKTagCommentsViewControllerWillHide willHide;
 -(void) replyUserAction:(LKUser *)user;
 
 @property (nonatomic, weak) id <LKTagCommentsViewControllerDelegate> delegate;
+/**
+ *  图片发布者
+ */
+@property (nonatomic, strong) LKPost *publisher;
+
 
 @end
 

@@ -1289,20 +1289,21 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
 #pragma mark - ***** LKPostDetailViewControllerDelegate *****
 - (void)postDetailViewController:(LKPostDetailViewController *)ctrl didDeletedTag:(LKTag *)deleteTag {
     
-    for (LKPost *post in self.datasource) {
-        for (LKTag *tag in post.tags) {
-            
-            if ([tag.tag isEqualToString:deleteTag.tag]) {
-                
-                // 删除标签
-                [post.tags removeObject:tag];
-                
-                [self.tableView reloadData];
-                
-                break;
-            }
-        }
-    }
+//    for (LKPost *post in self.datasource) {
+//        for (LKTag *tag in post.tags) {
+//            
+//            if ([tag.tag isEqualToString:deleteTag.tag]) {
+//                
+//                // 删除标签
+//                [post.tags removeObject:tag];
+//                
+//                [self.tableView reloadData];
+//                
+//                break;
+//            }
+//        }
+//    }
+    [self.tableView reloadData];
 }
 
 #pragma mark - ***** 数据源方法 *****

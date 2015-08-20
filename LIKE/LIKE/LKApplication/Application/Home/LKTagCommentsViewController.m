@@ -19,8 +19,6 @@
 #import "UIImageView+WebCache.h"
 
 #define iconWH 33
-// 当前用户id
-#define LOCAL_USER_ID LKLocalUser.singleton.user.id
 
 @interface LKTagCommentsViewController () <UITableViewDataSource,UITableViewDelegate>
 
@@ -59,7 +57,14 @@ LC_PROPERTY(strong) NSNumber * canFirstResponder;
  *  记录调用的次数
  */
 @property (nonatomic, assign) NSInteger index;
-
+/**
+ *  记录删除按钮
+ */
+@property (nonatomic, strong) LCUIButton *deleteBtn;
+/**
+ *  评论列表
+ */
+@property (nonatomic, strong) NSArray *commentList;
 
 @end
 
@@ -97,6 +102,11 @@ static NSString * __LKUserAddress = nil;
         }
         
         [self buildUI];
+        
+        
+        // 获取评论列表
+        [self getCommentList];
+        
     }
     
     return self;
@@ -491,16 +501,11 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             deleteBtn.titleLabel.textAlignment = UITextAlignmentRight;
             [deleteBtn setTitleColor:LC_RGB(180, 180, 180) forState:UIControlStateNormal];
             [deleteBtn addTarget:self action:@selector(deleteBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+            // 默认隐藏
+            deleteBtn.hidden = YES;
+            self.deleteBtn = deleteBtn;
             configurationCell.ADD(deleteBtn);
-            
-            // 判断是否是用户或者标签所有者
-            BOOL canDelete = [self userOrTagOwner];
-            
-            if (canDelete) {
-                deleteBtn.hidden = NO;
-            } else {
-                deleteBtn.hidden = YES;
-            }
+    
             
             
             UIImageView * line = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
@@ -575,10 +580,26 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
                 // 添加子控件
                 self.tagUsers = users;
 
-                if (self.index == 2) {
+                // 先判断是否有评论
+                if (self.commentList.count) {
                     
-                    [self addChildViews:tagUserView];
+                    if (self.index >= 4) {
+                        
+                        [self addChildViews:tagUserView];
+                    }
+                } else {
+                    
+                    if (self.index == 3) {
+                        
+                        [self addChildViews:tagUserView];
+                        
+                    }
                 }
+
+                // 判断是否是用户或者标签所有者
+                BOOL canDelete = [self userOrTagOwner];
+                
+                self.deleteBtn.hidden = !canDelete;
 
             }
             else if (result.state == LKHttpRequestStateFailed){
@@ -606,15 +627,17 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
 - (BOOL)userOrTagOwner {
     
     // 获取标签所有者
-    LKUser *user = [self.tagUsers lastObject];
+    LKUser *owner = [self.tagUsers lastObject];
     // 获取发布者
-    LKUser *publisher = self.tagValue.user;
+    LKUser *publisher = self.publisher.user;
+    
+    LKUser *user = LKLocalUser.singleton.user;
     
     // 和当前用户的id进行比较
-//    if ([user.id isEqualToNumber:LOCAL_USER_ID] || [publisher.id isEqualToNumber:LOCAL_USER_ID]) {
+    if (owner.id.integerValue == user.id.integerValue || publisher.id.integerValue == user.id.integerValue) {
     
-//        return YES;
-//    }
+        return YES;
+    }
     
     return NO;
 }
@@ -691,6 +714,8 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
                 // 删除标签,使用代理
                 if ([self.delegate respondsToSelector:@selector(tagCommentsViewController:didClickedDeleteBtn:)]) {
                     
+                    // 发送请求,删除标签
+                    [self deleteTag];
                     [self.delegate tagCommentsViewController:self didClickedDeleteBtn:deleteBtn];
                 }
                 
@@ -709,6 +734,27 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     }];
 }
 
+- (void)deleteTag {
+    
+    LKHttpRequestInterface *interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"mark/%@", self.tagValue.id]].AUTO_SESSION().DELETE_METHOD();
+    
+    @weakly(self);
+    
+    [self request:interface complete:^(LKHttpRequestResult *result) {
+        
+        @normally(self);
+        
+        if (result.state == LKHttpRequestStateFinished) {
+            
+            ;
+        }
+        else if (result.state == LKHttpRequestStateFailed){
+            
+            [self showTopMessageErrorHud:result.error];
+        }
+    }];
+}
+
 #pragma mark - ***** tableView的代理方法 *****
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -719,7 +765,8 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     }
     else{
         
-        return [LKTagCommentCell height:self.datasource[indexPath.row]];
+        // 修改了cell的行高,解决左滑显示删除按钮错位的问题
+        return [LKTagCommentCell height:self.datasource[indexPath.row]] - 4;
     }
 
 }
@@ -745,12 +792,144 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     }
 }
 
+/**
+ *  设置可编辑的行
+ */
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return indexPath.section == 1 ? YES : NO;
+}
+
+/**
+ *  设置编辑样式
+ */
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        
+        // 判断是否是图片发布者或者评论发布者
+        NSInteger index = indexPath.row;
+        BOOL canDelete = [self publisherOrCommentatorWithIndex:index];
+        
+        if (canDelete) {
+            
+            // 删除评论
+            // 发送请求,删除数据
+            [self deletCommentWithIndex:index];
+            
+//            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
+            
+        }
+    }
+}
+
+- (BOOL)publisherOrCommentatorWithIndex:(NSInteger)index {
+    
+    // 获取发布者
+    LKUser *publisher = self.publisher.user;
+    
+    // 获取评论者
+    LKComment *commmet = self.commentList[index];
+    LKUser *commentator = commmet.user;
+    
+    // 获取当前用户
+    LKUser *user = LKLocalUser.singleton.user;
+    
+    if (publisher.id.integerValue == user.id.integerValue || commentator.id.integerValue == user.id.integerValue) {
+        
+        return YES;
+    }
+    
+    return NO;
+}
+
+/**
+ *  获取评论列表
+ */
+- (void)getCommentList {
+    
+    LKHttpRequestInterface *interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"mark/%@/comment", self.tagValue.id]].AUTO_SESSION().GET_METHOD();
+    
+    @weakly(self);
+    
+    [self request:interface complete:^(LKHttpRequestResult *result) {
+        
+        @normally(self);
+        
+        if (result.state == LKHttpRequestStateFinished) {
+            
+            
+            NSArray *commentList = result.json[@"data"][@"comments"];
+            
+            NSMutableArray *arrayM = [NSMutableArray array];
+            
+            for (NSDictionary *dict in commentList) {
+                
+                [arrayM addObject:[LKComment objectFromDictionary:dict]];
+            }
+            
+            self.commentList = arrayM.copy;
+            
+            [self.pullLoader endRefresh];
+            [self.tableView reloadData];
+            
+        }
+        else if (result.state == LKHttpRequestStateFailed){
+            
+            [self showTopMessageErrorHud:result.error];
+        }
+    }];
+}
+
+/**
+ *  删除评论
+ */
+- (void)deletCommentWithIndex:(NSInteger)index {
+    
+    NSInteger commentCount = self.commentList.count;
+    LKComment *commment = self.commentList[commentCount - index - 1];
+    
+    LKHttpRequestInterface *interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"comment/%@", commment.id]].AUTO_SESSION().DELETE_METHOD();
+    
+    @weakly(self);
+    
+    [self request:interface complete:^(LKHttpRequestResult *result) {
+        
+        @normally(self);
+        
+        if (result.state == LKHttpRequestStateFinished) {
+
+            // 重新获取评论列表
+            [self getCommentList];
+
+            // 刷新
+            [self.pullLoader startRefresh];
+            
+//            [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:1]] withRowAnimation:UITableViewRowAnimationTop];
+            
+        }
+        else if (result.state == LKHttpRequestStateFailed){
+            
+            [self showTopMessageErrorHud:result.error];
+        }
+    }];
+    
+}
+
+#pragma mark - ***** scrollView代理方法 *****
 -(void) scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if (self.canFirstResponder.boolValue) {
         
         [self.inputView resignFirstResponder];
     }
+    
+//    [self getCommentList];
+}
+
+- (void)setPublisher:(LKPost *)publisher {
+    _publisher = publisher;
+
 }
 
 #pragma mark - ***** 懒加载 *****
@@ -768,6 +947,14 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         _iconViews = [NSMutableArray array];
     }
     return _iconViews;
+}
+
+- (NSArray *)commentList {
+    
+    if (_commentList == nil) {
+        _commentList = [NSArray array];
+    }
+    return _commentList;
 }
 
 @end

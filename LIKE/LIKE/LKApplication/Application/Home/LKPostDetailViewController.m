@@ -77,6 +77,8 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
 
 -(void) viewWillAppear:(BOOL)animated
 {
+    [self.tableView reloadData];
+    
     [super viewWillAppear:animated];
     
     [self setNavigationBarHidden:YES animated:animated];
@@ -706,6 +708,8 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
         
         LKTagCommentsViewController * comments = [[LKTagCommentsViewController alloc] initWithTag:tag];
         
+        // 传递发布者模型数据
+        comments.publisher = self.post;
         // 设置代理
         comments.delegate = self;
         self.tag = tag;
@@ -729,22 +733,30 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
 #pragma mark - ***** LKTagCommentsViewControllerDelegate *****
 - (void)tagCommentsViewController:(LKTagCommentsViewController *)ctrl didClickedDeleteBtn:(LCUIButton *)deleteBtn {
     
-    for (LKTag *tag in self.tagsListModel.tags) {
+//    for (LKTag *tag in self.tagsListModel.tags) {
+//        
+//        if ([self.tag.tag isEqualToString:tag.tag]) {
+//            
+//            [self.tagsListModel.tags removeObject:tag];
+//            
+//            // 调用代理
+//            if ([self.delegate respondsToSelector:@selector(postDetailViewController:didDeletedTag:)]) {
+//                
+//                [self.delegate postDetailViewController:self didDeletedTag:tag];
+//            }
+//    
+//            // 刷新数据
+//            [self.tableView reloadData];
+//        }
+//    }
+    
+    if ([self.delegate respondsToSelector:@selector(posetDetailViewControllerDidDeleteTag:)]) {
         
-        if ([self.tag.tag isEqualToString:tag.tag]) {
-            
-            [self.tagsListModel.tags removeObject:tag];
-            
-            // 调用代理
-            if ([self.delegate respondsToSelector:@selector(postDetailViewController:didDeletedTag:)]) {
-                
-                [self.delegate postDetailViewController:self didDeletedTag:tag];
-            }
-            
-            // 刷新数据
-            [self.tableView reloadData];
-        }
+        [self.delegate posetDetailViewControllerDidDeleteTag:self];
     }
+    
+    // 刷新数据
+    [self.tableView reloadData];
 }
 
 #pragma mark -
@@ -1042,6 +1054,12 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
                 [self.inputView resignFirstResponder];
                 
                 LKTagCommentsViewController * comments = [[LKTagCommentsViewController alloc] initWithTag:tag];
+                
+                // 传递发布者模型数据
+                comments.publisher = self.post;
+                // 设置代理
+                comments.delegate = self;
+
                 
                 [comments showInViewController:self];
                 

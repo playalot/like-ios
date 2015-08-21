@@ -64,7 +64,7 @@ LC_PROPERTY(strong) NSNumber * canFirstResponder;
 /**
  *  评论列表
  */
-@property (nonatomic, strong) NSArray *commentList;
+@property (nonatomic, strong) NSMutableArray *commentList;
 
 @end
 
@@ -297,7 +297,8 @@ static NSString * __LKUserAddress = nil;
        
         if (result.state == LKHttpRequestStateFinished) {
             
-            
+            // 重新获取评论列表
+            [self getCommentList];
         }
         else if (result.state == LKHttpRequestStateFailed){
             
@@ -807,6 +808,9 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
+        // 重新获取评论列表
+        [self getCommentList];
+        
         // 判断是否是图片发布者或者评论发布者
         NSInteger index = indexPath.row;
         BOOL canDelete = [self publisherOrCommentatorWithIndex:index];
@@ -819,6 +823,9 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             
 //            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
             
+        } else {
+            
+            self.tableView.editing = NO;
         }
     }
 }
@@ -829,7 +836,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     LKUser *publisher = self.publisher.user;
     
     // 获取评论者
-    LKComment *commmet = self.commentList[index];
+    LKComment *commmet = self.commentList[self.commentList.count - index - 1];
     LKUser *commentator = commmet.user;
     
     // 获取当前用户
@@ -868,7 +875,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
                 [arrayM addObject:[LKComment objectFromDictionary:dict]];
             }
             
-            self.commentList = arrayM.copy;
+            self.commentList = arrayM;
             
             [self.pullLoader endRefresh];
             [self.tableView reloadData];
@@ -949,10 +956,10 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     return _iconViews;
 }
 
-- (NSArray *)commentList {
+- (NSMutableArray *)commentList {
     
     if (_commentList == nil) {
-        _commentList = [NSArray array];
+        _commentList = [NSMutableArray array];
     }
     return _commentList;
 }

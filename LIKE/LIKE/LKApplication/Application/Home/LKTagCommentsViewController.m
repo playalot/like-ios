@@ -712,11 +712,12 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         switch (integerValue) {
             case 0:     // 确定
             {
+                // 发送请求,删除标签
+                [self deleteTagWithDeleteBtn:deleteBtn];
+                
                 // 删除标签,使用代理
                 if ([self.delegate respondsToSelector:@selector(tagCommentsViewController:didClickedDeleteBtn:)]) {
                     
-                    // 发送请求,删除标签
-                    [self deleteTag];
                     [self.delegate tagCommentsViewController:self didClickedDeleteBtn:deleteBtn];
                 }
                 
@@ -735,7 +736,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     }];
 }
 
-- (void)deleteTag {
+- (void)deleteTagWithDeleteBtn:(LCUIButton *)deleteBtn {
     
     LKHttpRequestInterface *interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"mark/%@", self.tagValue.id]].AUTO_SESSION().DELETE_METHOD();
     
@@ -747,7 +748,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         
         if (result.state == LKHttpRequestStateFinished) {
             
-            ;
+
         }
         else if (result.state == LKHttpRequestStateFailed){
             
@@ -930,8 +931,6 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         
         [self.inputView resignFirstResponder];
     }
-    
-//    [self getCommentList];
 }
 
 - (void)setPublisher:(LKPost *)publisher {

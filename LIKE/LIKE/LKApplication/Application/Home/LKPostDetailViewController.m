@@ -61,6 +61,11 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
  *  记录下当前的标签
  */
 @property (nonatomic, strong) LKTag *tag;
+/**
+ *  用户like数量
+ */
+@property (nonatomic, assign) NSInteger userLikesCount;
+
 
 @end
 
@@ -508,7 +513,7 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
 
     if (self.post.user.id.integerValue == LKLocalUser.singleton.user.id.integerValue) {
         
-        [LKActionSheet showWithTitle:LC_LO(@"更多") buttonTitles:@[LC_LO(@"举报"),LC_LO(@"删除"),LC_LO(@"保存图片")] didSelected:^(NSInteger index) {
+        [LKActionSheet showWithTitle:nil/*LC_LO(@"更多")*/ buttonTitles:@[/*LC_LO(@"举报"),*/LC_LO(@"删除"),LC_LO(@"保存图片")] didSelected:^(NSInteger index) {
             
             @normally(self);
 
@@ -535,7 +540,7 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
     }
     else{
         
-        [LKActionSheet showWithTitle:LC_LO(@"更多") buttonTitles:@[LC_LO(@"举报"),LC_LO(@"保存图片")] didSelected:^(NSInteger index) {
+        [LKActionSheet showWithTitle:nil/*LC_LO(@"更多")*/ buttonTitles:@[LC_LO(@"举报"),/*LC_LO(@"保存图片")*/] didSelected:^(NSInteger index) {
             
             @normally(self);
 
@@ -733,30 +738,32 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
 #pragma mark - ***** LKTagCommentsViewControllerDelegate *****
 - (void)tagCommentsViewController:(LKTagCommentsViewController *)ctrl didClickedDeleteBtn:(LCUIButton *)deleteBtn {
     
-//    for (LKTag *tag in self.tagsListModel.tags) {
-//        
-//        if ([self.tag.tag isEqualToString:tag.tag]) {
-//            
-//            [self.tagsListModel.tags removeObject:tag];
-//            
-//            // 调用代理
-//            if ([self.delegate respondsToSelector:@selector(postDetailViewController:didDeletedTag:)]) {
-//                
-//                [self.delegate postDetailViewController:self didDeletedTag:tag];
-//            }
-//    
-//            // 刷新数据
-//            [self.tableView reloadData];
-//        }
-//    }
-    
-    if ([self.delegate respondsToSelector:@selector(posetDetailViewControllerDidDeleteTag:)]) {
+    for (LKTag *tag in self.tagsListModel.tags) {
         
-        [self.delegate posetDetailViewControllerDidDeleteTag:self];
+        if ([self.tag.tag isEqualToString:tag.tag]) {
+            
+            [self.tagsListModel.tags removeObject:tag];
+            
+            // 调用代理
+            if ([self.delegate respondsToSelector:@selector(postDetailViewController:didDeletedTag:)]) {
+                
+                [self.delegate postDetailViewController:self didDeletedTag:tag];
+            }
+    
+            // 刷新数据
+            [self.tableView reloadData];
+            
+            break;
+        }
     }
     
+//    if ([self.delegate respondsToSelector:@selector(posetDetailViewControllerDidDeleteTag:)]) {
+//        
+//        [self.delegate posetDetailViewControllerDidDeleteTag:self];
+//    }
+    
     // 刷新数据
-    [self.tableView reloadData];
+//    [self.tableView reloadData];
 }
 
 #pragma mark -
@@ -905,6 +912,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         self.userHead.url = self.post.user.avatar;
         self.userName.text = self.post.user.name;
         [self.userLikes setText:self.post.user.likes.description animated:NO];
+
         
         CGSize likeSize = [self.userLikes.text sizeWithFont:LK_FONT(13) byWidth:200];
 

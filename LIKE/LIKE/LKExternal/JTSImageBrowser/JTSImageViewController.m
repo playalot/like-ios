@@ -1744,15 +1744,17 @@ typedef struct {
             CGPoint location = [sender locationInView:self.view];
             [self.interactionsDelegate imageViewerDidLongPress:self atRect:CGRectMake(location.x, location.y, 0.0f, 0.0f)];
         }
+
+        // 取消保存图片的功能
+//        [LKActionSheet showWithTitle:nil buttonTitles:@[@"保存图片"] didSelected:^(NSInteger index) {
+//           
+//            if (index == 0) {
+//                
+//                [LKPhotoAlbum saveImage:self.imageView.image showTip:YES];
+//            }
+//            
+//        }];
         
-        [LKActionSheet showWithTitle:nil buttonTitles:@[@"保存图片"] didSelected:^(NSInteger index) {
-           
-            if (index == 0) {
-                
-                [LKPhotoAlbum saveImage:self.imageView.image showTip:YES];
-            }
-            
-        }];
         
 //        if ([self.interactionsDelegate respondsToSelector:@selector(imageViewerAllowCopyToPasteboard:)]) {
 //            allowCopy = [self.interactionsDelegate imageViewerAllowCopyToPasteboard:self];

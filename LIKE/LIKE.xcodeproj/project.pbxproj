@@ -2427,7 +2427,8 @@
 				1373C4321B846FDA00A6C55A /* NSString+MJExtension.h */,
 				1373C4331B846FDA00A6C55A /* NSString+MJExtension.m */,
 			);
-			path = MJExtension;
+			name = MJExtension;
+			path = ../LCFramework/Extension/MJExtension;
 			sourceTree = "<group>";
 		};
 		1373C4411B847A6000A6C55A /* SDWebImage */ = {
@@ -2467,7 +2468,8 @@
 				1373C4611B847A6000A6C55A /* UIView+WebCacheOperation.h */,
 				1373C4621B847A6000A6C55A /* UIView+WebCacheOperation.m */,
 			);
-			path = SDWebImage;
+			name = SDWebImage;
+			path = ../LCFramework/Extension/SDWebImage;
 			sourceTree = "<group>";
 		};
 		1377F0411B5E35D8008E21BC /* Doppelganger */ = {
@@ -2987,8 +2989,6 @@
 		138EDCCC1AD7B0A30020957C /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				1373C4411B847A6000A6C55A /* SDWebImage */,
-				1373C41E1B846FDA00A6C55A /* MJExtension */,
 				138EDCCD1AD7B0A30020957C /* AFNetworking */,
 				138EDD051AD7B0A30020957C /* fmdb */,
 				138EDD111AD7B0A30020957C /* JSONModel */,
@@ -3484,6 +3484,8 @@
 		138EDECC1AD7B70F0020957C /* LKExternal */ = {
 			isa = PBXGroup;
 			children = (
+				1373C41E1B846FDA00A6C55A /* MJExtension */,
+				1373C4411B847A6000A6C55A /* SDWebImage */,
 				13478CB11B65F5D20012EDA2 /* M13BadgeView */,
 				13D549DA1B60E90F00D3CA2C /* ADTickerAnimationLabel */,
 				13E3EDFA1B60955400A48E76 /* NCChineseConverter */,

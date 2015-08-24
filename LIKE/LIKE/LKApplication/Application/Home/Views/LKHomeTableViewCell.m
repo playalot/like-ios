@@ -10,6 +10,7 @@
 #import "LKPost.h"
 #import "LKTagsView.h"
 #import "ADTickerLabel.h"
+#import "UIImageView+WebCache.h"
 
 @interface LKHomeTableViewCell()
 
@@ -21,7 +22,7 @@ LC_PROPERTY(strong) LCUIButton * friendshipButton;
 LC_PROPERTY(strong) LCUIActivityIndicatorView * loadingActivity;
 
 LC_PROPERTY(strong) LCUIButton * recommendedReason;
-LC_PROPERTY(strong) LCUILabel * recommendedReasonWithTag;
+LC_PROPERTY(strong) LCUIButton * recommendedReasonWithTag;
 
 LC_PROPERTY(strong) UIView * blackMask;
 
@@ -68,7 +69,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.ADD(self.contentBack);
     
     
-    
+    // 内容图片
     self.contentImage = LCUIImageView.view;
     self.contentImage.viewFrameY = -30;
     self.contentImage.backgroundColor = [UIColor whiteColor];
@@ -88,6 +89,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     [LKHomeTableViewCell roundCorners:UIRectCornerTopLeft | UIRectCornerTopRight forView:headerBack];
     
     
+    // 头像
     self.head = LCUIImageView.view;
     self.head.viewFrameX = 15;
     self.head.viewFrameY = 55 / 2 - 35 / 2 + 5;
@@ -101,6 +103,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.ADD(self.head);
     
     
+    // 昵称
     self.title = LCUILabel.view;
     self.title.viewFrameX = self.head.viewRightX + 10;
     self.title.viewFrameY = self.head.viewFrameY;
@@ -112,6 +115,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.ADD(self.title);
     
     
+    // like数量
     self.likes = ADTickerLabel.view;
     self.likes.viewFrameWidth = LC_DEVICE_WIDTH / 2 - 10 - 5;
     self.likes.viewFrameX = self.title.viewFrameX;
@@ -125,6 +129,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.ADD(self.likes);
     
     
+    // like数量后缀
     self.likesTip = LCUILabel.view;
     self.likesTip.viewFrameY = self.likes.viewFrameY;
     self.likesTip.font = LK_FONT(13);
@@ -136,7 +141,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     [self.likesTip addTapGestureRecognizer:self selector:@selector(handleHeadTap:)];
     self.ADD(self.likesTip);
     
-    
+    // 推荐理由
     self.recommendedReason = LCUIButton.view;
     self.recommendedReason.viewFrameY = self.title.viewFrameY + 2;
     self.recommendedReason.title = LC_LO(@"共同兴趣");
@@ -146,18 +151,29 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.recommendedReason.viewFrameHeight = LK_FONT(11).lineHeight;
     self.recommendedReason.viewFrameX = LC_DEVICE_WIDTH - self.recommendedReasonWithTag.viewFrameWidth - 15;
     self.recommendedReason.titleEdgeInsets = UIEdgeInsetsMake(1, 0, 0, 0);
+    [self.recommendedReason addTarget:self action:@selector(recommendedReasonBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     self.ADD(self.recommendedReason);
     
-    
-    self.recommendedReasonWithTag = LCUILabel.view;
+    // 推荐理由标签
+//    self.recommendedReasonWithTag = LCUILabel.view;
+    self.recommendedReasonWithTag = LCUIButton.view;
     self.recommendedReasonWithTag.viewFrameWidth = LC_DEVICE_WIDTH / 2;
-    self.recommendedReasonWithTag.viewFrameX = LC_DEVICE_WIDTH / 2 - 15;
-    self.recommendedReasonWithTag.viewFrameY = self.likesTip.viewFrameY + 2;
     self.recommendedReasonWithTag.viewFrameHeight = LK_FONT(11).lineHeight;
-    self.recommendedReasonWithTag.text = LC_LO(@"有故事的人");
-    self.recommendedReasonWithTag.textColor = LC_RGB(155, 155, 155);
-    self.recommendedReasonWithTag.font = LK_FONT(11);
-    self.recommendedReasonWithTag.textAlignment = UITextAlignmentRight;
+    self.recommendedReasonWithTag.viewFrameX = LC_DEVICE_WIDTH / 2 - 15;
+//    [self.recommendedReasonWithTag sizeToFit];
+//    self.recommendedReasonWithTag.viewFrameX = CGRectGetMaxX(self.recommendedReason.frame) - self.recommendedReasonWithTag.viewFrameWidth;
+    self.recommendedReasonWithTag.viewFrameY = self.likesTip.viewFrameY + 2;
+//    self.recommendedReasonWithTag.viewFrameY = CGRectGetMaxY(self.recommendedReason.frame) + 5;
+//    self.recommendedReasonWithTag.text = LC_LO(@"有故事的人");
+    self.recommendedReasonWithTag.title = LC_LO(@"有故事的人");
+//    self.recommendedReasonWithTag.textColor = LC_RGB(155, 155, 155);
+    self.recommendedReasonWithTag.titleColor = LC_RGB(155, 155, 155);
+//    self.recommendedReasonWithTag.font = LK_FONT(11);
+    self.recommendedReasonWithTag.titleFont = LK_FONT(11);
+//    self.recommendedReasonWithTag.textAlignment = UITextAlignmentRight;
+    self.recommendedReasonWithTag.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    self.recommendedReasonWithTag.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 1);
+    [self.recommendedReasonWithTag addTarget:self action:@selector(recommendedReasonBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     self.ADD(self.recommendedReasonWithTag);
     
     
@@ -230,7 +246,8 @@ LC_IMP_SIGNAL(PushPostDetail);
 
     // 设置cell内容
     self.head.image = nil;
-    self.head.url = post.user.avatar;
+//    self.head.url = post.user.avatar;
+    [self.head sd_setImageWithURL:[NSURL URLWithString:post.user.avatar] placeholderImage:nil];
     self.title.text = LC_NSSTRING_FORMAT(@"%@", post.user.name);
     [self.likes setText:LC_NSSTRING_FORMAT(@"%@", post.user.likes) animated:NO];
     
@@ -256,7 +273,8 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.contentImage.clipsToBounds = YES;
     self.contentImage.frame = self.contentBack.bounds;
     self.contentImage.image = nil;
-    self.contentImage.url = post.content;
+//    self.contentImage.url = post.content;
+    [self.contentImage sd_setImageWithURL:[NSURL URLWithString:post.content] placeholderImage:nil];
     
     
     // 设置标签的frame
@@ -308,12 +326,16 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.recommendedReason.viewFrameX = LC_DEVICE_WIDTH - self.recommendedReason.viewFrameWidth - 15;
     self.recommendedReason.hidden = post.reason <= 0;
     
-    self.recommendedReasonWithTag.text = post.reasonTag;
+//    self.recommendedReasonWithTag.text = post.reasonTag;
+    self.recommendedReasonWithTag.title = post.reasonTag;
     self.recommendedReasonWithTag.hidden = LC_NSSTRING_IS_INVALID(post.reasonTag);
     
     if (self.recommendedReasonWithTag.hidden == YES) {
         
         self.recommendedReason.viewFrameY = 55 / 2 - self.recommendedReason.viewMidHeight + 5;
+        self.recommendedReasonWithTag.viewFrameY = CGRectGetMaxY(self.recommendedReason.frame) - 5;
+        self.recommendedReasonWithTag.viewFrameX = CGRectGetMaxX(self.recommendedReason.frame) - self.recommendedReasonWithTag.viewFrameWidth;
+//        [self.recommendedReasonWithTag sizeToFit];
     }
 }
 
@@ -432,6 +454,14 @@ LC_IMP_SIGNAL(PushPostDetail);
     }
     
     return nil;
+}
+
+- (void)recommendedReasonBtnClick:(LCUIButton *)reasonBtn {
+    
+    if ([self.delegate respondsToSelector:@selector(homeTableViewCell:didClickReasonBtn:)]) {
+        
+        [self.delegate homeTableViewCell:self didClickReasonBtn:self.recommendedReasonWithTag];
+    }
 }
 
 @end

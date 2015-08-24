@@ -517,17 +517,18 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
             
             @normally(self);
 
-            if (index == 0) {
+            /*if (index == 0) {
                 
                 // 举报
                 [self _report];
             }
-            else if (index == 1){
+            else */
+            if (index == 0){
                 
                 // 删除
                 [self _delete];
             }
-            else if (index == 2){
+            else if (index == 1){
                 
                 if (self.header.backgroundView.image) {
                     
@@ -547,18 +548,104 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
             if (index == 0) {
                 
                 // 举报
-                [self _report];
+//                [self _report];
+                [self reportReason];
             }
-            else if (index == 1){
-                
-                if (self.header.backgroundView.image) {
-                    
-                    [LKPhotoAlbum saveImage:self.header.backgroundView.image showTip:YES];
-                }
-            }
+//            else if (index == 1){
+//                
+//                if (self.header.backgroundView.image) {
+//                    
+//                    [LKPhotoAlbum saveImage:self.header.backgroundView.image showTip:YES];
+//                }
+//            }
             
         }];
     }
+}
+
+/**
+ *  举报原因
+ */
+- (void)reportReason {
+    
+    @weakly(self);
+    
+    [LKActionSheet showWithTitle:nil buttonTitles:@[LC_LO(@"自拍"),LC_LO(@"广告"),LC_LO(@"色情"),LC_LO(@"谣言"),LC_LO(@"恶意营销"),LC_LO(@"侮辱诋毁"),LC_LO(@"侵权举报 (诽谤、抄袭、冒用...)")] didSelected:^(NSInteger index) {
+        
+        @normally(self);
+
+        if (index != 7) {
+            
+            [self reportWithIndex:index];
+        }
+        
+    }];
+}
+
+/**
+ *  举报
+ */
+- (void)reportWithIndex:(NSInteger)index {
+    
+    if ([LKLoginViewController needLoginOnViewController:self.navigationController]) {
+        return;
+    }
+    
+    [self cancelAllRequests];
+    
+    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"post/%@/report", self.post.id]].AUTO_SESSION().POST_METHOD();
+    
+    switch (index) {
+        case 0:
+            [interface addParameter:@"自拍" key:@"reason"];
+            break;
+            
+        case 1:
+            [interface addParameter:@"广告" key:@"reason"];
+            break;
+            
+        case 2:
+            [interface addParameter:@"色情" key:@"reason"];
+            break;
+            
+        case 3:
+            [interface addParameter:@"谣言" key:@"reason"];
+            break;
+            
+        case 4:
+            [interface addParameter:@"恶意营销" key:@"reason"];
+            break;
+            
+        case 5:
+            [interface addParameter:@"侮辱诋毁" key:@"reason"];
+            break;
+            
+        case 6:
+            [interface addParameter:@"侵权举报 (诽谤、抄袭、冒用...)" key:@"reason"];
+            break;
+            
+        default:
+            break;
+    }
+    
+    @weakly(self);
+    
+    [self request:interface complete:^(LKHttpRequestResult *result) {
+        
+        @normally(self);
+        
+        if (result.state == LKHttpRequestStateFinished) {
+            
+            [LCUIAlertView showWithTitle:nil message:LC_LO(@"感谢您的举报！") cancelTitle:LC_LO(@"好的") otherTitle:nil didTouchedBlock:^(NSInteger integerValue) {
+                
+            }];
+        }
+        else if (result.state == LKHttpRequestStateFailed){
+            
+            [self showTopMessageErrorHud:result.error];
+        }
+        
+    }];
 }
 
 #pragma mark - ***** 加载大图 *****
@@ -645,6 +732,7 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
     [self cancelAllRequests];
     
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"post/%@/report", self.post.id]].AUTO_SESSION().POST_METHOD();
+    
 
     @weakly(self);
 

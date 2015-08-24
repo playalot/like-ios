@@ -33,6 +33,7 @@
 #import "LKAttentionViewController.h"
 #import "Doppelganger.h"
 #import "LKBadgeView.h"
+#import "LKSearchResultsViewController.h"
 
 
 #define FOCUS_FEED_CACHE_KEY [NSString stringWithFormat:@"LKFocusFeedKey-%@", LKLocalUser.singleton.user.id]
@@ -44,7 +45,7 @@ typedef NS_ENUM(NSInteger, LKHomepageFeedType)
     LKHomepageFeedTypeNotification, // 通知页
 };
 
-@interface LKHomeViewController () <UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate, LKPostDetailViewControllerDelegate>
+@interface LKHomeViewController () <UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate, LKPostDetailViewControllerDelegate, LKHomeTableViewCellDelegate>
 
 LC_PROPERTY(assign) LKHomepageFeedType feedType;
 
@@ -1342,6 +1343,8 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
     }
     
     LKHomeTableViewCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Content" andClass:[LKHomeTableViewCell class]];
+    // 设置cell的代理
+    cell.delegate = self;
     
     LKPost * post = nil;
     
@@ -1439,6 +1442,131 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
     //    }
 }
 
+//- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+//    
+//    CGPoint offset = self.tableView.contentOffset;
+//    CGSize contentSize = self.tableView.contentSize;
+//    CGRect frame = self.tableView.frame;
+//    
+//    if (offset.y >= contentSize.height - 7 * frame.size.height) {
+//        
+//        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//            
+//            [self test:LCUIPullLoaderDiretionBottom];
+//        });
+//
+////        [self loadData:LCUIPullLoaderDiretionBottom];
+//    }
+//}
+
+- (void)test:(LCUIPullLoaderDiretion)diretion {
+    
+//    NSTimeInterval time = [[NSDate date] timeIntervalSince1970];
+    
+    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:self.feedType == LKHomepageFeedTypeFocus ? @"friendfeeds" : @"homefeeds" ].AUTO_SESSION();
+    
+    if (self.feedType == LKHomepageFeedTypeFocus) {
+        
+        if (self.focusNext && diretion == LCUIPullLoaderDiretionBottom) {
+            
+            [interface addParameter:self.focusNext key:@"ts"];
+        }
+    }
+    else{
+        
+        if (!LC_NSSTRING_IS_INVALID(self.next) && diretion == LCUIPullLoaderDiretionBottom) {
+            
+            [interface addParameter:self.next key:@"ts"];
+        }
+    }
+    
+    @weakly(self);
+    
+    [self request:interface complete:^(LKHttpRequestResult *result) {
+        
+        @normally(self);
+        
+        if (result.state == LKHttpRequestStateFinished) {
+            
+            if (self.feedType == LKHomepageFeedTypeFocus) {
+                
+                self.focusNext = result.json[@"data"][@"next"] ? result.json[@"data"][@"next"] : nil;
+            }
+            else{
+                
+                self.next = result.json[@"data"][@"next"] ? result.json[@"data"][@"next"] : @"";
+            }
+            
+            NSArray * resultData = result.json[@"data"][@"posts"];
+            NSMutableArray * datasource = [NSMutableArray array];
+            
+            for (NSDictionary * tmp in resultData) {
+                
+                [datasource addObject:[LKPost objectFromDictionary:tmp]];
+            }
+                
+            if (self.feedType == LKHomepageFeedTypeFocus) {
+                
+                [self.focusDatasource addObjectsFromArray:datasource];
+            }
+            else{
+                
+                [self.datasource addObjectsFromArray:datasource];
+            }
+            
+            if (diretion == LCUIPullLoaderDiretionBottom) {
+                
+                if (self.feedType == LKHomepageFeedTypeFocus) {
+                    
+                    [self.attentionViewController.pullLoader endRefresh];
+                }
+                else{
+                    
+                    [self.pullLoader endRefresh];
+                }
+                
+            }
+            
+            LC_FAST_ANIMATIONS(0.25, ^{
+                
+                if (self.feedType == LKHomepageFeedTypeMain) {
+                    
+                    [self.tableView reloadData];
+                }
+                else{
+                    [self.attentionViewController.tableView reloadData];
+                }
+            });
+            
+        }
+        else if (result.state == LKHttpRequestStateFailed){
+            
+            if (self.feedType == LKHomepageFeedTypeFocus) {
+                
+                [self.attentionViewController.pullLoader endRefresh];
+            }
+            else{
+                
+                [self.pullLoader endRefresh];
+            }
+            
+            [self showTopMessageErrorHud:result.error];
+            
+        }
+        else if (result.state == LKHttpRequestStateCanceled){
+            
+            if (self.feedType == LKHomepageFeedTypeFocus) {
+                
+                [self.attentionViewController.pullLoader endRefresh];
+            }
+            else{
+                
+                [self.pullLoader endRefresh];
+            }
+        }
+    }];
+}
+
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     if (decelerate) {
@@ -1453,10 +1581,40 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     if (self.needRefresh) {
-        
+    
         [self loadData:LCUIPullLoaderDiretionTop];
         
         self.needRefresh = NO;
+    }
+    
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
+    
+    
+    CGPoint offset = self.tableView.contentOffset;
+    CGSize contentSize = self.tableView.contentSize;
+    CGRect frame = self.tableView.frame;
+    
+    if (offset.y >= contentSize.height - 7 * frame.size.height) {
+        
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            
+            [self test:LCUIPullLoaderDiretionBottom];
+        });
+        
+        //        [self loadData:LCUIPullLoaderDiretionBottom];
+    }
+
+}
+
+#pragma mark - ***** LKHomeTableViewCellDelegate *****
+- (void)homeTableViewCell:(LKHomeTableViewCell *)cell didClickReasonBtn:(LCUIButton *)reasonBtn {
+    
+    if (reasonBtn.title != nil) {
+        
+        LKSearchResultsViewController *searchResultCtrl = [[LKSearchResultsViewController alloc] initWithSearchString:reasonBtn.title];
+        [self.navigationController pushViewController:searchResultCtrl animated:YES];
     }
 }
 

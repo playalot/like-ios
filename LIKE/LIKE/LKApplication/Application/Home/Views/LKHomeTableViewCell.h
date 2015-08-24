@@ -14,6 +14,8 @@ LC_BLOCK(void, LKHomeCellAddTag, (LKPost * post));
 LC_BLOCK(void, LKHomeCellRemovedTag, (LKPost * post));
 LC_BLOCK(void, LKHomeCellCustomAction, (LKPost * post));
 
+@protocol LKHomeTableViewCellDelegate;
+
 @interface LKHomeTableViewCell : LCUITableViewCell
 
 LC_ST_SIGNAL(PushUserCenter);
@@ -37,6 +39,14 @@ LC_PROPERTY(strong) UIView * contentBack;
 LC_PROPERTY(strong) LKTagsView * tagsView;
 
 -(void) newTagAnimation:(void (^)(BOOL finished))completion;
+
+@property (nonatomic, weak) id <LKHomeTableViewCellDelegate> delegate;
+
+@end
+
+@protocol LKHomeTableViewCellDelegate <NSObject>
+
+- (void)homeTableViewCell:(LKHomeTableViewCell *)cell didClickReasonBtn:(LCUIButton *)reasonBtn;
 
 @end
 

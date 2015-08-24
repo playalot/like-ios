@@ -67,22 +67,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "LIKE/LKExternal/JTSImageBrowser/JTSImageViewController.m"
-            timestampString = "453708358.070426"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1282"
-            endingLineNumber = "1282"
-            landmarkName = "-dismissByExpandingAltTextToOffscreenPosition"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "LIKE/LKExternal/JTSImageBrowser/JTSSimpleImageDownloader.m"
             timestampString = "453022868.508384"
             startingColumnNumber = "9223372036854775807"

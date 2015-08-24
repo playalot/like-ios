@@ -202,6 +202,9 @@ LC_IMP_SIGNAL(PushPostDetail);
 //    self.SEND(self.PushPostDetail).object = self.notification.posts[tap.view.tag];
 //}
 
+/**
+ *  点击头像执行
+ */
 -(void) handleHeadTap:(UITapGestureRecognizer *)tap
 {
     self.SEND(@"PushUserCenter").object = self.notification.user;

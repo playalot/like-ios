@@ -10,6 +10,11 @@
 		13101D2D1B12DE5F00FBE516 /* LKShareMaskImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 13101D2C1B12DE5F00FBE516 /* LKShareMaskImage.m */; };
 		13101D301B13074700FBE516 /* LKShareTagsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13101D2F1B13074700FBE516 /* LKShareTagsView.m */; };
 		13101D351B1332DE00FBE516 /* LikeIconSmall@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13101D341B1332DE00FBE516 /* LikeIconSmall@3x.png */; };
+		131915641B8C267900EC0F42 /* SMS_SDKLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 131915601B8C267900EC0F42 /* SMS_SDKLocalizable.strings */; };
+		131915651B8C267900EC0F42 /* SMS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 131915621B8C267900EC0F42 /* SMS_SDK.framework */; };
+		131915671B8C26C400EC0F42 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 131915661B8C26C400EC0F42 /* MessageUI.framework */; };
+		131915691B8C625A00EC0F42 /* 二维码.png in Resources */ = {isa = PBXBuildFile; fileRef = 131915681B8C625A00EC0F42 /* 二维码.png */; };
+		1319156B1B8C863100EC0F42 /* 旅行.png in Resources */ = {isa = PBXBuildFile; fileRef = 1319156A1B8C863100EC0F42 /* 旅行.png */; };
 		133A31831B5D09C500AB74A4 /* CollectionIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 133A31821B5D09C500AB74A4 /* CollectionIcon@3x.png */; };
 		133A31851B5D0D3400AB74A4 /* SearchPlaceholderIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 133A31841B5D0D3400AB74A4 /* SearchPlaceholderIcon@3x.png */; };
 		133D3C7D1AE78DC9008F303D /* LKAssistiveTouchButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 133D3C7C1AE78DC9008F303D /* LKAssistiveTouchButton.m */; };
@@ -762,6 +767,12 @@
 		13101D2E1B13074700FBE516 /* LKShareTagsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKShareTagsView.h; sourceTree = "<group>"; };
 		13101D2F1B13074700FBE516 /* LKShareTagsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKShareTagsView.m; sourceTree = "<group>"; };
 		13101D341B1332DE00FBE516 /* LikeIconSmall@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LikeIconSmall@3x.png"; sourceTree = "<group>"; };
+		131915611B8C267900EC0F42 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/SMS_SDKLocalizable.strings; sourceTree = "<group>"; };
+		131915621B8C267900EC0F42 /* SMS_SDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SMS_SDK.framework; sourceTree = "<group>"; };
+		131915631B8C267900EC0F42 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/SMS_SDKLocalizable.strings"; sourceTree = "<group>"; };
+		131915661B8C26C400EC0F42 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		131915681B8C625A00EC0F42 /* 二维码.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "二维码.png"; sourceTree = "<group>"; };
+		1319156A1B8C863100EC0F42 /* 旅行.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "旅行.png"; sourceTree = "<group>"; };
 		133A31821B5D09C500AB74A4 /* CollectionIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CollectionIcon@3x.png"; sourceTree = "<group>"; };
 		133A31841B5D0D3400AB74A4 /* SearchPlaceholderIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SearchPlaceholderIcon@3x.png"; sourceTree = "<group>"; };
 		133D3C7B1AE78DC9008F303D /* LKAssistiveTouchButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKAssistiveTouchButton.h; sourceTree = "<group>"; };
@@ -2164,7 +2175,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				131915671B8C26C400EC0F42 /* MessageUI.framework in Frameworks */,
 				135E8A9E1B45114600C2270C /* libstdc++.6.0.9.dylib in Frameworks */,
+				131915651B8C267900EC0F42 /* SMS_SDK.framework in Frameworks */,
 				135E8A9C1B45112300C2270C /* libstdc++.dylib in Frameworks */,
 				135735191B2EC6FC0032515C /* libicucore.dylib in Frameworks */,
 				138EDEC71AD7B1DA0020957C /* libxml2.dylib in Frameworks */,
@@ -2192,6 +2205,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1319155F1B8C267900EC0F42 /* SMS_SDK */ = {
+			isa = PBXGroup;
+			children = (
+				131915601B8C267900EC0F42 /* SMS_SDKLocalizable.strings */,
+				131915621B8C267900EC0F42 /* SMS_SDK.framework */,
+			);
+			path = SMS_SDK;
+			sourceTree = "<group>";
+		};
 		133D3C841AE79667008F303D /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -2535,6 +2557,7 @@
 		138EDBE41AD7B08A0020957C = {
 			isa = PBXGroup;
 			children = (
+				131915661B8C26C400EC0F42 /* MessageUI.framework */,
 				135E8A9D1B45114600C2270C /* libstdc++.6.0.9.dylib */,
 				135E8A9B1B45112300C2270C /* libstdc++.dylib */,
 				135735181B2EC6FC0032515C /* libicucore.dylib */,
@@ -3484,6 +3507,7 @@
 		138EDECC1AD7B70F0020957C /* LKExternal */ = {
 			isa = PBXGroup;
 			children = (
+				1319155F1B8C267900EC0F42 /* SMS_SDK */,
 				1373C41E1B846FDA00A6C55A /* MJExtension */,
 				1373C4411B847A6000A6C55A /* SDWebImage */,
 				13478CB11B65F5D20012EDA2 /* M13BadgeView */,
@@ -4592,6 +4616,8 @@
 		13F505091B0C5EA100D8D484 /* Share */ = {
 			isa = PBXGroup;
 			children = (
+				1319156A1B8C863100EC0F42 /* 旅行.png */,
+				131915681B8C625A00EC0F42 /* 二维码.png */,
 				1387C34F1B316CC400B065A7 /* FacebookIcon@3x.png */,
 				13F5050A1B0C5EAC00D8D484 /* QQIcon@3x.png */,
 				13F5050B1B0C5EAC00D8D484 /* ShareIcon@3x.png */,
@@ -4840,6 +4866,7 @@
 				135CF64E1B37E52500DB24D6 /* CameraMagic@3x.png in Resources */,
 				1357352D1B2EF44E0032515C /* WeiboLogin@3x.png in Resources */,
 				138EDE431AD7B0A30020957C /* web.bundle in Resources */,
+				131915691B8C625A00EC0F42 /* 二维码.png in Resources */,
 				13DEEBF91AE75585005E01A6 /* AlreadyFocusWrite@3x.png in Resources */,
 				1377F03D1B5E1240008E21BC /* NotificationTagIcon@3x.png in Resources */,
 				1377F03A1B5E1240008E21BC /* NotificationCommentIcon@3x.png in Resources */,
@@ -4864,6 +4891,7 @@
 				13B6C1961AE8E8EA008912C0 /* NotificationIcon@3x.png in Resources */,
 				13D9BF271AEB997E0020C94F /* Diana.png in Resources */,
 				135DBAF71AE60577004AD150 /* NavigationBarMore@3x.png in Resources */,
+				1319156B1B8C863100EC0F42 /* 旅行.png in Resources */,
 				133A31851B5D0D3400AB74A4 /* SearchPlaceholderIcon@3x.png in Resources */,
 				13D9BF251AEB997E0020C94F /* Ansel.png in Resources */,
 				13B6C19F1AE8FFBE008912C0 /* 1136.jpg in Resources */,
@@ -4887,6 +4915,7 @@
 				13B6C1A11AE8FFBE008912C0 /* 2208.jpg in Resources */,
 				13925A6D1B145BCE004D0656 /* SearchIcon@3x.png in Resources */,
 				138EDED61AD7C5DB0020957C /* LikeIcon@3x.png in Resources */,
+				131915641B8C267900EC0F42 /* SMS_SDKLocalizable.strings in Resources */,
 				135D5C261AE0DA9700811B06 /* FilterPreview@3x.jpg in Resources */,
 				134F929F1AFCB77400784185 /* LikesPage@3x.png in Resources */,
 				13D9BF291AEB997E0020C94F /* Instant.png in Resources */,
@@ -5522,6 +5551,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		131915601B8C267900EC0F42 /* SMS_SDKLocalizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				131915611B8C267900EC0F42 /* en */,
+				131915631B8C267900EC0F42 /* zh-Hans */,
+			);
+			name = SMS_SDKLocalizable.strings;
+			sourceTree = "<group>";
+		};
 		135735241B2EE7D10032515C /* country.plist */ = {
 			isa = PBXVariantGroup;
 			children = (

@@ -1288,7 +1288,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     CGFloat proportion = (image.size.width / 640);
     CGFloat headWidth = 90 * proportion;
     
-    
+    // 头像下面的view
     UIView * cornerRadiusView = UIView.view;
     cornerRadiusView.viewFrameX = 20 * proportion;
     cornerRadiusView.viewFrameY = 0;
@@ -1298,7 +1298,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     cornerRadiusView.backgroundColor = [UIColor whiteColor];
     bottomView.ADD(cornerRadiusView);
     
-    
+    // 用户头像
     LCUIImageView * imageView = LCUIImageView.view;
     imageView.viewFrameWidth = headWidth - 10 * proportion;
     imageView.viewFrameHeight = headWidth - 10 * proportion;
@@ -1310,7 +1310,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     bottomView.ADD(imageView);
     
     
-    
+    // 昵称
     LCUILabel * nameLabel = LCUILabel.view;
     nameLabel.viewFrameX = imageView.viewRightX + 10 * proportion;
     nameLabel.viewFrameY = 10 * proportion + headWidth / 2;
@@ -1322,6 +1322,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     bottomView.ADD(nameLabel);
     
     
+    // 分享图片的标签
     LKShareTagsView * tagsView = LKShareTagsView.view;
     tagsView.proportion = proportion;
     tagsView.viewFrameY = imageView.viewBottomY + 10 * proportion;
@@ -1330,8 +1331,46 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     tagsView.tags = self.tagsListModel.tags;
     bottomView.ADD(tagsView);
 
+    // 设置标签颜色
+    for (LKTagItem *item in tagsView.subviews) {
+        
+        item.backgroundColor = [LKColor.color colorWithAlphaComponent:1];
+        item.tagLabel.textColor = [UIColor whiteColor];
+        item.tagLabel.font = LK_FONT_B(20);
+        item.likesLabel.textColor = [UIColor whiteColor];
+        item.likesLabel.font = LK_FONT_B(20);
+        item.likesLabel.borderColor = [[UIColor whiteColor] colorWithAlphaComponent:1];
+        item.likesLabel.borderWidth = 1.5;
+
+    }
     
-    bottomView.viewFrameHeight = tagsView.viewBottomY + 10 * proportion;
+    // 二维码
+    LCUIImageView *qrCodeView = LCUIImageView.view;
+    qrCodeView.viewFrameWidth = 83 * 2;
+    qrCodeView.viewFrameHeight = 83 * 2;
+    qrCodeView.viewFrameX = image.size.width - qrCodeView.viewFrameWidth - 22;
+    qrCodeView.viewFrameY = CGRectGetMaxY(tagsView.frame);
+    qrCodeView.image = [UIImage imageNamed:@"二维码"];
+    bottomView.ADD(qrCodeView);
+    
+    
+    for (LKTag *tag in self.tagsListModel.tags) {
+        
+        if ([tag.tag isEqualToString:@"旅行"]) {
+            
+            // 添加旅行特色图片
+            LCUIImageView *travelView = LCUIImageView.view;
+            travelView.viewFrameWidth = 123 * 2;
+            travelView.viewFrameHeight = 32 * 2;
+            travelView.viewFrameX = tagsView.viewFrameX + 18;
+            travelView.viewFrameY = CGRectGetMaxY(qrCodeView.frame) - travelView.viewFrameHeight;
+            travelView.image = [UIImage imageNamed:@"旅行"];
+            bottomView.ADD(travelView);
+        }
+    }
+
+    
+    bottomView.viewFrameHeight = qrCodeView.viewBottomY + 22;
     bottomView.viewFrameWidth = image.size.width;
     
     
@@ -1364,6 +1403,46 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
                          inRect:LC_RECT(image.size.width - icon.size.width - 20, 20, icon.size.width, icon.size.height)];
     
     return image;
+}
+
+/**
+ *  根据不同的兴趣返回不同的图片
+ */
+- (UIImage *)getInterestImageWithTagArray:(NSArray *)tagArray {
+    
+    switch (tagArray.count) {
+        case 0:
+            return [UIImage imageNamed:@"二维码"];
+            break;
+            
+        case 1:
+            return [UIImage imageNamed:@"二维码"];
+            break;
+            
+        case 2:
+            return [UIImage imageNamed:@"二维码"];
+            break;
+            
+        case 3:
+            return [UIImage imageNamed:@"二维码"];
+            break;
+            
+        case 4:
+            return [UIImage imageNamed:@"二维码"];
+            break;
+            
+        case 5:
+            return [UIImage imageNamed:@"二维码"];
+            break;
+            
+        case 6:
+            return [UIImage imageNamed:@"二维码"];
+            break;
+            
+        default:
+            return nil;
+            break;
+    }
 }
 
 -(void) reloadDataAndUpdate

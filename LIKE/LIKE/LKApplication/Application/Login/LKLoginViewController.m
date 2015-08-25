@@ -17,6 +17,8 @@
 #import "LKISOCountryCodes.h"
 #import "WXApi.h"
 #import "WeiboSDK.h"
+#import <SMS_SDK/SMS_SDK.h>
+#import <SMS_SDK/CountryAndAreaCode.h>
 
 typedef NS_ENUM(NSInteger, LKOtherLoginType)
 {
@@ -610,6 +612,30 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     self.codeButton.userInteractionEnabled = NO;
     self.codeButton.title = LC_LO(@"获取中...");
     
+    
+    // 使用mob来进行短信验证
+//    NSString *countryCode = [self.countryCode.text substringFromIndex:1];
+//    [SMS_SDK getVerificationCodeBySMSWithPhone:self.phoneField.text
+//                                          zone:countryCode
+//                                        result:^(SMS_SDKError *error)
+//     {
+//         if (error)
+//         {
+//             UIAlertView *alert = [[UIAlertView alloc]
+//                                initWithTitle:NSLocalizedString(@"codesenderrtitle", nil)
+//                                      message:[NSString
+//                             stringWithFormat:@"状态码：%zi",error.errorCode]
+//                                     delegate:self
+//                            cancelButtonTitle:NSLocalizedString(@"sure", nil)
+//                            otherButtonTitles:nil, nil];
+//             [alert show];
+//             
+//         } else {
+//             
+//             [self $beginTimer];
+//             self.codeButton.userInteractionEnabled = YES;
+//         }
+//     }];
     
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"sendSmsCode"].POST_METHOD();
     

@@ -402,7 +402,7 @@ LC_PROPERTY(assign) CGFloat cacheSize;
                     [LCUIImageCache.singleton deleteAllImages];
                     self.cacheSize = 0;
                     
-                    [[SDImageCache sharedImageCache] cleanDisk];
+                    [[SDImageCache sharedImageCache] clearDisk];
                     
                     [LCGCD dispatchAsyncInMainQueue:^{
                         

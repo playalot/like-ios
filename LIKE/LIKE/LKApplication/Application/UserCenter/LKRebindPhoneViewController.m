@@ -11,6 +11,9 @@
 #import "LKISOCountryCodes.h"
 #import "LKCountryCodeViewController.h"
 
+#import <SMS_SDK/SMS_SDK.h>
+#import <SMS_SDK/CountryAndAreaCode.h>
+
 @interface LKRebindPhoneViewController ()
 
 LC_PROPERTY(strong) LCUILabel * countryCode;
@@ -265,42 +268,66 @@ LC_PROPERTY(assign) NSInteger timeInterval;
  */
 -(void) getCode
 {
-    if (![self $check:YES]) {
-        return;
-    }
+    [SMS_SDK getVerificationCodeBySMSWithPhone:self.phoneField.text
+                                          zone:self.countryCode.text
+                                        result:^(SMS_SDKError *error)
+     {
+         if (!error)
+         {
+             [self $beginTimer];
+             self.codeButton.userInteractionEnabled = YES;
+         }
+         else
+         {
+             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"codesenderrtitle", nil)
+                                                             message:[NSString stringWithFormat:@"状态码：%zi ,错误描述：%@",error.errorCode,error.errorDescription]
+                                                            delegate:self
+                                                   cancelButtonTitle:NSLocalizedString(@"sure", nil)
+                                                   otherButtonTitles:nil, nil];
+             [alert show];
+         }
+         
+     }];
+
     
-    [self cancelAllRequests];
-    
-    self.codeButton.userInteractionEnabled = NO;
-    self.codeButton.title = LC_LO(@"获取中...");
     
     
-    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"sendSmsCode"].POST_METHOD();
-    
-    [interface addParameter:[LKTimestampEncryption encryption:[[NSDate date] timeIntervalSince1970]] key:@"token"];
-    [interface addParameter:self.phoneField.text key:@"mobile"];
-    [interface addParameter:[LKISOCountryCodes countryWithCode:self.countryCode.text] key:@"zone"];
-    
-    @weakly(self);
-    
-    [self request:interface complete:^(LKHttpRequestResult * result) {
-        
-        @normally(self);
-        
-        if (result.state == LKHttpRequestStateFinished) {
-            
-            [self $beginTimer];
-            
-            self.codeButton.userInteractionEnabled = YES;
-        }
-        else if (result.state == LKHttpRequestStateFailed){
-            
-            [self showTopMessageErrorHud:result.error];
-            
-            self.codeButton.title = LC_LO(@"获取验证码");
-            self.codeButton.userInteractionEnabled = YES;
-        }
-    }];
+//    if (![self $check:YES]) {
+//        return;
+//    }
+//    
+//    [self cancelAllRequests];
+//    
+//    self.codeButton.userInteractionEnabled = NO;
+//    self.codeButton.title = LC_LO(@"获取中...");
+//    
+//    
+//    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"sendSmsCode"].POST_METHOD();
+//    
+//    [interface addParameter:[LKTimestampEncryption encryption:[[NSDate date] timeIntervalSince1970]] key:@"token"];
+//    [interface addParameter:self.phoneField.text key:@"mobile"];
+//    [interface addParameter:[LKISOCountryCodes countryWithCode:self.countryCode.text] key:@"zone"];
+//    
+//    @weakly(self);
+//    
+//    [self request:interface complete:^(LKHttpRequestResult * result) {
+//        
+//        @normally(self);
+//        
+//        if (result.state == LKHttpRequestStateFinished) {
+//            
+//            [self $beginTimer];
+//            
+//            self.codeButton.userInteractionEnabled = YES;
+//        }
+//        else if (result.state == LKHttpRequestStateFailed){
+//            
+//            [self showTopMessageErrorHud:result.error];
+//            
+//            self.codeButton.title = LC_LO(@"获取验证码");
+//            self.codeButton.userInteractionEnabled = YES;
+//        }
+//    }];
 }
 
 

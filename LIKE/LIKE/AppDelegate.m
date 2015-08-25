@@ -19,6 +19,8 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <MAMapKit/MAMapKit.h>
 #import "AFNetworkActivityIndicatorManager.h"
+#import <SMS_SDK/SMS_SDK.h>
+#import "SDImageCache.h"
 
 @interface AppDelegate () <LC_CMD_IMP>
 
@@ -79,6 +81,10 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
     [LCCMD addObjectCMD:@"session" CMDType:LC_CMD_TYPE_SEE IMPObject:self CMDDescription:@"User session."];
     [LCCMD addObjectCMD:@"uid" CMDType:LC_CMD_TYPE_SEE IMPObject:self CMDDescription:@"User id."];
     [LCCMD addObjectCMD:@"refreshtoken" CMDType:LC_CMD_TYPE_SEE IMPObject:self CMDDescription:@"Refresh token."];
+    
+    
+    // Mob短信验证
+    [SMS_SDK registerApp:@"81edd3d46294" withSecret:@"91a6694191e296937995cd3f66f5e9ca"];
 
     
     // 会话错误通知
@@ -379,5 +385,11 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
 //    
 //    return YES;
 //}
+
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
+    
+    [[SDImageCache sharedImageCache] clearMemory];
+    [[SDImageCache sharedImageCache] clearDisk];
+}
 
 @end

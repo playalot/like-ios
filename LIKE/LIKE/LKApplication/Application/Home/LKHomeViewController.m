@@ -1440,28 +1440,24 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
     //        
     //        [cell cellOnTableView:self.tableView didScrollOnView:self.view];
     //    }
+
 }
 
-//- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-//    
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    
 //    CGPoint offset = self.tableView.contentOffset;
 //    CGSize contentSize = self.tableView.contentSize;
 //    CGRect frame = self.tableView.frame;
 //    
-//    if (offset.y >= contentSize.height - 7 * frame.size.height) {
+//    if (offset.y >= contentSize.height - 5 * frame.size.height) {
 //        
-//        dispatch_async(dispatch_get_global_queue(0, 0), ^{
-//            
-//            [self test:LCUIPullLoaderDiretionBottom];
-//        });
-//
-////        [self loadData:LCUIPullLoaderDiretionBottom];
+//        [self test:LCUIPullLoaderDiretionBottom];
+//        
+//        //        [self loadData:LCUIPullLoaderDiretionBottom];
 //    }
-//}
+}
 
 - (void)test:(LCUIPullLoaderDiretion)diretion {
-    
-//    NSTimeInterval time = [[NSDate date] timeIntervalSince1970];
     
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:self.feedType == LKHomepageFeedTypeFocus ? @"friendfeeds" : @"homefeeds" ].AUTO_SESSION();
     
@@ -1484,37 +1480,69 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
     
     [self request:interface complete:^(LKHttpRequestResult *result) {
         
-        @normally(self);
-        
-        if (result.state == LKHttpRequestStateFinished) {
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
             
-            if (self.feedType == LKHomepageFeedTypeFocus) {
-                
-                self.focusNext = result.json[@"data"][@"next"] ? result.json[@"data"][@"next"] : nil;
-            }
-            else{
-                
-                self.next = result.json[@"data"][@"next"] ? result.json[@"data"][@"next"] : @"";
-            }
+            @normally(self);
             
-            NSArray * resultData = result.json[@"data"][@"posts"];
-            NSMutableArray * datasource = [NSMutableArray array];
+            if (result.state == LKHttpRequestStateFinished) {
+                
+                if (self.feedType == LKHomepageFeedTypeFocus) {
+                    
+                    self.focusNext = result.json[@"data"][@"next"] ? result.json[@"data"][@"next"] : nil;
+                }
+                else{
+                    
+                    self.next = result.json[@"data"][@"next"] ? result.json[@"data"][@"next"] : @"";
+                }
+                
+                NSArray * resultData = result.json[@"data"][@"posts"];
+                NSMutableArray * datasource = [NSMutableArray array];
+                
+                for (NSDictionary * tmp in resultData) {
+                    
+                    [datasource addObject:[LKPost objectFromDictionary:tmp]];
+                }
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    if (self.feedType == LKHomepageFeedTypeFocus) {
+                        
+                        [self.focusDatasource addObjectsFromArray:datasource];
+                    }
+                    else{
+                        
+                        [self.datasource addObjectsFromArray:datasource];
+                    }
+                
+                });
+                
+                if (diretion == LCUIPullLoaderDiretionBottom) {
+                    
+                    if (self.feedType == LKHomepageFeedTypeFocus) {
+                    
+                        [self.attentionViewController.pullLoader endRefresh];
+                    }
+                    else{
+                    
+                        [self.pullLoader endRefresh];
+                    }
+                
+                }
             
-            for (NSDictionary * tmp in resultData) {
-                
-                [datasource addObject:[LKPost objectFromDictionary:tmp]];
-            }
-                
-            if (self.feedType == LKHomepageFeedTypeFocus) {
-                
-                [self.focusDatasource addObjectsFromArray:datasource];
-            }
-            else{
-                
-                [self.datasource addObjectsFromArray:datasource];
-            }
             
-            if (diretion == LCUIPullLoaderDiretionBottom) {
+//                LC_FAST_ANIMATIONS(0.25, ^{
+                
+                    if (self.feedType == LKHomepageFeedTypeMain) {
+                    
+                        [self.tableView reloadData];
+                    }
+                    else{
+                        [self.attentionViewController.tableView reloadData];
+                    }
+//                });
+                
+            }
+            else if (result.state == LKHttpRequestStateFailed){
                 
                 if (self.feedType == LKHomepageFeedTypeFocus) {
                     
@@ -1525,45 +1553,23 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
                     [self.pullLoader endRefresh];
                 }
                 
-            }
-            
-            LC_FAST_ANIMATIONS(0.25, ^{
+                [self showTopMessageErrorHud:result.error];
                 
-                if (self.feedType == LKHomepageFeedTypeMain) {
+            }
+            else if (result.state == LKHttpRequestStateCanceled){
+                
+                if (self.feedType == LKHomepageFeedTypeFocus) {
                     
-                    [self.tableView reloadData];
+                    [self.attentionViewController.pullLoader endRefresh];
                 }
                 else{
-                    [self.attentionViewController.tableView reloadData];
+                    
+                    [self.pullLoader endRefresh];
                 }
-            });
-            
-        }
-        else if (result.state == LKHttpRequestStateFailed){
-            
-            if (self.feedType == LKHomepageFeedTypeFocus) {
-                
-                [self.attentionViewController.pullLoader endRefresh];
-            }
-            else{
-                
-                [self.pullLoader endRefresh];
             }
             
-            [self showTopMessageErrorHud:result.error];
-            
-        }
-        else if (result.state == LKHttpRequestStateCanceled){
-            
-            if (self.feedType == LKHomepageFeedTypeFocus) {
-                
-                [self.attentionViewController.pullLoader endRefresh];
-            }
-            else{
-                
-                [self.pullLoader endRefresh];
-            }
-        }
+        });
+        
     }];
 }
 
@@ -1587,25 +1593,6 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
         self.needRefresh = NO;
     }
     
-}
-
-- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
-    
-    
-    CGPoint offset = self.tableView.contentOffset;
-    CGSize contentSize = self.tableView.contentSize;
-    CGRect frame = self.tableView.frame;
-    
-    if (offset.y >= contentSize.height - 7 * frame.size.height) {
-        
-        dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            
-            [self test:LCUIPullLoaderDiretionBottom];
-        });
-        
-        //        [self loadData:LCUIPullLoaderDiretionBottom];
-    }
-
 }
 
 #pragma mark - ***** LKHomeTableViewCellDelegate *****

@@ -18,6 +18,7 @@
 #import "LKNotificationCount.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <MAMapKit/MAMapKit.h>
+#import "AFNetworkActivityIndicatorManager.h"
 
 @interface AppDelegate () <LC_CMD_IMP>
 
@@ -33,6 +34,16 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
  */
 -(void) load:(NSDictionary *)launchOptions
 {
+    
+    // 1.设置缓存
+    NSURLCache *cache = [[NSURLCache alloc] initWithMemoryCapacity:4 * 1024 * 1024 diskCapacity:20 * 1024 * 1024 diskPath:nil];
+    [NSURLCache setSharedURLCache:cache];
+    
+    // 2.设置网络指示器
+    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
+    
+    
+    
     [MAMapServices sharedServices].apiKey = @"4c0db296d4f4d092fdaa9004ee8c959a";
 
     
@@ -356,5 +367,17 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
         }
     }
 }
+
+//- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+//    
+//    // 1.设置缓存
+//    NSURLCache *cache = [[NSURLCache alloc] initWithMemoryCapacity:4 * 1024 * 1024 diskCapacity:20 * 1024 * 1024 diskPath:nil];
+//    [NSURLCache setSharedURLCache:cache];
+//    
+//    // 2.设置网络指示器
+//    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
+//    
+//    return YES;
+//}
 
 @end

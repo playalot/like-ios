@@ -36,7 +36,6 @@ LC_PROPERTY(copy) LKTagCommentsViewControllerWillHide willHide;
  */
 @property (nonatomic, strong) LKPost *publisher;
 
-
 @end
 
 @protocol LKTagCommentsViewControllerDelegate <NSObject>

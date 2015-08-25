@@ -73,7 +73,10 @@ LC_PROPERTY(strong) UIView * blur;
         
         [LKNotificationCount stopCheck];
         
-        [self buildUI];        
+        [self buildUI];
+        
+        // 刷新页面,避免删除评论后还显示提醒
+        [self loadData:LCUIPullLoaderDiretionTop];
     }
     
     return self;

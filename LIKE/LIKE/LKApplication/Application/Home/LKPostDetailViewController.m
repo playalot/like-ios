@@ -12,7 +12,6 @@
 #import "LKTagsView.h"
 #import "LKPostTagsDetailModel.h"
 #import "LKPostDetailCell.h"
-#import "LKTagLikesViewController.h"
 #import "LKUserCenterViewController.h"
 #import "LKInputView.h"
 #import "LKTagAddModel.h"
@@ -66,7 +65,6 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
  */
 @property (nonatomic, assign) NSInteger userLikesCount;
 
-
 @end
 
 @implementation LKPostDetailViewController
@@ -94,7 +92,6 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
     [self.header.headImageView removeFromSuperview];
     [self.header.nameLabel removeFromSuperview];
     [self.header.icon removeFromSuperview];
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -597,31 +594,31 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
     
     switch (index) {
         case 0:
-            [interface addParameter:@"自拍" key:@"reason"];
+            [interface addParameter:LC_LO(@"自拍") key:@"reason"];
             break;
             
         case 1:
-            [interface addParameter:@"广告" key:@"reason"];
+            [interface addParameter:LC_LO(@"广告") key:@"reason"];
             break;
             
         case 2:
-            [interface addParameter:@"色情" key:@"reason"];
+            [interface addParameter:LC_LO(@"色情") key:@"reason"];
             break;
             
         case 3:
-            [interface addParameter:@"谣言" key:@"reason"];
+            [interface addParameter:LC_LO(@"谣言") key:@"reason"];
             break;
             
         case 4:
-            [interface addParameter:@"恶意营销" key:@"reason"];
+            [interface addParameter:LC_LO(@"恶意营销") key:@"reason"];
             break;
             
         case 5:
-            [interface addParameter:@"侮辱诋毁" key:@"reason"];
+            [interface addParameter:LC_LO(@"侮辱诋毁") key:@"reason"];
             break;
             
         case 6:
-            [interface addParameter:@"侵权举报 (诽谤、抄袭、冒用...)" key:@"reason"];
+            [interface addParameter:LC_LO(@"侵权举报 (诽谤、抄袭、冒用...)") key:@"reason"];
             break;
             
         default:
@@ -1155,7 +1152,6 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
                 comments.publisher = self.post;
                 // 设置代理
                 comments.delegate = self;
-
                 
                 [comments showInViewController:self];
                 
@@ -1427,6 +1423,5 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     
     [self.header handleScrollDidScroll:scrollView];
 }
-
 
 @end

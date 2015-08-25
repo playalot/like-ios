@@ -13,6 +13,7 @@
 #import "LKModifyUserInfoModel.h"
 #import "LKUserInfoModel.h"
 #import "LKLinkAccountsViewController.h"
+#import "SDImageCache.h"
 
 @interface LKSettingsViewController () <UITableViewDataSource,UITableViewDelegate>
 
@@ -400,6 +401,8 @@ LC_PROPERTY(assign) CGFloat cacheSize;
                     
                     [LCUIImageCache.singleton deleteAllImages];
                     self.cacheSize = 0;
+                    
+                    [[SDImageCache sharedImageCache] cleanDisk];
                     
                     [LCGCD dispatchAsyncInMainQueue:^{
                         

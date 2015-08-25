@@ -70,7 +70,6 @@ LC_PROPERTY(strong) NSNumber * canFirstResponder;
 
 @implementation LKTagCommentsViewController
 
-
 -(void) dealloc
 {
     [self cancelAllRequests];
@@ -228,6 +227,7 @@ static NSString * __LKUserAddress = nil;
         
         [self performSelector:@selector(setCanFirstResponder:) withObject:@(YES) afterDelay:0.5];
     };
+
 }
 
 -(void) update
@@ -413,6 +413,9 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
  */
 -(void) hide
 {
+    
+    self.tableView.editing = NO;
+    
     if (self.willHide) {
         self.willHide();
     }
@@ -494,7 +497,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             
             // 删除按钮
             LCUIButton *deleteBtn = LCUIButton.view;
-            [deleteBtn setTitle:@"删除" forState:UIControlStateNormal];
+            [deleteBtn setTitle:LC_LO(@"删除") forState:UIControlStateNormal];
             [deleteBtn sizeToFit];
             deleteBtn.viewFrameX = LC_DEVICE_WIDTH - deleteBtn.viewFrameWidth - 14;
             deleteBtn.viewCenterY = headImageView.viewCenterY;
@@ -707,7 +710,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     // 注销第一响应者
     [self.inputView resignFirstResponder];
     // 弹窗提示
-    [LCUIAlertView showWithTitle:@"提醒" message:@"删除该标签后，你的like数也会相应减少，确认删除吗？" cancelTitle:@"确定" otherTitle:@"取消" didTouchedBlock:^(NSInteger integerValue) {
+    [LCUIAlertView showWithTitle:LC_LO(@"提醒") message:LC_LO(@"删除该标签后，你的like数也会相应减少，确认删除吗？") cancelTitle:LC_LO(@"确定") otherTitle:LC_LO(@"取消") didTouchedBlock:^(NSInteger integerValue) {
 
         switch (integerValue) {
             case 0:     // 确定
@@ -800,6 +803,22 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     
     return indexPath.section == 1 ? YES : NO;
+    
+//    if (indexPath.section == 1) {
+//        
+//        NSInteger index = indexPath.row;
+//        
+//        if ([self publisherOrCommentatorWithIndex:index]) {
+//            
+//            return YES;
+//        } else {
+//            
+//            return NO;
+//        }
+//    } else {
+//        
+//        return NO;
+//    }
 }
 
 /**

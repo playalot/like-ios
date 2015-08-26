@@ -7,6 +7,7 @@
 //
 
 #import "LKRecommendTagsView.h"
+#import "NSArray+Ext.h"
 
 @implementation LKRecommendTagItem
 
@@ -75,6 +76,14 @@
 
 @end
 
+@interface LKRecommendTagsView ()
+/**
+ *  服务器预置的标签
+ */
+@property (nonatomic, strong) NSArray *suggests;
+
+@end
+
 @implementation LKRecommendTagsView
 
 -(void) dealloc
@@ -108,6 +117,9 @@
             
             NSArray * array = result.json[@"data"][@"suggests"];
             NSArray * array1 = result.json[@"data"][@"recommends"];
+            
+            // 保存预置标签
+            self.suggests = array;
 
             NSMutableArray * tags = [NSMutableArray array];
             
@@ -177,12 +189,13 @@
     });
 
     
+    // preItem为添加的上一个标签
     LKRecommendTagItem * preItem = nil;
     
     for (NSInteger i = 0; i< self.tags.count; i++) {
         
         __LKTagS * tag = self.tags[i];
-        
+                
         LKRecommendTagItem * item = LKRecommendTagItem.view;
         
         item.tag = i;
@@ -201,7 +214,7 @@
                 
                 // 重新构建
                 [self.tags removeObjectAtIndex:cache.tag];
-                
+                                
                 [self reloadData:NO];
             }
             

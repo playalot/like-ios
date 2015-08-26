@@ -58,6 +58,15 @@
 		134B0B7D1B5656DE00A195BE /* LKSearchHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 134B0B7C1B5656DE00A195BE /* LKSearchHistory.m */; };
 		134B0B801B5667F200A195BE /* LKHotTagsPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 134B0B7F1B5667F200A195BE /* LKHotTagsPage.m */; };
 		134B0B831B5688D700A195BE /* LKHotUserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 134B0B821B5688D700A195BE /* LKHotUserView.m */; };
+		134D92E81B8D6A4A004CFAC8 /* NSArray+Ext.m in Sources */ = {isa = PBXBuildFile; fileRef = 134D92E61B8D6A4A004CFAC8 /* NSArray+Ext.m */; };
+		134D92F01B8DA8A0004CFAC8 /* 高达.png in Resources */ = {isa = PBXBuildFile; fileRef = 134D92E91B8DA8A0004CFAC8 /* 高达.png */; };
+		134D92F11B8DA8A0004CFAC8 /* 狗.png in Resources */ = {isa = PBXBuildFile; fileRef = 134D92EA1B8DA8A0004CFAC8 /* 狗.png */; };
+		134D92F21B8DA8A0004CFAC8 /* 猫.png in Resources */ = {isa = PBXBuildFile; fileRef = 134D92EB1B8DA8A0004CFAC8 /* 猫.png */; };
+		134D92F31B8DA8A0004CFAC8 /* 美食.png in Resources */ = {isa = PBXBuildFile; fileRef = 134D92EC1B8DA8A0004CFAC8 /* 美食.png */; };
+		134D92F41B8DA8A0004CFAC8 /* 喷漆.png in Resources */ = {isa = PBXBuildFile; fileRef = 134D92ED1B8DA8A0004CFAC8 /* 喷漆.png */; };
+		134D92F51B8DA8A0004CFAC8 /* 摄影.png in Resources */ = {isa = PBXBuildFile; fileRef = 134D92EE1B8DA8A0004CFAC8 /* 摄影.png */; };
+		134D92F61B8DA8A0004CFAC8 /* 游戏.png in Resources */ = {isa = PBXBuildFile; fileRef = 134D92EF1B8DA8A0004CFAC8 /* 游戏.png */; };
+		134D92F81B8DB18E004CFAC8 /* 手办.png in Resources */ = {isa = PBXBuildFile; fileRef = 134D92F71B8DB18E004CFAC8 /* 手办.png */; };
 		134F929F1AFCB77400784185 /* LikesPage@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F929E1AFCB77400784185 /* LikesPage@3x.png */; };
 		134F92A21AFCB84B00784185 /* LKLikesPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 134F92A11AFCB84B00784185 /* LKLikesPage.m */; };
 		135735191B2EC6FC0032515C /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 135735181B2EC6FC0032515C /* libicucore.dylib */; };
@@ -858,6 +867,16 @@
 		134B0B7F1B5667F200A195BE /* LKHotTagsPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKHotTagsPage.m; sourceTree = "<group>"; };
 		134B0B811B5688D700A195BE /* LKHotUserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKHotUserView.h; sourceTree = "<group>"; };
 		134B0B821B5688D700A195BE /* LKHotUserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKHotUserView.m; sourceTree = "<group>"; };
+		134D92E61B8D6A4A004CFAC8 /* NSArray+Ext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Ext.m"; sourceTree = "<group>"; };
+		134D92E71B8D6A4A004CFAC8 /* NSArray+Ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Ext.h"; sourceTree = "<group>"; };
+		134D92E91B8DA8A0004CFAC8 /* 高达.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "高达.png"; sourceTree = "<group>"; };
+		134D92EA1B8DA8A0004CFAC8 /* 狗.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "狗.png"; sourceTree = "<group>"; };
+		134D92EB1B8DA8A0004CFAC8 /* 猫.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "猫.png"; sourceTree = "<group>"; };
+		134D92EC1B8DA8A0004CFAC8 /* 美食.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "美食.png"; sourceTree = "<group>"; };
+		134D92ED1B8DA8A0004CFAC8 /* 喷漆.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "喷漆.png"; sourceTree = "<group>"; };
+		134D92EE1B8DA8A0004CFAC8 /* 摄影.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "摄影.png"; sourceTree = "<group>"; };
+		134D92EF1B8DA8A0004CFAC8 /* 游戏.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "游戏.png"; sourceTree = "<group>"; };
+		134D92F71B8DB18E004CFAC8 /* 手办.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "手办.png"; sourceTree = "<group>"; };
 		134F929E1AFCB77400784185 /* LikesPage@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LikesPage@3x.png"; sourceTree = "<group>"; };
 		134F92A01AFCB84B00784185 /* LKLikesPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKLikesPage.h; sourceTree = "<group>"; };
 		134F92A11AFCB84B00784185 /* LKLikesPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKLikesPage.m; sourceTree = "<group>"; };
@@ -3465,6 +3484,8 @@
 		138EDECB1AD7B65B0020957C /* LKUIKit */ = {
 			isa = PBXGroup;
 			children = (
+				134D92E61B8D6A4A004CFAC8 /* NSArray+Ext.m */,
+				134D92E71B8D6A4A004CFAC8 /* NSArray+Ext.h */,
 				138EDF101AD7EC330020957C /* LKUIKit.h */,
 				13FCC08A1ADE4B650008DB41 /* LKUIKit.m */,
 				13E27F0B1AFA03FE00C17362 /* LKTimestampView.xib */,
@@ -4616,6 +4637,14 @@
 		13F505091B0C5EA100D8D484 /* Share */ = {
 			isa = PBXGroup;
 			children = (
+				134D92F71B8DB18E004CFAC8 /* 手办.png */,
+				134D92E91B8DA8A0004CFAC8 /* 高达.png */,
+				134D92EA1B8DA8A0004CFAC8 /* 狗.png */,
+				134D92EB1B8DA8A0004CFAC8 /* 猫.png */,
+				134D92EC1B8DA8A0004CFAC8 /* 美食.png */,
+				134D92ED1B8DA8A0004CFAC8 /* 喷漆.png */,
+				134D92EE1B8DA8A0004CFAC8 /* 摄影.png */,
+				134D92EF1B8DA8A0004CFAC8 /* 游戏.png */,
 				1319156A1B8C863100EC0F42 /* 旅行.png */,
 				131915681B8C625A00EC0F42 /* 二维码.png */,
 				1387C34F1B316CC400B065A7 /* FacebookIcon@3x.png */,
@@ -4851,6 +4880,7 @@
 				138EDEFB1AD7DBA00020957C /* TabBarNotification@3x.png in Resources */,
 				135D5C281AE0E37800811B06 /* CameraFilter@3x.png in Resources */,
 				13E3EE041B60996000A48E76 /* zh2HK.txt in Resources */,
+				134D92F01B8DA8A0004CFAC8 /* 高达.png in Resources */,
 				1388B4FD1B01EFFB006F36AB /* EachOtherFocusLG@3x.png in Resources */,
 				13DEEC141AE789E6005E01A6 /* LC_navbar_bg@2x.png in Resources */,
 				138C84771B6B650C00C2AC62 /* LittleFollowing@3x.png in Resources */,
@@ -4871,6 +4901,7 @@
 				1377F03D1B5E1240008E21BC /* NotificationTagIcon@3x.png in Resources */,
 				1377F03A1B5E1240008E21BC /* NotificationCommentIcon@3x.png in Resources */,
 				1387C3441B31508A00B065A7 /* FacebookLogin@3x.png in Resources */,
+				134D92F11B8DA8A0004CFAC8 /* 狗.png in Resources */,
 				1388B4FE1B01EFFB006F36AB /* FocusLG@3x.png in Resources */,
 				1359F4A41B6A24B800A0ABE9 /* Gta-walking@3x.png in Resources */,
 				13F505151B0C5EAC00D8D484 /* WeChatFriendIcon@3x.png in Resources */,
@@ -4887,8 +4918,11 @@
 				13E1A2C81AE63BAB00E24C3C /* NavigationBarSet@3x.png in Resources */,
 				13DEEC1C1AE789E6005E01A6 /* LC_WebStop@2x.png in Resources */,
 				135735221B2EE7D10032515C /* country.plist in Resources */,
+				134D92F81B8DB18E004CFAC8 /* 手办.png in Resources */,
 				13E1A2D11AE644C200E24C3C /* EachOtherFocusGray@3x.png in Resources */,
 				13B6C1961AE8E8EA008912C0 /* NotificationIcon@3x.png in Resources */,
+				134D92F51B8DA8A0004CFAC8 /* 摄影.png in Resources */,
+				134D92F31B8DA8A0004CFAC8 /* 美食.png in Resources */,
 				13D9BF271AEB997E0020C94F /* Diana.png in Resources */,
 				135DBAF71AE60577004AD150 /* NavigationBarMore@3x.png in Resources */,
 				1319156B1B8C863100EC0F42 /* 旅行.png in Resources */,
@@ -4897,6 +4931,7 @@
 				13B6C19F1AE8FFBE008912C0 /* 1136.jpg in Resources */,
 				1387C3521B31703300B065A7 /* MobileIcon@3x.png in Resources */,
 				13DEEC191AE789E6005E01A6 /* LC_WebReload.png in Resources */,
+				134D92F21B8DA8A0004CFAC8 /* 猫.png in Resources */,
 				1359F49F1B6A237400A0ABE9 /* GtaTrevor.png in Resources */,
 				135E8AA01B4511B900C2270C /* AMap.bundle in Resources */,
 				13E27EED1AF8A67200C17362 /* VisitorIcon@3x.png in Resources */,
@@ -4916,6 +4951,7 @@
 				13925A6D1B145BCE004D0656 /* SearchIcon@3x.png in Resources */,
 				138EDED61AD7C5DB0020957C /* LikeIcon@3x.png in Resources */,
 				131915641B8C267900EC0F42 /* SMS_SDKLocalizable.strings in Resources */,
+				134D92F61B8DA8A0004CFAC8 /* 游戏.png in Resources */,
 				135D5C261AE0DA9700811B06 /* FilterPreview@3x.jpg in Resources */,
 				134F929F1AFCB77400784185 /* LikesPage@3x.png in Resources */,
 				13D9BF291AEB997E0020C94F /* Instant.png in Resources */,
@@ -4927,6 +4963,7 @@
 				1387C3501B316CC400B065A7 /* FacebookIcon@3x.png in Resources */,
 				13E27EEA1AF89BDD00C17362 /* CodeIcon@3x.png in Resources */,
 				134765341AE2564D0055D099 /* PostDidFinish@3x.png in Resources */,
+				134D92F41B8DA8A0004CFAC8 /* 喷漆.png in Resources */,
 				13892C3D1B1C44780053303E /* NavigationBarDismiss@3x.png in Resources */,
 				135D5C011ADFD21E00811B06 /* CameraCapture@3x.png in Resources */,
 				13DEEC151AE789E6005E01A6 /* LC_WebBack.png in Resources */,
@@ -5488,6 +5525,7 @@
 				138EDE0A1AD7B0A30020957C /* LCDeviceInfo.m in Sources */,
 				1373C43A1B846FDA00A6C55A /* NSObject+MJCoding.m in Sources */,
 				138EDBF31AD7B08A0020957C /* main.m in Sources */,
+				134D92E81B8D6A4A004CFAC8 /* NSArray+Ext.m in Sources */,
 				13A951A01B4CE528002B73ED /* AFHTTPRequestOperation.m in Sources */,
 				13BCD8981ADBA92200A0CBF5 /* POPPropertyAnimation.mm in Sources */,
 				1369AFEC1AEA612F00364602 /* LKWelcome.m in Sources */,

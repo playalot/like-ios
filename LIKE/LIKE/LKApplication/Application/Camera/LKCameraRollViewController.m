@@ -197,8 +197,12 @@ LC_PROPERTY(strong) UICollectionView * collectionView;
     
 }
 
+/**
+ *  获取相册图片
+ */
 -(void) photos
 {
+    // 获取图片
     LKUIImagePickerViewController * picker = [[LKUIImagePickerViewController alloc] init];
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     picker.allowsEditing = NO;
@@ -212,9 +216,10 @@ LC_PROPERTY(strong) UICollectionView * collectionView;
     
     [self presentViewController:picker animated:YES completion:nil];
     
-    
+    // 从相册中选择图片的完成回调
     picker.finalizationBlock = ^(id _picker, NSDictionary * imageInfo){
         
+        // 滤镜控制器
         LKImageCropperViewController * cropper = [[LKImageCropperViewController alloc] initWithImage:imageInfo[@"UIImagePickerControllerOriginalImage"]];
         
         [cropper showBackButton];

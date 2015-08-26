@@ -661,6 +661,7 @@ LC_PROPERTY(strong) UIView * gtaView;
         
 //        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
 
+        // push 发布控制器
         [self.navigationController pushViewController:[[LKNewPostViewController alloc] initWithImage:image] animated:YES];
     }
 }

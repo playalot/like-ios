@@ -297,6 +297,10 @@
     
     [manager.requestSerializer setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
     
+    if (LCNetwork.singleton.netWorkStatus == LCNetworkStatusViaWiFi) {
+        
+        [manager.requestSerializer setValue:@"YES" forHTTPHeaderField:@"LIKE-WIFI"];
+    }
 }
 
 @end

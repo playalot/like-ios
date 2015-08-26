@@ -30,6 +30,7 @@
 #import "LKTime.h"
 #import "LKPresentAnimation.h"
 #import "ADTickerLabel.h"
+#import "UIImageView+WebCache.h"
 
 @interface LKPostDetailViewController ()<UITableViewDataSource,UITableViewDelegate,JTSImageViewControllerDismissalDelegate,UINavigationControllerDelegate,UIViewControllerTransitioningDelegate, LKTagCommentsViewControllerDelegate>
 
@@ -229,7 +230,9 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
         self.header.backgroundView.autoMask = NO;
         self.header.scrollView = self.tableView;
         self.header.backgroundView.showIndicator = YES;
-        self.header.backgroundView.url = self.post.content;
+//        self.header.backgroundView.url = self.post.content;
+        [self.header.backgroundView sd_setImageWithURL:[NSURL URLWithString:self.post.content] placeholderImage:nil];
+        
         self.header.backgroundView.frame = CGRectMake(0, 0, size.width, size.height);
         self.header.maskView.backgroundColor = [UIColor clearColor];
         
@@ -1270,7 +1273,8 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     
     if (!image) {
         
-        image = [LCUIImageCache.singleton imageWithKey:self.post.content];
+//        image = [LCUIImageCache.singleton imageWithKey:self.post.content];
+        image = self.header.backgroundView.image;
     }
     
     if (image.size.width < 640) {
@@ -1286,11 +1290,12 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     UIView * bottomView = UIView.view;
     
     CGFloat proportion = (image.size.width / 640);
+    CGFloat layoutScale = (image.size.width / 414);
     CGFloat headWidth = 90 * proportion;
     
     // 头像下面的view
     UIView * cornerRadiusView = UIView.view;
-    cornerRadiusView.viewFrameX = 20 * proportion;
+    cornerRadiusView.viewFrameX = (20 + 18) * proportion;
     cornerRadiusView.viewFrameY = 0;
     cornerRadiusView.viewFrameWidth = headWidth;
     cornerRadiusView.viewFrameHeight = headWidth;
@@ -1302,7 +1307,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     LCUIImageView * imageView = LCUIImageView.view;
     imageView.viewFrameWidth = headWidth - 10 * proportion;
     imageView.viewFrameHeight = headWidth - 10 * proportion;
-    imageView.viewFrameX = 20 * proportion + 5 * proportion;
+    imageView.viewFrameX = (20 + 18) * proportion + 5 * proportion;
     imageView.viewFrameY = 5 * proportion;
     imageView.url = self.post.user.avatar;
     imageView.cornerRadius = imageView.viewMidHeight;
@@ -1327,18 +1332,18 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     tagsView.proportion = proportion;
     tagsView.viewFrameY = imageView.viewBottomY + 10 * proportion;
     tagsView.viewFrameX = 20 * proportion;
-    tagsView.viewFrameWidth = image.size.width - 40 * proportion;
+    tagsView.viewFrameWidth = image.size.width * 640 / 414 - 40 * proportion;
     tagsView.tags = self.tagsListModel.tags;
     bottomView.ADD(tagsView);
-
+    
     // 设置标签颜色
     for (LKTagItem *item in tagsView.subviews) {
         
         item.backgroundColor = [LKColor.color colorWithAlphaComponent:1];
         item.tagLabel.textColor = [UIColor whiteColor];
-        item.tagLabel.font = LK_FONT_B(20);
+//        item.tagLabel.font = LK_FONT_B(20);
         item.likesLabel.textColor = [UIColor whiteColor];
-        item.likesLabel.font = LK_FONT_B(20);
+//        item.likesLabel.font = LK_FONT_B(20);
         item.likesLabel.borderColor = [[UIColor whiteColor] colorWithAlphaComponent:1];
         item.likesLabel.borderWidth = 1.5;
 
@@ -1346,31 +1351,52 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     
     // 二维码
     LCUIImageView *qrCodeView = LCUIImageView.view;
-    qrCodeView.viewFrameWidth = 83 * 2;
-    qrCodeView.viewFrameHeight = 83 * 2;
-    qrCodeView.viewFrameX = image.size.width - qrCodeView.viewFrameWidth - 22;
-    qrCodeView.viewFrameY = CGRectGetMaxY(tagsView.frame);
+    qrCodeView.viewFrameWidth = 83 * layoutScale;
+    qrCodeView.viewFrameHeight = 83 * layoutScale;
+    qrCodeView.viewFrameX = image.size.width - qrCodeView.viewFrameWidth - 22 * layoutScale;
+    qrCodeView.viewFrameY = CGRectGetMaxY(tagsView.frame) + 30;
     qrCodeView.image = [UIImage imageNamed:@"二维码"];
     bottomView.ADD(qrCodeView);
     
     
+    // 添加特色图片
+    LCUIImageView *interestView = LCUIImageView.view;
+    interestView.viewFrameWidth = 160 * layoutScale;
+    interestView.viewFrameHeight = 42 * layoutScale;
+    interestView.viewFrameX = tagsView.viewFrameX + 18;
+    interestView.viewFrameY = CGRectGetMaxY(qrCodeView.frame) - interestView.viewFrameHeight;
+    bottomView.ADD(interestView);
+    
+    NSArray *interestArray = @[@"高达", @"狗", @"旅行", @"猫", @"美食", @"喷漆", @"摄影", @"游戏", @"手办"];
+    
+    UIImage *interestImage = nil;
     for (LKTag *tag in self.tagsListModel.tags) {
         
-        if ([tag.tag isEqualToString:@"旅行"]) {
+        for (NSString *str in interestArray) {
             
-            // 添加旅行特色图片
-            LCUIImageView *travelView = LCUIImageView.view;
-            travelView.viewFrameWidth = 123 * 2;
-            travelView.viewFrameHeight = 32 * 2;
-            travelView.viewFrameX = tagsView.viewFrameX + 18;
-            travelView.viewFrameY = CGRectGetMaxY(qrCodeView.frame) - travelView.viewFrameHeight;
-            travelView.image = [UIImage imageNamed:@"旅行"];
-            bottomView.ADD(travelView);
+            NSRange range = [tag.tag rangeOfString:str];
+            if (range.length) {
+                
+                interestImage = [self getInterestImageWithTagArray:interestArray tag:tag];
+                break;
+            }
+        }
+        
+        if (interestImage) {
+            
+            break;
         }
     }
-
     
-    bottomView.viewFrameHeight = qrCodeView.viewBottomY + 22;
+    if (interestImage == nil) {
+        
+        interestImage = [UIImage imageNamed:@"摄影"];
+    }
+    
+    interestView.image = interestImage;
+    
+    
+    bottomView.viewFrameHeight = qrCodeView.viewBottomY + 22 * layoutScale;
     bottomView.viewFrameWidth = image.size.width;
     
     
@@ -1396,11 +1422,11 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
                          inRect:LC_RECT(0, image.size.height - headWidth / 2, bottomView.viewFrameWidth, bottomView.viewFrameHeight)];
     
     
-    UIImage * icon = [[UIImage imageNamed:@"LikeIconSmall.png" useCache:NO] scaleToBeWidth:33 * proportion];
+    UIImage * icon = [[UIImage imageNamed:@"LikeIconSmall.png" useCache:NO] scaleToBeWidth:50 * proportion];
     
     image = [image addMaskImage:icon
                       imageSize:image.size
-                         inRect:LC_RECT(image.size.width - icon.size.width - 20, 20, icon.size.width, icon.size.height)];
+                         inRect:LC_RECT(image.size.width - icon.size.width - 40, 40, icon.size.width, icon.size.height)];
     
     return image;
 }
@@ -1408,41 +1434,127 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
 /**
  *  根据不同的兴趣返回不同的图片
  */
-- (UIImage *)getInterestImageWithTagArray:(NSArray *)tagArray {
+- (UIImage *)getInterestImageWithTagArray:(NSArray *)tagArray tag:(LKTag *)tag {
     
-    switch (tagArray.count) {
-        case 0:
-            return [UIImage imageNamed:@"二维码"];
-            break;
+    // 高达
+    NSArray *gundam = @[@"高达", @"Gundam", @"Gunpla", @"RG", @"MG", @"HG", @"强袭", @"高达模型"];
+    // 狗
+    NSArray *dog = @[@"汪星人", @"汪", @"狗"];
+    // 旅行
+    NSArray *travel = @[@"旅行"];
+    // 猫
+    NSArray *cat = @[@"喵星人", @"猫", @"喵"];
+    // 美食
+    NSArray *delicious = @[@"美食", @"吃货", @"好吃的", @"吃吃吃", @"饿了"];
+    // 喷漆
+    NSArray *lacquer = @[@"喷漆", @"上色", @"喷涂", @"改色", @"涂装", @"旧化"];
+    // 摄影
+    NSArray *photography = @[@"风景", @"海", @"旅行"];
+    // 游戏
+    NSArray *game = @[@"PS4", @"XBOX", @"游戏", @"GTA", @"数码", @"索尼大法好", @"索大好"];
+    // 手办
+    NSArray *gk = @[@"手办", @"粘土人", @"粘土"];
+    
+    if ([tag.tag rangeOfString:tagArray[0]].length) {
+        
+        for (NSString *str in gundam) {
             
-        case 1:
-            return [UIImage imageNamed:@"二维码"];
-            break;
-            
-        case 2:
-            return [UIImage imageNamed:@"二维码"];
-            break;
-            
-        case 3:
-            return [UIImage imageNamed:@"二维码"];
-            break;
-            
-        case 4:
-            return [UIImage imageNamed:@"二维码"];
-            break;
-            
-        case 5:
-            return [UIImage imageNamed:@"二维码"];
-            break;
-            
-        case 6:
-            return [UIImage imageNamed:@"二维码"];
-            break;
-            
-        default:
-            return nil;
-            break;
+            if ([tag.tag rangeOfString:str].length) {
+                
+                return [UIImage imageNamed:@"高达"];
+            }
+        }
     }
+    
+    if ([tag.tag rangeOfString:tagArray[1]].length) {
+        
+        for (NSString *str in dog) {
+            
+            if ([tag.tag rangeOfString:str].length) {
+                
+                return [UIImage imageNamed:@"狗"];
+            }
+        }
+    }
+
+    if ([tag.tag rangeOfString:tagArray[2]].length) {
+        
+        for (NSString *str in travel) {
+            
+            if ([tag.tag rangeOfString:str].length) {
+                
+                return [UIImage imageNamed:@"旅行"];
+            }
+        }
+    }
+
+    if ([tag.tag rangeOfString:tagArray[3]].length) {
+        
+        for (NSString *str in cat) {
+            
+            if ([tag.tag rangeOfString:str].length) {
+                
+                return [UIImage imageNamed:@"猫"];
+            }
+        }
+    }
+
+    if ([tag.tag rangeOfString:tagArray[4]].length) {
+        
+        for (NSString *str in delicious) {
+            
+            if ([tag.tag rangeOfString:str].length) {
+                
+                return [UIImage imageNamed:@"美食"];
+            }
+        }
+    }
+
+    if ([tag.tag rangeOfString:tagArray[5]].length) {
+        
+        for (NSString *str in lacquer) {
+            
+            if ([tag.tag rangeOfString:str].length) {
+                
+                return [UIImage imageNamed:@"喷漆"];
+            }
+        }
+    }
+
+    if ([tag.tag rangeOfString:tagArray[6]].length) {
+        
+        for (NSString *str in photography) {
+            
+            if ([tag.tag rangeOfString:str].length) {
+                
+                return [UIImage imageNamed:@"摄影"];
+            }
+        }
+    }
+
+    if ([tag.tag rangeOfString:tagArray[7]].length) {
+        
+        for (NSString *str in game) {
+            
+            if ([tag.tag rangeOfString:str].length) {
+                
+                return [UIImage imageNamed:@"游戏"];
+            }
+        }
+    }
+    
+    if ([tag.tag rangeOfString:tagArray[8]].length) {
+        
+        for (NSString *str in gk) {
+            
+            if ([tag.tag rangeOfString:str].length) {
+                
+                return [UIImage imageNamed:@"手办"];
+            }
+        }
+    }
+    
+    return nil;
 }
 
 -(void) reloadDataAndUpdate

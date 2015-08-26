@@ -614,55 +614,55 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     
     
     // 使用mob来进行短信验证
-//    NSString *countryCode = [self.countryCode.text substringFromIndex:1];
-//    [SMS_SDK getVerificationCodeBySMSWithPhone:self.phoneField.text
-//                                          zone:countryCode
-//                                        result:^(SMS_SDKError *error)
-//     {
-//         if (error)
-//         {
-//             UIAlertView *alert = [[UIAlertView alloc]
-//                                initWithTitle:NSLocalizedString(@"codesenderrtitle", nil)
-//                                      message:[NSString
-//                             stringWithFormat:@"状态码：%zi",error.errorCode]
-//                                     delegate:self
-//                            cancelButtonTitle:NSLocalizedString(@"sure", nil)
-//                            otherButtonTitles:nil, nil];
-//             [alert show];
-//             
-//         } else {
-//             
-//             [self $beginTimer];
-//             self.codeButton.userInteractionEnabled = YES;
-//         }
-//     }];
+    NSString *countryCode = [self.countryCode.text substringFromIndex:1];
+    [SMS_SDK getVerificationCodeBySMSWithPhone:self.phoneField.text
+                                          zone:countryCode
+                                        result:^(SMS_SDKError *error)
+     {
+         if (error)
+         {
+             UIAlertView *alert = [[UIAlertView alloc]
+                                initWithTitle:NSLocalizedString(@"codesenderrtitle", nil)
+                                      message:[NSString
+                             stringWithFormat:@"状态码：%zi",error.errorCode]
+                                     delegate:self
+                            cancelButtonTitle:NSLocalizedString(@"sure", nil)
+                            otherButtonTitles:nil, nil];
+             [alert show];
+             
+         } else {
+             
+             [self $beginTimer];
+             self.codeButton.userInteractionEnabled = YES;
+         }
+     }];
     
-    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"sendSmsCode"].POST_METHOD();
-    
-    [interface addParameter:[LKTimestampEncryption encryption:[[NSDate date] timeIntervalSince1970]] key:@"token"];
-    [interface addParameter:self.phoneField.text key:@"mobile"];
-    [interface addParameter:[LKISOCountryCodes countryWithCode:self.countryCode.text] key:@"zone"];
-    
-    @weakly(self);
-    
-    [self request:interface complete:^(LKHttpRequestResult * result) {
-        
-        @normally(self);
-        
-        if (result.state == LKHttpRequestStateFinished) {
-            
-            [self $beginTimer];
-            
-            self.codeButton.userInteractionEnabled = YES;
-        }
-        else if (result.state == LKHttpRequestStateFailed){
-            
-            [self showTopMessageErrorHud:result.error];
-            
-            self.codeButton.title = LC_LO(@"获取验证码");
-            self.codeButton.userInteractionEnabled = YES;
-        }
-    }];
+//    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"sendSmsCode"].POST_METHOD();
+//    
+//    [interface addParameter:[LKTimestampEncryption encryption:[[NSDate date] timeIntervalSince1970]] key:@"token"];
+//    [interface addParameter:self.phoneField.text key:@"mobile"];
+//    [interface addParameter:[LKISOCountryCodes countryWithCode:self.countryCode.text] key:@"zone"];
+//    
+//    @weakly(self);
+//    
+//    [self request:interface complete:^(LKHttpRequestResult * result) {
+//        
+//        @normally(self);
+//        
+//        if (result.state == LKHttpRequestStateFinished) {
+//            
+//            [self $beginTimer];
+//            
+//            self.codeButton.userInteractionEnabled = YES;
+//        }
+//        else if (result.state == LKHttpRequestStateFailed){
+//            
+//            [self showTopMessageErrorHud:result.error];
+//            
+//            self.codeButton.title = LC_LO(@"获取验证码");
+//            self.codeButton.userInteractionEnabled = YES;
+//        }
+//    }];
 }
 
 /**

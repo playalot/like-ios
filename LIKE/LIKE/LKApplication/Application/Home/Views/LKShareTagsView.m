@@ -132,7 +132,7 @@ LC_PROPERTY(strong) LCUILabel * likesLabel;
         }
         else{
             
-            if (preItem.viewRightX + padding + item.viewFrameWidth > self.viewFrameWidth) {
+            if ((preItem.viewRightX + padding + item.viewFrameWidth) * 640 / 414 > self.viewFrameWidth) {
                 
                 item.viewFrameX = padding;
                 item.viewFrameY = preItem.viewBottomY + padding;

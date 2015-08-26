@@ -38,6 +38,9 @@ LC_PROPERTY(strong) LCUIButton * locationButton;
 LC_PROPERTY(strong) CLLocation * location;
 LC_PROPERTY(strong) NSString * locationName;
 
+@property (nonatomic, strong) NSMutableArray *suggests;
+
+
 @end
 
 @implementation LKNewPostViewController
@@ -87,6 +90,7 @@ LC_PROPERTY(strong) NSString * locationName;
 
 -(void) buildUI
 {
+    // 格式化当前日期
     NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
     formatter.dateStyle = kCFDateFormatterMediumStyle;
     
@@ -104,6 +108,7 @@ LC_PROPERTY(strong) NSString * locationName;
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
     
     
+    // 图片预览
     self.preview = LCUIImageView.view;
     self.preview.contentMode = UIViewContentModeScaleAspectFill;
     self.preview.viewFrameWidth = 100;
@@ -120,6 +125,7 @@ LC_PROPERTY(strong) NSString * locationName;
     [self setNavigationBarButton:LCUINavigationBarButtonTypeRight title:LC_LO(@"发布") titleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.8]];
     
     
+    // 顶部提示label
     self.recommendLabel = LCUILabel.view;
     self.recommendLabel.viewFrameX = 10;
     self.recommendLabel.viewFrameY = 10;
@@ -134,6 +140,7 @@ LC_PROPERTY(strong) NSString * locationName;
     self.view.ADD(self.recommendLabel);
     
     
+    // 标签所在的view
     UIView * becomeFirstResponser = UIView.view;
     becomeFirstResponser.viewFrameX = 10;
     becomeFirstResponser.viewFrameY = self.recommendLabel.viewBottomY;
@@ -151,22 +158,28 @@ LC_PROPERTY(strong) NSString * locationName;
     self.selectedTags.tapRemove = YES;
     self.view.ADD(self.selectedTags);
     
-    @weakly(self);
-    
-    self.selectedTags.itemDidTap = ^(LKRecommendTagItem * item, NSInteger type){
-      
-        @normally(self);
-        
-        [self updateSubviewsLayout];
-    };
-    
-    
     // 推荐列表
     self.recommendTags = LKRecommendTagsView.view;
     self.recommendTags.viewFrameY = self.selectedTags.viewBottomY;
     self.recommendTags.viewFrameWidth = LC_DEVICE_WIDTH;
     self.recommendTags.highlight = NO;
     self.view.ADD(self.recommendTags);
+
+    
+    @weakly(self);
+    
+    self.selectedTags.itemDidTap = ^(LKRecommendTagItem * item, NSInteger type){
+      
+        @normally(self);
+        
+        [self.recommendTags.tags addObjectsFromArray:self.suggests.copy];
+        
+        [self.recommendTags reloadData:YES];
+        
+        [self updateSubviewsLayout];
+    };
+    
+    
     
     
     UIView * line = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
@@ -192,6 +205,7 @@ LC_PROPERTY(strong) NSString * locationName;
             
             if (type == 1) {
                 
+                // 点击的是预置标签
                 [UIView animateWithDuration:0.25 animations:^{
                     
                     self.recommendTags.alpha = 0;
@@ -206,7 +220,13 @@ LC_PROPERTY(strong) NSString * locationName;
                         
                         if (tag.type == 1) {
                             
+                            if (self.suggests.count < 16) {
+                                
+                                [self.suggests addObject:tag];
+                            }
+                            
                             [tags removeObject:tag];
+                            
                         }
                     }
                     
@@ -422,6 +442,9 @@ LC_PROPERTY(strong) NSString * locationName;
     [self dismissAction];
 }
 
+/**
+ *  点击预览图片执行
+ */
 -(void) previewTapAction
 {
     [self.inputView resignFirstResponder];
@@ -503,6 +526,15 @@ LC_PROPERTY(strong) NSString * locationName;
         
         [self presentViewController:LC_UINAVIGATION(search) animated:YES completion:nil];
     }
+}
+
+#pragma mark - ***** 懒加载 *****
+- (NSMutableArray *)suggests {
+    
+    if (_suggests == nil) {
+        _suggests = [NSMutableArray array];
+    }
+    return _suggests;
 }
 
 @end

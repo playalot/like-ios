@@ -51,6 +51,14 @@
 "更换头像" = "Edit your avatar";
 "拍摄新图片" = "Take a photo";
 "从相册选择" = "Select from album";
+"自拍" = "Selfie";
+"广告" = "Advertisement";
+"色情" = "Pornographic";
+"谣言" = "Rumor";
+"恶意营销" = "Malicious marketing";
+"侮辱诋毁" = "Insult or slander";
+"侵权举报(诽谤、抄袭、冒用...)" = "Infringement";
+"删除该标签后，你的like数也会相应减少，确认删除吗？" = "After you delete the tag, your like number will be reduced, are you ready for the confirmation?";
 
 // Tip
 "上传失败啦！请检查您的网络稍后再试Orz～" = "Upload failed! Please check your internet connection";

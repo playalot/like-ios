@@ -8,6 +8,7 @@
 
 #import "LKUserCenterUserCell.h"
 #import "LKTime.h"
+#import "UIImageView+WebCache.h"
 
 @interface LKUserCenterUserCell ()
 
@@ -67,7 +68,8 @@ LC_PROPERTY(strong) LCUIButton * button;
     _user = user;
     
     self.userHead.image = nil;
-    self.userHead.url = user.avatar;
+//    self.userHead.url = user.avatar;
+    [self.userHead sd_setImageWithURL:[NSURL URLWithString:user.avatar] placeholderImage:nil];
     
     self.titleLabel.text = [NSString stringWithFormat:@"%@", user.name];
     

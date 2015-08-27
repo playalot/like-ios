@@ -15,6 +15,13 @@
 		131915671B8C26C400EC0F42 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 131915661B8C26C400EC0F42 /* MessageUI.framework */; };
 		131915691B8C625A00EC0F42 /* 二维码.png in Resources */ = {isa = PBXBuildFile; fileRef = 131915681B8C625A00EC0F42 /* 二维码.png */; };
 		1319156B1B8C863100EC0F42 /* 旅行.png in Resources */ = {isa = PBXBuildFile; fileRef = 1319156A1B8C863100EC0F42 /* 旅行.png */; };
+		132622881B8EC5290074C589 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 132622851B8EC5290074C589 /* libMobClickLibrary.a */; };
+		1326228D1B8EE1150074C589 /* 变形金刚.png in Resources */ = {isa = PBXBuildFile; fileRef = 132622891B8EE1150074C589 /* 变形金刚.png */; };
+		1326228E1B8EE1150074C589 /* 钢铁侠.png in Resources */ = {isa = PBXBuildFile; fileRef = 1326228A1B8EE1150074C589 /* 钢铁侠.png */; };
+		1326228F1B8EE1150074C589 /* 手办.png in Resources */ = {isa = PBXBuildFile; fileRef = 1326228B1B8EE1150074C589 /* 手办.png */; };
+		132622901B8EE1150074C589 /* 星球大战.png in Resources */ = {isa = PBXBuildFile; fileRef = 1326228C1B8EE1150074C589 /* 星球大战.png */; };
+		1326229B1B8EF5850074C589 /* Wasted.png in Resources */ = {isa = PBXBuildFile; fileRef = 132622991B8EF5850074C589 /* Wasted.png */; };
+		1326229C1B8EF5850074C589 /* Wasted2.png in Resources */ = {isa = PBXBuildFile; fileRef = 1326229A1B8EF5850074C589 /* Wasted2.png */; };
 		133A31831B5D09C500AB74A4 /* CollectionIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 133A31821B5D09C500AB74A4 /* CollectionIcon@3x.png */; };
 		133A31851B5D0D3400AB74A4 /* SearchPlaceholderIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 133A31841B5D0D3400AB74A4 /* SearchPlaceholderIcon@3x.png */; };
 		133D3C7D1AE78DC9008F303D /* LKAssistiveTouchButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 133D3C7C1AE78DC9008F303D /* LKAssistiveTouchButton.m */; };
@@ -66,7 +73,6 @@
 		134D92F41B8DA8A0004CFAC8 /* 喷漆.png in Resources */ = {isa = PBXBuildFile; fileRef = 134D92ED1B8DA8A0004CFAC8 /* 喷漆.png */; };
 		134D92F51B8DA8A0004CFAC8 /* 摄影.png in Resources */ = {isa = PBXBuildFile; fileRef = 134D92EE1B8DA8A0004CFAC8 /* 摄影.png */; };
 		134D92F61B8DA8A0004CFAC8 /* 游戏.png in Resources */ = {isa = PBXBuildFile; fileRef = 134D92EF1B8DA8A0004CFAC8 /* 游戏.png */; };
-		134D92F81B8DB18E004CFAC8 /* 手办.png in Resources */ = {isa = PBXBuildFile; fileRef = 134D92F71B8DB18E004CFAC8 /* 手办.png */; };
 		134F929F1AFCB77400784185 /* LikesPage@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F929E1AFCB77400784185 /* LikesPage@3x.png */; };
 		134F92A21AFCB84B00784185 /* LKLikesPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 134F92A11AFCB84B00784185 /* LKLikesPage.m */; };
 		135735191B2EC6FC0032515C /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 135735181B2EC6FC0032515C /* libicucore.dylib */; };
@@ -653,7 +659,6 @@
 		13D9BF2C1AEB997E0020C94F /* Pro.png in Resources */ = {isa = PBXBuildFile; fileRef = 13D9BF231AEB997E0020C94F /* Pro.png */; };
 		13D9BF2D1AEB997E0020C94F /* Vivid.png in Resources */ = {isa = PBXBuildFile; fileRef = 13D9BF241AEB997E0020C94F /* Vivid.png */; };
 		13DA0FC61AEB8AFE005B9476 /* CameraFocus@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13DA0FC51AEB8AFE005B9476 /* CameraFocus@3x.png */; };
-		13DA0FCB1AEB8D8E005B9476 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 13DA0FC81AEB8D8E005B9476 /* libMobClickLibrary.a */; };
 		13DEEBF91AE75585005E01A6 /* AlreadyFocusWrite@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13DEEBF61AE75585005E01A6 /* AlreadyFocusWrite@3x.png */; };
 		13DEEBFA1AE75585005E01A6 /* EachOtherFocusWrite@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13DEEBF71AE75585005E01A6 /* EachOtherFocusWrite@3x.png */; };
 		13DEEBFB1AE75585005E01A6 /* FocusWirte@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13DEEBF81AE75585005E01A6 /* FocusWirte@3x.png */; };
@@ -782,6 +787,15 @@
 		131915661B8C26C400EC0F42 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		131915681B8C625A00EC0F42 /* 二维码.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "二维码.png"; sourceTree = "<group>"; };
 		1319156A1B8C863100EC0F42 /* 旅行.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "旅行.png"; sourceTree = "<group>"; };
+		132622851B8EC5290074C589 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
+		132622861B8EC5290074C589 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
+		132622871B8EC5290074C589 /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickSocialAnalytics.h; sourceTree = "<group>"; };
+		132622891B8EE1150074C589 /* 变形金刚.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "变形金刚.png"; sourceTree = "<group>"; };
+		1326228A1B8EE1150074C589 /* 钢铁侠.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "钢铁侠.png"; sourceTree = "<group>"; };
+		1326228B1B8EE1150074C589 /* 手办.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "手办.png"; sourceTree = "<group>"; };
+		1326228C1B8EE1150074C589 /* 星球大战.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "星球大战.png"; sourceTree = "<group>"; };
+		132622991B8EF5850074C589 /* Wasted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Wasted.png; sourceTree = "<group>"; };
+		1326229A1B8EF5850074C589 /* Wasted2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Wasted2.png; sourceTree = "<group>"; };
 		133A31821B5D09C500AB74A4 /* CollectionIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CollectionIcon@3x.png"; sourceTree = "<group>"; };
 		133A31841B5D0D3400AB74A4 /* SearchPlaceholderIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SearchPlaceholderIcon@3x.png"; sourceTree = "<group>"; };
 		133D3C7B1AE78DC9008F303D /* LKAssistiveTouchButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKAssistiveTouchButton.h; sourceTree = "<group>"; };
@@ -876,7 +890,6 @@
 		134D92ED1B8DA8A0004CFAC8 /* 喷漆.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "喷漆.png"; sourceTree = "<group>"; };
 		134D92EE1B8DA8A0004CFAC8 /* 摄影.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "摄影.png"; sourceTree = "<group>"; };
 		134D92EF1B8DA8A0004CFAC8 /* 游戏.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "游戏.png"; sourceTree = "<group>"; };
-		134D92F71B8DB18E004CFAC8 /* 手办.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "手办.png"; sourceTree = "<group>"; };
 		134F929E1AFCB77400784185 /* LikesPage@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LikesPage@3x.png"; sourceTree = "<group>"; };
 		134F92A01AFCB84B00784185 /* LKLikesPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKLikesPage.h; sourceTree = "<group>"; };
 		134F92A11AFCB84B00784185 /* LKLikesPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKLikesPage.m; sourceTree = "<group>"; };
@@ -2022,9 +2035,6 @@
 		13D9BF231AEB997E0020C94F /* Pro.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pro.png; sourceTree = "<group>"; };
 		13D9BF241AEB997E0020C94F /* Vivid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Vivid.png; sourceTree = "<group>"; };
 		13DA0FC51AEB8AFE005B9476 /* CameraFocus@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraFocus@3x.png"; sourceTree = "<group>"; };
-		13DA0FC81AEB8D8E005B9476 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
-		13DA0FC91AEB8D8E005B9476 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
-		13DA0FCA1AEB8D8E005B9476 /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickSocialAnalytics.h; sourceTree = "<group>"; };
 		13DEEBF61AE75585005E01A6 /* AlreadyFocusWrite@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AlreadyFocusWrite@3x.png"; sourceTree = "<group>"; };
 		13DEEBF71AE75585005E01A6 /* EachOtherFocusWrite@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "EachOtherFocusWrite@3x.png"; sourceTree = "<group>"; };
 		13DEEBF81AE75585005E01A6 /* FocusWirte@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FocusWirte@3x.png"; sourceTree = "<group>"; };
@@ -2201,6 +2211,7 @@
 				135735191B2EC6FC0032515C /* libicucore.dylib in Frameworks */,
 				138EDEC71AD7B1DA0020957C /* libxml2.dylib in Frameworks */,
 				1387C33F1B313B5300B065A7 /* FBSDKLoginKit.framework in Frameworks */,
+				132622881B8EC5290074C589 /* libMobClickLibrary.a in Frameworks */,
 				138EDEC51AD7B1D20020957C /* libz.dylib in Frameworks */,
 				1387C33D1B3139B700B065A7 /* FBSDKCoreKit.framework in Frameworks */,
 				13F504EF1B0AF4EA00D8D484 /* libWeChatSDK.a in Frameworks */,
@@ -2210,7 +2221,6 @@
 				138EDE8D1AD7B0A30020957C /* libleveldb.a in Frameworks */,
 				13F5051C1B0CA05600D8D484 /* TencentOpenAPI.framework in Frameworks */,
 				135E8A9A1B450DA200C2270C /* MAMapKit.framework in Frameworks */,
-				13DA0FCB1AEB8D8E005B9476 /* libMobClickLibrary.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2405,6 +2415,8 @@
 				13D9BF241AEB997E0020C94F /* Vivid.png */,
 				1359F49D1B6A237400A0ABE9 /* GtaTrevor.png */,
 				1359F49E1B6A237400A0ABE9 /* GtaFranklin.png */,
+				132622991B8EF5850074C589 /* Wasted.png */,
+				1326229A1B8EF5850074C589 /* Wasted2.png */,
 			);
 			path = FilterImage;
 			sourceTree = "<group>";
@@ -4110,9 +4122,9 @@
 		13DA0FC71AEB8D8E005B9476 /* UMAnalytics */ = {
 			isa = PBXGroup;
 			children = (
-				13DA0FC81AEB8D8E005B9476 /* libMobClickLibrary.a */,
-				13DA0FC91AEB8D8E005B9476 /* MobClick.h */,
-				13DA0FCA1AEB8D8E005B9476 /* MobClickSocialAnalytics.h */,
+				132622851B8EC5290074C589 /* libMobClickLibrary.a */,
+				132622861B8EC5290074C589 /* MobClick.h */,
+				132622871B8EC5290074C589 /* MobClickSocialAnalytics.h */,
 			);
 			path = UMAnalytics;
 			sourceTree = "<group>";
@@ -4637,7 +4649,10 @@
 		13F505091B0C5EA100D8D484 /* Share */ = {
 			isa = PBXGroup;
 			children = (
-				134D92F71B8DB18E004CFAC8 /* 手办.png */,
+				132622891B8EE1150074C589 /* 变形金刚.png */,
+				1326228A1B8EE1150074C589 /* 钢铁侠.png */,
+				1326228B1B8EE1150074C589 /* 手办.png */,
+				1326228C1B8EE1150074C589 /* 星球大战.png */,
 				134D92E91B8DA8A0004CFAC8 /* 高达.png */,
 				134D92EA1B8DA8A0004CFAC8 /* 狗.png */,
 				134D92EB1B8DA8A0004CFAC8 /* 猫.png */,
@@ -4850,6 +4865,8 @@
 				1369D0D21B82E7EE00498950 /* more.png in Resources */,
 				135D5C041ADFD21E00811B06 /* CameraCut@3x.png in Resources */,
 				138EDF0C1AD7E19D0020957C /* LoginBackground@3x.jpg in Resources */,
+				132622901B8EE1150074C589 /* 星球大战.png in Resources */,
+				1326229B1B8EF5850074C589 /* Wasted.png in Resources */,
 				13925A911B1477D2004D0656 /* NavBarIconSearch_blue@2x.png in Resources */,
 				13F21F3C1B0F1D6200124291 /* WeiboSDK.bundle in Resources */,
 				13E3EE021B60955400A48E76 /* zh2TW.txt in Resources */,
@@ -4876,6 +4893,7 @@
 				13925A921B1477D2004D0656 /* NavBarIconSearch_white@2x.png in Resources */,
 				13478CB71B6636770012EDA2 /* LittleSP@3x.png in Resources */,
 				1359F4A31B6A24B800A0ABE9 /* Gta-driving@3x.png in Resources */,
+				1326228D1B8EE1150074C589 /* 变形金刚.png in Resources */,
 				135D5C061ADFD21E00811B06 /* CameraFlash@3x.png in Resources */,
 				138EDEFB1AD7DBA00020957C /* TabBarNotification@3x.png in Resources */,
 				135D5C281AE0E37800811B06 /* CameraFilter@3x.png in Resources */,
@@ -4918,12 +4936,12 @@
 				13E1A2C81AE63BAB00E24C3C /* NavigationBarSet@3x.png in Resources */,
 				13DEEC1C1AE789E6005E01A6 /* LC_WebStop@2x.png in Resources */,
 				135735221B2EE7D10032515C /* country.plist in Resources */,
-				134D92F81B8DB18E004CFAC8 /* 手办.png in Resources */,
 				13E1A2D11AE644C200E24C3C /* EachOtherFocusGray@3x.png in Resources */,
 				13B6C1961AE8E8EA008912C0 /* NotificationIcon@3x.png in Resources */,
 				134D92F51B8DA8A0004CFAC8 /* 摄影.png in Resources */,
 				134D92F31B8DA8A0004CFAC8 /* 美食.png in Resources */,
 				13D9BF271AEB997E0020C94F /* Diana.png in Resources */,
+				1326228E1B8EE1150074C589 /* 钢铁侠.png in Resources */,
 				135DBAF71AE60577004AD150 /* NavigationBarMore@3x.png in Resources */,
 				1319156B1B8C863100EC0F42 /* 旅行.png in Resources */,
 				133A31851B5D0D3400AB74A4 /* SearchPlaceholderIcon@3x.png in Resources */,
@@ -4934,6 +4952,7 @@
 				134D92F21B8DA8A0004CFAC8 /* 猫.png in Resources */,
 				1359F49F1B6A237400A0ABE9 /* GtaTrevor.png in Resources */,
 				135E8AA01B4511B900C2270C /* AMap.bundle in Resources */,
+				1326229C1B8EF5850074C589 /* Wasted2.png in Resources */,
 				13E27EED1AF8A67200C17362 /* VisitorIcon@3x.png in Resources */,
 				138EDEF91AD7DAD20020957C /* TabBarCamera@3x.png in Resources */,
 				13D9BF261AEB997E0020C94F /* Dawn.png in Resources */,
@@ -4943,6 +4962,7 @@
 				13FCC0931ADF5E9C0008DB41 /* TagAdd@3x.png in Resources */,
 				13D9BF281AEB997E0020C94F /* Holga.png in Resources */,
 				1359F4A01B6A237400A0ABE9 /* GtaFranklin.png in Resources */,
+				1326228F1B8EE1150074C589 /* 手办.png in Resources */,
 				13D9BF2A1AEB997E0020C94F /* Luna.png in Resources */,
 				1357352B1B2EF44E0032515C /* QQLogin@3x.png in Resources */,
 				13E27F0E1AFA1A4900C17362 /* HomeLikeIcon@3x.png in Resources */,
@@ -5666,8 +5686,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Zhenjun Wang (BT5C5YCZ44)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zhenjun Wang (BT5C5YCZ44)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -5710,8 +5730,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Zhenjun Wang (BT5C5YCZ44)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zhenjun Wang (BT5C5YCZ44)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -5736,8 +5756,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Zhenjun Wang (BT5C5YCZ44)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zhenjun Wang (BT5C5YCZ44)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/LIKE/LKExternal/Tencent",
@@ -5761,7 +5781,10 @@
 					"$(PROJECT_DIR)/LIKE/LKExternal/WeChat",
 					"$(PROJECT_DIR)/LIKE/LKExternal/Weibo",
 				);
-				OTHER_LDFLAGS = "-all_load";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -5773,8 +5796,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Zhenjun Wang (BT5C5YCZ44)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zhenjun Wang (BT5C5YCZ44)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/LIKE/LKExternal/Tencent",
@@ -5798,7 +5821,10 @@
 					"$(PROJECT_DIR)/LIKE/LKExternal/WeChat",
 					"$(PROJECT_DIR)/LIKE/LKExternal/Weibo",
 				);
-				OTHER_LDFLAGS = "-all_load";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;

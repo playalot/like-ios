@@ -8,6 +8,7 @@
 
 #import "LKTagCommentCell.h"
 #import "LKTime.h"
+#import "UIImageView+WebCache.h"
 
 @interface LKTagCommentCell ()
 
@@ -71,7 +72,8 @@ LC_PROPERTY(strong) UIImageView * line;
     _comment = comment;
     
     self.head.image = nil;
-    self.head.url = comment.user.avatar;
+//    self.head.url = comment.user.avatar;
+    [self.head sd_setImageWithURL:[NSURL URLWithString:comment.user.avatar] placeholderImage:nil];
     
     NSString * content = [NSString stringWithFormat:@"%@：%@%@" ,comment.user.name, comment.replyUser ? [NSString stringWithFormat:@"@%@ ", comment.replyUser.name] : @"",comment.content];
 

@@ -8,6 +8,7 @@
 
 #import "LKHotTagsView.h"
 #import "LKTag.h"
+#import "UIImageView+WebCache.h"
 
 @interface LKHotTagItem ()
 
@@ -184,7 +185,8 @@ LC_PROPERTY(strong) UIView * maskView;
         
         if (!LC_NSSTRING_IS_INVALID(tag.image)) {
             
-            item.url = tag.image;
+//            item.url = tag.image;
+            [item sd_setImageWithURL:[NSURL URLWithString:tag.image] placeholderImage:nil];
         }
         
         item.selected = self.highlight;

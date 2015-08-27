@@ -38,7 +38,9 @@ LC_PROPERTY(assign) NSInteger filterIndex;
 
 LC_PROPERTY(assign)  UIDeviceOrientation deviceOrientation;
 
-LC_PROPERTY(strong) UIView * gtaView;
+LC_PROPERTY(strong) UIView *gtaView;
+
+LC_PROPERTY(strong) UIView *wastedView;
 
 
 @end
@@ -106,6 +108,17 @@ LC_PROPERTY(strong) UIView * gtaView;
                     
                     NSMutableArray * array = [@[self.flashButton, self.switchCameraButton, self.photosButton] mutableCopy];
 
+                    if (self.wastedView) {
+                        [array addObject:self.wastedView];
+                        
+                        LC_FAST_ANIMATIONS(0.25, ^{
+                            
+                            self.wastedView.viewFrameX = 0;
+                            self.wastedView.viewFrameY = (self.fastCamera.view.viewFrameHeight - self.wastedView.viewFrameHeight) * 0.5;
+                            
+                        });
+                    }
+                    
                     if (self.gtaView) {
                         [array addObject:self.gtaView];
                         
@@ -130,6 +143,17 @@ LC_PROPERTY(strong) UIView * gtaView;
                     CGFloat rotation = self.deviceOrientation == UIDeviceOrientationLandscapeLeft ? 90.f : -90.f;
                     
                     NSMutableArray * array = [@[self.flashButton, self.switchCameraButton, self.photosButton] mutableCopy];
+                    
+                    if (self.wastedView) {
+                        
+                        [array addObject:self.wastedView];
+                        
+                        LC_FAST_ANIMATIONS(0.25, ^{
+                            
+                            self.wastedView.viewFrameX = 0;
+                            self.wastedView.viewFrameY = (self.fastCamera.view.viewFrameHeight - self.wastedView.viewFrameHeight) * 0.5;
+                        });
+                    }
                     
                     if (self.gtaView) {
                         
@@ -399,6 +423,11 @@ LC_PROPERTY(strong) UIView * gtaView;
 {
     self.filterIndex = index;
     
+    if (self.wastedView) {
+        [self.wastedView removeFromSuperview];
+        self.wastedView = nil;
+    }
+    
     if (self.gtaView) {
         [self.gtaView removeFromSuperview];
         self.gtaView = nil;
@@ -409,7 +438,15 @@ LC_PROPERTY(strong) UIView * gtaView;
         return;
     }
     
-    if (self.filterIndex == 1 || self.filterIndex == 2) {
+    if (self.filterIndex == 1) {
+        
+        self.wastedView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Wasted2" useCache:YES]];
+        self.wastedView.viewFrameX = 0;
+        self.wastedView.viewFrameY = (self.fastCamera.view.viewFrameHeight - self.wastedView.viewFrameHeight) * 0.5;
+        self.fastCamera.view.ADD(self.wastedView);
+    }
+    
+    if (self.filterIndex == 2 || self.filterIndex == 3) {
         
         self.gtaView = [[UIImageView alloc] initWithImage:self.filterIndex == 1 ? [UIImage imageNamed:@"Gta-driving.png" useCache:YES] : [UIImage imageNamed:@"Gta-walking.png" useCache:YES]];
         self.gtaView.viewFrameX = 10;

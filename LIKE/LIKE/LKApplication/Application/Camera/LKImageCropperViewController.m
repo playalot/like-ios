@@ -55,7 +55,9 @@ LC_PROPERTY(strong) UISlider * slider2;
 LC_PROPERTY(assign) NSInteger filterIndex;
 LC_PROPERTY(assign) BOOL magic;
 
-LC_PROPERTY(strong) UIView * gtaView;
+LC_PROPERTY(strong) UIView *gtaView;
+
+LC_PROPERTY(strong) UIView *wastedView;
 
 @end
 
@@ -315,8 +317,17 @@ LC_PROPERTY(strong) UIView * gtaView;
         
         UIImage * image = [self lookkupImageFilterWithImage:LKFilterManager.singleton.allFilterImage[i - 1] originImage:preview];
         
+        // Wasted滤镜
+        if (i == 1) {
+            
+            CGFloat width = image.size.width;
+            CGFloat height = width / 414 * 72;
+            
+            image = [image addMaskImage:[UIImage imageNamed:@"Wasted2" useCache:YES] imageSize:image.size inRect:CGRectMake(0, (image.size.height - height) * 0.5, width, height)];
+        }
         
-        if (i == 1 || i == 2) {
+        // GTA滤镜
+        if (i == 2 || i == 3) {
             
             CGFloat width = (245. / 1020.) * image.size.width * 1.5;
             CGFloat height = width / 245 * 172.;
@@ -474,13 +485,32 @@ LC_PROPERTY(strong) UIView * gtaView;
             
             image = [self lookkupImageFilterWithImage:LKFilterManager.singleton.allFilterImage[self.filterIndex - 1] originImage:self.originalImage];
             
+            if (self.wastedView) {
+                [self.wastedView removeFromSuperview];
+                self.wastedView = nil;
+            }
             
             if (self.gtaView) {
                 [self.gtaView removeFromSuperview];
                 self.gtaView = nil;
             }
             
-            if (self.filterIndex == 1 || self.filterIndex == 2) {
+            
+            // Wasted滤镜
+            if (self.filterIndex == 1) {
+                
+//                CGFloat width = image.size.width;
+//                CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
+//                CGFloat scale = [UIScreen mainScreen].scale;
+//                CGFloat height = width / 1242 * 216;
+                CGFloat width = image.size.width;
+                CGFloat height = width * 216 / 1242;
+                
+                image = [image addMaskImage:[UIImage imageNamed:@"Wasted2" useCache:YES] imageSize:image.size inRect:CGRectMake(0, (image.size.height - height) * 0.5, width, height)];
+            }
+            
+            // GTA滤镜
+            if (self.filterIndex == 2 || self.filterIndex == 3) {
                 
                 CGFloat width = (245. / 1020.) * image.size.width;
                 CGFloat height = width / 245 * 172.;

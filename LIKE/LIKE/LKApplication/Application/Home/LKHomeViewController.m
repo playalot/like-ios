@@ -34,6 +34,7 @@
 #import "Doppelganger.h"
 #import "LKBadgeView.h"
 #import "LKSearchResultsViewController.h"
+#import "MobClick.h"
 
 
 #define FOCUS_FEED_CACHE_KEY [NSString stringWithFormat:@"LKFocusFeedKey-%@", LKLocalUser.singleton.user.id]

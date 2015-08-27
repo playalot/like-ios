@@ -10,6 +10,7 @@
 #import "LKComment.h"
 #import "LKTime.h"
 #import "LKPostDetailCell.h"
+#import "UIImageView+WebCache.h"
 
 @implementation LKCommentsView
 
@@ -79,7 +80,8 @@
         head.viewFrameWidth = 33;
         head.viewFrameHeight = 33;
         head.cornerRadius = 33 / 2;
-        head.url = comment.user.avatar;
+//        head.url = comment.user.avatar;
+        [head sd_setImageWithURL:[NSURL URLWithString:comment.user.avatar] placeholderImage:nil];
         head.userInteractionEnabled = YES;
         [head addTapGestureRecognizer:self selector:@selector(headTapAction:)];
         head.tag = i + 100;

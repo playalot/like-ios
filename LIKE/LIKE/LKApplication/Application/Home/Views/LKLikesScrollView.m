@@ -7,6 +7,7 @@
 //
 
 #import "LKLikesScrollView.h"
+#import "UIImageView+WebCache.h"
 
 @interface LKLikesScrollView ()
 
@@ -84,7 +85,8 @@ LC_PROPERTY(strong) NSMutableArray * cache;
         item.hidden = NO;
         item.viewFrameX = i * width + i * padding + 8;
         item.backgroundColor = LKColor.backgroundColor;
-        item.url = user.avatar; 
+//        item.url = user.avatar;
+        [item sd_setImageWithURL:[NSURL URLWithString:user.avatar] placeholderImage:nil];
         item.tag = i;
         
         viewRightX = item.viewRightX;

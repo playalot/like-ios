@@ -39,6 +39,7 @@
 
 -(void) defaultSettings
 {
+    [self addImageFilter:@"Wasted"];
     [self addImageFilter:@"GtaTrevor"];
     [self addImageFilter:@"GtaFranklin"];
     [self addImageFilter:@"Vivid"];

@@ -8,6 +8,7 @@
 
 #import "LKNotificationCell.h"
 #import "LKTime.h"
+#import "UIImageView+WebCache.h"
 
 @interface LKNotificationCell ()
 
@@ -117,7 +118,8 @@ LC_IMP_SIGNAL(PushPostDetail);
     _notification = notification;
     
     self.headImageView.image = nil;
-    self.headImageView.url = notification.user.avatar;
+//    self.headImageView.url = notification.user.avatar;
+    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:notification.user.avatar] placeholderImage:nil];
     
     self.nameLabel.text = [NSString stringWithFormat:@"%@%@", notification.user.name, [LKNotificationCell getTitle:notification]];
     
@@ -167,7 +169,8 @@ LC_IMP_SIGNAL(PushPostDetail);
             image.viewFrameY = 55 / 2 - 35 / 2;
             image.viewFrameWidth = 35;
             image.viewFrameHeight = 35;
-            image.url = post.content;
+//            image.url = post.content;
+            [image sd_setImageWithURL:[NSURL URLWithString:post.content] placeholderImage:nil];
             image.tag = i;
             image.userInteractionEnabled = YES;
             [self.morePreview addSubview:image];
@@ -180,7 +183,8 @@ LC_IMP_SIGNAL(PushPostDetail);
         self.preview.hidden = NO;
         self.preview.image = nil;
         self.preview.tag = 0;
-        self.preview.url = ((LKPost *)notification.posts[0]).content;
+//        self.preview.url = ((LKPost *)notification.posts[0]).content;
+        [self.preview sd_setImageWithURL:[NSURL URLWithString:((LKPost *)notification.posts[0]).content] placeholderImage:nil];
         self.morePreview.hidden = YES;
     }
     else{

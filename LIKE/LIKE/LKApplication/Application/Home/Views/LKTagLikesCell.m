@@ -8,6 +8,7 @@
 
 #import "LKTagLikesCell.h"
 #import "LKTime.h"
+#import "UIImageView+WebCache.h"
 
 @interface LKTagLikesCell ()
 
@@ -107,7 +108,8 @@ LC_IMP_SIGNAL(PushUserInfo);
     _tagValue = tagValue;
     
     self.userHead.image = nil;
-    self.userHead.url = tagValue.user.avatar;
+//    self.userHead.url = tagValue.user.avatar;
+    [self.userHead sd_setImageWithURL:[NSURL URLWithString:tagValue.user.avatar] placeholderImage:nil];
     
     self.userName.text = tagValue.user.name;
     self.userName.FIT();
@@ -165,7 +167,8 @@ LC_IMP_SIGNAL(PushUserInfo);
         }
         userHead.viewFrameY = inv * (i/maxCount) + 33 * (i/maxCount);
         userHead.cornerRadius = 33 / 2;
-        userHead.url = user.avatar;
+//        userHead.url = user.avatar;
+        [userHead sd_setImageWithURL:[NSURL URLWithString:user.avatar] placeholderImage:nil];
         userHead.backgroundColor = [UIColor whiteColor];
         userHead.userInteractionEnabled = YES;
         userHead.tag = i;

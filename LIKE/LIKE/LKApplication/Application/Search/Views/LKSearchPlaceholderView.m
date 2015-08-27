@@ -9,6 +9,7 @@
 #import "LKSearchPlaceholderView.h"
 #import "LKTag.h"
 #import "LKSearchHistory.h"
+#import "UIImageView+WebCache.h"
 
 @interface LKSearchPlaceholderView () <UITableViewDataSource,UITableViewDelegate>
 
@@ -221,7 +222,8 @@ LC_PROPERTY(strong) NSArray * history;
      
         LKUser * user = self.users[indexPath.row];
         
-        head.url = user.avatar;
+//        head.url = user.avatar;
+        [head sd_setImageWithURL:[NSURL URLWithString:user.avatar] placeholderImage:nil];
         label.text = user.name;
         
         head.alpha = 1;

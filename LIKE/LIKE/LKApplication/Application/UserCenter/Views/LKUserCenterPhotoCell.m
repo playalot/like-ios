@@ -7,6 +7,7 @@
 //
 
 #import "LKUserCenterPhotoCell.h"
+#import "UIImageView+WebCache.h"
 
 @interface __LKUserCenterPhotoItem : UIView
 
@@ -103,7 +104,8 @@ LC_IMP_SIGNAL(PushPostDetail);
         if (post) {
             
             item.hidden = NO;
-            item.imageView.url = post.content;
+//            item.imageView.url = post.content;
+            [item.imageView sd_setImageWithURL:[NSURL URLWithString:post.content] placeholderImage:nil];
         }
     }
 }

@@ -540,7 +540,8 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             cell.ADD(item);
         }
         
-        head.url = self.tagValue.user.avatar;
+//        head.url = self.tagValue.user.avatar;
+        [head sd_setImageWithURL:[NSURL URLWithString:self.tagValue.user.avatar] placeholderImage:nil];
         item.tagValue = self.tagValue;
         item.viewFrameX = head.viewRightX + padding;
         item.viewFrameY = 53 / 2 - item.viewMidHeight;

@@ -11,6 +11,7 @@
 #import "FXBlurView.h"
 #import "LKSearchBar.h"
 #import "LKLoginViewController.h"
+#import "UIImageView+WebCache.h"
 
 #define kDefaultHeaderFrame CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)
 
@@ -301,7 +302,9 @@ LC_PROPERTY(strong) LCUIButton * doneButton;
         self.user = user;
         
         self.nameLabel.text = [NSString stringWithFormat:@"%@\n%@ likes",LKLocalUser.singleton.user.name, @(LKLocalUser.singleton.user.likes.integerValue)];
-        self.headImageView.url = user.avatar;
+//        self.headImageView.url = user.avatar;
+        [self.headImageView sd_setImageWithURL:[NSURL URLWithString:user.avatar] placeholderImage:nil];
+        
         
         if (!LC_NSSTRING_IS_INVALID(user.cover)) {
             
@@ -310,7 +313,8 @@ LC_PROPERTY(strong) LCUIButton * doneButton;
             [animation setType:kCATransitionFade];
             [self.backgroundView.layer addAnimation:animation forKey:@"transition"];
             
-            self.backgroundView.url = user.cover;
+//            self.backgroundView.url = user.cover;
+            [self.backgroundView sd_setImageWithURL:[NSURL URLWithString:user.cover] placeholderImage:nil];
         }
         else{
             

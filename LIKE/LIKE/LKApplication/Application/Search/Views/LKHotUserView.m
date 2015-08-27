@@ -7,6 +7,7 @@
 //
 
 #import "LKHotUserView.h"
+#import "UIImageView+WebCache.h"
 
 @interface LKHotUserView ()
 
@@ -67,7 +68,8 @@ LC_PROPERTY(strong) UIScrollView * scrollView;
         item.viewFrameWidth = 35;
         item.viewFrameHeight = 35;
         item.cornerRadius = 17.5;
-        item.url = user.avatar;
+//        item.url = user.avatar;
+        [item sd_setImageWithURL:[NSURL URLWithString:user.avatar] placeholderImage:nil];
         item.backgroundColor = LKColor.backgroundColor;
         item.userInteractionEnabled = YES;
         item.tag = i;

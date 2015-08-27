@@ -8,6 +8,7 @@
 
 #import "LKHotTagsScrollView.h"
 #import "LKTag.h"
+#import "UIImageView+WebCache.h"
 
 @interface __LKHotTagsItem : LCUIImageView
 
@@ -21,7 +22,8 @@ LC_PROPERTY(strong) LCUILabel * label;
 {
     if (self = [super initWithFrame:CGRectMake(0, 0, 80, 80)]) {
         
-        self.url = imageURL;
+//        self.url = imageURL;
+        [self sd_setImageWithURL:[NSURL URLWithString:imageURL] placeholderImage:nil];
         
         self.backgroundColor = LKColor.backgroundColor;
         

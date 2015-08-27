@@ -11,6 +11,7 @@
 #import "LKTime.h"
 #import "LKCommentsView.h"
 #import "LKLikesScrollView.h"
+#import "UIImageView+WebCache.h"
 
 @interface LKPostDetailCell ()
 
@@ -133,7 +134,8 @@ LC_IMP_SIGNAL(PushUserCenter);
     _tagDetail = tagDetail;
     
     self.headImageView.image = nil;
-    self.headImageView.url = tagDetail.user.avatar;
+//    self.headImageView.url = tagDetail.user.avatar;
+    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:tagDetail.user.avatar] placeholderImage:nil];
     
     
     if (!self.tagItem) {

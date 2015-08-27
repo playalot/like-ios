@@ -7,6 +7,7 @@
 //
 
 #import "LKSearchResultCollectionViewCell.h"
+#import "UIImageView+WebCache.h"
 
 @interface LKSearchResultCollectionViewCell ()
 
@@ -117,7 +118,8 @@ LC_PROPERTY(strong) LCUILabel * likes;
     
     
     self.head.image = nil;
-    self.head.url = post.user.avatar;
+//    self.head.url = post.user.avatar;
+    [self.head sd_setImageWithURL:[NSURL URLWithString:post.user.avatar] placeholderImage:nil];
     self.title.text = LC_NSSTRING_FORMAT(@"%@", post.user.name);
     self.likes.text = LC_NSSTRING_FORMAT(@"%@ likes", post.user.likes);
     
@@ -136,7 +138,8 @@ LC_PROPERTY(strong) LCUILabel * likes;
     self.contentImage.viewFrameWidth = size.width;
     self.contentImage.viewFrameHeight = size.height;
     self.contentImage.image = nil;
-    self.contentImage.url = post.content;
+//    self.contentImage.url = post.content;
+    [self.contentImage sd_setImageWithURL:[NSURL URLWithString:post.content] placeholderImage:nil];
     
     
     //[LKSearchResultCollectionViewCell roundCorners:UIRectCornerBottomLeft | UIRectCornerBottomRight forView:self.contentImage];

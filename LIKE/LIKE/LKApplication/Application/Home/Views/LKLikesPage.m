@@ -7,6 +7,7 @@
 //
 
 #import "LKLikesPage.h"
+#import "UIImageView+WebCache.h"
 
 @interface LKLikesPage () <UIScrollViewDelegate>
 
@@ -263,7 +264,8 @@ LC_PROPERTY(strong) UIView * line;
         item.tag = i;
         
         if (user.avatar) {
-            item.url = user.avatar;
+//            item.url = user.avatar;
+            [item sd_setImageWithURL:[NSURL URLWithString:user.avatar] placeholderImage:nil];
             [item addTapGestureRecognizer:self selector:@selector(didTapHeadAction:)];
         }
         

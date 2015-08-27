@@ -7,6 +7,7 @@
 //
 
 #import "LKHomepageHeader.h"
+#import "UIImageView+WebCache.h"
 
 @interface LKHomepageHeader ()
 
@@ -56,7 +57,8 @@ LC_PROPERTY(assign) CGPoint point;
     if (user) {
         
         self.nameLabel.text = [NSString stringWithFormat:@"%@\n %@ likes", user.name, @(user.likes.integerValue)];
-        self.headImageView.url = user.avatar;
+//        self.headImageView.url = user.avatar;
+        [self.headImageView sd_setImageWithURL:[NSURL URLWithString:user.avatar] placeholderImage:nil];
         self.nameLabelOnShowing.text = user.name;
         
         if (!LC_NSSTRING_IS_INVALID(user.cover)) {
@@ -66,7 +68,8 @@ LC_PROPERTY(assign) CGPoint point;
             [animation setType:kCATransitionFade];
             [self.backgroundView.layer addAnimation:animation forKey:@"transition"];
             
-            self.backgroundView.url = user.cover;
+//            self.backgroundView.url = user.cover;
+            [self.backgroundView sd_setImageWithURL:[NSURL URLWithString:user.cover] placeholderImage:nil];
         }
         else{
             

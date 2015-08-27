@@ -27,13 +27,13 @@ LC_PROPERTY(strong) LCUILabel * likesLabel;
         
         
         self.tagLabel = LCUILabel.view;
-        self.tagLabel.font = LK_FONT(11 * 2);
+        self.tagLabel.font = LK_FONT_B(11 * 2);
         self.tagLabel.textColor = [UIColor whiteColor];//LC_RGB(74, 74, 74);
         self.ADD(self.tagLabel);
         
         
         self.likesLabel = LCUILabel.view;
-        self.likesLabel.font = LK_FONT(11 * 2);
+        self.likesLabel.font = LK_FONT_B(11 * 2);
         self.likesLabel.textColor = [UIColor whiteColor];
         self.likesLabel.borderWidth = 1;
         self.likesLabel.borderColor = [[UIColor whiteColor] colorWithAlphaComponent:0.4];
@@ -116,8 +116,8 @@ LC_PROPERTY(strong) LCUILabel * likesLabel;
         __LKTagItem * item = __LKTagItem.view;
         
         if (self.proportion) {
-            item.tagLabel.font = LK_FONT(20 * self.proportion);
-            item.likesLabel.font = LK_FONT(20 * self.proportion);
+            item.tagLabel.font = LK_FONT_B(20 * self.proportion);
+            item.likesLabel.font = LK_FONT_B(20 * self.proportion);
         }
 
         

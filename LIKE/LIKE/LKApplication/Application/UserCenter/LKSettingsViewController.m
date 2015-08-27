@@ -14,6 +14,7 @@
 #import "LKUserInfoModel.h"
 #import "LKLinkAccountsViewController.h"
 #import "SDImageCache.h"
+#import "UIImageView+WebCache.h"
 
 @interface LKSettingsViewController () <UITableViewDataSource,UITableViewDelegate>
 
@@ -166,7 +167,8 @@ LC_PROPERTY(assign) CGFloat cacheSize;
             self.head.viewFrameY = 200 / 3 / 2 - 20;
             self.head.cornerRadius = 20;
             self.head.image = nil;
-            self.head.url = LKLocalUser.singleton.user.avatar;
+//            self.head.url = LKLocalUser.singleton.user.avatar;
+            [self.head sd_setImageWithURL:[NSURL URLWithString:LKLocalUser.singleton.user.avatar] placeholderImage:nil];
             configurationCell.ADD(self.head);
             
             

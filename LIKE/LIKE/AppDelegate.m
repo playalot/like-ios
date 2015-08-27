@@ -75,6 +75,7 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
     
     // UMeng
     [MobClick startWithAppkey:@"54bf7949fd98c563bc00075d" reportPolicy:SENDWIFIONLY channelId:@"App Store"];
+    [MobClick checkUpdate];
     
     
     // CMD

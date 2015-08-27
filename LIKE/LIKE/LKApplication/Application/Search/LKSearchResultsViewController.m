@@ -9,6 +9,7 @@
 #import "LKSearchResultsViewController.h"
 #import "LKUserCenterPhotoCell.h"
 #import "LKPostDetailViewController.h"
+#import "UIImageView+WebCache.h"
 
 @interface LKSearchResultsViewController ()
 
@@ -163,7 +164,8 @@ LC_PROPERTY(strong) NSDictionary * info;
     head.viewFrameX = 15;
     head.viewFrameY = 15;
     head.backgroundColor = LKColor.backgroundColor;
-    head.url = avatar;
+//    head.url = avatar;
+    [head sd_setImageWithURL:[NSURL URLWithString:avatar] placeholderImage:nil];
     head.cornerRadius = 4;
     view.ADD(head);
     

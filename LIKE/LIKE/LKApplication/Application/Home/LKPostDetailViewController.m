@@ -570,7 +570,7 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
     
     @weakly(self);
     
-    [LKActionSheet showWithTitle:nil buttonTitles:@[LC_LO(@"自拍"),LC_LO(@"广告"),LC_LO(@"色情"),LC_LO(@"谣言"),LC_LO(@"恶意营销"),LC_LO(@"侮辱诋毁"),LC_LO(@"侵权举报 (诽谤、抄袭、冒用...)")] didSelected:^(NSInteger index) {
+    [LKActionSheet showWithTitle:nil buttonTitles:@[LC_LO(@"自拍"),LC_LO(@"广告"),LC_LO(@"色情"),LC_LO(@"谣言"),LC_LO(@"恶意营销"),LC_LO(@"侮辱诋毁"),LC_LO(@"侵权举报(诽谤、抄袭、冒用...)")] didSelected:^(NSInteger index) {
         
         @normally(self);
 
@@ -621,7 +621,7 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
             break;
             
         case 6:
-            [interface addParameter:LC_LO(@"侵权举报 (诽谤、抄袭、冒用...)") key:@"reason"];
+            [interface addParameter:LC_LO(@"侵权举报(诽谤、抄袭、冒用...)") key:@"reason"];
             break;
             
         default:
@@ -997,7 +997,8 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         };
         
         
-        self.userHead.url = self.post.user.avatar;
+//        self.userHead.url = self.post.user.avatar;
+        [self.userHead sd_setImageWithURL:[NSURL URLWithString:self.post.user.avatar] placeholderImage:nil];
         self.userName.text = self.post.user.name;
         [self.userLikes setText:self.post.user.likes.description animated:NO];
 
@@ -1309,7 +1310,8 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     imageView.viewFrameHeight = headWidth - 10 * proportion;
     imageView.viewFrameX = (20 + 18) * proportion + 5 * proportion;
     imageView.viewFrameY = 5 * proportion;
-    imageView.url = self.post.user.avatar;
+//    imageView.url = self.post.user.avatar;
+    [imageView sd_setImageWithURL:[NSURL URLWithString:self.post.user.avatar] placeholderImage:nil];
     imageView.cornerRadius = imageView.viewMidHeight;
     imageView.backgroundColor = [UIColor whiteColor];
     bottomView.ADD(imageView);
@@ -1367,7 +1369,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     interestView.viewFrameY = CGRectGetMaxY(qrCodeView.frame) - interestView.viewFrameHeight;
     bottomView.ADD(interestView);
     
-    NSArray *interestArray = @[@"高达", @"狗", @"旅行", @"猫", @"美食", @"喷漆", @"摄影", @"游戏", @"手办"];
+    NSArray *interestArray = @[@"高达", @"狗", @"旅行", @"猫", @"美食", @"喷漆", @"摄影", @"游戏", @"手办", @"变形金刚", @"钢铁侠", @"星球大战"];
     
     UIImage *interestImage = nil;
     for (LKTag *tag in self.tagsListModel.tags) {
@@ -1422,11 +1424,11 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
                          inRect:LC_RECT(0, image.size.height - headWidth / 2, bottomView.viewFrameWidth, bottomView.viewFrameHeight)];
     
     
-    UIImage * icon = [[UIImage imageNamed:@"LikeIconSmall.png" useCache:NO] scaleToBeWidth:50 * proportion];
+    UIImage * icon = [[UIImage imageNamed:@"LikeIconSmall.png" useCache:NO] scaleToBeWidth:33 * proportion];
     
     image = [image addMaskImage:icon
                       imageSize:image.size
-                         inRect:LC_RECT(image.size.width - icon.size.width - 40, 40, icon.size.width, icon.size.height)];
+                         inRect:LC_RECT(image.size.width - icon.size.width - 20, 20, icon.size.width, icon.size.height)];
     
     return image;
 }
@@ -1441,7 +1443,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     // 狗
     NSArray *dog = @[@"汪星人", @"汪", @"狗"];
     // 旅行
-    NSArray *travel = @[@"旅行"];
+    NSArray *travel = @[@"旅行", @"吉他", @"音乐", @"艺术", @"旅游"];
     // 猫
     NSArray *cat = @[@"喵星人", @"猫", @"喵"];
     // 美食
@@ -1453,7 +1455,13 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     // 游戏
     NSArray *game = @[@"PS4", @"XBOX", @"游戏", @"GTA", @"数码", @"索尼大法好", @"索大好"];
     // 手办
-    NSArray *gk = @[@"手办", @"粘土人", @"粘土"];
+    NSArray *gk = @[@"手办", @"粘土人", @"粘土", @"舰娘", @"初音", @"动漫", @"漫画"];
+    // 变形金刚
+    NSArray *transformer = @[@"变形金刚", @"擎天柱", @"大力神", @"大黄蜂", @"TF", @"汽车人", @"transformers", @"威震天"];
+    // 钢铁侠
+    NSArray *ironMan = @[@"钢铁侠", @"美国队长", @"IRON MAN", @"复仇者联盟", @"绿巨人", @"漫威"];
+    // 星球大战
+    NSArray *starWar = @[@"星球大战", @"STAR WARS", @"STARWARS", @"星战"];
     
     if ([tag.tag rangeOfString:tagArray[0]].length) {
         
@@ -1550,6 +1558,39 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             if ([tag.tag rangeOfString:str].length) {
                 
                 return [UIImage imageNamed:@"手办"];
+            }
+        }
+    }
+    
+    if ([tag.tag rangeOfString:tagArray[9]].length) {
+        
+        for (NSString *str in transformer) {
+            
+            if ([tag.tag rangeOfString:str].length) {
+                
+                return [UIImage imageNamed:@"变形金刚"];
+            }
+        }
+    }
+    
+    if ([tag.tag rangeOfString:tagArray[10]].length) {
+        
+        for (NSString *str in ironMan) {
+            
+            if ([tag.tag rangeOfString:str].length) {
+                
+                return [UIImage imageNamed:@"钢铁侠"];
+            }
+        }
+    }
+    
+    if ([tag.tag rangeOfString:tagArray[11]].length) {
+        
+        for (NSString *str in starWar) {
+            
+            if ([tag.tag rangeOfString:str].length) {
+                
+                return [UIImage imageNamed:@"星球大战"];
             }
         }
     }

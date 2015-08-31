@@ -21,6 +21,7 @@
 #import "AFNetworkActivityIndicatorManager.h"
 #import <SMS_SDK/SMS_SDK.h>
 #import "SDImageCache.h"
+#import "APService.h"
 
 @interface AppDelegate () <LC_CMD_IMP>
 
@@ -91,29 +92,47 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
     // 会话错误通知
     [self observeNotification:LKSessionError];
     // 应用程序远程登录通知
-    [self observeNotification:LCUIApplicationDidRegisterRemoteNotification];
+//    [self observeNotification:LCUIApplicationDidRegisterRemoteNotification];
+    [self observeNotification:kJPFNetworkDidRegisterNotification];
+    
     // 应用程序远程登录失败通知
-    [self observeNotification:LCUIApplicationDidRegisterRemoteFailNotification];
+//    [self observeNotification:LCUIApplicationDidRegisterRemoteFailNotification];
+    
     // 应用程序接收到远程通知
-    [self observeNotification:LCUIApplicationDidReceiveRemoteNotification];
+//    [self observeNotification:LCUIApplicationDidReceiveRemoteNotification];
+    [self observeNotification:kJPFNetworkDidReceiveMessageNotification];
     
     
     self.home = [LKHomeViewController viewController];
     
     
+    // 极光推送
     if (IOS8_OR_LATER) {
         
         // 若系统为iOS 8以后的版本,需要注册通知
-        UIUserNotificationSettings * settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeAlert) categories:nil];
+//        UIUserNotificationSettings * settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeAlert) categories:nil];
+//        
+//        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+//        [[UIApplication sharedApplication] registerForRemoteNotifications];
         
-        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-        [[UIApplication sharedApplication] registerForRemoteNotifications];
+        [APService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
+                                                       UIUserNotificationTypeSound |
+                                                       UIUserNotificationTypeAlert)
+                                           categories:nil];
     }
     else{
         
-        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
+//        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
+//        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
+        
+        [APService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                       UIRemoteNotificationTypeSound |
+                                                       UIRemoteNotificationTypeAlert)
+                                           categories:nil];
     }
+    
+    [APService setupWithOption:launchOptions];
+    [APService setTags:nil alias:@"11226" callbackSelector:@selector(tagsAliasCallback:tags:alias:) target:self];
     
     // Please notify the application each time the orientation is changed.
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
@@ -123,11 +142,13 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
     if (LKLocalUser.singleton.isLogin && launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
         
         [self.home performSelector:@selector(notificationAction) withObject:nil afterDelay:0.5];
+        
     }
-
+    
+    
     // tabbarCtrl只放了一个主页控制器
     self.tabBarController = [[LKTabBarController alloc] initWithViewControllers:@[LC_UINAVIGATION(self.home)]];
-    
+
     self.window.rootViewController = self.tabBarController;
     
     
@@ -163,6 +184,15 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
 
 //    // welcom...
 //    [LKWelcome welcome];
+}
+
+- (void)tagsAliasCallback:(int)iResCode
+                     tags:(NSSet *)tags
+                    alias:(NSString *)alias {
+    
+    NSString *callbackString = [NSString stringWithFormat:@"%d, \nalias: %@\n", iResCode, alias];
+    
+    NSLog(@"TagsAlias回调:%@", callbackString);
 }
 
 /**
@@ -246,6 +276,9 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
                 // 过期,重新登录,并设置badge
                 [LKLocalUser regetSessionTokenAndUseLoadingTip:NO];
             }
+            
+            [self.home performSelector:@selector(notificationAction) withObject:nil];
+            
         }
         
         // 检查通知数量
@@ -305,7 +338,7 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
             [LKLoginViewController needLoginOnViewController:nil];
         }
     }
-    else if ([notification is:LCUIApplicationDidRegisterRemoteNotification]){
+    else if ([notification is:kJPFNetworkDidRegisterNotification]){
     
         if (LKLocalUser.singleton.isLogin) {
             
@@ -322,11 +355,8 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
 
         }
     }
-    else if ([notification is:LCUIApplicationDidRegisterRemoteFailNotification]){
-        
-    }
-    else if ([notification is:LCUIApplicationDidReceiveRemoteNotification]){
-        
+    else if ([notification is:kJPFNetworkDidReceiveMessageNotification]){
+
     }
 }
 
@@ -375,22 +405,25 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
     }
 }
 
-//- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-//    
-//    // 1.设置缓存
-//    NSURLCache *cache = [[NSURLCache alloc] initWithMemoryCapacity:4 * 1024 * 1024 diskCapacity:20 * 1024 * 1024 diskPath:nil];
-//    [NSURLCache setSharedURLCache:cache];
-//    
-//    // 2.设置网络指示器
-//    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
-//    
-//    return YES;
-//}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    
+    [APService handleRemoteNotification:userInfo];
+    completionHandler(UIBackgroundFetchResultNewData);
+    
+    // Bind badge.
+    [LKNotificationCount bindView:self.home.navigationItem.rightBarButtonItem.customView withBadgeCount:[userInfo[@"aps"][@"badge"] integerValue]];
+
+}
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
     
     [[SDImageCache sharedImageCache] clearMemory];
     [[SDImageCache sharedImageCache] clearDisk];
 }
+
+//- (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err {
+//    NSLog(@"Error in registration. Error: %@", err);
+//}
 
 @end

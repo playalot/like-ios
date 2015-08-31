@@ -11,6 +11,7 @@
 @interface LKNotificationCount : NSObject
 
 +(void) bindView:(UIView *)bindView;
++(void) bindView:(UIView *)bindView withBadgeCount:(NSInteger)badgeCount;
 +(void) cleanBadge;
 
 +(void) startCheck;

@@ -197,6 +197,7 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
     
     // Load...
     [self.tagsListModel loadDataWithPostID:self.post.id getMore:NO];
+        
 }
 
 -(void) buildUI

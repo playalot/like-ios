@@ -22,6 +22,14 @@
 		132622901B8EE1150074C589 /* 星球大战.png in Resources */ = {isa = PBXBuildFile; fileRef = 1326228C1B8EE1150074C589 /* 星球大战.png */; };
 		1326229B1B8EF5850074C589 /* Wasted.png in Resources */ = {isa = PBXBuildFile; fileRef = 132622991B8EF5850074C589 /* Wasted.png */; };
 		1326229C1B8EF5850074C589 /* Wasted2.png in Resources */ = {isa = PBXBuildFile; fileRef = 1326229A1B8EF5850074C589 /* Wasted2.png */; };
+		132622A01B93FC0D0074C589 /* libPushSDK-1.8.5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1326229F1B93FC0D0074C589 /* libPushSDK-1.8.5.a */; };
+		132622A21B93FC6F0074C589 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 132622A11B93FC6F0074C589 /* CFNetwork.framework */; };
+		132622A41B93FC800074C589 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 132622A31B93FC800074C589 /* CoreFoundation.framework */; };
+		132622A61B93FC950074C589 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 132622A51B93FC950074C589 /* CoreTelephony.framework */; };
+		132622A81B93FCA60074C589 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 132622A71B93FCA60074C589 /* SystemConfiguration.framework */; };
+		132622AA1B93FCB50074C589 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 132622A91B93FCB50074C589 /* CoreGraphics.framework */; };
+		132622AC1B93FCCC0074C589 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 132622AB1B93FCCC0074C589 /* Security.framework */; };
+		132622AE1B93FD4C0074C589 /* PushConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 132622AD1B93FD4C0074C589 /* PushConfig.plist */; };
 		133A31831B5D09C500AB74A4 /* CollectionIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 133A31821B5D09C500AB74A4 /* CollectionIcon@3x.png */; };
 		133A31851B5D0D3400AB74A4 /* SearchPlaceholderIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 133A31841B5D0D3400AB74A4 /* SearchPlaceholderIcon@3x.png */; };
 		133D3C7D1AE78DC9008F303D /* LKAssistiveTouchButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 133D3C7C1AE78DC9008F303D /* LKAssistiveTouchButton.m */; };
@@ -796,6 +804,15 @@
 		1326228C1B8EE1150074C589 /* 星球大战.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "星球大战.png"; sourceTree = "<group>"; };
 		132622991B8EF5850074C589 /* Wasted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Wasted.png; sourceTree = "<group>"; };
 		1326229A1B8EF5850074C589 /* Wasted2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Wasted2.png; sourceTree = "<group>"; };
+		1326229E1B93FC0D0074C589 /* APService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APService.h; sourceTree = "<group>"; };
+		1326229F1B93FC0D0074C589 /* libPushSDK-1.8.5.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libPushSDK-1.8.5.a"; sourceTree = "<group>"; };
+		132622A11B93FC6F0074C589 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		132622A31B93FC800074C589 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		132622A51B93FC950074C589 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		132622A71B93FCA60074C589 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		132622A91B93FCB50074C589 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		132622AB1B93FCCC0074C589 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		132622AD1B93FD4C0074C589 /* PushConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PushConfig.plist; sourceTree = "<group>"; };
 		133A31821B5D09C500AB74A4 /* CollectionIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CollectionIcon@3x.png"; sourceTree = "<group>"; };
 		133A31841B5D0D3400AB74A4 /* SearchPlaceholderIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SearchPlaceholderIcon@3x.png"; sourceTree = "<group>"; };
 		133D3C7B1AE78DC9008F303D /* LKAssistiveTouchButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKAssistiveTouchButton.h; sourceTree = "<group>"; };
@@ -2204,7 +2221,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				132622AC1B93FCCC0074C589 /* Security.framework in Frameworks */,
+				132622AA1B93FCB50074C589 /* CoreGraphics.framework in Frameworks */,
+				132622A81B93FCA60074C589 /* SystemConfiguration.framework in Frameworks */,
+				132622A61B93FC950074C589 /* CoreTelephony.framework in Frameworks */,
+				132622A41B93FC800074C589 /* CoreFoundation.framework in Frameworks */,
+				132622A21B93FC6F0074C589 /* CFNetwork.framework in Frameworks */,
 				131915671B8C26C400EC0F42 /* MessageUI.framework in Frameworks */,
+				132622A01B93FC0D0074C589 /* libPushSDK-1.8.5.a in Frameworks */,
 				135E8A9E1B45114600C2270C /* libstdc++.6.0.9.dylib in Frameworks */,
 				131915651B8C267900EC0F42 /* SMS_SDK.framework in Frameworks */,
 				135E8A9C1B45112300C2270C /* libstdc++.dylib in Frameworks */,
@@ -2241,6 +2265,15 @@
 				131915621B8C267900EC0F42 /* SMS_SDK.framework */,
 			);
 			path = SMS_SDK;
+			sourceTree = "<group>";
+		};
+		1326229D1B93FC0D0074C589 /* JPush */ = {
+			isa = PBXGroup;
+			children = (
+				1326229E1B93FC0D0074C589 /* APService.h */,
+				1326229F1B93FC0D0074C589 /* libPushSDK-1.8.5.a */,
+			);
+			path = JPush;
 			sourceTree = "<group>";
 		};
 		133D3C841AE79667008F303D /* Views */ = {
@@ -2588,6 +2621,12 @@
 		138EDBE41AD7B08A0020957C = {
 			isa = PBXGroup;
 			children = (
+				132622AB1B93FCCC0074C589 /* Security.framework */,
+				132622A91B93FCB50074C589 /* CoreGraphics.framework */,
+				132622A71B93FCA60074C589 /* SystemConfiguration.framework */,
+				132622A51B93FC950074C589 /* CoreTelephony.framework */,
+				132622A31B93FC800074C589 /* CoreFoundation.framework */,
+				132622A11B93FC6F0074C589 /* CFNetwork.framework */,
 				131915661B8C26C400EC0F42 /* MessageUI.framework */,
 				135E8A9D1B45114600C2270C /* libstdc++.6.0.9.dylib */,
 				135E8A9B1B45112300C2270C /* libstdc++.dylib */,
@@ -2638,6 +2677,7 @@
 		138EDBF01AD7B08A0020957C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				132622AD1B93FD4C0074C589 /* PushConfig.plist */,
 				134995301B46B247007C9E48 /* Info.plist */,
 				138EDBF21AD7B08A0020957C /* main.m */,
 				138EDEC11AD7B0D80020957C /* LIKE.pch */,
@@ -3540,6 +3580,7 @@
 		138EDECC1AD7B70F0020957C /* LKExternal */ = {
 			isa = PBXGroup;
 			children = (
+				1326229D1B93FC0D0074C589 /* JPush */,
 				1319155F1B8C267900EC0F42 /* SMS_SDK */,
 				1373C41E1B846FDA00A6C55A /* MJExtension */,
 				1373C4411B847A6000A6C55A /* SDWebImage */,
@@ -4877,6 +4918,7 @@
 				1377F03B1B5E1240008E21BC /* NotificationFocusIcon@3x.png in Resources */,
 				138EDE8C1AD7B0A30020957C /* LCInternationalization.bundle in Resources */,
 				13B5B4E61B15CB6800252A78 /* TalkIcon@3x.png in Resources */,
+				132622AE1B93FD4C0074C589 /* PushConfig.plist in Resources */,
 				13DFCECF1B3D105000DC0CF7 /* Localizable.strings in Resources */,
 				13DEEC1A1AE789E6005E01A6 /* LC_WebReload@2x.png in Resources */,
 				1388B4F81B00C0DD006F36AB /* SettingNick@3x.png in Resources */,
@@ -5780,6 +5822,7 @@
 					"$(PROJECT_DIR)/LIKE/LKExternal/UMAnalytics",
 					"$(PROJECT_DIR)/LIKE/LKExternal/WeChat",
 					"$(PROJECT_DIR)/LIKE/LKExternal/Weibo",
+					"$(PROJECT_DIR)/LIKE/LKExternal/JPush",
 				);
 				OTHER_LDFLAGS = (
 					"-all_load",
@@ -5820,6 +5863,7 @@
 					"$(PROJECT_DIR)/LIKE/LKExternal/UMAnalytics",
 					"$(PROJECT_DIR)/LIKE/LKExternal/WeChat",
 					"$(PROJECT_DIR)/LIKE/LKExternal/Weibo",
+					"$(PROJECT_DIR)/LIKE/LKExternal/JPush",
 				);
 				OTHER_LDFLAGS = (
 					"-all_load",

@@ -9,6 +9,9 @@
 //
 
 #import "LCUIApplication.h"
+#import "APService.h"
+#import "LKNotificationViewController.h"
+#import "LKHomeViewController.h"
 
 static LCUIApplication * __skeleton = nil;
 
@@ -154,27 +157,31 @@ static LCUIApplication * __skeleton = nil;
 	token = [token stringByReplacingOccurrencesOfString:@">" withString:@""];
 	token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
     
-    [self postNotification:LCUIApplicationDidRegisterRemoteNotification withObject:token];
+//    [self postNotification:LCUIApplicationDidRegisterRemoteNotification withObject:token];
+    [APService registerDeviceToken:deviceToken];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
-    [self postNotification:LCUIApplicationDidRegisterRemoteFailNotification withObject:error];
+//    [self postNotification:LCUIApplicationDidRegisterRemoteFailNotification withObject:error];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-	UIApplicationState state = [UIApplication sharedApplication].applicationState;
-	if ( UIApplicationStateInactive == state || UIApplicationStateBackground == state )
-	{
-		NSDictionary * dict = [NSDictionary dictionaryWithObjectsAndKeys:userInfo, @"userInfo", [NSNumber numberWithBool:NO], @"inApp", nil];
-        [self postNotification:LCUIApplicationDidReceiveRemoteNotification withObject:dict];
-	}
-	else
-	{
-		NSDictionary * dict = [NSDictionary dictionaryWithObjectsAndKeys:userInfo, @"userInfo", [NSNumber numberWithBool:YES], @"inApp", nil];
-        [self postNotification:LCUIApplicationDidReceiveRemoteNotification withObject:dict];
-	}
+//	UIApplicationState state = [UIApplication sharedApplication].applicationState;
+//	if ( UIApplicationStateInactive == state || UIApplicationStateBackground == state )
+//	{
+//		NSDictionary * dict = [NSDictionary dictionaryWithObjectsAndKeys:userInfo, @"userInfo", [NSNumber numberWithBool:NO], @"inApp", nil];
+//        [self postNotification:LCUIApplicationDidReceiveRemoteNotification withObject:dict];
+        
+//	}
+//	else
+//	{
+//		NSDictionary * dict = [NSDictionary dictionaryWithObjectsAndKeys:userInfo, @"userInfo", [NSNumber numberWithBool:YES], @"inApp", nil];
+//        [self postNotification:LCUIApplicationDidReceiveRemoteNotification withObject:dict];
+        
+//	}
+    [APService handleRemoteNotification:userInfo];
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification

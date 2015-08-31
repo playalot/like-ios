@@ -116,7 +116,7 @@
         if (result.state == LKHttpRequestStateFinished) {
             
             NSArray * array = result.json[@"data"][@"suggests"];
-            NSArray * array1 = result.json[@"data"][@"recommends"];
+            NSArray * array1 = result.json[@"data"][@"defaults"];
             
             // 保存预置标签
             self.suggests = array;

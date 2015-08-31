@@ -293,9 +293,14 @@
     CGFloat width = LC_DEVICE_WIDTH * (UI_IS_IPHONE6PLUS ? 3 : 2);
     
     [manager.requestSerializer setValue:@(width).description forHTTPHeaderField:@"LIKE-SCREEN-WIDTH"];
-    [manager.requestSerializer setValue:country forHTTPHeaderField:@"LIKE-LANGUAGE"];
+//    [manager.requestSerializer setValue:country forHTTPHeaderField:@"LIKE-LANGUAGE"];
     
     [manager.requestSerializer setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
+    
+    // 获取当前App版本号
+    NSString *appVersion = [NSString stringWithFormat:@"%@", [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString*)kCFBundleVersionKey]];
+
+    [manager.requestSerializer setValue:appVersion forHTTPHeaderField:@"LIKE-VERSION"];
     
     if (LCNetwork.singleton.netWorkStatus == LCNetworkStatusViaWiFi) {
         

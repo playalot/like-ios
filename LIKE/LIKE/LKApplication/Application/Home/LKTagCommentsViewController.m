@@ -876,7 +876,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
  */
 - (void)getCommentList {
     
-    LKHttpRequestInterface *interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"mark/%@/comment", self.tagValue.id]].AUTO_SESSION().GET_METHOD();
+    LKHttpRequestInterface *interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"mark/%@/comments", self.tagValue.id]].AUTO_SESSION().GET_METHOD();
     
     @weakly(self);
     

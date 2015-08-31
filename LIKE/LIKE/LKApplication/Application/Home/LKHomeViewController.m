@@ -35,6 +35,7 @@
 #import "LKBadgeView.h"
 #import "LKSearchResultsViewController.h"
 #import "MobClick.h"
+#import "APService.h"
 
 
 #define FOCUS_FEED_CACHE_KEY [NSString stringWithFormat:@"LKFocusFeedKey-%@", LKLocalUser.singleton.user.id]
@@ -249,7 +250,11 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     
     
     //
-    self.titleView = [LCUIImageView viewWithImage:[UIImage imageNamed:@"HomeLikeIcon.png" useCache:YES]];
+    LCUIButton *titleBtn = [[LCUIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];
+    [titleBtn setImage:[UIImage imageNamed:@"HomeLikeIcon"] forState:UIControlStateNormal];
+//    self.titleView = [LCUIImageView viewWithImage:[UIImage imageNamed:@"HomeLikeIcon.png" useCache:YES]];
+    self.titleView = titleBtn;
+    [titleBtn addTarget:self action:@selector(scrollViewScrollToTop) forControlEvents:UIControlEventTouchUpInside];
     
     //
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
@@ -627,6 +632,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     else if([notification is:LKHomeViewControllerUpdateHeader]){
         
         [self.header updateWithUser:LKLocalUser.singleton.user];
+        
     }
     else if ([notification is:LKHomeViewControllerReloadingData]){
         
@@ -636,14 +642,15 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
 //        }
         
         [self loadData:LCUIPullLoaderDiretionTop];
+        
     }
 }
 
 -(void) scrollViewScrollToTop
 {
     LC_FAST_ANIMATIONS(0.25, ^{
-        
-        [self.tableView setContentOffset:LC_POINT(0, 0) animated:NO];
+    
+        [self.tableView setContentOffset:LC_POINT(0, 0) animated:YES];
     });
 }
 
@@ -768,7 +775,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     
     LC_APPDELEGATE.tabBarController.loading = YES;
     
-    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:self.feedType == LKHomepageFeedTypeFocus ? @"friendfeeds" : @"homefeeds" ].AUTO_SESSION();
+    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:self.feedType == LKHomepageFeedTypeFocus ? @"followingFeeds" : @"homeFeeds" ].AUTO_SESSION();
     
     if (self.feedType == LKHomepageFeedTypeFocus) {
         
@@ -1460,7 +1467,7 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
 
 - (void)test:(LCUIPullLoaderDiretion)diretion {
     
-    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:self.feedType == LKHomepageFeedTypeFocus ? @"friendfeeds" : @"homefeeds" ].AUTO_SESSION();
+    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:self.feedType == LKHomepageFeedTypeFocus ? @"followingFeeds" : @"homeFeeds" ].AUTO_SESSION();
     
     if (self.feedType == LKHomepageFeedTypeFocus) {
         

@@ -235,9 +235,10 @@ LC_PROPERTY(assign) NSInteger timeInterval;
     self.sureButton.title = LC_LO(@"修改中...");
     self.sureButton.userInteractionEnabled = NO;
     
-    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"account/link/mobile"].AUTO_SESSION().POST_METHOD();
+    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"account/link/mobile/mob"].AUTO_SESSION().POST_METHOD();
     
-    [interface addParameter:[LKISOCountryCodes countryWithCode:self.countryCode.text] key:@"zone"];
+    NSString *countryCode = [self.countryCode.text stringByReplacingOccurrencesOfString:@"+" withString:@""];
+    [interface addParameter:countryCode key:@"zone"];
     [interface addParameter:self.phoneField.text key:@"mobile"];
     [interface addParameter:self.codeField.text key:@"code"];
     
@@ -268,25 +269,38 @@ LC_PROPERTY(assign) NSInteger timeInterval;
  */
 -(void) getCode
 {
+    if (![self $check:YES]) {
+        return;
+    }
+    
+    [self cancelAllRequests];
+    
+    self.codeButton.userInteractionEnabled = NO;
+    self.codeButton.title = LC_LO(@"获取中...");
+    
+    
+    // 使用mob来进行短信验证
+    NSString *countryCode = [self.countryCode.text substringFromIndex:1];
     [SMS_SDK getVerificationCodeBySMSWithPhone:self.phoneField.text
-                                          zone:self.countryCode.text
+                                          zone:countryCode
                                         result:^(SMS_SDKError *error)
      {
-         if (!error)
+         if (error)
          {
+             UIAlertView *alert = [[UIAlertView alloc]
+                                   initWithTitle:NSLocalizedString(@"codesenderrtitle", nil)
+                                   message:[NSString
+                                            stringWithFormat:@"状态码：%zi",error.errorCode]
+                                   delegate:self
+                                   cancelButtonTitle:NSLocalizedString(@"sure", nil)
+                                   otherButtonTitles:nil, nil];
+             [alert show];
+             
+         } else {
+             
              [self $beginTimer];
              self.codeButton.userInteractionEnabled = YES;
          }
-         else
-         {
-             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"codesenderrtitle", nil)
-                                                             message:[NSString stringWithFormat:@"状态码：%zi ,错误描述：%@",error.errorCode,error.errorDescription]
-                                                            delegate:self
-                                                   cancelButtonTitle:NSLocalizedString(@"sure", nil)
-                                                   otherButtonTitles:nil, nil];
-             [alert show];
-         }
-         
      }];
 
     

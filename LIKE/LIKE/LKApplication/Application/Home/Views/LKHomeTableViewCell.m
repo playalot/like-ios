@@ -248,6 +248,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.head.image = nil;
 //    self.head.url = post.user.avatar;
     [self.head sd_setImageWithURL:[NSURL URLWithString:post.user.avatar] placeholderImage:nil];
+    
     self.title.text = LC_NSSTRING_FORMAT(@"%@", post.user.name);
     [self.likes setText:LC_NSSTRING_FORMAT(@"%@", post.user.likes) animated:NO];
     
@@ -274,7 +275,18 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.contentImage.frame = self.contentBack.bounds;
     self.contentImage.image = nil;
 //    self.contentImage.url = post.content;
-    [self.contentImage sd_setImageWithURL:[NSURL URLWithString:post.content] placeholderImage:nil];
+
+    [self.contentImage sd_setImageWithURL:[NSURL URLWithString:post.content] placeholderImage:nil options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+        
+        [self.contentImage.indicator setProgress:receivedSize * 1.0 / expectedSize animated:YES];
+        
+        self.contentImage.indicator.alpha = 1;
+        
+    } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        
+        self.contentImage.indicator.alpha = 0;
+    }];
+    
     
     
     // 设置标签的frame

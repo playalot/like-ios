@@ -9,7 +9,7 @@
 #ifndef LIKE_LKNetwork_h
 #define LIKE_LKNetwork_h
 
-#define LK_API @"http://api1.likeorz.com/v1/"//@"http://api.likeorz.com/v2/"
+#define LK_API @"http://api.likeorz.com/v1/"//@"http://api.likeorz.com/v2/"
 //#define LK_API2 @"http://192.168.2.11:9000/v1/"
 
 

@@ -681,7 +681,9 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"authenticate/mobile/mob"].POST_METHOD();
     
-    [interface addParameter:[LKISOCountryCodes countryWithCode:self.countryCode.text] key:@"zone"];
+//    [interface addParameter:[LKISOCountryCodes countryWithCode:self.countryCode.text] key:@"zone"];
+    NSString *countryCode = [self.countryCode.text stringByReplacingOccurrencesOfString:@"+" withString:@""];
+    [interface addParameter:countryCode key:@"zone"];
     [interface addParameter:self.phoneField.text key:@"mobile"];
     [interface addParameter:self.codeField.text key:@"code"];
     

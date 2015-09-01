@@ -28,11 +28,13 @@ LC_PROPERTY(strong) LKTag * tagValue;
 LC_PROPERTY(assign) BOOL loadFinished;
 LC_PROPERTY(assign) BOOL loading;
 
-LC_PROPERTY(strong) NSArray * posts;
+LC_PROPERTY(strong) NSMutableArray * posts;
 
 LC_PROPERTY(strong) CHTCollectionViewWaterfallLayout * layout;
 
 LC_PROPERTY(strong) LKHotUserView * hotUsersView;
+
+LC_PROPERTY(strong) LKMoreContentButton *moreContentBtn;
 
 @end
 
@@ -85,14 +87,22 @@ LC_PROPERTY(strong) LKHotUserView * hotUsersView;
         return;
     }
 
-    [self sendNetWorkRequest];
+    [self sendNetWorkRequestWithTimestamp:nil];
 }
 
-- (void)sendNetWorkRequest {
+- (void)sendNetWorkRequestWithTimestamp:(NSNumber *)timestamp {
     
     // request
     //
-    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"explore/tag/%@",self.tagValue.tag.URLCODE()]].AUTO_SESSION();
+    LKHttpRequestInterface *interface;
+    
+    if (timestamp) {
+        
+        interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"explore/tag/%@?=%@",self.tagValue.tag.URLCODE(), timestamp]].AUTO_SESSION();
+    } else {
+        
+        interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"explore/tag/%@",self.tagValue.tag.URLCODE()]].AUTO_SESSION();
+    }
     
     @weakly(self);
     
@@ -120,9 +130,8 @@ LC_PROPERTY(strong) LKHotUserView * hotUsersView;
             for (NSDictionary * post in postsDic) {
                 
                 [posts addObject:[LKPost objectFromDictionary:post]];
+                [self.posts addObject:[LKPost objectFromDictionary:post]];
             }
-            
-            self.posts = posts;
             
             [self reloadData];
             
@@ -180,6 +189,8 @@ LC_PROPERTY(strong) LKHotUserView * hotUsersView;
         
         reusableView = [collectionView dequeueReusableSupplementaryViewOfKind:kind  withReuseIdentifier:FOOTER_IDENTIFIER forIndexPath:indexPath];
         
+        self.moreContentBtn = (LKMoreContentButton *)reusableView;
+        
         [((LKMoreContentButton *)reusableView) setTagValue:self.tagValue];
     }
     
@@ -198,14 +209,33 @@ LC_PROPERTY(strong) LKHotUserView * hotUsersView;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
-    CGPoint offset = scrollView.contentOffset;
-    CGSize contentSize = scrollView.contentSize;
-    
-    if (offset.y > (contentSize.height - 2 * LC_DEVICE_HEIGHT)) {
-        
-        // 发送网络请求
-        [self sendNetWorkRequest];
+    if (self.moreContentBtn == nil || self.loading) {
+        return;
     }
+    
+    if ((scrollView.contentOffset.y + scrollView.bounds.size.height) > self.contentSize.height) {
+
+        // 如果正在刷新数据，不需要再次刷新
+        self.loading = YES;
+
+        // 释放掉 footerView
+        self.moreContentBtn = nil;
+        
+        LKPost *post = [self.posts lastObject];
+        // 发送网络请求
+        [self sendNetWorkRequestWithTimestamp:post.timestamp];
+
+        self.loading = NO;
+    }
+}
+
+#pragma mark - ***** 懒加载 *****
+- (NSMutableArray *)posts {
+    
+    if (_posts == nil) {
+        _posts = [NSMutableArray array];
+    }
+    return _posts;
 }
 
 @end

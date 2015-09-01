@@ -8,6 +8,7 @@
 
 #import "LKUserCenterPhotoCell.h"
 #import "UIImageView+WebCache.h"
+#import "LKLoginViewController.h"
 
 @interface __LKUserCenterPhotoItem : UIView
 
@@ -114,7 +115,11 @@ LC_IMP_SIGNAL(PushPostDetail);
 {
     if (tap.view.tag < self.posts.count) {
 
-        self.SEND(self.PushPostDetail).object = self.posts[tap.view.tag];
+        // 游客不能访问图片详情页
+        if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
+            
+            self.SEND(self.PushPostDetail).object = self.posts[tap.view.tag];
+        }
     }
 }
 

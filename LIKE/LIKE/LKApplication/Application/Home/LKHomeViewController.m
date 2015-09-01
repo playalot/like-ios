@@ -1183,8 +1183,8 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
 {
     [self.inputView resignFirstResponder];
     
-    if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
-        
+//    if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
+    
         [self setNavigationBarHidden:YES animated:YES];
         
         LC_FAST_ANIMATIONS(UINavigationControllerHideShowBarDuration, ^{
@@ -1231,8 +1231,8 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
             
         };
         
-    }
-    
+//    }
+
 }
 
 -(void) notificationAction

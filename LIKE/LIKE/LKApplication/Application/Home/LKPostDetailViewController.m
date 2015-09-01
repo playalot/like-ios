@@ -57,6 +57,8 @@ LC_PROPERTY(strong) UIView * blackMask;
 
 LC_PROPERTY(strong) LKShareTools * shareTools;
 
+LC_PROPERTY(assign) BOOL favorited;
+
 /**
  *  记录下当前的标签
  */
@@ -510,11 +512,13 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
 {
     [self.inputView resignFirstResponder];
     
+    NSString *favorStr = self.post.favorited ? @"取消收藏" : @"收藏图片";
+    
     @weakly(self);
 
     if (self.post.user.id.integerValue == LKLocalUser.singleton.user.id.integerValue) {
         
-        [LKActionSheet showWithTitle:nil/*LC_LO(@"更多")*/ buttonTitles:@[/*LC_LO(@"举报"),*/LC_LO(@"删除"),LC_LO(@"保存图片")] didSelected:^(NSInteger index) {
+        [LKActionSheet showWithTitle:nil/*LC_LO(@"更多")*/ buttonTitles:@[/*LC_LO(@"举报"),*/LC_LO(@"删除"),LC_LO(favorStr),LC_LO(@"保存图片")] didSelected:^(NSInteger index) {
             
             @normally(self);
 
@@ -528,8 +532,12 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
                 
                 // 删除
                 [self _delete];
-            }
-            else if (index == 1){
+                
+            } else if (index == 1) {
+              
+                [self favoriteImageWithStatus:self.post.favorited];
+                
+            } else if (index == 2){
                 
                 if (self.header.backgroundView.image) {
                     
@@ -542,11 +550,15 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
     }
     else{
         
-        [LKActionSheet showWithTitle:nil/*LC_LO(@"更多")*/ buttonTitles:@[LC_LO(@"举报"),/*LC_LO(@"保存图片")*/] didSelected:^(NSInteger index) {
+        [LKActionSheet showWithTitle:nil/*LC_LO(@"更多")*/ buttonTitles:@[LC_LO(favorStr),LC_LO(@"举报"),/*LC_LO(@"保存图片")*/] didSelected:^(NSInteger index) {
             
             @normally(self);
 
             if (index == 0) {
+                
+                [self favoriteImageWithStatus:self.post.favorited];
+                
+            } else if (index == 1) {
                 
                 // 举报
 //                [self _report];
@@ -646,6 +658,40 @@ LC_PROPERTY(strong) LKShareTools * shareTools;
             [self showTopMessageErrorHud:result.error];
         }
         
+    }];
+}
+
+/**
+ *  收藏图片
+ */
+- (void)favoriteImageWithStatus:(BOOL)favorited {
+    
+    LKHttpRequestInterface *interface;
+    
+    if (!favorited) {
+        
+        // 收藏图片
+        interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"post/%@/favorite",self.post.id]].POST_METHOD();
+    } else {
+        
+        // 取消收藏
+        interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"post/%@/favorite",self.post.id]].DELETE_METHOD();
+    }
+    
+    @weakly(self);
+    
+    [self request:interface complete:^(LKHttpRequestResult *result) {
+        
+        @normally(self);
+        
+        if (result.state == LKHttpRequestStateFinished) {
+            
+            self.post.favorited = !favorited;
+            
+        } else if (result.state == LKHttpRequestStateFailed) {
+            
+            
+        }
     }];
 }
 

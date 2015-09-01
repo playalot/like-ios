@@ -98,7 +98,7 @@ LC_PROPERTY(strong) LKMoreContentButton *moreContentBtn;
     
     if (timestamp) {
         
-        interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"explore/tag/%@?=%@",self.tagValue.tag.URLCODE(), timestamp]].AUTO_SESSION();
+        interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"explore/tag/%@?ts=%@",self.tagValue.tag.URLCODE(), timestamp]].AUTO_SESSION();
     } else {
         
         interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"explore/tag/%@",self.tagValue.tag.URLCODE()]].AUTO_SESSION();

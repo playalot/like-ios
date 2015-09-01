@@ -28,6 +28,8 @@
 LC_PROPERTY(strong) TencentOAuth * tencentOAuth;
 LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
 
+LC_PROPERTY(strong) NSDictionary *launchOptions;
+
 @end
 
 @implementation AppDelegate
@@ -37,6 +39,8 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
  */
 -(void) load:(NSDictionary *)launchOptions
 {
+    
+    self.launchOptions = launchOptions;
     
     // 1.设置缓存
     NSURLCache *cache = [[NSURLCache alloc] initWithMemoryCapacity:4 * 1024 * 1024 diskCapacity:20 * 1024 * 1024 diskPath:nil];
@@ -275,7 +279,12 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
                 [LKLocalUser regetSessionTokenAndUseLoadingTip:NO];
             }
             
-            [self.home performSelector:@selector(notificationAction) withObject:nil];
+            
+            // 判断是否为推送打开
+            if ([UIApplication sharedApplication].applicationIconBadgeNumber) {
+                
+                [self.home performSelector:@selector(notificationAction) withObject:nil afterDelay:0.5];
+            }
             
         }
         
@@ -398,7 +407,7 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
         // 判断本地用户是否是登录状态
         if (LKLocalUser.singleton.isLogin) {
             
-            [self.home performSelector:@selector(notificationAction) withObject:nil afterDelay:0.5];
+//            [self.home performSelector:@selector(notificationAction) withObject:nil afterDelay:0.5];
         }
     }
 }
@@ -411,7 +420,6 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
     
     // Bind badge.
     [LKNotificationCount bindView:self.home.navigationItem.rightBarButtonItem.customView withBadgeCount:[userInfo[@"aps"][@"badge"] integerValue]];
-
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
@@ -423,5 +431,14 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
 //- (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err {
 //    NSLog(@"Error in registration. Error: %@", err);
 //}
+
+#pragma mark - ***** 懒加载 *****
+- (NSDictionary *)launchOptions {
+    
+    if (_launchOptions == nil) {
+        _launchOptions = [[NSDictionary alloc] init];
+    }
+    return _launchOptions;
+}
 
 @end

@@ -164,10 +164,10 @@ LC_PROPERTY(strong) LCUIButton * doneButton;
 
 -(void) beginSearch
 {
-    if([LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
-       
-        return;
-    }
+//    if([LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
+//    
+//        return;
+//    }
     
     if ([self.blurView respondsToSelector:@selector(setDynamic:)]) {
         

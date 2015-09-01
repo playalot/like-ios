@@ -25,5 +25,6 @@ LC_PROPERTY(copy)   NSString * place;
 LC_PROPERTY(assign) NSInteger reason;
 LC_PROPERTY(copy) NSString * reasonTag;
 
+LC_PROPERTY(assign) BOOL favorited;
 
 @end

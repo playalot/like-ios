@@ -13,6 +13,7 @@ typedef NS_ENUM(NSInteger, LKUserCenterModelType)
     LKUserCenterModelTypePhotos,
     LKUserCenterModelTypeFocus,
     LKUserCenterModelTypeFans,
+    LKUserCenterModelTypeFavor
 };
 
 LC_BLOCK(void, LKUserCenterModelRequestFinished, (LKUserCenterModelType type, LKHttpRequestResult * result, NSString * error));

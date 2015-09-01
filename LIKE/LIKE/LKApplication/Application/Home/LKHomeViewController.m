@@ -1466,6 +1466,7 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
 
 }
 
+
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     
 //    CGPoint offset = self.tableView.contentOffset;

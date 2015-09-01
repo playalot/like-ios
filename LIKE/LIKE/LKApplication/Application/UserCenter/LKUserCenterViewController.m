@@ -154,6 +154,11 @@ LC_PROPERTY(assign) BOOL isLocalUser;
             [tableViewHeader setTitle:LC_NSSTRING_FORMAT(@"%@",self.userInfoModel.user.followCount) subTitle:LC_LO(@"关注") atIndex:1];
             [tableViewHeader setTitle:LC_NSSTRING_FORMAT(@"%@",self.userInfoModel.user.fansCount) subTitle:LC_LO(@"粉丝") atIndex:2];
             
+            if (self.isLocalUser) {
+                
+                [tableViewHeader setTitle:LC_NSSTRING_FORMAT(@"%@",self.userInfoModel.user.postCount) subTitle:LC_LO(@"收藏") atIndex:3];
+            }
+            
             [self updateFriendButton];
 
         }
@@ -323,6 +328,10 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     [tableViewHeader addTitle:[NSString stringWithFormat:@"%@", @(self.user.postCount.integerValue)] subTitle:LC_LO(@"照片")];
     [tableViewHeader addTitle:[NSString stringWithFormat:@"%@", @(self.user.followCount.integerValue)] subTitle:LC_LO(@"关注")];
     [tableViewHeader addTitle:[NSString stringWithFormat:@"%@", @(self.user.fansCount.integerValue)] subTitle:LC_LO(@"粉丝")];
+
+    if (self.isLocalUser) {
+        [tableViewHeader addTitle:[NSString stringWithFormat:@"%@", @(self.user.postCount.integerValue)] subTitle:LC_LO(@"收藏")];
+    }
     
     @weakly(self);
     
@@ -373,6 +382,7 @@ LC_PROPERTY(assign) BOOL isLocalUser;
 
     [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFocus uid:self.user.id];
     [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFans uid:self.user.id];
+    [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFavor uid:self.user.id];
 }
 
 #pragma mark - 
@@ -531,7 +541,7 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (self.currentType == LKUserCenterModelTypePhotos) {
+    if (self.currentType == LKUserCenterModelTypePhotos || self.currentType == LKUserCenterModelTypeFavor) {
         
         NSArray * datasource = [self.userCenterModel dataWithType:self.currentType];
         
@@ -548,7 +558,7 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
 
 - (UITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.currentType == LKUserCenterModelTypePhotos) {
+    if (self.currentType == LKUserCenterModelTypePhotos || self.currentType == LKUserCenterModelTypeFavor) {
         
         LKUserCenterPhotoCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Photos" andClass:[LKUserCenterPhotoCell class]];
 
@@ -604,6 +614,7 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
     switch (self.currentType) {
             
         case LKUserCenterModelTypePhotos:
+        case LKUserCenterModelTypeFavor:
             return [LKUserCenterPhotoCell height];
         case LKUserCenterModelTypeFocus:
         case LKUserCenterModelTypeFans:
@@ -622,6 +633,7 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
 
     switch (self.currentType) {
         case LKUserCenterModelTypePhotos:
+        case LKUserCenterModelTypeFavor:
             ;
             break;
         case LKUserCenterModelTypeFocus:

@@ -61,6 +61,9 @@ LC_PROPERTY(assign) BOOL fansCanLoadMore;
         case LKUserCenterModelTypeFans:
             interface = [LKHttpRequestInterface interfaceType:LC_NSSTRING_FORMAT(@"user/%@/fans/%@", uid, @(page))].AUTO_SESSION();
             break;
+        case LKUserCenterModelTypeFavor:
+            interface = [LKHttpRequestInterface interfaceType:LC_NSSTRING_FORMAT(@"user/%@/posts/%@", uid, @(page))].AUTO_SESSION();
+            break;
         default:
             break;
     }
@@ -95,25 +98,30 @@ LC_PROPERTY(assign) BOOL fansCanLoadMore;
 -(BOOL) canLoadMoreWithType:(LKUserCenterModelType)type
 {
     switch (type) {
+            
         case LKUserCenterModelTypePhotos:
             
             return self.photoCanLoadMore;
-            
             break;
+            
         case LKUserCenterModelTypeFocus:
             
             return self.focusCanLoadMore;
-            
             break;
+            
         case LKUserCenterModelTypeFans:
             
             return self.fansCanLoadMore;
-            
             break;
+            
+        case LKUserCenterModelTypeFavor:
+            
+            return self.photoCanLoadMore;
+            break;
+            
         default:
             
             return YES;
-            
             break;
     }
 }
@@ -149,6 +157,7 @@ LC_PROPERTY(assign) BOOL fansCanLoadMore;
             
         }
             break;
+            
         case LKUserCenterModelTypeFocus:
         {
             NSArray * datasource = result.json[@"data"][@"follows"];
@@ -175,6 +184,7 @@ LC_PROPERTY(assign) BOOL fansCanLoadMore;
             }
         }
             break;
+            
         case LKUserCenterModelTypeFans:
         {
             NSArray * datasource = result.json[@"data"][@"fans"];
@@ -201,6 +211,35 @@ LC_PROPERTY(assign) BOOL fansCanLoadMore;
             }
         }
             break;
+            
+        case LKUserCenterModelTypeFavor:
+        {
+            NSArray * datasource = result.json[@"data"][@"posts"];
+            
+            NSMutableArray * resultData = [NSMutableArray array];
+            
+            for (NSDictionary * tmp in datasource) {
+                
+                [resultData addObject:[LKPost objectFromDictionary:tmp]];
+            }
+            
+            if (isFirstPage) {
+                
+                self.photoArray = resultData;
+            }
+            else{
+                
+                [self.photoArray addObjectsFromArray:resultData];
+            }
+            
+            if (datasource.count < 21) {
+                
+                self.photoCanLoadMore = NO;
+            }
+            
+        }
+            break;
+            
         default:
             break;
     }
@@ -213,12 +252,19 @@ LC_PROPERTY(assign) BOOL fansCanLoadMore;
         case LKUserCenterModelTypePhotos:
             return self.photoArray;
             break;
+            
         case LKUserCenterModelTypeFocus:
             return self.focusArray;
             break;
+            
         case LKUserCenterModelTypeFans:
             return self.fansArray;
             break;
+            
+        case LKUserCenterModelTypeFavor:
+            return self.photoArray;
+            break;
+            
         default:
             break;
     }
@@ -231,12 +277,19 @@ LC_PROPERTY(assign) BOOL fansCanLoadMore;
         case LKUserCenterModelTypePhotos:
             return self.photoPage;
             break;
+            
         case LKUserCenterModelTypeFocus:
             return self.focusPage;
             break;
+            
         case LKUserCenterModelTypeFans:
             return self.fansPage;
             break;
+            
+        case LKUserCenterModelTypeFavor:
+            return self.photoPage;
+            break;
+            
         default:
             break;
     }
@@ -249,12 +302,19 @@ LC_PROPERTY(assign) BOOL fansCanLoadMore;
         case LKUserCenterModelTypePhotos:
             self.photoPage = page;
             break;
+            
         case LKUserCenterModelTypeFocus:
             self.focusPage = page;
             break;
+            
         case LKUserCenterModelTypeFans:
             self.fansPage = page;
             break;
+            
+        case LKUserCenterModelTypeFavor:
+            self.photoPage = page;
+            break;
+            
         default:
             break;
     }

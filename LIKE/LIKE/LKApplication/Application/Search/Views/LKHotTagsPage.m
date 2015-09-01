@@ -84,6 +84,11 @@ LC_PROPERTY(strong) LKHotUserView * hotUsersView;
     if (self.loading || self.loadFinished) {
         return;
     }
+
+    [self sendNetWorkRequest];
+}
+
+- (void)sendNetWorkRequest {
     
     // request
     //
@@ -92,7 +97,7 @@ LC_PROPERTY(strong) LKHotUserView * hotUsersView;
     @weakly(self);
     
     [self request:interface complete:^(LKHttpRequestResult *result) {
-       
+        
         @normally(self);
         
         if (result.state == LKHttpRequestStateFinished) {
@@ -136,6 +141,7 @@ LC_PROPERTY(strong) LKHotUserView * hotUsersView;
         }
         
     }];
+    
 }
 
 
@@ -188,6 +194,18 @@ LC_PROPERTY(strong) LKHotUserView * hotUsersView;
 -(void) collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
 
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    CGPoint offset = scrollView.contentOffset;
+    CGSize contentSize = scrollView.contentSize;
+    
+    if (offset.y > (contentSize.height - 2 * LC_DEVICE_HEIGHT)) {
+        
+        // 发送网络请求
+        [self sendNetWorkRequest];
+    }
 }
 
 @end

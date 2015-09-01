@@ -251,7 +251,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     
     //
     LCUIButton *titleBtn = [[LCUIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];
-    [titleBtn setImage:[UIImage imageNamed:@"HomeLikeIcon"] forState:UIControlStateNormal];
+    [titleBtn setImage:[UIImage imageNamed:@"HomeLikeIcon" useCache:YES] forState:UIControlStateNormal];
 //    self.titleView = [LCUIImageView viewWithImage:[UIImage imageNamed:@"HomeLikeIcon.png" useCache:YES]];
     self.titleView = titleBtn;
     [titleBtn addTarget:self action:@selector(scrollViewScrollToTop) forControlEvents:UIControlEventTouchUpInside];
@@ -649,8 +649,15 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
 -(void) scrollViewScrollToTop
 {
     LC_FAST_ANIMATIONS(0.25, ^{
-    
-        [self.tableView setContentOffset:LC_POINT(0, 0) animated:YES];
+
+        if (self.feedType == LKHomepageFeedTypeMain) {
+            
+            [self.tableView setContentOffset:LC_POINT(0, 0) animated:YES];
+            
+        } else {
+            
+            [self.attentionViewController.tableView setContentOffset:LC_POINT(0, 0) animated:YES];
+        }
     });
 }
 
@@ -944,8 +951,14 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
             left.buttonImage = leftImage;
             right.buttonImage = rightImage;
             
-            self.titleView = [LCUIImageView viewWithImage:[UIImage imageNamed:@"HomeLikeIcon.png" useCache:YES]];
+//            self.titleView = [LCUIImageView viewWithImage:[UIImage imageNamed:@"HomeLikeIcon.png" useCache:YES]];
+
+            LCUIButton *titleBtn = [[LCUIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];
+            [titleBtn setImage:[UIImage imageNamed:@"HomeLikeIcon" useCache:YES] forState:UIControlStateNormal];
+            self.titleView = titleBtn;
+            [titleBtn addTarget:self action:@selector(scrollViewScrollToTop) forControlEvents:UIControlEventTouchUpInside];
             self.titleView.alpha = 0;
+            
             
             left.userInteractionEnabled = NO;
             right.userInteractionEnabled = NO;
@@ -1051,6 +1064,8 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
             header.font = LK_FONT_B(16);
             header.textColor = [UIColor whiteColor];
             header.text = LC_LO(@"关注的人");
+            header.userInteractionEnabled = YES;
+            [header addTapGestureRecognizer:self selector:@selector(scrollViewScrollToTop)];
             self.titleView = header;
             self.titleView.alpha = 0;
             

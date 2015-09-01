@@ -116,7 +116,6 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
 //        [[UIApplication sharedApplication] registerForRemoteNotifications];
         
         [APService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
-                                                       UIUserNotificationTypeSound |
                                                        UIUserNotificationTypeAlert)
                                            categories:nil];
     }
@@ -126,7 +125,6 @@ LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
 //        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
         
         [APService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
-                                                       UIRemoteNotificationTypeSound |
                                                        UIRemoteNotificationTypeAlert)
                                            categories:nil];
     }

@@ -22,10 +22,11 @@
             self.cover = dict[@"cover"];
             self.likes = dict[@"likes"];
             self.isFollowing = dict[@"is_following"];
-            self.postCount = dict[@"count"][@"post"];
-            self.followCount = dict[@"count"][@"follow"];
-            self.fansCount = dict[@"count"][@"fan"];
+            self.postCount = dict[@"count"][@"posts"];
+            self.followCount = dict[@"count"][@"following"];
+            self.fansCount = dict[@"count"][@"followers"];
             self.originAvatar = dict[@"origin_avatar"];
+            self.favorCount = dict[@"count"][@"favorites"];
 
         }
         else{

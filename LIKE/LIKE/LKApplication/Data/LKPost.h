@@ -15,15 +15,15 @@
 
 LC_PROPERTY(strong) LKUser * user;
 
-LC_PROPERTY(strong) NSNumber * id;
+LC_PROPERTY(strong) NSNumber *id;
 LC_PROPERTY(assign) NSInteger type;
-LC_PROPERTY(strong) NSString * content;
-LC_PROPERTY(strong) NSNumber * timestamp;
-LC_PROPERTY(strong) NSMutableArray * tags;
-LC_PROPERTY(copy)   NSString * place;
+LC_PROPERTY(strong) NSString *content;
+LC_PROPERTY(strong) NSNumber *timestamp;
+LC_PROPERTY(strong) NSMutableArray *tags;
+LC_PROPERTY(copy)   NSString *place;
 
 LC_PROPERTY(assign) NSInteger reason;
-LC_PROPERTY(copy) NSString * reasonTag;
+LC_PROPERTY(copy) NSString *reasonTag;
 
 LC_PROPERTY(assign) BOOL favorited;
 

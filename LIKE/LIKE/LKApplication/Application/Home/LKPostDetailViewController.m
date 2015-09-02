@@ -188,11 +188,11 @@ LC_PROPERTY(assign) BOOL favorited;
             
             [self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.25];
             
-            if (!self.bigContentURL) {
-                
-                // Big image...
-                [self performSelector:@selector(loadBigImage) withObject:nil afterDelay:0.25];
-            }
+//            if (!self.bigContentURL) {
+//                
+//                // Big image...
+//                [self performSelector:@selector(loadBigImage) withObject:nil afterDelay:0.25];
+//            }
         }
     };
     
@@ -685,7 +685,7 @@ LC_PROPERTY(assign) BOOL favorited;
         @normally(self);
         
         if (result.state == LKHttpRequestStateFinished) {
-            
+                        
             self.post.favorited = !favorited;
             
         } else if (result.state == LKHttpRequestStateFailed) {

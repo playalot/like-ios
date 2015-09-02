@@ -20,9 +20,10 @@ LC_BLOCK(void, LKUserCenterModelRequestFinished, (LKUserCenterModelType type, LK
 
 @interface LKUserCenterModel : LCHTTPRequestModel
 
-LC_PROPERTY(strong) NSMutableArray * photoArray;
-LC_PROPERTY(strong) NSMutableArray * focusArray;
-LC_PROPERTY(strong) NSMutableArray * fansArray;
+LC_PROPERTY(strong) NSMutableArray *photoArray;
+LC_PROPERTY(strong) NSMutableArray *focusArray;
+LC_PROPERTY(strong) NSMutableArray *fansArray;
+LC_PROPERTY(strong) NSMutableArray *favorArray;
 
 LC_PROPERTY(copy) LKUserCenterModelRequestFinished requestFinished;
 

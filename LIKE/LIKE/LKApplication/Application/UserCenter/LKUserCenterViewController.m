@@ -23,6 +23,7 @@
 #import "LKLoginViewController.h"
 #import "LKUserInfoCache.h"
 #import "JTSImageViewController.h"
+#import "UIScrollView+SVInfiniteScrolling.h"
 
 @interface LKUserCenterViewController () <UITableViewDataSource,UITableViewDelegate>
 
@@ -42,10 +43,7 @@ LC_PROPERTY(strong) LKUserCenterModel * userCenterModel;
 
 LC_PROPERTY(assign) LKUserCenterModelType currentType;
 
-
-
 LC_PROPERTY(assign) BOOL isLocalUser;
-
 
 @end
 
@@ -156,7 +154,7 @@ LC_PROPERTY(assign) BOOL isLocalUser;
             
             if (self.isLocalUser) {
                 
-                [tableViewHeader setTitle:LC_NSSTRING_FORMAT(@"%@",self.userInfoModel.user.postCount) subTitle:LC_LO(@"收藏") atIndex:3];
+                [tableViewHeader setTitle:LC_NSSTRING_FORMAT(@"%@",self.userInfoModel.user.favorCount) subTitle:LC_LO(@"收藏") atIndex:3];
             }
             
             [self updateFriendButton];
@@ -328,10 +326,12 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     [tableViewHeader addTitle:[NSString stringWithFormat:@"%@", @(self.user.postCount.integerValue)] subTitle:LC_LO(@"照片")];
     [tableViewHeader addTitle:[NSString stringWithFormat:@"%@", @(self.user.followCount.integerValue)] subTitle:LC_LO(@"关注")];
     [tableViewHeader addTitle:[NSString stringWithFormat:@"%@", @(self.user.fansCount.integerValue)] subTitle:LC_LO(@"粉丝")];
-
+    
     if (self.isLocalUser) {
-        [tableViewHeader addTitle:[NSString stringWithFormat:@"%@", @(self.user.postCount.integerValue)] subTitle:LC_LO(@"收藏")];
+
+        [tableViewHeader addTitle:[NSString stringWithFormat:@"%@", self.userInfoModel.user.favorCount] subTitle:LC_LO(@"收藏")];
     }
+
     
     @weakly(self);
     
@@ -383,6 +383,7 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFocus uid:self.user.id];
     [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFans uid:self.user.id];
     [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFavor uid:self.user.id];
+    
 }
 
 #pragma mark - 
@@ -468,12 +469,15 @@ LC_PROPERTY(assign) BOOL isLocalUser;
 -(void) updateFriendButton
 {
     switch (self.user.isFollowing.integerValue) {
+            
         case 0:
             self.friendshipButton.buttonImage = [UIImage imageNamed:@"FocusWirte.png" useCache:YES];
             break;
+            
         case 1:
             self.friendshipButton.buttonImage = [UIImage imageNamed:@"AlreadyFocusWrite.png" useCache:YES];
             break;
+            
         case 2:
             self.friendshipButton.buttonImage = [UIImage imageNamed:@"EachOtherFocusWrite.png" useCache:YES];
             break;
@@ -558,7 +562,7 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
 
 - (UITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.currentType == LKUserCenterModelTypePhotos || self.currentType == LKUserCenterModelTypeFavor) {
+    if (self.currentType == LKUserCenterModelTypePhotos) {
         
         LKUserCenterPhotoCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Photos" andClass:[LKUserCenterPhotoCell class]];
 
@@ -587,22 +591,53 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
         cell.posts = array;
         
         return cell;
-    }
-    else if (self.currentType == LKUserCenterModelTypeFocus){
+        
+    } else if (self.currentType == LKUserCenterModelTypeFocus){
         
         LKUserCenterUserCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Focus" andClass:[LKUserCenterUserCell class]];
 
         cell.user = self.userCenterModel.focusArray[indexPath.row];
         
         return cell;
-    }
-    else if (self.currentType == LKUserCenterModelTypeFans){
+        
+    } else if (self.currentType == LKUserCenterModelTypeFans){
      
         LKUserCenterUserCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Fans" andClass:[LKUserCenterUserCell class]];
 
         cell.user = self.userCenterModel.fansArray[indexPath.row];
         
         return cell;
+        
+    } else if (self.currentType == LKUserCenterModelTypeFavor) {
+        
+        LKUserCenterPhotoCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Favor" andClass:[LKUserCenterPhotoCell class]];
+        
+        NSInteger index = indexPath.row * 3;
+        
+        NSArray * datasource = [self.userCenterModel dataWithType:LKUserCenterModelTypeFavor];
+        
+        LKPost * post = datasource[index];
+        LKPost * post1 = index + 1 < datasource.count ? datasource[index + 1] : nil;
+        LKPost * post2 = index + 2 < datasource.count ? datasource[index + 2] : nil;
+        
+        NSMutableArray * array = [NSMutableArray array];
+        
+        if (post) {
+            [array addObject:post];
+        }
+        
+        if (post1) {
+            [array addObject:post1];
+        }
+        
+        if (post2) {
+            [array addObject:post2];
+        }
+        
+        cell.posts = array;
+        
+        return cell;
+        
     }
     
     ERROR(@"Crash...");

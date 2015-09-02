@@ -65,7 +65,8 @@ LC_PROPERTY(strong) NSNumber * canResignFirstResponder;
 
 LC_PROPERTY(strong) UIView * fromView;
 
-LC_PROPERTY(copy) NSString * next;
+//LC_PROPERTY(copy) NSString * next;
+LC_PROPERTY(copy) NSNumber * next;
 LC_PROPERTY(copy) NSNumber * focusNext;
 LC_PROPERTY(assign) NSTimeInterval lastFocusLoadTime;
 
@@ -793,7 +794,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     }
     else{
         
-        if (!LC_NSSTRING_IS_INVALID(self.next) && diretion == LCUIPullLoaderDiretionBottom) {
+        if (/*!LC_NSSTRING_IS_INVALID*/(self.next) && diretion == LCUIPullLoaderDiretionBottom) {
             
             [interface addParameter:self.next key:@"ts"];
         }
@@ -1494,7 +1495,7 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
     }
     else{
         
-        if (!LC_NSSTRING_IS_INVALID(self.next) && diretion == LCUIPullLoaderDiretionBottom) {
+        if (/*!LC_NSSTRING_IS_INVALID*/(self.next) && diretion == LCUIPullLoaderDiretionBottom) {
             
             [interface addParameter:self.next key:@"ts"];
         }

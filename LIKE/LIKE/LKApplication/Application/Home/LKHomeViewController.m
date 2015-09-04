@@ -254,7 +254,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     LCUIButton *titleBtn = [[LCUIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];
     [titleBtn setImage:[UIImage imageNamed:@"HomeLikeIcon" useCache:YES] forState:UIControlStateNormal];
 //    self.titleView = [LCUIImageView viewWithImage:[UIImage imageNamed:@"HomeLikeIcon.png" useCache:YES]];
-    self.titleView = titleBtn;
+    self.titleView = (UIView *)titleBtn;
     [titleBtn addTarget:self action:@selector(scrollViewScrollToTop) forControlEvents:UIControlEventTouchUpInside];
     
     //

@@ -28,11 +28,6 @@
 #pragma mark -
 #pragma mark Initialization and teardown
 
--(void) dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (id)init;
 {
     if (!(self = [super init]))

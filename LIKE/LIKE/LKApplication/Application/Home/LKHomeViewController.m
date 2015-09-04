@@ -92,6 +92,8 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
 {
     [super viewWillAppear:animated];
     
+    [MobClick beginLogPageView:@"HomePage"];
+    
     if([self.header.blurView respondsToSelector:@selector(setDynamic:)]){
         ((FXBlurView *)self.header.blurView).dynamic = YES;
     }
@@ -133,6 +135,8 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
 -(void) viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    
+    [MobClick endLogPageView:@"HomePage"];
     
     [self.inputView resignFirstResponder];
     
@@ -1619,7 +1623,6 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
         
         self.needRefresh = NO;
     }
-    
 }
 
 #pragma mark - ***** LKHomeTableViewCellDelegate *****

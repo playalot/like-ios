@@ -329,7 +329,7 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     
     if (self.isLocalUser) {
 
-        [tableViewHeader addTitle:[NSString stringWithFormat:@"%@", self.userInfoModel.user.favorCount] subTitle:LC_LO(@"收藏")];
+        [tableViewHeader addTitle:[NSString stringWithFormat:@"%@", @(self.user.favorCount.integerValue)] subTitle:LC_LO(@"收藏")];
     }
 
     

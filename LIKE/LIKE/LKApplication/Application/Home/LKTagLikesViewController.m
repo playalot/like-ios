@@ -155,7 +155,12 @@ LC_HANDLE_UI_SIGNAL(PushUserInfo, signal)
     
     CGFloat inv = (LC_DEVICE_WIDTH - (maxCount * 33)) / (maxCount + 1);
     
-    NSInteger line = self.datasource.count / maxCount + 1;
+    NSInteger line = 1;
+    
+    if (maxCount != 0) {
+        
+        line = self.datasource.count / maxCount + 1;
+    }
     
     return 58 + 36 + (line * 33) + (line * inv);
 }

@@ -59,6 +59,18 @@ LC_PROPERTY(strong) NSDictionary * info;
     
     [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[UIImage imageNamed:@"NavigationBarBack.png" useCache:YES] selectImage:nil];
     
+    // 订阅标签按钮
+    LCUIButton *subscribeBtn = LCUIButton.view;
+    subscribeBtn.hidden = YES;
+    subscribeBtn.viewFrameWidth = 50;
+    subscribeBtn.viewFrameHeight = 44;
+    [subscribeBtn setImage:[UIImage imageNamed:@"subscribe.png" useCache:YES] forState:UIControlStateNormal];
+    [subscribeBtn setImage:[UIImage imageNamed:@"cancelSubscribe.png" useCache:YES] forState:UIControlStateSelected];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:(UIView *)subscribeBtn];
+    [subscribeBtn addTarget:self action:@selector(subscribeTag:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
 
     
@@ -77,7 +89,45 @@ LC_PROPERTY(strong) NSDictionary * info;
 
 -(void) handleNavigationBarButton:(LCUINavigationBarButtonType)type
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    if (type == LCUINavigationBarButtonTypeLeft) {
+        
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+    
+        
+    }
+}
+
+// 订阅标签
+- (void)subscribeTag:(LCUIButton *)subscribeBtn {
+    
+    subscribeBtn.selected = !subscribeBtn.isSelected;
+    
+    LKHttpRequestInterface *interface = nil;
+    
+    if (subscribeBtn.isSelected) {
+
+        interface = [LKHttpRequestInterface interfaceType:@""].GET_METHOD();
+    } else {
+        
+        interface = [LKHttpRequestInterface interfaceType:@""].GET_METHOD();
+    }
+    
+    [self request:interface complete:^(LKHttpRequestResult *result) {
+       
+        if (result.state == LKHttpRequestStateFinished) {
+            
+            
+        } else if (result.state == LKHttpRequestStateFailed) {
+            
+            
+        }
+    }];
+}
+
+- (void)sendNetworkRequest {
+    
+    
 }
 
 -(void) loadData:(LCUIPullLoaderDiretion)diretion
@@ -130,6 +180,12 @@ LC_PROPERTY(strong) NSDictionary * info;
             }
             
             self.page = page;
+            
+            
+            if (self.datasource.count) {
+                
+                
+            }
             
             [self.pullLoader endRefresh];
             [self reloadData];

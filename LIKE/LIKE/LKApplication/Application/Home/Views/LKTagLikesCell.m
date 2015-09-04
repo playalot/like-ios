@@ -162,10 +162,11 @@ LC_IMP_SIGNAL(PushUserInfo);
         if (maxCount != 0) {
             
             userHead.viewFrameX = inv * (i % maxCount) + inv + 33 * (i % maxCount);
+            userHead.viewFrameY = inv * (i/maxCount) + 33 * (i/maxCount);
         } else {
             userHead.viewFrameX = inv * i + inv + 33 * i;
+            userHead.viewFrameY = inv * i + 33 * i;
         }
-        userHead.viewFrameY = inv * (i/maxCount) + 33 * (i/maxCount);
         userHead.cornerRadius = 33 / 2;
 //        userHead.url = user.avatar;
         [userHead sd_setImageWithURL:[NSURL URLWithString:user.avatar] placeholderImage:nil];

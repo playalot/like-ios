@@ -554,6 +554,8 @@
 		139055651B994A6D00DBF34A /* GPUImageWhiteBalanceFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 139054BD1B994A6D00DBF34A /* GPUImageWhiteBalanceFilter.m */; };
 		139055661B994A6D00DBF34A /* GPUImageXYDerivativeFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 139054BF1B994A6D00DBF34A /* GPUImageXYDerivativeFilter.m */; };
 		139055671B994A6D00DBF34A /* GPUImageZoomBlurFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 139054C11B994A6D00DBF34A /* GPUImageZoomBlurFilter.m */; };
+		1390556A1B99991E00DBF34A /* cancelSubscribe.png in Resources */ = {isa = PBXBuildFile; fileRef = 139055681B99991E00DBF34A /* cancelSubscribe.png */; };
+		1390556B1B99991E00DBF34A /* subscribe.png in Resources */ = {isa = PBXBuildFile; fileRef = 139055691B99991E00DBF34A /* subscribe.png */; };
 		13925A6D1B145BCE004D0656 /* SearchIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13925A6C1B145BCE004D0656 /* SearchIcon@3x.png */; };
 		13925A7E1B146BD1004D0656 /* INSSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 13925A731B146BD1004D0656 /* INSSearchBar.m */; };
 		13925A8B1B146C4B004D0656 /* LKSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 13925A8A1B146C4B004D0656 /* LKSearchBar.m */; };
@@ -1833,6 +1835,8 @@
 		139054BF1B994A6D00DBF34A /* GPUImageXYDerivativeFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageXYDerivativeFilter.m; sourceTree = "<group>"; };
 		139054C01B994A6D00DBF34A /* GPUImageZoomBlurFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageZoomBlurFilter.h; sourceTree = "<group>"; };
 		139054C11B994A6D00DBF34A /* GPUImageZoomBlurFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageZoomBlurFilter.m; sourceTree = "<group>"; };
+		139055681B99991E00DBF34A /* cancelSubscribe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancelSubscribe.png; sourceTree = "<group>"; };
+		139055691B99991E00DBF34A /* subscribe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = subscribe.png; sourceTree = "<group>"; };
 		13925A6C1B145BCE004D0656 /* SearchIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SearchIcon@3x.png"; sourceTree = "<group>"; };
 		13925A721B146BD1004D0656 /* INSSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INSSearchBar.h; sourceTree = "<group>"; };
 		13925A731B146BD1004D0656 /* INSSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INSSearchBar.m; sourceTree = "<group>"; };
@@ -4766,6 +4770,8 @@
 		13FCC0911ADF5E930008DB41 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				139055681B99991E00DBF34A /* cancelSubscribe.png */,
+				139055691B99991E00DBF34A /* subscribe.png */,
 				13478CB51B6636770012EDA2 /* LittleSP@3x.png */,
 				13478CB61B6636770012EDA2 /* LittleYouLike@3x.png */,
 				13D549E61B61114B00D3CA2C /* LittleTag@3x.png */,
@@ -4934,11 +4940,13 @@
 				138EDE0F1AD7B0A30020957C /* LCGLBubbleEffect.fsh in Resources */,
 				13925A921B1477D2004D0656 /* NavBarIconSearch_white@2x.png in Resources */,
 				13478CB71B6636770012EDA2 /* LittleSP@3x.png in Resources */,
+				1390556A1B99991E00DBF34A /* cancelSubscribe.png in Resources */,
 				1359F4A31B6A24B800A0ABE9 /* Gta-driving@3x.png in Resources */,
 				1326228D1B8EE1150074C589 /* 变形金刚.png in Resources */,
 				135D5C061ADFD21E00811B06 /* CameraFlash@3x.png in Resources */,
 				138EDEFB1AD7DBA00020957C /* TabBarNotification@3x.png in Resources */,
 				135D5C281AE0E37800811B06 /* CameraFilter@3x.png in Resources */,
+				1390556B1B99991E00DBF34A /* subscribe.png in Resources */,
 				13E3EE041B60996000A48E76 /* zh2HK.txt in Resources */,
 				134D92F01B8DA8A0004CFAC8 /* 高达.png in Resources */,
 				1388B4FD1B01EFFB006F36AB /* EachOtherFocusLG@3x.png in Resources */,

@@ -814,7 +814,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
             }
             else{
                 
-                self.next = result.json[@"data"][@"next"] ? result.json[@"data"][@"next"] : @"";
+                self.next = result.json[@"data"][@"next"] ? result.json[@"data"][@"next"] : nil/*@""*/;
             }
             
             NSArray * resultData = result.json[@"data"][@"posts"];
@@ -1322,7 +1322,9 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
                 // 删除标签
                 [post.tags removeObject:tag];
                 
+                [self.tableView beginUpdates];
                 [self.tableView reloadData];
+                [self.tableView endUpdates];
                 
                 break;
             }
@@ -1517,7 +1519,7 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
                 }
                 else{
                     
-                    self.next = result.json[@"data"][@"next"] ? result.json[@"data"][@"next"] : @"";
+                    self.next = result.json[@"data"][@"next"] ? result.json[@"data"][@"next"] : nil/*@""*/;
                 }
                 
                 NSArray * resultData = result.json[@"data"][@"posts"];

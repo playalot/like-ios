@@ -886,7 +886,9 @@ LC_PROPERTY(assign) BOOL favorited;
             }
     
             // 刷新数据
+            [self.tableView beginUpdates];
             [self.tableView reloadData];
+            [self.tableView endUpdates];
             
             break;
         }
@@ -1044,8 +1046,8 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         };
         
         
-//        self.userHead.url = self.post.user.avatar;
-        [self.userHead sd_setImageWithURL:[NSURL URLWithString:self.post.user.avatar] placeholderImage:nil];
+        self.userHead.url = self.post.user.avatar;
+//        [self.userHead sd_setImageWithURL:[NSURL URLWithString:self.post.user.avatar] placeholderImage:nil];
         self.userName.text = self.post.user.name;
         [self.userLikes setText:self.post.user.likes.description animated:NO];
 
@@ -1357,8 +1359,8 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     imageView.viewFrameHeight = headWidth - 10 * proportion;
     imageView.viewFrameX = (20 + 18) * proportion + 5 * proportion;
     imageView.viewFrameY = 5 * proportion;
-//    imageView.url = self.post.user.avatar;
-    [imageView sd_setImageWithURL:[NSURL URLWithString:self.post.user.avatar] placeholderImage:nil];
+    imageView.url = self.post.user.avatar;
+//    [imageView sd_setImageWithURL:[NSURL URLWithString:self.post.user.avatar] placeholderImage:nil];
     imageView.cornerRadius = imageView.viewMidHeight;
     imageView.backgroundColor = [UIColor whiteColor];
     bottomView.ADD(imageView);

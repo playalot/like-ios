@@ -152,10 +152,10 @@ static LCUIApplication * __skeleton = nil;
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-	NSString * token = [deviceToken description];
-	token = [token stringByReplacingOccurrencesOfString:@"<" withString:@""];
-	token = [token stringByReplacingOccurrencesOfString:@">" withString:@""];
-	token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
+//	NSString * token = [deviceToken description];
+//	token = [token stringByReplacingOccurrencesOfString:@"<" withString:@""];
+//	token = [token stringByReplacingOccurrencesOfString:@">" withString:@""];
+//	token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
     
 //    [self postNotification:LCUIApplicationDidRegisterRemoteNotification withObject:token];
     [APService registerDeviceToken:deviceToken];

@@ -153,7 +153,6 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     
     self.userInfoModel = [[LKUserInfoModel alloc] init];
     
-    
     [self observeNotification:LKHomeViewControllerAddNewPost];
     [self observeNotification:LKHomeViewControllerUpdateHeader];
     [self observeNotification:LKHomeViewControllerReloadingData];
@@ -161,31 +160,25 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     
     // read cache...
     NSArray * cache = LKUserDefaults.singleton[self.class.description];
-    
     NSMutableArray * datasource = [NSMutableArray array];
     
     for (NSDictionary * tmp in cache) {
-        
         [datasource addObject:[LKPost objectFromDictionary:tmp]];
     }
     
     if (datasource.count) {
-        
         self.datasource = datasource;
     }
     
     
     NSArray * focusCache = LKUserDefaults.singleton[FOCUS_FEED_CACHE_KEY];
-    
     NSMutableArray * focusDatasource = [NSMutableArray array];
     
     for (NSDictionary * tmp in focusCache) {
-        
         [focusDatasource addObject:[LKPost objectFromDictionary:tmp]];
     }
     
     if (focusDatasource.count) {
-        
         self.focusDatasource = datasource;
     }
     
@@ -197,7 +190,6 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
         @normally(self);
         
         if (self.feedType == LKHomepageFeedTypeFocus) {
-            
             [self handleNavigationBarButton:LCUINavigationBarButtonTypeLeft];
         }
         
@@ -1518,26 +1510,18 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
             if (result.state == LKHttpRequestStateFinished) {
                 
                 if (self.feedType == LKHomepageFeedTypeFocus) {
-                    
                     self.focusNext = result.json[@"data"][@"next"] ? result.json[@"data"][@"next"] : nil;
-                }
-                else{
-                    
+                } else {
                     self.next = result.json[@"data"][@"next"] ? result.json[@"data"][@"next"] : nil/*@""*/;
                 }
-                
                 NSArray * resultData = result.json[@"data"][@"posts"];
                 NSMutableArray * datasource = [NSMutableArray array];
-                
                 for (NSDictionary * tmp in resultData) {
-                    
                     [datasource addObject:[LKPost objectFromDictionary:tmp]];
                 }
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    
                     if (self.feedType == LKHomepageFeedTypeFocus) {
-                        
                         [self.focusDatasource addObjectsFromArray:datasource];
                     }
                     else{
@@ -1550,11 +1534,8 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
                 if (diretion == LCUIPullLoaderDiretionBottom) {
                     
                     if (self.feedType == LKHomepageFeedTypeFocus) {
-                    
                         [self.attentionViewController.pullLoader endRefresh];
-                    }
-                    else{
-                    
+                    } else {
                         [self.pullLoader endRefresh];
                     }
                 

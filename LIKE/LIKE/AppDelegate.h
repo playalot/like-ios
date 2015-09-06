@@ -19,7 +19,6 @@ LC_NOTIFICATION_SET(LKSessionError);
 @interface AppDelegate : LCUIApplication
 
 LC_PROPERTY(strong) LKTabBarController * tabBarController;
-
 LC_PROPERTY(strong) LKHomeViewController * home;
 LC_PROPERTY(strong) UIViewController * none;
 

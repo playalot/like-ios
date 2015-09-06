@@ -12,19 +12,26 @@
 #import "APService.h"
 #import "LKNotificationViewController.h"
 #import "LKHomeViewController.h"
+#import "LCNetworkConfig.h"
+#import "LCUrlArgumentsFilter.h"
 
 static LCUIApplication * __skeleton = nil;
 
 @implementation LCUIApplication
 
-+ (LCUIApplication *)sharedInstance
-{
-	return __skeleton;
++ (LCUIApplication *)sharedInstance {
+    return __skeleton;
 }
 
-- (void) load:(NSDictionary *)launchOptions
-{
-    ;
+- (void) configNetwork {
+    NSString *appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    LCNetworkConfig *config = [LCNetworkConfig sharedInstance];
+    config.baseUrl = LK_API_BASE_URL;
+    LCUrlArgumentsFilter *urlFilter = [LCUrlArgumentsFilter filterWithArguments:@{@"version": appVersion}];
+    [config addUrlFilter:urlFilter];
+}
+
+- (void) load:(NSDictionary *)launchOptions {
 }
 
 +(void) presentViewController:(UIViewController *)viewController
@@ -64,7 +71,6 @@ static LCUIApplication * __skeleton = nil;
 - (void)applicationDidFinishLaunching:(UIApplication *)application
 {
 	INFO( @"[LCUIApplication] Did finish launching." );
-	
 	[self application:application didFinishLaunchingWithOptions:nil];
 }
 
@@ -72,15 +78,13 @@ static LCUIApplication * __skeleton = nil;
 {
 	__skeleton = self;
     
+    [self configNetwork];
 	[self initializeWindow];
     [self load:launchOptions];
 	
 	if (self.window.rootViewController){
-        
-		UIView * rootView = self.window.rootViewController.view;
-        
+        UIView * rootView = self.window.rootViewController.view;
 		if (rootView){
-            
 			[self.window makeKeyAndVisible];
 		}
 	}
@@ -208,7 +212,6 @@ static LCUIApplication * __skeleton = nil;
 {
     
 }
-
 
 
 @end

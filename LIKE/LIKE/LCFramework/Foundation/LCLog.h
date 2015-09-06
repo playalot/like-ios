@@ -32,8 +32,6 @@
 
 #import <Foundation/Foundation.h>
 
-
-
 #undef	NSLog
 #define	NSLog(desc,...) LCLog(desc, ##__VA_ARGS__)
 

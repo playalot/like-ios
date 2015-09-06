@@ -120,7 +120,6 @@
 		135E8A9E1B45114600C2270C /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 135E8A9D1B45114600C2270C /* libstdc++.6.0.9.dylib */; };
 		135E8AA01B4511B900C2270C /* AMap.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 135E8A9F1B4511B900C2270C /* AMap.bundle */; };
 		135E8AA31B4549BD00C2270C /* LKSearchPlacesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 135E8AA21B4549BD00C2270C /* LKSearchPlacesViewController.m */; };
-		1369AFEC1AEA612F00364602 /* LKWelcome.m in Sources */ = {isa = PBXBuildFile; fileRef = 1369AFEB1AEA612F00364602 /* LKWelcome.m */; };
 		1369D0D21B82E7EE00498950 /* more.png in Resources */ = {isa = PBXBuildFile; fileRef = 1369D0D11B82E7EE00498950 /* more.png */; };
 		137106991B576212008BCD66 /* LKHotTagDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 137106981B576212008BCD66 /* LKHotTagDetail.m */; };
 		1371069D1B58E0E9008BCD66 /* CHTCollectionViewWaterfallLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1371069C1B58E0E9008BCD66 /* CHTCollectionViewWaterfallLayout.m */; };
@@ -375,7 +374,6 @@
 		138EDEC51AD7B1D20020957C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 138EDEC41AD7B1D20020957C /* libz.dylib */; };
 		138EDEC71AD7B1DA0020957C /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 138EDEC61AD7B1DA0020957C /* libxml2.dylib */; };
 		138EDED61AD7C5DB0020957C /* LikeIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 138EDED51AD7C5DB0020957C /* LikeIcon@3x.png */; };
-		138EDEE31AD7C7E90020957C /* LKTabBarController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 138EDEE21AD7C7E90020957C /* LKTabBarController.mm */; };
 		138EDEE61AD7D1020020957C /* TabBarLike@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 138EDEE51AD7D1020020957C /* TabBarLike@3x.png */; };
 		138EDEF51AD7D8160020957C /* RDVTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 138EDEF01AD7D8160020957C /* RDVTabBar.m */; };
 		138EDEF61AD7D8160020957C /* RDVTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 138EDEF21AD7D8160020957C /* RDVTabBarController.m */; };
@@ -770,6 +768,19 @@
 		BC12A5E91B9BD16100B99CB5 /* LKNetworkPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A5DF1B9BD16100B99CB5 /* LKNetworkPrivate.m */; };
 		BC12A5EA1B9BD16100B99CB5 /* LKRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A5E11B9BD16100B99CB5 /* LKRequest.m */; };
 		BC12A6111B9BE48B00B99CB5 /* AFDownloadRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6101B9BE48B00B99CB5 /* AFDownloadRequestOperation.m */; };
+		BC12A6251B9BEE2300B99CB5 /* LCBaseRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6141B9BEE2300B99CB5 /* LCBaseRequest.m */; };
+		BC12A6261B9BEE2300B99CB5 /* LCBatchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6161B9BEE2300B99CB5 /* LCBatchRequest.m */; };
+		BC12A6271B9BEE2300B99CB5 /* LCBatchRequestAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6181B9BEE2300B99CB5 /* LCBatchRequestAgent.m */; };
+		BC12A6281B9BEE2300B99CB5 /* LCChainRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A61A1B9BEE2300B99CB5 /* LCChainRequest.m */; };
+		BC12A6291B9BEE2300B99CB5 /* LCChainRequestAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A61C1B9BEE2300B99CB5 /* LCChainRequestAgent.m */; };
+		BC12A62A1B9BEE2300B99CB5 /* LCNetworkAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A61E1B9BEE2300B99CB5 /* LCNetworkAgent.m */; };
+		BC12A62B1B9BEE2300B99CB5 /* LCNetworkConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6201B9BEE2300B99CB5 /* LCNetworkConfig.m */; };
+		BC12A62C1B9BEE2300B99CB5 /* LCNetworkPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6221B9BEE2300B99CB5 /* LCNetworkPrivate.m */; };
+		BC12A62D1B9BEE2300B99CB5 /* LCRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6241B9BEE2300B99CB5 /* LCRequest.m */; };
+		BC12A6301B9BF04F00B99CB5 /* LCUrlArgumentsFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A62F1B9BF04F00B99CB5 /* LCUrlArgumentsFilter.m */; };
+		BC12A6371B9BF1BE00B99CB5 /* LKTabBarController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6341B9BF1BE00B99CB5 /* LKTabBarController.mm */; };
+		BC12A6381B9BF1BE00B99CB5 /* LKWelcome.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6361B9BF1BE00B99CB5 /* LKWelcome.m */; };
+		BC12A63B1B9BF24500B99CB5 /* LKContext.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A63A1B9BF24500B99CB5 /* LKContext.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -976,8 +987,6 @@
 		135E8A9F1B4511B900C2270C /* AMap.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AMap.bundle; sourceTree = "<group>"; };
 		135E8AA11B4549BD00C2270C /* LKSearchPlacesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKSearchPlacesViewController.h; sourceTree = "<group>"; };
 		135E8AA21B4549BD00C2270C /* LKSearchPlacesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKSearchPlacesViewController.m; sourceTree = "<group>"; };
-		1369AFEA1AEA612F00364602 /* LKWelcome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKWelcome.h; sourceTree = "<group>"; };
-		1369AFEB1AEA612F00364602 /* LKWelcome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKWelcome.m; sourceTree = "<group>"; };
 		1369D0D11B82E7EE00498950 /* more.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = more.png; sourceTree = "<group>"; };
 		137106971B576212008BCD66 /* LKHotTagDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKHotTagDetail.h; sourceTree = "<group>"; };
 		137106981B576212008BCD66 /* LKHotTagDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKHotTagDetail.m; sourceTree = "<group>"; };
@@ -1488,8 +1497,6 @@
 		138EDED21AD7B8830020957C /* LKPrecompile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKPrecompile.h; sourceTree = "<group>"; };
 		138EDED31AD7B89F0020957C /* LKBlockDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKBlockDefines.h; sourceTree = "<group>"; };
 		138EDED51AD7C5DB0020957C /* LikeIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LikeIcon@3x.png"; sourceTree = "<group>"; };
-		138EDEE11AD7C7E90020957C /* LKTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKTabBarController.h; sourceTree = "<group>"; };
-		138EDEE21AD7C7E90020957C /* LKTabBarController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LKTabBarController.mm; sourceTree = "<group>"; };
 		138EDEE51AD7D1020020957C /* TabBarLike@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TabBarLike@3x.png"; sourceTree = "<group>"; };
 		138EDEEF1AD7D8160020957C /* RDVTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDVTabBar.h; sourceTree = "<group>"; };
 		138EDEF01AD7D8160020957C /* RDVTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RDVTabBar.m; sourceTree = "<group>"; };
@@ -2248,6 +2255,32 @@
 		BC12A5E11B9BD16100B99CB5 /* LKRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKRequest.m; path = LKNetwork/LKRequest.m; sourceTree = "<group>"; };
 		BC12A60F1B9BE48B00B99CB5 /* AFDownloadRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFDownloadRequestOperation.h; path = LIKE/LKExternal/AFNetwork/AFDownloadRequestOperation/AFDownloadRequestOperation.h; sourceTree = SOURCE_ROOT; };
 		BC12A6101B9BE48B00B99CB5 /* AFDownloadRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFDownloadRequestOperation.m; path = LIKE/LKExternal/AFNetwork/AFDownloadRequestOperation/AFDownloadRequestOperation.m; sourceTree = SOURCE_ROOT; };
+		BC12A6131B9BEE2300B99CB5 /* LCBaseRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LCBaseRequest.h; path = LCNetworking/LCBaseRequest.h; sourceTree = "<group>"; };
+		BC12A6141B9BEE2300B99CB5 /* LCBaseRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LCBaseRequest.m; path = LCNetworking/LCBaseRequest.m; sourceTree = "<group>"; };
+		BC12A6151B9BEE2300B99CB5 /* LCBatchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LCBatchRequest.h; path = LCNetworking/LCBatchRequest.h; sourceTree = "<group>"; };
+		BC12A6161B9BEE2300B99CB5 /* LCBatchRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LCBatchRequest.m; path = LCNetworking/LCBatchRequest.m; sourceTree = "<group>"; };
+		BC12A6171B9BEE2300B99CB5 /* LCBatchRequestAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LCBatchRequestAgent.h; path = LCNetworking/LCBatchRequestAgent.h; sourceTree = "<group>"; };
+		BC12A6181B9BEE2300B99CB5 /* LCBatchRequestAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LCBatchRequestAgent.m; path = LCNetworking/LCBatchRequestAgent.m; sourceTree = "<group>"; };
+		BC12A6191B9BEE2300B99CB5 /* LCChainRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LCChainRequest.h; path = LCNetworking/LCChainRequest.h; sourceTree = "<group>"; };
+		BC12A61A1B9BEE2300B99CB5 /* LCChainRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LCChainRequest.m; path = LCNetworking/LCChainRequest.m; sourceTree = "<group>"; };
+		BC12A61B1B9BEE2300B99CB5 /* LCChainRequestAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LCChainRequestAgent.h; path = LCNetworking/LCChainRequestAgent.h; sourceTree = "<group>"; };
+		BC12A61C1B9BEE2300B99CB5 /* LCChainRequestAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LCChainRequestAgent.m; path = LCNetworking/LCChainRequestAgent.m; sourceTree = "<group>"; };
+		BC12A61D1B9BEE2300B99CB5 /* LCNetworkAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LCNetworkAgent.h; path = LCNetworking/LCNetworkAgent.h; sourceTree = "<group>"; };
+		BC12A61E1B9BEE2300B99CB5 /* LCNetworkAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LCNetworkAgent.m; path = LCNetworking/LCNetworkAgent.m; sourceTree = "<group>"; };
+		BC12A61F1B9BEE2300B99CB5 /* LCNetworkConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LCNetworkConfig.h; path = LCNetworking/LCNetworkConfig.h; sourceTree = "<group>"; };
+		BC12A6201B9BEE2300B99CB5 /* LCNetworkConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LCNetworkConfig.m; path = LCNetworking/LCNetworkConfig.m; sourceTree = "<group>"; };
+		BC12A6211B9BEE2300B99CB5 /* LCNetworkPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LCNetworkPrivate.h; path = LCNetworking/LCNetworkPrivate.h; sourceTree = "<group>"; };
+		BC12A6221B9BEE2300B99CB5 /* LCNetworkPrivate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LCNetworkPrivate.m; path = LCNetworking/LCNetworkPrivate.m; sourceTree = "<group>"; };
+		BC12A6231B9BEE2300B99CB5 /* LCRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LCRequest.h; path = LCNetworking/LCRequest.h; sourceTree = "<group>"; };
+		BC12A6241B9BEE2300B99CB5 /* LCRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LCRequest.m; path = LCNetworking/LCRequest.m; sourceTree = "<group>"; };
+		BC12A62E1B9BF04F00B99CB5 /* LCUrlArgumentsFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LCUrlArgumentsFilter.h; path = LCNetworking/LCUrlArgumentsFilter.h; sourceTree = "<group>"; };
+		BC12A62F1B9BF04F00B99CB5 /* LCUrlArgumentsFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LCUrlArgumentsFilter.m; path = LCNetworking/LCUrlArgumentsFilter.m; sourceTree = "<group>"; };
+		BC12A6331B9BF1BE00B99CB5 /* LKTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKTabBarController.h; path = Common/LKTabBarController.h; sourceTree = "<group>"; };
+		BC12A6341B9BF1BE00B99CB5 /* LKTabBarController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = LKTabBarController.mm; path = Common/LKTabBarController.mm; sourceTree = "<group>"; };
+		BC12A6351B9BF1BE00B99CB5 /* LKWelcome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKWelcome.h; path = Common/LKWelcome.h; sourceTree = "<group>"; };
+		BC12A6361B9BF1BE00B99CB5 /* LKWelcome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKWelcome.m; path = Common/LKWelcome.m; sourceTree = "<group>"; };
+		BC12A6391B9BF24500B99CB5 /* LKContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKContext.h; path = LKCommon/LKContext.h; sourceTree = "<group>"; };
+		BC12A63A1B9BF24500B99CB5 /* LKContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKContext.m; path = LKCommon/LKContext.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2689,12 +2722,9 @@
 		138EDBEF1AD7B08A0020957C /* LIKE */ = {
 			isa = PBXGroup;
 			children = (
+				BC12A6311B9BF16D00B99CB5 /* LKCommon */,
 				138EDBF41AD7B08A0020957C /* AppDelegate.h */,
 				138EDBF51AD7B08A0020957C /* AppDelegate.m */,
-				138EDEE11AD7C7E90020957C /* LKTabBarController.h */,
-				138EDEE21AD7C7E90020957C /* LKTabBarController.mm */,
-				1369AFEA1AEA612F00364602 /* LKWelcome.h */,
-				1369AFEB1AEA612F00364602 /* LKWelcome.m */,
 				138EDEC81AD7B65B0020957C /* LKApplication */,
 				138EDECA1AD7B65B0020957C /* LKResource */,
 				138EDECB1AD7B65B0020957C /* LKUIKit */,
@@ -3405,6 +3435,7 @@
 		138EDD911AD7B0A30020957C /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				BC12A6121B9BEDA700B99CB5 /* LCNetworking */,
 				138EDD921AD7B0A30020957C /* Extension */,
 				138EDD991AD7B0A30020957C /* LCNetwork.h */,
 				138EDD9A1AD7B0A30020957C /* LCNetwork.m */,
@@ -3542,6 +3573,7 @@
 		138EDEC81AD7B65B0020957C /* LKApplication */ = {
 			isa = PBXGroup;
 			children = (
+				BC12A6321B9BF18A00B99CB5 /* Common */,
 				138EDECD1AD7B7C00020957C /* Application */,
 				138EDECE1AD7B7C00020957C /* Data */,
 				138EDECF1AD7B7C00020957C /* Model */,
@@ -3821,6 +3853,7 @@
 		138EDF031AD7DDFA0020957C /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				BC12A63D1B9BF51200B99CB5 /* Requests */,
 				139B06901ADBF4E3006A260F /* Views */,
 				139B068D1ADBF161006A260F /* LKHomeViewController.h */,
 				139B068E1ADBF161006A260F /* LKHomeViewController.m */,
@@ -4299,13 +4332,6 @@
 			name = "Views(Link)";
 			sourceTree = "<group>";
 		};
-		139C712F1B55198D0051B2C3 /* Extension */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Extension;
-			sourceTree = "<group>";
-		};
 		13B6C19A1AE8FFBE008912C0 /* Welcome */ = {
 			isa = PBXGroup;
 			children = (
@@ -4763,7 +4789,7 @@
 		13FCC06E1ADE16C00008DB41 /* UserCenter */ = {
 			isa = PBXGroup;
 			children = (
-				139C712F1B55198D0051B2C3 /* Extension */,
+				BC12A63C1B9BF50800B99CB5 /* Requests */,
 				139C712D1B5519760051B2C3 /* Views(Link) */,
 				139C712C1B55195A0051B2C3 /* Views(UserCenter) */,
 				13FCC0861ADE40790008DB41 /* Views(Cell) */,
@@ -4870,6 +4896,67 @@
 				BC12A6101B9BE48B00B99CB5 /* AFDownloadRequestOperation.m */,
 			);
 			name = AFDownloadRequestOperation;
+			sourceTree = "<group>";
+		};
+		BC12A6121B9BEDA700B99CB5 /* LCNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				BC12A62E1B9BF04F00B99CB5 /* LCUrlArgumentsFilter.h */,
+				BC12A62F1B9BF04F00B99CB5 /* LCUrlArgumentsFilter.m */,
+				BC12A6131B9BEE2300B99CB5 /* LCBaseRequest.h */,
+				BC12A6141B9BEE2300B99CB5 /* LCBaseRequest.m */,
+				BC12A6151B9BEE2300B99CB5 /* LCBatchRequest.h */,
+				BC12A6161B9BEE2300B99CB5 /* LCBatchRequest.m */,
+				BC12A6171B9BEE2300B99CB5 /* LCBatchRequestAgent.h */,
+				BC12A6181B9BEE2300B99CB5 /* LCBatchRequestAgent.m */,
+				BC12A6191B9BEE2300B99CB5 /* LCChainRequest.h */,
+				BC12A61A1B9BEE2300B99CB5 /* LCChainRequest.m */,
+				BC12A61B1B9BEE2300B99CB5 /* LCChainRequestAgent.h */,
+				BC12A61C1B9BEE2300B99CB5 /* LCChainRequestAgent.m */,
+				BC12A61D1B9BEE2300B99CB5 /* LCNetworkAgent.h */,
+				BC12A61E1B9BEE2300B99CB5 /* LCNetworkAgent.m */,
+				BC12A61F1B9BEE2300B99CB5 /* LCNetworkConfig.h */,
+				BC12A6201B9BEE2300B99CB5 /* LCNetworkConfig.m */,
+				BC12A6211B9BEE2300B99CB5 /* LCNetworkPrivate.h */,
+				BC12A6221B9BEE2300B99CB5 /* LCNetworkPrivate.m */,
+				BC12A6231B9BEE2300B99CB5 /* LCRequest.h */,
+				BC12A6241B9BEE2300B99CB5 /* LCRequest.m */,
+			);
+			name = LCNetworking;
+			sourceTree = "<group>";
+		};
+		BC12A6311B9BF16D00B99CB5 /* LKCommon */ = {
+			isa = PBXGroup;
+			children = (
+				BC12A6391B9BF24500B99CB5 /* LKContext.h */,
+				BC12A63A1B9BF24500B99CB5 /* LKContext.m */,
+			);
+			name = LKCommon;
+			sourceTree = "<group>";
+		};
+		BC12A6321B9BF18A00B99CB5 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				BC12A6331B9BF1BE00B99CB5 /* LKTabBarController.h */,
+				BC12A6341B9BF1BE00B99CB5 /* LKTabBarController.mm */,
+				BC12A6351B9BF1BE00B99CB5 /* LKWelcome.h */,
+				BC12A6361B9BF1BE00B99CB5 /* LKWelcome.m */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
+		BC12A63C1B9BF50800B99CB5 /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Requests;
+			sourceTree = "<group>";
+		};
+		BC12A63D1B9BF51200B99CB5 /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Requests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -5186,6 +5273,7 @@
 				13F504F31B0B120F00D8D484 /* LKWeChatShare.m in Sources */,
 				13BCA6681B5CE43D00DC0549 /* FXBlurView.m in Sources */,
 				138EDEB81AD7B0A30020957C /* LCUITabBarController.m in Sources */,
+				BC12A62B1B9BEE2300B99CB5 /* LCNetworkConfig.m in Sources */,
 				139054E01B994A6D00DBF34A /* GPUImageCrosshairGenerator.m in Sources */,
 				138EDDF91AD7B0A30020957C /* UIDevice+Reachability.m in Sources */,
 				1387C3421B313B7500B065A7 /* LKFacebookShare.m in Sources */,
@@ -5211,6 +5299,7 @@
 				13E1A4E61AE65FE300E24C3C /* AVCaptureDevice+FastttCamera.m in Sources */,
 				13B5B4EE1B16F0EB00252A78 /* LKCommentsView.m in Sources */,
 				13D549DD1B60E90F00D3CA2C /* ADTickerLabel.m in Sources */,
+				BC12A6281B9BEE2300B99CB5 /* LCChainRequest.m in Sources */,
 				139055501B994A6D00DBF34A /* GPUImageTextureInput.m in Sources */,
 				1390554C1B994A6D00DBF34A /* GPUImageStillCamera.m in Sources */,
 				139054DF1B994A6D00DBF34A /* GPUImageCropFilter.m in Sources */,
@@ -5296,6 +5385,7 @@
 				1387C3581B32B9CB00B065A7 /* LKRebindPhoneViewController.m in Sources */,
 				1390554B1B994A6D00DBF34A /* GPUImageSphereRefractionFilter.m in Sources */,
 				138EDE271AD7B0A30020957C /* LCProcessInfoController.m in Sources */,
+				BC12A6381B9BF1BE00B99CB5 /* LKWelcome.m in Sources */,
 				139055671B994A6D00DBF34A /* GPUImageZoomBlurFilter.m in Sources */,
 				139054EA1B994A6D00DBF34A /* GPUImageErosionFilter.m in Sources */,
 				138EDE091AD7B0A30020957C /* LCCPUTableView.m in Sources */,
@@ -5330,6 +5420,7 @@
 				13101D301B13074700FBE516 /* LKShareTagsView.m in Sources */,
 				1373C46E1B847A6000A6C55A /* UIImage+MultiFormat.m in Sources */,
 				138EDEBD1AD7B0A30020957C /* LCUITextView.m in Sources */,
+				BC12A6251B9BEE2300B99CB5 /* LCBaseRequest.m in Sources */,
 				13FCC0961ADF67AF0008DB41 /* LKTagLikeModel.m in Sources */,
 				138EDF161AD7EC8D0020957C /* LKFont.m in Sources */,
 				1390554A1B994A6D00DBF34A /* GPUImageSourceOverBlendFilter.m in Sources */,
@@ -5363,6 +5454,7 @@
 				1373C46B1B847A6000A6C55A /* SDWebImagePrefetcher.m in Sources */,
 				139055511B994A6D00DBF34A /* GPUImageTextureOutput.m in Sources */,
 				139055591B994A6D00DBF34A /* GPUImageTransformFilter.m in Sources */,
+				BC12A6291B9BEE2300B99CB5 /* LCChainRequestAgent.m in Sources */,
 				13A951A61B4CE528002B73ED /* AFURLRequestSerialization.m in Sources */,
 				134765621AE25EA40055D099 /* QNEtag.m in Sources */,
 				138EDE3C1AD7B0A30020957C /* HTTPMessage.m in Sources */,
@@ -5398,6 +5490,7 @@
 				13E1A4E71AE65FE300E24C3C /* FastttCamera.m in Sources */,
 				13BCD8D71ADBB00500A0CBF5 /* LKNetworkCenter.m in Sources */,
 				139054FA1B994A6D00DBF34A /* GPUImageHalftoneFilter.m in Sources */,
+				BC12A62D1B9BEE2300B99CB5 /* LCRequest.m in Sources */,
 				139055471B994A6D00DBF34A /* GPUImageSoftEleganceFilter.m in Sources */,
 				138EDE211AD7B0A30020957C /* LCConnectionsTableView.m in Sources */,
 				138EDE121AD7B0A30020957C /* LCGLTube.m in Sources */,
@@ -5461,6 +5554,7 @@
 				1390551F1B994A6D00DBF34A /* GPUImageMovie.m in Sources */,
 				13E14F5F1B21C032009CCF9F /* LCNetworkCenter.m in Sources */,
 				1390550E1B994A6D00DBF34A /* GPUImageLightenBlendFilter.m in Sources */,
+				BC12A62A1B9BEE2300B99CB5 /* LCNetworkAgent.m in Sources */,
 				13E1A4F51AE676E500E24C3C /* LKModifyUserInfoModel.m in Sources */,
 				139054CB1B994A6D00DBF34A /* GPUImageAverageColor.m in Sources */,
 				138EDE081AD7B0A30020957C /* LCCPULoadFilter.m in Sources */,
@@ -5484,6 +5578,7 @@
 				139B06A91ADBF577006A260F /* LKHomepageHeader.m in Sources */,
 				13F504F61B0B121F00D8D484 /* LKSinaShare.m in Sources */,
 				1390553A1B994A6D00DBF34A /* GPUImageRGBErosionFilter.m in Sources */,
+				BC12A6371B9BF1BE00B99CB5 /* LKTabBarController.mm in Sources */,
 				138EDE941AD7B0A30020957C /* LCNetwork.m in Sources */,
 				1373C4371B846FDA00A6C55A /* MJPropertyKey.m in Sources */,
 				13B5B4F61B1710AE00252A78 /* LKTagCommentCell.m in Sources */,
@@ -5505,6 +5600,7 @@
 				13A951A41B4CE528002B73ED /* AFSecurityPolicy.m in Sources */,
 				1373C4701B847A6000A6C55A /* UIImageView+HighlightedWebCache.m in Sources */,
 				139B06A41ADBF50F006A260F /* FacebookStyleBarBehaviorDefiner.m in Sources */,
+				BC12A62C1B9BEE2300B99CB5 /* LCNetworkPrivate.m in Sources */,
 				1390551C1B994A6D00DBF34A /* GPUImageMosaicFilter.m in Sources */,
 				138EDE5D1AD7B0A30020957C /* FMDatabasePool.m in Sources */,
 				139055521B994A6D00DBF34A /* GPUImageThreeInputFilter.m in Sources */,
@@ -5527,7 +5623,6 @@
 				138EDEA11AD7B0A30020957C /* UIView+LCUIBackground.m in Sources */,
 				1390553E1B994A6D00DBF34A /* GPUImageSaturationFilter.m in Sources */,
 				138EDE6B1AD7B0A30020957C /* Reachability.m in Sources */,
-				138EDEE31AD7C7E90020957C /* LKTabBarController.mm in Sources */,
 				13E1A4EC1AE65FE300E24C3C /* FastttFilter.m in Sources */,
 				139054D01B994A6D00DBF34A /* GPUImageBuffer.m in Sources */,
 				138EDEA61AD7B0A30020957C /* LCUIActionSheet.m in Sources */,
@@ -5557,6 +5652,7 @@
 				138EDE3E1AD7B0A30020957C /* HTTPServer.m in Sources */,
 				138EDDFD1AD7B0A30020957C /* LCCMDInput.m in Sources */,
 				138EDBF61AD7B08A0020957C /* AppDelegate.m in Sources */,
+				BC12A63B1B9BF24500B99CB5 /* LKContext.m in Sources */,
 				13E1A4EF1AE65FE300E24C3C /* UIImage+FastttFilters.m in Sources */,
 				139055291B994A6D00DBF34A /* GPUImageOverlayBlendFilter.m in Sources */,
 				134B0B7D1B5656DE00A195BE /* LKSearchHistory.m in Sources */,
@@ -5569,6 +5665,7 @@
 				139054C51B994A6D00DBF34A /* GPUImage3x3ConvolutionFilter.m in Sources */,
 				138EDE7C1AD7B0A30020957C /* LCFoundation.m in Sources */,
 				13D63AE71AEA3896001587C0 /* LKPhotoAlbum.m in Sources */,
+				BC12A6301B9BF04F00B99CB5 /* LCUrlArgumentsFilter.m in Sources */,
 				135DBAEF1AE4EF79004AD150 /* LKPostDetailViewController.m in Sources */,
 				1373C4641B847A6000A6C55A /* NSData+ImageContentType.m in Sources */,
 				138EDE3B1AD7B0A30020957C /* HTTPFileResponse.m in Sources */,
@@ -5601,6 +5698,7 @@
 				13E3EDF91B5F4BD100A48E76 /* UIImage+MostColor.m in Sources */,
 				138EDE7F1AD7B0A30020957C /* LCKeychain.m in Sources */,
 				13BCD88A1ADBA92200A0CBF5 /* POPAnimatableProperty.mm in Sources */,
+				BC12A6261B9BEE2300B99CB5 /* LCBatchRequest.m in Sources */,
 				135E8A921B43FA1A00C2270C /* LKLocationManager.m in Sources */,
 				1373C4721B847A6000A6C55A /* UIView+WebCacheOperation.m in Sources */,
 				139055541B994A6D00DBF34A /* GPUImageThresholdedNonMaximumSuppressionFilter.m in Sources */,
@@ -5640,6 +5738,7 @@
 				139054FB1B994A6D00DBF34A /* GPUImageHardLightBlendFilter.m in Sources */,
 				138EDE6F1AD7B0A30020957C /* NSData+LCExtension.m in Sources */,
 				138EDE281AD7B0A30020957C /* LCProgressTableView.m in Sources */,
+				BC12A6271B9BEE2300B99CB5 /* LCBatchRequestAgent.m in Sources */,
 				13BCD8CE1ADBA93000A0CBF5 /* MCVelocityProxy.m in Sources */,
 				13F504F91B0B124200D8D484 /* LKTencentShare.m in Sources */,
 				138EDE151AD7B0A30020957C /* LCGPUInfo.m in Sources */,
@@ -5671,7 +5770,6 @@
 				134D92E81B8D6A4A004CFAC8 /* NSArray+Ext.m in Sources */,
 				13A951A01B4CE528002B73ED /* AFHTTPRequestOperation.m in Sources */,
 				13BCD8981ADBA92200A0CBF5 /* POPPropertyAnimation.mm in Sources */,
-				1369AFEC1AEA612F00364602 /* LKWelcome.m in Sources */,
 				139054E11B994A6D00DBF34A /* GPUImageCrosshatchFilter.m in Sources */,
 				1390552D1B994A6D00DBF34A /* GPUImagePicture.m in Sources */,
 				13BCD8D81ADBB00500A0CBF5 /* LKHttpRequestInterface.m in Sources */,

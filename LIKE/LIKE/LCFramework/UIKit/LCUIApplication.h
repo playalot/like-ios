@@ -27,7 +27,6 @@ LC_PROPERTY(strong) UIWindow * window;
 
 +(void) presentViewController:(UIViewController *)viewController;
 +(void) presentViewController:(UIViewController *)viewController animation:(BOOL)animation;
-
 -(void) presentViewController:(UIViewController *)viewController animation:(BOOL)animation;
 
 @end

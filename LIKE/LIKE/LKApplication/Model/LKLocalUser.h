@@ -13,11 +13,9 @@
 
 LC_PROPERTY(readonly) BOOL isLogin;
 LC_PROPERTY(readonly) LKUser * user;
-
 LC_PROPERTY(strong) NSString * sessionToken;
 LC_PROPERTY(strong) NSString * refreshToken;
 LC_PROPERTY(strong) NSString * expiresIn;
-
 LC_PROPERTY(strong) NSDictionary * rawUserInfo;
 
 +(void) login:(NSDictionary *)rowUserInfo;

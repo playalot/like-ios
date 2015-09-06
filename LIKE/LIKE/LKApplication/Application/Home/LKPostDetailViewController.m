@@ -86,12 +86,10 @@ LC_PROPERTY(assign) BOOL favorited;
     [self.tableView reloadData];
     
     [super viewWillAppear:animated];
-    
     [self setNavigationBarHidden:YES animated:animated];
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:animated];
 
-    
     [self.header.headImageView removeFromSuperview];
     [self.header.nameLabel removeFromSuperview];
     [self.header.icon removeFromSuperview];
@@ -100,7 +98,6 @@ LC_PROPERTY(assign) BOOL favorited;
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
     
     if (self.tableView.viewFrameY != 0) {
     
@@ -1623,22 +1620,16 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     }
     
     if ([tag.tag rangeOfString:tagArray[10]].length) {
-        
         for (NSString *str in ironMan) {
-            
             if ([tag.tag rangeOfString:str].length) {
-                
                 return [UIImage imageNamed:@"钢铁侠"];
             }
         }
     }
     
     if ([tag.tag rangeOfString:tagArray[11]].length) {
-        
         for (NSString *str in starWar) {
-            
             if ([tag.tag rangeOfString:str].length) {
-                
                 return [UIImage imageNamed:@"星球大战"];
             }
         }

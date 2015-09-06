@@ -50,19 +50,14 @@ typedef NS_ENUM(NSInteger, LKHomepageFeedType)
 @interface LKHomeViewController () <UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate, LKPostDetailViewControllerDelegate, LKHomeTableViewCellDelegate>
 
 LC_PROPERTY(assign) LKHomepageFeedType feedType;
-
 LC_PROPERTY(strong) LKHomeHeader * header;
 
 LC_PROPERTY(strong) LCUITableView * tableView;
 LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
-
 LC_PROPERTY(strong) LKInputView * inputView;
 
-
 LC_PROPERTY(strong) LKUserInfoModel * userInfoModel;
-
 LC_PROPERTY(strong) NSNumber * canResignFirstResponder;
-
 LC_PROPERTY(strong) UIView * fromView;
 
 //LC_PROPERTY(copy) NSString * next;
@@ -273,10 +268,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     
     
     @weakly(self);
-    
-    
     self.header = [[LKHomeHeader alloc] initWithCGSize:CGSizeMake(LC_DEVICE_WIDTH, 150)];
-    
     self.header.headAction = ^(id value){
         
         @normally(self);
@@ -756,13 +748,9 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
 -(void) loadData:(LCUIPullLoaderDiretion)diretion
 {
     if (LC_APPDELEGATE.tabBarController.loading) {
-        
         if (self.feedType == LKHomepageFeedTypeFocus) {
-            
             [self.attentionViewController.pullLoader endRefresh];
-        }
-        else{
-            
+        } else{
             [self.pullLoader endRefresh];
         }
         return;
@@ -771,7 +759,6 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     NSTimeInterval time = [[NSDate date] timeIntervalSince1970];
     
     if (self.feedType == LKHomepageFeedTypeFocus && diretion == LCUIPullLoaderDiretionTop) {
-        
         if (time - self.lastFocusLoadTime < 30) {
             return;
         }
@@ -1263,7 +1250,6 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
 LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
 {
     if (self.inputView.isFirstResponder) {
-        
         [self.inputView resignFirstResponder];
         return;
     }
@@ -1273,7 +1259,6 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
     }
     
     self.fromView = signal.from;
-    
     LKPostDetailViewController * detail = [[LKPostDetailViewController alloc] initWithPost:signal.object];
     
     // 设置代理
@@ -1285,9 +1270,7 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
     
     [self.navigationController presentViewController:nav animated:YES completion:nil];
     
-    
     LKPost * post = signal.object;
-    
     if ([post.tagString rangeOfString:@"Comment-"].length) {
         
         LKTag * tag = [[LKTag alloc] init];
@@ -1356,11 +1339,8 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
 - (UITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        
         LKUploadingCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Upload" andClass:[LKUploadingCell class]];
-        
         cell.posting = LKNewPostUploadCenter.singleton.uploadingImages[indexPath.row];
-        
         return cell;
     }
     

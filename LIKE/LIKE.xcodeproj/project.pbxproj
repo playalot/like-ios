@@ -760,6 +760,16 @@
 		13FCC0991ADF852A0008DB41 /* LKInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FCC0981ADF852A0008DB41 /* LKInputView.m */; };
 		13FCC09B1ADF86050008DB41 /* KeyboardDismiss@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13FCC09A1ADF86050008DB41 /* KeyboardDismiss@3x.png */; };
 		13FCC09E1ADF94470008DB41 /* LKTagAddModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FCC09D1ADF94470008DB41 /* LKTagAddModel.m */; };
+		BC12A5E21B9BD16100B99CB5 /* LKBaseRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A5D11B9BD16000B99CB5 /* LKBaseRequest.m */; };
+		BC12A5E31B9BD16100B99CB5 /* LKBatchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A5D31B9BD16000B99CB5 /* LKBatchRequest.m */; };
+		BC12A5E41B9BD16100B99CB5 /* LKBatchRequestAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A5D51B9BD16000B99CB5 /* LKBatchRequestAgent.m */; };
+		BC12A5E51B9BD16100B99CB5 /* LKChainRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A5D71B9BD16000B99CB5 /* LKChainRequest.m */; };
+		BC12A5E61B9BD16100B99CB5 /* LKChainRequestAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A5D91B9BD16000B99CB5 /* LKChainRequestAgent.m */; };
+		BC12A5E71B9BD16100B99CB5 /* LKNetworkAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A5DB1B9BD16000B99CB5 /* LKNetworkAgent.m */; };
+		BC12A5E81B9BD16100B99CB5 /* LKNetworkConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A5DD1B9BD16000B99CB5 /* LKNetworkConfig.m */; };
+		BC12A5E91B9BD16100B99CB5 /* LKNetworkPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A5DF1B9BD16100B99CB5 /* LKNetworkPrivate.m */; };
+		BC12A5EA1B9BD16100B99CB5 /* LKRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A5E11B9BD16100B99CB5 /* LKRequest.m */; };
+		BC12A6111B9BE48B00B99CB5 /* AFDownloadRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6101B9BE48B00B99CB5 /* AFDownloadRequestOperation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2218,6 +2228,26 @@
 		13FCC09A1ADF86050008DB41 /* KeyboardDismiss@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "KeyboardDismiss@3x.png"; sourceTree = "<group>"; };
 		13FCC09C1ADF94470008DB41 /* LKTagAddModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKTagAddModel.h; sourceTree = "<group>"; };
 		13FCC09D1ADF94470008DB41 /* LKTagAddModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKTagAddModel.m; sourceTree = "<group>"; };
+		BC12A5D01B9BD16000B99CB5 /* LKBaseRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKBaseRequest.h; path = LKNetwork/LKBaseRequest.h; sourceTree = "<group>"; };
+		BC12A5D11B9BD16000B99CB5 /* LKBaseRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKBaseRequest.m; path = LKNetwork/LKBaseRequest.m; sourceTree = "<group>"; };
+		BC12A5D21B9BD16000B99CB5 /* LKBatchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKBatchRequest.h; path = LKNetwork/LKBatchRequest.h; sourceTree = "<group>"; };
+		BC12A5D31B9BD16000B99CB5 /* LKBatchRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKBatchRequest.m; path = LKNetwork/LKBatchRequest.m; sourceTree = "<group>"; };
+		BC12A5D41B9BD16000B99CB5 /* LKBatchRequestAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKBatchRequestAgent.h; path = LKNetwork/LKBatchRequestAgent.h; sourceTree = "<group>"; };
+		BC12A5D51B9BD16000B99CB5 /* LKBatchRequestAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKBatchRequestAgent.m; path = LKNetwork/LKBatchRequestAgent.m; sourceTree = "<group>"; };
+		BC12A5D61B9BD16000B99CB5 /* LKChainRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKChainRequest.h; path = LKNetwork/LKChainRequest.h; sourceTree = "<group>"; };
+		BC12A5D71B9BD16000B99CB5 /* LKChainRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKChainRequest.m; path = LKNetwork/LKChainRequest.m; sourceTree = "<group>"; };
+		BC12A5D81B9BD16000B99CB5 /* LKChainRequestAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKChainRequestAgent.h; path = LKNetwork/LKChainRequestAgent.h; sourceTree = "<group>"; };
+		BC12A5D91B9BD16000B99CB5 /* LKChainRequestAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKChainRequestAgent.m; path = LKNetwork/LKChainRequestAgent.m; sourceTree = "<group>"; };
+		BC12A5DA1B9BD16000B99CB5 /* LKNetworkAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKNetworkAgent.h; path = LKNetwork/LKNetworkAgent.h; sourceTree = "<group>"; };
+		BC12A5DB1B9BD16000B99CB5 /* LKNetworkAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKNetworkAgent.m; path = LKNetwork/LKNetworkAgent.m; sourceTree = "<group>"; };
+		BC12A5DC1B9BD16000B99CB5 /* LKNetworkConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKNetworkConfig.h; path = LKNetwork/LKNetworkConfig.h; sourceTree = "<group>"; };
+		BC12A5DD1B9BD16000B99CB5 /* LKNetworkConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKNetworkConfig.m; path = LKNetwork/LKNetworkConfig.m; sourceTree = "<group>"; };
+		BC12A5DE1B9BD16000B99CB5 /* LKNetworkPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKNetworkPrivate.h; path = LKNetwork/LKNetworkPrivate.h; sourceTree = "<group>"; };
+		BC12A5DF1B9BD16100B99CB5 /* LKNetworkPrivate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKNetworkPrivate.m; path = LKNetwork/LKNetworkPrivate.m; sourceTree = "<group>"; };
+		BC12A5E01B9BD16100B99CB5 /* LKRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKRequest.h; path = LKNetwork/LKRequest.h; sourceTree = "<group>"; };
+		BC12A5E11B9BD16100B99CB5 /* LKRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKRequest.m; path = LKNetwork/LKRequest.m; sourceTree = "<group>"; };
+		BC12A60F1B9BE48B00B99CB5 /* AFDownloadRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFDownloadRequestOperation.h; path = LIKE/LKExternal/AFNetwork/AFDownloadRequestOperation/AFDownloadRequestOperation.h; sourceTree = SOURCE_ROOT; };
+		BC12A6101B9BE48B00B99CB5 /* AFDownloadRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFDownloadRequestOperation.m; path = LIKE/LKExternal/AFNetwork/AFDownloadRequestOperation/AFDownloadRequestOperation.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3100,6 +3130,7 @@
 		138EDCCD1AD7B0A30020957C /* AFNetworking */ = {
 			isa = PBXGroup;
 			children = (
+				BC12A60E1B9BE47F00B99CB5 /* AFDownloadRequestOperation */,
 				13A951A91B4CE57C002B73ED /* AFNetworkActivityIndicatorManager.h */,
 				13A951AA1B4CE57C002B73ED /* AFNetworkActivityIndicatorManager.m */,
 				13A9518D1B4CE528002B73ED /* AFHTTPRequestOperation.h */,
@@ -3584,6 +3615,7 @@
 		138EDECC1AD7B70F0020957C /* LKExternal */ = {
 			isa = PBXGroup;
 			children = (
+				BC12A5CF1B9BD14E00B99CB5 /* LKNetwork */,
 				1326229D1B93FC0D0074C589 /* JPush */,
 				1319155F1B8C267900EC0F42 /* SMS_SDK */,
 				1373C41E1B846FDA00A6C55A /* MJExtension */,
@@ -4806,6 +4838,40 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
+		BC12A5CF1B9BD14E00B99CB5 /* LKNetwork */ = {
+			isa = PBXGroup;
+			children = (
+				BC12A5D01B9BD16000B99CB5 /* LKBaseRequest.h */,
+				BC12A5D11B9BD16000B99CB5 /* LKBaseRequest.m */,
+				BC12A5D21B9BD16000B99CB5 /* LKBatchRequest.h */,
+				BC12A5D31B9BD16000B99CB5 /* LKBatchRequest.m */,
+				BC12A5D41B9BD16000B99CB5 /* LKBatchRequestAgent.h */,
+				BC12A5D51B9BD16000B99CB5 /* LKBatchRequestAgent.m */,
+				BC12A5D61B9BD16000B99CB5 /* LKChainRequest.h */,
+				BC12A5D71B9BD16000B99CB5 /* LKChainRequest.m */,
+				BC12A5D81B9BD16000B99CB5 /* LKChainRequestAgent.h */,
+				BC12A5D91B9BD16000B99CB5 /* LKChainRequestAgent.m */,
+				BC12A5DA1B9BD16000B99CB5 /* LKNetworkAgent.h */,
+				BC12A5DB1B9BD16000B99CB5 /* LKNetworkAgent.m */,
+				BC12A5DC1B9BD16000B99CB5 /* LKNetworkConfig.h */,
+				BC12A5DD1B9BD16000B99CB5 /* LKNetworkConfig.m */,
+				BC12A5DE1B9BD16000B99CB5 /* LKNetworkPrivate.h */,
+				BC12A5DF1B9BD16100B99CB5 /* LKNetworkPrivate.m */,
+				BC12A5E01B9BD16100B99CB5 /* LKRequest.h */,
+				BC12A5E11B9BD16100B99CB5 /* LKRequest.m */,
+			);
+			name = LKNetwork;
+			sourceTree = "<group>";
+		};
+		BC12A60E1B9BE47F00B99CB5 /* AFDownloadRequestOperation */ = {
+			isa = PBXGroup;
+			children = (
+				BC12A60F1B9BE48B00B99CB5 /* AFDownloadRequestOperation.h */,
+				BC12A6101B9BE48B00B99CB5 /* AFDownloadRequestOperation.m */,
+			);
+			name = AFDownloadRequestOperation;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -5083,6 +5149,7 @@
 				139054F11B994A6D00DBF34A /* GPUImageFilterPipeline.m in Sources */,
 				1371069D1B58E0E9008BCD66 /* CHTCollectionViewWaterfallLayout.m in Sources */,
 				138EDE401AD7B0A30020957C /* LCWebBackstageTableView.m in Sources */,
+				BC12A6111B9BE48B00B99CB5 /* AFDownloadRequestOperation.m in Sources */,
 				13BCD88E1ADBA92200A0CBF5 /* POPAnimationRuntime.mm in Sources */,
 				138EDE1A1AD7B0A30020957C /* LCNetworkTraffic.m in Sources */,
 				13F505081B0C5DFD00D8D484 /* LKShareTools.m in Sources */,
@@ -5196,6 +5263,7 @@
 				139054DD1B994A6D00DBF34A /* GPUImageContext.m in Sources */,
 				1373C4651B847A6000A6C55A /* SDImageCache.m in Sources */,
 				1388B6AB1B33EA98006ACA44 /* LKCameraRollViewController.m in Sources */,
+				BC12A5E91B9BD16100B99CB5 /* LKNetworkPrivate.m in Sources */,
 				139B06A51ADBF50F006A260F /* SquareCashStyleBehaviorDefiner.m in Sources */,
 				1373C4681B847A6000A6C55A /* SDWebImageDownloader.m in Sources */,
 				138EDE0C1AD7B0A30020957C /* LCDeviceTableView.m in Sources */,
@@ -5265,6 +5333,7 @@
 				13FCC0961ADF67AF0008DB41 /* LKTagLikeModel.m in Sources */,
 				138EDF161AD7EC8D0020957C /* LKFont.m in Sources */,
 				1390554A1B994A6D00DBF34A /* GPUImageSourceOverBlendFilter.m in Sources */,
+				BC12A5E81B9BD16100B99CB5 /* LKNetworkConfig.m in Sources */,
 				138EDEB71AD7B0A30020957C /* LCUITabBar.m in Sources */,
 				139055181B994A6D00DBF34A /* GPUImageMaskFilter.m in Sources */,
 				139055081B994A6D00DBF34A /* GPUImageJFAVoronoiFilter.m in Sources */,
@@ -5375,6 +5444,7 @@
 				13BCD8971ADBA92200A0CBF5 /* POPMath.mm in Sources */,
 				13E1A4ED1AE65FE300E24C3C /* FastttFilterCamera.m in Sources */,
 				139055101B994A6D00DBF34A /* GPUImageLineGenerator.m in Sources */,
+				BC12A5EA1B9BD16100B99CB5 /* LKRequest.m in Sources */,
 				138EDEBE1AD7B0A30020957C /* LCUIView.m in Sources */,
 				134B0B831B5688D700A195BE /* LKHotUserView.m in Sources */,
 				138EDEA41AD7B0A30020957C /* UIViewController+LCTitle.m in Sources */,
@@ -5423,6 +5493,7 @@
 				138EDF131AD7EC5A0020957C /* LKColor.m in Sources */,
 				138EDE611AD7B0A30020957C /* JSONModelArray.m in Sources */,
 				139B068C1ADBE7FA006A260F /* LCUIMaskView.m in Sources */,
+				BC12A5E61B9BD16100B99CB5 /* LKChainRequestAgent.m in Sources */,
 				138EDE951AD7B0A30020957C /* LCModelSignal.m in Sources */,
 				13BCA65E1B5CB28F00DC0549 /* LKPresentAnimation.m in Sources */,
 				138EDE771AD7B0A30020957C /* LCAssociate.m in Sources */,
@@ -5533,8 +5604,10 @@
 				135E8A921B43FA1A00C2270C /* LKLocationManager.m in Sources */,
 				1373C4721B847A6000A6C55A /* UIView+WebCacheOperation.m in Sources */,
 				139055541B994A6D00DBF34A /* GPUImageThresholdedNonMaximumSuppressionFilter.m in Sources */,
+				BC12A5E71B9BD16100B99CB5 /* LKNetworkAgent.m in Sources */,
 				139055011B994A6D00DBF34A /* GPUImageHistogramFilter.m in Sources */,
 				139055001B994A6D00DBF34A /* GPUImageHistogramEqualizationFilter.m in Sources */,
+				BC12A5E21B9BD16100B99CB5 /* LKBaseRequest.m in Sources */,
 				139054FF1B994A6D00DBF34A /* GPUImageHighPassFilter.m in Sources */,
 				13BCD8DC1ADBCD1000A0CBF5 /* LKUserInfoCache.m in Sources */,
 				139055141B994A6D00DBF34A /* GPUImageLuminanceRangeFilter.m in Sources */,
@@ -5547,6 +5620,7 @@
 				13BCD8CC1ADBA93000A0CBF5 /* CALayer+MCShorthand.m in Sources */,
 				138EDE6C1AD7B0A30020957C /* UIScrollView+SVInfiniteScrolling.m in Sources */,
 				13E27F061AF9CBB700C17362 /* LKPopAnimation.m in Sources */,
+				BC12A5E31B9BD16100B99CB5 /* LKBatchRequest.m in Sources */,
 				139054CE1B994A6D00DBF34A /* GPUImageBoxBlurFilter.m in Sources */,
 				139054E91B994A6D00DBF34A /* GPUImageEmbossFilter.m in Sources */,
 				139054F81B994A6D00DBF34A /* GPUImageGlassSphereFilter.m in Sources */,
@@ -5603,6 +5677,7 @@
 				13BCD8D81ADBB00500A0CBF5 /* LKHttpRequestInterface.m in Sources */,
 				138EDE9C1AD7B0A30020957C /* UITabBarItem+LCExtension.m in Sources */,
 				1373C43C1B846FDA00A6C55A /* NSObject+MJProperty.m in Sources */,
+				BC12A5E51B9BD16100B99CB5 /* LKChainRequest.m in Sources */,
 				138EDE741AD7B0A30020957C /* NSString+LCExtension.m in Sources */,
 				13E1A4E81AE65FE300E24C3C /* FastttCapturedImage+Process.m in Sources */,
 				138EDE7B1AD7B0A30020957C /* LCFileCache.m in Sources */,
@@ -5616,6 +5691,7 @@
 				13A951A21B4CE528002B73ED /* AFHTTPSessionManager.m in Sources */,
 				134B0B731B56293C00A195BE /* LKHotTagsSegmentView.m in Sources */,
 				1373C4711B847A6000A6C55A /* UIImageView+WebCache.m in Sources */,
+				BC12A5E41B9BD16100B99CB5 /* LKBatchRequestAgent.m in Sources */,
 				13D63AD11AEA13D8001587C0 /* LKDelegateHandler.m in Sources */,
 				138EDEAE1AD7B0A30020957C /* LCUIImageLoadConnection.m in Sources */,
 				138EDE361AD7B0A30020957C /* HTTPAsyncFileResponse.m in Sources */,

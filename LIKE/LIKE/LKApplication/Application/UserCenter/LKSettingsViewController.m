@@ -312,7 +312,7 @@ LC_PROPERTY(assign) CGFloat cacheSize;
         
         NSArray * icons = @[@"SettingBinding.png", @"DeleteCache.png", @"Appstore.png", @"Feedback.png"];
         NSArray * titles = @[LC_LO(@"账号绑定"), LC_LO(@"清除缓存"), LC_LO(@"求鼓励"), @"@CEO"];
-        NSArray * subTitles = @[@" ", self.cacheSize ? [NSString stringWithFormat:@"%.2fMB", self.cacheSize] : @" ", @"Backend-关关\niOS-红果果", LC_LO(@"无所不能的王果果")];
+        NSArray * subTitles = @[@" ", self.cacheSize ? [NSString stringWithFormat:@"%.2fMB", self.cacheSize] : @" ", @"Backend-关关\niOS-Elkins", LC_LO(@"无所不能的王果果")];
 
         icon.buttonImage = [UIImage imageNamed:icons[indexPath.row - 2] useCache:YES];
         label.text = titles[indexPath.row - 2];
@@ -522,7 +522,11 @@ LC_PROPERTY(assign) CGFloat cacheSize;
 // MB
 -(CGFloat) getCacheSize
 {
-    return [self folderSizeAtPath:LCUIImageCache.singleton.fileCache.cachePath];
+    NSString *cachePath = LCUIImageCache.singleton.fileCache.cachePath;
+    NSString *sdCachePath = [NSString stringWithFormat:@"%@/Library/Caches/default/com.hackemist.SDWebImageCache.default", NSHomeDirectory()];
+    CGFloat LCImageCacheSize = [self folderSizeAtPath:cachePath];
+    CGFloat sdCacheSize = [self folderSizeAtPath:sdCachePath];
+    return  LCImageCacheSize + sdCacheSize;
 }
 
 - (long long) fileSizeAtPath:(NSString *) filePath

@@ -16,8 +16,10 @@
 LC_PROPERTY(copy) NSString * searchString;
 LC_PROPERTY(strong) NSMutableArray * datasource;
 LC_PROPERTY(assign) NSInteger page;
-
 LC_PROPERTY(strong) NSDictionary * info;
+LC_PROPERTY(strong) NSDictionary *tagInfo;
+LC_PROPERTY(strong) LCUIButton *subscribeBtn;
+LC_PROPERTY(getter=isSubscribed) BOOL subscribed;
 
 @end
 
@@ -61,14 +63,16 @@ LC_PROPERTY(strong) NSDictionary * info;
     
     // 订阅标签按钮
     LCUIButton *subscribeBtn = LCUIButton.view;
+    self.subscribeBtn = subscribeBtn;
     subscribeBtn.hidden = YES;
-    subscribeBtn.viewFrameWidth = 50;
+    subscribeBtn.viewFrameWidth = 56;
     subscribeBtn.viewFrameHeight = 44;
     [subscribeBtn setImage:[UIImage imageNamed:@"subscribe.png" useCache:YES] forState:UIControlStateNormal];
     [subscribeBtn setImage:[UIImage imageNamed:@"cancelSubscribe.png" useCache:YES] forState:UIControlStateSelected];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:(UIView *)subscribeBtn];
     [subscribeBtn addTarget:self action:@selector(subscribeTag:) forControlEvents:UIControlEventTouchUpInside];
-    
+    // 判别是否显示订阅标签
+    [self judgeSubscribeTag];
     
     
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
@@ -92,10 +96,44 @@ LC_PROPERTY(strong) NSDictionary * info;
     if (type == LCUINavigationBarButtonTypeLeft) {
         
         [self.navigationController popViewControllerAnimated:YES];
-    } else {
-    
-        
     }
+}
+
+// 判别是否显示订阅标签
+- (void)judgeSubscribeTag {
+    
+    LKHttpRequestInterface *interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"tag/%@/subscribe", self.searchString.URLCODE()]].GET_METHOD();
+    
+    @weakly(self);
+    
+    [self request:interface complete:^(LKHttpRequestResult *result) {
+        
+        @normally(self);
+
+        if (result.state == LKHttpRequestStateFinished) {
+            
+            NSDictionary *tmp = result.json[@"data"];
+            
+            if (tmp[@"tag"]) {
+                
+                // 显示订阅按钮
+                NSDictionary *tagInfo = tmp[@"tag"];
+                self.tagInfo = tagInfo;
+                self.subscribed = [tagInfo[@"subscribed"] boolValue];
+                self.subscribeBtn.hidden = NO;
+                self.subscribeBtn.selected = self.isSubscribed;
+                
+            } else {
+                
+                // 隐藏订阅按钮
+                self.subscribeBtn.hidden = YES;
+            }
+            
+        } else if (result.state == LKHttpRequestStateFailed) {
+            
+            [self showTopMessageErrorHud:result.error];
+        }
+    }];
 }
 
 // 订阅标签
@@ -106,28 +144,23 @@ LC_PROPERTY(strong) NSDictionary * info;
     LKHttpRequestInterface *interface = nil;
     
     if (subscribeBtn.isSelected) {
-
-        interface = [LKHttpRequestInterface interfaceType:@""].GET_METHOD();
+        
+        interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"tag/%@/subscribe", self.tagInfo[@"id"]]].POST_METHOD();
     } else {
         
-        interface = [LKHttpRequestInterface interfaceType:@""].GET_METHOD();
+        interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"tag/%@/subscribe", self.tagInfo[@"id"]]].DELETE_METHOD();
     }
     
     [self request:interface complete:^(LKHttpRequestResult *result) {
-       
+        
         if (result.state == LKHttpRequestStateFinished) {
             
             
         } else if (result.state == LKHttpRequestStateFailed) {
             
-            
+            [self showTopMessageErrorHud:result.error];
         }
     }];
-}
-
-- (void)sendNetworkRequest {
-    
-    
 }
 
 -(void) loadData:(LCUIPullLoaderDiretion)diretion

@@ -241,12 +241,12 @@ LC_PROPERTY(assign) NSInteger index;
             
         case LKUserCenterModelTypeFavor:
         {
-            NSArray * datasource = result.json[@"data"][@"posts"];
+            NSArray *datasource = result.json[@"data"][@"posts"];
             NSNumber *timestamp = result.json[@"data"][@"next"];
             
-            NSMutableArray * resultData = [NSMutableArray array];
+            NSMutableArray *resultData = [NSMutableArray array];
             
-            for (NSDictionary * tmp in datasource) {
+            for (NSDictionary *tmp in datasource) {
                 
                 [resultData addObject:[LKPost objectFromDictionary:tmp]];
             }
@@ -260,8 +260,8 @@ LC_PROPERTY(assign) NSInteger index;
                 
                     self.timestamp = timestamp;
                 }
-            }
-            else{
+                
+            } else{
                 
                 if (self.timestamp.integerValue != timestamp.integerValue) {
                 
@@ -269,7 +269,6 @@ LC_PROPERTY(assign) NSInteger index;
                     [self.favorArray addObjectsFromArray:resultData];
                     self.timestamp = timestamp;
                 }
-                
             }
             
             if (datasource.count == 0) {

@@ -32,6 +32,8 @@ LC_PROPERTY(copy) LKTagItemDidRemoved didRemoved;
 
 LC_PROPERTY(assign) BOOL showNumber;
 
+- (void)like;
+
 @end
 
 

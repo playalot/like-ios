@@ -74,6 +74,7 @@ LC_IMP_SIGNAL(PushUserCenter);
     
     self.tagItem = LKTagItem.view;
     self.tagItem.showNumber = YES;
+
     
     self.cellBackgroundView.ADD(self.tagItem);
     
@@ -142,12 +143,30 @@ LC_IMP_SIGNAL(PushUserCenter);
         
         self.tagItem = LKTagItem.view;
         self.tagItem.showNumber = YES;
-        self.cellBackgroundView.ADD(self.tagItem);
+//        self.cellBackgroundView.ADD(self.tagItem);
     }
     
     self.tagItem.tagValue = tagDetail;
     self.tagItem.viewFrameX = 8;
     self.tagItem.viewCenterY = 33 / 2;
+    
+    
+    // 获取tag的宽度
+    CGFloat maxItemX = CGRectGetMaxX(self.tagItem.frame);
+    
+    // 获取点赞区域
+    CGRect tagItemRect = CGRectMake(0, 0, maxItemX, self.viewFrameHeight - 10);
+    UIView *coverView = [[UIView alloc] initWithFrame:tagItemRect];
+    self.cellBackgroundView.ADD(coverView);
+    
+    if (self.viewFrameX < maxItemX) {
+        
+        [coverView addTapGestureRecognizer:self selector:@selector(tagTapAction)];
+    }
+    
+    coverView.ADD(self.tagItem);
+    
+
     
     @weakly(self);
     
@@ -254,8 +273,14 @@ LC_IMP_SIGNAL(PushUserCenter);
 -(void) commentTapAction
 {
     if (self.commentAction) {
+        
         self.commentAction(self.tagDetail);
     }
+}
+
+- (void)tagTapAction {
+    
+    [self.tagItem like];
 }
 
 -(void) likesTapAction

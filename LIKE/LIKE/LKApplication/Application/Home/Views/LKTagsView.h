@@ -32,7 +32,14 @@ LC_PROPERTY(copy) LKTagItemDidRemoved didRemoved;
 
 LC_PROPERTY(assign) BOOL showNumber;
 
+// 设置字体大小
+LC_PROPERTY(strong) UIFont *font;
+// 设置背景图
+LC_PROPERTY(strong) UIView *maskView;
+
 - (void)like;
+
+- (instancetype)initWithFont:(UIFont *)font;
 
 @end
 

@@ -36,6 +36,7 @@
 #import "LKSearchResultsViewController.h"
 #import "MobClick.h"
 #import "APService.h"
+#import "LKChooseTagView.h"
 
 
 #define FOCUS_FEED_CACHE_KEY [NSString stringWithFormat:@"LKFocusFeedKey-%@", LKLocalUser.singleton.user.id]
@@ -231,11 +232,13 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
 -(void) buildUI
 {
     self.view.backgroundColor = LKColor.backgroundColor;
+
     
     // Bar item.
     [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image: [[UIImage imageNamed:@"CollectionIcon.png" useCache:YES] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]] selectImage:nil];
     
     [self setNavigationBarButton:LCUINavigationBarButtonTypeRight image:[[UIImage imageNamed:@"NotificationIcon.png" useCache:YES] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]] selectImage:nil];
+    
     
     // Bind badge.
     [LKNotificationCount bindView:self.navigationItem.rightBarButtonItem.customView];
@@ -460,6 +463,10 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     };
     
     [self loadData:LCUIPullLoaderDiretionTop];
+    
+    // 如果是第一次登陆,选择兴趣标签    
+    LKChooseTagView *chooseView = [LKChooseTagView chooseTagView];
+    [UIApplication sharedApplication].keyWindow.ADD(chooseView);
 }
 
 #pragma mark -

@@ -17,6 +17,7 @@
         self.id = dict[@"mark_id"];
         self.tag = dict[@"tag"];
         self.likes = dict[@"likes"];
+        self.group = dict[@"group"];
         self.isLiked = [dict[@"is_liked"] boolValue];
         self.createTime = dict[@"created"];
         self.user = [LKUser objectFromDictionary:dict[@"user"]];

@@ -66,10 +66,14 @@ LC_PROPERTY(getter=isSubscribed) BOOL subscribed;
     self.subscribeBtn = subscribeBtn;
     subscribeBtn.hidden = YES;
     subscribeBtn.viewFrameWidth = 56;
-    subscribeBtn.viewFrameHeight = 44;
+    subscribeBtn.viewFrameHeight = 29;
     [subscribeBtn setImage:[UIImage imageNamed:@"subscribe.png" useCache:YES] forState:UIControlStateNormal];
     [subscribeBtn setImage:[UIImage imageNamed:@"cancelSubscribe.png" useCache:YES] forState:UIControlStateSelected];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:(UIView *)subscribeBtn];
+    // 添加弹簧
+    UIBarButtonItem *fixedSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    fixedSpace.width = -8;
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:(UIView *)subscribeBtn];
+    self.navigationItem.rightBarButtonItems = @[fixedSpace, rightItem];
     [subscribeBtn addTarget:self action:@selector(subscribeTag:) forControlEvents:UIControlEventTouchUpInside];
     // 判别是否显示订阅标签
     [self judgeSubscribeTag];
@@ -155,7 +159,7 @@ LC_PROPERTY(getter=isSubscribed) BOOL subscribed;
         
         if (result.state == LKHttpRequestStateFinished) {
             
-            
+
         } else if (result.state == LKHttpRequestStateFailed) {
             
             [self showTopMessageErrorHud:result.error];

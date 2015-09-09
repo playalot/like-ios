@@ -48,6 +48,41 @@ LC_PROPERTY(assign) BOOL custom;
     return self;
 }
 
+- (instancetype)initWithFont:(UIFont *)font {
+    
+    if (self == [super init]) {
+        
+        self.cornerRadius = 4;
+        self.layer.masksToBounds = NO;
+        self.showNumber = YES;
+        
+        self.tagLabel = LCUILabel.view;
+        self.tagLabel.font = font;
+        self.tagLabel.textColor = [UIColor whiteColor];//LC_RGB(74, 74, 74);
+        self.ADD(self.tagLabel);
+        
+        
+        self.likesLabel = LCUILabel.view;
+        self.likesLabel.font = font;
+        self.likesLabel.textColor = [UIColor whiteColor];
+        self.likesLabel.borderWidth = 1;
+        self.likesLabel.borderColor = [[UIColor whiteColor] colorWithAlphaComponent:0.4];
+        self.likesLabel.textAlignment = UITextAlignmentCenter;
+        self.likesLabel.layer.shouldRasterize = YES;
+        self.ADD(self.likesLabel);
+        
+        UIView *maskView = UIView.view.COLOR([[UIColor blackColor] colorWithAlphaComponent:0.2]);
+        self.backgroundImageView.ADD(maskView);
+        self.maskView = maskView;
+        
+        
+        [self addTapGestureRecognizer:self selector:@selector(like)];
+        
+    }
+    
+    return self;
+}
+
 -(void) like
 {
     if (self.custom) {
@@ -200,6 +235,10 @@ LC_PROPERTY(assign) BOOL custom;
         });
     });
     
+    if (self.maskView) {
+        
+        return;
+    }
     
     [LKTagLikeModel likeOrUnLike:self.tagValue requestFinished:^(LKHttpRequestResult *result, NSString *error) {
         
@@ -254,7 +293,7 @@ LC_PROPERTY(assign) BOOL custom;
         self.likesLabel.viewFrameX = self.tagLabel.viewRightX + leftPadding - 2;
         self.likesLabel.viewFrameY = topPadding / 2. + 1;
         self.likesLabel.viewFrameHeight = (self.tagLabel.viewFrameHeight + topPadding * 2.) - topPadding;
-        self.likesLabel.viewFrameWidth = self.likesLabel.viewFrameWidth < self.likesLabel.viewFrameHeight ? self.likesLabel.viewFrameHeight : self.likesLabel.viewFrameWidth;
+        self.likesLabel.viewFrameWidth = self.likesLabel.viewFrameWidth < self.likesLabel.viewFrameHeight ? self.likesLabel.viewFrameHeight + 4 : self.likesLabel.viewFrameWidth + 4;
         self.likesLabel.cornerRadius = self.likesLabel.viewMidHeight;
         
         
@@ -281,6 +320,11 @@ LC_PROPERTY(assign) BOOL custom;
         self.likesLabel.textColor = [UIColor whiteColor];
         self.likesLabel.borderColor = [[UIColor whiteColor] colorWithAlphaComponent:0.4];
         self.tagLabel.textColor = [UIColor whiteColor];
+        
+        if (self.maskView) {
+            
+            self.backgroundImageView.hidden = YES;
+        }
     }
     else{
         
@@ -288,7 +332,19 @@ LC_PROPERTY(assign) BOOL custom;
         self.likesLabel.textColor = [LC_RGB(74, 74, 74) colorWithAlphaComponent:0.9];
         self.tagLabel.textColor = [LC_RGB(74, 74, 74) colorWithAlphaComponent:0.9];
         self.likesLabel.borderColor = LC_RGB(220, 215, 209);
+        
+        if (self.maskView) {
+            
+            self.tagLabel.textColor = [UIColor whiteColor];
+            self.likesLabel.textColor = [UIColor whiteColor];
+            self.backgroundImageView.hidden = NO;
+        }
+
     }
+    
+    self.maskView.frame = self.bounds;
+    self.backgroundImageView.layer.cornerRadius = 15;
+    self.backgroundImageView.layer.masksToBounds = YES;
 }
 
 @end

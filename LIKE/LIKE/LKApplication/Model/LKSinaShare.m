@@ -42,10 +42,10 @@ LC_PROPERTY(copy) LKSinaLoginComplete complete;
     
     /*
      
-     我从like分享了一张玩具照片，有玩具的也都一起晒出来吧！\(^ω^)/ @like-你的新玩具
+     #将兴趣玩到极致# 我在like发布了一张照片，一起来玩吧 (۶•̀ᴗ•́)۶ @like-你的新玩具
      */
     
-    object.text = @"我从like分享了一张玩具照片，有玩具的也都一起晒出来吧！\(^ω^)/  @like-你的新玩具";
+    object.text = @"#将兴趣玩到极致# 我在like发布了一张照片，一起来玩吧 (۶•̀ᴗ•́)۶ @like-你的新玩具";
     
     WBSendMessageToWeiboRequest * request = [WBSendMessageToWeiboRequest requestWithMessage:object];
     

@@ -14,6 +14,7 @@
 LC_PROPERTY(strong) NSNumber * id;
 LC_PROPERTY(strong) NSString * tag;
 LC_PROPERTY(strong) NSNumber * likes;
+LC_PROPERTY(strong) NSNumber * group;
 LC_PROPERTY(assign) BOOL isLiked;
 LC_PROPERTY(strong) NSNumber * createTime;
 LC_PROPERTY(strong) LKUser * user;

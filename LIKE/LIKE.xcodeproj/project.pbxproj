@@ -552,8 +552,13 @@
 		139055651B994A6D00DBF34A /* GPUImageWhiteBalanceFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 139054BD1B994A6D00DBF34A /* GPUImageWhiteBalanceFilter.m */; };
 		139055661B994A6D00DBF34A /* GPUImageXYDerivativeFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 139054BF1B994A6D00DBF34A /* GPUImageXYDerivativeFilter.m */; };
 		139055671B994A6D00DBF34A /* GPUImageZoomBlurFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 139054C11B994A6D00DBF34A /* GPUImageZoomBlurFilter.m */; };
-		1390556A1B99991E00DBF34A /* cancelSubscribe.png in Resources */ = {isa = PBXBuildFile; fileRef = 139055681B99991E00DBF34A /* cancelSubscribe.png */; };
-		1390556B1B99991E00DBF34A /* subscribe.png in Resources */ = {isa = PBXBuildFile; fileRef = 139055691B99991E00DBF34A /* subscribe.png */; };
+		139055751B9D9D4700DBF34A /* LKChooseTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 139055741B9D9D4700DBF34A /* LKChooseTagView.m */; };
+		139055781B9D9F1C00DBF34A /* avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 139055761B9D9F1C00DBF34A /* avatar.png */; };
+		139055791B9D9F1C00DBF34A /* edit.png in Resources */ = {isa = PBXBuildFile; fileRef = 139055771B9D9F1C00DBF34A /* edit.png */; };
+		1390557B1B9DA47D00DBF34A /* LKChooseTagView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1390557A1B9DA47D00DBF34A /* LKChooseTagView.xib */; };
+		1390557E1B9E93B900DBF34A /* cancelSubscribe.png in Resources */ = {isa = PBXBuildFile; fileRef = 1390557C1B9E93B900DBF34A /* cancelSubscribe.png */; };
+		1390557F1B9E93B900DBF34A /* subscribe.png in Resources */ = {isa = PBXBuildFile; fileRef = 1390557D1B9E93B900DBF34A /* subscribe.png */; };
+		139055851B9EDB3700DBF34A /* LKChooseTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 139055841B9EDB3700DBF34A /* LKChooseTag.m */; };
 		13925A6D1B145BCE004D0656 /* SearchIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13925A6C1B145BCE004D0656 /* SearchIcon@3x.png */; };
 		13925A7E1B146BD1004D0656 /* INSSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 13925A731B146BD1004D0656 /* INSSearchBar.m */; };
 		13925A8B1B146C4B004D0656 /* LKSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 13925A8A1B146C4B004D0656 /* LKSearchBar.m */; };
@@ -1854,8 +1859,15 @@
 		139054BF1B994A6D00DBF34A /* GPUImageXYDerivativeFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageXYDerivativeFilter.m; sourceTree = "<group>"; };
 		139054C01B994A6D00DBF34A /* GPUImageZoomBlurFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageZoomBlurFilter.h; sourceTree = "<group>"; };
 		139054C11B994A6D00DBF34A /* GPUImageZoomBlurFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageZoomBlurFilter.m; sourceTree = "<group>"; };
-		139055681B99991E00DBF34A /* cancelSubscribe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancelSubscribe.png; sourceTree = "<group>"; };
-		139055691B99991E00DBF34A /* subscribe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = subscribe.png; sourceTree = "<group>"; };
+		139055731B9D9D4700DBF34A /* LKChooseTagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKChooseTagView.h; sourceTree = "<group>"; };
+		139055741B9D9D4700DBF34A /* LKChooseTagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKChooseTagView.m; sourceTree = "<group>"; };
+		139055761B9D9F1C00DBF34A /* avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar.png; sourceTree = "<group>"; };
+		139055771B9D9F1C00DBF34A /* edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit.png; sourceTree = "<group>"; };
+		1390557A1B9DA47D00DBF34A /* LKChooseTagView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LKChooseTagView.xib; sourceTree = "<group>"; };
+		1390557C1B9E93B900DBF34A /* cancelSubscribe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancelSubscribe.png; sourceTree = "<group>"; };
+		1390557D1B9E93B900DBF34A /* subscribe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = subscribe.png; sourceTree = "<group>"; };
+		139055831B9EDB3700DBF34A /* LKChooseTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKChooseTag.h; sourceTree = "<group>"; };
+		139055841B9EDB3700DBF34A /* LKChooseTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKChooseTag.m; sourceTree = "<group>"; };
 		13925A6C1B145BCE004D0656 /* SearchIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SearchIcon@3x.png"; sourceTree = "<group>"; };
 		13925A721B146BD1004D0656 /* INSSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INSSearchBar.h; sourceTree = "<group>"; };
 		13925A731B146BD1004D0656 /* INSSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INSSearchBar.m; sourceTree = "<group>"; };
@@ -3715,6 +3727,8 @@
 				13B5B4EA1B15EE1300252A78 /* LKComment.m */,
 				137106971B576212008BCD66 /* LKHotTagDetail.h */,
 				137106981B576212008BCD66 /* LKHotTagDetail.m */,
+				139055831B9EDB3700DBF34A /* LKChooseTag.h */,
+				139055841B9EDB3700DBF34A /* LKChooseTag.m */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -3796,6 +3810,8 @@
 		138EDED41AD7C5D40020957C /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				139055761B9D9F1C00DBF34A /* avatar.png */,
+				139055771B9D9F1C00DBF34A /* edit.png */,
 				135735281B2EF44E0032515C /* QQLogin@3x.png */,
 				1387C3431B31508A00B065A7 /* FacebookLogin@3x.png */,
 				1357352A1B2EF44E0032515C /* WeiboLogin@3x.png */,
@@ -4299,6 +4315,9 @@
 				13BCA6601B5CCC7600DC0549 /* LKHomeHeader.m */,
 				13BCA6621B5CDCF200DC0549 /* LCBlurSearchBar.h */,
 				13BCA6631B5CDCF200DC0549 /* LCBlurSearchBar.m */,
+				139055731B9D9D4700DBF34A /* LKChooseTagView.h */,
+				139055741B9D9D4700DBF34A /* LKChooseTagView.m */,
+				1390557A1B9DA47D00DBF34A /* LKChooseTagView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -4838,8 +4857,8 @@
 		13FCC0911ADF5E930008DB41 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				139055681B99991E00DBF34A /* cancelSubscribe.png */,
-				139055691B99991E00DBF34A /* subscribe.png */,
+				1390557C1B9E93B900DBF34A /* cancelSubscribe.png */,
+				1390557D1B9E93B900DBF34A /* subscribe.png */,
 				13478CB51B6636770012EDA2 /* LittleSP@3x.png */,
 				13478CB61B6636770012EDA2 /* LittleYouLike@3x.png */,
 				13D549E61B61114B00D3CA2C /* LittleTag@3x.png */,
@@ -5014,7 +5033,7 @@
 		138EDBE51AD7B08A0020957C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				CLASSPREFIX = EZ;
+				CLASSPREFIX = LK;
 				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = "Beijing Like Technology Co.Ltd . ( http://www.likeorz.com )";
 				TargetAttributes = {
@@ -5059,6 +5078,7 @@
 				13FCC0851ADE3DAB0008DB41 /* PullLoaderSmallArrow@2x.png in Resources */,
 				138EDEE61AD7D1020020957C /* TabBarLike@3x.png in Resources */,
 				134765351AE2564D0055D099 /* PostDismiss@3x.png in Resources */,
+				1390557B1B9DA47D00DBF34A /* LKChooseTagView.xib in Resources */,
 				13D9BF2B1AEB997E0020C94F /* Midway.png in Resources */,
 				13925A941B1477D2004D0656 /* NavBarIconSearchBar2_blue@2x.png in Resources */,
 				13D549E71B61114B00D3CA2C /* LittleTag@3x.png in Resources */,
@@ -5081,6 +5101,7 @@
 				13925A911B1477D2004D0656 /* NavBarIconSearch_blue@2x.png in Resources */,
 				13F21F3C1B0F1D6200124291 /* WeiboSDK.bundle in Resources */,
 				13E3EE021B60955400A48E76 /* zh2TW.txt in Resources */,
+				139055781B9D9F1C00DBF34A /* avatar.png in Resources */,
 				13892C3B1B1C31E40053303E /* HomepageIcon@3x.png in Resources */,
 				13F505101B0C5EAC00D8D484 /* QQIcon@3x.png in Resources */,
 				13DA0FC61AEB8AFE005B9476 /* CameraFocus@3x.png in Resources */,
@@ -5103,13 +5124,12 @@
 				138EDE0F1AD7B0A30020957C /* LCGLBubbleEffect.fsh in Resources */,
 				13925A921B1477D2004D0656 /* NavBarIconSearch_white@2x.png in Resources */,
 				13478CB71B6636770012EDA2 /* LittleSP@3x.png in Resources */,
-				1390556A1B99991E00DBF34A /* cancelSubscribe.png in Resources */,
 				1359F4A31B6A24B800A0ABE9 /* Gta-driving@3x.png in Resources */,
 				1326228D1B8EE1150074C589 /* 变形金刚.png in Resources */,
 				135D5C061ADFD21E00811B06 /* CameraFlash@3x.png in Resources */,
 				138EDEFB1AD7DBA00020957C /* TabBarNotification@3x.png in Resources */,
+				1390557E1B9E93B900DBF34A /* cancelSubscribe.png in Resources */,
 				135D5C281AE0E37800811B06 /* CameraFilter@3x.png in Resources */,
-				1390556B1B99991E00DBF34A /* subscribe.png in Resources */,
 				13E3EE041B60996000A48E76 /* zh2HK.txt in Resources */,
 				134D92F01B8DA8A0004CFAC8 /* 高达.png in Resources */,
 				1388B4FD1B01EFFB006F36AB /* EachOtherFocusLG@3x.png in Resources */,
@@ -5189,6 +5209,7 @@
 				134F929F1AFCB77400784185 /* LikesPage@3x.png in Resources */,
 				13D9BF291AEB997E0020C94F /* Instant.png in Resources */,
 				133A31831B5D09C500AB74A4 /* CollectionIcon@3x.png in Resources */,
+				1390557F1B9E93B900DBF34A /* subscribe.png in Resources */,
 				13DEEBFA1AE75585005E01A6 /* EachOtherFocusWrite@3x.png in Resources */,
 				13925A931B1477D2004D0656 /* NavBarIconSearchBar_blue@2x.png in Resources */,
 				138EDE041AD7B0A30020957C /* LOGO.txt in Resources */,
@@ -5199,6 +5220,7 @@
 				134D92F41B8DA8A0004CFAC8 /* 喷漆.png in Resources */,
 				13892C3D1B1C44780053303E /* NavigationBarDismiss@3x.png in Resources */,
 				135D5C011ADFD21E00811B06 /* CameraCapture@3x.png in Resources */,
+				139055791B9D9F1C00DBF34A /* edit.png in Resources */,
 				13DEEC151AE789E6005E01A6 /* LC_WebBack.png in Resources */,
 				13E27EF41AF8B7D000C17362 /* bgImage_HL@2x.png in Resources */,
 				13DEEC161AE789E6005E01A6 /* LC_WebBack@2x.png in Resources */,
@@ -5562,6 +5584,7 @@
 				13A951AB1B4CE57C002B73ED /* AFNetworkActivityIndicatorManager.m in Sources */,
 				1373C43D1B846FDA00A6C55A /* NSString+MJExtension.m in Sources */,
 				13BCD8991ADBA92200A0CBF5 /* POPSpringAnimation.mm in Sources */,
+				139055751B9D9D4700DBF34A /* LKChooseTagView.m in Sources */,
 				1390551F1B994A6D00DBF34A /* GPUImageMovie.m in Sources */,
 				13E14F5F1B21C032009CCF9F /* LCNetworkCenter.m in Sources */,
 				1390550E1B994A6D00DBF34A /* GPUImageLightenBlendFilter.m in Sources */,
@@ -5732,6 +5755,7 @@
 				BC12A5E31B9BD16100B99CB5 /* LKBatchRequest.m in Sources */,
 				139054CE1B994A6D00DBF34A /* GPUImageBoxBlurFilter.m in Sources */,
 				139054E91B994A6D00DBF34A /* GPUImageEmbossFilter.m in Sources */,
+				139055851B9EDB3700DBF34A /* LKChooseTag.m in Sources */,
 				139054F81B994A6D00DBF34A /* GPUImageGlassSphereFilter.m in Sources */,
 				139055531B994A6D00DBF34A /* GPUImageThresholdEdgeDetectionFilter.m in Sources */,
 				137750F11B2AB185006AA43D /* LKNewPostUploadCenter.m in Sources */,

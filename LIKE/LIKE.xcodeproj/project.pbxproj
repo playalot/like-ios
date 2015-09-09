@@ -781,6 +781,8 @@
 		BC12A6371B9BF1BE00B99CB5 /* LKTabBarController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6341B9BF1BE00B99CB5 /* LKTabBarController.mm */; };
 		BC12A6381B9BF1BE00B99CB5 /* LKWelcome.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6361B9BF1BE00B99CB5 /* LKWelcome.m */; };
 		BC12A63B1B9BF24500B99CB5 /* LKContext.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A63A1B9BF24500B99CB5 /* LKContext.m */; };
+		BC12A6401B9C38DE00B99CB5 /* LKUserCenterBrowsingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A63F1B9C38DE00B99CB5 /* LKUserCenterBrowsingViewController.m */; };
+		BC12A6431B9C4EE600B99CB5 /* LKUserCenterBrowsingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6421B9C4EE600B99CB5 /* LKUserCenterBrowsingCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2281,6 +2283,10 @@
 		BC12A6361B9BF1BE00B99CB5 /* LKWelcome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKWelcome.m; path = Common/LKWelcome.m; sourceTree = "<group>"; };
 		BC12A6391B9BF24500B99CB5 /* LKContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKContext.h; path = LKCommon/LKContext.h; sourceTree = "<group>"; };
 		BC12A63A1B9BF24500B99CB5 /* LKContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKContext.m; path = LKCommon/LKContext.m; sourceTree = "<group>"; };
+		BC12A63E1B9C38DE00B99CB5 /* LKUserCenterBrowsingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKUserCenterBrowsingViewController.h; sourceTree = "<group>"; };
+		BC12A63F1B9C38DE00B99CB5 /* LKUserCenterBrowsingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKUserCenterBrowsingViewController.m; sourceTree = "<group>"; };
+		BC12A6411B9C4EE600B99CB5 /* LKUserCenterBrowsingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKUserCenterBrowsingCell.h; sourceTree = "<group>"; };
+		BC12A6421B9C4EE600B99CB5 /* LKUserCenterBrowsingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKUserCenterBrowsingCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4801,6 +4807,8 @@
 				1387C34D1B3166C500B065A7 /* LKLinkAccountsViewController.m */,
 				1387C3561B32B9CB00B065A7 /* LKRebindPhoneViewController.h */,
 				1387C3571B32B9CB00B065A7 /* LKRebindPhoneViewController.m */,
+				BC12A63E1B9C38DE00B99CB5 /* LKUserCenterBrowsingViewController.h */,
+				BC12A63F1B9C38DE00B99CB5 /* LKUserCenterBrowsingViewController.m */,
 			);
 			path = UserCenter;
 			sourceTree = "<group>";
@@ -4820,6 +4828,8 @@
 				13FCC0881ADE40AC0008DB41 /* LKUserCenterPhotoCell.m */,
 				13E1A2C91AE6439F00E24C3C /* LKUserCenterUserCell.h */,
 				13E1A2CA1AE6439F00E24C3C /* LKUserCenterUserCell.m */,
+				BC12A6411B9C4EE600B99CB5 /* LKUserCenterBrowsingCell.h */,
+				BC12A6421B9C4EE600B99CB5 /* LKUserCenterBrowsingCell.m */,
 			);
 			name = "Views(Cell)";
 			path = Views;
@@ -5271,6 +5281,7 @@
 				139054F71B994A6D00DBF34A /* GPUImageGaussianSelectiveBlurFilter.m in Sources */,
 				139B06A61ADBF50F006A260F /* UIView+BLKFlexibleHeightBarSubview.m in Sources */,
 				13F504F31B0B120F00D8D484 /* LKWeChatShare.m in Sources */,
+				BC12A6431B9C4EE600B99CB5 /* LKUserCenterBrowsingCell.m in Sources */,
 				13BCA6681B5CE43D00DC0549 /* FXBlurView.m in Sources */,
 				138EDEB81AD7B0A30020957C /* LCUITabBarController.m in Sources */,
 				BC12A62B1B9BEE2300B99CB5 /* LCNetworkConfig.m in Sources */,
@@ -5732,6 +5743,7 @@
 				138EDEBA1AD7B0A30020957C /* LCUITableViewCell.m in Sources */,
 				135D5C931AE1013100811B06 /* LKImageCropperViewController.m in Sources */,
 				139054F91B994A6D00DBF34A /* GPUImageGrayscaleFilter.m in Sources */,
+				BC12A6401B9C38DE00B99CB5 /* LKUserCenterBrowsingViewController.m in Sources */,
 				13E1A2C31AE61DCB00E24C3C /* LKTagLikesViewController.m in Sources */,
 				138EDE331AD7B0A30020957C /* DDNumber.m in Sources */,
 				13BCD8DF1ADBD0C700A0CBF5 /* LKUserInfoModel.m in Sources */,

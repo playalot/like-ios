@@ -226,8 +226,6 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     };
 }
 
-
-
 -(void) buildUI
 {
     self.view.backgroundColor = LKColor.backgroundColor;

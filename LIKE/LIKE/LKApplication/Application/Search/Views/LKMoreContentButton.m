@@ -36,7 +36,8 @@
     
     LCUIButton * button = LCUIButton.view;
     button.titleFont = LK_FONT(12);
-    button.title = [NSString stringWithFormat:LC_LO(@"查看关于#%@#的全部内容"), tag.tag];
+//    button.title = [NSString stringWithFormat:LC_LO(@"查看关于#%@#的全部内容"), tag.tag];
+    button.title = @" ";    // 隐藏按钮
     button.viewFrameHeight = 40;
     button.FIT();
     button.viewFrameWidth += 30;

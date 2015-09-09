@@ -36,7 +36,6 @@
 #import "LKSearchResultsViewController.h"
 #import "MobClick.h"
 #import "APService.h"
-#import "LKChooseTagView.h"
 
 
 #define FOCUS_FEED_CACHE_KEY [NSString stringWithFormat:@"LKFocusFeedKey-%@", LKLocalUser.singleton.user.id]
@@ -463,10 +462,6 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     };
     
     [self loadData:LCUIPullLoaderDiretionTop];
-    
-    // 如果是第一次登陆,选择兴趣标签    
-    LKChooseTagView *chooseView = [LKChooseTagView chooseTagView];
-    [UIApplication sharedApplication].keyWindow.ADD(chooseView);
 }
 
 #pragma mark -

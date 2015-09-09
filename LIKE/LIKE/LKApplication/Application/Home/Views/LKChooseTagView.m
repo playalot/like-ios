@@ -76,7 +76,7 @@ LC_PROPERTY(strong) LKSettingsViewController *settings;
         
         if (item.backgroundImageView.isHidden) {
             
-            [idArray addObject:item.tagValue.id];
+            [idArray addObject:item.tagValue.chooseTagId];
             [groupArray addObject:item.tagValue.group];
         }
     }

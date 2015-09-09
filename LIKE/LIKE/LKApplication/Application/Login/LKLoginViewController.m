@@ -19,6 +19,7 @@
 #import "WeiboSDK.h"
 #import <SMS_SDK/SMS_SDK.h>
 #import <SMS_SDK/CountryAndAreaCode.h>
+#import "LKChooseTagView.h"
 
 typedef NS_ENUM(NSInteger, LKOtherLoginType)
 {
@@ -228,6 +229,20 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
             LKLocalUser.singleton.sessionToken = self.sesstionToken;
             LKLocalUser.singleton.refreshToken = self.refreshToken;
             LKLocalUser.singleton.expiresIn = [NSString stringWithFormat:@"%@", self.expiresIn];
+            
+            
+            // 如果是第一次登陆,选择兴趣标签
+            BOOL firstStart = [[NSUserDefaults standardUserDefaults] boolForKey:@"firstStart"];
+            
+            // 判断是否是初次启动
+            if (!firstStart) {
+            
+                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstStart"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+
+                LKChooseTagView *chooseView = [LKChooseTagView chooseTagView];
+                [UIApplication sharedApplication].keyWindow.ADD(chooseView);
+            }
             
             [self dismissViewControllerAnimated:YES completion:nil];
         }

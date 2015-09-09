@@ -12,6 +12,7 @@
 @interface LKTag : LCDataModel
 
 LC_PROPERTY(strong) NSNumber * id;
+LC_PROPERTY(strong) NSNumber * chooseTagId;
 LC_PROPERTY(strong) NSString * tag;
 LC_PROPERTY(strong) NSNumber * likes;
 LC_PROPERTY(strong) NSNumber * group;

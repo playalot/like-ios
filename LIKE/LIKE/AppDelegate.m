@@ -22,6 +22,7 @@
 #import <SMS_SDK/SMS_SDK.h>
 #import "SDImageCache.h"
 #import "APService.h"
+#import "LKChooseTagView.h"
 
 @interface AppDelegate () <LC_CMD_IMP>
 
@@ -48,7 +49,6 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     
     // 2.设置网络指示器
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
-    
     
     
     [MAMapServices sharedServices].apiKey = @"4c0db296d4f4d092fdaa9004ee8c959a";
@@ -180,8 +180,20 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
                 
             }];
         }];
+    } else {
         
+        // 如果是第一次登陆,选择兴趣标签
+        BOOL firstStart = [[NSUserDefaults standardUserDefaults] boolForKey:@"firstStart"];
         
+        // 判断是否是初次启动
+        if (!firstStart) {
+            
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstStart"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            LKChooseTagView *chooseView = [LKChooseTagView chooseTagView];
+            [UIApplication sharedApplication].keyWindow.ADD(chooseView);
+        }
     }
 
 //    // welcom...

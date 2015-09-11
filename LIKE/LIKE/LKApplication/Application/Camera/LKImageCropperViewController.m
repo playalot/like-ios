@@ -55,7 +55,8 @@ LC_PROPERTY(strong) UISlider * slider2;
 LC_PROPERTY(assign) NSInteger filterIndex;
 LC_PROPERTY(assign) BOOL magic;
 
-LC_PROPERTY(strong) UIView *gtaView;
+LC_PROPERTY(strong) UIView *gtaView1;
+LC_PROPERTY(strong) UIView *gtaView2;
 
 LC_PROPERTY(strong) UIView *wastedView;
 
@@ -313,12 +314,12 @@ LC_PROPERTY(strong) UIView *wastedView;
     
     [filterScrollView addFilterName:LC_LO(@"默认") filterImage:preview];
     
-    for (NSInteger i = 1; i< filterNames.count ; i++) {
+    for (NSInteger i = 1; i< filterNames.count + 1; i++) {
         
         UIImage * image = [self lookkupImageFilterWithImage:LKFilterManager.singleton.allFilterImage[i - 1] originImage:preview];
         
         // Wasted滤镜
-        if (i == 1) {
+        if (i == filterNames.count - 2) {
             
             CGFloat width = image.size.width;
             CGFloat height = width / 414 * 72;
@@ -327,15 +328,23 @@ LC_PROPERTY(strong) UIView *wastedView;
         }
         
         // GTA滤镜
-        if (i == 2 || i == 3) {
+        if (i == filterNames.count - 1) {
             
             CGFloat width = (245. / 1020.) * image.size.width * 1.5;
             CGFloat height = width / 245 * 172.;
             CGFloat padding = (30. / 1020.) * image.size.width;
             
-            image = [image addMaskImage:self.filterIndex == 1 ? [UIImage imageNamed:@"Gta-driving.png" useCache:YES] : [UIImage imageNamed:@"Gta-walking.png" useCache:YES] imageSize:image.size inRect:CGRectMake(padding, image.size.height - height - padding, width, height)];
+            image = [image addMaskImage:[UIImage imageNamed:@"Gta-driving.png" useCache:YES] imageSize:image.size inRect:CGRectMake(padding, image.size.height - height - padding, width, height)];
         }
 
+        if (i == filterNames.count) {
+            
+            CGFloat width = (245. / 1020.) * image.size.width * 1.5;
+            CGFloat height = width / 245 * 172.;
+            CGFloat padding = (30. / 1020.) * image.size.width;
+            
+            image = [image addMaskImage:[UIImage imageNamed:@"Gta-walking.png" useCache:YES] imageSize:image.size inRect:CGRectMake(padding, image.size.height - height - padding, width, height)];
+        }
         
         
         [filterScrollView addFilterName:filterNames[i - 1] filterImage:image];
@@ -490,14 +499,20 @@ LC_PROPERTY(strong) UIView *wastedView;
                 self.wastedView = nil;
             }
             
-            if (self.gtaView) {
-                [self.gtaView removeFromSuperview];
-                self.gtaView = nil;
+            if (self.gtaView1) {
+                [self.gtaView1 removeFromSuperview];
+                self.gtaView1 = nil;
             }
             
+            if (self.gtaView2) {
+                [self.gtaView2 removeFromSuperview];
+                self.gtaView2 = nil;
+            }
+            
+            NSInteger filterImageCount = LKFilterManager.singleton.allFilterImage.count;
             
             // Wasted滤镜
-            if (self.filterIndex == 1) {
+            if (self.filterIndex == filterImageCount - 2) {
                 
 //                CGFloat width = image.size.width;
 //                CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
@@ -510,14 +525,24 @@ LC_PROPERTY(strong) UIView *wastedView;
             }
             
             // GTA滤镜
-            if (self.filterIndex == 2 || self.filterIndex == 3) {
+            if (self.filterIndex == filterImageCount - 1) {
                 
                 CGFloat width = (245. / 1020.) * image.size.width;
                 CGFloat height = width / 245 * 172.;
                 CGFloat padding = (30. / 1020.) * image.size.width;
                 
-                image = [image addMaskImage:self.filterIndex == 1 ? [UIImage imageNamed:@"Gta-driving.png" useCache:YES] : [UIImage imageNamed:@"Gta-walking.png" useCache:YES] imageSize:image.size inRect:CGRectMake(padding, image.size.height - height - padding, width, height)];
+                image = [image addMaskImage:[UIImage imageNamed:@"Gta-driving.png" useCache:YES] imageSize:image.size inRect:CGRectMake(padding, image.size.height - height - padding, width, height)];
             }
+            
+            if (self.filterIndex == filterImageCount) {
+                
+                CGFloat width = (245. / 1020.) * image.size.width;
+                CGFloat height = width / 245 * 172.;
+                CGFloat padding = (30. / 1020.) * image.size.width;
+                
+                image = [image addMaskImage:[UIImage imageNamed:@"Gta-walking.png" useCache:YES] imageSize:image.size inRect:CGRectMake(padding, image.size.height - height - padding, width, height)];
+            }
+
         }
         
         if (self.magic) {
@@ -593,28 +618,28 @@ LC_PROPERTY(strong) UIView *wastedView;
     GPUImagePicture * lookupImageSource = [[GPUImagePicture alloc] initWithImage:filterImage];
     GPUImageLookupFilter * lookupFilter = [[GPUImageLookupFilter alloc] init];
     
-    GPUImageVignetteFilter * vignettefilter = [[GPUImageVignetteFilter alloc] init];
-    vignettefilter.vignetteStart = 0.569;
-    vignettefilter.vignetteEnd =  0.899;
+//    GPUImageVignetteFilter * vignettefilter = [[GPUImageVignetteFilter alloc] init];
+//    vignettefilter.vignetteStart = 0.569;
+//    vignettefilter.vignetteEnd =  0.899;
     
-    [lookupFilter addTarget:vignettefilter];
+//    [lookupFilter addTarget:vignettefilter];
     [stillImageSource addTarget:lookupFilter];
     [lookupImageSource addTarget:lookupFilter];
     
     [stillImageSource processImage];
     [lookupImageSource processImage];
     
-    [vignettefilter useNextFrameForImageCapture];
+    [stillImageSource useNextFrameForImageCapture];
     [lookupFilter useNextFrameForImageCapture];
     
-    UIImage * filteredimage = [vignettefilter imageFromCurrentFramebuffer];
+    UIImage * filteredimage = [lookupFilter imageFromCurrentFramebuffer];
     
     filteredimage = [UIImage imageWithCGImage:filteredimage.CGImage scale:filteredimage.scale orientation:originImage.imageOrientation];
     
     return filteredimage;
 }
 
-
+// 需要裁剪
 -(void) setNeedCut:(BOOL)needCut
 {
     _needCut = needCut;
@@ -819,6 +844,9 @@ LC_PROPERTY(strong) UIView *wastedView;
     return newFrame;
 }
 
+/**
+ *  获取当前图片
+ */
 -(UIImage *) currentImage
 {
     if (self.needCut) {
@@ -829,6 +857,9 @@ LC_PROPERTY(strong) UIView *wastedView;
     }
 }
 
+/**
+ *  裁剪图片
+ */
 -(UIImage *)getSubImage{
     
     UIImageView * showImgView = [[UIImageView alloc] initWithImage:self.originalImage];

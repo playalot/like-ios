@@ -257,7 +257,10 @@
             // 授权过期
             if (errCode == 4016 || errCode == 4013) {
                 
-                [self postNotification:LKSessionError withObject:@(errCode)];
+                if (LKLocalUser.singleton.isLogin) {
+                    
+                    [self postNotification:LKSessionError withObject:@(errCode)];
+                }
             }
         }
         

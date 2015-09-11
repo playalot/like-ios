@@ -11,6 +11,7 @@
 #import "LKHomepageHeader.h"
 
 @protocol LKPostDetailViewControllerDelegate;
+@protocol LKPostDetailViewControllerCancelFavorDelegate;
 
 @interface LKPostDetailViewController : LCUIViewController
 
@@ -26,12 +27,18 @@ LC_PROPERTY(strong) LKPost * post;
 -(void) setPresendModelAnimationOpen;
 
 @property (nonatomic, weak) id <LKPostDetailViewControllerDelegate> delegate;
+@property (nonatomic, weak) id <LKPostDetailViewControllerCancelFavorDelegate> cancelFavordelegate;
 
 @end
 
 @protocol LKPostDetailViewControllerDelegate <NSObject>
 
 - (void)postDetailViewController:(LKPostDetailViewController *)ctrl didDeletedTag:(LKTag *)deleteTag;
-//- (void)posetDetailViewControllerDidDeleteTag:(LKPostDetailViewController *)ctrl;
+
+@end
+
+@protocol LKPostDetailViewControllerCancelFavorDelegate <NSObject>
+
+- (void)postDetailViewController:(LKPostDetailViewController *)ctrl didcancelFavorWithPost:(LKPost *)post;
 
 @end

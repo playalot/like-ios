@@ -472,7 +472,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
         if (self.feedType == LKHomepageFeedTypeMain) {
             
             if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
-                
+            
                 self.feedType = LKHomepageFeedTypeFocus;
             }
         }
@@ -1233,7 +1233,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     [self.inputView resignFirstResponder];
     
     if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
-        
+    
         self.feedType = LKHomepageFeedTypeNotification;
     }
 }

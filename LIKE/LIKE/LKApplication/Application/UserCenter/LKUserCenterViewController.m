@@ -25,7 +25,7 @@
 #import "JTSImageViewController.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
 
-@interface LKUserCenterViewController () <UITableViewDataSource,UITableViewDelegate>
+@interface LKUserCenterViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerCancelFavorDelegate>
 
 //
 LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
@@ -530,9 +530,13 @@ LC_PROPERTY(assign) BOOL isLocalUser;
 LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
 {
     LKPost * post = signal.object;
-    post.user = self.user;
+    if (self.currentType == LKUserCenterModelTypePhotos) {
+        
+        post.user = self.user;
+    }
     
     LKPostDetailViewController * postDetail = [[LKPostDetailViewController alloc] initWithPost:post];
+    postDetail.cancelFavordelegate = self;
     
     LCUINavigationController * nav = LC_UINAVIGATION(postDetail);
     
@@ -686,6 +690,25 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
     [self.inputView resignFirstResponder];
     
     [self.header handleScrollDidScroll:scrollView];
+}
+
+#pragma mark - ***** LKPostDetailViewControllerCancelFavorDelegate *****
+- (void)postDetailViewController:(LKPostDetailViewController *)ctrl didcancelFavorWithPost:(LKPost *)post {
+    
+    NSMutableArray *favorArray = self.userCenterModel.favorArray;
+    for (LKPost *favorPost in favorArray) {
+        
+        if (favorPost.id.integerValue == post.id.integerValue) {
+            
+            [self.tableView beginUpdates];
+            [self.userCenterModel.favorArray removeObject:favorPost];
+            [self.tableView endUpdates];
+            
+            [self.tableView reloadData];
+            
+            break;
+        }
+    }
 }
 
 @end

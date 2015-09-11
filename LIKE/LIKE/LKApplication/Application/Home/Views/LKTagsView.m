@@ -126,20 +126,37 @@ LC_PROPERTY(assign) BOOL custom;
         self.willRequest(self);
     }
     
-    
-    if (self.tagValue.isLiked) {
+    if (self.chooseTag) {
         
-        self.tagValue.likes = @(self.tagValue.likes.integerValue - 1);
-    }
-    else{
+        if (self.chooseTag.isLiked) {
+            
+            self.chooseTag.likes = @(self.chooseTag.likes.integerValue - 1);
+        }
+        else{
+            
+            self.chooseTag.likes = @(self.chooseTag.likes.integerValue + 1);
+        }
         
-        self.tagValue.likes = @(self.tagValue.likes.integerValue + 1);
+        self.chooseTag.isLiked = !self.chooseTag.isLiked;
+        
+        // 新数据重新赋值
+        self.chooseTag = self.chooseTag;
+    } else {
+        
+        if (self.tagValue.isLiked) {
+            
+            self.tagValue.likes = @(self.tagValue.likes.integerValue - 1);
+        }
+        else{
+            
+            self.tagValue.likes = @(self.tagValue.likes.integerValue + 1);
+        }
+
+        self.tagValue.isLiked = !self.tagValue.isLiked;
+
+        // 新数据重新赋值
+        self.tagValue = self.tagValue;
     }
-    
-    self.tagValue.isLiked = !self.tagValue.isLiked;
-    
-    // 新数据重新赋值
-    self.tagValue = self.tagValue;
     
 //    static int i = 1;
 //    
@@ -216,7 +233,13 @@ LC_PROPERTY(assign) BOOL custom;
         
         LC_FAST_ANIMATIONS_F(0.15, ^{
             
-            self.transform = self.tagValue.likes.integerValue <= 0 ? CGAffineTransformScale(CGAffineTransformIdentity, 0, 0) : CGAffineTransformScale(CGAffineTransformIdentity, 1.0, 1.0);
+            if (self.chooseTag) {
+                
+                self.transform = self.chooseTag.likes.integerValue <= 0 ? CGAffineTransformScale(CGAffineTransformIdentity, 0, 0) : CGAffineTransformScale(CGAffineTransformIdentity, 1.0, 1.0);
+            } else {
+                
+                self.transform = self.tagValue.likes.integerValue <= 0 ? CGAffineTransformScale(CGAffineTransformIdentity, 0, 0) : CGAffineTransformScale(CGAffineTransformIdentity, 1.0, 1.0);
+            }
             
         }, ^(BOOL finished){
             
@@ -240,7 +263,7 @@ LC_PROPERTY(assign) BOOL custom;
         return;
     }
     
-    [LKTagLikeModel likeOrUnLike:self.tagValue requestFinished:^(LKHttpRequestResult *result, NSString *error) {
+    [LKTagLikeModel likeOrUnLike:self.chooseTag ? self.chooseTag : self.tagValue requestFinished:^(LKHttpRequestResult *result, NSString *error) {
         
         @normally(self);
         
@@ -345,6 +368,85 @@ LC_PROPERTY(assign) BOOL custom;
     self.maskView.frame = self.bounds;
     self.backgroundImageView.layer.cornerRadius = 15;
     self.backgroundImageView.layer.masksToBounds = YES;
+}
+
+- (void)setChooseTag:(LKTag *)chooseTag {
+    
+    if (!chooseTag) {
+        return;
+    }
+    
+    _chooseTag = chooseTag;
+    
+    self.tagLabel.text = chooseTag.tag.description;
+    self.tagLabel.FIT();
+    
+    
+    CGFloat topPadding = 5;
+    CGFloat leftPadding = 15;
+    
+    self.tagLabel.viewFrameX = leftPadding;
+    self.tagLabel.viewFrameY = topPadding + 1.5;
+    
+    if (self.showNumber) {
+        
+        self.likesLabel.text = LC_NSSTRING_FORMAT(@"%@", chooseTag.likes);
+        self.likesLabel.FIT();
+        
+        self.likesLabel.viewFrameX = self.tagLabel.viewRightX + leftPadding - 2;
+        self.likesLabel.viewFrameY = topPadding / 2. + 1;
+        self.likesLabel.viewFrameHeight = (self.tagLabel.viewFrameHeight + topPadding * 2.) - topPadding;
+        self.likesLabel.viewFrameWidth = self.likesLabel.viewFrameWidth < self.likesLabel.viewFrameHeight ? self.likesLabel.viewFrameHeight + 4 : self.likesLabel.viewFrameWidth + 4;
+        self.likesLabel.cornerRadius = self.likesLabel.viewMidHeight;
+        
+        
+        self.viewFrameWidth = self.likesLabel.viewRightX + topPadding;
+        self.viewFrameHeight = self.likesLabel.viewBottomY + topPadding;
+    }
+    else{
+        
+        self.viewFrameWidth = self.tagLabel.viewRightX + leftPadding;
+        self.viewFrameHeight = self.tagLabel.viewBottomY + topPadding;
+    }
+    
+    
+    self.cornerRadius = self.viewMidHeight;
+    self.layer.masksToBounds = NO;
+    self.custom = NO;
+    
+    //
+    if (!chooseTag.isLiked) {
+        
+        self.backgroundColor = [LKColor.color colorWithAlphaComponent:1];
+        self.likesLabel.textColor = [UIColor whiteColor];
+        self.likesLabel.borderColor = [[UIColor whiteColor] colorWithAlphaComponent:0.4];
+        self.tagLabel.textColor = [UIColor whiteColor];
+        
+        if (self.maskView) {
+            
+            self.backgroundImageView.hidden = YES;
+        }
+    }
+    else{
+        
+        self.backgroundColor = LC_RGB(245, 240, 236);
+        self.likesLabel.textColor = [LC_RGB(74, 74, 74) colorWithAlphaComponent:0.9];
+        self.tagLabel.textColor = [LC_RGB(74, 74, 74) colorWithAlphaComponent:0.9];
+        self.likesLabel.borderColor = LC_RGB(220, 215, 209);
+        
+        if (self.maskView) {
+            
+            self.tagLabel.textColor = [UIColor whiteColor];
+            self.likesLabel.textColor = [UIColor whiteColor];
+            self.backgroundImageView.hidden = NO;
+        }
+        
+    }
+    
+    self.maskView.frame = self.bounds;
+    self.backgroundImageView.layer.cornerRadius = 15;
+    self.backgroundImageView.layer.masksToBounds = YES;
+
 }
 
 @end

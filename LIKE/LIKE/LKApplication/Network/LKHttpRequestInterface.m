@@ -158,7 +158,7 @@ LC_PROPERTY(strong) NSMutableDictionary * parameters;
 {
     URLCode block = ^(){
         
-        return [self.description stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        return [self.description stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLHostAllowedCharacterSet];
     };
     
     return block;

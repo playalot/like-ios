@@ -62,6 +62,14 @@
         
         image = [UIImage imageNamed:@"2208.jpg" useCache:NO];
     }
+    else if (UI_IS_IPADMINI){
+        
+        image = [UIImage imageNamed:@"1024.jpg" useCache:NO];
+    }
+    else if(UI_IS_IPADAIR2){
+        
+        image = [UIImage imageNamed:@"2048.jpg" useCache:NO];
+    }
     
     return image;
 }

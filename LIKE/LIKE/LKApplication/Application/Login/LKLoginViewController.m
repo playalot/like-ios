@@ -606,7 +606,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
  */
 -(void) agreement
 {
-    LCUIWebViewController * web = [[LCUIWebViewController alloc] initWithURL:[NSURL URLWithString:@"http://terms.likeorz.com"]];
+    LCUIWebViewController * web = [[LCUIWebViewController alloc] initWithURL:[NSURL URLWithString:@"http://www.likeorz.com/terms"]];
     [self presentViewController:LC_UINAVIGATION(web) animated:YES completion:nil];
     
     // UIBarMetricsDefault：用竖着（拿手机）时UINavigationBar的标准的尺寸来显示UINavigationBar

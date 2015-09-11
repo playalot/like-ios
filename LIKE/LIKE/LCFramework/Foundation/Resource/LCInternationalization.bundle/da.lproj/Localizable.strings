@@ -61,6 +61,8 @@
 "删除该标签后，你的like数也会相应减少，确认删除吗？" = "After you delete the tag, your like number will be reduced, are you ready for the confirmation?";
 "收藏图片" = "Favorited";
 "取消收藏" = "Cancel favorited";
+"订阅" = "Subscribe";
+"取消订阅" = "Cancel Subscribe";
 
 // Tip
 "上传失败啦！请检查您的网络稍后再试Orz～" = "Upload failed! Please check your internet connection";

@@ -8,6 +8,7 @@
 
 #import "LCUITableViewCell.h"
 #import "LKPost.h"
+#import "LKUserCenterModel.h"
 
 @interface LKUserCenterPhotoCell : LCUITableViewCell
 

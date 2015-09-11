@@ -76,8 +76,8 @@ LC_PROPERTY(strong) LKSettingsViewController *settings;
         
         if (item.backgroundImageView.isHidden) {
             
-            [idArray addObject:item.tagValue.chooseTagId];
-            [groupArray addObject:item.tagValue.group];
+            [idArray addObject:item.chooseTag.chooseTagId];
+            [groupArray addObject:item.chooseTag.group];
         }
     }
     
@@ -179,16 +179,16 @@ LC_PROPERTY(strong) LKSettingsViewController *settings;
     CGFloat maxItemY = 0;
     for (NSInteger i = 0; i < tags.count; i++) {
         
-        LKTagItem *item = [[LKTagItem alloc] initWithFont:LK_FONT_B(18)];
+        LKTagItem *item = [[LKTagItem alloc] initWithFont:LK_FONT_B(14)];
         
-        item.tagValue = tags[i];
+        item.chooseTag = tags[i];
         [self.tagsView addSubview:item];
         item.backgroundImageView.url = (NSString *)[tags[i] image];
 
 
         CGFloat margin = 10;
         item.viewFrameWidth = CGRectGetMaxX(item.likesLabel.frame) + 2;
-        item.viewFrameX = 2 * margin + arc4random_uniform(self.tagsView.viewFrameWidth - item.viewFrameWidth - 2 * margin);
+        item.viewFrameX = 2 * margin + arc4random_uniform(self.tagsView.viewFrameWidth - item.viewFrameWidth - 3 * margin);
         item.viewFrameHeight = 31;
         item.viewFrameY = (i + 1) * margin + i * item.viewFrameHeight;
         

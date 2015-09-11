@@ -55,11 +55,11 @@ LC_PROPERTY(strong) UIView * bindView;
     [self cancelAllTimers];
     
     if (!LKLocalUser.singleton.isLogin) {
-        
+    
         [self setBadgeCount:0];
     }
     else{
-        
+    
         [self checkTimerStart];
     }
 }

@@ -175,8 +175,8 @@ LC_PROPERTY(getter=isSubscribed) BOOL subscribed;
         page = self.page + 1;
     }
     
-    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"search/tag/%@/%@", self.searchString.URLCODE(), @(page)]].AUTO_SESSION();
-    
+    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"search/tag/%@/%@", self.searchString.URLCODE(), @(page)]].GET_METHOD();
+
     @weakly(self);
     
     [self request:interface complete:^(LKHttpRequestResult * result) {

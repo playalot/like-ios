@@ -134,7 +134,11 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     }
     
     [APService setupWithOption:launchOptions];
-    [APService setTags:nil alias:@"11226" callbackSelector:@selector(tagsAliasCallback:tags:alias:) target:self];
+    
+    if (LKLocalUser.singleton.isLogin) {
+        
+        [APService setTags:nil alias:[NSString stringWithFormat:@"%@", LKLocalUser.singleton.user.id] callbackSelector:@selector(tagsAliasCallback:tags:alias:) target:self];
+    }
     
     // Please notify the application each time the orientation is changed.
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
@@ -356,26 +360,6 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
             [LKLocalUser logout];
             [LKLoginViewController needLoginOnViewController:nil];
         }
-    }
-    else if ([notification is:kJPFNetworkDidRegisterNotification]){
-    
-        if (LKLocalUser.singleton.isLogin) {
-            
-            
-            LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"installation"].AUTO_SESSION().POST_METHOD();
-            
-            [interface addParameter:@"ios" key:@"device_type"];
-            [interface addParameter:notification.object key:@"device_token"];
-            
-            [self request:interface complete:^(LKHttpRequestResult * result) {
-                
-                // TODO
-            }];
-
-        }
-    }
-    else if ([notification is:kJPFNetworkDidReceiveMessageNotification]){
-
     }
 }
 

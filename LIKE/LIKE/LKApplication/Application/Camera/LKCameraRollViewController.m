@@ -8,6 +8,7 @@
 
 #import "LKCameraRollViewController.h"
 #import <AssetsLibrary/AssetsLibrary.h>
+#import <Photos/Photos.h>
 #import "LKCameraRollCell.h"
 #import "LKPhotoRollCell.h"
 #import "LKImageCropperViewController.h"
@@ -155,46 +156,66 @@ LC_PROPERTY(strong) UICollectionView * collectionView;
 {
     @weakly(self);
     
-    ALAssetsLibraryAccessFailureBlock failureblock = ^(NSError * error){
-        
-        if (error) {
-            
-            [self showTopMessageErrorHud:LC_LO(@"无法访问相册，可能是因为您拒绝了相册的访问权限")];
-        }
-    };
     
-    ALAssetsGroupEnumerationResultsBlock groupEnumerAtion = ^(ALAsset *result,NSUInteger index, BOOL *stop){
+    if (IOS8_OR_LATER) {
         
-        @normally(self);
-        
-        if (result != NULL) {
+        PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
+        PHFetchResult *fetchResult = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions];
+        if ([fetchResult countOfAssetsWithMediaType:PHAssetMediaTypeImage] > 0) {
             
-            if ([[result valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypePhoto]) {
+            [fetchResult enumerateObjectsWithOptions:0 usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 
-                [self.datasource insertObject:result atIndex:0];
+                if (obj) {
+                    
+                    @normally(self);
+                    
+                    [self.datasource insertObject:obj atIndex:0];
+                } else {
+                    
+                    [self.collectionView reloadData];
+                }
+            }];
+        }
+    } else {
+
+        ALAssetsLibraryAccessFailureBlock failureblock = ^(NSError * error){
+            
+            if (error) {
+                
+                [self showTopMessageErrorHud:LC_LO(@"无法访问相册，可能是因为您拒绝了相册的访问权限")];
             }
-        }
-        else{
-            
-            [self.collectionView reloadData];
-        }
-    };
-    
-    ALAssetsLibraryGroupsEnumerationResultsBlock libraryGroupsEnumeration = ^(ALAssetsGroup * group, BOOL* stop){
+        };
         
-        if (group != nil) {
+        ALAssetsGroupEnumerationResultsBlock groupEnumerAtion = ^(ALAsset *result,NSUInteger index, BOOL *stop){
             
-            [group enumerateAssetsUsingBlock:groupEnumerAtion];
-        }
-    };
-    
-    
-    
-    
-    [self.assetLibrary enumerateGroupsWithTypes:ALAssetsGroupAll
-                           usingBlock:libraryGroupsEnumeration
-                         failureBlock:failureblock];
-    
+            @normally(self);
+            
+            if (result != NULL) {
+                
+                if ([[result valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypePhoto]) {
+                    
+                    [self.datasource insertObject:result atIndex:0];
+                }
+            }
+            else{
+                
+                [self.collectionView reloadData];
+            }
+        };
+        
+        ALAssetsLibraryGroupsEnumerationResultsBlock libraryGroupsEnumeration = ^(ALAssetsGroup * group, BOOL* stop){
+            
+            if (group != nil) {
+                
+                [group enumerateAssetsUsingBlock:groupEnumerAtion];
+            }
+        };
+        
+        [self.assetLibrary enumerateGroupsWithTypes:ALAssetsGroupAll
+                               usingBlock:libraryGroupsEnumeration
+                             failureBlock:failureblock];
+
+    }
 }
 
 /**
@@ -248,6 +269,8 @@ LC_PROPERTY(strong) UICollectionView * collectionView;
     return self.datasource.count + 1;
 }
 
+static PHImageRequestOptions *requestOptions;
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == 0) {
@@ -260,9 +283,35 @@ LC_PROPERTY(strong) UICollectionView * collectionView;
         
         LKPhotoRollCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Photo" forIndexPath:indexPath];
         
-        ALAsset * asset = self.datasource[indexPath.row - 1];
-        
-        cell.image = [[UIImage imageWithCGImage:asset.thumbnail] autoOrientation];
+        if (IOS8_OR_LATER) {
+            
+            [[PHImageManager defaultManager] cancelImageRequest:(PHImageRequestID)cell.requestID];
+            
+            PHAsset *asset = self.datasource[indexPath.row - 1];
+            
+            if (!requestOptions) {
+                requestOptions = [[PHImageRequestOptions alloc] init];
+                requestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeOpportunistic;
+                requestOptions.resizeMode = PHImageRequestOptionsResizeModeFast;
+            }
+            
+            CGFloat margin = 5;
+            CGFloat column = 4;
+            CGFloat itemWidth = (LC_DEVICE_WIDTH - margin * (column + 1)) / column;
+            cell.requestID = [[PHImageManager defaultManager] requestImageForAsset:asset
+                                                                        targetSize:CGSizeMake(itemWidth, itemWidth)
+                                                                       contentMode:PHImageContentModeAspectFill
+                                                                           options:requestOptions
+                                                                     resultHandler:^(UIImage *result, NSDictionary *info) {
+                                                                         
+                                                                         cell.image = result;
+                                                                     }];
+            
+        } else {
+            
+            ALAsset * asset = self.datasource[indexPath.row - 1];
+            cell.image = [[UIImage imageWithCGImage:asset.thumbnail] autoOrientation];
+        }
 
         return cell;
     }
@@ -293,11 +342,23 @@ LC_PROPERTY(strong) UICollectionView * collectionView;
     }
     else{
         
-        ALAsset * asset = self.datasource[indexPath.row - 1];
+        if (IOS8_OR_LATER) {
+            
+            PHAsset *asset = self.datasource[indexPath.row - 1];
+            [[PHImageManager defaultManager] requestImageDataForAsset:asset options:requestOptions resultHandler:^(NSData *imageData, NSString *dataUTI, UIImageOrientation orientation, NSDictionary *info) {
+                
+                UIImage *image = [UIImage imageWithData:imageData];
+                [self selectedImage:image];
+            }];
+            
+        } else {
+            
+            ALAsset *asset = self.datasource[indexPath.row - 1];
+            UIImage *image = [[UIImage alloc] initWithCGImage:asset.defaultRepresentation.fullResolutionImage scale:asset.defaultRepresentation.scale orientation:(UIImageOrientation)asset.defaultRepresentation.orientation];
+    
+            [self selectedImage:image];
+        }
         
-        UIImage * image = [[UIImage alloc] initWithCGImage:asset.defaultRepresentation.fullResolutionImage scale:asset.defaultRepresentation.scale orientation:(UIImageOrientation)asset.defaultRepresentation.orientation];
-        
-        [self selectedImage:image];
         
 //        [self.assetLibrary assetForURL:url resultBlock:^(ALAsset *asset){
 //            

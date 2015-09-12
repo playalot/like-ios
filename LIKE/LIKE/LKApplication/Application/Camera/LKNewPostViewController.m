@@ -179,9 +179,6 @@ LC_PROPERTY(strong) NSString * locationName;
         [self updateSubviewsLayout];
     };
     
-    
-    
-    
     UIView * line = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
     line.viewFrameWidth = LC_DEVICE_WIDTH;
     line.tag = 100;

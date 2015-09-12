@@ -788,6 +788,9 @@
 		BC12A63B1B9BF24500B99CB5 /* LKContext.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A63A1B9BF24500B99CB5 /* LKContext.m */; };
 		BC12A6401B9C38DE00B99CB5 /* LKUserCenterBrowsingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A63F1B9C38DE00B99CB5 /* LKUserCenterBrowsingViewController.m */; };
 		BC12A6431B9C4EE600B99CB5 /* LKUserCenterBrowsingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6421B9C4EE600B99CB5 /* LKUserCenterBrowsingCell.m */; };
+		BC12A6521BA023E600B99CB5 /* LKPostTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6511BA023E600B99CB5 /* LKPostTableViewController.m */; };
+		BC12A6551BA0240200B99CB5 /* LKPostTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6541BA0240200B99CB5 /* LKPostTableViewCell.m */; };
+		BC12A6581BA03EAD00B99CB5 /* LKSearchResultsBrowsingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6571BA03EAD00B99CB5 /* LKSearchResultsBrowsingViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2299,6 +2302,12 @@
 		BC12A63F1B9C38DE00B99CB5 /* LKUserCenterBrowsingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKUserCenterBrowsingViewController.m; sourceTree = "<group>"; };
 		BC12A6411B9C4EE600B99CB5 /* LKUserCenterBrowsingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKUserCenterBrowsingCell.h; sourceTree = "<group>"; };
 		BC12A6421B9C4EE600B99CB5 /* LKUserCenterBrowsingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKUserCenterBrowsingCell.m; sourceTree = "<group>"; };
+		BC12A6501BA023E600B99CB5 /* LKPostTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKPostTableViewController.h; path = Common/LKPostTableViewController.h; sourceTree = "<group>"; };
+		BC12A6511BA023E600B99CB5 /* LKPostTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKPostTableViewController.m; path = Common/LKPostTableViewController.m; sourceTree = "<group>"; };
+		BC12A6531BA0240200B99CB5 /* LKPostTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKPostTableViewCell.h; path = Common/LKPostTableViewCell.h; sourceTree = "<group>"; };
+		BC12A6541BA0240200B99CB5 /* LKPostTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKPostTableViewCell.m; path = Common/LKPostTableViewCell.m; sourceTree = "<group>"; };
+		BC12A6561BA03EAD00B99CB5 /* LKSearchResultsBrowsingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKSearchResultsBrowsingViewController.h; sourceTree = "<group>"; };
+		BC12A6571BA03EAD00B99CB5 /* LKSearchResultsBrowsingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKSearchResultsBrowsingViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2461,6 +2470,8 @@
 				134B0B581B5624A400A195BE /* LKSearchResultsViewController.m */,
 				134B0B591B5624A400A195BE /* LKSearchViewController.h */,
 				134B0B5A1B5624A400A195BE /* LKSearchViewController.m */,
+				BC12A6561BA03EAD00B99CB5 /* LKSearchResultsBrowsingViewController.h */,
+				BC12A6571BA03EAD00B99CB5 /* LKSearchResultsBrowsingViewController.m */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -4970,6 +4981,10 @@
 				BC12A6341B9BF1BE00B99CB5 /* LKTabBarController.mm */,
 				BC12A6351B9BF1BE00B99CB5 /* LKWelcome.h */,
 				BC12A6361B9BF1BE00B99CB5 /* LKWelcome.m */,
+				BC12A6501BA023E600B99CB5 /* LKPostTableViewController.h */,
+				BC12A6511BA023E600B99CB5 /* LKPostTableViewController.m */,
+				BC12A6531BA0240200B99CB5 /* LKPostTableViewCell.h */,
+				BC12A6541BA0240200B99CB5 /* LKPostTableViewCell.m */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -5316,6 +5331,7 @@
 				139055661B994A6D00DBF34A /* GPUImageXYDerivativeFilter.m in Sources */,
 				138EDE391AD7B0A30020957C /* HTTPDataResponse.m in Sources */,
 				135E8AA31B4549BD00C2270C /* LKSearchPlacesViewController.m in Sources */,
+				BC12A6551BA0240200B99CB5 /* LKPostTableViewCell.m in Sources */,
 				13B5B4EB1B15EE1300252A78 /* LKComment.m in Sources */,
 				13BCD8C21ADBA93000A0CBF5 /* MCBasicAnimation.m in Sources */,
 				13E1A4EB1AE65FE300E24C3C /* FastttEmptyFilter.m in Sources */,
@@ -5545,6 +5561,7 @@
 				139B06891ADBE5F6006A260F /* NSObject+LKTopHud.m in Sources */,
 				1347656B1AE25EA40055D099 /* QNResumeUpload.m in Sources */,
 				138EDE841AD7B0A30020957C /* LCSanbox.m in Sources */,
+				BC12A6521BA023E600B99CB5 /* LKPostTableViewController.m in Sources */,
 				1357351F1B2EE01B0032515C /* LKCountryCodeViewController.m in Sources */,
 				139055211B994A6D00DBF34A /* GPUImageMovieWriter.m in Sources */,
 				13101D2D1B12DE5F00FBE516 /* LKShareMaskImage.m in Sources */,
@@ -5799,6 +5816,7 @@
 				138EDE721AD7B0A30020957C /* NSObject+LCPerformSelector.m in Sources */,
 				134765731AE25ED90055D099 /* LKFileUploader.m in Sources */,
 				13E1A2D51AE6538500E24C3C /* LKUploadAvatarAndCoverModel.m in Sources */,
+				BC12A6581BA03EAD00B99CB5 /* LKSearchResultsBrowsingViewController.m in Sources */,
 				138EDE881AD7B0A30020957C /* LCTypeFaultTolerance.m in Sources */,
 				138EDE0A1AD7B0A30020957C /* LCDeviceInfo.m in Sources */,
 				1373C43A1B846FDA00A6C55A /* NSObject+MJCoding.m in Sources */,

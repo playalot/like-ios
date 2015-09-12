@@ -26,14 +26,12 @@ LC_PROPERTY(copy) LKHomeCellAddTag addTag;
 LC_PROPERTY(copy) LKHomeCellRemovedTag removedTag;
 LC_PROPERTY(copy) LKHomeCellCustomAction customAction;
 
-
 +(CGFloat) height:(LKPost *)post;
 
 -(void) reloadTags;
 
 -(void)cellOnTableView:(UITableView *)tableView didScrollOnView:(UIView *)view;
 
-//
 LC_PROPERTY(strong) LCUIImageView * contentImage;
 LC_PROPERTY(strong) UIView * contentBack;
 LC_PROPERTY(strong) LKTagsView * tagsView;

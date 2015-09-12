@@ -378,7 +378,6 @@ LC_PROPERTY(assign) BOOL favorited;
         }
     };
     
-    
     /*
     self.pullLoader = [LCUIPullLoader pullLoaderWithScrollView:self.tableView pullStyle:LCUIPullLoaderStyleFooter];
     

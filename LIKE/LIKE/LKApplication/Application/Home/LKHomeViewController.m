@@ -102,7 +102,6 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     
     // hide navigation bar.
     if (self.searchViewController) {
-        
         [self setNavigationBarHidden:YES animated:animated];
     }
     else{
@@ -165,7 +164,6 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     if (datasource.count) {
         self.datasource = datasource;
     }
-    
     
     NSArray * focusCache = LKUserDefaults.singleton[FOCUS_FEED_CACHE_KEY];
     NSMutableArray * focusDatasource = [NSMutableArray array];
@@ -230,7 +228,6 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
 -(void) buildUI
 {
     self.view.backgroundColor = LKColor.backgroundColor;
-
     
     // Bar item.
     [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image: [[UIImage imageNamed:@"CollectionIcon.png" useCache:YES] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]] selectImage:nil];
@@ -381,7 +378,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
         @normally(self);
         
         if (string.trim.length == 0) {
-            
+
             [self showTopMessageErrorHud:LC_LO(@"标签不能为空")];
             return;
         }

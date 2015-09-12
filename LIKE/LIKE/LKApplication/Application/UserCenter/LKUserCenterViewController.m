@@ -99,7 +99,7 @@ LC_PROPERTY(assign) BOOL isLocalUser;
 +(LKUserCenterViewController *) pushUserCenterWithUser:(LKUser *)user navigationController:(UINavigationController *)navigationController
 {
     LKUserCenterViewController * userCenter = [[LKUserCenterViewController alloc] initWithUser:user];
-    
+
     [navigationController pushViewController:userCenter animated:YES];
     
     return userCenter;

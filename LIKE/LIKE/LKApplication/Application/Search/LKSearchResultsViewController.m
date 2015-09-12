@@ -10,6 +10,7 @@
 #import "LKUserCenterPhotoCell.h"
 #import "LKPostDetailViewController.h"
 #import "UIImageView+WebCache.h"
+#import "LKPostTableViewController.h"
 
 @interface LKSearchResultsViewController ()
 
@@ -356,22 +357,20 @@ LC_PROPERTY(getter=isSubscribed) BOOL subscribed;
     return [LKUserCenterPhotoCell height];
 }
 
--(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
 }
 
-LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
-{
-    LKPost * post = signal.object;
+LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
+//    LKPost * post = signal.object;
+//    LKPostDetailViewController * postDetail = [[LKPostDetailViewController alloc] initWithPost:post];
+//    UINavigationController * nav = LC_UINAVIGATION(postDetail);
+//    [postDetail setPresendModelAnimationOpen];
+//    [self.navigationController  presentViewController:nav animated:YES completion:nil];
     
-    LKPostDetailViewController * postDetail = [[LKPostDetailViewController alloc] initWithPost:post];
-    
-    UINavigationController * nav = LC_UINAVIGATION(postDetail);
-    
-    [postDetail setPresendModelAnimationOpen];
-    
-    [self.navigationController  presentViewController:nav animated:YES completion:nil];
+    LKPostTableViewController *postViewController = [LKPostTableViewController viewController];
+    postViewController.datasource = self.datasource;
+    [self.navigationController pushViewController:postViewController animated:YES];
 }
 
 @end

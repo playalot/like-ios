@@ -223,7 +223,6 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
             
             NSMutableDictionary * dic =  [self.userInfoModel.rawUserInfo mutableCopy];
             
-            
             [LKLocalUser login:dic];
             LKLocalUser.singleton.sessionToken = self.sesstionToken;
             LKLocalUser.singleton.refreshToken = self.refreshToken;

@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Photos/Photos.h>
 
 @interface LKPhotoRollCell : UICollectionViewCell
 
 LC_PROPERTY(strong) UIImage * image;
+LC_PROPERTY(assign) PHImageRequestID requestID;
 
 @end

@@ -182,6 +182,11 @@ LC_PROPERTY(strong) LKUser * user;
 
 +(void) regetSessionTokenAndUseLoadingTip:(BOOL)useLoadingTip
 {
+    if (!LKLocalUser.singleton.isLogin) {
+        
+        return;
+    }
+    
     if (useLoadingTip) {
         [LC_KEYWINDOW showTopLoadingMessageHud:LC_LO(@"重新登录中...")];
     }

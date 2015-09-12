@@ -21,7 +21,7 @@
         self.timestamp = dict[@"created"];
         self.user = [LKUser objectFromDictionary:dict[@"user"]];
         self.place = [dict[@"place"] isKindOfClass:[NSString class]] && [dict[@"place"] length] ? dict[@"place"] : nil;
-        self.favorited = dict[@"favorited"];
+        self.favorited = [dict[@"favorited"] boolValue];
         self.tags = [NSMutableArray array];
         
         NSArray * tags = dict[@"marks"];

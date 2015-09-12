@@ -9,6 +9,7 @@
 #import "LKUserCenterPhotoCell.h"
 #import "UIImageView+WebCache.h"
 #import "LKLoginViewController.h"
+#import "LKPostDetailViewController.h"
 
 @interface __LKUserCenterPhotoItem : UIView
 

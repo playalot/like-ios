@@ -170,11 +170,14 @@ LC_PROPERTY(assign) NSInteger page;
 
 - (void)searchBarDidTapReturn:(INSSearchBar *)searchBar
 {
-    [LKSearchHistory addHistory:searchBar.searchField.text];
+    if (LKLocalUser.singleton.isLogin) {
+        
+        [LKSearchHistory addHistory:searchBar.searchField.text];
+    }
 
-    LKSearchResultsViewController * search = [[LKSearchResultsViewController alloc] initWithSearchString:searchBar.searchField.text];
+    LKSearchResultsViewController * searchResultsViewController = [[LKSearchResultsViewController alloc] initWithSearchString:searchBar.searchField.text];
     
-    [LC_APPDELEGATE.home.navigationController pushViewController:search animated:YES];
+    [LC_APPDELEGATE.home.navigationController pushViewController:searchResultsViewController animated:YES];
 }
 
 #pragma mark -

@@ -150,6 +150,24 @@ LC_PROPERTY(assign) BOOL favorited;
     return self;
 }
 
+- (void)getUserInfoWithPost:(LKPost *)post {
+    
+    LKHttpRequestInterface *interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"post/%@", post.id]].GET_METHOD();
+    
+    [self request:interface complete:^(LKHttpRequestResult *result) {
+       
+        if (result.state == LKHttpRequestStateFinished) {
+            
+            NSDictionary *resultData = result.json[@"data"];
+            self.post = [LKPost objectFromDictionary:resultData];
+
+        } else if (result.state == LKHttpRequestStateFailed) {
+            
+            [self showTopMessageErrorHud:result.error];
+        }
+    }];
+}
+
 /**
  *  设置打开页面的动画样式
  */
@@ -165,6 +183,8 @@ LC_PROPERTY(assign) BOOL favorited;
 -(void) viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self getUserInfoWithPost:self.post];
     
     self.tagsListModel = LKPostTagsDetailModel.new;
     
@@ -196,7 +216,6 @@ LC_PROPERTY(assign) BOOL favorited;
     
     // Load...
     [self.tagsListModel loadDataWithPostID:self.post.id getMore:NO];
-        
 }
 
 -(void) buildUI
@@ -540,8 +559,6 @@ LC_PROPERTY(assign) BOOL favorited;
                     [LKPhotoAlbum saveImage:self.header.backgroundView.image showTip:YES];
                 }
             }
-
-            
         }];
     }
     else{
@@ -587,7 +604,6 @@ LC_PROPERTY(assign) BOOL favorited;
             
             [self reportWithIndex:index];
         }
-        
     }];
 }
 
@@ -661,6 +677,14 @@ LC_PROPERTY(assign) BOOL favorited;
  *  收藏图片
  */
 - (void)favoriteImageWithStatus:(BOOL)favorited {
+    
+    if (favorited) {
+        
+        if ([self.cancelFavordelegate respondsToSelector:@selector(postDetailViewController:didcancelFavorWithPost:)]) {
+            
+            [self.cancelFavordelegate postDetailViewController:self didcancelFavorWithPost:self.post];
+        }
+    }
     
     LKHttpRequestInterface *interface;
     

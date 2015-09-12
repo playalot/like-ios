@@ -28,6 +28,10 @@
 #define UI_IS_IPHONE6           (UI_IS_IPHONE && [[UIScreen mainScreen] bounds].size.height == 667.0)
 #define UI_IS_IPHONE6PLUS       (UI_IS_IPHONE && [[UIScreen mainScreen] bounds].size.height == 736.0 || [[UIScreen mainScreen] bounds].size.width == 736.0) // Both orientations
 
+#define UI_IS_IPAD           ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
+#define UI_IS_IPADMINI       (UI_IS_IPAD && [[UIScreen mainScreen] bounds].size.height == 1024.0)
+#define UI_IS_IPADAIR2       (UI_IS_IPAD && [[UIScreen mainScreen] bounds].size.height == 2048.0)
+
 @interface LKUIKit : NSObject
 
 + (CGSize) parsingImageSizeWithURL:(NSString *)imageUrl;

@@ -22,6 +22,7 @@ LC_PROPERTY(strong) LCUILabel * likesLabel;
 //LC_PROPERTY(strong) UIView * right;
 
 LC_PROPERTY(strong) LKTag * tagValue;
+LC_PROPERTY(strong) LKTag * chooseTag;
 LC_PROPERTY(strong) LKTag * associatedTagValue;
 
 LC_PROPERTY(copy) LKTagItemRequest willRequest;

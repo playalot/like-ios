@@ -278,13 +278,16 @@ LC_IMP_SIGNAL(PushPostDetail);
 
     [self.contentImage sd_setImageWithURL:[NSURL URLWithString:post.content] placeholderImage:nil options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
         
-        [self.contentImage.indicator setProgress:receivedSize * 1.0 / expectedSize animated:YES];
-        
-        self.contentImage.indicator.alpha = 1;
+        if (self.contentImage.indicator.progress == 0) {
+            
+            [self.contentImage.indicator setProgress:receivedSize * 1.0 / expectedSize animated:YES];
+            self.contentImage.indicator.alpha = 1;
+        }
         
     } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         
         self.contentImage.indicator.alpha = 0;
+        [self.contentImage.indicator removeFromSuperview];
     }];
     
     

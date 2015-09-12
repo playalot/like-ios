@@ -15,6 +15,7 @@
     if (self = [super init]) {
         
         self.id = dict[@"mark_id"];
+        self.chooseTagId = dict[@"id"];
         self.tag = dict[@"tag"];
         self.likes = dict[@"likes"];
         self.group = dict[@"group"];

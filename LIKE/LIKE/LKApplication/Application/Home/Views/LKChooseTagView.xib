@@ -37,7 +37,7 @@
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="boolean" keyPath="self.hidden" value="NO"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="self.hidden" value="YES"/>
                     </userDefinedRuntimeAttributes>
                     <connections>
                         <action selector="editUserInfo:" destination="iN0-l3-epB" eventType="touchUpInside" id="jwH-eD-RCb"/>
@@ -53,17 +53,17 @@
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="boolean" keyPath="self.hidden" value="NO"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="self.hidden" value="YES"/>
                     </userDefinedRuntimeAttributes>
                     <connections>
                         <action selector="editUserInfo:" destination="iN0-l3-epB" eventType="touchUpInside" id="RYt-ZM-med"/>
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="给喜欢的标签点赞，在like遇见更多同类" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XqR-Ep-csi">
-                    <rect key="frame" x="187" y="223" width="229" height="16"/>
+                    <rect key="frame" x="187" y="84" width="229" height="16"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="16" id="Bkg-Un-LVN"/>
-                        <constraint firstAttribute="width" constant="229" id="ciS-nl-uS0"/>
+                        <constraint firstAttribute="width" constant="229" id="SxF-fC-pGD"/>
+                        <constraint firstAttribute="height" constant="16" id="xah-PQ-zfs"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -104,7 +104,7 @@
                             <integer key="value" value="35"/>
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="self.layer.masksToBounds" value="YES"/>
-                        <userDefinedRuntimeAttribute type="boolean" keyPath="self.hidden" value="NO"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="self.hidden" value="YES"/>
                     </userDefinedRuntimeAttributes>
                     <connections>
                         <action selector="headIconClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="IvM-92-tEN"/>
@@ -117,13 +117,13 @@
                 <constraint firstAttribute="centerX" secondItem="8pn-zi-pil" secondAttribute="centerX" id="3Ft-Ho-vLz"/>
                 <constraint firstAttribute="centerX" secondItem="Lv1-FU-8dM" secondAttribute="centerX" constant="-0.5" id="4uI-jV-7tI"/>
                 <constraint firstAttribute="trailing" secondItem="F9z-Fk-yOR" secondAttribute="trailing" id="Bga-tL-bvz"/>
+                <constraint firstItem="XqR-Ep-csi" firstAttribute="top" secondItem="F9z-Fk-yOR" secondAttribute="bottom" constant="20" id="KPm-r7-BtA"/>
                 <constraint firstAttribute="bottom" secondItem="8pn-zi-pil" secondAttribute="bottom" constant="35" id="LXR-kV-8fi"/>
-                <constraint firstItem="lZE-ZD-nEW" firstAttribute="centerX" secondItem="XqR-Ep-csi" secondAttribute="centerX" constant="-0.5" id="MHn-aa-sFo"/>
                 <constraint firstItem="lZE-ZD-nEW" firstAttribute="centerY" secondItem="KG3-lU-e3v" secondAttribute="centerY" constant="0.5" id="UF2-WS-Ot1"/>
                 <constraint firstItem="lZE-ZD-nEW" firstAttribute="centerX" secondItem="Lv1-FU-8dM" secondAttribute="centerX" id="WNh-sc-AcT"/>
-                <constraint firstItem="XqR-Ep-csi" firstAttribute="top" secondItem="lZE-ZD-nEW" secondAttribute="bottom" constant="20" id="a43-2Z-wmS"/>
                 <constraint firstItem="F9z-Fk-yOR" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="dla-O3-ljY"/>
                 <constraint firstItem="F9z-Fk-yOR" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="jjW-iW-CQt"/>
+                <constraint firstItem="F9z-Fk-yOR" firstAttribute="centerX" secondItem="XqR-Ep-csi" secondAttribute="centerX" constant="-1.5" id="rv6-KA-Sjh"/>
                 <constraint firstItem="KG3-lU-e3v" firstAttribute="leading" secondItem="lZE-ZD-nEW" secondAttribute="trailing" constant="8" id="uBO-PG-RVn"/>
                 <constraint firstItem="lZE-ZD-nEW" firstAttribute="top" secondItem="Lv1-FU-8dM" secondAttribute="bottom" constant="15" id="uJb-w2-VCt"/>
             </constraints>

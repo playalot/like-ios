@@ -22,6 +22,7 @@
 #import <SMS_SDK/SMS_SDK.h>
 #import "SDImageCache.h"
 #import "APService.h"
+#import "LKChooseTagView.h"
 
 @interface AppDelegate () <LC_CMD_IMP>
 
@@ -48,7 +49,6 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     
     // 2.设置网络指示器
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
-    
     
     
     [MAMapServices sharedServices].apiKey = @"4c0db296d4f4d092fdaa9004ee8c959a";
@@ -134,7 +134,11 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     }
     
     [APService setupWithOption:launchOptions];
-    [APService setTags:nil alias:@"11226" callbackSelector:@selector(tagsAliasCallback:tags:alias:) target:self];
+    
+    if (LKLocalUser.singleton.isLogin) {
+        
+        [APService setTags:nil alias:[NSString stringWithFormat:@"%@", LKLocalUser.singleton.user.id] callbackSelector:@selector(tagsAliasCallback:tags:alias:) target:self];
+    }
     
     // Please notify the application each time the orientation is changed.
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
@@ -180,8 +184,20 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
                 
             }];
         }];
+    } else {
         
+        // 如果是第一次登陆,选择兴趣标签
+        BOOL firstStart = [[NSUserDefaults standardUserDefaults] boolForKey:@"firstStart"];
         
+        // 判断是否是初次启动
+        if (!firstStart) {
+            
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstStart"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            LKChooseTagView *chooseView = [LKChooseTagView chooseTagView];
+            [UIApplication sharedApplication].keyWindow.ADD(chooseView);
+        }
     }
 
 //    // welcom...
@@ -344,26 +360,6 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
             [LKLocalUser logout];
             [LKLoginViewController needLoginOnViewController:nil];
         }
-    }
-    else if ([notification is:kJPFNetworkDidRegisterNotification]){
-    
-        if (LKLocalUser.singleton.isLogin) {
-            
-            
-            LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"installation"].AUTO_SESSION().POST_METHOD();
-            
-            [interface addParameter:@"ios" key:@"device_type"];
-            [interface addParameter:notification.object key:@"device_token"];
-            
-            [self request:interface complete:^(LKHttpRequestResult * result) {
-                
-                // TODO
-            }];
-
-        }
-    }
-    else if ([notification is:kJPFNetworkDidReceiveMessageNotification]){
-
     }
 }
 

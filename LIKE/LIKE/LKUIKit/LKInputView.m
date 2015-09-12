@@ -60,13 +60,21 @@
         self.textField.borderWidth = 0.5;
         self.ADD(self.textField);
 
+        
         @weakly(self);
         
         self.textField.shouldReturn = ^BOOL(id value){
             
             @normally(self);
-
+            
             if (self.textField.text.length) {
+                
+                if ([self.textField.text rangeOfString:@"@"].location != NSNotFound) {
+                    
+                    NSRange range = [self.textField.text rangeOfString:@":"];
+                    self.textField.text = [self.textField.text substringFromIndex:range.location + range.length];
+                }
+
                 if (self.sendAction) {
                     self.sendAction(self.textField.text);
                 }
@@ -99,6 +107,13 @@
             @normally(self);
             
             if (self.willDismiss) {
+                
+                if ([self.textField.text rangeOfString:@"@"].location != NSNotFound) {
+                    
+                    NSRange range = [self.textField.text rangeOfString:@":"];
+                    self.textField.text = [self.textField.text substringFromIndex:range.location + range.length];
+                }
+
                 self.willDismiss(self.textField.text);
             }
         };
@@ -111,6 +126,13 @@
 {
     if (self.textField.text.length) {
         if (self.sendAction) {
+            
+            if ([self.textField.text rangeOfString:@"@"].location != NSNotFound) {
+                
+                NSRange range = [self.textField.text rangeOfString:@":"];
+                self.textField.text = [self.textField.text substringFromIndex:range.location + range.length];
+            }
+
             self.sendAction(self.textField.text);
         }
     }   

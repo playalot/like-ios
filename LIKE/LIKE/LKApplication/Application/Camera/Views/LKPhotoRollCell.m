@@ -21,7 +21,8 @@ LC_PROPERTY(strong) LCUIImageView * imageView;
     if (self = [super initWithFrame:frame]) {
         
         self.imageView = [[LCUIImageView alloc] initWithFrame:LC_RECT(2.5, 2.5, frame.size.width - 5, frame.size.height - 5)];
-        self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+        self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+        self.imageView.clipsToBounds = YES;
         self.imageView.alpha = 0;
         self.ADD(self.imageView);
     }

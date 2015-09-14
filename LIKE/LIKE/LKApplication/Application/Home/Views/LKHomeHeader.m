@@ -155,7 +155,7 @@ LC_PROPERTY(strong) LCUIButton * doneButton;
     }
 }
 
--(void) setSearchViewController:(LKSearchViewController *)searchViewController
+-(void) setSearchViewController:(LKSearchView *)searchViewController
 {
     _searchViewController = searchViewController;
     

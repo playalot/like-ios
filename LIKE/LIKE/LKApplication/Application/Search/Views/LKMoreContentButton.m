@@ -54,10 +54,10 @@
 -(void) didTap
 {
     [LKSearchHistory addHistory:self.tagString];
-    
+
     LKSearchResultsViewController * search = [[LKSearchResultsViewController alloc] initWithSearchString:self.tagString];
     
-    [LC_APPDELEGATE.home.navigationController pushViewController:search animated:YES];
+    [LC_APPDELEGATE.homeViewController.navigationController pushViewController:search animated:YES];
 }
 
 @end

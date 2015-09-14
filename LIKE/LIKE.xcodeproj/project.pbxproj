@@ -65,7 +65,7 @@
 		13478CB81B6636770012EDA2 /* LittleYouLike@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13478CB61B6636770012EDA2 /* LittleYouLike@3x.png */; };
 		134995341B4AAD28007C9E48 /* LKLikesScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 134995331B4AAD28007C9E48 /* LKLikesScrollView.m */; };
 		134B0B601B5624A400A195BE /* LKSearchResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 134B0B581B5624A400A195BE /* LKSearchResultsViewController.m */; };
-		134B0B611B5624A400A195BE /* LKSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 134B0B5A1B5624A400A195BE /* LKSearchViewController.m */; };
+		134B0B611B5624A400A195BE /* LKSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 134B0B5A1B5624A400A195BE /* LKSearchView.m */; };
 		134B0B621B5624A400A195BE /* LKHotTagsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 134B0B5D1B5624A400A195BE /* LKHotTagsView.m */; };
 		134B0B631B5624A400A195BE /* LKSearchPlaceholderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 134B0B5F1B5624A400A195BE /* LKSearchPlaceholderView.m */; };
 		134B0B731B56293C00A195BE /* LKHotTagsSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 134B0B721B56293C00A195BE /* LKHotTagsSegmentView.m */; };
@@ -794,6 +794,7 @@
 		BC12A6521BA023E600B99CB5 /* LKPostTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6511BA023E600B99CB5 /* LKPostTableViewController.m */; };
 		BC12A6551BA0240200B99CB5 /* LKPostTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6541BA0240200B99CB5 /* LKPostTableViewCell.m */; };
 		BC12A6581BA03EAD00B99CB5 /* LKSearchResultsBrowsingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6571BA03EAD00B99CB5 /* LKSearchResultsBrowsingViewController.m */; };
+		BC12A65B1BA5A36D00B99CB5 /* LKSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A65A1BA5A36D00B99CB5 /* LKSearchViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -918,8 +919,8 @@
 		134995331B4AAD28007C9E48 /* LKLikesScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKLikesScrollView.m; sourceTree = "<group>"; };
 		134B0B571B5624A400A195BE /* LKSearchResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKSearchResultsViewController.h; sourceTree = "<group>"; };
 		134B0B581B5624A400A195BE /* LKSearchResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKSearchResultsViewController.m; sourceTree = "<group>"; };
-		134B0B591B5624A400A195BE /* LKSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKSearchViewController.h; sourceTree = "<group>"; };
-		134B0B5A1B5624A400A195BE /* LKSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKSearchViewController.m; sourceTree = "<group>"; };
+		134B0B591B5624A400A195BE /* LKSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKSearchView.h; sourceTree = "<group>"; };
+		134B0B5A1B5624A400A195BE /* LKSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKSearchView.m; sourceTree = "<group>"; };
 		134B0B5C1B5624A400A195BE /* LKHotTagsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKHotTagsView.h; sourceTree = "<group>"; };
 		134B0B5D1B5624A400A195BE /* LKHotTagsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKHotTagsView.m; sourceTree = "<group>"; };
 		134B0B5E1B5624A400A195BE /* LKSearchPlaceholderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKSearchPlaceholderView.h; sourceTree = "<group>"; };
@@ -2314,6 +2315,8 @@
 		BC12A6541BA0240200B99CB5 /* LKPostTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKPostTableViewCell.m; path = Common/LKPostTableViewCell.m; sourceTree = "<group>"; };
 		BC12A6561BA03EAD00B99CB5 /* LKSearchResultsBrowsingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKSearchResultsBrowsingViewController.h; sourceTree = "<group>"; };
 		BC12A6571BA03EAD00B99CB5 /* LKSearchResultsBrowsingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKSearchResultsBrowsingViewController.m; sourceTree = "<group>"; };
+		BC12A6591BA5A36D00B99CB5 /* LKSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKSearchViewController.h; sourceTree = "<group>"; };
+		BC12A65A1BA5A36D00B99CB5 /* LKSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKSearchViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2474,10 +2477,12 @@
 				134B0B5B1B5624A400A195BE /* Views */,
 				134B0B571B5624A400A195BE /* LKSearchResultsViewController.h */,
 				134B0B581B5624A400A195BE /* LKSearchResultsViewController.m */,
-				134B0B591B5624A400A195BE /* LKSearchViewController.h */,
-				134B0B5A1B5624A400A195BE /* LKSearchViewController.m */,
+				134B0B591B5624A400A195BE /* LKSearchView.h */,
+				134B0B5A1B5624A400A195BE /* LKSearchView.m */,
 				BC12A6561BA03EAD00B99CB5 /* LKSearchResultsBrowsingViewController.h */,
 				BC12A6571BA03EAD00B99CB5 /* LKSearchResultsBrowsingViewController.m */,
+				BC12A6591BA5A36D00B99CB5 /* LKSearchViewController.h */,
+				BC12A65A1BA5A36D00B99CB5 /* LKSearchViewController.m */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -5333,6 +5338,7 @@
 				BC12A6431B9C4EE600B99CB5 /* LKUserCenterBrowsingCell.m in Sources */,
 				13BCA6681B5CE43D00DC0549 /* FXBlurView.m in Sources */,
 				138EDEB81AD7B0A30020957C /* LCUITabBarController.m in Sources */,
+				BC12A65B1BA5A36D00B99CB5 /* LKSearchViewController.m in Sources */,
 				BC12A62B1B9BEE2300B99CB5 /* LCNetworkConfig.m in Sources */,
 				139054E01B994A6D00DBF34A /* GPUImageCrosshairGenerator.m in Sources */,
 				138EDDF91AD7B0A30020957C /* UIDevice+Reachability.m in Sources */,
@@ -5584,7 +5590,7 @@
 				1390554F1B994A6D00DBF34A /* GPUImageSwirlFilter.m in Sources */,
 				138EDE701AD7B0A30020957C /* NSObject+LCFastSingleton.m in Sources */,
 				1390554D1B994A6D00DBF34A /* GPUImageStretchDistortionFilter.m in Sources */,
-				134B0B611B5624A400A195BE /* LKSearchViewController.m in Sources */,
+				134B0B611B5624A400A195BE /* LKSearchView.m in Sources */,
 				138EDE371AD7B0A30020957C /* HTTPAuthenticationRequest.m in Sources */,
 				138EDE231AD7B0A30020957C /* LCNetworkInfo.m in Sources */,
 				139054F61B994A6D00DBF34A /* GPUImageGaussianBlurPositionFilter.m in Sources */,

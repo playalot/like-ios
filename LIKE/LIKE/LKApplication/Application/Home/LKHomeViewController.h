@@ -22,4 +22,6 @@ LC_PROPERTY(strong) NSMutableArray * focusDatasource;
 
 -(void) loadData:(LCUIPullLoaderDiretion)diretion;
 
++ (id)sharedInstance;
+
 @end

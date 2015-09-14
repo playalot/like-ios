@@ -23,6 +23,7 @@
 #import "SDImageCache.h"
 #import "APService.h"
 #import "LKChooseTagView.h"
+#import "LKSearchViewController.h"
 
 @interface AppDelegate () <LC_CMD_IMP>
 
@@ -107,7 +108,9 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     [self observeNotification:kJPFNetworkDidReceiveMessageNotification];
     
     
-    self.home = [LKHomeViewController viewController];
+    self.homeViewController = [LKHomeViewController viewController];
+    
+    self.searchViewController = [LKSearchViewController viewController];
     
     
     // 极光推送
@@ -146,14 +149,12 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     
     // 判断是否为推送打开
     if (LKLocalUser.singleton.isLogin && launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
-        
-        [self.home performSelector:@selector(notificationAction) withObject:nil afterDelay:0.5];
-        
+        [self.homeViewController performSelector:@selector(notificationAction) withObject:nil afterDelay:0.5];
     }
     
     
     // tabbarCtrl只放了一个主页控制器
-    self.tabBarController = [[LKTabBarController alloc] initWithViewControllers:@[LC_UINAVIGATION(self.home)]];
+    self.tabBarController = [[LKTabBarController alloc] initWithViewControllers:@[LC_UINAVIGATION(self.homeViewController), LC_UINAVIGATION(self.searchViewController)]];
 
     self.window.rootViewController = self.tabBarController;
     
@@ -299,7 +300,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
             // 判断是否为推送打开
             if ([UIApplication sharedApplication].applicationIconBadgeNumber) {
                 
-                [self.home performSelector:@selector(notificationAction) withObject:nil afterDelay:0.5];
+                [self.homeViewController performSelector:@selector(notificationAction) withObject:nil afterDelay:0.5];
             }
             
         }
@@ -415,7 +416,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     completionHandler(UIBackgroundFetchResultNewData);
     
     // Bind badge.
-    [LKNotificationCount bindView:self.home.navigationItem.rightBarButtonItem.customView withBadgeCount:[userInfo[@"aps"][@"badge"] integerValue]];
+    [LKNotificationCount bindView:self.homeViewController.navigationItem.rightBarButtonItem.customView withBadgeCount:[userInfo[@"aps"][@"badge"] integerValue]];
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {

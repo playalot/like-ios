@@ -23,7 +23,7 @@
 #import "LKPushAnimation.h"
 #import "LKTime.h"
 #import "LKAssistiveTouchButton.h"
-#import "LKSearchViewController.h"
+#import "LKSearchView.h"
 #import "LKNewPostUploadCenter.h"
 #import "LKUploadingCell.h"
 #import "LCUIKeyBoard.h"
@@ -68,7 +68,7 @@ LC_PROPERTY(assign) NSTimeInterval lastFocusLoadTime;
 LC_PROPERTY(assign) BOOL needRefresh;
 
 // - - - - - - -
-LC_PROPERTY(strong) LKSearchViewController * searchViewController;
+LC_PROPERTY(strong) LKSearchView * searchView;
 LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
 LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
 
@@ -76,6 +76,15 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
 @end
 
 @implementation LKHomeViewController
+
++ (id)sharedInstance {
+    static LKHomeViewController *instance_;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        instance_ = [[LKHomeViewController alloc] init];
+    });
+    return instance_;
+}
 
 -(void) dealloc
 {
@@ -95,12 +104,12 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     
     // hide status bar.
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:animated];
-    
+
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     
     
     // hide navigation bar.
-    if (self.searchViewController) {
+    if (self.searchView) {
         [self setNavigationBarHidden:YES animated:animated];
     }
     else{
@@ -236,7 +245,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     
     // Bind badge.
     [LKNotificationCount bindView:self.navigationItem.rightBarButtonItem.customView];
-    
+
     
     //
     LCUIButton *titleBtn = [[LCUIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];
@@ -331,7 +340,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
         
         LC_FAST_ANIMATIONS_F(UINavigationControllerHideShowBarDuration, ^{
             
-            self.searchViewController.alpha = 0;
+            self.searchView.alpha = 0;
             
             if (self.feedType == LKHomepageFeedTypeFocus) {
                 
@@ -344,8 +353,8 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
             
         }, ^(BOOL finished){
             
-            [self.searchViewController removeFromSuperview];
-            self.searchViewController = nil;
+            [self.searchView removeFromSuperview];
+            self.searchView = nil;
             
         });
         
@@ -1185,10 +1194,10 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
         
         LC_APPDELEGATE.tabBarController.assistiveTouchButton.hidden = YES;
         
-        LKSearchViewController * view = LKSearchViewController.view;
+        LKSearchView * view = LKSearchView.view;
         
         self.header.searchViewController = view;
-        self.searchViewController = view;
+        self.searchView = view;
         
         view.viewFrameY = self.header.viewBottomY;
         view.alpha = 0;

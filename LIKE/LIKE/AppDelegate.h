@@ -11,6 +11,7 @@
 #import "LKHomeViewController.h"
 #import "LKCameraViewController.h"
 #import "LKNotificationViewController.h"
+#import "LKSearchViewController.h"
 
 
 LC_NOTIFICATION_SET(LKSessionError);
@@ -19,7 +20,8 @@ LC_NOTIFICATION_SET(LKSessionError);
 @interface AppDelegate : LCUIApplication
 
 LC_PROPERTY(strong) LKTabBarController * tabBarController;
-LC_PROPERTY(strong) LKHomeViewController * home;
+LC_PROPERTY(strong) LKHomeViewController * homeViewController;
+LC_PROPERTY(strong) LKSearchViewController * searchViewController;
 LC_PROPERTY(strong) UIViewController * none;
 
 @end

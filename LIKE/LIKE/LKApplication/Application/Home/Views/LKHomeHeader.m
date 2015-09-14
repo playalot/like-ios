@@ -12,6 +12,7 @@
 #import "LKSearchBar.h"
 #import "LKLoginViewController.h"
 #import "UIImageView+WebCache.h"
+#import "LKSearchView.h"
 
 #define kDefaultHeaderFrame CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)
 

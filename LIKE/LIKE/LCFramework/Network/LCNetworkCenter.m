@@ -267,11 +267,9 @@ LC_PROPERTY(strong) NSLock * lock;
 }
 
 -(void) handleSuccessTask:(NSURLSessionDataTask *)task responseOjbect:(id)responseObject updateBlock:(LCNetworkCenterBlock)updateBlock sender:(NSObject *)sender
-{
-    
+{    
     [self postNotification:AFNetworkingTaskDidCompleteNotification withObject:task];
 
-    
     LCHTTPRequestResult * result = [[LCHTTPRequestResult alloc] init];
     result.responseObject = responseObject;
     result.task = task;

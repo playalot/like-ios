@@ -23,13 +23,11 @@
 #import "SDImageCache.h"
 #import "APService.h"
 #import "LKChooseTagView.h"
-#import "LKSearchViewController.h"
 
 @interface AppDelegate () <LC_CMD_IMP>
 
 LC_PROPERTY(strong) TencentOAuth * tencentOAuth;
 LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
-
 LC_PROPERTY(strong) NSDictionary *launchOptions;
 
 @end
@@ -109,9 +107,9 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     
     
     self.homeViewController = [LKHomeViewController viewController];
-    
     self.searchViewController = [LKSearchViewController viewController];
-    
+    self.notificationViewController = [LKNotificationViewController viewController];
+    self.userCenterViewController = [[LKUserCenterViewController alloc] initWithUser:LKLocalUser.singleton.user];
     
     // 极光推送
     if (IOS8_OR_LATER) {
@@ -154,7 +152,12 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     
     
     // tabbarCtrl只放了一个主页控制器
-    self.tabBarController = [[LKTabBarController alloc] initWithViewControllers:@[LC_UINAVIGATION(self.homeViewController), LC_UINAVIGATION(self.searchViewController)]];
+    self.tabBarController = [[LKTabBarController alloc]
+                             initWithViewControllers:@[
+                                                       LC_UINAVIGATION(self.homeViewController),
+                                                       LC_UINAVIGATION(self.searchViewController),
+                                                       LC_UINAVIGATION(self.notificationViewController),
+                                                       LC_UINAVIGATION(self.userCenterViewController)]];
 
     self.window.rootViewController = self.tabBarController;
     

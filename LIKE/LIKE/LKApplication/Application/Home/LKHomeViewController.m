@@ -15,7 +15,7 @@
 #import "LKTagAddModel.h"
 #import "LKPostDetailViewController.h"
 #import "LKLoginViewController.h"
-#import "LKNotificationViewController.h"
+#import "LKNotificationView.h"
 #import "LKNotificationCount.h"
 #import "SVPullToRefresh.h"
 #import "LKUploadAvatarAndCoverModel.h"
@@ -30,7 +30,7 @@
 #import "LKHomeHeader.h"
 #import "LKSearchBar.h"
 #import "FXBlurView.h"
-#import "LKAttentionViewController.h"
+#import "LKAttentionView.h"
 #import "Doppelganger.h"
 #import "LKBadgeView.h"
 #import "LKSearchResultsViewController.h"
@@ -69,8 +69,8 @@ LC_PROPERTY(assign) BOOL needRefresh;
 
 // - - - - - - -
 LC_PROPERTY(strong) LKSearchView * searchView;
-LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
-LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
+LC_PROPERTY(strong) LKNotificationView * notificationViewController;
+LC_PROPERTY(strong) LKAttentionView * attentionViewController;
 
 
 @end
@@ -240,38 +240,36 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     // Bar item.
     [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image: [[UIImage imageNamed:@"CollectionIcon.png" useCache:YES] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]] selectImage:nil];
     
-    [self setNavigationBarButton:LCUINavigationBarButtonTypeRight image:[[UIImage imageNamed:@"NotificationIcon.png" useCache:YES] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]] selectImage:nil];
-    
+//    [self setNavigationBarButton:LCUINavigationBarButtonTypeRight image:[[UIImage imageNamed:@"NotificationIcon.png" useCache:YES] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]] selectImage:nil];
     
     // Bind badge.
-    [LKNotificationCount bindView:self.navigationItem.rightBarButtonItem.customView];
-
+//    [LKNotificationCount bindView:self.navigationItem.rightBarButtonItem.customView];
     
-    //
     LCUIButton *titleBtn = [[LCUIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];
     [titleBtn setImage:[UIImage imageNamed:@"HomeLikeIcon" useCache:YES] forState:UIControlStateNormal];
 //    self.titleView = [LCUIImageView viewWithImage:[UIImage imageNamed:@"HomeLikeIcon.png" useCache:YES]];
     self.titleView = (UIView *)titleBtn;
     [titleBtn addTarget:self action:@selector(scrollViewScrollToTop) forControlEvents:UIControlEventTouchUpInside];
     
-    //
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
     
-    
-    self.attentionViewController = LKAttentionViewController.view;
+    self.attentionViewController = LKAttentionView.view;
     self.attentionViewController.delegate = self;
     self.attentionViewController.tableView.scrollsToTop = NO;
     self.attentionViewController.hidden = YES;
     self.view.ADD(self.attentionViewController);
     
-    //
-    self.tableView = [[LCUITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.viewFrameWidth, self.view.viewFrameHeight - 64) style:UITableViewStylePlain];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.tableView.backgroundColor = [UIColor clearColor];
-    self.view.ADD(self.tableView);
+    [self buildTableView];
+    [self buildInputView];
+    [self buildPullLoader];
     
+    [self loadData:LCUIPullLoaderDiretionTop];
+}
+
+- (void)buildNavigation {
+}
+
+- (void)buildHeader {
     
     @weakly(self);
     self.header = [[LKHomeHeader alloc] initWithCGSize:CGSizeMake(LC_DEVICE_WIDTH, 150)];
@@ -288,24 +286,22 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     };
     
     self.header.backgroundAction = ^(id value){
-        
         /*
-        // upload cover.
-        @normally(self);
-        
-        if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
-            
-            [LKUploadAvatarAndCoverModel chooseCoverImage:^(NSString *error, UIImage * image) {
-                
-                if (!error) {
-                    
-                    self.header.backgroundView.image = image;
-                    [self.userInfoModel getUserInfo:LKLocalUser.singleton.user.id];
-                }
-            }];
-        }
+         // upload cover.
+         @normally(self);
+         
+         if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
+         
+         [LKUploadAvatarAndCoverModel chooseCoverImage:^(NSString *error, UIImage * image) {
+         
+         if (!error) {
+         
+         self.header.backgroundView.image = image;
+         [self.userInfoModel getUserInfo:LKLocalUser.singleton.user.id];
+         }
+         }];
+         }
          */
-        
     };
     
     self.header.willBeginSearch = ^(id value){
@@ -363,19 +359,33 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     };
     
     self.tableView.tableHeaderView = self.header;
+}
+
+- (void)buildTableView {
+    self.tableView = [[LCUITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.viewFrameWidth, self.view.viewFrameHeight - 64) style:UITableViewStylePlain];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.backgroundColor = [UIColor clearColor];
+    self.view.ADD(self.tableView);
     
-    //
+//    [self buildHeader];
+}
+
+- (void)buildPullLoader {
+    @weakly(self);
     self.pullLoader = [LCUIPullLoader pullLoaderWithScrollView:self.tableView pullStyle:LCUIPullLoaderStyleFooter];
     self.pullLoader.indicatorViewStyle = UIActivityIndicatorViewStyleWhite;
     
-    self.pullLoader.beginRefresh = ^(LCUIPullLoaderDiretion diretion){
-        
+    self.pullLoader.beginRefresh = ^(LCUIPullLoaderDiretion diretion) {
         @normally(self);
-        
         [self loadData:diretion];
     };
+}
+
+- (void)buildInputView {
     
-    
+    @weakly(self);
     
     self.inputView = LKInputView.view;
     self.inputView.viewFrameY = self.view.viewFrameHeight;
@@ -386,7 +396,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
         @normally(self);
         
         if (string.trim.length == 0) {
-
+            
             [self showTopMessageErrorHud:LC_LO(@"标签不能为空")];
             return;
         }
@@ -403,7 +413,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
         if (self.feedType == LKHomepageFeedTypeFocus) {
             
             cell = (LKHomeTableViewCell *)[self.attentionViewController.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:1]];;
-
+            
         }
         else{
             
@@ -464,8 +474,6 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
         
         LC_APPDELEGATE.tabBarController.assistiveTouchButton.hidden = NO;
     };
-    
-    [self loadData:LCUIPullLoaderDiretionTop];
 }
 
 #pragma mark -
@@ -973,7 +981,7 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
         self.attentionViewController.tableView.scrollsToTop = NO;
         self.tableView.scrollsToTop = NO;
 
-        LKNotificationViewController * notification = LKNotificationViewController.view;
+        LKNotificationView * notification = LKNotificationView.view;
         notification.alpha = 0;
         notification.fromType = self.feedType;
         self.view.ADD(notification);

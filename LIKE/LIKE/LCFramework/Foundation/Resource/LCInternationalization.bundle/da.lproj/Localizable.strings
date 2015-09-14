@@ -173,7 +173,7 @@
 // LKCameraViewController
 "默认" = "Original";
 
-// LKNotificationViewController
+// LKNotificationView
 "为你图片添加了标签" = "tagged ";
 "关注了你" = "started following you";
 "赞了标签" = "liked ";

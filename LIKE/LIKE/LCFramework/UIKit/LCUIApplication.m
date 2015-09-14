@@ -10,7 +10,7 @@
 
 #import "LCUIApplication.h"
 #import "APService.h"
-#import "LKNotificationViewController.h"
+#import "LKNotificationView.h"
 #import "LKHomeViewController.h"
 #import "LCNetworkConfig.h"
 #import "LCUrlArgumentsFilter.h"

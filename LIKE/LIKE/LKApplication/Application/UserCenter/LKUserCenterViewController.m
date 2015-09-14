@@ -178,7 +178,6 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     self.tableView.alpha = 0;
     self.view.ADD(self.tableView);
     
-    
     {
         {
             // Navigation bar.

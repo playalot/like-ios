@@ -1,19 +1,19 @@
 //
-//  LKAttentionViewController.m
+//  LKAttentionView.m
 //  LIKE
 //
 //  Created by Licheng Guo ( http://nsobjet.me ) on 15/7/21.
 //  Copyright (c) 2015年 Beijing Like Technology Co.Ltd . ( http://www.likeorz.com ). All rights reserved.
 //
 
-#import "LKAttentionViewController.h"
+#import "LKAttentionView.h"
 #import "LKHomeViewController.h"
 
-@interface LKAttentionViewController ()
+@interface LKAttentionView ()
 
 @end
 
-@implementation LKAttentionViewController
+@implementation LKAttentionView
 
 -(instancetype) init
 {
@@ -29,7 +29,7 @@
         self.tableView.backgroundColor = [UIColor clearColor];
         self.ADD(self.tableView);
         
-        
+
         self.pullLoader = [LCUIPullLoader pullLoaderWithScrollView:self.tableView pullStyle:LCUIPullLoaderStyleFooter];
         self.pullLoader.indicatorViewStyle = UIActivityIndicatorViewStyleWhite;
         

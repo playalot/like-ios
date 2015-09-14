@@ -1,5 +1,5 @@
 //
-//  LKAttentionViewController.h
+//  LKAttentionView.h
 //  LIKE
 //
 //  Created by Licheng Guo ( http://nsobjet.me ) on 15/7/21.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LKAttentionViewController : UIView
+@interface LKAttentionView : UIView
 
 LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
 

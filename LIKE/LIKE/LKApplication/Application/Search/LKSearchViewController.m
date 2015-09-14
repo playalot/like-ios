@@ -23,9 +23,10 @@
     return instance_;
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
+- (void)buildUI {
+    self.view.backgroundColor = [LKColor backgroundColor];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {

@@ -19,6 +19,7 @@ LC_PROPERTY(strong) UIView * bindView;
 
 +(void) bindView:(UIView *)bindView
 {
+    if (bindView == nil) return;
     [LKNotificationCount.singleton setBindView:bindView];
 }
 
@@ -88,7 +89,7 @@ LC_PROPERTY(strong) UIView * bindView;
         if (result.state == LKHttpRequestStateFinished) {
             
             NSInteger count = [result.json[@"data"][@"count"] integerValue];
-            
+
             [self setBadgeCount:count];
         }
         else if(result.state == LKHttpRequestStateFailed){
@@ -100,12 +101,14 @@ LC_PROPERTY(strong) UIView * bindView;
 
 -(void) setBadgeCount:(NSInteger)badgeCount
 {
-    M13BadgeView * badge = self.bindView.FIND(100100);
-    badge.text = LC_NSSTRING_FROM_INT(badgeCount);
+    if (self.bindView != nil) {
+        M13BadgeView * badge = self.bindView.FIND(100100);
+        if (badge)
+            badge.text = LC_NSSTRING_FROM_INT(badgeCount);
+    }
+    
     //badge.viewFrameX = self.bindView.viewFrameWidth - badge.viewFrameWidth - self.bindView.viewMidWidth;
-    
     LKUserDefaults.singleton[self.class.description] = LC_NSSTRING_FROM_INT(badgeCount);
-    
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:badgeCount];
 }
 

@@ -94,13 +94,11 @@ LC_PROPERTY(strong) LCUIButton * doneButton;
     self.searchTip.titleEdgeInsets = UIEdgeInsetsMake(2, 0, 0, 0);
     [self.searchTip addTarget:self action:@selector(beginSearch) forControlEvents:UIControlEventTouchUpInside];
     self.ADD(self.searchTip);
-
     
     self.textField = [[LKSearchBar alloc] initWithFrame:self.searchTip.frame];
     self.textField.frame = self.searchTip.frame;
     self.textField.alpha = 0;
     self.ADD(self.textField);
-    
     
 //    UIView * view = UIView.view;
 //    view.frame = CGRectMake(0, 0, self.viewFrameWidth, 1500);

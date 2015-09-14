@@ -104,9 +104,7 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
     
     // hide status bar.
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:animated];
-
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
-    
     
     // hide navigation bar.
     if (self.searchView) {
@@ -237,36 +235,41 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
 {
     self.view.backgroundColor = LKColor.backgroundColor;
     
+    // build common view
+    [self buildNavigationBar];
+    [self buildAttentionView];
+    [self buildTableView];
+    [self buildInputView];
+    [self buildPullLoader];
+    
+    // 触发下拉刷新
+    [self loadData:LCUIPullLoaderDiretionTop];
+}
+
+- (void)buildNavigationBar {
     // Bar item.
     [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image: [[UIImage imageNamed:@"CollectionIcon.png" useCache:YES] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]] selectImage:nil];
     
-//    [self setNavigationBarButton:LCUINavigationBarButtonTypeRight image:[[UIImage imageNamed:@"NotificationIcon.png" useCache:YES] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]] selectImage:nil];
+    //    [self setNavigationBarButton:LCUINavigationBarButtonTypeRight image:[[UIImage imageNamed:@"NotificationIcon.png" useCache:YES] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]] selectImage:nil];
     
     // Bind badge.
-//    [LKNotificationCount bindView:self.navigationItem.rightBarButtonItem.customView];
+    //    [LKNotificationCount bindView:self.navigationItem.rightBarButtonItem.customView];
     
     LCUIButton *titleBtn = [[LCUIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];
     [titleBtn setImage:[UIImage imageNamed:@"HomeLikeIcon" useCache:YES] forState:UIControlStateNormal];
-//    self.titleView = [LCUIImageView viewWithImage:[UIImage imageNamed:@"HomeLikeIcon.png" useCache:YES]];
+    //    self.titleView = [LCUIImageView viewWithImage:[UIImage imageNamed:@"HomeLikeIcon.png" useCache:YES]];
     self.titleView = (UIView *)titleBtn;
     [titleBtn addTarget:self action:@selector(scrollViewScrollToTop) forControlEvents:UIControlEventTouchUpInside];
     
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
-    
+}
+
+- (void)buildAttentionView {
     self.attentionViewController = LKAttentionView.view;
     self.attentionViewController.delegate = self;
     self.attentionViewController.tableView.scrollsToTop = NO;
     self.attentionViewController.hidden = YES;
     self.view.ADD(self.attentionViewController);
-    
-    [self buildTableView];
-    [self buildInputView];
-    [self buildPullLoader];
-    
-    [self loadData:LCUIPullLoaderDiretionTop];
-}
-
-- (void)buildNavigation {
 }
 
 - (void)buildHeader {
@@ -369,7 +372,7 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
     self.tableView.backgroundColor = [UIColor clearColor];
     self.view.ADD(self.tableView);
     
-//    [self buildHeader];
+    [self buildHeader];
 }
 
 - (void)buildPullLoader {

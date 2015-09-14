@@ -25,8 +25,6 @@
 
 - (void)buildUI {
     self.view.backgroundColor = [LKColor backgroundColor];
-    
-    
 }
 
 - (void)didReceiveMemoryWarning {

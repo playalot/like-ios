@@ -239,7 +239,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     
     
     if (post.user.id.integerValue == LKLocalUser.singleton.user.id.integerValue) {
-        
+
         post.user = LKLocalUser.singleton.user;
     }
     

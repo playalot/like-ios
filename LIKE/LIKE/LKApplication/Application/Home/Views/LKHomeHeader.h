@@ -22,7 +22,6 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
 
 LC_PROPERTY(copy) LKValueChanged willBeginSearch;
 LC_PROPERTY(copy) LKValueChanged willEndSearch;
-
 LC_PROPERTY(copy) LKValueChanged headAction;
 LC_PROPERTY(copy) LKValueChanged backgroundAction;
 

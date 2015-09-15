@@ -10,6 +10,8 @@
 #import "LKHomeViewController.h"
 #import "LKPost.h"
 
+#define FOCUS_FEED_CACHE_KEY [NSString stringWithFormat:@"LKFocusFeedKey-%@", LKLocalUser.singleton.user.id]
+
 @interface LKFollowingViewController ()
 
 LC_PROPERTY(strong) NSMutableArray *datasource;
@@ -18,12 +20,16 @@ LC_PROPERTY(strong) LCUITableView * tableView;
 
 LC_PROPERTY(weak) id delegate;
 
+LC_PROPERTY(copy) NSNumber * next;
+LC_PROPERTY(copy) NSNumber * focusNext;
+LC_PROPERTY(assign) NSTimeInterval lastFocusLoadTime;
+
 @end
 
 @implementation LKFollowingViewController
 
 - (void)viewDidLoad {
-    [self viewDidLoad];
+    [super viewDidLoad];
     
     self.view.backgroundColor = LKColor.backgroundColor;
     
@@ -41,20 +47,34 @@ LC_PROPERTY(weak) id delegate;
     
     self.pullLoader.beginRefresh = ^(LCUIPullLoaderDiretion diretion){
         @normally(self);
-        [self.pullLoader endRefresh];
-//        [self loadData:diretion];
+        [self loadData:diretion];
     };
 
 }
 
-/*
--(void)loadData:(LCUIPullLoaderDiretion)diretion {
+// 这个方法同时负责主页和关注的人列表的请求
+-(void) loadData:(LCUIPullLoaderDiretion)diretion
+{
+//    if (LC_APPDELEGATE.tabBarController.loading) {
+//        [self.pullLoader endRefresh];
+//        return;
+//    }
     
     NSTimeInterval time = [[NSDate date] timeIntervalSince1970];
     
-    LC_APPDELEGATE.tabBarController.loading = YES;
+//    if (self.feedType == LKHomepageFeedTypeFocus && diretion == LCUIPullLoaderDiretionTop) {
+//        if (time - self.lastFocusLoadTime < 30) {
+//            return;
+//        }
+//    }
+    
+//    LC_APPDELEGATE.tabBarController.loading = YES;
     
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"followingFeeds"].AUTO_SESSION();
+    
+    if (self.next && diretion == LCUIPullLoaderDiretionBottom) {
+        [interface addParameter:self.focusNext key:@"ts"];
+    }
     
     @weakly(self);
     
@@ -64,8 +84,9 @@ LC_PROPERTY(weak) id delegate;
         
         if (result.state == LKHttpRequestStateFinished) {
             
-            self.focusNext = result.json[@"data"][@"next"] ? result.json[@"data"][@"next"] : nil;
-
+            NSNumber *resultNext = result.json[@"data"][@"next"];
+            if (resultNext)
+                self.next = resultNext;
             
             NSArray * resultData = result.json[@"data"][@"posts"];
             NSMutableArray * datasource = [NSMutableArray array];
@@ -78,50 +99,41 @@ LC_PROPERTY(weak) id delegate;
                 
                 self.datasource = datasource;
                 LKUserDefaults.singleton[FOCUS_FEED_CACHE_KEY] = resultData;
-                self.lastFocusLoadTime = time;
                 
-            } else {
+                self.lastFocusLoadTime = time;
+            }
+            else{
+                
                 [self.datasource addObjectsFromArray:datasource];
             }
             
             if (diretion == LCUIPullLoaderDiretionBottom) {
+                
                 [self.pullLoader endRefresh];
+                
             }
             
             LC_FAST_ANIMATIONS(0.25, ^{
-                
                 [self.tableView reloadData];
-                
             });
             
-            LC_APPDELEGATE.tabBarController.loading = NO;
-
+//            [LC_APPDELEGATE.tabBarController.loading = NO;
         }
         else if (result.state == LKHttpRequestStateFailed){
             
             [self.pullLoader endRefresh];
             
-            [self showTopMessageErrorHud:result.error];
-            
-            LC_APPDELEGATE.tabBarController.loading = NO;
+//            LC_APPDELEGATE.tabBarController.loading = NO;
         }
         else if (result.state == LKHttpRequestStateCanceled){
             
-            if (self.feedType == LKHomepageFeedTypeFocus) {
-                
-                [self.attentionViewController.pullLoader endRefresh];
-            }
-            else{
-                
-                [self.pullLoader endRefresh];
-            }
+            [self.pullLoader endRefresh];
             
-            LC_APPDELEGATE.tabBarController.loading = NO;
+//            LC_APPDELEGATE.tabBarController.loading = NO;
         }
     }];
     
 }
-*/
  
 -(void) setDelegate:(id)delegate
 {

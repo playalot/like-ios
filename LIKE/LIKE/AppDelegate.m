@@ -107,6 +107,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     
     
     self.homeViewController = [LKHomeViewController viewController];
+    self.followingViewController = [LKFollowingViewController viewController];
     self.searchViewController = [LKSearchViewController viewController];
     self.notificationViewController = [LKNotificationViewController viewController];
     self.userCenterViewController = [[LKUserCenterViewController alloc] initWithUser:LKLocalUser.singleton.user];
@@ -154,7 +155,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     // tabbarCtrl只放了一个主页控制器
     self.tabBarController = [[LKTabBarController alloc]
                              initWithViewControllers:@[
-                                                       LC_UINAVIGATION(self.homeViewController),
+                                                       LC_UINAVIGATION(self.followingViewController),
                                                        LC_UINAVIGATION(self.searchViewController),
                                                        LC_UINAVIGATION(self.notificationViewController),
                                                        LC_UINAVIGATION(self.userCenterViewController)]];

@@ -14,6 +14,7 @@
 #import "LKSearchViewController.h"
 #import "LKNotificationViewController.h"
 #import "LKUserCenterViewController.h"
+#import "LKFollowingViewController.h"
 
 LC_NOTIFICATION_SET(LKSessionError);
 
@@ -21,6 +22,7 @@ LC_NOTIFICATION_SET(LKSessionError);
 
 LC_PROPERTY(strong) LKTabBarController * tabBarController;
 LC_PROPERTY(strong) LKHomeViewController * homeViewController;
+LC_PROPERTY(strong) LKFollowingViewController * followingViewController;
 LC_PROPERTY(strong) LKSearchViewController * searchViewController;
 LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
 LC_PROPERTY(strong) LKUserCenterViewController * userCenterViewController;

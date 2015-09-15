@@ -7,6 +7,7 @@
 //
 
 #import "LCUIViewController.h"
+#import "LCUIViewController.h"
 
 @interface LKFollowingViewController : LCUIViewController
 

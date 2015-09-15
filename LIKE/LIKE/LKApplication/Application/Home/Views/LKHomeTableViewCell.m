@@ -11,6 +11,7 @@
 #import "LKTagsView.h"
 #import "ADTickerLabel.h"
 #import "UIImageView+WebCache.h"
+#import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 
 @interface LKHomeTableViewCell()
 
@@ -276,20 +277,23 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.contentImage.image = nil;
 //    self.contentImage.url = post.content;
 
-    [self.contentImage sd_setImageWithURL:[NSURL URLWithString:post.content] placeholderImage:nil options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+    @weakly(self);
+    
+    for (UIView *view in self.contentImage.subviews) {
         
-        if (self.contentImage.indicator.progress == 0) {
+        if ([view isKindOfClass:[M13ProgressViewRing class]]) {
             
-            [self.contentImage.indicator setProgress:receivedSize * 1.0 / expectedSize animated:YES];
-            self.contentImage.indicator.alpha = 1;
+            [view removeFromSuperview];
         }
+    }
+    
+    [self.contentImage setImageWithURL:[NSURL URLWithString:post.content] placeholderImage:nil options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+        
         
     } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         
-        self.contentImage.indicator.alpha = 0;
-        [self.contentImage.indicator removeFromSuperview];
-    }];
-    
+        
+    } usingActivityIndicatorStyle:0];
     
     
     // 设置标签的frame
@@ -299,7 +303,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     [LKHomeTableViewCell roundCorners:UIRectCornerBottomLeft | UIRectCornerBottomRight forView:self.tagsView];
     
     
-    @weakly(self);
+//    @weakly(self);
     
     self.tagsView.didRemoveTag = ^(LKTag * tag){
         

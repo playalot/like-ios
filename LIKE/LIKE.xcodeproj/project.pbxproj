@@ -609,6 +609,7 @@
 		13B5B4F61B1710AE00252A78 /* LKTagCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B5B4F51B1710AE00252A78 /* LKTagCommentCell.m */; };
 		13B6C1961AE8E8EA008912C0 /* NotificationIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13B6C1951AE8E8EA008912C0 /* NotificationIcon@3x.png */; };
 		13B6C1991AE8EA9F008912C0 /* LKUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B6C1981AE8EA9F008912C0 /* LKUserDefaults.m */; };
+		13BB8DB51BA6EC32004AF98B /* UIImageView+UIActivityIndicatorForSDWebImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BB8DB41BA6EC32004AF98B /* UIImageView+UIActivityIndicatorForSDWebImage.m */; };
 		13BCA65E1B5CB28F00DC0549 /* LKPresentAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BCA65D1B5CB28F00DC0549 /* LKPresentAnimation.m */; };
 		13BCA6611B5CCC7600DC0549 /* LKHomeHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BCA6601B5CCC7600DC0549 /* LKHomeHeader.m */; };
 		13BCA6641B5CDCF200DC0549 /* LCBlurSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BCA6631B5CDCF200DC0549 /* LCBlurSearchBar.m */; };
@@ -1953,6 +1954,8 @@
 		13B6C1951AE8E8EA008912C0 /* NotificationIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationIcon@3x.png"; sourceTree = "<group>"; };
 		13B6C1971AE8EA9F008912C0 /* LKUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKUserDefaults.h; sourceTree = "<group>"; };
 		13B6C1981AE8EA9F008912C0 /* LKUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKUserDefaults.m; sourceTree = "<group>"; };
+		13BB8DB31BA6EC32004AF98B /* UIImageView+UIActivityIndicatorForSDWebImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+UIActivityIndicatorForSDWebImage.h"; sourceTree = "<group>"; };
+		13BB8DB41BA6EC32004AF98B /* UIImageView+UIActivityIndicatorForSDWebImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+UIActivityIndicatorForSDWebImage.m"; sourceTree = "<group>"; };
 		13BCA65C1B5CB28F00DC0549 /* LKPresentAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKPresentAnimation.h; sourceTree = "<group>"; };
 		13BCA65D1B5CB28F00DC0549 /* LKPresentAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKPresentAnimation.m; sourceTree = "<group>"; };
 		13BCA65F1B5CCC7600DC0549 /* LKHomeHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKHomeHeader.h; sourceTree = "<group>"; };
@@ -3376,6 +3379,8 @@
 		138EDD381AD7B0A30020957C /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				13BB8DB31BA6EC32004AF98B /* UIImageView+UIActivityIndicatorForSDWebImage.h */,
+				13BB8DB41BA6EC32004AF98B /* UIImageView+UIActivityIndicatorForSDWebImage.m */,
 				138EDD391AD7B0A30020957C /* NSArray+LCExtension.h */,
 				138EDD3A1AD7B0A30020957C /* NSArray+LCExtension.m */,
 				138EDD3B1AD7B0A30020957C /* NSData+LCExtension.h */,
@@ -5675,6 +5680,7 @@
 				1377F04D1B5E35D8008E21BC /* WMLArrayDiffUtility.m in Sources */,
 				13BCD8911ADBA92200A0CBF5 /* POPBasicAnimation.mm in Sources */,
 				138EDE9F1AD7B0A30020957C /* UIView+LCGestureRecognizer.m in Sources */,
+				13BB8DB51BA6EC32004AF98B /* UIImageView+UIActivityIndicatorForSDWebImage.m in Sources */,
 				13E1A4EA1AE65FE300E24C3C /* FastttFocus.m in Sources */,
 				138EDE261AD7B0A30020957C /* LCProcessInfo.m in Sources */,
 				1390550D1B994A6D00DBF34A /* GPUImageLevelsFilter.m in Sources */,

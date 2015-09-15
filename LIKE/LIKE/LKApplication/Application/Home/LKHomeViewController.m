@@ -787,14 +787,12 @@ LC_PROPERTY(strong) LKTabBarController *tabbarCtrl;
     if (self.feedType == LKHomepageFeedTypeFocus) {
         
         if (self.focusNext && diretion == LCUIPullLoaderDiretionBottom) {
-            
             [interface addParameter:self.focusNext key:@"ts"];
         }
     }
     else{
         
-        if (/*!LC_NSSTRING_IS_INVALID*/(self.next) && diretion == LCUIPullLoaderDiretionBottom) {
-            
+        if ((self.next) && diretion == LCUIPullLoaderDiretionBottom) {
             [interface addParameter:self.next key:@"ts"];
         }
     }
@@ -807,13 +805,13 @@ LC_PROPERTY(strong) LKTabBarController *tabbarCtrl;
         
         if (result.state == LKHttpRequestStateFinished) {
             
-            if (self.feedType == LKHomepageFeedTypeFocus) {
-                
-                self.focusNext = result.json[@"data"][@"next"] ? result.json[@"data"][@"next"] : nil;
-            }
-            else{
-                
-                self.next = result.json[@"data"][@"next"] ? result.json[@"data"][@"next"] : nil/*@""*/;
+            NSNumber *resultNext = result.json[@"data"][@"next"];
+            if (resultNext) {
+                if (self.feedType == LKHomepageFeedTypeFocus) {
+                    self.focusNext = resultNext;
+                } else {
+                    self.next = resultNext;
+                }
             }
             
             NSArray * resultData = result.json[@"data"][@"posts"];
@@ -825,7 +823,7 @@ LC_PROPERTY(strong) LKTabBarController *tabbarCtrl;
             }
             
             if (diretion == LCUIPullLoaderDiretionTop) {
-                
+    
                 
                 // Change datasource and save cache...
                 if (self.feedType == LKHomepageFeedTypeFocus) {

@@ -43,6 +43,9 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     
     self.launchOptions = launchOptions;
     
+    self.home = [LKHomeViewController viewController];
+
+    
     // 1.设置缓存
     NSURLCache *cache = [[NSURLCache alloc] initWithMemoryCapacity:4 * 1024 * 1024 diskCapacity:20 * 1024 * 1024 diskPath:nil];
     [NSURLCache setSharedURLCache:cache];
@@ -91,23 +94,6 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     
     // Mob短信验证
     [SMS_SDK registerApp:@"81edd3d46294" withSecret:@"91a6694191e296937995cd3f66f5e9ca"];
-
-    
-    // 会话错误通知
-    [self observeNotification:LKSessionError];
-    // 应用程序远程登录通知
-//    [self observeNotification:LCUIApplicationDidRegisterRemoteNotification];
-    [self observeNotification:kJPFNetworkDidRegisterNotification];
-    
-    // 应用程序远程登录失败通知
-//    [self observeNotification:LCUIApplicationDidRegisterRemoteFailNotification];
-    
-    // 应用程序接收到远程通知
-//    [self observeNotification:LCUIApplicationDidReceiveRemoteNotification];
-    [self observeNotification:kJPFNetworkDidReceiveMessageNotification];
-    
-    
-    self.home = [LKHomeViewController viewController];
     
     
     // 极光推送
@@ -134,6 +120,21 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     }
     
     [APService setupWithOption:launchOptions];
+
+    
+    // 会话错误通知
+    [self observeNotification:LKSessionError];
+    // 应用程序远程登录通知
+    //    [self observeNotification:LCUIApplicationDidRegisterRemoteNotification];
+    [self observeNotification:kJPFNetworkDidRegisterNotification];
+    
+    // 应用程序远程登录失败通知
+    //    [self observeNotification:LCUIApplicationDidRegisterRemoteFailNotification];
+    
+    // 应用程序接收到远程通知
+    //    [self observeNotification:LCUIApplicationDidReceiveRemoteNotification];
+    [self observeNotification:kJPFNetworkDidReceiveMessageNotification];
+
     
     if (LKLocalUser.singleton.isLogin) {
         
@@ -144,22 +145,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     
     
-    // 判断是否为推送打开
-    if (LKLocalUser.singleton.isLogin && launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
-        
-        [self.home performSelector:@selector(notificationAction) withObject:nil afterDelay:0.5];
-        
-    }
-    
-    
-    // tabbarCtrl只放了一个主页控制器
-    self.tabBarController = [[LKTabBarController alloc] initWithViewControllers:@[LC_UINAVIGATION(self.home)]];
-
-    self.window.rootViewController = self.tabBarController;
-    
-    
     if (!LKLocalUser.singleton.isLogin) {
-
 
         LCUIImageView * imageView = LCUIImageView.view;
         imageView.image = [LKWelcome image];
@@ -199,6 +185,21 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
             [UIApplication sharedApplication].keyWindow.ADD(chooseView);
         }
     }
+    
+    
+    NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    // 判断是否为推送打开
+    if(userInfo && LKLocalUser.singleton.isLogin)
+    {
+        //点击推送进来后
+        self.window.rootViewController = self.home;
+        //        [self.home performSelector:@selector(notificationAction) withObject:nil afterDelay:2];
+        return;
+    }
+    
+    // tabbarCtrl只放了一个主页控制器
+    self.tabBarController = [[LKTabBarController alloc] initWithViewControllers:@[LC_UINAVIGATION(self.home)]];
+    self.window.rootViewController = self.tabBarController;
 
 //    // welcom...
 //    [LKWelcome welcome];

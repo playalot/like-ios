@@ -25,9 +25,12 @@ LC_PROPERTY(strong) UIView * bindView;
 + (void)bindView:(UIView *)bindView withBadgeCount:(NSInteger)badgeCount {
 
     M13BadgeView *badge = bindView.FIND(100100);
+    if (badge) {
+        [badge removeFromSuperview];
+    }
     NSString *cache =  LKUserDefaults.singleton[self.class.description];
     badge.text = LC_NSSTRING_FROM_INGERGER(cache.integerValue + badgeCount);
-    LKUserDefaults.singleton[self.class.description] = LC_NSSTRING_FROM_INT(cache.integerValue + badgeCount);
+    LKUserDefaults.singleton[self.class.description] = LC_NSSTRING_FROM_INGERGER(cache.integerValue + badgeCount);
     
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:badgeCount];
     

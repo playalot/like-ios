@@ -74,19 +74,15 @@ LC_PROPERTY(assign) NSInteger index;
             
         case LKUserCenterModelTypeFavor: {
             
-            if (self.timestamp == nil) {
-            
-                if (isFirstPage) {
-                    
-                    interface = [LKHttpRequestInterface interfaceType:LC_NSSTRING_FORMAT(@"user/favorites")].AUTO_SESSION();
-                } else {
-                    
-                    interface = [LKHttpRequestInterface interfaceType:LC_NSSTRING_FORMAT(@"user/favorites?ts=%@", self.timestamp)].AUTO_SESSION();
-                }
-                
+            if (isFirstPage) {
+                interface = [LKHttpRequestInterface interfaceType:LC_NSSTRING_FORMAT(@"user/favorites")].AUTO_SESSION();
             } else {
                 
-                interface = [LKHttpRequestInterface interfaceType:LC_NSSTRING_FORMAT(@"user/favorites?ts=%@", self.timestamp)].AUTO_SESSION();
+                if (self.timestamp) {
+                    interface = [LKHttpRequestInterface interfaceType:LC_NSSTRING_FORMAT(@"user/favorites?ts=%@", self.timestamp)].AUTO_SESSION();
+                } else {
+                    interface = [LKHttpRequestInterface interfaceType:LC_NSSTRING_FORMAT(@"user/favorites")].AUTO_SESSION();
+                }
             }
             
             break;

@@ -240,8 +240,14 @@ LC_PROPERTY(strong) UICollectionView * collectionView;
     // 从相册中选择图片的完成回调
     picker.finalizationBlock = ^(id _picker, NSDictionary * imageInfo){
         
+        UIImage *sourceImage = imageInfo[@"UIImagePickerControllerOriginalImage"];
+        
+        if (sourceImage == nil || sourceImage.size.width == CGSizeZero.width || sourceImage.size.height == CGSizeZero.height) {
+            return;
+        }
+        
         // 滤镜控制器
-        LKImageCropperViewController * cropper = [[LKImageCropperViewController alloc] initWithImage:imageInfo[@"UIImagePickerControllerOriginalImage"]];
+        LKImageCropperViewController * cropper = [[LKImageCropperViewController alloc] initWithImage:sourceImage];
         
         [cropper showBackButton];
         

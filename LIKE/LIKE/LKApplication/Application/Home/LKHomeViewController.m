@@ -72,6 +72,7 @@ LC_PROPERTY(strong) LKSearchViewController * searchViewController;
 LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
 LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
 
+LC_PROPERTY(strong) LKTabBarController *tabbarCtrl;
 
 @end
 
@@ -122,8 +123,17 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
     if (LKLocalUser.singleton.isLogin) {
         [self.userInfoModel getUserInfo:LKLocalUser.singleton.user.id];
     }
-    
+
     [self reloadData];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+
+    if (self.view.transform.ty <= 0) {
+//        self.view.transform = CGAffineTransformMakeTranslation(0, 64);
+        [self.view reloadInputViews];
+    }
 }
 
 -(void) viewWillDisappear:(BOOL)animated
@@ -226,6 +236,15 @@ LC_PROPERTY(strong) LKAttentionViewController * attentionViewController;
 
 -(void) buildUI
 {
+    if (!self.navigationController) {
+        
+        self.tabbarCtrl = [[LKTabBarController alloc] initWithViewControllers:@[LC_UINAVIGATION(self)]];
+        [UIApplication sharedApplication].keyWindow.rootViewController = self.tabbarCtrl;
+        self.navigationController.navigationBar.backgroundColor = LKColor.color;
+        self.navigationController.navigationBar.barTintColor = LKColor.color;
+        [self performSelector:@selector(notificationAction) withObject:nil afterDelay:0.5];
+    }
+
     self.view.backgroundColor = LKColor.backgroundColor;
     
     // Bar item.

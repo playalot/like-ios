@@ -13,5 +13,6 @@
 @interface LKPostTableViewController : LCUIViewController
 
 LC_PROPERTY(strong) NSMutableArray * datasource;
+LC_PROPERTY(strong) LCUITableView *tableView;
 
 @end

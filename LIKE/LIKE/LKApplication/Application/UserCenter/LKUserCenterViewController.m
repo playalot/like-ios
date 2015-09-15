@@ -24,10 +24,10 @@
 #import "LKUserInfoCache.h"
 #import "JTSImageViewController.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
+#import "LKUserCenterBrowsingViewController.h"
 
 @interface LKUserCenterViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerCancelFavorDelegate>
 
-//
 LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
 LC_PROPERTY(strong) LCUITableView * tableView;
 LC_PROPERTY(strong) LKHomepageHeader * header;
@@ -127,10 +127,8 @@ LC_PROPERTY(assign) BOOL isLocalUser;
 -(void) viewDidLoad
 {
     if (self.isLocalUser) {
-        
         [self observeNotification:LKUserCenterViewControllerReloadingData];
     }
-    
     
     self.userCenterModel = [[LKUserCenterModel alloc] init];
     self.userInfoModel = [[LKUserInfoModel alloc] init];
@@ -153,7 +151,6 @@ LC_PROPERTY(assign) BOOL isLocalUser;
             [tableViewHeader setTitle:LC_NSSTRING_FORMAT(@"%@",self.userInfoModel.user.fansCount) subTitle:LC_LO(@"粉丝") atIndex:2];
             
             if (self.isLocalUser) {
-                
                 [tableViewHeader setTitle:LC_NSSTRING_FORMAT(@"%@",self.userInfoModel.user.favorCount) subTitle:LC_LO(@"收藏") atIndex:3];
             }
             
@@ -269,18 +266,6 @@ LC_PROPERTY(assign) BOOL isLocalUser;
             // shadow...
 //            UIView * shadow = UIView.VIEW.WIDTH(LC_DEVICE_WIDTH).HEIGHT(200).COLOR([[UIColor blackColor] colorWithAlphaComponent:0.22]);
 //            [self.header insertSubview:shadow aboveSubview:self.header.backgroundImageView];
-            
-            
-            //
-            LCUIButton * backButton = LCUIButton.view;
-            backButton.viewFrameWidth = 50;
-            backButton.viewFrameHeight = 54 / 3 + 40;
-            backButton.viewFrameY = 10;
-            backButton.buttonImage = [UIImage imageNamed:@"NavigationBarBack.png" useCache:YES];
-            backButton.showsTouchWhenHighlighted = YES;
-            [backButton addTarget:self action:@selector(dismissAction) forControlEvents:UIControlEventTouchUpInside];
-            backButton.tag = 1002;
-            [self.header addSubview:backButton];
             
             
             if (self.isLocalUser) {
@@ -400,11 +385,6 @@ LC_PROPERTY(assign) BOOL isLocalUser;
 -(void) loadMore
 {
     [self loadData:self.currentType diretion:LCUIPullLoaderDiretionBottom];
-}
-
--(void) dismissAction
-{
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void) setAction
@@ -530,18 +510,16 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
 {
     LKPost * post = signal.object;
     if (self.currentType == LKUserCenterModelTypePhotos) {
-        
         post.user = self.user;
     }
     
-    LKPostDetailViewController * postDetail = [[LKPostDetailViewController alloc] initWithPost:post];
-    postDetail.cancelFavordelegate = self;
+    LKUserCenterBrowsingViewController *postViewController = [LKUserCenterBrowsingViewController viewController];
+    postViewController.datasource = self.userCenterModel.favorArray;
     
-    LCUINavigationController * nav = LC_UINAVIGATION(postDetail);
+    NSArray * datasource = [self.userCenterModel dataWithType:self.currentType];
+    postViewController.currentIndex = [datasource indexOfObject:post];
     
-    [postDetail setPresendModelAnimationOpen];
-
-    [self.navigationController presentViewController:nav animated:YES completion:nil];
+    [self.navigationController pushViewController:postViewController animated:YES];
 }
 
 #pragma mark - 

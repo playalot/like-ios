@@ -115,6 +115,12 @@ LC_PROPERTY(assign) BOOL favorited;
     [self.inputView resignFirstResponder];
     
     [self.shareTools hideTools];
+    
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
 }
 
 #pragma mark -

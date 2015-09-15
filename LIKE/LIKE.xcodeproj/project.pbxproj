@@ -766,6 +766,8 @@
 		13FCC0991ADF852A0008DB41 /* LKInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FCC0981ADF852A0008DB41 /* LKInputView.m */; };
 		13FCC09B1ADF86050008DB41 /* KeyboardDismiss@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13FCC09A1ADF86050008DB41 /* KeyboardDismiss@3x.png */; };
 		13FCC09E1ADF94470008DB41 /* LKTagAddModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FCC09D1ADF94470008DB41 /* LKTagAddModel.m */; };
+		BC0C42481BA8043500055BB1 /* LKUserCenterBrowsingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0C42471BA8043500055BB1 /* LKUserCenterBrowsingViewController.m */; };
+		BC0C424B1BA8201600055BB1 /* LKFollowingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0C424A1BA8201600055BB1 /* LKFollowingViewController.m */; };
 		BC12A5E21B9BD16100B99CB5 /* LKBaseRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A5D11B9BD16000B99CB5 /* LKBaseRequest.m */; };
 		BC12A5E31B9BD16100B99CB5 /* LKBatchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A5D31B9BD16000B99CB5 /* LKBatchRequest.m */; };
 		BC12A5E41B9BD16100B99CB5 /* LKBatchRequestAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A5D51B9BD16000B99CB5 /* LKBatchRequestAgent.m */; };
@@ -789,7 +791,6 @@
 		BC12A6371B9BF1BE00B99CB5 /* LKTabBarController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6341B9BF1BE00B99CB5 /* LKTabBarController.mm */; };
 		BC12A6381B9BF1BE00B99CB5 /* LKWelcome.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6361B9BF1BE00B99CB5 /* LKWelcome.m */; };
 		BC12A63B1B9BF24500B99CB5 /* LKContext.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A63A1B9BF24500B99CB5 /* LKContext.m */; };
-		BC12A6401B9C38DE00B99CB5 /* LKUserCenterBrowsingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A63F1B9C38DE00B99CB5 /* LKUserCenterBrowsingViewController.m */; };
 		BC12A6431B9C4EE600B99CB5 /* LKUserCenterBrowsingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6421B9C4EE600B99CB5 /* LKUserCenterBrowsingCell.m */; };
 		BC12A6521BA023E600B99CB5 /* LKPostTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6511BA023E600B99CB5 /* LKPostTableViewController.m */; };
 		BC12A6551BA0240200B99CB5 /* LKPostTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6541BA0240200B99CB5 /* LKPostTableViewCell.m */; };
@@ -2261,6 +2262,10 @@
 		13FCC09A1ADF86050008DB41 /* KeyboardDismiss@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "KeyboardDismiss@3x.png"; sourceTree = "<group>"; };
 		13FCC09C1ADF94470008DB41 /* LKTagAddModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKTagAddModel.h; sourceTree = "<group>"; };
 		13FCC09D1ADF94470008DB41 /* LKTagAddModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKTagAddModel.m; sourceTree = "<group>"; };
+		BC0C42461BA8043500055BB1 /* LKUserCenterBrowsingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKUserCenterBrowsingViewController.h; sourceTree = "<group>"; };
+		BC0C42471BA8043500055BB1 /* LKUserCenterBrowsingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKUserCenterBrowsingViewController.m; sourceTree = "<group>"; };
+		BC0C42491BA8201600055BB1 /* LKFollowingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKFollowingViewController.h; sourceTree = "<group>"; };
+		BC0C424A1BA8201600055BB1 /* LKFollowingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKFollowingViewController.m; sourceTree = "<group>"; };
 		BC12A5D01B9BD16000B99CB5 /* LKBaseRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKBaseRequest.h; path = LKNetwork/LKBaseRequest.h; sourceTree = "<group>"; };
 		BC12A5D11B9BD16000B99CB5 /* LKBaseRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKBaseRequest.m; path = LKNetwork/LKBaseRequest.m; sourceTree = "<group>"; };
 		BC12A5D21B9BD16000B99CB5 /* LKBatchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKBatchRequest.h; path = LKNetwork/LKBatchRequest.h; sourceTree = "<group>"; };
@@ -2307,8 +2312,6 @@
 		BC12A6361B9BF1BE00B99CB5 /* LKWelcome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKWelcome.m; path = Common/LKWelcome.m; sourceTree = "<group>"; };
 		BC12A6391B9BF24500B99CB5 /* LKContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKContext.h; path = LKCommon/LKContext.h; sourceTree = "<group>"; };
 		BC12A63A1B9BF24500B99CB5 /* LKContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKContext.m; path = LKCommon/LKContext.m; sourceTree = "<group>"; };
-		BC12A63E1B9C38DE00B99CB5 /* LKUserCenterBrowsingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKUserCenterBrowsingViewController.h; sourceTree = "<group>"; };
-		BC12A63F1B9C38DE00B99CB5 /* LKUserCenterBrowsingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKUserCenterBrowsingViewController.m; sourceTree = "<group>"; };
 		BC12A6411B9C4EE600B99CB5 /* LKUserCenterBrowsingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKUserCenterBrowsingCell.h; sourceTree = "<group>"; };
 		BC12A6421B9C4EE600B99CB5 /* LKUserCenterBrowsingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKUserCenterBrowsingCell.m; sourceTree = "<group>"; };
 		BC12A6501BA023E600B99CB5 /* LKPostTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKPostTableViewController.h; path = Common/LKPostTableViewController.h; sourceTree = "<group>"; };
@@ -2323,6 +2326,7 @@
 		BC12A65D1BA67AA400B99CB5 /* LKNotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKNotificationViewController.m; sourceTree = "<group>"; };
 		BC12A65F1BA696F700B99CB5 /* LKNotificationHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKNotificationHeader.h; sourceTree = "<group>"; };
 		BC12A6601BA696F700B99CB5 /* LKNotificationHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKNotificationHeader.m; sourceTree = "<group>"; };
+		BC12A6621BA7BE6000B99CB5 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2735,6 +2739,7 @@
 		138EDBE41AD7B08A0020957C = {
 			isa = PBXGroup;
 			children = (
+				BC12A6621BA7BE6000B99CB5 /* CloudKit.framework */,
 				132622AB1B93FCCC0074C589 /* Security.framework */,
 				132622A91B93FCB50074C589 /* CoreGraphics.framework */,
 				132622A71B93FCA60074C589 /* SystemConfiguration.framework */,
@@ -3916,6 +3921,8 @@
 				13E1A2C21AE61DCB00E24C3C /* LKTagLikesViewController.m */,
 				1377F03E1B5E1702008E21BC /* LKAttentionView.h */,
 				1377F03F1B5E1702008E21BC /* LKAttentionView.m */,
+				BC0C42491BA8201600055BB1 /* LKFollowingViewController.h */,
+				BC0C424A1BA8201600055BB1 /* LKFollowingViewController.m */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -4861,8 +4868,8 @@
 				1387C34D1B3166C500B065A7 /* LKLinkAccountsViewController.m */,
 				1387C3561B32B9CB00B065A7 /* LKRebindPhoneViewController.h */,
 				1387C3571B32B9CB00B065A7 /* LKRebindPhoneViewController.m */,
-				BC12A63E1B9C38DE00B99CB5 /* LKUserCenterBrowsingViewController.h */,
-				BC12A63F1B9C38DE00B99CB5 /* LKUserCenterBrowsingViewController.m */,
+				BC0C42461BA8043500055BB1 /* LKUserCenterBrowsingViewController.h */,
+				BC0C42471BA8043500055BB1 /* LKUserCenterBrowsingViewController.m */,
 			);
 			path = UserCenter;
 			sourceTree = "<group>";
@@ -5566,6 +5573,7 @@
 				13BCD88C1ADBA92200A0CBF5 /* POPAnimationEvent.mm in Sources */,
 				13BCD8961ADBA92200A0CBF5 /* POPLayerExtras.mm in Sources */,
 				13E1A4E71AE65FE300E24C3C /* FastttCamera.m in Sources */,
+				BC0C42481BA8043500055BB1 /* LKUserCenterBrowsingViewController.m in Sources */,
 				13BCD8D71ADBB00500A0CBF5 /* LKNetworkCenter.m in Sources */,
 				139054FA1B994A6D00DBF34A /* GPUImageHalftoneFilter.m in Sources */,
 				BC12A62D1B9BEE2300B99CB5 /* LCRequest.m in Sources */,
@@ -5814,7 +5822,6 @@
 				138EDEBA1AD7B0A30020957C /* LCUITableViewCell.m in Sources */,
 				135D5C931AE1013100811B06 /* LKImageCropperViewController.m in Sources */,
 				139054F91B994A6D00DBF34A /* GPUImageGrayscaleFilter.m in Sources */,
-				BC12A6401B9C38DE00B99CB5 /* LKUserCenterBrowsingViewController.m in Sources */,
 				13E1A2C31AE61DCB00E24C3C /* LKTagLikesViewController.m in Sources */,
 				138EDE331AD7B0A30020957C /* DDNumber.m in Sources */,
 				13BCD8DF1ADBD0C700A0CBF5 /* LKUserInfoModel.m in Sources */,
@@ -5835,6 +5842,7 @@
 				139054E71B994A6D00DBF34A /* GPUImageDissolveBlendFilter.m in Sources */,
 				139055421B994A6D00DBF34A /* GPUImageShiTomasiFeatureDetectionFilter.m in Sources */,
 				13FCC0741ADE17F70008DB41 /* LKSegmentHeader.m in Sources */,
+				BC0C424B1BA8201600055BB1 /* LKFollowingViewController.m in Sources */,
 				13FCC07C1ADE37790008DB41 /* LKUserCenterModel.m in Sources */,
 				138EDEAC1AD7B0A30020957C /* LCUIHud.m in Sources */,
 				139054E21B994A6D00DBF34A /* GPUImageDarkenBlendFilter.m in Sources */,
@@ -6064,8 +6072,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Zhenjun Wang (BT5C5YCZ44)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zhenjun Wang (BT5C5YCZ44)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Weifeng Huang (M2RTDV28NJ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Weifeng Huang (M2RTDV28NJ)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/LIKE/LKExternal/Tencent",
@@ -6095,7 +6103,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "754781b9-21ae-4625-8691-cc5f03c7f257";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -6105,8 +6113,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Zhenjun Wang (BT5C5YCZ44)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zhenjun Wang (BT5C5YCZ44)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Weifeng Huang (M2RTDV28NJ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/LIKE/LKExternal/Tencent",
@@ -6136,7 +6144,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "754781b9-21ae-4625-8691-cc5f03c7f257";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

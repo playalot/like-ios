@@ -14,8 +14,6 @@
 
 @interface LKPostTableViewController () <LKPostDetailViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 
-LC_PROPERTY(strong) LCUITableView *tableView;
-
 @end
 
 @implementation LKPostTableViewController
@@ -26,15 +24,17 @@ LC_PROPERTY(strong) LCUITableView *tableView;
     [self unobserveAllNotifications];
 }
 
--(void) viewWillAppear:(BOOL)animated
-{
+-(void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self reloadData];
 }
 
--(void) viewWillDisappear:(BOOL)animated
-{
+-(void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+}
+
+- (void) viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
 }
 
 -(void) viewDidLoad
@@ -101,7 +101,6 @@ LC_PROPERTY(strong) LCUITableView *tableView;
     
     [post.tags insertObject:tagValue atIndex:0];
     
-    
     // reload tags...
     [cell reloadTags];
     
@@ -143,7 +142,7 @@ LC_PROPERTY(strong) LCUITableView *tableView;
 
 -(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

@@ -27,7 +27,9 @@ LC_PROPERTY(strong) NSMutableArray *favorArray;
 
 LC_PROPERTY(copy) LKUserCenterModelRequestFinished requestFinished;
 
--(void) getDataAtFirstPage:(BOOL)isFirstPage type:(LKUserCenterModelType)type uid:(NSNumber *)uid;
+- (void)getDataAtFirstPage:(BOOL)isFirstPage
+                      type:(LKUserCenterModelType)type
+                       uid:(NSNumber *)uid;
 
 -(NSMutableArray *) dataWithType:(LKUserCenterModelType)type;
 

@@ -2,80 +2,58 @@
 //  LKUserCenterBrowsingViewController.m
 //  LIKE
 //
-//  Created by huangweifeng on 9/6/15.
+//  Created by huangweifeng on 9/15/15.
 //  Copyright (c) 2015 Beijing Like Technology Co.Ltd . ( http://www.likeorz.com ). All rights reserved.
 //
 
 #import "LKUserCenterBrowsingViewController.h"
 
-@interface LKUserCenterBrowsingViewController () <UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate>
-
-LC_PROPERTY(strong) NSMutableArray * datasource;
-
-LC_PROPERTY(strong) LCUITableView * tableView;
-LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
+@interface LKUserCenterBrowsingViewController ()
 
 @end
 
 @implementation LKUserCenterBrowsingViewController
 
--(void) dealloc
-{
-    [self cancelAllRequests];
-    [self unobserveAllNotifications];
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
 }
 
--(void) viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 }
 
--(void) viewWillDisappear:(BOOL)animated
-{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
 }
 
--(void) viewDidLoad
-{
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+//    [self setNavigationBarHidden:NO animated:YES];
+}
+
+- (void)viewDidLoad {
     [super viewDidLoad];
-}
 
--(void) buildUI
-{
-    self.view.backgroundColor = LKColor.backgroundColor;
-}
-
-#pragma mark - ***** 数据源方法 *****
-
--(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.datasource.count;
-}
-
-- (UITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return NULL;
-}
-
-/**
- *  根据cell计算行高
- */
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 38;
-}
-
--(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self setNavigationBarHidden:NO animated:YES];
     
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:self.currentIndex inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
 }
 
--(void) scrollViewDidScroll:(UIScrollView *)scrollView {
-    
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
+/*
+#pragma mark - Navigation
 
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
 }
+*/
 
 @end

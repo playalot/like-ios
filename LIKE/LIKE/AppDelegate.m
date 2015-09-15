@@ -159,7 +159,10 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
                                                        LC_UINAVIGATION(self.notificationViewController),
                                                        LC_UINAVIGATION(self.userCenterViewController)]];
 
-    self.window.rootViewController = self.tabBarController;
+    UINavigationController *rootNavigationViewController = LC_UINAVIGATION(self.tabBarController);
+    [rootNavigationViewController setNavigationBarHidden:YES];
+    
+    self.window.rootViewController = rootNavigationViewController;
     
     
     if (!LKLocalUser.singleton.isLogin) {

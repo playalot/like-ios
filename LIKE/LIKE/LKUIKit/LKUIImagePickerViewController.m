@@ -49,6 +49,8 @@ static char cancelationBlockKey;
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
+    NSLog(@"info: %@", info);
+    
     if (self.finalizationBlock) {
         self.finalizationBlock(self, info);
     }
@@ -95,13 +97,13 @@ LC_PROPERTY(assign) UIStatusBarStyle barStyleCache;
         [viewController isKindOfClass:[LKImageCropperViewController class]] ||
          [viewController isKindOfClass:[LKNewPostViewController class]]) {
         
-        
-        
     }
     else{
         
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+        
+        
     }
    
 }

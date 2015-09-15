@@ -48,8 +48,9 @@ LC_PROPERTY(assign) NSInteger index;
 }
 
 
--(void) getDataAtFirstPage:(BOOL)isFirstPage type:(LKUserCenterModelType)type uid:(NSNumber *)uid
-{
+-(void) getDataAtFirstPage:(BOOL)isFirstPage
+                      type:(LKUserCenterModelType)type
+                       uid:(NSNumber *)uid {
     NSInteger page = 0;
     
     if (!isFirstPage) {
@@ -74,19 +75,15 @@ LC_PROPERTY(assign) NSInteger index;
             
         case LKUserCenterModelTypeFavor: {
             
-            if (self.timestamp == nil) {
-            
-                if (isFirstPage) {
-                    
-                    interface = [LKHttpRequestInterface interfaceType:LC_NSSTRING_FORMAT(@"user/favorites")].AUTO_SESSION();
-                } else {
-                    
-                    interface = [LKHttpRequestInterface interfaceType:LC_NSSTRING_FORMAT(@"user/favorites?ts=%@", self.timestamp)].AUTO_SESSION();
-                }
-                
+            if (isFirstPage) {
+                interface = [LKHttpRequestInterface interfaceType:LC_NSSTRING_FORMAT(@"user/favorites")].AUTO_SESSION();
             } else {
                 
-                interface = [LKHttpRequestInterface interfaceType:LC_NSSTRING_FORMAT(@"user/favorites?ts=%@", self.timestamp)].AUTO_SESSION();
+                if (self.timestamp) {
+                    interface = [LKHttpRequestInterface interfaceType:LC_NSSTRING_FORMAT(@"user/favorites?ts=%@", self.timestamp)].AUTO_SESSION();
+                } else {
+                    interface = [LKHttpRequestInterface interfaceType:LC_NSSTRING_FORMAT(@"user/favorites")].AUTO_SESSION();
+                }
             }
             
             break;
@@ -376,6 +373,8 @@ LC_PROPERTY(assign) NSInteger index;
             for (NSDictionary *post in postsDic) {
                 
                 [self.favorArray addObject:[LKPost objectFromDictionary:post]];
+                
+                self.favorCanLoadMore = YES;
                 
             }
             

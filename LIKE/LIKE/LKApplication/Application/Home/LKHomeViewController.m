@@ -372,7 +372,7 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
     self.tableView.backgroundColor = [UIColor clearColor];
     self.view.ADD(self.tableView);
     
-    [self buildHeader];
+//    [self buildHeader];
 }
 
 - (void)buildPullLoader {
@@ -1206,7 +1206,8 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
         LC_APPDELEGATE.tabBarController.assistiveTouchButton.hidden = YES;
         
         LKSearchView * view = LKSearchView.view;
-        
+    view.parentViewController = self;
+    
         self.header.searchViewController = view;
         self.searchView = view;
         

@@ -145,9 +145,12 @@ LC_PROPERTY(assign) NSInteger page;
     
     self.placeholderView.didSelectRow = ^(NSString * tagString){
         
-        LKSearchResultsViewController * search = [[LKSearchResultsViewController alloc] initWithSearchString:tagString];
+        @normally(self);
         
-        [LC_APPDELEGATE.homeViewController.navigationController pushViewController:search animated:YES];
+        if (self.parentViewController) {
+            LKSearchResultsViewController * search = [[LKSearchResultsViewController alloc] initWithSearchString:tagString];
+            [self.parentViewController.navigationController pushViewController:search animated:YES];
+        }
     };
 }
 

@@ -30,32 +30,23 @@ LC_PROPERTY(strong) UIView * blackMask;
 LC_IMP_SIGNAL(PushUserCenter);
 LC_IMP_SIGNAL(PushPostDetail);
 
-+(CGFloat) height:(LKPost *)post
-{
++ (CGFloat)height:(LKPost *)post {
     CGSize size = [LKUIKit parsingImageSizeWithURL:post.content constSize:CGSizeMake(LC_DEVICE_WIDTH - 10, LC_DEVICE_WIDTH - 10)];
-    
     if (size.width > LC_DEVICE_WIDTH - 10) {
-        
         size.height = (LC_DEVICE_WIDTH - 10) / size.width * size.height;
         size.width = (LC_DEVICE_WIDTH - 10);
     }
     
-    
     static LKTagsView * __tagsView = nil;
-    
     if (!__tagsView) {
-        
         __tagsView = LKTagsView.view;
         __tagsView.viewFrameWidth = LC_DEVICE_WIDTH - 10;
     }
-    
     __tagsView.tags = post.tags;
-    
     return size.height + __tagsView.viewFrameHeight + 55;
 }
 
--(void) buildUI
-{
+- (void)buildUI {
     self.backgroundColor = [UIColor clearColor];
     self.contentView.backgroundColor = [UIColor clearColor];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -79,7 +70,6 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.ADD(headerBack);
     
     [LKPostTableViewCell roundCorners:UIRectCornerTopLeft | UIRectCornerTopRight forView:headerBack];
-    
     
     // 头像
     self.head = LCUIImageView.view;
@@ -145,25 +135,17 @@ LC_IMP_SIGNAL(PushPostDetail);
         @normally(self);
         
         if (item.tagValue.isLiked) {
-            
             self.post.user.likes = @(self.post.user.likes.integerValue + 1);
-        }
-        else{
-            
+        } else {
             self.post.user.likes = @(self.post.user.likes.integerValue - 1);
         }
         
-        
         self.likes.text = LC_NSSTRING_FORMAT(@"%@", self.post.user.likes);
-        
         CGSize likeSize = [self.post.user.likes.description sizeWithFont:LK_FONT(13) byWidth:200];
-        
         [UIView animateWithDuration:0.25 animations:^{
-            
             self.likesTip.viewFrameX = self.likes.viewFrameX + likeSize.width + 3;
         }];
     };
-    
 }
 
 -(void) addTagAction
@@ -192,10 +174,8 @@ LC_IMP_SIGNAL(PushPostDetail);
     
     
     if (post.user.id.integerValue == LKLocalUser.singleton.user.id.integerValue) {
-        
         post.user = LKLocalUser.singleton.user;
     }
-    
     
     // 设置cell内容
     self.head.image = nil;
@@ -208,12 +188,9 @@ LC_IMP_SIGNAL(PushPostDetail);
     CGSize likeSize = [post.user.likes.description sizeWithFont:LK_FONT(13) byWidth:200];
     
     self.likesTip.viewFrameX = self.likes.viewFrameX + likeSize.width + 3;
-    
-    
     CGSize size = [LKUIKit parsingImageSizeWithURL:post.content constSize:CGSizeMake(LC_DEVICE_WIDTH - 10, LC_DEVICE_WIDTH - 10)];
     
     if (size.width > LC_DEVICE_WIDTH - 10) {
-        
         size.height = (LC_DEVICE_WIDTH - 10) / size.width * size.height;
         size.width = (LC_DEVICE_WIDTH - 10);
     }
@@ -240,14 +217,11 @@ LC_IMP_SIGNAL(PushPostDetail);
         self.contentImage.indicator.alpha = 0;
     }];
     
-    
-    
     // 设置标签的frame
     self.tagsView.tags = post.tags;
     self.tagsView.viewFrameY = self.contentBack.viewBottomY;
     
     [LKPostTableViewCell roundCorners:UIRectCornerBottomLeft | UIRectCornerBottomRight forView:self.tagsView];
-    
     
     @weakly(self);
     

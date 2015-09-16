@@ -7,8 +7,9 @@
 //
 
 #import "LCUIViewController.h"
-
-@class LKUserInfoModel;
+#import "LKUserCenterModel.h"
+#import "LKUserInfoModel.h"
+#import "LKUserCenterBrowsingViewController.h"
 
 LC_NOTIFICATION_SET(LKUserCenterViewControllerReloadingData);
 
@@ -16,9 +17,12 @@ LC_NOTIFICATION_SET(LKUserCenterViewControllerReloadingData);
 
 LC_PROPERTY(strong) LKUserInfoModel * userInfoModel;;
 LC_PROPERTY(strong) LKUser * user;
+LC_PROPERTY(strong) LKUserCenterBrowsingViewController *browsingViewController;
 
-+(LKUserCenterViewController *) pushUserCenterWithUser:(LKUser *)user navigationController:(UINavigationController *)navigationController;
+- (void)loadData:(LKUserCenterModelType)type diretion:(LCUIPullLoaderDiretion)diretion;
+- (void)updateUserMetaInfo;
+- (instancetype)initWithUser:(LKUser *)user;
 
--(instancetype) initWithUser:(LKUser *)user;
++ (LKUserCenterViewController *)pushUserCenterWithUser:(LKUser *)user navigationController:(UINavigationController *)navigationController;
 
 @end

@@ -24,6 +24,7 @@
 #import "LKUserInfoCache.h"
 #import "JTSImageViewController.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
+#import "LKUserCenterBrowsingViewController.h"
 
 @interface LKUserCenterViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerCancelFavorDelegate>
 
@@ -94,38 +95,6 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     return self;
 }
 
--(void) viewDidLoad {
-    
-    [super viewDidLoad];
-    
-    @weakly(self);
-    self.userInfoModel.requestFinished = ^(LKHttpRequestResult * result, NSString * error){
-        @normally(self);
-        if (!error){
-            self.user = self.userInfoModel.user;
-            [self.header updateWithUser:self.userInfoModel.user];
-            [self updateTableHeaderView];
-            [self updateFriendButton];
-        }
-    };
-    
-    [self.userInfoModel getUserInfo:self.user.id];
-    
-    ((LCUINavigationController *)self.navigationController).animationHandler = ^id(UINavigationControllerOperation operation, UIViewController * fromVC, UIViewController * toVC){
-        if (operation == UINavigationControllerOperationPush && [toVC isKindOfClass:[LKPostDetailViewController class]]) {
-            return [[LKPushAnimation alloc] init];
-        }
-        return nil;
-    };
-    
-    if (self.tableView.viewFrameY != 0) {
-        self.tableView.pop_springBounciness = 10;
-        self.tableView.pop_springSpeed = 10;
-        self.tableView.pop_spring.center = LC_POINT(self.tableView.viewCenterX, self.tableView.viewCenterY - (self.isLocalUser ? 30 : 20));
-        self.tableView.pop_spring.alpha = 1;
-    }
-}
-
 - (void)updateTableHeaderView {
     LKSegmentHeader * tableViewHeader = (LKSegmentHeader *)self.tableView.tableHeaderView;
     [tableViewHeader setTitle:LC_NSSTRING_FORMAT(@"%@",self.userInfoModel.user.postCount) subTitle:LC_LO(@"照片") atIndex:0];
@@ -136,8 +105,7 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     }
 }
 
--(void) buildUI
-{
+-(void) buildUI {
     self.tableView = [[LCUITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableView.viewFrameY = 30;
     self.tableView.delegate = self;
@@ -171,22 +139,16 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     self.header.nameLabelOnShowing.hidden = NO;
     self.header.backgroundView.backgroundColor = LC_RGB(245, 240, 236);
     
-    //
     @weakly(self);
-    
     self.header.headAction = ^(UIImageView * imageView){
         
         @normally(self);
-        
         JTSImageInfo * info = [[JTSImageInfo alloc] init];
-        
         NSString *imageURLString = LC_NSSTRING_IS_INVALID(self.user.originAvatar) ? self.user.originAvatar : self.user.avatar;
         info.imageURL = [NSURL URLWithString:imageURLString];
-        
         info.referenceRect = imageView.frame;
         info.referenceView = imageView.superview;
         info.referenceCornerRadius = 65 / 2;
-        
         // Setup view controller
         JTSImageViewController * imageViewer = [[JTSImageViewController alloc]
                                                 initWithImageInfo:info
@@ -195,7 +157,6 @@ LC_PROPERTY(assign) BOOL isLocalUser;
         // Present the view controller.
         [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOriginalPosition];
     };
-    
     
     self.header.backgroundAction = ^(id value){
         @normally(self);
@@ -288,16 +249,12 @@ LC_PROPERTY(assign) BOOL isLocalUser;
         @normally(self);
         
         [self.inputView resignFirstResponder];
-        
         [LKModifyUserInfoModel setNewName:string requestFinished:^(NSString *error) {
-            
             if (!error) {
-                
                 [self.userInfoModel getUserInfo:self.user.id];
             }
         }];
     };
-    
     
     self.currentType = LKUserCenterModelTypePhotos;
     
@@ -305,6 +262,37 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFans uid:self.user.id];
     [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFavor uid:self.user.id];
     
+    self.userInfoModel.requestFinished = ^(LKHttpRequestResult * result, NSString * error){
+        @normally(self);
+        if (!error){
+            self.user = self.userInfoModel.user;
+            [self.header updateWithUser:self.userInfoModel.user];
+            [self updateTableHeaderView];
+            [self updateFriendButton];
+        }
+    };
+    
+    // update user meta information
+    [self updateUserMetaInfo];
+    
+    ((LCUINavigationController *)self.navigationController).animationHandler = ^id(UINavigationControllerOperation operation, UIViewController * fromVC, UIViewController * toVC){
+        if (operation == UINavigationControllerOperationPush && [toVC isKindOfClass:[LKPostDetailViewController class]]) {
+            return [[LKPushAnimation alloc] init];
+        }
+        return nil;
+    };
+    
+    if (self.tableView.viewFrameY != 0) {
+        self.tableView.pop_springBounciness = 10;
+        self.tableView.pop_springSpeed = 10;
+        self.tableView.pop_spring.center = LC_POINT(self.tableView.viewCenterX, self.tableView.viewCenterY - (self.isLocalUser ? 30 : 20));
+        self.tableView.pop_spring.alpha = 1;
+    }
+    
+}
+
+- (void)updateUserMetaInfo {
+    [self.userInfoModel getUserInfo:self.user.id];
 }
 
 #pragma mark -
@@ -452,38 +440,34 @@ LC_PROPERTY(assign) BOOL isLocalUser;
 LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
 {
     LKPost * post = signal.object;
-    if (self.currentType == LKUserCenterModelTypePhotos) {
-        
-        post.user = self.user;
+    
+//    LKPostDetailViewController * postDetail = [[LKPostDetailViewController alloc] initWithPost:post];
+//    postDetail.cancelFavordelegate = self;
+//    LCUINavigationController * nav = LC_UINAVIGATION(postDetail);
+//    [postDetail setPresendModelAnimationOpen];
+//    [self.navigationController presentViewController:nav animated:YES completion:nil];
+    
+    if (self.browsingViewController == nil) {
+        self.browsingViewController = [[LKUserCenterBrowsingViewController alloc] init];
     }
     
-    LKPostDetailViewController * postDetail = [[LKPostDetailViewController alloc] initWithPost:post];
-    postDetail.cancelFavordelegate = self;
-    
-    LCUINavigationController * nav = LC_UINAVIGATION(postDetail);
-    
-    [postDetail setPresendModelAnimationOpen];
-    
-    [self.navigationController presentViewController:nav animated:YES completion:nil];
+    if (self.currentType == LKUserCenterModelTypePhotos) {
+        post.user = self.user;
+    }
+    self.browsingViewController.datasource = [NSMutableArray arrayWithArray:[self.userCenterModel dataWithType:self.currentType]];
+    [self.navigationController pushViewController:self.browsingViewController animated:YES];
 }
 
 #pragma mark -
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (self.currentType == LKUserCenterModelTypePhotos || self.currentType == LKUserCenterModelTypeFavor) {
-        
         NSArray * datasource = [self.userCenterModel dataWithType:self.currentType];
-        
         NSInteger remainder = datasource.count % 3;
-        
         return remainder ? datasource.count / 3 + 1 : datasource.count / 3;
-    }
-    else{
-        
+    } else {
         return [self.userCenterModel dataWithType:self.currentType].count;
     }
-    
 }
 
 - (UITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -599,7 +583,6 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
             break;
         case LKUserCenterModelTypeFocus:
         case LKUserCenterModelTypeFans:
-            
             [LKUserCenterViewController pushUserCenterWithUser:data[indexPath.row] navigationController:self.navigationController];
             break;
         default:
@@ -607,27 +590,20 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
     }
 }
 
--(void) scrollViewDidScroll:(UIScrollView *)scrollView
-{
+-(void) scrollViewDidScroll:(UIScrollView *)scrollView {
     [self.inputView resignFirstResponder];
-    
     [self.header handleScrollDidScroll:scrollView];
 }
 
 #pragma mark - ***** LKPostDetailViewControllerCancelFavorDelegate *****
 - (void)postDetailViewController:(LKPostDetailViewController *)ctrl didcancelFavorWithPost:(LKPost *)post {
-    
     NSMutableArray *favorArray = self.userCenterModel.favorArray;
     for (LKPost *favorPost in favorArray) {
-        
         if (favorPost.id.integerValue == post.id.integerValue) {
-            
             [self.tableView beginUpdates];
             [self.userCenterModel.favorArray removeObject:favorPost];
             [self.tableView endUpdates];
-            
             [self.tableView reloadData];
-            
             break;
         }
     }

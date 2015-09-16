@@ -7,10 +7,11 @@
 //
 
 #import "LKPostTableViewController.h"
+#import "LKUserCenterViewController.h"
 
 @interface LKUserCenterBrowsingViewController : LKPostTableViewController
 
-//LC_PROPERTY(assign) LKSearchResultsViewController *parentSearchResultsViewController;
+//LC_PROPERTY(assign) LKUserCenterViewController *parentUserCenterViewController;
 
 - (void)reloadData;
 

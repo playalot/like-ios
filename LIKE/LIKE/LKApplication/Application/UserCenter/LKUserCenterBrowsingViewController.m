@@ -7,6 +7,7 @@
 //
 
 #import "LKUserCenterBrowsingViewController.h"
+#import "LKPostTableViewCell.h"
 
 @interface LKUserCenterBrowsingViewController ()
 
@@ -15,6 +16,14 @@ LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
 @end
 
 @implementation LKUserCenterBrowsingViewController
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.cellHeadLineHidden = YES;
+    }
+    return self;
+}
 
 - (void)reloadData {
     [self.pullLoader endRefresh];

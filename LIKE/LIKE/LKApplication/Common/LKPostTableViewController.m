@@ -12,7 +12,7 @@
 #import "LKPostDetailViewController.h"
 #import "LKLoginViewController.h"
 
-@interface LKPostTableViewController () <LKPostDetailViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface LKPostTableViewController () <LKPostDetailViewControllerDelegate>
 
 LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
 
@@ -124,6 +124,8 @@ LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
 - (UITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     LKPostTableViewCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Content" andClass:[LKPostTableViewCell class]];
     
+    cell.headLineHidden = self.cellHeadLineHidden;
+    
     LKPost *post = self.datasource[indexPath.row];
     cell.post = post;
     
@@ -131,7 +133,7 @@ LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
     
     cell.addTag = ^(LKPost * value){
         
-    @normally(self);
+//    @normally(self);
         
 //        if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
 //            
@@ -160,7 +162,7 @@ LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
  *  根据cell计算行高
  */
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [LKPostTableViewCell height:self.datasource[indexPath.row]];
+    return [LKPostTableViewCell height:self.datasource[indexPath.row] headLineHidden:self.cellHeadLineHidden];
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

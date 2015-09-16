@@ -285,7 +285,7 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     if (self.tableView.viewFrameY != 0) {
         self.tableView.pop_springBounciness = 10;
         self.tableView.pop_springSpeed = 10;
-        self.tableView.pop_spring.center = LC_POINT(self.tableView.viewCenterX, self.tableView.viewCenterY - (self.isLocalUser ? 30 : 20));
+        self.tableView.pop_spring.center = LC_POINT(self.tableView.viewCenterX, self.tableView.viewCenterY - (self.isLocalUser ? 30 : 15));
         self.tableView.pop_spring.alpha = 1;
     }
     

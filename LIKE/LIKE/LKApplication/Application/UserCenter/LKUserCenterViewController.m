@@ -66,10 +66,8 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:animated];
 }
 
--(void) viewWillDisappear:(BOOL)animated
-{
+-(void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
     ((LCUINavigationController *)self.navigationController).animationHandler = nil;
 }
 
@@ -124,8 +122,10 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     return self;
 }
 
--(void) viewDidLoad
-{
+
+-(void) viewDidLoad {
+    [super viewDidLoad];
+    
     if (self.isLocalUser) {
         [self observeNotification:LKUserCenterViewControllerReloadingData];
     }
@@ -136,7 +136,7 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     @weakly(self);
     
     self.userInfoModel.requestFinished = ^(LKHttpRequestResult * result, NSString * error){
-     
+        
         @normally(self);
         
         if (!error){
@@ -155,17 +155,123 @@ LC_PROPERTY(assign) BOOL isLocalUser;
             }
             
             [self updateFriendButton];
-
+            
         }
     };
     
     [self.userInfoModel getUserInfo:self.user.id];
-    
-    [super viewDidLoad];
 }
 
--(void) buildUI
-{
+- (void)buildNavigationBar {
+    
+    self.header = [[LKHomepageHeader alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.frame), 100.0)];
+    self.header.scrollView = self.tableView;
+    [self.header.maskView removeFromSuperview];
+    self.header.maskView = nil;
+    
+    SquareCashStyleBehaviorDefiner *behaviorDefiner = [[SquareCashStyleBehaviorDefiner alloc] init];
+    [behaviorDefiner addSnappingPositionProgress:0.0 forProgressRangeStart:0.0 end:0.5];
+    [behaviorDefiner addSnappingPositionProgress:1.0 forProgressRangeStart:0.5 end:1.0];
+    behaviorDefiner.snappingEnabled = NO;
+    behaviorDefiner.elasticMaximumHeightAtTop = NO;
+    self.header.behaviorDefiner = behaviorDefiner;
+    
+    self.delegateSplitter = [[BLKDelegateSplitter alloc] initWithFirstDelegate:behaviorDefiner secondDelegate:self];
+    self.tableView.delegate = (id<UITableViewDelegate>)self.delegateSplitter;
+    
+    [self.view addSubview:self.header];
+    
+    self.tableView.contentInset = UIEdgeInsetsMake(self.header.maximumBarHeight - 20, 0.0, 0.0, 0.0);
+    
+    self.header.icon.image = nil;
+    self.header.nameLabelOnShowing.hidden = NO;
+    self.header.backgroundView.backgroundColor = LC_RGB(245, 240, 236);
+    
+    @weakly(self);
+    
+    self.header.headAction = ^(UIImageView * imageView){
+        
+        @normally(self);
+        
+        JTSImageInfo * info = [[JTSImageInfo alloc] init];
+        if (LC_NSSTRING_IS_INVALID(self.user.originAvatar)) {
+            info.imageURL = [NSURL URLWithString:self.user.avatar];
+        } else {
+            info.imageURL = [NSURL URLWithString:self.user.originAvatar];
+        }
+        
+        info.referenceRect = imageView.frame;
+        info.referenceView = imageView.superview;
+        info.referenceCornerRadius = 65 / 2;
+        
+        // Setup view controller
+        JTSImageViewController * imageViewer = [[JTSImageViewController alloc]
+                                                initWithImageInfo:info
+                                                mode:JTSImageViewControllerMode_Image
+                                                backgroundStyle:JTSImageViewControllerBackgroundOption_Blurred];
+        // Present the view controller.
+        [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOriginalPosition];
+    };
+    
+    
+    self.header.backgroundAction = ^(id value){
+        
+        // upload cover.
+        @normally(self);
+        
+        if (self.isLocalUser) {
+            [LKUploadAvatarAndCoverModel chooseCoverImage:^(NSString *error, UIImage * image) {
+                if (!error) {
+                    self.header.backgroundView.image = image;
+                    [self.userInfoModel getUserInfo:self.user.id];
+                }
+            }];
+        }
+    };
+    
+    self.header.labelAction = ^(id value){
+    };
+    
+    if (self.isLocalUser) {
+        LCUIButton * setButton = LCUIButton.view;
+        setButton.viewFrameWidth = 64 / 3 + 40;
+        setButton.viewFrameHeight = 64 / 3 + 40;
+        setButton.viewFrameX = LC_DEVICE_WIDTH - setButton.viewFrameWidth;
+        setButton.viewFrameY = 10;
+        setButton.buttonImage = [UIImage imageNamed:@"NavigationBarSet.png" useCache:YES];
+        setButton.showsTouchWhenHighlighted = YES;
+        [setButton addTarget:self action:@selector(setAction) forControlEvents:UIControlEventTouchUpInside];
+        [self.header addSubview:setButton];
+    } else {
+        LCUIButton * backButton = LCUIButton.view;
+        backButton.viewFrameWidth = 50;
+        backButton.viewFrameHeight = 54 / 3 + 40;
+        backButton.viewFrameY = 10;
+        backButton.buttonImage = [UIImage imageNamed:@"NavigationBarBack.png" useCache:YES];
+        backButton.showsTouchWhenHighlighted = YES;
+        [backButton addTarget:self action:@selector(dismissAction) forControlEvents:UIControlEventTouchUpInside];
+        backButton.tag = 1002;
+        [self.header addSubview:backButton];
+        
+        self.friendshipButton = LCUIButton.view;
+        self.friendshipButton.viewFrameWidth = 64 / 3 + 40;
+        self.friendshipButton.viewFrameHeight = 64 / 3 + 40;
+        self.friendshipButton.viewFrameX = LC_DEVICE_WIDTH - self.friendshipButton.viewFrameWidth;
+        self.friendshipButton.viewFrameY = 10;
+        self.friendshipButton.showsTouchWhenHighlighted = YES;
+        [self.friendshipButton addTarget:self action:@selector(friendShipAction) forControlEvents:UIControlEventTouchUpInside];
+        [self.header addSubview:self.friendshipButton];
+        
+        self.loadingActivity = [LCUIActivityIndicatorView whiteView];
+        self.loadingActivity.center = self.friendshipButton.center;
+        [self.header addSubview:self.loadingActivity];
+        
+        // update...
+        [self updateFriendButton];
+    }
+}
+
+- (void)buildTableView {
     self.tableView = [[LCUITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableView.viewFrameY = 30;
     self.tableView.delegate = self;
@@ -174,142 +280,6 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.alpha = 0;
     self.view.ADD(self.tableView);
-    
-    {
-        {
-            // Navigation bar.
-            self.header = [[LKHomepageHeader alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.frame), 100.0)];
-            self.header.scrollView = self.tableView;
-            [self.header.maskView removeFromSuperview];
-            self.header.maskView = nil;
-            
-            SquareCashStyleBehaviorDefiner *behaviorDefiner = [[SquareCashStyleBehaviorDefiner alloc] init];
-            [behaviorDefiner addSnappingPositionProgress:0.0 forProgressRangeStart:0.0 end:0.5];
-            [behaviorDefiner addSnappingPositionProgress:1.0 forProgressRangeStart:0.5 end:1.0];
-            behaviorDefiner.snappingEnabled = NO;
-            behaviorDefiner.elasticMaximumHeightAtTop = NO;
-            self.header.behaviorDefiner = behaviorDefiner;
-            
-            self.delegateSplitter = [[BLKDelegateSplitter alloc] initWithFirstDelegate:behaviorDefiner secondDelegate:self];
-            self.tableView.delegate = (id<UITableViewDelegate>)self.delegateSplitter;
-            
-            [self.view addSubview:self.header];
-            
-            self.tableView.contentInset = UIEdgeInsetsMake(self.header.maximumBarHeight - 20, 0.0, 0.0, 0.0);
-            
-            self.header.icon.image = nil;
-            self.header.nameLabelOnShowing.hidden = NO;
-            self.header.backgroundView.backgroundColor = LC_RGB(245, 240, 236);
-            
-            //
-            @weakly(self);
-            
-            self.header.headAction = ^(UIImageView * imageView){
-                
-                @normally(self);
-
-                JTSImageInfo * info = [[JTSImageInfo alloc] init];
-                
-                if (LC_NSSTRING_IS_INVALID(self.user.originAvatar)) {
-                    
-                    info.imageURL = [NSURL URLWithString:self.user.avatar];
-                }
-                else{
-                    
-                    info.imageURL = [NSURL URLWithString:self.user.originAvatar];
-                }
-                
-                info.referenceRect = imageView.frame;
-                info.referenceView = imageView.superview;
-                info.referenceCornerRadius = 65 / 2;
-                
-                // Setup view controller
-                JTSImageViewController * imageViewer = [[JTSImageViewController alloc]
-                                                       initWithImageInfo:info
-                                                       mode:JTSImageViewControllerMode_Image
-                                                       backgroundStyle:JTSImageViewControllerBackgroundOption_Blurred];
-                // Present the view controller.
-                [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOriginalPosition];
-            };
-            
-            
-            self.header.backgroundAction = ^(id value){
-              
-                // upload cover.
-                @normally(self);
-
-                if (self.isLocalUser) {
-                 
-                    [LKUploadAvatarAndCoverModel chooseCoverImage:^(NSString *error, UIImage * image) {
-                        
-                        if (!error) {
-                            
-                            self.header.backgroundView.image = image;
-                            [self.userInfoModel getUserInfo:self.user.id];
-                        }
-                    }];
-                }
-            };
-            
-            self.header.labelAction = ^(id value){
-              
-                // .
-//                @normally(self);
-//
-//                if (self.isLocalUser) {
-//                    
-//                    [self.inputView becomeFirstResponder];
-//                }
-            };
-            
-            
-            // shadow...
-//            UIView * shadow = UIView.VIEW.WIDTH(LC_DEVICE_WIDTH).HEIGHT(200).COLOR([[UIColor blackColor] colorWithAlphaComponent:0.22]);
-//            [self.header insertSubview:shadow aboveSubview:self.header.backgroundImageView];
-            
-            if (self.isLocalUser) {
-             
-                LCUIButton * setButton = LCUIButton.view;
-                setButton.viewFrameWidth = 64 / 3 + 40;
-                setButton.viewFrameHeight = 64 / 3 + 40;
-                setButton.viewFrameX = LC_DEVICE_WIDTH - setButton.viewFrameWidth;
-                setButton.viewFrameY = 10;
-                setButton.buttonImage = [UIImage imageNamed:@"NavigationBarSet.png" useCache:YES];
-                setButton.showsTouchWhenHighlighted = YES;
-                [setButton addTarget:self action:@selector(setAction) forControlEvents:UIControlEventTouchUpInside];
-                [self.header addSubview:setButton];
-            }
-            else{
-                
-                LCUIButton * backButton = LCUIButton.view;
-                backButton.viewFrameWidth = 50;
-                backButton.viewFrameHeight = 54 / 3 + 40;
-                backButton.viewFrameY = 10;
-                backButton.buttonImage = [UIImage imageNamed:@"NavigationBarBack.png" useCache:YES];
-                backButton.showsTouchWhenHighlighted = YES;
-                [backButton addTarget:self action:@selector(dismissAction) forControlEvents:UIControlEventTouchUpInside];
-                backButton.tag = 1002;
-                [self.header addSubview:backButton];
-                
-                self.friendshipButton = LCUIButton.view;
-                self.friendshipButton.viewFrameWidth = 64 / 3 + 40;
-                self.friendshipButton.viewFrameHeight = 64 / 3 + 40;
-                self.friendshipButton.viewFrameX = LC_DEVICE_WIDTH - self.friendshipButton.viewFrameWidth;
-                self.friendshipButton.viewFrameY = 10;
-                self.friendshipButton.showsTouchWhenHighlighted = YES;
-                [self.friendshipButton addTarget:self action:@selector(friendShipAction) forControlEvents:UIControlEventTouchUpInside];
-                [self.header addSubview:self.friendshipButton];
-                
-                
-                self.loadingActivity = [LCUIActivityIndicatorView whiteView];
-                self.loadingActivity.center = self.friendshipButton.center;
-                [self.header addSubview:self.loadingActivity];
-                
-                // update...
-                [self updateFriendButton];
-            }
-        }
-    }
     
     // Header.
     LKSegmentHeader * tableViewHeader = LKSegmentHeader.view;
@@ -321,34 +291,23 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     [tableViewHeader addTitle:[NSString stringWithFormat:@"%@", @(self.user.fansCount.integerValue)] subTitle:LC_LO(@"粉丝")];
     
     if (self.isLocalUser) {
-
         [tableViewHeader addTitle:[NSString stringWithFormat:@"%@", @(self.user.favorCount.integerValue)] subTitle:LC_LO(@"收藏")];
     }
-
     
     @weakly(self);
     
     tableViewHeader.didSelected = ^(NSInteger index){
-        
         @normally(self);
-        
         self.currentType = index;
     };
     
     
     self.tableView.tableHeaderView = tableViewHeader;
-    
-    
-    //
     self.pullLoader = [[LCUIPullLoader alloc] initWithScrollView:self.tableView pullStyle:LCUIPullLoaderStyleFooter];
-    
     self.pullLoader.beginRefresh = ^(LCUIPullLoaderDiretion diretion){
-      
         @normally(self);
-        
         [self loadMore];
     };
-    
     
     self.inputView = LKInputView.view;
     self.inputView.viewFrameY = self.view.viewFrameHeight;
@@ -356,27 +315,24 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     self.view.ADD(self.inputView);
     
     self.inputView.sendAction = ^(NSString * string){
-        
         @normally(self);
-        
         [self.inputView resignFirstResponder];
-        
         [LKModifyUserInfoModel setNewName:string requestFinished:^(NSString *error) {
-           
             if (!error) {
-                
                 [self.userInfoModel getUserInfo:self.user.id];
             }
         }];
     };
     
-    
     self.currentType = LKUserCenterModelTypePhotos;
-
     [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFocus uid:self.user.id];
     [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFans uid:self.user.id];
     [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFavor uid:self.user.id];
-    
+}
+
+-(void) buildUI {
+    [self buildNavigationBar];
+    [self buildTableView];
 }
 
 - (void)dismissAction {
@@ -403,24 +359,19 @@ LC_PROPERTY(assign) BOOL isLocalUser;
 -(void) setAction
 {
     LC_FAST_ANIMATIONS(0.25, ^{
-        
         ((UIView *)self.header.FIND(1002)).alpha = 0;
         self.header.headImageView.alpha = 0;
-        
     });
 
-    
     LKSettingsViewController * settings = LKSettingsViewController.view;
     [settings showInViewController:self];
     
     @weakly(self);
     
     settings.willHide = ^(){
-      
-        @normally(self);
         
+        @normally(self);
         LC_FAST_ANIMATIONS(0.25, ^{
-            
             self.header.headImageView.alpha = 1;
             ((UIView *)self.header.FIND(1002)).alpha = 1;
             [self scrollViewDidScroll:self.tableView];

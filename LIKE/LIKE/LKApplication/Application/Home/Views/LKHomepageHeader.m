@@ -219,12 +219,6 @@ LC_PROPERTY(assign) CGPoint point;
     self.nameLabelOnShowing.hidden = YES;
     [self.icon addSubview:self.nameLabelOnShowing];
     
-    
-    
-    
-    
-
-    
     // Add and configure profile image
     self.headImageView = LCUIImageView.view;
     self.headImageView.contentMode = UIViewContentModeScaleAspectFill;

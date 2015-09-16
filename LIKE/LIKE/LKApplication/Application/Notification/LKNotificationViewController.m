@@ -11,8 +11,11 @@
 #import "LKNotificationCount.h"
 #import "LKNotificationCell.h"
 #import "LKNotificationHeader.h"
+#import "LKLoginViewController.h"
+#import "LKPostDetailViewController.h"
+#import "LKUserCenterViewController.h"
 
-@interface LKNotificationViewController () <UITableViewDataSource,UITableViewDelegate>
+@interface LKNotificationViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerDelegate>
 
 LC_PROPERTY(strong) LKNotificationModel * notificationModel;
 LC_PROPERTY(strong) LKNotificationHeader * notificationHeader;
@@ -27,11 +30,18 @@ LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
     [self cancelAllRequests];
 }
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.notificationModel = [[LKNotificationModel alloc] init];
+    }
+    return self;
+}
+
 - (void)buildUI {
     self.view.backgroundColor = LKColor.backgroundColor;
     
-    self.notificationHeader = [[LKNotificationHeader alloc] initWithCGSize:CGSizeMake(LC_DEVICE_WIDTH, 150)];
-    self.view.ADD(self.notificationHeader);
+    [self buildNavigationBar];
     
     self.tableView = [[LCUITableView alloc] initWithFrame:CGRectZero];
     self.tableView.frame = self.view.bounds;
@@ -48,15 +58,20 @@ LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
     self.pullLoader = [[LCUIPullLoader alloc] initWithScrollView:self.tableView pullStyle:LCUIPullLoaderStyleHeaderAndFooter];
     
     [self.pullLoader setBeginRefresh:^(LCUIPullLoaderDiretion diretion) {
-        
         @normally(self);
-        
         [self loadData:diretion];
-        
     }];
     
     
     [self loadData:LCUIPullLoaderDiretionTop];
+}
+
+- (void)buildNavigationBar {
+    LCUIButton *titleBtn = [[LCUIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];
+    [titleBtn setImage:[UIImage imageNamed:@"HomeLikeIcon" useCache:YES] forState:UIControlStateNormal];
+    self.titleView = (UIView *)titleBtn;
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
 }
 
 -(void) loadData:(LCUIPullLoaderDiretion)diretion
@@ -110,25 +125,29 @@ LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
     }
 }
 
--(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     LKNotification * notification = self.notificationModel.datasource[indexPath.row];
     
     if (notification.type == LKNotificationTypeFocus) {
         
-        self.SEND(@"PushUserCenter").object = notification.user;
+        LKUserCenterViewController *userCenterViewController = [[LKUserCenterViewController alloc] initWithUser:notification.user];
+        [self.navigationController presentViewController:userCenterViewController animated:YES completion:^{}];
     }
     else{
-        
         
         if ((notification.type == LKNotificationTypeComment ||
              notification.type == LKNotificationTypeReply) && [notification.tagID isKindOfClass:[NSNumber class]]) {
             
             notification.post.tagString = [NSString stringWithFormat:@"Comment-%@",notification.tagID];
         }
-        
-        self.SEND(@"PushPostDetail").object = notification.post;
+        LKPostDetailViewController * detailViewController = [[LKPostDetailViewController alloc] initWithPost:notification.post];
+        [self.navigationController presentViewController:detailViewController animated:YES completion:^{}];
     }
+}
+
+#pragma mark LKPostDetailViewControllerDelegate
+- (void)postDetailViewController:(LKPostDetailViewController *)ctrl didDeletedTag:(LKTag *)deleteTag {
+    
 }
 
 @end

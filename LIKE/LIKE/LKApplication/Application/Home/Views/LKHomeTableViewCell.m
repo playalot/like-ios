@@ -228,8 +228,7 @@ LC_IMP_SIGNAL(PushPostDetail);
 /**
  *  点击主页cell里面的图片就会执行此方法
  */
--(void) contentImageTapAction
-{
+-(void) contentImageTapAction {
     self.SEND(self.PushPostDetail).object = self.post;
 }
 

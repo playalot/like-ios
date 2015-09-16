@@ -768,6 +768,8 @@
 		13FCC09E1ADF94470008DB41 /* LKTagAddModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FCC09D1ADF94470008DB41 /* LKTagAddModel.m */; };
 		BC0C42481BA8043500055BB1 /* LKUserCenterBrowsingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0C42471BA8043500055BB1 /* LKUserCenterBrowsingViewController.m */; };
 		BC0C424B1BA8201600055BB1 /* LKFollowingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0C424A1BA8201600055BB1 /* LKFollowingViewController.m */; };
+		BC0C424E1BA8573C00055BB1 /* LKFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0C424D1BA8573C00055BB1 /* LKFeedViewController.m */; };
+		BC0C42511BA85B5F00055BB1 /* LKTimeLineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0C42501BA85B5F00055BB1 /* LKTimeLineViewController.m */; };
 		BC12A5E21B9BD16100B99CB5 /* LKBaseRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A5D11B9BD16000B99CB5 /* LKBaseRequest.m */; };
 		BC12A5E31B9BD16100B99CB5 /* LKBatchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A5D31B9BD16000B99CB5 /* LKBatchRequest.m */; };
 		BC12A5E41B9BD16100B99CB5 /* LKBatchRequestAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A5D51B9BD16000B99CB5 /* LKBatchRequestAgent.m */; };
@@ -2266,6 +2268,10 @@
 		BC0C42471BA8043500055BB1 /* LKUserCenterBrowsingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKUserCenterBrowsingViewController.m; sourceTree = "<group>"; };
 		BC0C42491BA8201600055BB1 /* LKFollowingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKFollowingViewController.h; sourceTree = "<group>"; };
 		BC0C424A1BA8201600055BB1 /* LKFollowingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKFollowingViewController.m; sourceTree = "<group>"; };
+		BC0C424C1BA8573C00055BB1 /* LKFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKFeedViewController.h; sourceTree = "<group>"; };
+		BC0C424D1BA8573C00055BB1 /* LKFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKFeedViewController.m; sourceTree = "<group>"; };
+		BC0C424F1BA85B5F00055BB1 /* LKTimeLineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKTimeLineViewController.h; sourceTree = "<group>"; };
+		BC0C42501BA85B5F00055BB1 /* LKTimeLineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKTimeLineViewController.m; sourceTree = "<group>"; };
 		BC12A5D01B9BD16000B99CB5 /* LKBaseRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKBaseRequest.h; path = LKNetwork/LKBaseRequest.h; sourceTree = "<group>"; };
 		BC12A5D11B9BD16000B99CB5 /* LKBaseRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKBaseRequest.m; path = LKNetwork/LKBaseRequest.m; sourceTree = "<group>"; };
 		BC12A5D21B9BD16000B99CB5 /* LKBatchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKBatchRequest.h; path = LKNetwork/LKBatchRequest.h; sourceTree = "<group>"; };
@@ -3923,6 +3929,10 @@
 				1377F03F1B5E1702008E21BC /* LKAttentionView.m */,
 				BC0C42491BA8201600055BB1 /* LKFollowingViewController.h */,
 				BC0C424A1BA8201600055BB1 /* LKFollowingViewController.m */,
+				BC0C424C1BA8573C00055BB1 /* LKFeedViewController.h */,
+				BC0C424D1BA8573C00055BB1 /* LKFeedViewController.m */,
+				BC0C424F1BA85B5F00055BB1 /* LKTimeLineViewController.h */,
+				BC0C42501BA85B5F00055BB1 /* LKTimeLineViewController.m */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -5503,6 +5513,7 @@
 				134B0B601B5624A400A195BE /* LKSearchResultsViewController.m in Sources */,
 				13101D301B13074700FBE516 /* LKShareTagsView.m in Sources */,
 				1373C46E1B847A6000A6C55A /* UIImage+MultiFormat.m in Sources */,
+				BC0C42511BA85B5F00055BB1 /* LKTimeLineViewController.m in Sources */,
 				138EDEBD1AD7B0A30020957C /* LCUITextView.m in Sources */,
 				BC12A6251B9BEE2300B99CB5 /* LCBaseRequest.m in Sources */,
 				13FCC0961ADF67AF0008DB41 /* LKTagLikeModel.m in Sources */,
@@ -5641,6 +5652,7 @@
 				139055751B9D9D4700DBF34A /* LKChooseTagView.m in Sources */,
 				1390551F1B994A6D00DBF34A /* GPUImageMovie.m in Sources */,
 				13E14F5F1B21C032009CCF9F /* LCNetworkCenter.m in Sources */,
+				BC0C424E1BA8573C00055BB1 /* LKFeedViewController.m in Sources */,
 				1390550E1B994A6D00DBF34A /* GPUImageLightenBlendFilter.m in Sources */,
 				BC12A62A1B9BEE2300B99CB5 /* LCNetworkAgent.m in Sources */,
 				13E1A4F51AE676E500E24C3C /* LKModifyUserInfoModel.m in Sources */,

@@ -109,9 +109,7 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
     // hide navigation bar.
     if (self.searchView) {
         [self setNavigationBarHidden:YES animated:animated];
-    }
-    else{
-        
+    } else {
         [self setNavigationBarHidden:NO animated:animated];
     }
     
@@ -123,7 +121,6 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
     
     //
     [LKNotificationCount startCheck];
-    
     
     // update user.
     if (LKLocalUser.singleton.isLogin) {
@@ -250,7 +247,7 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
     // Bar item.
     [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image: [[UIImage imageNamed:@"CollectionIcon.png" useCache:YES] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]] selectImage:nil];
     
-    //    [self setNavigationBarButton:LCUINavigationBarButtonTypeRight image:[[UIImage imageNamed:@"NotificationIcon.png" useCache:YES] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]] selectImage:nil];
+    [self setNavigationBarButton:LCUINavigationBarButtonTypeRight image:[[UIImage imageNamed:@"NotificationIcon.png" useCache:YES] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]] selectImage:nil];
     
     // Bind badge.
     //    [LKNotificationCount bindView:self.navigationItem.rightBarButtonItem.customView];

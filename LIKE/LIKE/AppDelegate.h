@@ -15,12 +15,16 @@
 #import "LKNotificationViewController.h"
 #import "LKUserCenterViewController.h"
 #import "LKFollowingViewController.h"
+#import "LKFeedViewController.h"
+#import "LKTimeLineViewController.h"
 
 LC_NOTIFICATION_SET(LKSessionError);
 
 @interface AppDelegate : LCUIApplication
 
 LC_PROPERTY(strong) LKTabBarController * tabBarController;
+LC_PROPERTY(strong) LKTimeLineViewController * timeLineViewController;
+LC_PROPERTY(strong) LKFeedViewController * feedViewController;
 LC_PROPERTY(strong) LKHomeViewController * homeViewController;
 LC_PROPERTY(strong) LKFollowingViewController * followingViewController;
 LC_PROPERTY(strong) LKSearchViewController * searchViewController;

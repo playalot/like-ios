@@ -52,7 +52,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     
     [MAMapServices sharedServices].apiKey = @"4c0db296d4f4d092fdaa9004ee8c959a";
 
-    
+
     // 全局容错
     [LCSwizzle beginFaultTolerant];
     
@@ -106,8 +106,10 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     [self observeNotification:kJPFNetworkDidReceiveMessageNotification];
     
     
-    self.homeViewController = [LKHomeViewController viewController];
-    self.followingViewController = [LKFollowingViewController viewController];
+//    self.homeViewController = [LKHomeViewController viewController];
+    self.timeLineViewController = [LKTimeLineViewController viewController];
+//    self.feedViewController = [LKFeedViewController viewController];
+//    self.followingViewController = [LKFollowingViewController viewController];
     self.searchViewController = [LKSearchViewController viewController];
     self.notificationViewController = [LKNotificationViewController viewController];
     self.userCenterViewController = [[LKUserCenterViewController alloc] initWithUser:LKLocalUser.singleton.user];
@@ -155,7 +157,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     // tabbarCtrl只放了一个主页控制器
     self.tabBarController = [[LKTabBarController alloc]
                              initWithViewControllers:@[
-                                                       LC_UINAVIGATION(self.followingViewController),
+                                                       LC_UINAVIGATION(self.timeLineViewController),
                                                        LC_UINAVIGATION(self.searchViewController),
                                                        LC_UINAVIGATION(self.notificationViewController),
                                                        LC_UINAVIGATION(self.userCenterViewController)]];

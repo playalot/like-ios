@@ -267,7 +267,6 @@ LC_PROPERTY(assign) BOOL isLocalUser;
 //            UIView * shadow = UIView.VIEW.WIDTH(LC_DEVICE_WIDTH).HEIGHT(200).COLOR([[UIColor blackColor] colorWithAlphaComponent:0.22]);
 //            [self.header insertSubview:shadow aboveSubview:self.header.backgroundImageView];
             
-            
             if (self.isLocalUser) {
              
                 LCUIButton * setButton = LCUIButton.view;
@@ -281,6 +280,16 @@ LC_PROPERTY(assign) BOOL isLocalUser;
                 [self.header addSubview:setButton];
             }
             else{
+                
+                LCUIButton * backButton = LCUIButton.view;
+                backButton.viewFrameWidth = 50;
+                backButton.viewFrameHeight = 54 / 3 + 40;
+                backButton.viewFrameY = 10;
+                backButton.buttonImage = [UIImage imageNamed:@"NavigationBarBack.png" useCache:YES];
+                backButton.showsTouchWhenHighlighted = YES;
+                [backButton addTarget:self action:@selector(dismissAction) forControlEvents:UIControlEventTouchUpInside];
+                backButton.tag = 1002;
+                [self.header addSubview:backButton];
                 
                 self.friendshipButton = LCUIButton.view;
                 self.friendshipButton.viewFrameWidth = 64 / 3 + 40;
@@ -368,6 +377,10 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFans uid:self.user.id];
     [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFavor uid:self.user.id];
     
+}
+
+- (void)dismissAction {
+    [self dismissOrPopViewController];
 }
 
 #pragma mark - 

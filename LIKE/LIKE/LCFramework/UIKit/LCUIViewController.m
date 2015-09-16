@@ -46,8 +46,6 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self buildUI];
-    
-    
 }
 
 /**

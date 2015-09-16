@@ -14,10 +14,11 @@
 #import "LKHomeTableViewCell.h"
 #import "LKLoginViewController.h"
 #import "LKInputView.h"
+#import "LKPostDetailViewController.h"
 
 #define FOCUS_FEED_CACHE_KEY [NSString stringWithFormat:@"LKFocusFeedKey-%@", LKLocalUser.singleton.user.id]
 
-@interface LKFollowingViewController () <UITableViewDataSource, UITableViewDelegate, LKHomeTableViewCellDelegate>
+@interface LKFollowingViewController () <UITableViewDataSource, UITableViewDelegate, LKHomeTableViewCellDelegate, LKPostDetailViewControllerDelegate>
 
 LC_PROPERTY(strong) NSMutableArray *datasource;
 LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
@@ -38,6 +39,7 @@ LC_PROPERTY(weak) id delegate;
     self.view.backgroundColor = LKColor.backgroundColor;
     
     self.tableView = [[LCUITableView alloc] initWithFrame:self.view.frame];
+    self.tableView.viewFrameHeight = self.tableView.viewFrameHeight - LC_APPDELEGATE.tabBarController.tabBar.viewFrameHeight - 10;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -226,6 +228,47 @@ LC_PROPERTY(weak) id delegate;
         [self loadData:LCUIPullLoaderDiretionTop];
         self.needRefresh = NO;
     }
+}
+
+LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
+    
+    LKPostDetailViewController * detail = [[LKPostDetailViewController alloc] initWithPost:signal.object];
+    // 设置代理
+    detail.delegate = self;
+
+    LCUINavigationController * nav = LC_UINAVIGATION(detail);
+    
+    [detail setPresendModelAnimationOpen];
+    [self.navigationController presentViewController:nav animated:YES completion:nil];
+
+    LKPost * post = signal.object;
+    if ([post.tagString rangeOfString:@"Comment-"].length) {
+        LKTag * tag = [[LKTag alloc] init];
+        tag.id = @([post.tagString stringByReplacingOccurrencesOfString:@"Comment-" withString:@""].integerValue);
+        [detail performSelector:@selector(openCommentsView:) withObject:tag afterDelay:0.35];
+    }
+}
+
+#pragma mark - ***** LKPostDetailViewControllerDelegate *****
+- (void)postDetailViewController:(LKPostDetailViewController *)ctrl didDeletedTag:(LKTag *)deleteTag {
+    
+    for (LKPost *post in self.datasource) {
+        for (LKTag *tag in post.tags) {
+            
+            if ([tag.tag isEqualToString:deleteTag.tag]) {
+                
+                // 删除标签
+                [post.tags removeObject:tag];
+                
+                [self.tableView beginUpdates];
+                [self.tableView reloadData];
+                [self.tableView endUpdates];
+                
+                break;
+            }
+        }
+    }
+    [self.tableView reloadData];
 }
 
 #pragma mark - ***** LKHomeTableViewCellDelegate *****

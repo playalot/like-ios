@@ -179,11 +179,9 @@ LC_PROPERTY(assign) BOOL isLocalUser;
         @normally(self);
         
         JTSImageInfo * info = [[JTSImageInfo alloc] init];
-        if (LC_NSSTRING_IS_INVALID(self.user.originAvatar)) {
-            info.imageURL = [NSURL URLWithString:self.user.avatar];
-        } else {  
-            info.imageURL = [NSURL URLWithString:self.user.originAvatar];
-        }
+        
+        NSString *imageURLString = LC_NSSTRING_IS_INVALID(self.user.originAvatar) ? self.user.originAvatar : self.user.avatar;
+        info.imageURL = [NSURL URLWithString:imageURLString];
         
         info.referenceRect = imageView.frame;
         info.referenceView = imageView.superview;
@@ -324,8 +322,7 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     [self loadData:self.currentType diretion:LCUIPullLoaderDiretionBottom];
 }
 
--(void) dismissAction
-{
+-(void) dismissAction {
     [self dismissOrPopViewController];
 }
 

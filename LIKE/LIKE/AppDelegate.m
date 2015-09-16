@@ -23,6 +23,7 @@
 #import "SDImageCache.h"
 #import "APService.h"
 #import "LKChooseTagView.h"
+#import "RDVTabBarItem.h"
 
 @interface AppDelegate () <LC_CMD_IMP>
 
@@ -162,6 +163,20 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
                                                        LC_UINAVIGATION(self.notificationViewController),
                                                        LC_UINAVIGATION(self.userCenterViewController)]];
 
+    NSArray *titles = @[@"主页", @"发现", @"通知", @"个人"];
+    NSInteger i = 0;
+    
+    for (UIView *view in self.tabBarController.tabBar.items) {
+        
+        if ([view isKindOfClass:[RDVTabBarItem class]]) {
+            
+            view.backgroundColor = [UIColor colorWithRed:arc4random_uniform(255.0)/255.0 green:arc4random_uniform(255.0)/255.0 blue:arc4random_uniform(255.0)/255.0 alpha:1];
+            RDVTabBarItem *item = (RDVTabBarItem *)view;
+            item.title = titles[i];
+            i++;
+        }
+    }
+    
     UINavigationController *rootNavigationViewController = LC_UINAVIGATION(self.tabBarController);
     [rootNavigationViewController setNavigationBarHidden:YES];
     

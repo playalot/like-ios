@@ -78,6 +78,9 @@ static NSTimeInterval const kLKSearchBarAnimationStepDuration = 0.25;
 {
     if ((self = [super initWithFrame:CGRectMake(CGRectGetMinX(frame), CGRectGetMinY(frame), CGRectGetWidth(frame), frame.size.height)]))
 	{
+        self.layer.cornerRadius = 4;
+        self.layer.masksToBounds = YES;
+        
         // Initialization code
 		self.opaque = NO;
 		self.backgroundColor = [UIColor whiteColor];

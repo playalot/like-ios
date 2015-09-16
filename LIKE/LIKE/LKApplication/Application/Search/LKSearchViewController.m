@@ -9,10 +9,16 @@
 #import "LKSearchViewController.h"
 #import "LKSearchView.h"
 #import "FXBlurView.h"
+#import "LKSearchSuggestionView.h"
+#import "LKSearchResultsViewController.h"
+#import "LKTag.h"
+#import "LKSearchHistory.h"
+#import "LKPostTableViewController.h"
 
 @interface LKSearchViewController () <LKSearchBarDelegate>
 
 LC_PROPERTY(strong) UIView *topBarSearchView;
+LC_PROPERTY(strong) LKSearchSuggestionView *suggestionView;
 LC_PROPERTY(strong) LKSearchBar * searchBar;
 LC_PROPERTY(strong) LCUIButton * doneButton;
 LC_PROPERTY(strong) LKSearchView * searchView;
@@ -20,6 +26,24 @@ LC_PROPERTY(strong) LKSearchView * searchView;
 @end
 
 @implementation LKSearchViewController
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    self.searchBar.alpha = 1;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.searchBar.alpha = 0;
+}
 
 - (void)buildUI {
     self.view.backgroundColor = [LKColor backgroundColor];
@@ -32,12 +56,13 @@ LC_PROPERTY(strong) LKSearchView * searchView;
     self.topBarSearchView.viewFrameX = 0;
     self.topBarSearchView.viewFrameY = 0;
     
-    CGRect searchBarFrame = CGRectMake(5, 5, self.topBarSearchView.viewFrameWidth - 10, 30);
+    CGRect searchBarFrame = CGRectMake(0, 0, self.topBarSearchView.viewFrameWidth - 10, 30);
     self.searchBar = [[LKSearchBar alloc] initWithFrame:searchBarFrame];
     self.searchBar.frame = searchBarFrame;
     self.searchBar.delegate = self;
     self.searchBar.backgroundColor = [UIColor redColor];
     self.searchBar.alpha = 1;
+    self.searchBar.delegate = self;
     self.topBarSearchView.ADD(self.searchBar);
     
     self.doneButton = LCUIButton.view;
@@ -51,13 +76,30 @@ LC_PROPERTY(strong) LKSearchView * searchView;
     [self.doneButton addTarget:self action:@selector(endSearch) forControlEvents:UIControlEventTouchUpInside];
     self.topBarSearchView.ADD(self.doneButton);
     
-    self.navigationController.navigationBar.ADD(self.topBarSearchView);
+    self.titleView = self.topBarSearchView;
     
     self.searchView = LKSearchView.view;
     self.searchView.parentViewController = self;
     self.view.ADD(self.searchView);
     
-    self.searchBar.delegate = self.searchView;
+    self.suggestionView = LKSearchSuggestionView.view;
+    self.suggestionView.viewFrameWidth = self.view.viewFrameWidth;
+    self.suggestionView.viewFrameHeight = self.view.viewFrameHeight;
+    self.suggestionView.viewFrameY = 0;
+    self.suggestionView.alpha = 0;
+    self.view.ADD(self.suggestionView);
+    
+    @weakly(self);
+    self.suggestionView.didTap = ^(){
+        @normally(self);
+        [self.searchBar.searchField resignFirstResponder];
+    };
+    
+    self.suggestionView.didSelectRow = ^(NSString * tagString){
+        @normally(self);
+        LKSearchResultsViewController * searchViewController = [[LKSearchResultsViewController alloc] initWithSearchString:tagString];
+        [self.navigationController pushViewController:searchViewController animated:YES];
+    };
 }
 
 -(void) beginSearch {
@@ -75,48 +117,70 @@ LC_PROPERTY(strong) LKSearchView * searchView;
     });
 }
 
--(void) endSearch
-{
-//    if (self.searchViewController.placeholderView.alpha != 0) {
-//        
-//        LC_FAST_ANIMATIONS(UINavigationControllerHideShowBarDuration, ^{
-//            
-//            self.searchViewController.placeholderView.alpha = 0;
-//            self.searchViewController.placeholderView.searchString = @"";
-//            self.searchViewController.placeholderView.tags = nil;
-//            self.searchBar.searchField.text = @"";
-//            [self.searchBar.searchField resignFirstResponder];
-//        });
-//        
-//        return;
-//    }
-//    
-//    if ([self.blurView respondsToSelector:@selector(setDynamic:)]) {
-//        
-//        ((FXBlurView *)self.blurView).dynamic = YES;
-//    }
-//    
-//    LC_FAST_ANIMATIONS_F(UINavigationControllerHideShowBarDuration, ^{
-//        
-//        self.searchBar.viewFrameWidth = self.topBarSearchView.viewFrameWidth - 10;
-//        self.blurView.viewFrameWidth = self.searchBar.viewFrameWidth;
-//        self.searchTip.viewFrameWidth = self.searchBar.viewFrameWidth;
-//        self.doneButton.viewFrameX = self.topBarSearchView.viewFrameWidth;
-//        
-//        self.blurView.viewFrameY = 5;
-//        self.searchTip.viewFrameY = self.blurView.viewFrameY;
-//        self.searchBar.viewFrameY = self.blurView.viewFrameY;
-//        self.doneButton.viewFrameY = 0;
-//        
-//        
-//    }, ^(BOOL finished){
-//        
-//    });
+-(void) endSearch {
 }
 
-#pragma mark
-- (void)searchBarDidTapReturn:(LKSearchBar *)searchBar {
-    NSLog(@"search bar");
+#pragma mark - LKSearchBarDelegate
+
+- (void)searchBar:(LKSearchBar *)searchBar willStartTransitioningToState:(LKSearchBarState)destinationState {
+    NSLog(@"search bar willStartTransitioningToState");
 }
+
+- (void)searchBarTextDidChange:(LKSearchBar *)searchBar {
+    LC_FAST_ANIMATIONS(0.25, ^{
+        self.suggestionView.alpha = 1;
+        self.suggestionView.searchString = searchBar.searchField.text;
+        [self searchSuggestionTags:searchBar.searchField.text];
+    });
+}
+
+-(void) searchBarDidBeginEditing:(LKSearchBar *)searchBar editing:(BOOL)editing {
+    [self searchBarTextDidChange:searchBar];
+}
+
+- (void)searchBarDidTapReturn:(LKSearchBar *)searchBar {
+    if (LKLocalUser.singleton.isLogin) {
+        [LKSearchHistory addHistory:searchBar.searchField.text];
+    }
+    LKSearchResultsViewController * searchResultsViewController = [[LKSearchResultsViewController alloc] initWithSearchString:searchBar.searchField.text];
+    [LC_APPDELEGATE.homeViewController.navigationController pushViewController:searchResultsViewController animated:YES];
+}
+
+-(void) searchSuggestionTags:(NSString *)searchString
+{
+    [self.suggestionView cancelAllRequests];
+    
+    if (searchString.length == 0) {
+        self.suggestionView.tags = nil;
+        return;
+    }
+    
+    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"search/topsearch/%@" ,searchString.URLCODE()]].AUTO_SESSION();
+    @weakly(self);
+    [self.suggestionView request:interface complete:^(LKHttpRequestResult *result) {
+        @normally(self);
+        
+        if (result.state == LKHttpRequestStateFinished) {
+            NSArray * array0 = result.json[@"data"][@"users"];
+            NSMutableArray * users = [NSMutableArray array];
+            for (NSDictionary * dic in array0) {
+                [users addObject:[LKUser objectFromDictionary:dic]];
+            }
+            self.suggestionView.users = users;
+            NSArray * array = result.json[@"data"][@"tags"];
+            NSMutableArray * tags = [NSMutableArray array];
+            for (NSDictionary * dic in array) {
+                LKTag * tag = [LKTag objectFromDictionary:dic];
+                [tags addObject:tag];
+            }
+            self.suggestionView.tags = tags;
+            
+        } else if (result.state == LKHttpRequestStateFailed){
+            
+        }
+    }];
+    
+}
+
 
 @end

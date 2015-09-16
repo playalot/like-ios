@@ -10,6 +10,8 @@
 
 @interface LKUserCenterBrowsingViewController : LKPostTableViewController
 
-LC_PROPERTY(assign) NSInteger currentIndex;
+//LC_PROPERTY(assign) LKSearchResultsViewController *parentSearchResultsViewController;
+
+- (void)reloadData;
 
 @end

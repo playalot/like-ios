@@ -14,5 +14,6 @@
 
 LC_PROPERTY(strong) NSMutableArray * datasource;
 LC_PROPERTY(strong) LCUITableView *tableView;
+LC_PROPERTY(assign) NSInteger currentIndex;
 
 @end

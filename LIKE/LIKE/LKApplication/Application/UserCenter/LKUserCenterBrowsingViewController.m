@@ -10,50 +10,41 @@
 
 @interface LKUserCenterBrowsingViewController ()
 
+LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
+
 @end
 
 @implementation LKUserCenterBrowsingViewController
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+- (void)reloadData {
+    [self.pullLoader endRefresh];
+    [self.tableView reloadData];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
+- (void)buildUI {
+    [super buildUI];
     
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
+    [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[UIImage imageNamed:@"NavigationBarBack.png" useCache:YES] selectImage:nil];
     
-//    [self setNavigationBarHidden:NO animated:YES];
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-
-    [self setNavigationBarHidden:NO animated:YES];
+    self.pullLoader = [LCUIPullLoader pullLoaderWithScrollView:self.tableView pullStyle:LCUIPullLoaderStyleHeaderAndFooter];
+    @weakly(self);
+    self.pullLoader.beginRefresh = ^(LCUIPullLoaderDiretion diretion) {
+        @normally(self);
+        [self loadData:diretion];
+    };
     
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:self.currentIndex inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:self.currentIndex inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+// 这个方法同时负责主页和关注的人列表的请求
+- (void)loadData:(LCUIPullLoaderDiretion)diretion {
+//    [self.parentSearchResultsViewController loadData:diretion];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)setCurrentIndex:(NSInteger)currentIndex {
+    [super setCurrentIndex:currentIndex];
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:self.currentIndex inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
 }
-*/
 
 @end

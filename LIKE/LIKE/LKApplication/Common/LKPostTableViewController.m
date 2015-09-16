@@ -14,64 +14,38 @@
 
 @interface LKPostTableViewController () <LKPostDetailViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 
+LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
+
 @end
 
 @implementation LKPostTableViewController
 
--(void) dealloc
-{
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        
+    }
+    return self;
+}
+
+- (void)dealloc {
     [self cancelAllRequests];
     [self unobserveAllNotifications];
 }
 
--(void) viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self reloadData];
-}
-
--(void) viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-}
-
-- (void) viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-}
-
--(void) viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
-    if (self.datasource.count == 0)
+    if (self.datasource == nil)
         self.datasource = [NSMutableArray array];
-    
     [self reloadData];
 }
 
--(void) buildUI
-{
+- (void)buildUI {
     self.view.backgroundColor = LKColor.backgroundColor;
     
-    LCUIButton *titleBtn = [[LCUIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];
-    [titleBtn setImage:[UIImage imageNamed:@"HomeLikeIcon" useCache:YES] forState:UIControlStateNormal];
-    //    self.titleView = [LCUIImageView viewWithImage:[UIImage imageNamed:@"HomeLikeIcon.png" useCache:YES]];
-    self.titleView = (UIView *)titleBtn;
-    [titleBtn addTarget:self action:@selector(scrollViewScrollToTop) forControlEvents:UIControlEventTouchUpInside];
-    
+    [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[UIImage imageNamed:@"NavigationBarBack.png" useCache:YES] selectImage:nil];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
-    
-    // 导航栏返回上一级按钮
-    LCUIButton * backButton = LCUIButton.view;
-    backButton.viewFrameWidth = 80;
-    backButton.viewFrameHeight = 80;
-    backButton.viewFrameY = -17;
-    backButton.viewFrameX = -15;
-    backButton.buttonImage = [UIImage imageNamed:@"NavigationBarBack.png" useCache:YES];
-    backButton.showsTouchWhenHighlighted = YES;
-    [backButton addTarget:self action:@selector(_dismissAction) forControlEvents:UIControlEventTouchUpInside];
-    backButton.tag = 1002;
-    
-    self.navigationItem.hidesBackButton = YES;
-    [self.navigationController.navigationBar addSubview:backButton];
 
     self.tableView = [[LCUITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.viewFrameWidth, self.view.viewFrameHeight - 64) style:UITableViewStylePlain];
     self.tableView.delegate = self;
@@ -79,18 +53,20 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = [UIColor clearColor];
     self.view.ADD(self.tableView);
+    
+    [self setNavigationBarHidden:NO animated:YES];
 }
 
--(void) _dismissAction {
-    [self dismissOrPopViewController];
+- (void)handleNavigationBarButton:(LCUINavigationBarButtonType)type {
+    if (type == LCUINavigationBarButtonTypeLeft) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 #pragma mark -
 
--(void) addTag:(NSString *)tag onPost:(LKPost *)post onCell:(LKPostTableViewCell *)cell
-{
+-(void) addTag:(NSString *)tag onPost:(LKPost *)post onCell:(LKPostTableViewCell *)cell {
     @weakly(self);
-    
     LKTag * tagValue = [[LKTag alloc] init];
     tagValue.tag = tag;
     tagValue.likes = @1;
@@ -109,11 +85,9 @@
     // reload row...
     if (indexPath) {
         post.user.likes = @(post.user.likes.integerValue + 1);
-        
         [self.tableView beginUpdates];
         cell.post = post;
         [self.tableView endUpdates];
-    
         [cell newTagAnimation:^(BOOL finished) {}];
     }
     
@@ -137,11 +111,9 @@
     }];
 }
 
-
 #pragma mark - ***** 数据源方法 *****
 
--(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
-{
+-(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 

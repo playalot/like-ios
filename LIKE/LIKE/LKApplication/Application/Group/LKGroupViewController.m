@@ -70,10 +70,7 @@ LC_PROPERTY_MODEL(LKPostTagsDetailModel, tagsListModel);
     
     [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[UIImage imageNamed:@"NavigationBarBack.png" useCache:YES] selectImage:nil];
     [self setNavigationBarButton:LCUINavigationBarButtonTypeRight image:[UIImage imageNamed:@"NavigationBarMore.png" useCache:YES] selectImage:nil];
-    
-//    LCUIButton *left = (LCUIButton *)self.navigationItem.leftBarButtonItem.customView;
-//    left.alpha = 0;
-    
+        
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:LC_SIZE(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
     
     self.tableView.sectionIndexColor = LKColor.color;
@@ -81,7 +78,7 @@ LC_PROPERTY_MODEL(LKPostTagsDetailModel, tagsListModel);
     
     // 输入框
     self.inputView = LKGroupInputView.view;
-    self.inputView.viewFrameY = LC_DEVICE_HEIGHT + 20 - self.inputView.viewFrameHeight - 49;
+    self.inputView.viewFrameY = LC_DEVICE_HEIGHT + 20 - self.inputView.viewFrameHeight;
     [UIApplication sharedApplication].keyWindow.ADD(self.inputView);
     
     @weakly(self);
@@ -96,6 +93,47 @@ LC_PROPERTY_MODEL(LKPostTagsDetailModel, tagsListModel);
             return;
         }
     };
+}
+
+/**
+ *  根据导航栏按钮类型处理相关操作
+ */
+- (void)handleNavigationBarButton:(LCUINavigationBarButtonType)type {
+    
+    if (type == LCUINavigationBarButtonTypeLeft) {
+        
+        [self.inputView removeFromSuperview];
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        
+        [self moreAction];
+    }
+}
+
+- (void)moreAction {
+    
+    [self.inputView resignFirstResponder];
+    
+    @weakly(self);
+    
+    [LKActionSheet showWithTitle:nil buttonTitles:@[LC_LO(@"查看群组成员"), LC_LO(@"申请管理员"), LC_LO(@"屏蔽该群组")] didSelected:^(NSInteger index) {
+        
+        @normally(self);
+        
+        if (index == 0){
+            
+            NSLog(@"查看群组成员  %s", __FUNCTION__);
+            
+        } else if (index == 1) {
+            
+            NSLog(@"申请管理员   %s", __FUNCTION__);
+            
+        } else if (index == 2){
+            
+            NSLog(@"屏蔽该群组   %s", __FUNCTION__);
+
+        }
+    }];
 }
 
 #pragma mark - ***** tableView dataSource *****
@@ -135,8 +173,7 @@ LC_PROPERTY_MODEL(LKPostTagsDetailModel, tagsListModel);
         height += 5;
     }
     
-    return 180;
-
+    return 370;
 }
 
 #pragma mark - ***** scrollView Delegate *****-

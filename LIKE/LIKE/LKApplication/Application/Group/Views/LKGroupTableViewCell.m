@@ -15,14 +15,20 @@
 
 @interface LKGroupTableViewCell ()
 
-LC_PROPERTY(strong) LCUIImageView * headImageView;
-LC_PROPERTY(strong) LCUILabel * contentLabel;
-LC_PROPERTY(strong) LCUIImageView * contentImageView;
+LC_PROPERTY(strong) LCUIImageView *headImageView;
+LC_PROPERTY(strong) LCUILabel *contentLabel;
+LC_PROPERTY(strong) LCUIImageView *contentImageView;
 LC_PROPERTY(strong) LKTagsView *tagsView;
-LC_PROPERTY(strong) LCUILabel * timeLabel;
-LC_PROPERTY(strong) UIView * cellBackgroundView;
-LC_PROPERTY(strong) LKCommentsView * commentsView;
-LC_PROPERTY(strong) LKLikesScrollView * likesView;
+LC_PROPERTY(strong) LCUILabel *timeLabel;
+LC_PROPERTY(strong) LCUIButton *showMoreButton;
+LC_PROPERTY(strong) UIView *cellBackgroundView;
+LC_PROPERTY(strong) LKCommentsView *commentsView;
+LC_PROPERTY(strong) LKLikesScrollView *likesView;
+/**
+ *  是否展示更多
+ */
+LC_PROPERTY(assign) BOOL showMore;
+LC_PROPERTY(strong) LKTag *testTag;
 
 @end
 
@@ -83,8 +89,10 @@ LC_PROPERTY(strong) LKLikesScrollView * likesView;
     
     
     self.tagsView = LKTagsView.view;
-    self.tagsView.viewFrameX = self.contentImageView.viewRightX + 10;
-    self.tagsView.viewFrameY = self.contentImageView.viewFrameY;
+    self.tagsView.scrollEnabled = NO;
+    self.showMore = NO;
+    self.tagsView.viewFrameX = self.contentImageView.viewRightX;
+    self.tagsView.viewFrameY = self.contentImageView.viewFrameY - 10;
     self.tagsView.viewFrameWidth = self.cellBackgroundView.viewFrameWidth - self.tagsView.viewFrameX - 10;
     self.cellBackgroundView.ADD(self.tagsView);
     
@@ -99,15 +107,18 @@ LC_PROPERTY(strong) LKLikesScrollView * likesView;
     self.cellBackgroundView.ADD(self.timeLabel);
     
     
-    LCUIButton *showMoreButton = LCUIButton.view;
-    showMoreButton.buttonImage = [UIImage imageNamed:@"more.png" useCache:YES];
-    showMoreButton.titleColor = LC_RGB(140, 133, 126);
-    showMoreButton.viewFrameHeight = 33;
-    showMoreButton.viewFrameWidth = 19;
-    showMoreButton.viewFrameX = self.cellBackgroundView.viewFrameWidth - showMoreButton.viewFrameWidth - 3;
-    showMoreButton.viewCenterY = self.timeLabel.viewCenterY;
-    showMoreButton.transform = CGAffineTransformMakeRotation(M_PI_2);
-    self.cellBackgroundView.ADD(showMoreButton);
+    self.showMoreButton = LCUIButton.view;
+    self.showMoreButton.buttonImage = [UIImage imageNamed:@"more.png" useCache:YES];
+    self.showMoreButton.titleColor = LC_RGB(140, 133, 126);
+    self.showMoreButton.viewFrameHeight = 33;
+    self.showMoreButton.viewFrameWidth = 19;
+    self.showMoreButton.viewFrameX = self.cellBackgroundView.viewFrameWidth
+                                   - self.showMoreButton.viewFrameWidth
+                                   - 3;
+    self.showMoreButton.viewCenterY = self.timeLabel.viewCenterY;
+    self.showMoreButton.transform = CGAffineTransformMakeRotation(M_PI_2);
+    [self.showMoreButton addTarget:self action:@selector(showMoreTags) forControlEvents:UIControlEventTouchUpInside];
+    self.cellBackgroundView.ADD(self.showMoreButton);
     
     
     self.commentsView = LKCommentsView.view;
@@ -138,7 +149,52 @@ LC_PROPERTY(strong) LKLikesScrollView * likesView;
     [self.contentImageView sd_setImageWithURL:[NSURL URLWithString:post.content] placeholderImage:nil];
     self.tagsView.tags = post.tags;
     self.timeLabel.text = [LKTime dateNearByTimestamp:post.timestamp];
-    self.commentsView.tagValue =
+    
+    NSDictionary *dict = @{@"mark_id": @"532930",
+                           @"comments": @[@{@"comment_id": @"18594",
+                                            @"content": @"like更新啦!",
+                                            @"created": @"1441010240",
+                                            @"place": @"福州市",
+                                            @"user": @{@"user_id": @"11226",
+                                                       @"likes": @"9999",
+                                                       @"avatar": @"http://cdn.likeorz.com/avatar_11_1422968054.jpg?imageView2/5/w/240",
+                                                       @"nickname": @"Developer"}},
+                                          @{@"comment_id": @"18610",
+                                            @"content": @"作死小能手!",
+                                            @"created": @"1941010240",
+                                            @"place": @"重庆市",
+                                            @"user": @{@"user_id": @"200",
+                                                       @"likes": @"9999",
+                                                       @"avatar": @"http://cdn.likeorz.com/avatar_11_1422968054.jpg?imageView2/5/w/240",
+                                                       @"nickname": @"Buffer"}},
+                                          @{@"comment_id": @"18615",
+                                            @"content": @"喜闻乐见!",
+                                            @"created": @"1442010240",
+                                            @"place": @"New York",
+                                            @"user": @{@"user_id": @"11226",
+                                                       @"likes": @"9999",
+                                                       @"avatar": @"http://cdn.likeorz.com/avatar_11_1422968054.jpg?imageView2/5/w/240",
+                                                       @"nickname": @"Mob"}},
+                                          @{@"comment_id": @"18818",
+                                            @"content": @"顶二楼!",
+                                            @"created": @"1443010240",
+                                            @"place": @"Los Angeles",
+                                            @"user": @{@"user_id": @"11226",
+                                                       @"likes": @"9999",
+                                                       @"avatar": @"http://cdn.likeorz.com/avatar_11_1422968054.jpg?imageView2/5/w/240",
+                                                       @"nickname": @"Umeng"}}],
+                           @"likes": @"5",
+                           @"tag": @"测试用",
+                           @"is_liked": @"0",
+                           @"total_comments": @"4",
+                           @"createTime": @"1442456235",
+                           @"user": @{@"user_id": @"11226",
+                                      @"likes": @"9999",
+                                      @"avatar": @"http://cdn.likeorz.com/avatar_11_1422968054.jpg?imageView2/5/w/240",
+                                      @"nickname": @"Developer"}};
+    LKTag *tag = [[LKTag alloc] initWithDictionary:dict error:nil];
+    self.testTag = tag;
+    self.commentsView.tagValue = tag;
     
     self.cellBackgroundView.layer.mask = nil;
     self.commentsView.viewFrameY = self.cellBackgroundView.viewBottomY;
@@ -154,7 +210,11 @@ LC_PROPERTY(strong) LKLikesScrollView * likesView;
 //    }
     
     
-//    self.commentsView.tagValue = _tagDetail;
+    // 删除添加标签按钮
+    [[self.tagsView.subviews lastObject] removeFromSuperview];
+    // 重新计算contentSize
+    LKTagItem *lastItem = [self.tagsView.subviews lastObject];
+    self.tagsView.contentSize = CGSizeMake(0, lastItem.viewBottomY + 10);
 }
 
 - (void)roundCorners:(UIRectCorner)corners forView:(UIView *)view
@@ -190,7 +250,42 @@ LC_PROPERTY(strong) LKLikesScrollView * likesView;
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    self.tagsView.viewFrameHeight = 100;
+    LC_FAST_ANIMATIONS(0.25, ^{
+    
+        if (self.showMore) {
+
+            self.tagsView.viewFrameHeight = self.tagsView.contentSize.height;
+        } else {
+            
+            self.tagsView.viewFrameHeight = 110;
+        }
+        
+        if (self.tagsView.contentSize.height < 120) {
+            
+            self.timeLabel.viewFrameY = self.contentImageView.viewBottomY + 10;
+        } else {
+            
+            self.timeLabel.viewFrameY = self.tagsView.viewBottomY + 10;
+        }
+        self.showMoreButton.viewCenterY = self.timeLabel.viewCenterY;
+        self.cellBackgroundView.viewFrameHeight = self.timeLabel.viewBottomY + 10;
+        self.commentsView.viewFrameY = self.cellBackgroundView.viewBottomY;
+    });
+}
+
+- (void)showMoreTags {
+    
+    if (self.tagsView.contentSize.height < 120) {
+        return;
+    }
+    
+    self.showMore = !self.showMore;
+    LC_FAST_ANIMATIONS(0.25, ^{
+        
+        self.showMoreButton.transform = CGAffineTransformRotate(self.showMoreButton.transform, M_PI);
+    });
+    
+    [self layoutSubviews];
 }
 
 @end

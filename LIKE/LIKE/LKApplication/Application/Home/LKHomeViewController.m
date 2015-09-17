@@ -86,13 +86,13 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
     return instance_;
 }
 
--(void) dealloc
+- (void)dealloc
 {
     [self cancelAllRequests];
     [self unobserveAllNotifications];
 }
 
--(void) viewWillAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     

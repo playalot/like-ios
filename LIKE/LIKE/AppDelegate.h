@@ -17,6 +17,7 @@
 #import "LKFollowingViewController.h"
 #import "LKFeedViewController.h"
 #import "LKTimeLineViewController.h"
+#import "LKGroupViewController.h"
 
 LC_NOTIFICATION_SET(LKSessionError);
 
@@ -30,6 +31,7 @@ LC_PROPERTY(strong) LKFollowingViewController * followingViewController;
 LC_PROPERTY(strong) LKSearchViewController * searchViewController;
 LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
 LC_PROPERTY(strong) LKUserCenterViewController * userCenterViewController;
+LC_PROPERTY(strong) LKGroupViewController * groupViewController;
 LC_PROPERTY(strong) UIViewController * none;
 
 @end

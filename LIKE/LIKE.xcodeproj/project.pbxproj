@@ -30,6 +30,10 @@
 		132622AA1B93FCB50074C589 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 132622A91B93FCB50074C589 /* CoreGraphics.framework */; };
 		132622AC1B93FCCC0074C589 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 132622AB1B93FCCC0074C589 /* Security.framework */; };
 		132622AE1B93FD4C0074C589 /* PushConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 132622AD1B93FD4C0074C589 /* PushConfig.plist */; };
+		132E6F7B1BA93264001DF4BF /* LKGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 132E6F7A1BA93264001DF4BF /* LKGroupViewController.m */; };
+		132E6F7F1BA932D0001DF4BF /* LKGroupTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 132E6F7E1BA932D0001DF4BF /* LKGroupTableViewCell.m */; };
+		132E6F851BA9695B001DF4BF /* LKGroupInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 132E6F841BA9695B001DF4BF /* LKGroupInputView.m */; };
+		132E6F891BA970E5001DF4BF /* GCPlaceholderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 132E6F881BA970E5001DF4BF /* GCPlaceholderTextView.m */; };
 		133A31831B5D09C500AB74A4 /* CollectionIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 133A31821B5D09C500AB74A4 /* CollectionIcon@3x.png */; };
 		133A31851B5D0D3400AB74A4 /* SearchPlaceholderIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 133A31841B5D0D3400AB74A4 /* SearchPlaceholderIcon@3x.png */; };
 		133D3C7D1AE78DC9008F303D /* LKAssistiveTouchButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 133D3C7C1AE78DC9008F303D /* LKAssistiveTouchButton.m */; };
@@ -855,6 +859,14 @@
 		132622A91B93FCB50074C589 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		132622AB1B93FCCC0074C589 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		132622AD1B93FD4C0074C589 /* PushConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PushConfig.plist; sourceTree = "<group>"; };
+		132E6F791BA93264001DF4BF /* LKGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKGroupViewController.h; sourceTree = "<group>"; };
+		132E6F7A1BA93264001DF4BF /* LKGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKGroupViewController.m; sourceTree = "<group>"; };
+		132E6F7D1BA932D0001DF4BF /* LKGroupTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKGroupTableViewCell.h; sourceTree = "<group>"; };
+		132E6F7E1BA932D0001DF4BF /* LKGroupTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKGroupTableViewCell.m; sourceTree = "<group>"; };
+		132E6F831BA9695B001DF4BF /* LKGroupInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKGroupInputView.h; sourceTree = "<group>"; };
+		132E6F841BA9695B001DF4BF /* LKGroupInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKGroupInputView.m; sourceTree = "<group>"; };
+		132E6F871BA970E5001DF4BF /* GCPlaceholderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCPlaceholderTextView.h; sourceTree = "<group>"; };
+		132E6F881BA970E5001DF4BF /* GCPlaceholderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCPlaceholderTextView.m; sourceTree = "<group>"; };
 		133A31821B5D09C500AB74A4 /* CollectionIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CollectionIcon@3x.png"; sourceTree = "<group>"; };
 		133A31841B5D0D3400AB74A4 /* SearchPlaceholderIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SearchPlaceholderIcon@3x.png"; sourceTree = "<group>"; };
 		133D3C7B1AE78DC9008F303D /* LKAssistiveTouchButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKAssistiveTouchButton.h; sourceTree = "<group>"; };
@@ -2395,6 +2407,34 @@
 			path = JPush;
 			sourceTree = "<group>";
 		};
+		132E6F781BA931BA001DF4BF /* Group */ = {
+			isa = PBXGroup;
+			children = (
+				132E6F7C1BA93289001DF4BF /* Views */,
+				132E6F791BA93264001DF4BF /* LKGroupViewController.h */,
+				132E6F7A1BA93264001DF4BF /* LKGroupViewController.m */,
+			);
+			path = Group;
+			sourceTree = "<group>";
+		};
+		132E6F7C1BA93289001DF4BF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				132E6F7D1BA932D0001DF4BF /* LKGroupTableViewCell.h */,
+				132E6F7E1BA932D0001DF4BF /* LKGroupTableViewCell.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		132E6F861BA970E5001DF4BF /* GCPlaceholderTextView */ = {
+			isa = PBXGroup;
+			children = (
+				132E6F871BA970E5001DF4BF /* GCPlaceholderTextView.h */,
+				132E6F881BA970E5001DF4BF /* GCPlaceholderTextView.m */,
+			);
+			path = GCPlaceholderTextView;
+			sourceTree = "<group>";
+		};
 		133D3C841AE79667008F303D /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -3674,6 +3714,8 @@
 				138EDF151AD7EC8D0020957C /* LKFont.m */,
 				139B06871ADBE5F6006A260F /* NSObject+LKTopHud.h */,
 				139B06881ADBE5F6006A260F /* NSObject+LKTopHud.m */,
+				132E6F831BA9695B001DF4BF /* LKGroupInputView.h */,
+				132E6F841BA9695B001DF4BF /* LKGroupInputView.m */,
 				13FCC0971ADF852A0008DB41 /* LKInputView.h */,
 				13FCC0981ADF852A0008DB41 /* LKInputView.m */,
 				13FCC0721ADE17F70008DB41 /* LKSegmentHeader.h */,
@@ -3705,6 +3747,7 @@
 		138EDECC1AD7B70F0020957C /* LKExternal */ = {
 			isa = PBXGroup;
 			children = (
+				132E6F861BA970E5001DF4BF /* GCPlaceholderTextView */,
 				BC12A5CF1B9BD14E00B99CB5 /* LKNetwork */,
 				1326229D1B93FC0D0074C589 /* JPush */,
 				1319155F1B8C267900EC0F42 /* SMS_SDK */,
@@ -3742,6 +3785,7 @@
 		138EDECD1AD7B7C00020957C /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				132E6F781BA931BA001DF4BF /* Group */,
 				134B0B561B5624A400A195BE /* Search */,
 				13FCC06E1ADE16C00008DB41 /* UserCenter */,
 				138EDF021AD7DDFA0020957C /* Camera */,
@@ -5446,6 +5490,7 @@
 				139054DD1B994A6D00DBF34A /* GPUImageContext.m in Sources */,
 				1373C4651B847A6000A6C55A /* SDImageCache.m in Sources */,
 				1388B6AB1B33EA98006ACA44 /* LKCameraRollViewController.m in Sources */,
+				132E6F891BA970E5001DF4BF /* GCPlaceholderTextView.m in Sources */,
 				BC12A5E91B9BD16100B99CB5 /* LKNetworkPrivate.m in Sources */,
 				139B06A51ADBF50F006A260F /* SquareCashStyleBehaviorDefiner.m in Sources */,
 				1373C4681B847A6000A6C55A /* SDWebImageDownloader.m in Sources */,
@@ -5467,6 +5512,7 @@
 				134765721AE25ED90055D099 /* LKFileUploaderConfig.m in Sources */,
 				138EDEC01AD7B0A30020957C /* LCUIWebViewController.m in Sources */,
 				135DBAF51AE5193E004AD150 /* LKPostDetailCell.m in Sources */,
+				132E6F7F1BA932D0001DF4BF /* LKGroupTableViewCell.m in Sources */,
 				1347656D1AE25EA40055D099 /* QNUploadOption.m in Sources */,
 				139055121B994A6D00DBF34A /* GPUImageLookupFilter.m in Sources */,
 				13BCA6641B5CDCF200DC0549 /* LCBlurSearchBar.m in Sources */,
@@ -5574,6 +5620,7 @@
 				138EDE5C1AD7B0A30020957C /* FMDatabaseAdditions.m in Sources */,
 				139055581B994A6D00DBF34A /* GPUImageToonFilter.m in Sources */,
 				135DBAEC1AE4AC24004AD150 /* LKRecommendTagsView.m in Sources */,
+				132E6F7B1BA93264001DF4BF /* LKGroupViewController.m in Sources */,
 				139054C91B994A6D00DBF34A /* GPUImageAlphaBlendFilter.m in Sources */,
 				13D63ACB1AEA01F1001587C0 /* LKNotificationCount.m in Sources */,
 				138EDEB91AD7B0A30020957C /* LCUITableView.m in Sources */,
@@ -5721,6 +5768,7 @@
 				134765641AE25EA40055D099 /* QNDns.m in Sources */,
 				138EDEA51AD7B0A30020957C /* UIViewController+LCUINavigationBar.m in Sources */,
 				138EDE221AD7B0A30020957C /* LCNetworkBandwidth.m in Sources */,
+				132E6F851BA9695B001DF4BF /* LKGroupInputView.m in Sources */,
 				138EDEA11AD7B0A30020957C /* UIView+LCUIBackground.m in Sources */,
 				1390553E1B994A6D00DBF34A /* GPUImageSaturationFilter.m in Sources */,
 				138EDE6B1AD7B0A30020957C /* Reachability.m in Sources */,

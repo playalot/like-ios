@@ -113,6 +113,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
 //    self.followingViewController = [LKFollowingViewController viewController];
     self.searchViewController = [LKSearchViewController viewController];
     self.notificationViewController = [LKNotificationViewController viewController];
+    self.groupViewController = [LKGroupViewController viewController];
     self.userCenterViewController = [[LKUserCenterViewController alloc] initWithUser:LKLocalUser.singleton.user];
     
     // 极光推送

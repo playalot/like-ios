@@ -140,9 +140,33 @@ LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
             
             notification.post.tagString = [NSString stringWithFormat:@"Comment-%@",notification.tagID];
         }
-        LKPostDetailViewController * detailViewController = [[LKPostDetailViewController alloc] initWithPost:notification.post];
-        [self.navigationController presentViewController:detailViewController animated:YES completion:^{}];
+        
+        [self getOriginPostWithPost:notification.post];
     }
+}
+
+/**
+ *  解决进入图片详情页面图片模糊的问题
+ */
+- (void)getOriginPostWithPost:(LKPost *)post {
+    
+    LKHttpRequestInterface *interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"post/%@", post.id]].GET_METHOD();
+    
+    [self request:interface complete:^(LKHttpRequestResult *result) {
+       
+        if (result.state == LKHttpRequestStateFinished) {
+         
+            NSString *content = result.json[@"data"][@"content"];
+            post.content = content;
+            
+            LKPostDetailViewController *detailViewController = [[LKPostDetailViewController alloc] initWithPost:post];
+            [self.navigationController presentViewController:detailViewController animated:YES completion:^{}];
+            
+        } else if (result.state == LKHttpRequestStateFailed) {
+            
+            [self showTopMessageErrorHud:result.error];
+        }
+    }];
 }
 
 #pragma mark LKPostDetailViewControllerDelegate

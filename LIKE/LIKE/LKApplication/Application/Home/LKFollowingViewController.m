@@ -39,7 +39,6 @@ LC_PROPERTY(weak) id delegate;
     self.view.backgroundColor = LKColor.backgroundColor;
     
     self.tableView = [[LCUITableView alloc] initWithFrame:self.view.frame];
-    self.tableView.viewFrameHeight = self.tableView.viewFrameHeight - LC_APPDELEGATE.tabBarController.tabBar.viewFrameHeight - 10;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;

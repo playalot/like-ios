@@ -749,7 +749,7 @@
 		13F505151B0C5EAC00D8D484 /* WeChatFriendIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13F5050F1B0C5EAC00D8D484 /* WeChatFriendIcon@3x.png */; };
 		13F5051C1B0CA05600D8D484 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13F5051A1B0CA05600D8D484 /* TencentOpenAPI.framework */; };
 		13F5051D1B0CA05600D8D484 /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 13F5051B1B0CA05600D8D484 /* TencentOpenApi_IOS_Bundle.bundle */; };
-		13FCC0711ADE16DD0008DB41 /* LKUserCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FCC0701ADE16DD0008DB41 /* LKUserCenterViewController.m */; };
+		13FCC0711ADE16DD0008DB41 /* LKUserCenterHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FCC0701ADE16DD0008DB41 /* LKUserCenterHomeViewController.m */; };
 		13FCC0741ADE17F70008DB41 /* LKSegmentHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FCC0731ADE17F70008DB41 /* LKSegmentHeader.m */; };
 		13FCC0781ADE2E5F0008DB41 /* LKHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FCC0761ADE2E5F0008DB41 /* LKHomeTableViewCell.m */; };
 		13FCC07C1ADE37790008DB41 /* LKUserCenterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FCC07B1ADE37790008DB41 /* LKUserCenterModel.m */; };
@@ -794,7 +794,6 @@
 		BC12A6371B9BF1BE00B99CB5 /* LKTabBarController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6341B9BF1BE00B99CB5 /* LKTabBarController.mm */; };
 		BC12A6381B9BF1BE00B99CB5 /* LKWelcome.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6361B9BF1BE00B99CB5 /* LKWelcome.m */; };
 		BC12A63B1B9BF24500B99CB5 /* LKContext.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A63A1B9BF24500B99CB5 /* LKContext.m */; };
-		BC12A6431B9C4EE600B99CB5 /* LKUserCenterBrowsingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6421B9C4EE600B99CB5 /* LKUserCenterBrowsingCell.m */; };
 		BC12A6521BA023E600B99CB5 /* LKPostTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6511BA023E600B99CB5 /* LKPostTableViewController.m */; };
 		BC12A6551BA0240200B99CB5 /* LKPostTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6541BA0240200B99CB5 /* LKPostTableViewCell.m */; };
 		BC12A65B1BA5A36D00B99CB5 /* LKSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A65A1BA5A36D00B99CB5 /* LKSearchViewController.m */; };
@@ -2235,8 +2234,8 @@
 		13F5050F1B0C5EAC00D8D484 /* WeChatFriendIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WeChatFriendIcon@3x.png"; sourceTree = "<group>"; };
 		13F5051A1B0CA05600D8D484 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		13F5051B1B0CA05600D8D484 /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
-		13FCC06F1ADE16DD0008DB41 /* LKUserCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKUserCenterViewController.h; sourceTree = "<group>"; };
-		13FCC0701ADE16DD0008DB41 /* LKUserCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKUserCenterViewController.m; sourceTree = "<group>"; };
+		13FCC06F1ADE16DD0008DB41 /* LKUserCenterHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKUserCenterHomeViewController.h; sourceTree = "<group>"; };
+		13FCC0701ADE16DD0008DB41 /* LKUserCenterHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKUserCenterHomeViewController.m; sourceTree = "<group>"; };
 		13FCC0721ADE17F70008DB41 /* LKSegmentHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKSegmentHeader.h; sourceTree = "<group>"; };
 		13FCC0731ADE17F70008DB41 /* LKSegmentHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKSegmentHeader.m; sourceTree = "<group>"; };
 		13FCC0751ADE2E5F0008DB41 /* LKHomeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKHomeTableViewCell.h; sourceTree = "<group>"; };
@@ -2320,8 +2319,6 @@
 		BC12A6361B9BF1BE00B99CB5 /* LKWelcome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKWelcome.m; path = Common/LKWelcome.m; sourceTree = "<group>"; };
 		BC12A6391B9BF24500B99CB5 /* LKContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKContext.h; path = LKCommon/LKContext.h; sourceTree = "<group>"; };
 		BC12A63A1B9BF24500B99CB5 /* LKContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKContext.m; path = LKCommon/LKContext.m; sourceTree = "<group>"; };
-		BC12A6411B9C4EE600B99CB5 /* LKUserCenterBrowsingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKUserCenterBrowsingCell.h; sourceTree = "<group>"; };
-		BC12A6421B9C4EE600B99CB5 /* LKUserCenterBrowsingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKUserCenterBrowsingCell.m; sourceTree = "<group>"; };
 		BC12A6501BA023E600B99CB5 /* LKPostTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKPostTableViewController.h; path = Common/LKPostTableViewController.h; sourceTree = "<group>"; };
 		BC12A6511BA023E600B99CB5 /* LKPostTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKPostTableViewController.m; path = Common/LKPostTableViewController.m; sourceTree = "<group>"; };
 		BC12A6531BA0240200B99CB5 /* LKPostTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKPostTableViewCell.h; path = Common/LKPostTableViewCell.h; sourceTree = "<group>"; };
@@ -4870,8 +4867,8 @@
 				139C712D1B5519760051B2C3 /* Views(Link) */,
 				139C712C1B55195A0051B2C3 /* Views(UserCenter) */,
 				13FCC0861ADE40790008DB41 /* Views(Cell) */,
-				13FCC06F1ADE16DD0008DB41 /* LKUserCenterViewController.h */,
-				13FCC0701ADE16DD0008DB41 /* LKUserCenterViewController.m */,
+				13FCC06F1ADE16DD0008DB41 /* LKUserCenterHomeViewController.h */,
+				13FCC0701ADE16DD0008DB41 /* LKUserCenterHomeViewController.m */,
 				13DEEBFF1AE7723F005E01A6 /* LKSettingsViewController.h */,
 				13DEEC001AE7723F005E01A6 /* LKSettingsViewController.m */,
 				1387C34C1B3166C500B065A7 /* LKLinkAccountsViewController.h */,
@@ -4899,8 +4896,6 @@
 				13FCC0881ADE40AC0008DB41 /* LKUserCenterPhotoCell.m */,
 				13E1A2C91AE6439F00E24C3C /* LKUserCenterUserCell.h */,
 				13E1A2CA1AE6439F00E24C3C /* LKUserCenterUserCell.m */,
-				BC12A6411B9C4EE600B99CB5 /* LKUserCenterBrowsingCell.h */,
-				BC12A6421B9C4EE600B99CB5 /* LKUserCenterBrowsingCell.m */,
 			);
 			name = "Views(Cell)";
 			path = Views;
@@ -5362,7 +5357,6 @@
 				139054F71B994A6D00DBF34A /* GPUImageGaussianSelectiveBlurFilter.m in Sources */,
 				139B06A61ADBF50F006A260F /* UIView+BLKFlexibleHeightBarSubview.m in Sources */,
 				13F504F31B0B120F00D8D484 /* LKWeChatShare.m in Sources */,
-				BC12A6431B9C4EE600B99CB5 /* LKUserCenterBrowsingCell.m in Sources */,
 				13BCA6681B5CE43D00DC0549 /* FXBlurView.m in Sources */,
 				138EDEB81AD7B0A30020957C /* LCUITabBarController.m in Sources */,
 				BC12A65B1BA5A36D00B99CB5 /* LKSearchViewController.m in Sources */,
@@ -5491,7 +5485,7 @@
 				13D63AE11AEA2DB3001587C0 /* JTSImageViewController.m in Sources */,
 				13FCC0821ADE3B960008DB41 /* LKTag.m in Sources */,
 				1373C43B1B846FDA00A6C55A /* NSObject+MJKeyValue.m in Sources */,
-				13FCC0711ADE16DD0008DB41 /* LKUserCenterViewController.m in Sources */,
+				13FCC0711ADE16DD0008DB41 /* LKUserCenterHomeViewController.m in Sources */,
 				138EDE971AD7B0A30020957C /* LCSignal.m in Sources */,
 				1390552A1B994A6D00DBF34A /* GPUImageParallelCoordinateLineTransformFilter.m in Sources */,
 				1390550A1B994A6D00DBF34A /* GPUImageKuwaharaRadius3Filter.m in Sources */,

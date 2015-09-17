@@ -1,12 +1,12 @@
 //
-//  LKUserCenterViewController.m
+//  LKUserCenterHomeViewController.m
 //  LIKE
 //
 //  Created by Licheng Guo ( http://nsobjet.me ) on 15/4/15.
 //  Copyright (c) 2015年 Beijing Like Technology Co.Ltd . ( http://www.likeorz.com ). All rights reserved.
 //
 
-#import "LKUserCenterViewController.h"
+#import "LKUserCenterHomeViewController.h"
 #import "LKHomepageHeader.h"
 #import "SquareCashStyleBehaviorDefiner.h"
 #import "BLKDelegateSplitter.h"
@@ -26,7 +26,7 @@
 #import "UIScrollView+SVInfiniteScrolling.h"
 #import "LKUserCenterBrowsingViewController.h"
 
-@interface LKUserCenterViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerCancelFavorDelegate>
+@interface LKUserCenterHomeViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerCancelFavorDelegate>
 
 //
 LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
@@ -48,35 +48,33 @@ LC_PROPERTY(assign) BOOL isLocalUser;
 
 @end
 
-@implementation LKUserCenterViewController
+@implementation LKUserCenterHomeViewController
 
--(void) dealloc
-{
+- (void)dealloc {
     self.tableView.delegate = nil;
     [self unobserveAllNotifications];
 }
 
--(void) viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     [self.header updateWithUser:self.user];
-    [self setNavigationBarHidden:YES animated:animated];
+    [self setNavigationBarHidden:YES animated:NO];
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:animated];
 }
 
--(void) viewWillDisappear:(BOOL)animated {
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     ((LCUINavigationController *)self.navigationController).animationHandler = nil;
 }
 
-+ (LKUserCenterViewController *) pushUserCenterWithUser:(LKUser *)user navigationController:(UINavigationController *)navigationController {
-    LKUserCenterViewController * userCenter = [[LKUserCenterViewController alloc] initWithUser:user];
++ (LKUserCenterHomeViewController *) pushUserCenterWithUser:(LKUser *)user navigationController:(UINavigationController *)navigationController {
+    LKUserCenterHomeViewController * userCenter = [[LKUserCenterHomeViewController alloc] initWithUser:user];
     [navigationController pushViewController:userCenter animated:YES];
     return userCenter;
 }
 
--(instancetype) initWithUser:(LKUser *)user {
+- (instancetype)initWithUser:(LKUser *)user {
     if (self = [super init]) {
         self.user = user;
         self.isLocalUser = self.user.id.integerValue == LKLocalUser.singleton.user.id.integerValue;
@@ -86,7 +84,7 @@ LC_PROPERTY(assign) BOOL isLocalUser;
         }
         
         if (self.isLocalUser) {
-            [self observeNotification:LKUserCenterViewControllerReloadingData];
+            [self observeNotification:LKUserCenterHomeViewControllerReloadingData];
         }
         
         self.userCenterModel = [[LKUserCenterModel alloc] init];
@@ -299,23 +297,22 @@ LC_PROPERTY(assign) BOOL isLocalUser;
 
 -(void) handleNotification:(NSNotification *)notification
 {
-    if ([notification is:LKUserCenterViewControllerReloadingData]) {
+    if ([notification is:LKUserCenterHomeViewControllerReloadingData]) {
         [self loadData:self.currentType diretion:LCUIPullLoaderDiretionTop];
     }
 }
 
 #pragma mark -
 
--(void) loadMore {
+- (void)loadMore {
     [self loadData:self.currentType diretion:LCUIPullLoaderDiretionBottom];
 }
 
--(void) dismissAction {
+- (void)dismissAction {
     [self dismissOrPopViewController];
 }
 
--(void) setAction
-{
+- (void)setAction {
     LC_FAST_ANIMATIONS(0.25, ^{
         
         ((UIView *)self.header.FIND(1002)).alpha = 0;
@@ -346,15 +343,13 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     settings.fromViewController = self;
 }
 
--(void) friendShipAction
-{
+- (void)friendShipAction {
+    
     if([LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
-        
         return;
     }
     
     LC_FAST_ANIMATIONS(0.15, ^{
-        
         self.friendshipButton.alpha = 0;
         [self.loadingActivity startAnimating];
     });
@@ -372,8 +367,7 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     }];
 }
 
--(void) updateFriendButton
-{
+-(void) updateFriendButton {
     switch (self.user.isFollowing.integerValue) {
             
         case 0:
@@ -390,72 +384,57 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     }
 }
 
--(void) updateUserCache
-{
+-(void) updateUserCache {
     [self.userInfoModel.rawUserInfo setObject:self.userInfoModel.user.isFollowing forKey:@"is_following"];
     LKUserInfoCache.singleton[self.user.id.description] = self.userInfoModel.rawUserInfo;
 }
 
 #pragma mark -
 
--(void) setCurrentType:(LKUserCenterModelType)currentType
-{
+- (void)scrollToPostByIndex:(NSInteger)index {
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:(index / 3) inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+}
+
+- (void)setCurrentType:(LKUserCenterModelType)currentType {
     _currentType = currentType;
-    
     self.pullLoader.canLoadMore = [self.userCenterModel canLoadMoreWithType:currentType];
-    
     [self loadData:currentType diretion:LCUIPullLoaderDiretionTop];
 }
 
--(void) loadData:(LKUserCenterModelType)type diretion:(LCUIPullLoaderDiretion)diretion
-{
+- (void)loadData:(LKUserCenterModelType)type diretion:(LCUIPullLoaderDiretion)diretion {
     [self.tableView reloadData];
-    
     [self.userCenterModel getDataAtFirstPage:diretion == LCUIPullLoaderDiretionTop type:type uid:self.user.id];
-    
     @weakly(self);
-    
     self.userCenterModel.requestFinished = ^(LKUserCenterModelType type, LKHttpRequestResult * result, NSString * error){
-        
         @normally(self);
-        
         [self.pullLoader endRefresh];
-        
         // Update header user information
         [self.userInfoModel getUserInfo:self.user.id];
-        
         // Reload data
         [self.tableView reloadData];
-        
         if (error) {
             [self showTopMessageErrorHud:error];;
         }
-        
         self.pullLoader.canLoadMore = [self.userCenterModel canLoadMoreWithType:type];
     };
 }
 
 #pragma mark -
 
-LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
-{
+LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     LKPost * post = signal.object;
-    
-//    LKPostDetailViewController * postDetail = [[LKPostDetailViewController alloc] initWithPost:post];
-//    postDetail.cancelFavordelegate = self;
-//    LCUINavigationController * nav = LC_UINAVIGATION(postDetail);
-//    [postDetail setPresendModelAnimationOpen];
-//    [self.navigationController presentViewController:nav animated:YES completion:nil];
-    
-    if (self.browsingViewController == nil) {
+    if (!self.browsingViewController) {
         self.browsingViewController = [[LKUserCenterBrowsingViewController alloc] init];
     }
-    
     if (self.currentType == LKUserCenterModelTypePhotos) {
         post.user = self.user;
     }
-    self.browsingViewController.datasource = [NSMutableArray arrayWithArray:[self.userCenterModel dataWithType:self.currentType]];
+    NSArray *datasource = [self.userCenterModel dataWithType:self.currentType];
+    self.browsingViewController.datasource = [NSMutableArray arrayWithArray:datasource];
+    self.browsingViewController.parentUserCenterViewController = self;
+    self.browsingViewController.currentIndex = [datasource indexOfObject:post];
     [self.navigationController pushViewController:self.browsingViewController animated:YES];
+    [self.browsingViewController reloadData];
 }
 
 #pragma mark -
@@ -583,7 +562,7 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
             break;
         case LKUserCenterModelTypeFocus:
         case LKUserCenterModelTypeFans:
-            [LKUserCenterViewController pushUserCenterWithUser:data[indexPath.row] navigationController:self.navigationController];
+            [LKUserCenterHomeViewController pushUserCenterWithUser:data[indexPath.row] navigationController:self.navigationController];
             break;
         default:
             break;

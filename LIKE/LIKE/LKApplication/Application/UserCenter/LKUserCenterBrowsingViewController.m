@@ -30,10 +30,13 @@ LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
     [self.tableView reloadData];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self setNavigationBarHidden:NO animated:NO];
+}
+
 - (void)buildUI {
     [super buildUI];
-    
-    [self setNavigationBarHidden:NO animated:NO];
     
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
     [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[UIImage imageNamed:@"NavigationBarBack.png" useCache:YES] selectImage:nil];
@@ -50,13 +53,21 @@ LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
 
 // 这个方法同时负责主页和关注的人列表的请求
 - (void)loadData:(LCUIPullLoaderDiretion)diretion {
-//    [self.parentUserCenterViewController updateUserMetaInfo];
-//    [self.parentUserCenterViewController loadData:LKUserCenterModelTypePhotos diretion:LCUIPullLoaderDiretionTop];
+    if (self.parentUserCenterViewController) {
+        [self.parentUserCenterViewController updateUserMetaInfo];
+        [self.parentUserCenterViewController loadData:LKUserCenterModelTypePhotos diretion:LCUIPullLoaderDiretionTop];
+    }
 }
 
 - (void)setCurrentIndex:(NSInteger)currentIndex {
     [super setCurrentIndex:currentIndex];
     [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:self.currentIndex inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+}
+
+- (void)handleNavigationBarButton:(LCUINavigationBarButtonType)type {
+    [super handleNavigationBarButton:type];
+    NSIndexPath *visibleIndexPath = [[self.tableView indexPathsForVisibleRows] objectAtIndex:0];
+    [self.parentUserCenterViewController scrollToPostByIndex:visibleIndexPath.row];
 }
 
 @end

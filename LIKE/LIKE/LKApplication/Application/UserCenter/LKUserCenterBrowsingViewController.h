@@ -7,11 +7,13 @@
 //
 
 #import "LKPostTableViewController.h"
-#import "LKUserCenterViewController.h"
+#import "LKUserCenterHomeViewController.h"
+
+@class LKUserCenterHomeViewController;
 
 @interface LKUserCenterBrowsingViewController : LKPostTableViewController
 
-//LC_PROPERTY(assign) LKUserCenterViewController *parentUserCenterViewController;
+LC_PROPERTY(weak) LKUserCenterHomeViewController *parentUserCenterViewController;
 
 - (void)reloadData;
 

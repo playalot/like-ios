@@ -94,7 +94,7 @@
 "请求失败...请检查您的网络后重试" = "Request failed, please check your internet connection and try again";
 
 
-// LKUserCenterViewController
+// LKUserCenterHomeViewController
 "照片" = "Posts";
 "关注" = "Following";
 "粉丝" = "Followers";

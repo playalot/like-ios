@@ -13,7 +13,7 @@
 #import "LKNotificationView.h"
 #import "LKSearchViewController.h"
 #import "LKNotificationViewController.h"
-#import "LKUserCenterViewController.h"
+#import "LKUserCenterHomeViewController.h"
 #import "LKFollowingViewController.h"
 #import "LKFeedViewController.h"
 #import "LKTimeLineViewController.h"
@@ -29,7 +29,7 @@ LC_PROPERTY(strong) LKHomeViewController * homeViewController;
 LC_PROPERTY(strong) LKFollowingViewController * followingViewController;
 LC_PROPERTY(strong) LKSearchViewController * searchViewController;
 LC_PROPERTY(strong) LKNotificationViewController * notificationViewController;
-LC_PROPERTY(strong) LKUserCenterViewController * userCenterViewController;
+LC_PROPERTY(strong) LKUserCenterHomeViewController * userCenterViewController;
 LC_PROPERTY(strong) UIViewController * none;
 
 @end

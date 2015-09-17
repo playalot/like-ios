@@ -39,7 +39,9 @@ LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
 
 // 这个方法同时负责主页和关注的人列表的请求
 - (void)loadData:(LCUIPullLoaderDiretion)diretion {
-    [self.parentSearchResultsViewController loadData:diretion];
+    if (self.parentSearchResultsViewController) {
+        [self.parentSearchResultsViewController loadData:diretion];
+    }
 }
 
 - (void)setCurrentIndex:(NSInteger)currentIndex {

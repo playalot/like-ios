@@ -11,7 +11,7 @@
 #import "LKNotificationCell.h"
 #import "LKPostDetailViewController.h"
 #import "LKNotificationCount.h"
-#import "LKUserCenterViewController.h"
+#import "LKUserCenterHomeViewController.h"
 #import "AppDelegate.h"
 #import "FXBlurView.h"
 #import "LKAssistiveTouchButton.h"

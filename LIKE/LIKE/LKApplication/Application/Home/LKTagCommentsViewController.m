@@ -14,7 +14,7 @@
 #import "LKLocationManager.h"
 #import "LCUIKeyBoard.h"
 #import "LKLikesPage.h"
-#import "LKUserCenterViewController.h"
+#import "LKUserCenterHomeViewController.h"
 #import "LKHotUserView.h"
 #import "UIImageView+WebCache.h"
 

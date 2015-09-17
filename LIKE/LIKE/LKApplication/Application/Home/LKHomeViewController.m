@@ -7,7 +7,7 @@
 //
 
 #import "LKHomeViewController.h"
-#import "LKUserCenterViewController.h"
+#import "LKUserCenterHomeViewController.h"
 #import "LKHomeTableViewCell.h"
 #import "AppDelegate.h"
 #import "LKTagsView.h"
@@ -279,7 +279,7 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
         
         if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
             
-            [self.navigationController pushViewController:[LKTabBarController hiddenBottomBarWhenPushed:[[LKUserCenterViewController alloc] initWithUser:self.header.user]] animated:YES];
+            [self.navigationController pushViewController:[LKTabBarController hiddenBottomBarWhenPushed:[[LKUserCenterHomeViewController alloc] initWithUser:self.header.user]] animated:YES];
             
         };
         
@@ -1257,7 +1257,7 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
 
 LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
 {
-    [LKUserCenterViewController pushUserCenterWithUser:signal.object navigationController:self.navigationController];
+    [LKUserCenterHomeViewController pushUserCenterWithUser:signal.object navigationController:self.navigationController];
     
     [LC_APPDELEGATE.tabBarController hideBar];
 }

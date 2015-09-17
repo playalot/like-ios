@@ -12,11 +12,11 @@
 #import "LKTagsView.h"
 #import "LKPostTagsDetailModel.h"
 #import "LKPostDetailCell.h"
-#import "LKUserCenterViewController.h"
+#import "LKUserCenterHomeViewController.h"
 #import "LKInputView.h"
 #import "LKTagAddModel.h"
 #import "LKHomeViewController.h"
-#import "LKUserCenterViewController.h"
+#import "LKUserCenterHomeViewController.h"
 #import "JTSImageViewController.h"
 #import "LKLoginViewController.h"
 #import "LKPhotoAlbum.h"
@@ -824,7 +824,7 @@ LC_PROPERTY(assign) BOOL favorited;
                     [self dismissOrPopViewController];
                     //
                     [self postNotification:LKHomeViewControllerReloadingData];
-                    [self postNotification:LKUserCenterViewControllerReloadingData];
+                    [self postNotification:LKUserCenterHomeViewControllerReloadingData];
                 }
                 else if (result.state == LKHttpRequestStateFailed){
                     
@@ -906,7 +906,7 @@ LC_PROPERTY(assign) BOOL favorited;
 
 LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
 {
-    [LKUserCenterViewController pushUserCenterWithUser:signal.object navigationController:self.navigationController];
+    [LKUserCenterHomeViewController pushUserCenterWithUser:signal.object navigationController:self.navigationController];
 }
 
 #pragma mark -
@@ -1168,7 +1168,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             
             page.didTapHead = ^(LKUser * user){
                 
-                [LKUserCenterViewController pushUserCenterWithUser:user navigationController:self.navigationController];
+                [LKUserCenterHomeViewController pushUserCenterWithUser:user navigationController:self.navigationController];
             };
             
 
@@ -1683,7 +1683,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
 
     if (indexPath.section == 0) {
         
-        [LKUserCenterViewController pushUserCenterWithUser:self.post.user navigationController:self.navigationController];
+        [LKUserCenterHomeViewController pushUserCenterWithUser:self.post.user navigationController:self.navigationController];
     }
     else{
         

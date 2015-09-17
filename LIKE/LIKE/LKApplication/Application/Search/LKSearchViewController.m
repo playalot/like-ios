@@ -53,7 +53,7 @@ LC_PROPERTY(strong) LKSearchView * searchView;
     CGRect searchBarFrame = CGRectMake(0, 0, self.navigationController.navigationBar.viewFrameWidth - 10, 30);
     
     self.topBarSearchView = UIView.view;
-    self.topBarSearchView.backgroundColor = [UIColor randomColor];
+    self.topBarSearchView.backgroundColor = [UIColor clearColor];
     self.topBarSearchView.frame = searchBarFrame;
     
     CGRect testFrame = CGRectMake(0, 0, self.navigationController.navigationBar.viewFrameWidth - 100, 30);

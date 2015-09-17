@@ -710,24 +710,16 @@ LC_PROPERTY(strong) UIView * tipLine;
     [self cancelAllTimers];
 }
 
--(void) handleTimer:(NSTimer *)timer
-{
+-(void) handleTimer:(NSTimer *)timer {
     LC_FAST_ANIMATIONS(0.5, ^{
-       
         if (self.tipLine.alpha == 0) {
-         
             self.tipLine.alpha = 0.2;
-        }
-        else if (self.tipLine.alpha == 0.2) {
-            
+        } else if (self.tipLine.alpha == 0.2) {
             self.tipLine.alpha = 1;
-        }
-        else{
+        } else {
             self.tipLine.alpha = 0.2;
         }
-        
     });
-
 }
 
 -(UIView *) buildNewActionTag

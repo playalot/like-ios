@@ -14,6 +14,7 @@
 
 @interface LKPostTableViewCell ()
 
+LC_PROPERTY(strong) UIView *headerBack;
 LC_PROPERTY(strong) LCUIImageView * head;
 LC_PROPERTY(strong) LCUILabel * title;
 LC_PROPERTY(strong) ADTickerLabel * likes;
@@ -36,14 +37,13 @@ LC_IMP_SIGNAL(PushPostDetail);
         size.height = (LC_DEVICE_WIDTH - 10) / size.width * size.height;
         size.width = (LC_DEVICE_WIDTH - 10);
     }
-    
     static LKTagsView * __tagsView = nil;
     if (!__tagsView) {
         __tagsView = LKTagsView.view;
         __tagsView.viewFrameWidth = LC_DEVICE_WIDTH - 10;
     }
     __tagsView.tags = post.tags;
-    return size.height + __tagsView.viewFrameHeight + (headHidden ? 0 : 55);
+    return size.height + __tagsView.viewFrameHeight + (headHidden ? 10 : 55);
 }
 
 - (void)buildUI {
@@ -51,48 +51,19 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.contentView.backgroundColor = [UIColor clearColor];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    self.contentBack = UIView.view;
-    self.contentBack.clipsToBounds = YES;
-    self.ADD(self.contentBack);
-    
-    // 内容图片
-    self.contentImage = LCUIImageView.view;
-    self.contentImage.viewFrameY = -30;
-    self.contentImage.backgroundColor = [UIColor whiteColor];
-    self.contentImage.contentMode = UIViewContentModeScaleAspectFill;
-    self.contentImage.userInteractionEnabled = YES;
-    self.contentImage.showIndicator = YES;
-    [self.contentImage addTapGestureRecognizer:self selector:@selector(contentImageTapAction)];
-    self.contentBack.ADD(self.contentImage);
-    
-    UIView *headerBack = UIView.view.X(5).Y(5).WIDTH(LC_DEVICE_WIDTH - 10).HEIGHT(55);
-    headerBack.backgroundColor = [UIColor whiteColor];
-    self.ADD(headerBack);
-    
-    [LKPostTableViewCell roundCorners:UIRectCornerTopLeft | UIRectCornerTopRight forView:headerBack];
-    
-    if (!self.headLineHidden) {
-        [self buildHeadLine];
-    }
-    
-    self.tagsView = LKTagsView.view;
-    self.tagsView.viewFrameX = 5;
-    self.tagsView.viewFrameWidth = LC_DEVICE_WIDTH - 10;
-    self.tagsView.backgroundColor = [UIColor whiteColor];
-    self.ADD(self.tagsView);
+    [self buildHeadLine];
+    [self buildContentView];
+    [self buildTagsView];
     
     @weakly(self);
     
     self.tagsView.itemRequestFinished = ^(LKTagItem * item){
-        
         @normally(self);
-        
         if (item.tagValue.isLiked) {
             self.post.user.likes = @(self.post.user.likes.integerValue + 1);
         } else {
             self.post.user.likes = @(self.post.user.likes.integerValue - 1);
         }
-        
         self.likes.text = LC_NSSTRING_FORMAT(@"%@", self.post.user.likes);
         CGSize likeSize = [self.post.user.likes.description sizeWithFont:LK_FONT(13) byWidth:200];
         [UIView animateWithDuration:0.25 animations:^{
@@ -102,13 +73,46 @@ LC_IMP_SIGNAL(PushPostDetail);
 }
 
 - (void)hideHeadLine {
-    [self.head removeFromSuperview];
-    [self.title removeFromSuperview];
-    [self.likes removeFromSuperview];
-    [self.likesTip removeFromSuperview];
+    self.headerBack.alpha = 0;
+    self.head.alpha = 0;
+    self.title.alpha = 0;
+    self.likes.alpha = 0;
+    self.likesTip.alpha = 0;
+}
+
+- (void)buildTagsView {
+    self.tagsView = LKTagsView.view;
+    self.tagsView.viewFrameX = 5;
+    self.tagsView.viewFrameWidth = LC_DEVICE_WIDTH - 10;
+    self.tagsView.backgroundColor = [UIColor whiteColor];
+    self.contentView.ADD(self.tagsView);
+}
+
+- (void)buildContentView {
+    // 内容北京View
+    self.contentBack = UIView.view;
+    self.contentBack.clipsToBounds = YES;
+    self.contentView.ADD(self.contentBack);
+    
+    // 内容图片
+    self.contentImageView = LCUIImageView.view;
+    self.contentImageView.viewFrameY = -30;
+    self.contentImageView.backgroundColor = [UIColor whiteColor];
+    self.contentImageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.contentImageView.userInteractionEnabled = YES;
+    self.contentImageView.showIndicator = YES;
+    [self.contentImageView addTapGestureRecognizer:self selector:@selector(contentImageTapAction)];
+    self.contentBack.ADD(self.contentImageView);
 }
 
 - (void)buildHeadLine {
+    
+    // White Header Bar
+    self.headerBack = UIView.view.X(5).Y(5).WIDTH(LC_DEVICE_WIDTH - 10).HEIGHT(55);
+    self.headerBack.backgroundColor = [UIColor whiteColor];
+    self.contentView.ADD(self.headerBack);
+    
+    [LKPostTableViewCell roundCorners:UIRectCornerTopLeft | UIRectCornerTopRight forView:self.headerBack];
     
     // 头像
     self.head = LCUIImageView.view;
@@ -121,7 +125,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.head.backgroundColor = LKColor.backgroundColor;
     self.head.userInteractionEnabled = YES;
     [self.head addTapGestureRecognizer:self selector:@selector(handleHeadTap:)];
-    self.ADD(self.head);
+    self.contentView.ADD(self.head);
     
     // 昵称
     self.title = LCUILabel.view;
@@ -132,7 +136,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.title.font = LK_FONT(13);
     self.title.textColor = LC_RGB(51, 51, 51);
     [self.title addTapGestureRecognizer:self selector:@selector(handleHeadTap:)];
-    self.ADD(self.title);
+    self.contentView.ADD(self.title);
     
     // like数量
     self.likes = ADTickerLabel.view;
@@ -145,7 +149,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.likes.textColor = LC_RGB(51, 51, 51);
     self.likes.changeTextAnimationDuration = 0.25;
     [self.likes addTapGestureRecognizer:self selector:@selector(handleHeadTap:)];
-    self.ADD(self.likes);
+    self.contentView.ADD(self.likes);
     
     // like数量后缀
     self.likesTip = LCUILabel.view;
@@ -157,7 +161,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.likesTip.FIT();
     self.likesTip.viewFrameHeight = LK_FONT(13).lineHeight;
     [self.likesTip addTapGestureRecognizer:self selector:@selector(handleHeadTap:)];
-    self.ADD(self.likesTip);
+    self.contentView.ADD(self.likesTip);
 }
 
 - (void)addTagAction {
@@ -166,18 +170,16 @@ LC_IMP_SIGNAL(PushPostDetail);
     }
 }
 
--(void) handleHeadTap:(UITapGestureRecognizer *)tap {
+- (void)handleHeadTap:(UITapGestureRecognizer *)tap {
     self.SEND(self.PushUserCenter).object = self.post.user;
 }
 
--(void) contentImageTapAction {
+- (void)contentImageTapAction {
     self.SEND(self.PushPostDetail).object = self.post;
 }
 
--(void) setPost:(LKPost *)post
-{
+- (void)setPost:(LKPost *)post {
     _post = post;
-    
     
     if (post.user.id.integerValue == LKLocalUser.singleton.user.id.integerValue) {
         post.user = LKLocalUser.singleton.user;
@@ -185,7 +187,6 @@ LC_IMP_SIGNAL(PushPostDetail);
     
     // 设置cell内容
     self.head.image = nil;
-    //    self.head.url = post.user.avatar;
     [self.head sd_setImageWithURL:[NSURL URLWithString:post.user.avatar] placeholderImage:nil];
     
     self.title.text = LC_NSSTRING_FORMAT(@"%@", post.user.name);
@@ -201,79 +202,60 @@ LC_IMP_SIGNAL(PushPostDetail);
         size.width = (LC_DEVICE_WIDTH - 10);
     }
     
-    // 设置图片的frame
     self.contentBack.viewFrameX = 5 + (LC_DEVICE_WIDTH - 10) / 2 - size.width / 2;
-    self.contentBack.viewFrameY = self.headLineHidden ? 10 : 55; // 55;
+    self.contentBack.viewFrameY = self.headLineHidden ? 10 : 55;
     self.contentBack.viewFrameWidth = size.width;
     self.contentBack.viewFrameHeight = size.height;
     
-    self.contentImage.clipsToBounds = YES;
-    self.contentImage.frame = self.contentBack.bounds;
-    self.contentImage.image = nil;
-    //    self.contentImage.url = post.content;
+    self.contentImageView.clipsToBounds = YES;
+    self.contentImageView.frame = self.contentBack.bounds;
+    self.contentImageView.image = nil;
+    //    self.contentImageView.url = post.content;
     
-    [self.contentImage sd_setImageWithURL:[NSURL URLWithString:post.content] placeholderImage:nil options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-        
-        [self.contentImage.indicator setProgress:receivedSize * 1.0 / expectedSize animated:YES];
-        
-        self.contentImage.indicator.alpha = 1;
-        
+    [self.contentImageView sd_setImageWithURL:[NSURL URLWithString:post.content] placeholderImage:nil options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+        [self.contentImageView.indicator setProgress:receivedSize * 1.0 / expectedSize animated:YES];
+        self.contentImageView.indicator.alpha = 1;
     } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        
-        self.contentImage.indicator.alpha = 0;
+        self.contentImageView.indicator.alpha = 0;
     }];
     
-    // 设置标签的frame
     self.tagsView.tags = post.tags;
     self.tagsView.viewFrameY = self.contentBack.viewBottomY;
     
     [LKPostTableViewCell roundCorners:UIRectCornerBottomLeft | UIRectCornerBottomRight forView:self.tagsView];
     
     @weakly(self);
-    
     self.tagsView.didRemoveTag = ^(LKTag * tag){
-        
         @normally(self);
-        
         if (self.removedTag) {
             self.removedTag(self.post);
         }
     };
     
     self.tagsView.customAction = ^(id value){
-        
         @normally(self);
-        
         if (self.addTag) {
             self.addTag(self.post);
         }
     };
     
     self.tagsView.willRequest = ^(LKTagItem * item){
-        
         @normally(self);
-        
         if (item.tagValue.isLiked) {
             return;
         }
-        
         [self newTagAnimation:nil];
     };
 }
 
-/**
- *  点击标签就会执行动画
- */
--(void) newTagAnimation:(void (^)(BOOL finished))completion
-{
+- (void)newTagAnimation:(void (^)(BOOL finished))completion {
     if (!self.blackMask) {
-        
         self.blackMask = UIView.view;
         self.blackMask.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
-        self.contentImage.ADD(self.blackMask);
+        self.contentImageView.ADD(self.blackMask);
     }
     
-    self.blackMask.frame = self.contentImage.bounds;
+    self.blackMask.frame = self.contentImageView.bounds;
     self.blackMask.alpha = 0;
     
     LCUILabel * label = [[LCUILabel alloc] init];
@@ -281,29 +263,22 @@ LC_IMP_SIGNAL(PushPostDetail);
     label.font = [UIFont fontWithName:@"AvenirNext-Bold" size:60];
     label.textColor = [UIColor whiteColor];
     label.FIT();
-    label.viewCenterX = self.contentImage.viewMidWidth;
-    label.viewCenterY = self.contentImage.viewMidHeight;
+    label.viewCenterX = self.contentImageView.viewMidWidth;
+    label.viewCenterY = self.contentImageView.viewMidHeight;
     label.alpha = 0;
     label.transform = CGAffineTransformScale(CGAffineTransformIdentity, 2, 2);
-    self.contentImage.ADD(label);
+    self.contentImageView.ADD(label);
     
     [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionAllowUserInteraction animations:^{
-        
         label.alpha = 1;
         label.transform = CGAffineTransformIdentity;
         self.blackMask.alpha = 1;
-        
     } completion:^(BOOL finished) {
-        
         [UIView animateWithDuration:0.25 delay:0.5 options:UIViewAnimationOptionCurveLinear | UIViewAnimationOptionAllowUserInteraction animations:^{
-            
             label.alpha = 0;
             self.blackMask.alpha = 0;
-            
         } completion:^(BOOL finished) {
-            
             [label removeFromSuperview];
-            
             if (completion) {
                 completion(YES);
             }
@@ -318,8 +293,7 @@ LC_IMP_SIGNAL(PushPostDetail);
 - (void)cellOnTableView:(UITableView *)tableView didScrollOnView:(UIView *)view {
 }
 
-+ (void)roundCorners:(UIRectCorner)corners forView:(UIView *)view
-{
++ (void)roundCorners:(UIRectCorner)corners forView:(UIView *)view {
     UIBezierPath * maskPath = [UIBezierPath bezierPathWithRoundedRect:view.bounds
                                                     byRoundingCorners:corners
                                                           cornerRadii:CGSizeMake(2, 2)];
@@ -332,29 +306,23 @@ LC_IMP_SIGNAL(PushPostDetail);
 /**
  *  获取推荐理由图片
  */
--(UIImage *) getIconImage:(NSInteger)type
-{
+-(UIImage *) getIconImage:(NSInteger)type {
     if (type == 1) {
-
         return [UIImage imageNamed:@"LittleTag.png" useCache:YES];
-    }
-    else if (type == 2){
-        
+    } else if (type == 2) {
         return [UIImage imageNamed:@"LittleSP.png" useCache:YES];
-    }
-    else if(type == 3){
-        
+    } else if(type == 3) {
         return [UIImage imageNamed:@"LittleYouLike.png" useCache:YES];
-    }
-    else if(type == 4){
-        
+    } else if(type == 4) {
         return [UIImage imageNamed:@"LittleFollowing.png" useCache:YES];
     }
-    
     return nil;
 }
 
 - (void)layoutSubviews {
+    if (self.headLineHidden) {
+        [self hideHeadLine];
+    }
     [super layoutSubviews];
 }
 

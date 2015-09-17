@@ -50,17 +50,17 @@ LC_PROPERTY(strong) LKSearchView * searchView;
     
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
     
+    CGRect searchBarFrame = CGRectMake(0, 0, self.navigationController.navigationBar.viewFrameWidth - 10, 30);
+    
     self.topBarSearchView = UIView.view;
     self.topBarSearchView.backgroundColor = [UIColor clearColor];
-    self.topBarSearchView.frame = self.navigationController.navigationBar.frame;
-    self.topBarSearchView.viewFrameX = 0;
-    self.topBarSearchView.viewFrameY = 0;
+    self.topBarSearchView.frame = searchBarFrame;
     
-    CGRect searchBarFrame = CGRectMake(0, 0, self.topBarSearchView.viewFrameWidth - 10, 30);
-    self.searchBar = [[LKSearchBar alloc] initWithFrame:searchBarFrame];
-    self.searchBar.frame = searchBarFrame;
+    CGRect testFrame = CGRectMake(0, 0, self.navigationController.navigationBar.viewFrameWidth - 100, 30);
+    self.searchBar = [[LKSearchBar alloc] initWithFrame:testFrame];
+    self.searchBar.frame = testFrame; //self.topBarSearchView.bounds;
     self.searchBar.delegate = self;
-    self.searchBar.backgroundColor = [UIColor redColor];
+    self.searchBar.backgroundColor = [UIColor clearColor];
     self.searchBar.alpha = 1;
     self.searchBar.delegate = self;
     self.topBarSearchView.ADD(self.searchBar);

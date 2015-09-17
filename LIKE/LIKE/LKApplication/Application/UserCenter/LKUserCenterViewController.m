@@ -50,22 +50,20 @@ LC_PROPERTY(assign) BOOL isLocalUser;
 
 @implementation LKUserCenterViewController
 
--(void) dealloc
-{
+- (void)dealloc {
     self.tableView.delegate = nil;
     [self unobserveAllNotifications];
 }
 
--(void) viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     [self.header updateWithUser:self.user];
-    [self setNavigationBarHidden:YES animated:animated];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:animated];
+    [self setNavigationBarHidden:YES animated:NO];
+//    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:animated];
 }
 
--(void) viewWillDisappear:(BOOL)animated {
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     ((LCUINavigationController *)self.navigationController).animationHandler = nil;
 }
@@ -76,7 +74,7 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     return userCenter;
 }
 
--(instancetype) initWithUser:(LKUser *)user {
+- (instancetype)initWithUser:(LKUser *)user {
     if (self = [super init]) {
         self.user = user;
         self.isLocalUser = self.user.id.integerValue == LKLocalUser.singleton.user.id.integerValue;
@@ -106,6 +104,16 @@ LC_PROPERTY(assign) BOOL isLocalUser;
 }
 
 -(void) buildUI {
+    
+    if (!self.isLocalUser) {
+        [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[UIImage imageNamed:@"NavigationBarBack.png" useCache:YES] selectImage:nil];
+    }
+    
+    LCUIButton *titleBtn = [[LCUIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];
+    [titleBtn setImage:[UIImage imageNamed:@"HomeLikeIcon" useCache:YES] forState:UIControlStateNormal];
+    self.titleView = (UIView *)titleBtn;
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
+    
     self.tableView = [[LCUITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableView.viewFrameY = 30;
     self.tableView.delegate = self;
@@ -174,6 +182,7 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     };
     
     if (self.isLocalUser) {
+        
         LCUIButton * setButton = LCUIButton.view;
         setButton.viewFrameWidth = 64 / 3 + 40;
         setButton.viewFrameHeight = 64 / 3 + 40;
@@ -183,7 +192,9 @@ LC_PROPERTY(assign) BOOL isLocalUser;
         setButton.showsTouchWhenHighlighted = YES;
         [setButton addTarget:self action:@selector(setAction) forControlEvents:UIControlEventTouchUpInside];
         [self.header addSubview:setButton];
+        
     } else {
+        
         LCUIButton * backButton = LCUIButton.view;
         backButton.viewFrameWidth = 50;
         backButton.viewFrameHeight = 54 / 3 + 40;
@@ -295,6 +306,12 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     [self.userInfoModel getUserInfo:self.user.id];
 }
 
+- (void)handleNavigationBarButton:(LCUINavigationBarButtonType)type {
+    if (type == LCUINavigationBarButtonTypeLeft) {
+        [self dismissAction];
+    }
+}
+
 #pragma mark -
 
 -(void) handleNotification:(NSNotification *)notification
@@ -306,16 +323,15 @@ LC_PROPERTY(assign) BOOL isLocalUser;
 
 #pragma mark -
 
--(void) loadMore {
+- (void)loadMore {
     [self loadData:self.currentType diretion:LCUIPullLoaderDiretionBottom];
 }
 
--(void) dismissAction {
+- (void)dismissAction {
     [self dismissOrPopViewController];
 }
 
--(void) setAction
-{
+- (void)setAction {
     LC_FAST_ANIMATIONS(0.25, ^{
         
         ((UIView *)self.header.FIND(1002)).alpha = 0;
@@ -346,15 +362,13 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     settings.fromViewController = self;
 }
 
--(void) friendShipAction
-{
+- (void)friendShipAction {
+    
     if([LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
-        
         return;
     }
     
     LC_FAST_ANIMATIONS(0.15, ^{
-        
         self.friendshipButton.alpha = 0;
         [self.loadingActivity startAnimating];
     });
@@ -372,8 +386,7 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     }];
 }
 
--(void) updateFriendButton
-{
+-(void) updateFriendButton {
     switch (self.user.isFollowing.integerValue) {
             
         case 0:
@@ -390,72 +403,58 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     }
 }
 
--(void) updateUserCache
-{
+-(void) updateUserCache {
     [self.userInfoModel.rawUserInfo setObject:self.userInfoModel.user.isFollowing forKey:@"is_following"];
     LKUserInfoCache.singleton[self.user.id.description] = self.userInfoModel.rawUserInfo;
 }
 
 #pragma mark -
 
--(void) setCurrentType:(LKUserCenterModelType)currentType
-{
+- (void)scrollToPostByIndex:(NSInteger)index {
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:(index / 3) inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+}
+
+- (void)setCurrentType:(LKUserCenterModelType)currentType {
     _currentType = currentType;
-    
     self.pullLoader.canLoadMore = [self.userCenterModel canLoadMoreWithType:currentType];
-    
     [self loadData:currentType diretion:LCUIPullLoaderDiretionTop];
 }
 
--(void) loadData:(LKUserCenterModelType)type diretion:(LCUIPullLoaderDiretion)diretion
-{
+- (void)loadData:(LKUserCenterModelType)type diretion:(LCUIPullLoaderDiretion)diretion {
     [self.tableView reloadData];
-    
     [self.userCenterModel getDataAtFirstPage:diretion == LCUIPullLoaderDiretionTop type:type uid:self.user.id];
-    
     @weakly(self);
-    
     self.userCenterModel.requestFinished = ^(LKUserCenterModelType type, LKHttpRequestResult * result, NSString * error){
-        
         @normally(self);
-        
         [self.pullLoader endRefresh];
-        
         // Update header user information
         [self.userInfoModel getUserInfo:self.user.id];
-        
         // Reload data
         [self.tableView reloadData];
-        
         if (error) {
             [self showTopMessageErrorHud:error];;
         }
-        
         self.pullLoader.canLoadMore = [self.userCenterModel canLoadMoreWithType:type];
+        [self.browsingViewController reloadData];
     };
 }
 
 #pragma mark -
 
-LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
-{
+LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     LKPost * post = signal.object;
-    
-//    LKPostDetailViewController * postDetail = [[LKPostDetailViewController alloc] initWithPost:post];
-//    postDetail.cancelFavordelegate = self;
-//    LCUINavigationController * nav = LC_UINAVIGATION(postDetail);
-//    [postDetail setPresendModelAnimationOpen];
-//    [self.navigationController presentViewController:nav animated:YES completion:nil];
-    
-    if (self.browsingViewController == nil) {
+    if (!self.browsingViewController) {
         self.browsingViewController = [[LKUserCenterBrowsingViewController alloc] init];
     }
-    
     if (self.currentType == LKUserCenterModelTypePhotos) {
         post.user = self.user;
     }
-    self.browsingViewController.datasource = [NSMutableArray arrayWithArray:[self.userCenterModel dataWithType:self.currentType]];
+    NSArray *datasource = [self.userCenterModel dataWithType:self.currentType];
+    self.browsingViewController.datasource = [NSMutableArray arrayWithArray:datasource];
+    self.browsingViewController.parentUserCenterViewController = self;
+    self.browsingViewController.currentIndex = [datasource indexOfObject:post];
     [self.navigationController pushViewController:self.browsingViewController animated:YES];
+    [self.browsingViewController reloadData];
 }
 
 #pragma mark -
@@ -572,8 +571,7 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
     return 30;
 }
 
--(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSArray * data = [self.userCenterModel dataWithType:self.currentType];
     
     switch (self.currentType) {

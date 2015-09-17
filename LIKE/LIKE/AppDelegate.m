@@ -318,10 +318,8 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
                 [LKLocalUser regetSessionTokenAndUseLoadingTip:NO];
             }
             
-            
             // 判断是否为推送打开
             if ([UIApplication sharedApplication].applicationIconBadgeNumber) {
-                
                 [self.homeViewController performSelector:@selector(notificationAction) withObject:nil afterDelay:0.5];
             }
             

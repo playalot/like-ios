@@ -39,7 +39,6 @@ LC_PROPERTY(weak) id delegate;
     self.view.backgroundColor = LKColor.backgroundColor;
     
     self.tableView = [[LCUITableView alloc] initWithFrame:self.view.frame];
-    self.tableView.viewFrameHeight = self.tableView.viewFrameHeight - LC_APPDELEGATE.tabBarController.tabBar.viewFrameHeight - 10;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -228,6 +227,11 @@ LC_PROPERTY(weak) id delegate;
         [self loadData:LCUIPullLoaderDiretionTop];
         self.needRefresh = NO;
     }
+}
+
+LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
+    [LKUserCenterViewController pushUserCenterWithUser:signal.object navigationController:self.navigationController];
+    [LC_APPDELEGATE.tabBarController hideBar];
 }
 
 LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {

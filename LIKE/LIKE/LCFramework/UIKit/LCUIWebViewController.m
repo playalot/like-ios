@@ -51,8 +51,7 @@
 {
     [super viewDidLoad];
     
-    if (self.navigationController.viewControllers.count)
-    {
+    if (self.navigationController.viewControllers.count) {
         [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[UIImage imageNamed:@"NavigationBarBack.png" useCache:YES] selectImage:nil];
     }
     

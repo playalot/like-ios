@@ -139,7 +139,7 @@ static NSTimeInterval const kLKSearchBarAnimationStepDuration = 0.25;
 
 		self.searchImageViewOff = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.bounds) - kLKSearchBarInset - kLKSearchBarImageSize, (CGRectGetHeight(self.bounds) - kLKSearchBarImageSize) / 2, kLKSearchBarImageSize, kLKSearchBarImageSize)];
 		self.searchImageViewOff.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-		self.searchImageViewOff.alpha = 1.0;
+        self.searchImageViewOff.alpha = 1.0;
 		self.searchImageViewOff.image = [UIImage imageNamed:@"NavBarIconSearch_white"];
         self.searchImageViewOff.contentMode = UIViewContentModeScaleAspectFit;
 

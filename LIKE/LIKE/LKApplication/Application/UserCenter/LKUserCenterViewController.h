@@ -15,10 +15,11 @@ LC_NOTIFICATION_SET(LKUserCenterViewControllerReloadingData);
 
 @interface LKUserCenterViewController : LCUIViewController
 
-LC_PROPERTY(strong) LKUserInfoModel * userInfoModel;;
-LC_PROPERTY(strong) LKUser * user;
+LC_PROPERTY(strong) LKUserInfoModel *userInfoModel;;
+LC_PROPERTY(strong) LKUser *user;
 LC_PROPERTY(strong) LKUserCenterBrowsingViewController *browsingViewController;
 
+- (void)scrollToPostByIndex:(NSInteger)index;
 - (void)loadData:(LKUserCenterModelType)type diretion:(LCUIPullLoaderDiretion)diretion;
 - (void)updateUserMetaInfo;
 - (instancetype)initWithUser:(LKUser *)user;

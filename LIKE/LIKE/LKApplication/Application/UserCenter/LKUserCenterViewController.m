@@ -59,7 +59,7 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     [super viewWillAppear:animated];
     
     [self.header updateWithUser:self.user];
-    [self setNavigationBarHidden:YES animated:NO];
+//    [self setNavigationBarHidden:YES animated:NO];
 //    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:animated];
 }
 

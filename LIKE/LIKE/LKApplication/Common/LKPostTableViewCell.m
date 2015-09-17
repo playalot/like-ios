@@ -30,32 +30,23 @@ LC_PROPERTY(strong) UIView * blackMask;
 LC_IMP_SIGNAL(PushUserCenter);
 LC_IMP_SIGNAL(PushPostDetail);
 
-+(CGFloat) height:(LKPost *)post
-{
++ (CGFloat)height:(LKPost *)post headLineHidden:(BOOL)headHidden {
     CGSize size = [LKUIKit parsingImageSizeWithURL:post.content constSize:CGSizeMake(LC_DEVICE_WIDTH - 10, LC_DEVICE_WIDTH - 10)];
-    
     if (size.width > LC_DEVICE_WIDTH - 10) {
-        
         size.height = (LC_DEVICE_WIDTH - 10) / size.width * size.height;
         size.width = (LC_DEVICE_WIDTH - 10);
     }
     
-    
     static LKTagsView * __tagsView = nil;
-    
     if (!__tagsView) {
-        
         __tagsView = LKTagsView.view;
         __tagsView.viewFrameWidth = LC_DEVICE_WIDTH - 10;
     }
-    
     __tagsView.tags = post.tags;
-    
-    return size.height + __tagsView.viewFrameHeight + 55;
+    return size.height + __tagsView.viewFrameHeight + (headHidden ? 0 : 55);
 }
 
--(void) buildUI
-{
+- (void)buildUI {
     self.backgroundColor = [UIColor clearColor];
     self.contentView.backgroundColor = [UIColor clearColor];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -74,12 +65,50 @@ LC_IMP_SIGNAL(PushPostDetail);
     [self.contentImage addTapGestureRecognizer:self selector:@selector(contentImageTapAction)];
     self.contentBack.ADD(self.contentImage);
     
-    UIView * headerBack = UIView.view.X(5).Y(5).WIDTH(LC_DEVICE_WIDTH - 10).HEIGHT(55);
+    UIView *headerBack = UIView.view.X(5).Y(5).WIDTH(LC_DEVICE_WIDTH - 10).HEIGHT(55);
     headerBack.backgroundColor = [UIColor whiteColor];
     self.ADD(headerBack);
     
     [LKPostTableViewCell roundCorners:UIRectCornerTopLeft | UIRectCornerTopRight forView:headerBack];
     
+    if (!self.headLineHidden) {
+        [self buildHeadLine];
+    }
+    
+    self.tagsView = LKTagsView.view;
+    self.tagsView.viewFrameX = 5;
+    self.tagsView.viewFrameWidth = LC_DEVICE_WIDTH - 10;
+    self.tagsView.backgroundColor = [UIColor whiteColor];
+    self.ADD(self.tagsView);
+    
+    @weakly(self);
+    
+    self.tagsView.itemRequestFinished = ^(LKTagItem * item){
+        
+        @normally(self);
+        
+        if (item.tagValue.isLiked) {
+            self.post.user.likes = @(self.post.user.likes.integerValue + 1);
+        } else {
+            self.post.user.likes = @(self.post.user.likes.integerValue - 1);
+        }
+        
+        self.likes.text = LC_NSSTRING_FORMAT(@"%@", self.post.user.likes);
+        CGSize likeSize = [self.post.user.likes.description sizeWithFont:LK_FONT(13) byWidth:200];
+        [UIView animateWithDuration:0.25 animations:^{
+            self.likesTip.viewFrameX = self.likes.viewFrameX + likeSize.width + 3;
+        }];
+    };
+}
+
+- (void)hideHeadLine {
+    [self.head removeFromSuperview];
+    [self.title removeFromSuperview];
+    [self.likes removeFromSuperview];
+    [self.likesTip removeFromSuperview];
+}
+
+- (void)buildHeadLine {
     
     // 头像
     self.head = LCUIImageView.view;
@@ -118,7 +147,6 @@ LC_IMP_SIGNAL(PushPostDetail);
     [self.likes addTapGestureRecognizer:self selector:@selector(handleHeadTap:)];
     self.ADD(self.likes);
     
-    
     // like数量后缀
     self.likesTip = LCUILabel.view;
     self.likesTip.viewFrameY = self.likes.viewFrameY;
@@ -130,59 +158,19 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.likesTip.viewFrameHeight = LK_FONT(13).lineHeight;
     [self.likesTip addTapGestureRecognizer:self selector:@selector(handleHeadTap:)];
     self.ADD(self.likesTip);
-    
-    self.tagsView = LKTagsView.view;
-    self.tagsView.viewFrameX = 5;
-    self.tagsView.viewFrameWidth = LC_DEVICE_WIDTH - 10;
-    self.tagsView.backgroundColor = [UIColor whiteColor];
-    self.ADD(self.tagsView);
-    
-    
-    @weakly(self);
-    
-    self.tagsView.itemRequestFinished = ^(LKTagItem * item){
-        
-        @normally(self);
-        
-        if (item.tagValue.isLiked) {
-            
-            self.post.user.likes = @(self.post.user.likes.integerValue + 1);
-        }
-        else{
-            
-            self.post.user.likes = @(self.post.user.likes.integerValue - 1);
-        }
-        
-        
-        self.likes.text = LC_NSSTRING_FORMAT(@"%@", self.post.user.likes);
-        
-        CGSize likeSize = [self.post.user.likes.description sizeWithFont:LK_FONT(13) byWidth:200];
-        
-        [UIView animateWithDuration:0.25 animations:^{
-            
-            self.likesTip.viewFrameX = self.likes.viewFrameX + likeSize.width + 3;
-        }];
-    };
-    
 }
 
--(void) addTagAction
-{
+- (void)addTagAction {
     if (self.addTag) {
         self.addTag(self.post);
     }
 }
 
--(void) handleHeadTap:(UITapGestureRecognizer *)tap
-{
+-(void) handleHeadTap:(UITapGestureRecognizer *)tap {
     self.SEND(self.PushUserCenter).object = self.post.user;
 }
 
-/**
- *  点击主页cell里面的图片就会执行此方法
- */
--(void) contentImageTapAction
-{
+-(void) contentImageTapAction {
     self.SEND(self.PushPostDetail).object = self.post;
 }
 
@@ -192,10 +180,8 @@ LC_IMP_SIGNAL(PushPostDetail);
     
     
     if (post.user.id.integerValue == LKLocalUser.singleton.user.id.integerValue) {
-        
         post.user = LKLocalUser.singleton.user;
     }
-    
     
     // 设置cell内容
     self.head.image = nil;
@@ -208,19 +194,16 @@ LC_IMP_SIGNAL(PushPostDetail);
     CGSize likeSize = [post.user.likes.description sizeWithFont:LK_FONT(13) byWidth:200];
     
     self.likesTip.viewFrameX = self.likes.viewFrameX + likeSize.width + 3;
-    
-    
     CGSize size = [LKUIKit parsingImageSizeWithURL:post.content constSize:CGSizeMake(LC_DEVICE_WIDTH - 10, LC_DEVICE_WIDTH - 10)];
     
     if (size.width > LC_DEVICE_WIDTH - 10) {
-        
         size.height = (LC_DEVICE_WIDTH - 10) / size.width * size.height;
         size.width = (LC_DEVICE_WIDTH - 10);
     }
     
     // 设置图片的frame
     self.contentBack.viewFrameX = 5 + (LC_DEVICE_WIDTH - 10) / 2 - size.width / 2;
-    self.contentBack.viewFrameY = 55;
+    self.contentBack.viewFrameY = self.headLineHidden ? 10 : 55; // 55;
     self.contentBack.viewFrameWidth = size.width;
     self.contentBack.viewFrameHeight = size.height;
     
@@ -240,14 +223,11 @@ LC_IMP_SIGNAL(PushPostDetail);
         self.contentImage.indicator.alpha = 0;
     }];
     
-    
-    
     // 设置标签的frame
     self.tagsView.tags = post.tags;
     self.tagsView.viewFrameY = self.contentBack.viewBottomY;
     
     [LKPostTableViewCell roundCorners:UIRectCornerBottomLeft | UIRectCornerBottomRight forView:self.tagsView];
-    
     
     @weakly(self);
     
@@ -332,44 +312,20 @@ LC_IMP_SIGNAL(PushPostDetail);
     
 }
 
--(void) reloadTags
-{
-    //    LC_FAST_ANIMATIONS(1, ^{
-    //
-    //        [self.tagsView reloadDataAndRemoveAll:NO];
-    //    });
+-(void) reloadTags {
 }
 
-
-- (void)cellOnTableView:(UITableView *)tableView didScrollOnView:(UIView *)view
-{
-    //        CGRect rectInSuperview = [tableView convertRect:self.frame toView:view];
-    //
-    //        CGFloat distanceFromCenter = CGRectGetHeight(view.frame)/2 - CGRectGetMinY(rectInSuperview);
-    //        CGFloat difference = CGRectGetHeight(self.contentImage.frame) - CGRectGetHeight(self.frame);
-    //        CGFloat move = (distanceFromCenter / CGRectGetHeight(view.frame)) * difference;
-    //
-    //        CGRect imageRect = self.contentImage.frame;
-    //        imageRect.origin.y = -(difference/2)+move;
-    //        self.contentImage.frame = imageRect;
+- (void)cellOnTableView:(UITableView *)tableView didScrollOnView:(UIView *)view {
 }
 
-/**
- *  裁剪圆角
- */
 + (void)roundCorners:(UIRectCorner)corners forView:(UIView *)view
 {
     UIBezierPath * maskPath = [UIBezierPath bezierPathWithRoundedRect:view.bounds
-                               
                                                     byRoundingCorners:corners
-                               
                                                           cornerRadii:CGSizeMake(2, 2)];
     CAShapeLayer * maskLayer = [CAShapeLayer layer];
-    
     maskLayer.frame = view.bounds;
-    
     maskLayer.path = maskPath.CGPath;
-    
     view.layer.mask = maskLayer;
 }
 
@@ -379,7 +335,7 @@ LC_IMP_SIGNAL(PushPostDetail);
 -(UIImage *) getIconImage:(NSInteger)type
 {
     if (type == 1) {
-        
+
         return [UIImage imageNamed:@"LittleTag.png" useCache:YES];
     }
     else if (type == 2){
@@ -396,6 +352,10 @@ LC_IMP_SIGNAL(PushPostDetail);
     }
     
     return nil;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
 }
 
 @end

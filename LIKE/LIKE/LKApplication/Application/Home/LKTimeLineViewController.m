@@ -10,6 +10,7 @@
 #import "LKFeedViewController.h"
 #import "LKFollowingViewController.h"
 
+
 @interface LKTimeLineViewController ()
 
 LC_PROPERTY(strong) LKFeedViewController *feedViewController;
@@ -49,20 +50,18 @@ LC_PROPERTY(weak) LCUIViewController *currentViewController;
 }
 
 -(void) handleNavigationBarButton:(LCUINavigationBarButtonType)type {
+    
     if (type == LCUINavigationBarButtonTypeLeft) {
         
         @weakly(self);
-        
         LC_FAST_ANIMATIONS_F(0.25, ^{
             
             @normally(self);
-            
             self.currentViewController.view.alpha = 0;
             
         }, ^(BOOL finished){
             
             @normally(self);
-            
             [self.currentViewController.view removeFromSuperview];
             if (self.currentViewController == self.feedViewController) {
                 self.currentViewController = self.followingViewController;

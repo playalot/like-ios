@@ -7,9 +7,12 @@
 //
 
 #import "LKPostTableViewController.h"
+#import "LKUserCenterViewController.h"
 
 @interface LKUserCenterBrowsingViewController : LKPostTableViewController
 
-LC_PROPERTY(assign) NSInteger currentIndex;
+//LC_PROPERTY(assign) LKUserCenterViewController *parentUserCenterViewController;
+
+- (void)reloadData;
 
 @end

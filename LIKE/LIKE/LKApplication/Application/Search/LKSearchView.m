@@ -154,9 +154,9 @@ LC_PROPERTY(assign) NSInteger page;
     };
 }
 
-#pragma mark - INSSearchBarDelegate
+#pragma mark - LKSearchBarDelegate
 
-- (void)searchBarTextDidChange:(INSSearchBar *)searchBar
+- (void)searchBarTextDidChange:(LKSearchBar *)searchBar
 {
     LC_FAST_ANIMATIONS(0.25, ^{
         self.placeholderView.alpha = 1;
@@ -165,12 +165,12 @@ LC_PROPERTY(assign) NSInteger page;
     });
 }
 
--(void) searchBarDidBeginEditing:(INSSearchBar *)searchBar editing:(BOOL)editing
+-(void) searchBarDidBeginEditing:(LKSearchBar *)searchBar editing:(BOOL)editing
 {
     [self searchBarTextDidChange:searchBar];
 }
 
-- (void)searchBarDidTapReturn:(INSSearchBar *)searchBar
+- (void)searchBarDidTapReturn:(LKSearchBar *)searchBar
 {
     if (LKLocalUser.singleton.isLogin) {
         

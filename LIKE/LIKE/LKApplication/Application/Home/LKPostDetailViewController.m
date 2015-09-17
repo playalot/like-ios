@@ -239,6 +239,7 @@ LC_PROPERTY(assign) BOOL favorited;
     self.tableView.alpha = 0;
     self.view.ADD(self.tableView);
     
+    // Header
     {
         CGSize size = [LKUIKit parsingImageSizeWithURL:self.post.content];
         
@@ -312,20 +313,13 @@ LC_PROPERTY(assign) BOOL favorited;
                 NSString * content = nil;
                 
                 if (self.post.content) {
-                    
                     NSArray * contents = [self.post.content componentsSeparatedByString:@"?"];
-                    
                     if (contents.count) {
                         content = [contents[0] stringByAppendingString:@"?imageView2/4/q/85"];
                     }
                 }
                 
                 info.imageURL = [NSURL URLWithString:content];
-                //                        }
-                //                        else{
-                //
-                //                        }
-                
                 info.referenceRect = self.header.frame;
                 info.referenceView = self.header.superview;
                 info.fromView = self.header.backgroundView;
@@ -342,7 +336,6 @@ LC_PROPERTY(assign) BOOL favorited;
                 
             }
         };
-        
         
         // 导航栏返回上一级按钮
         LCUIButton * backButton = LCUIButton.view;
@@ -369,7 +362,6 @@ LC_PROPERTY(assign) BOOL favorited;
         [self.header addSubview:moreButton];
     }
     
-    
     // 输入框
     self.inputView = LKInputView.view;
     self.inputView.viewFrameY = self.view.viewFrameHeight - self.inputView.viewFrameHeight;
@@ -382,40 +374,21 @@ LC_PROPERTY(assign) BOOL favorited;
         @normally(self);
         
         if (string.trim.length == 0) {
-            
             [self showTopMessageErrorHud:LC_LO(@"标签不能为空")];
             return;
         }
         
         if (string.length > 12) {
-            
             [self showTopMessageErrorHud:LC_LO(@"标签长度不能大于12位")];
             return;
         }
         
         if ([self _checkTag:string onTags:self.post.tags]) {
-            
             [self _addTag:string onPost:self.post];
-        }
-        else{
-            
+        } else {
             [self showTopMessageErrorHud:LC_LO(@"该标签已存在")];
         }
     };
-    
-    /*
-    self.pullLoader = [LCUIPullLoader pullLoaderWithScrollView:self.tableView pullStyle:LCUIPullLoaderStyleFooter];
-    
-    self.pullLoader.beginRefresh = ^(LCUIPullLoaderDiretion diretion){
-      
-        @normally(self);
-        
-        if (diretion == LCUIPullLoaderDiretionBottom) {
-            
-            [self.tagsListModel loadDataWithPostID:self.post.id getMore:YES];
-        }
-    };
-     */
 }
 
 #pragma mark - ***** 放大后的headerView dismiss的时候调用 *****

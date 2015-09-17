@@ -10,6 +10,10 @@
 
 @interface LKSearchResultsViewController : LCUITableViewController
 
--(instancetype) initWithSearchString:(NSString *)searchString;
+- (instancetype)initWithSearchString:(NSString *)searchString;
+
+- (void)loadData:(LCUIPullLoaderDiretion)diretion;
+
+- (void)scrollToPostByIndex:(NSInteger)index;
 
 @end

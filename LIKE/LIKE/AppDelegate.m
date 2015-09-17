@@ -183,10 +183,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     
     self.window.rootViewController = rootNavigationViewController;
     
-    
     if (!LKLocalUser.singleton.isLogin) {
-
-
         LCUIImageView * imageView = LCUIImageView.view;
         imageView.image = [LKWelcome image];
         imageView.viewFrameWidth = LC_DEVICE_WIDTH;

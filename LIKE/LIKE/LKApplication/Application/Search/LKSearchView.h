@@ -10,7 +10,7 @@
 #import "LKSearchBar.h"
 #import "LKSearchPlaceholderView.h"
 
-@interface LKSearchView : UIView <INSSearchBarDelegate>
+@interface LKSearchView : UIView <LKSearchBarDelegate>
 
 LC_PROPERTY(copy) LKValueChanged willShow;
 LC_PROPERTY(copy) LKValueChanged willHide;

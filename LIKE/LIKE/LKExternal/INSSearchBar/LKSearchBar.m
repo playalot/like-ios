@@ -1,14 +1,14 @@
 //
-//  INSSearchBar.m
+//  LKSearchBar.m
 //  Berlin Insomniac
 //
 //  Created by Salánki, Benjámin on 06/03/14.
 //  Copyright (c) 2014 Berlin Insomniac. All rights reserved.
 //
 
-#import "INSSearchBar.h"
+#import "LKSearchBar.h"
 
-@interface INSSearchBar () <UITextFieldDelegate, UIGestureRecognizerDelegate>
+@interface LKSearchBar () <UITextFieldDelegate, UIGestureRecognizerDelegate>
 
 /**
  *  The borderedframe of the search bar. Visible only when search mode is active.
@@ -62,15 +62,15 @@
 
 @property (nonatomic, strong) UITapGestureRecognizer *keyboardDismissGestureRecognizer;
 
-@property (nonatomic, assign) INSSearchBarState state;
+@property (nonatomic, assign) LKSearchBarState state;
 
 @end
 
-static CGFloat const kINSSearchBarInset = 15.0;
-static CGFloat const kINSSearchBarImageSize = 18;
-static NSTimeInterval const kINSSearchBarAnimationStepDuration = 0.25;
+static CGFloat const kLKSearchBarInset = 15.0;
+static CGFloat const kLKSearchBarImageSize = 18;
+static NSTimeInterval const kLKSearchBarAnimationStepDuration = 0.25;
 
-@implementation INSSearchBar
+@implementation LKSearchBar
 
 #pragma mark - initialization
 
@@ -78,6 +78,9 @@ static NSTimeInterval const kINSSearchBarAnimationStepDuration = 0.25;
 {
     if ((self = [super initWithFrame:CGRectMake(CGRectGetMinX(frame), CGRectGetMinY(frame), CGRectGetWidth(frame), frame.size.height)]))
 	{
+        self.layer.cornerRadius = 4;
+        self.layer.masksToBounds = YES;
+        
         // Initialization code
 		self.opaque = NO;
 		self.backgroundColor = [UIColor whiteColor];
@@ -91,7 +94,7 @@ static NSTimeInterval const kINSSearchBarAnimationStepDuration = 0.25;
 		
 		[self addSubview:self.searchFrame];
 		
-		self.searchField = [[UITextField alloc] initWithFrame:CGRectMake(kINSSearchBarInset, 3.0, CGRectGetWidth(self.bounds) - (2 * kINSSearchBarInset) - kINSSearchBarImageSize, CGRectGetHeight(self.bounds) - 6.0)];
+		self.searchField = [[UITextField alloc] initWithFrame:CGRectMake(kLKSearchBarInset, 3.0, CGRectGetWidth(self.bounds) - (2 * kLKSearchBarInset) - kLKSearchBarImageSize, CGRectGetHeight(self.bounds) - 6.0)];
 		self.searchField.borderStyle = UITextBorderStyleNone;
 		self.searchField.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		self.searchField.font = LK_FONT(13);
@@ -102,7 +105,7 @@ static NSTimeInterval const kINSSearchBarAnimationStepDuration = 0.25;
 		
 		[self.searchFrame addSubview:self.searchField];
 		
-		UIView *searchImageViewOnContainerView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.bounds) - kINSSearchBarInset - kINSSearchBarImageSize + 2, (CGRectGetHeight(self.bounds) - kINSSearchBarImageSize) / 2, kINSSearchBarImageSize, kINSSearchBarImageSize)];
+		UIView *searchImageViewOnContainerView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.bounds) - kLKSearchBarInset - kLKSearchBarImageSize + 2, (CGRectGetHeight(self.bounds) - kLKSearchBarImageSize) / 2, kLKSearchBarImageSize, kLKSearchBarImageSize)];
 		searchImageViewOnContainerView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
 		
 		[self.searchFrame addSubview:searchImageViewOnContainerView];
@@ -134,7 +137,7 @@ static NSTimeInterval const kINSSearchBarAnimationStepDuration = 0.25;
 
 		[searchImageViewOnContainerView addSubview:self.searchImageCrossRight];
 
-		self.searchImageViewOff = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.bounds) - kINSSearchBarInset - kINSSearchBarImageSize, (CGRectGetHeight(self.bounds) - kINSSearchBarImageSize) / 2, kINSSearchBarImageSize, kINSSearchBarImageSize)];
+		self.searchImageViewOff = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.bounds) - kLKSearchBarInset - kLKSearchBarImageSize, (CGRectGetHeight(self.bounds) - kLKSearchBarImageSize) / 2, kLKSearchBarImageSize, kLKSearchBarImageSize)];
 		self.searchImageViewOff.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
 		self.searchImageViewOff.alpha = 1.0;
 		self.searchImageViewOff.image = [UIImage imageNamed:@"NavBarIconSearch_white"];
@@ -142,7 +145,7 @@ static NSTimeInterval const kINSSearchBarAnimationStepDuration = 0.25;
 
 		[self.searchFrame addSubview:self.searchImageViewOff];
 
-		UIView *tapableView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.bounds) - (2 * kINSSearchBarInset) - kINSSearchBarImageSize, 0.0, (2 * kINSSearchBarInset) + kINSSearchBarImageSize, CGRectGetHeight(self.bounds))];
+		UIView *tapableView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.bounds) - (2 * kLKSearchBarInset) - kLKSearchBarImageSize, 0.0, (2 * kLKSearchBarInset) + kLKSearchBarImageSize, CGRectGetHeight(self.bounds))];
 		tapableView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleHeight;
 		[tapableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeStateIfPossible:)]];
 		
@@ -168,26 +171,26 @@ static NSTimeInterval const kINSSearchBarAnimationStepDuration = 0.25;
 {
 	switch (self.state)
 	{
-		case INSSearchBarStateNormal:
+		case LKSearchBarStateNormal:
 		{
 			[self showSearchBar:gestureRecognizer];
 		}
 			break;
 			
-		case INSSearchBarStateSearchBarVisible:
+		case LKSearchBarStateSearchBarVisible:
 		{
             [self.searchField resignFirstResponder];
 		}
 			break;
 			
-		case INSSearchBarStateSearchBarHasContent:
+		case LKSearchBarStateSearchBarHasContent:
 		{
 			self.searchField.text = nil;
 			[self textDidChange:nil];
 		}
 			break;
 			
-		case INSSearchBarStateTransitioning:
+		case LKSearchBarStateTransitioning:
 		{
 			// Do nothing.
 		}
@@ -197,18 +200,18 @@ static NSTimeInterval const kINSSearchBarAnimationStepDuration = 0.25;
 
 - (void)showSearchBar:(id)sender
 {
-	if (self.state == INSSearchBarStateNormal)
+	if (self.state == LKSearchBarStateNormal)
 	{
 		if ([self.delegate respondsToSelector:@selector(searchBar:willStartTransitioningToState:)])
 		{
-			[self.delegate searchBar:self willStartTransitioningToState:INSSearchBarStateSearchBarVisible];
+			[self.delegate searchBar:self willStartTransitioningToState:LKSearchBarStateSearchBarVisible];
 		}
 		
-		self.state = INSSearchBarStateSearchBarVisible;
+		self.state = LKSearchBarStateSearchBarVisible;
 		
 		self.searchField.text = nil;
 		
-		[UIView animateWithDuration:kINSSearchBarAnimationStepDuration animations:^{
+		[UIView animateWithDuration:kLKSearchBarAnimationStepDuration animations:^{
 			
 			self.searchFrame.layer.borderColor = [UIColor whiteColor].CGColor;
 			
@@ -223,7 +226,7 @@ static NSTimeInterval const kINSSearchBarAnimationStepDuration = 0.25;
 			
 			//[self.searchField becomeFirstResponder];
 
-			[UIView animateWithDuration:kINSSearchBarAnimationStepDuration * 2 animations:^{
+			[UIView animateWithDuration:kLKSearchBarAnimationStepDuration * 2 animations:^{
 				
 				self.searchFrame.layer.backgroundColor = [UIColor whiteColor].CGColor;
 				self.searchImageViewOff.alpha = 0.0;
@@ -232,11 +235,11 @@ static NSTimeInterval const kINSSearchBarAnimationStepDuration = 0.25;
 				
 			} completion:^(BOOL finished) {
 								
-				self.state = INSSearchBarStateSearchBarVisible;
+				self.state = LKSearchBarStateSearchBarVisible;
 				
 				if ([self.delegate respondsToSelector:@selector(searchBar:didEndTransitioningFromState:)])
 				{
-					[self.delegate searchBar:self didEndTransitioningFromState:INSSearchBarStateNormal];
+					[self.delegate searchBar:self didEndTransitioningFromState:LKSearchBarStateNormal];
 				}
 			}];
 		}];
@@ -245,20 +248,20 @@ static NSTimeInterval const kINSSearchBarAnimationStepDuration = 0.25;
 
 //- (void)hideSearchBar:(id)sender
 //{
-//	if (self.state == INSSearchBarStateSearchBarVisible || self.state == INSSearchBarStateSearchBarHasContent)
+//	if (self.state == LKSearchBarStateSearchBarVisible || self.state == LKSearchBarStateSearchBarHasContent)
 //	{
 //		[self.window endEditing:YES];
 //		
 //		if ([self.delegate respondsToSelector:@selector(searchBar:willStartTransitioningToState:)])
 //		{
-//			[self.delegate searchBar:self willStartTransitioningToState:INSSearchBarStateNormal];
+//			[self.delegate searchBar:self willStartTransitioningToState:LKSearchBarStateNormal];
 //		}
 //
 //		self.searchField.text = nil;
 //		
-//		self.state = INSSearchBarStateTransitioning;
+//		self.state = LKSearchBarStateTransitioning;
 //		
-//		[UIView animateWithDuration:kINSSearchBarAnimationStepDuration animations:^{
+//		[UIView animateWithDuration:kLKSearchBarAnimationStepDuration animations:^{
 //			
 //			if ([self.delegate respondsToSelector:@selector(destinationFrameForSearchBar:)])
 //			{
@@ -272,7 +275,7 @@ static NSTimeInterval const kINSSearchBarAnimationStepDuration = 0.25;
 //			
 //		} completion:^(BOOL finished) {
 //			
-//			[UIView animateWithDuration:kINSSearchBarAnimationStepDuration animations:^{
+//			[UIView animateWithDuration:kLKSearchBarAnimationStepDuration animations:^{
 //				
 //				self.searchFrame.layer.borderColor = [UIColor clearColor].CGColor;
 //				
@@ -284,11 +287,11 @@ static NSTimeInterval const kINSSearchBarAnimationStepDuration = 0.25;
 //				self.searchImageCrossLeft.alpha = 0.0;
 //				self.searchImageCrossRight.alpha = 0.0;
 //				
-//				self.state = INSSearchBarStateNormal;
+//				self.state = LKSearchBarStateNormal;
 //				
 //				if ([self.delegate respondsToSelector:@selector(searchBar:didEndTransitioningFromState:)])
 //				{
-//					[self.delegate searchBar:self didEndTransitioningFromState:INSSearchBarStateSearchBarVisible];
+//					[self.delegate searchBar:self didEndTransitioningFromState:LKSearchBarStateSearchBarVisible];
 //				}
 //			}];
 //		}];
@@ -303,7 +306,7 @@ static NSTimeInterval const kINSSearchBarAnimationStepDuration = 0.25;
 	{
         if ([self.delegate respondsToSelector:@selector(searchBar:willStartTransitioningToState:)])
         {
-            [self.delegate searchBar:self willStartTransitioningToState:INSSearchBarStateSearchBarVisible];
+            [self.delegate searchBar:self willStartTransitioningToState:LKSearchBarStateSearchBarVisible];
         }
         
         if ([self.delegate respondsToSelector:@selector(searchBarDidBeginEditing:editing:)]) {
@@ -323,7 +326,7 @@ static NSTimeInterval const kINSSearchBarAnimationStepDuration = 0.25;
 	{
         if ([self.delegate respondsToSelector:@selector(searchBar:willStartTransitioningToState:)])
         {
-            [self.delegate searchBar:self willStartTransitioningToState:INSSearchBarStateNormal];
+            [self.delegate searchBar:self willStartTransitioningToState:LKSearchBarStateNormal];
         }
         
         if ([self.delegate respondsToSelector:@selector(searchBarDidBeginEditing:editing:)]) {
@@ -341,7 +344,7 @@ static NSTimeInterval const kINSSearchBarAnimationStepDuration = 0.25;
 	{
 		[self.window endEditing:YES];
 		
-		if (self.state == INSSearchBarStateSearchBarVisible && self.searchField.text.length == 0)
+		if (self.state == LKSearchBarStateSearchBarVisible && self.searchField.text.length == 0)
 		{
             [self.searchField resignFirstResponder];
         }
@@ -356,9 +359,9 @@ static NSTimeInterval const kINSSearchBarAnimationStepDuration = 0.25;
 	
 	if (hasText)
 	{
-		if (self.state == INSSearchBarStateSearchBarVisible)
+		if (self.state == LKSearchBarStateSearchBarVisible)
 		{
-			self.state = INSSearchBarStateTransitioning;
+			self.state = LKSearchBarStateTransitioning;
 			
             LC_FAST_ANIMATIONS(0.25, ^{
                 
@@ -372,15 +375,15 @@ static NSTimeInterval const kINSSearchBarAnimationStepDuration = 0.25;
             });
             
 			
-            self.state = INSSearchBarStateSearchBarHasContent;
+            self.state = LKSearchBarStateSearchBarHasContent;
 
-			[UIView animateWithDuration:kINSSearchBarAnimationStepDuration animations:^{
+			[UIView animateWithDuration:kLKSearchBarAnimationStepDuration animations:^{
 				
 				
 				
 			} completion:^(BOOL finished) {
 				
-				[UIView animateWithDuration:kINSSearchBarAnimationStepDuration animations:^{
+				[UIView animateWithDuration:kLKSearchBarAnimationStepDuration animations:^{
 					
 					
 				} completion:^(BOOL finished) {
@@ -392,9 +395,9 @@ static NSTimeInterval const kINSSearchBarAnimationStepDuration = 0.25;
 	}
 	else
 	{
-		if (self.state == INSSearchBarStateSearchBarHasContent)
+		if (self.state == LKSearchBarStateSearchBarHasContent)
 		{
-			self.state = INSSearchBarStateTransitioning;
+			self.state = LKSearchBarStateTransitioning;
 			
             LC_FAST_ANIMATIONS(0.25, ^{
 
@@ -407,7 +410,7 @@ static NSTimeInterval const kINSSearchBarAnimationStepDuration = 0.25;
             
             });
                 
-            self.state = INSSearchBarStateSearchBarVisible;
+            self.state = LKSearchBarStateSearchBarVisible;
 
 		}
 	}

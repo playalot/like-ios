@@ -1,5 +1,5 @@
 //
-//  INSSearchBar.h
+//  LKSearchBar.h
 //  Berlin Insomniac
 //
 //  Created by Salánki, Benjámin on 06/03/14.
@@ -9,43 +9,43 @@
 #import <UIKit/UIKit.h>
 
 /**
- *  The different states for an INSSearchBarState.
+ *  The different states for an LKSearchBarState.
  */
 
-typedef NS_ENUM(NSUInteger, INSSearchBarState)
+typedef NS_ENUM(NSUInteger, LKSearchBarState)
 {
 	/**
 	 *  The default or normal state. The search field is hidden.
 	 */
 	
-	INSSearchBarStateNormal = 0,
+	LKSearchBarStateNormal = 0,
 	
 	/**
 	 *  The state where the search field is visible.
 	 */
 	
-	INSSearchBarStateSearchBarVisible,
+	LKSearchBarStateSearchBarVisible,
 
 	/**
 	 *  The state where the search field is visible and there is text entered.
 	 */
 	
-	INSSearchBarStateSearchBarHasContent,
+	LKSearchBarStateSearchBarHasContent,
 
 	/**
 	 *  The search bar is transitioning between states.
 	 */
 	
-	INSSearchBarStateTransitioning
+	LKSearchBarStateTransitioning
 };
 
-@class INSSearchBar;
+@class LKSearchBar;
 
 /**
  *  The delegate is responsible for providing values to the search bar that it can use to determine its size.
  */
 
-@protocol INSSearchBarDelegate <NSObject>
+@protocol LKSearchBarDelegate <NSObject>
 
 @optional
 /**
@@ -56,7 +56,7 @@ typedef NS_ENUM(NSUInteger, INSSearchBarState)
  *  @return The frame in the coordinate system of the search bar's superview.
  */
 
-- (CGRect)destinationFrameForSearchBar:(INSSearchBar *)searchBar;
+- (CGRect)destinationFrameForSearchBar:(LKSearchBar *)searchBar;
 
 /**
  *  The delegate is informed about the imminent state transitioning of the status bar.
@@ -65,7 +65,7 @@ typedef NS_ENUM(NSUInteger, INSSearchBarState)
  *  @param destinationState The state that the bar will be in once transitioning completes. The current state of the search bar can be queried and will return the state before transitioning.
  */
 
-- (void)searchBar:(INSSearchBar *)searchBar willStartTransitioningToState:(INSSearchBarState)destinationState;
+- (void)searchBar:(LKSearchBar *)searchBar willStartTransitioningToState:(LKSearchBarState)destinationState;
 
 /**
  *  The delegate is informed about the state transitioning of the status bar that has just occured.
@@ -74,7 +74,7 @@ typedef NS_ENUM(NSUInteger, INSSearchBarState)
  *  @param destinationState The state that the bar was in before transitioning started. The current state of the search bar can be queried and will return the state after transitioning.
  */
 
-- (void)searchBar:(INSSearchBar *)searchBar didEndTransitioningFromState:(INSSearchBarState)previousState;
+- (void)searchBar:(LKSearchBar *)searchBar didEndTransitioningFromState:(LKSearchBarState)previousState;
 
 /**
  *  The delegate is informed that the search bar's return key was pressed. This should be used to start querries.
@@ -84,7 +84,7 @@ typedef NS_ENUM(NSUInteger, INSSearchBarState)
  *  @param searchBar        The search bar whose return key was pressed.
  */
 
-- (void)searchBarDidTapReturn:(INSSearchBar *)searchBar;
+- (void)searchBarDidTapReturn:(LKSearchBar *)searchBar;
 
 /**
  *  The delegate is informed that the search bar's text has changed.
@@ -94,9 +94,9 @@ typedef NS_ENUM(NSUInteger, INSSearchBarState)
  *  @param searchBar        The search bar whose text did change.
  */
 
-- (void)searchBarTextDidChange:(INSSearchBar *)searchBar;
+- (void)searchBarTextDidChange:(LKSearchBar *)searchBar;
 
-- (void)searchBarDidBeginEditing:(INSSearchBar *)searchBar editing:(BOOL)editing;
+- (void)searchBarDidBeginEditing:(LKSearchBar *)searchBar editing:(BOOL)editing;
 
 @end
 
@@ -104,13 +104,13 @@ typedef NS_ENUM(NSUInteger, INSSearchBarState)
  *  An animating search bar.
  */
 
-@interface INSSearchBar : UIView
+@interface LKSearchBar : UIView
 
 /**
  *  The current state of the search bar.
  */
 
-@property (nonatomic, readonly) INSSearchBarState state;
+@property (nonatomic, readonly) LKSearchBarState state;
 
 /**
  *  The text field used for entering search queries. Visible only when search is active.
@@ -119,9 +119,9 @@ typedef NS_ENUM(NSUInteger, INSSearchBarState)
 @property (nonatomic, readonly) UITextField *searchField;
 
 /**
- *  The (optional) delegate is responsible for providing values necessary for state change animations of the search bar. @see INSSearchBarDelegate.
+ *  The (optional) delegate is responsible for providing values necessary for state change animations of the search bar. @see LKSearchBarDelegate.
  */
 
-@property (nonatomic, weak) id<INSSearchBarDelegate>	delegate;
+@property (nonatomic, weak) id<LKSearchBarDelegate>	delegate;
 
 @end

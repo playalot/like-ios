@@ -10,9 +10,11 @@
 #import "LKPost.h"
 #import "LKTagsView.h"
 
-@interface LKPostTableViewController : LCUIViewController
+@interface LKPostTableViewController : LCUIViewController <UITableViewDataSource, UITableViewDelegate>
 
 LC_PROPERTY(strong) NSMutableArray * datasource;
 LC_PROPERTY(strong) LCUITableView *tableView;
+LC_PROPERTY(assign) NSInteger currentIndex;
+LC_PROPERTY(assign) BOOL cellHeadLineHidden;
 
 @end

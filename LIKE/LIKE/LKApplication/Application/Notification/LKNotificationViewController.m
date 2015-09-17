@@ -56,13 +56,11 @@ LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
     @weakly(self);
     
     self.pullLoader = [[LCUIPullLoader alloc] initWithScrollView:self.tableView pullStyle:LCUIPullLoaderStyleHeaderAndFooter];
-    
+
     [self.pullLoader setBeginRefresh:^(LCUIPullLoaderDiretion diretion) {
         @normally(self);
         [self loadData:diretion];
     }];
-    
-    
     [self loadData:LCUIPullLoaderDiretionTop];
 }
 
@@ -74,18 +72,16 @@ LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
 }
 
--(void) loadData:(LCUIPullLoaderDiretion)diretion
+-(void)loadData:(LCUIPullLoaderDiretion)diretion
 {
     [self.notificationModel cancelAllRequests];
     
     @weakly(self);
-    
     [self.notificationModel getNotificationsAtFirstPage:diretion == LCUIPullLoaderDiretionTop requestFinished:^(NSString *error) {
         
         @normally(self);
         
         if (diretion == LCUIPullLoaderDiretionTop) {
-            
             [LKNotificationCount cleanBadge];
         }
         
@@ -96,48 +92,33 @@ LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
 }
 
 #pragma mark - UITableViewDataSource
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.notificationModel.datasource.count;
 }
 
-- (UITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     LKNotificationCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Cell" andClass:[LKNotificationCell class]];
-    
     cell.notification = self.notificationModel.datasource[indexPath.row];
-    
     return cell;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     LKNotification * notification = self.notificationModel.datasource[indexPath.row];
-    
     if (notification.posts.count >= 2) {
-        
         return 110;
-    }
-    else{
-        
+    } else {
         return [LKNotificationCell height:notification];
     }
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     LKNotification * notification = self.notificationModel.datasource[indexPath.row];
-    
     if (notification.type == LKNotificationTypeFocus) {
-        
         LKUserCenterViewController *userCenterViewController = [[LKUserCenterViewController alloc] initWithUser:notification.user];
         [self.navigationController presentViewController:userCenterViewController animated:YES completion:^{}];
-    }
-    else{
-        
+    } else {
         if ((notification.type == LKNotificationTypeComment ||
              notification.type == LKNotificationTypeReply) && [notification.tagID isKindOfClass:[NSNumber class]]) {
-            
             notification.post.tagString = [NSString stringWithFormat:@"Comment-%@",notification.tagID];
         }
         

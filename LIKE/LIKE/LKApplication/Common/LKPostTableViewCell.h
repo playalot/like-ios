@@ -23,12 +23,13 @@ LC_PROPERTY(strong) LKPost * post;
 LC_PROPERTY(copy) LKPostCellAddTag addTag;
 LC_PROPERTY(copy) LKPostCellRemovedTag removedTag;
 LC_PROPERTY(copy) LKPostCellCustomAction customAction;
+LC_PROPERTY(assign) BOOL headLineHidden;
 
-+(CGFloat) height:(LKPost *)post;
++ (CGFloat)height:(LKPost *)post headLineHidden:(BOOL)headHidden;
 
--(void) reloadTags;
+- (void)reloadTags;
 
--(void)cellOnTableView:(UITableView *)tableView didScrollOnView:(UIView *)view;
+- (void)cellOnTableView:(UITableView *)tableView didScrollOnView:(UIView *)view;
 
 LC_PROPERTY(strong) LCUIImageView * contentImage;
 LC_PROPERTY(strong) UIView * contentBack;

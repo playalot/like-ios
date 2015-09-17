@@ -121,8 +121,13 @@ LC_PROPERTY(weak) id delegate;
     
 }
 
--(void) reloadData {
+- (void)reloadData {
     [self.tableView reloadData];
+}
+
+LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
+    [LKUserCenterViewController pushUserCenterWithUser:signal.object navigationController:self.navigationController];
+    [LC_APPDELEGATE.tabBarController hideBar];
 }
 
 LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {

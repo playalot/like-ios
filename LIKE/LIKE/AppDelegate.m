@@ -112,7 +112,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
 //    self.followingViewController = [LKFollowingViewController viewController];
     self.searchViewController = [LKSearchViewController viewController];
     self.notificationViewController = [LKNotificationViewController viewController];
-    self.userCenterViewController = [[LKUserCenterHomeViewController alloc] initWithUser:LKLocalUser.singleton.user];
+    self.userCenterViewController = [[LKUserCenterViewController alloc] initWithUser:LKLocalUser.singleton.user];
     
     // 极光推送
     if (IOS8_OR_LATER) {
@@ -302,10 +302,8 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
                 [LKLocalUser regetSessionTokenAndUseLoadingTip:NO];
             }
             
-            
             // 判断是否为推送打开
             if ([UIApplication sharedApplication].applicationIconBadgeNumber) {
-                
                 [self.homeViewController performSelector:@selector(notificationAction) withObject:nil afterDelay:0.5];
             }
             

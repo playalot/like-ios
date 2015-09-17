@@ -13,7 +13,7 @@
 #import "LKNotificationHeader.h"
 #import "LKLoginViewController.h"
 #import "LKPostDetailViewController.h"
-#import "LKUserCenterHomeViewController.h"
+#import "LKUserCenterViewController.h"
 
 @interface LKNotificationViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerDelegate>
 
@@ -114,7 +114,7 @@ LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     LKNotification * notification = self.notificationModel.datasource[indexPath.row];
     if (notification.type == LKNotificationTypeFocus) {
-        LKUserCenterHomeViewController *userCenterViewController = [[LKUserCenterHomeViewController alloc] initWithUser:notification.user];
+        LKUserCenterViewController *userCenterViewController = [[LKUserCenterViewController alloc] initWithUser:notification.user];
         [self.navigationController presentViewController:userCenterViewController animated:YES completion:^{}];
     } else {
         if ((notification.type == LKNotificationTypeComment ||

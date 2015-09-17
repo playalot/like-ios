@@ -652,9 +652,6 @@ LC_PROPERTY(strong) UIView * tipLine;
     newItem.viewFrameX = self.viewFrameWidth - newItem.viewFrameWidth - 10;
     [newItem addTapGestureRecognizer:self selector:@selector(newTagAction)];
     lastItem = (LKTagItem *)newItem;
-
-    
-    
     
     //    newItem.customAction = ^(LKTagItem * item){
     //
@@ -671,18 +668,13 @@ LC_PROPERTY(strong) UIView * tipLine;
     maxHeight = height > maxHeight ? height : maxHeight;
     
     self.ADD(newItem);
-    
-    
     CGSize size = CGSizeMake((page + 1) * self.viewFrameWidth, maxHeight);
     
     self.contentSize = size;
     self.viewFrameHeight = size.height;
     
-    
     if (page + 1 > 1) {
-        
         LC_REMOVE_FROM_SUPERVIEW(self.tipLine, YES);
-        
         self.tipLine = UIView.view;
         self.tipLine.viewFrameX = self.viewFrameWidth - 4;
         self.tipLine.viewFrameWidth = 4;
@@ -690,24 +682,18 @@ LC_PROPERTY(strong) UIView * tipLine;
         self.tipLine.backgroundColor = [LKColor.color colorWithAlphaComponent:0.8];
         self.tipLine.alpha = 0;
         self.ADD(self.tipLine);
-        
         [self cancelAllTimers];
         NSTimer * timer = [self fireTimer:@"TipLine" timeInterval:1 repeat:YES];
-        
         [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
     }
 }
 
--(void) addNewItem:(LKTagItem *)item
-{
-
+-(void) addNewItem:(LKTagItem *)item {
 }
 
--(void) removeFromSuperview
-{
+-(void) removeFromSuperview {
     [super removeFromSuperview];
-    
-    [self cancelAllTimers];
+//    [self cancelAllTimers];
 }
 
 -(void) handleTimer:(NSTimer *)timer {

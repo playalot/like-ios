@@ -8,7 +8,7 @@
 
 #import "LKTagLikesViewController.h"
 #import "LKTagLikesCell.h"
-#import "LKUserCenterHomeViewController.h"
+#import "LKUserCenterViewController.h"
 
 @interface LKTagLikesViewController ()
 
@@ -118,7 +118,7 @@ LC_PROPERTY(strong) NSMutableArray * datasource;
 
 LC_HANDLE_UI_SIGNAL(PushUserInfo, signal)
 {
-    [LKUserCenterHomeViewController pushUserCenterWithUser:signal.object navigationController:self.navigationController];
+    [LKUserCenterViewController pushUserCenterWithUser:signal.object navigationController:self.navigationController];
 }
 
 #pragma mark -

@@ -1,5 +1,5 @@
 //
-//  LKUserCenterHomeViewController.h
+//  LKUserCenterViewController.h
 //  LIKE
 //
 //  Created by Licheng Guo ( http://nsobjet.me ) on 15/4/15.
@@ -11,9 +11,9 @@
 #import "LKUserInfoModel.h"
 #import "LKUserCenterBrowsingViewController.h"
 
-LC_NOTIFICATION_SET(LKUserCenterHomeViewControllerReloadingData);
+LC_NOTIFICATION_SET(LKUserCenterViewControllerReloadingData);
 
-@interface LKUserCenterHomeViewController : LCUIViewController
+@interface LKUserCenterViewController : LCUIViewController
 
 LC_PROPERTY(strong) LKUserInfoModel *userInfoModel;;
 LC_PROPERTY(strong) LKUser *user;
@@ -24,6 +24,6 @@ LC_PROPERTY(strong) LKUserCenterBrowsingViewController *browsingViewController;
 - (void)updateUserMetaInfo;
 - (instancetype)initWithUser:(LKUser *)user;
 
-+ (LKUserCenterHomeViewController *)pushUserCenterWithUser:(LKUser *)user navigationController:(UINavigationController *)navigationController;
++ (LKUserCenterViewController *)pushUserCenterWithUser:(LKUser *)user navigationController:(UINavigationController *)navigationController;
 
 @end

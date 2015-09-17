@@ -7,13 +7,13 @@
 //
 
 #import "LCUITableViewController.h"
-#import "LKUserCenterHomeViewController.h"
+#import "LKUserCenterViewController.h"
 
 LC_BLOCK(void, LKSettingsViewControllerWillHide, ());
 
 @interface LKSettingsViewController : UIView
 
-LC_PROPERTY(strong) LKUserCenterHomeViewController * fromViewController;
+LC_PROPERTY(strong) LKUserCenterViewController * fromViewController;
 LC_PROPERTY(copy) LKSettingsViewControllerWillHide willHide;
 
 -(void) showInViewController:(UIViewController *)viewController;

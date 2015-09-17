@@ -1,12 +1,12 @@
 //
-//  LKUserCenterHomeViewController.m
+//  LKUserCenterViewController.m
 //  LIKE
 //
 //  Created by Licheng Guo ( http://nsobjet.me ) on 15/4/15.
 //  Copyright (c) 2015年 Beijing Like Technology Co.Ltd . ( http://www.likeorz.com ). All rights reserved.
 //
 
-#import "LKUserCenterHomeViewController.h"
+#import "LKUserCenterViewController.h"
 #import "LKHomepageHeader.h"
 #import "SquareCashStyleBehaviorDefiner.h"
 #import "BLKDelegateSplitter.h"
@@ -26,7 +26,7 @@
 #import "UIScrollView+SVInfiniteScrolling.h"
 #import "LKUserCenterBrowsingViewController.h"
 
-@interface LKUserCenterHomeViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerCancelFavorDelegate>
+@interface LKUserCenterViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerCancelFavorDelegate>
 
 //
 LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
@@ -48,7 +48,7 @@ LC_PROPERTY(assign) BOOL isLocalUser;
 
 @end
 
-@implementation LKUserCenterHomeViewController
+@implementation LKUserCenterViewController
 
 - (void)dealloc {
     self.tableView.delegate = nil;
@@ -60,7 +60,7 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     
     [self.header updateWithUser:self.user];
     [self setNavigationBarHidden:YES animated:NO];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:animated];
+//    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -68,8 +68,8 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     ((LCUINavigationController *)self.navigationController).animationHandler = nil;
 }
 
-+ (LKUserCenterHomeViewController *) pushUserCenterWithUser:(LKUser *)user navigationController:(UINavigationController *)navigationController {
-    LKUserCenterHomeViewController * userCenter = [[LKUserCenterHomeViewController alloc] initWithUser:user];
++ (LKUserCenterViewController *) pushUserCenterWithUser:(LKUser *)user navigationController:(UINavigationController *)navigationController {
+    LKUserCenterViewController * userCenter = [[LKUserCenterViewController alloc] initWithUser:user];
     [navigationController pushViewController:userCenter animated:YES];
     return userCenter;
 }
@@ -84,7 +84,7 @@ LC_PROPERTY(assign) BOOL isLocalUser;
         }
         
         if (self.isLocalUser) {
-            [self observeNotification:LKUserCenterHomeViewControllerReloadingData];
+            [self observeNotification:LKUserCenterViewControllerReloadingData];
         }
         
         self.userCenterModel = [[LKUserCenterModel alloc] init];
@@ -104,6 +104,16 @@ LC_PROPERTY(assign) BOOL isLocalUser;
 }
 
 -(void) buildUI {
+    
+    if (!self.isLocalUser) {
+        [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[UIImage imageNamed:@"NavigationBarBack.png" useCache:YES] selectImage:nil];
+    }
+    
+    LCUIButton *titleBtn = [[LCUIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];
+    [titleBtn setImage:[UIImage imageNamed:@"HomeLikeIcon" useCache:YES] forState:UIControlStateNormal];
+    self.titleView = (UIView *)titleBtn;
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
+    
     self.tableView = [[LCUITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableView.viewFrameY = 30;
     self.tableView.delegate = self;
@@ -172,6 +182,7 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     };
     
     if (self.isLocalUser) {
+        
         LCUIButton * setButton = LCUIButton.view;
         setButton.viewFrameWidth = 64 / 3 + 40;
         setButton.viewFrameHeight = 64 / 3 + 40;
@@ -181,7 +192,9 @@ LC_PROPERTY(assign) BOOL isLocalUser;
         setButton.showsTouchWhenHighlighted = YES;
         [setButton addTarget:self action:@selector(setAction) forControlEvents:UIControlEventTouchUpInside];
         [self.header addSubview:setButton];
+        
     } else {
+        
         LCUIButton * backButton = LCUIButton.view;
         backButton.viewFrameWidth = 50;
         backButton.viewFrameHeight = 54 / 3 + 40;
@@ -293,11 +306,17 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     [self.userInfoModel getUserInfo:self.user.id];
 }
 
+- (void)handleNavigationBarButton:(LCUINavigationBarButtonType)type {
+    if (type == LCUINavigationBarButtonTypeLeft) {
+        [self dismissAction];
+    }
+}
+
 #pragma mark -
 
 -(void) handleNotification:(NSNotification *)notification
 {
-    if ([notification is:LKUserCenterHomeViewControllerReloadingData]) {
+    if ([notification is:LKUserCenterViewControllerReloadingData]) {
         [self loadData:self.currentType diretion:LCUIPullLoaderDiretionTop];
     }
 }
@@ -416,6 +435,7 @@ LC_PROPERTY(assign) BOOL isLocalUser;
             [self showTopMessageErrorHud:error];;
         }
         self.pullLoader.canLoadMore = [self.userCenterModel canLoadMoreWithType:type];
+        [self.browsingViewController reloadData];
     };
 }
 
@@ -551,8 +571,7 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     return 30;
 }
 
--(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSArray * data = [self.userCenterModel dataWithType:self.currentType];
     
     switch (self.currentType) {
@@ -562,7 +581,7 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
             break;
         case LKUserCenterModelTypeFocus:
         case LKUserCenterModelTypeFans:
-            [LKUserCenterHomeViewController pushUserCenterWithUser:data[indexPath.row] navigationController:self.navigationController];
+            [LKUserCenterViewController pushUserCenterWithUser:data[indexPath.row] navigationController:self.navigationController];
             break;
         default:
             break;

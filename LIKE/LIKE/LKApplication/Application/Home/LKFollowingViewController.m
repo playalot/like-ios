@@ -229,6 +229,11 @@ LC_PROPERTY(weak) id delegate;
     }
 }
 
+LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
+    [LKUserCenterViewController pushUserCenterWithUser:signal.object navigationController:self.navigationController];
+    [LC_APPDELEGATE.tabBarController hideBar];
+}
+
 LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     
     LKPostDetailViewController * detail = [[LKPostDetailViewController alloc] initWithPost:signal.object];

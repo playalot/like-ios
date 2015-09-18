@@ -425,38 +425,25 @@ LC_PROPERTY(assign) CGFloat cacheSize;
     }
     // 反馈
     else if (indexPath.row == 5){
-        
         LKInputTextViewController * input = [LKInputTextViewController viewController];
-        
         @weakly(self);
-        
         input.inputFinished = ^(NSString * string){
-            
             @normally(self);
-            
             [self uploadFeedback:string];
         };
-        
         input.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         [self.fromViewController presentViewController:LC_UINAVIGATION(input) animated:YES completion:nil];
     }
 }
 
--(void) showInViewController:(UIViewController *)viewController
-{
+- (void)showInViewController:(UIViewController *)viewController {
     UIView * view = self.FIND(1002);
     view.alpha = 0;
-    
     self.blur.viewFrameY = self.viewFrameHeight;
-    
     [viewController.view addSubview:self];
-    
     [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:3 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        
         view.alpha = 1;
-        
         self.blur.viewFrameY = 64;
-        
     } completion:^(BOOL finished) {
         
     }];

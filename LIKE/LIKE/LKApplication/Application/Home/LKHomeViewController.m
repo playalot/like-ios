@@ -369,7 +369,7 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
     self.tableView.backgroundColor = [UIColor clearColor];
     self.view.ADD(self.tableView);
     
-//    [self buildHeader];
+    [self buildHeader];
 }
 
 - (void)buildPullLoader {
@@ -1177,8 +1177,8 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
 }
 
 
--(void) searchAction
-{
+- (void)searchAction {
+    
     [self.inputView resignFirstResponder];
     
 //    if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
@@ -1255,20 +1255,16 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
 
 #pragma mark -
 
-LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
-{
+LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
     [LKUserCenterViewController pushUserCenterWithUser:signal.object navigationController:self.navigationController];
-    
     [LC_APPDELEGATE.tabBarController hideBar];
 }
 
-LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
-{
+LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     if (self.inputView.isFirstResponder) {
         [self.inputView resignFirstResponder];
         return;
     }
-    
     if ([LKLoginViewController needLoginOnViewController:self.navigationController]) {
         return;
     }

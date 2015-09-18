@@ -42,13 +42,11 @@ LC_PROPERTY(strong) LCUIButton * doneButton;
 - (void) buildUI
 {
     [self addTapGestureRecognizer:self selector:@selector(backgroundViewTapAction)];
-
-
+    
     self.scrollView = [UIScrollView viewWithFrame:self.bounds];
     self.scrollView.userInteractionEnabled = YES;
     self.scrollView.scrollsToTop = NO;
     self.ADD(self.scrollView);
-    
     
     self.backgroundView = LCUIImageView.view;
     self.backgroundView.frame = self.scrollView.bounds;
@@ -57,7 +55,6 @@ LC_PROPERTY(strong) LCUIButton * doneButton;
     self.backgroundView.userInteractionEnabled = YES;
     self.backgroundView.autoMask = YES;
     self.scrollView.ADD(self.backgroundView);
-    
     
     if (IOS8_OR_LATER) {
         

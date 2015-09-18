@@ -18,6 +18,7 @@
 #import "LKLikeViewController.h"
 #import "LKFansViewController.h"
 #import "LKMessageViewController.h"
+#import "LKOfficialDetailViewController.h"
 
 @interface LKNotificationViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerDelegate>
 
@@ -167,9 +168,12 @@ LC_PROPERTY(strong) LCUIPullLoader *pullLoader;
             NSString *content = result.json[@"data"][@"content"];
             post.content = content;
             
-            LKPostDetailViewController *detailViewController = [[LKPostDetailViewController alloc] initWithPost:post];
-            [self.navigationController presentViewController:detailViewController animated:YES completion:^{}];
-            
+//            LKPostDetailViewController *detailViewController = [[LKPostDetailViewController alloc] initWithPost:post];
+//            [self.navigationController presentViewController:detailViewController animated:YES completion:^{}];
+
+            LKOfficialDetailViewController *detailCtrl = [[LKOfficialDetailViewController alloc] init];
+            [self.navigationController pushViewController:detailCtrl animated:YES];
+
         } else if (result.state == LKHttpRequestStateFailed) {
             
             [self showTopMessageErrorHud:result.error];

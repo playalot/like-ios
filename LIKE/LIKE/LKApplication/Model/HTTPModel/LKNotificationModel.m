@@ -19,14 +19,27 @@
 {
     if (self = [super init]) {
         
-        NSArray * tmp = LKUserDefaults.singleton[self.class.description];
+        NSArray *tmp = LKUserDefaults.singleton[self.class.description];
 
         self.datasource = [NSMutableArray array];
 
-        for (NSDictionary *data in tmp) {
+//        for (NSDictionary *data in tmp) {
+//            
+//            [self.datasource addObject:[[LKNotification alloc] initWithDictionary:data error:nil]];
+//        }
+        
+        for (NSInteger i = 0; i < tmp.count; i++) {
             
-            [self.datasource addObject:[[LKNotification alloc] initWithDictionary:data error:nil]];
+            NSDictionary *dict = tmp[i];
+            NSDictionary *nextNoti = nil;
+            
+            if (i != tmp.count - 1) {
+                
+                nextNoti = tmp[i + 1];
+            }
+            [self.datasource addObject:[[LKNotification alloc] initWithDictionary:dict nextDict:nextNoti error:nil]];
         }
+    
     }
     return self;
 }
@@ -48,14 +61,27 @@
         
         if (result.state == LKHttpRequestStateFinished) {
                         
-            NSArray * tmp = result.json[@"data"][@"notifications"];
+            NSArray *tmp = result.json[@"data"][@"notifications"];
             
             NSMutableArray *datasource = [NSMutableArray array];
             
-            for (NSDictionary * dic in tmp) {
+//            for (NSDictionary *dic in tmp) {
+//
+//                [datasource addObject:[[LKNotification alloc] initWithDictionary:dic error:nil]];
+//            }
+            
+            for (NSInteger i = 0; i < tmp.count; i++) {
                 
-                [datasource addObject:[[LKNotification alloc] initWithDictionary:dic error:nil]];
+                NSDictionary *dict = tmp[i];
+                NSDictionary *nextNoti = nil;
+
+                if (i != tmp.count - 1) {
+
+                    nextNoti = tmp[i + 1];
+                }
+                [datasource addObject:[[LKNotification alloc] initWithDictionary:dict nextDict:nextNoti error:nil]];
             }
+            
             
             if (firstPage) {
                 

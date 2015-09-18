@@ -95,14 +95,7 @@ LC_PROPERTY(strong) LKNotificationModel *notificationModel;
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     LKNotification *notification = self.notificationModel.likesArray[indexPath.row];
-    
-    if (notification.posts.count >= 2) {
-        
-        return 110;
-    } else {
-        
-        return [LKNotificationCell height:notification];
-    }
+    return 100;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

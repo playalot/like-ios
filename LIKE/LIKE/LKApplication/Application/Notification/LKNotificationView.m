@@ -138,7 +138,7 @@ LC_PROPERTY(strong) UIView * blur;
         [self.pullLoader endRefresh];
         [self.tableView reloadData];
         
-    } type:LKNotificationModelTypeOther];
+    }];
 }
 
 #pragma mark - 

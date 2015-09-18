@@ -67,7 +67,7 @@ LC_PROPERTY(strong) LKNotificationModel *notificationModel;
         [self.pullLoader endRefresh];
         [self.tableView reloadData];
         
-    } type:LKNotificationModelTypeLike];
+    }];
 }
 
 - (void)handleNavigationBarButton:(LCUINavigationBarButtonType)type {

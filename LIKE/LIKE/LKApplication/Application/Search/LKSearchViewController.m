@@ -19,9 +19,12 @@
 
 LC_PROPERTY(strong) UIView *topBarSearchView;
 LC_PROPERTY(strong) LKSearchSuggestionView *suggestionView;
-LC_PROPERTY(strong) LKSearchBar * searchBar;
-LC_PROPERTY(strong) LCUIButton * doneButton;
-LC_PROPERTY(strong) LKSearchView * searchView;
+LC_PROPERTY(strong) LKSearchBar *searchBar;
+
+LC_PROPERTY(strong) UIView * blurView;
+LC_PROPERTY(strong) LCUIButton *searchTip;
+LC_PROPERTY(strong) LCUIButton *doneButton;
+LC_PROPERTY(strong) LKSearchView *searchView;
 
 @end
 
@@ -29,11 +32,11 @@ LC_PROPERTY(strong) LKSearchView * searchView;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    self.searchBar.alpha = 1;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self.topBarSearchView setHidden:NO];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -42,7 +45,7 @@ LC_PROPERTY(strong) LKSearchView * searchView;
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    self.searchBar.alpha = 0;
+    [self.topBarSearchView setHidden:YES];
 }
 
 - (void)buildUI {
@@ -50,25 +53,52 @@ LC_PROPERTY(strong) LKSearchView * searchView;
     
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
     
-    CGRect searchBarFrame = CGRectMake(0, 0, self.navigationController.navigationBar.viewFrameWidth - 10, 30);
-    
+    CGRect searchBarFrame = CGRectMake(5, 5, self.navigationController.navigationBar.viewFrameWidth - 10, 30);
     self.topBarSearchView = UIView.view;
     self.topBarSearchView.backgroundColor = [UIColor clearColor];
     self.topBarSearchView.frame = searchBarFrame;
     
-    CGRect testFrame = CGRectMake(0, 0, self.navigationController.navigationBar.viewFrameWidth - 100, 30);
-    self.searchBar = [[LKSearchBar alloc] initWithFrame:testFrame];
-    self.searchBar.frame = testFrame; //self.topBarSearchView.bounds;
+    if (IOS8_OR_LATER) {
+        self.blurView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
+        self.blurView.frame = self.topBarSearchView.bounds;
+        self.blurView.cornerRadius = 4;
+        self.blurView.layer.shouldRasterize = NO;
+        self.blurView.layer.rasterizationScale = 1;
+        UIView * view = UIView.view.COLOR([[UIColor whiteColor] colorWithAlphaComponent:0.15]);
+        view.frame = self.blurView.bounds;
+        ((UIVisualEffectView *)self.blurView).contentView.ADD(view);
+    } else {
+        self.blurView = [[FXBlurView alloc] initWithFrame:self.topBarSearchView.bounds];
+        ((FXBlurView *)self.blurView).blurRadius = 10;
+        self.blurView.cornerRadius = 4;
+    }
+    self.blurView.tintColor = [[UIColor whiteColor] colorWithAlphaComponent:0.15];
+    self.blurView.layer.masksToBounds = YES;
+    self.topBarSearchView.ADD(self.blurView);
+    
+    UIImage * searchIcon = [[[UIImage imageNamed:@"SearchIcon.png" useCache:YES] imageWithTintColor:[[UIColor blackColor] colorWithAlphaComponent:0.35]] scaleToWidth:20];
+    self.searchTip = LCUIButton.view;
+    self.searchTip.frame = self.topBarSearchView.bounds;
+    self.searchTip.titleFont = LK_FONT(12);
+    self.searchTip.titleColor = [[UIColor blackColor] colorWithAlphaComponent:0.35];
+    self.searchTip.title = LC_LO(@"  发现更多有趣内容");
+    self.searchTip.buttonImage = searchIcon;
+    self.searchTip.titleEdgeInsets = UIEdgeInsetsMake(2, 0, 0, 0);
+    [self.searchTip addTarget:self action:@selector(beginSearch) forControlEvents:UIControlEventTouchUpInside];
+    self.topBarSearchView.ADD(self.searchTip);
+    
+    self.searchBar = [[LKSearchBar alloc] initWithFrame:self.topBarSearchView.bounds];
+    self.searchBar.frame = self.topBarSearchView.bounds;
     self.searchBar.delegate = self;
     self.searchBar.backgroundColor = [UIColor clearColor];
-    self.searchBar.alpha = 1;
+    self.searchBar.alpha = 0;
     self.searchBar.delegate = self;
     self.topBarSearchView.ADD(self.searchBar);
     
     self.doneButton = LCUIButton.view;
     self.doneButton.viewFrameX = self.topBarSearchView.viewFrameWidth;
     self.doneButton.viewFrameWidth = 55;
-    self.doneButton.viewFrameHeight = 50;
+    self.doneButton.viewFrameHeight = self.topBarSearchView.viewFrameHeight;
     self.doneButton.titleColor = [UIColor whiteColor];
     self.doneButton.title = LC_LO(@"完成");
     self.doneButton.titleFont = LK_FONT_B(14);
@@ -76,7 +106,7 @@ LC_PROPERTY(strong) LKSearchView * searchView;
     [self.doneButton addTarget:self action:@selector(endSearch) forControlEvents:UIControlEventTouchUpInside];
     self.topBarSearchView.ADD(self.doneButton);
     
-    self.titleView = self.topBarSearchView;
+    self.navigationController.navigationBar.ADD(self.topBarSearchView);
     
     self.searchView = LKSearchView.view;
     self.searchView.parentViewController = self;
@@ -104,27 +134,58 @@ LC_PROPERTY(strong) LKSearchView * searchView;
 
 -(void) beginSearch {
     
+    [self.searchBar.searchField becomeFirstResponder];
+    
     LC_FAST_ANIMATIONS_F(0.1, ^{
+        
         self.searchBar.alpha = 1;
+        self.searchTip.alpha = 0;
+        self.blurView.alpha = 0;
+        self.suggestionView.alpha = 1;
         
     }, ^(BOOL finished){
         
         LC_FAST_ANIMATIONS(UINavigationControllerHideShowBarDuration, ^{
-            self.searchBar.viewFrameWidth = self.topBarSearchView.viewFrameWidth - self.doneButton.viewFrameWidth - 10;
+            self.searchBar.viewFrameWidth = self.topBarSearchView.viewFrameWidth - self.doneButton.viewFrameWidth;
+            self.blurView.viewFrameWidth = self.searchBar.viewFrameWidth;
+            self.searchTip.viewFrameWidth = self.searchBar.viewFrameWidth;
             self.doneButton.viewFrameX = self.topBarSearchView.viewFrameWidth - self.doneButton.viewFrameWidth;
             
         });
     });
 }
 
--(void) endSearch {
+- (void)endSearch {
+    
+    [self.searchBar.searchField resignFirstResponder];
+    
+    LC_FAST_ANIMATIONS_F(0.1, ^{
+        
+        self.searchBar.alpha = 0;
+        self.searchTip.alpha = 1;
+        self.blurView.alpha = 1;
+        self.suggestionView.alpha = 0;
+        
+    }, ^(BOOL finished){
+        
+        LC_FAST_ANIMATIONS(UINavigationControllerHideShowBarDuration, ^{
+            self.searchBar.viewFrameWidth = self.topBarSearchView.viewFrameWidth;
+            self.blurView.viewFrameWidth = self.searchBar.viewFrameWidth;
+            self.searchTip.viewFrameWidth = self.searchBar.viewFrameWidth;
+            self.doneButton.viewFrameX = self.topBarSearchView.viewFrameWidth;
+            
+        });
+    });
+}
+
+- (void)searchAction {
+    [self.inputView resignFirstResponder];
+    [self setNavigationBarHidden:YES animated:YES];
+    LC_FAST_ANIMATIONS(UINavigationControllerHideShowBarDuration, ^{
+    });
 }
 
 #pragma mark - LKSearchBarDelegate
-
-- (void)searchBar:(LKSearchBar *)searchBar willStartTransitioningToState:(LKSearchBarState)destinationState {
-    NSLog(@"search bar willStartTransitioningToState");
-}
 
 - (void)searchBarTextDidChange:(LKSearchBar *)searchBar {
     LC_FAST_ANIMATIONS(0.25, ^{
@@ -146,7 +207,7 @@ LC_PROPERTY(strong) LKSearchView * searchView;
     [LC_APPDELEGATE.homeViewController.navigationController pushViewController:searchResultsViewController animated:YES];
 }
 
--(void) searchSuggestionTags:(NSString *)searchString
+- (void)searchSuggestionTags:(NSString *)searchString
 {
     [self.suggestionView cancelAllRequests];
     

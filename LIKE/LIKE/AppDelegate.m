@@ -107,7 +107,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     [self observeNotification:kJPFNetworkDidReceiveMessageNotification];
     
     
-//    self.homeViewController = [LKHomeViewController viewController];
+    self.homeViewController = [LKHomeViewController viewController];
     self.timeLineViewController = [LKTimeLineViewController viewController];
 //    self.feedViewController = [LKFeedViewController viewController];
 //    self.followingViewController = [LKFollowingViewController viewController];
@@ -154,7 +154,6 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     if (LKLocalUser.singleton.isLogin && launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
         [self.homeViewController performSelector:@selector(notificationAction) withObject:nil afterDelay:0.5];
     }
-    
     
     // tabbarCtrl只放了一个主页控制器
     self.tabBarController = [[LKTabBarController alloc]

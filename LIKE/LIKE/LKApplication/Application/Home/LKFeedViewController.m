@@ -36,6 +36,8 @@ LC_PROPERTY(weak) id delegate;
 - (void)buildUI {
     self.view.backgroundColor = LKColor.backgroundColor;
     
+    self.view.viewFrameHeight = self.view.viewFrameHeight - 200;
+    
     self.tableView = [[LCUITableView alloc] initWithFrame:self.view.frame];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;

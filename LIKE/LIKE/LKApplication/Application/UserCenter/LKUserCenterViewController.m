@@ -57,14 +57,13 @@ LC_PROPERTY(assign) BOOL isLocalUser;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     [self.header updateWithUser:self.user];
-//    [self setNavigationBarHidden:YES animated:NO];
-//    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:animated];
+    [self setNavigationBarHidden:YES animated:NO];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [self setNavigationBarHidden:NO animated:NO];
     ((LCUINavigationController *)self.navigationController).animationHandler = nil;
 }
 
@@ -178,8 +177,7 @@ LC_PROPERTY(assign) BOOL isLocalUser;
         }
     };
     
-    self.header.labelAction = ^(id value){
-    };
+    self.header.labelAction = ^(id value){};
     
     if (self.isLocalUser) {
         
@@ -296,10 +294,9 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     if (self.tableView.viewFrameY != 0) {
         self.tableView.pop_springBounciness = 10;
         self.tableView.pop_springSpeed = 10;
-        self.tableView.pop_spring.center = LC_POINT(self.tableView.viewCenterX, self.tableView.viewCenterY - (self.isLocalUser ? 30 : 15));
+        self.tableView.pop_spring.center = LC_POINT(self.tableView.viewCenterX, self.tableView.viewCenterY - 20);
         self.tableView.pop_spring.alpha = 1;
-    }
-    
+    } 
 }
 
 - (void)updateUserMetaInfo {
@@ -333,12 +330,9 @@ LC_PROPERTY(assign) BOOL isLocalUser;
 
 - (void)setAction {
     LC_FAST_ANIMATIONS(0.25, ^{
-        
         ((UIView *)self.header.FIND(1002)).alpha = 0;
         self.header.headImageView.alpha = 0;
-        
     });
-    
     
     LKSettingsViewController * settings = LKSettingsViewController.view;
     [settings showInViewController:self];
@@ -348,7 +342,6 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     settings.willHide = ^(){
         
         @normally(self);
-        
         LC_FAST_ANIMATIONS(0.25, ^{
             
             self.header.headImageView.alpha = 1;
@@ -435,7 +428,12 @@ LC_PROPERTY(assign) BOOL isLocalUser;
             [self showTopMessageErrorHud:error];;
         }
         self.pullLoader.canLoadMore = [self.userCenterModel canLoadMoreWithType:type];
-        [self.browsingViewController reloadData];
+        
+        if (self.browsingViewController) {
+            NSArray *datasource = [self.userCenterModel dataWithType:self.currentType];
+            self.browsingViewController.datasource = [NSMutableArray arrayWithArray:datasource];
+            [self.browsingViewController reloadData];
+        }
     };
 }
 
@@ -454,7 +452,6 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     self.browsingViewController.parentUserCenterViewController = self;
     self.browsingViewController.currentIndex = [datasource indexOfObject:post];
     [self.navigationController pushViewController:self.browsingViewController animated:YES];
-    [self.browsingViewController reloadData];
 }
 
 #pragma mark -

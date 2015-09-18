@@ -45,6 +45,8 @@ LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
 - (void)buildUI {
     self.view.backgroundColor = LKColor.backgroundColor;
     
+    self.view.viewFrameHeight = self.view.viewFrameHeight - 300;
+    
     [self buildNavigationBar];
     
     self.tableView = [[LCUITableView alloc] initWithFrame:CGRectZero];

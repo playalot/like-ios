@@ -32,7 +32,6 @@ LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self setNavigationBarHidden:NO animated:NO];
 }
 
 - (void)buildUI {

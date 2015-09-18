@@ -155,13 +155,16 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
         [self.homeViewController performSelector:@selector(notificationAction) withObject:nil afterDelay:0.5];
     }
     
+    UINavigationController *timeLineNavViewController = LC_UINAVIGATION(self.timeLineViewController);
+    UINavigationController *notificationNavViewController = LC_UINAVIGATION(self.notificationViewController);
+    
     
     // tabbarCtrl只放了一个主页控制器
     self.tabBarController = [[LKTabBarController alloc]
                              initWithViewControllers:@[
                                                        LC_UINAVIGATION(self.timeLineViewController),
                                                        LC_UINAVIGATION(self.searchViewController),
-                                                       LC_UINAVIGATION(self.notificationViewController),
+                                                       notificationNavViewController,
                                                        LC_UINAVIGATION(self.userCenterViewController)]];
 
     NSArray *titles = @[@"主页", @"发现", @"通知", @"个人"];

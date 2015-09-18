@@ -20,25 +20,18 @@ LC_PROPERTY(strong) LCUILabel * likes;
 
 @implementation LKSearchResultCollectionViewCell
 
-+(CGSize) sizeWithPost:(LKPost *)post
-{
++ (CGSize)sizeWithPost:(LKPost *)post {
     CGFloat width = (LC_DEVICE_WIDTH - 15) / 2;
-    
     CGSize size = [LKUIKit parsingImageSizeWithURL:post.content constSize:CGSizeMake(width, width)];
-    
     if (size.width > width) {
-        
         size.height = width / size.width * size.height;
         size.width = width;
     }
-    
     return CGSizeMake(width, size.height + 40);
 }
 
--(instancetype) initWithFrame:(CGRect)frame
-{
+- (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-        
         self.head = LCUIImageView.view;
         self.head.viewFrameX = 10;
         self.head.viewFrameY = 40 / 2 - 25 / 2;
@@ -50,7 +43,6 @@ LC_PROPERTY(strong) LCUILabel * likes;
         [self.head addTapGestureRecognizer:self selector:@selector(handleHeadTap:)];
         self.ADD(self.head);
         
-        
         self.title = LCUILabel.view;
         self.title.viewFrameX = self.head.viewRightX + 10;
         self.title.viewFrameWidth = self.viewFrameWidth - 120;
@@ -59,7 +51,6 @@ LC_PROPERTY(strong) LCUILabel * likes;
         self.title.textColor = LC_RGB(51, 51, 51);
         [self.title addTapGestureRecognizer:self selector:@selector(handleHeadTap:)];
         self.ADD(self.title);
-        
         
         self.likes = LCUILabel.view;
         self.likes.viewFrameWidth = self.viewFrameWidth - 10;
@@ -71,7 +62,6 @@ LC_PROPERTY(strong) LCUILabel * likes;
         [self.likes addTapGestureRecognizer:self selector:@selector(handleHeadTap:)];
         self.ADD(self.likes);
         
-        
         self.contentImage = LCUIImageView.view;
         self.contentImage.viewFrameY = 40;
         self.contentImage.clipsToBounds = YES;
@@ -81,7 +71,6 @@ LC_PROPERTY(strong) LCUILabel * likes;
         [self.contentImage addTapGestureRecognizer:self selector:@selector(handleImageTapAction:)];
         
         self.ADD(self.contentImage);
-        
         
         self.backgroundColor = [UIColor whiteColor];
         self.cornerRadius = 2;

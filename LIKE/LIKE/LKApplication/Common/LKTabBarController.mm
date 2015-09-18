@@ -19,23 +19,15 @@
 
 @implementation LKTabBarController
 
--(void) viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     if (!self.assistiveTouchButton) {
-        
         CGFloat width = 100;
-        
         self.assistiveTouchButton = [[LKAssistiveTouchButton alloc] initWithFrame:CGRectMake(LC_DEVICE_WIDTH / 2 - width / 2, LC_DEVICE_HEIGHT + 20 - width, width, width) inView:self.view];
-        
         self.view.ADD(self.assistiveTouchButton);
         
-
         if (LKUserDefaults.singleton[@"LKAssistiveTouchButton"]) {
-            
             CGRect frame = CGRectFromString(LKUserDefaults.singleton[@"LKAssistiveTouchButton"]);
-
             self.assistiveTouchButton.frame = frame;
         }
         
@@ -52,32 +44,25 @@
 
         self.assistiveTouchButton.ADD(tip);
         
-        
         @weakly(self);
         
         // 按下状态按钮放大1.2倍显示
         self.assistiveTouchButton.touchDown = ^(){
-            
             @normally(self);
-            
             [self touchDown:tip];
             [self touchDown:self.assistiveTouchButton.view];
         };
         
         // 点击结束还原状态
         self.assistiveTouchButton.touchEnd = ^(){
-            
             @normally(self);
-            
             [self touchEnd:tip];
             [self touchEnd:self.assistiveTouchButton.view];
         };
         
         // 选中的状态modal出相机相册控制器
         self.assistiveTouchButton.didSelected = ^(){
-          
             @normally(self);
-            
             [self didTap];
         };
     }
@@ -89,51 +74,41 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
 }
 
--(void) viewDidAppear:(BOOL)animated
-{
+- (void)viewDidLoad {
+    [super viewDidLoad];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 }
 
 
--(instancetype) initWithViewControllers:(NSArray *)viewControllers
-{
+- (instancetype)initWithViewControllers:(NSArray *)viewControllers {
     if (self = [super init]) {
-        
         self.viewControllers = viewControllers;
         self.delegate = self;
     }
-    
     return self;
 }
 
 /**
  *  重写加载状态的set方法,设置按钮周围线条动画
  */
--(void) setLoading:(BOOL)loading
-{
+- (void)setLoading:(BOOL)loading {
     _loading = loading;
-
     MMMaterialDesignSpinner * tip = (MMMaterialDesignSpinner *)[self.assistiveTouchButton viewWithTag:100];
 
     if (loading) {
-        
         // 旋转
         LC_FAST_ANIMATIONS_F(0.25, ^{
-        
             tip.alpha = 0.8;
-            
         }, ^(BOOL finished){
         
         });
-    }
-    else{
-        
+    } else {
         [UIView animateWithDuration:1 animations:^{
-            
             tip.alpha = 0;
-            
         } completion:^(BOOL finished) {
-            
         }];
     }
 }

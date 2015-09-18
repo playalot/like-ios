@@ -10,34 +10,64 @@
 
 @implementation LKNotificationModel
 
--(void) dealloc
+- (void)dealloc
 {
     [self cancelAllRequests];
 }
 
--(instancetype) init
+- (instancetype)init
 {
     if (self = [super init]) {
         
         NSArray * tmp = LKUserDefaults.singleton[self.class.description];
 
         self.datasource = [NSMutableArray array];
+        self.likesArray = [NSMutableArray array];
+        self.followsArray = [NSMutableArray array];
         
-        for (NSDictionary * data in tmp) {
+        for (NSDictionary *data in tmp) {
             
-            [self.datasource addObject:[[LKNotification alloc] initWithDictionary:data error:nil]];
+            NSString *type = data[@"type"];
+            
+            if ([type isEqualToString:@"LIKE"]) {
+                
+                [self.likesArray addObject:[[LKNotification alloc] initWithDictionary:data error:nil]];
+                
+            } else if ([type isEqualToString:@"FOLLOW"]) {
+                
+                [self.followsArray addObject:[[LKNotification alloc] initWithDictionary:data error:nil]];
+                
+            } else if ([type isEqualToString:@"MESSAGE"]) {
+                
+                
+            } else {
+                
+                [self.datasource addObject:[[LKNotification alloc] initWithDictionary:data error:nil]];
+            }
         }
     }
     
     return self;
 }
 
--(void) getNotificationsAtFirstPage:(BOOL)firstPage requestFinished:(LKNotificationModelRequestFinished)requestFinished
+- (void)getNotificationsAtFirstPage:(BOOL)firstPage requestFinished:(LKNotificationModelRequestFinished)requestFinished type:(LKNotificationModelType)type
 {
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"notification"].AUTO_SESSION();
     
     if (!firstPage) {
-        [interface addParameter:@(self.timestamp) key:@"ts"];
+        
+        if (type == LKNotificationModelTypeLike) {
+            
+            [interface addParameter:@(self.likeTimestamp) key:@"ts"];
+            
+        } else if (type == LKNotificationModelTypeFollow) {
+            
+            [interface addParameter:@(self.followTimestamp) key:@"ts"];
+
+        } else if (type == LKNotificationModelTypeOther) {
+            
+            [interface addParameter:@(self.timestamp) key:@"ts"];
+        }
     }
     
     
@@ -51,16 +81,35 @@
                         
             NSArray * tmp = result.json[@"data"][@"notifications"];
             
-            NSMutableArray * datasource = [NSMutableArray array];
+            NSMutableArray *datasource = [NSMutableArray array];
+            NSMutableArray *likesArray = [NSMutableArray array];
+            NSMutableArray *followsArray = [NSMutableArray array];
             
             for (NSDictionary * dic in tmp) {
                 
-                [datasource addObject:[[LKNotification alloc] initWithDictionary:dic error:nil]];
+                NSString *type = dic[@"type"];
+                
+                if ([type isEqualToString:@"LIKE"]) {
+                    
+                    [likesArray addObject:[[LKNotification alloc] initWithDictionary:dic error:nil]];
+                    
+                } else if ([type isEqualToString:@"FOLLOW"]) {
+                    
+                    [followsArray addObject:[[LKNotification alloc] initWithDictionary:dic error:nil]];
+
+                } else if ([type isEqualToString:@"MESSAGE"]) {
+                    
+                } else {
+                    
+                    [datasource addObject:[[LKNotification alloc] initWithDictionary:dic error:nil]];
+                }
             }
             
             if (firstPage) {
                 
                 self.datasource = datasource;
+                self.likesArray = likesArray;
+                self.followsArray = followsArray;
                 
                 // save cache...
                 LKUserDefaults.singleton[self.class.description] = tmp;
@@ -68,9 +117,13 @@
             else{
                 
                 [self.datasource addObjectsFromArray:datasource];
+                [self.likesArray addObjectsFromArray:likesArray];
+                [self.followsArray addObjectsFromArray:followsArray];
             }
             
             self.timestamp = ((LKComment *)self.datasource.lastObject).timestamp.integerValue;
+            self.likeTimestamp = ((LKComment *)self.likesArray.lastObject).timestamp.integerValue;
+            self.followTimestamp = ((LKComment *)self.followsArray.lastObject).timestamp.integerValue;
             
             if (requestFinished) {
                 requestFinished(nil);

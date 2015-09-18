@@ -12,5 +12,6 @@
 
 LC_PROPERTY(strong) LCUIImageView *iconView;
 LC_PROPERTY(strong) LCUILabel *titleLbl;
+LC_PROPERTY(strong) LCUIBadgeView *badgeView;
 
 @end

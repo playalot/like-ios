@@ -92,7 +92,7 @@ LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
         [self.pullLoader endRefresh];
         [self.tableView reloadData];
         
-    }];
+    } type:LKNotificationModelTypeOther];
 }
 
 #pragma mark - UITableViewDataSource
@@ -149,7 +149,7 @@ LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
     
     if (indexPath.section == 4) {
         
-        LKNotification * notification = self.notificationModel.datasource[indexPath.row];
+        LKNotification *notification = self.notificationModel.datasource[indexPath.row];
         if (notification.posts.count >= 2) {
             
             return 110;

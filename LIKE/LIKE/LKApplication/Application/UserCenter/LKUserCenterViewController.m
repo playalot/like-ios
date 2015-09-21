@@ -45,6 +45,7 @@ LC_PROPERTY(strong) LKUserCenterModel * userCenterModel;
 LC_PROPERTY(assign) LKUserCenterModelType currentType;
 
 LC_PROPERTY(assign) BOOL isLocalUser;
+LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
 
 @end
 
@@ -121,6 +122,16 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.alpha = 0;
     self.view.ADD(self.tableView);
+    
+    
+    self.cartoonImageView = LCUIImageView.view;
+    self.cartoonImageView.viewFrameWidth = 169;
+    self.cartoonImageView.viewFrameHeight = 245;
+    self.cartoonImageView.viewCenterX = self.tableView.viewCenterX;
+    self.cartoonImageView.viewFrameY = 52 + 48;
+    self.cartoonImageView.image = [UIImage imageNamed:@"segment_photo.png" useCache:YES];
+    self.cartoonImageView.hidden = YES;
+    self.tableView.ADD(self.cartoonImageView);
     
     // Navigation bar.
     self.header = [[LKHomepageHeader alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.frame), 100.0)];
@@ -236,6 +247,28 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     tableViewHeader.didSelected = ^(NSInteger index){
         @normally(self);
         self.currentType = index;
+        
+        switch (index) {
+            case 0:
+                self.cartoonImageView.hidden = self.userCenterModel.photoArray.count ? YES : NO;
+                self.cartoonImageView.image = [UIImage imageNamed:@"segment_photo.png" useCache:YES];
+                break;
+            case 1:
+                self.cartoonImageView.hidden = self.userCenterModel.focusArray.count ? YES : NO;
+                self.cartoonImageView.image = [UIImage imageNamed:@"segment_follow.png" useCache:YES];
+                break;
+            case 2:
+                self.cartoonImageView.hidden = self.userCenterModel.fansArray.count ? YES : NO;
+                self.cartoonImageView.image = [UIImage imageNamed:@"segment_fans.png" useCache:YES];
+                break;
+            case 3:
+                self.cartoonImageView.hidden = self.userCenterModel.favorArray.count ? YES : NO;
+                self.cartoonImageView.image = [UIImage imageNamed:@"segment_favor.png" useCache:YES];
+                break;
+                
+            default:
+                break;
+        }
     };
     
     
@@ -278,6 +311,11 @@ LC_PROPERTY(assign) BOOL isLocalUser;
             [self.header updateWithUser:self.userInfoModel.user];
             [self updateTableHeaderView];
             [self updateFriendButton];
+            
+            if (self.currentType == LKUserCenterModelTypePhotos) {
+                
+                self.cartoonImageView.hidden = self.userCenterModel.photoArray.count ? YES : NO;
+            }
         }
     };
     
@@ -296,7 +334,7 @@ LC_PROPERTY(assign) BOOL isLocalUser;
         self.tableView.pop_springSpeed = 10;
         self.tableView.pop_spring.center = LC_POINT(self.tableView.viewCenterX, self.tableView.viewCenterY - 20);
         self.tableView.pop_spring.alpha = 1;
-    } 
+    }
 }
 
 - (void)updateUserMetaInfo {
@@ -503,7 +541,7 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
         LKUserCenterUserCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Focus" andClass:[LKUserCenterUserCell class]];
         
         cell.user = self.userCenterModel.focusArray[indexPath.row];
-        
+
         return cell;
         
     } else if (self.currentType == LKUserCenterModelTypeFans){

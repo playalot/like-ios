@@ -795,7 +795,7 @@
 		BC0C42481BA8043500055BB1 /* LKUserCenterBrowsingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0C42471BA8043500055BB1 /* LKUserCenterBrowsingViewController.m */; };
 		BC0C424B1BA8201600055BB1 /* LKFollowingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0C424A1BA8201600055BB1 /* LKFollowingViewController.m */; };
 		BC0C424E1BA8573C00055BB1 /* LKHomeFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0C424D1BA8573C00055BB1 /* LKHomeFeedViewController.m */; };
-		BC0C42511BA85B5F00055BB1 /* LKTimeLineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0C42501BA85B5F00055BB1 /* LKTimeLineViewController.m */; };
+		BC0C42511BA85B5F00055BB1 /* LKMainFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0C42501BA85B5F00055BB1 /* LKMainFeedViewController.m */; };
 		BC0C42541BA94A6100055BB1 /* LKSearchSuggestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0C42531BA94A6100055BB1 /* LKSearchSuggestionView.m */; };
 		BC0C42571BA9680F00055BB1 /* LKSearchResultsBrowsingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0C42561BA9680F00055BB1 /* LKSearchResultsBrowsingViewController.m */; };
 		BC12A5E21B9BD16100B99CB5 /* LKBaseRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A5D11B9BD16000B99CB5 /* LKBaseRequest.m */; };
@@ -2341,8 +2341,8 @@
 		BC0C424A1BA8201600055BB1 /* LKFollowingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKFollowingViewController.m; sourceTree = "<group>"; };
 		BC0C424C1BA8573C00055BB1 /* LKHomeFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKHomeFeedViewController.h; sourceTree = "<group>"; };
 		BC0C424D1BA8573C00055BB1 /* LKHomeFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKHomeFeedViewController.m; sourceTree = "<group>"; };
-		BC0C424F1BA85B5F00055BB1 /* LKTimeLineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKTimeLineViewController.h; sourceTree = "<group>"; };
-		BC0C42501BA85B5F00055BB1 /* LKTimeLineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKTimeLineViewController.m; sourceTree = "<group>"; };
+		BC0C424F1BA85B5F00055BB1 /* LKMainFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKMainFeedViewController.h; sourceTree = "<group>"; };
+		BC0C42501BA85B5F00055BB1 /* LKMainFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKMainFeedViewController.m; sourceTree = "<group>"; };
 		BC0C42521BA94A6100055BB1 /* LKSearchSuggestionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKSearchSuggestionView.h; sourceTree = "<group>"; };
 		BC0C42531BA94A6100055BB1 /* LKSearchSuggestionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKSearchSuggestionView.m; sourceTree = "<group>"; };
 		BC0C42551BA9680F00055BB1 /* LKSearchResultsBrowsingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKSearchResultsBrowsingViewController.h; sourceTree = "<group>"; };
@@ -4086,8 +4086,8 @@
 				BC0C424A1BA8201600055BB1 /* LKFollowingViewController.m */,
 				BC0C424C1BA8573C00055BB1 /* LKHomeFeedViewController.h */,
 				BC0C424D1BA8573C00055BB1 /* LKHomeFeedViewController.m */,
-				BC0C424F1BA85B5F00055BB1 /* LKTimeLineViewController.h */,
-				BC0C42501BA85B5F00055BB1 /* LKTimeLineViewController.m */,
+				BC0C424F1BA85B5F00055BB1 /* LKMainFeedViewController.h */,
+				BC0C42501BA85B5F00055BB1 /* LKMainFeedViewController.m */,
 				BC810CAA1BABF4AA00AC956B /* LKTestHomeViewController.h */,
 				BC810CAB1BABF4AA00AC956B /* LKTestHomeViewController.m */,
 				BC07B2801BAC3FA600A0ED71 /* LKFocusRequest.h */,
@@ -5711,7 +5711,7 @@
 				134B0B601B5624A400A195BE /* LKSearchResultsViewController.m in Sources */,
 				13101D301B13074700FBE516 /* LKShareTagsView.m in Sources */,
 				1373C46E1B847A6000A6C55A /* UIImage+MultiFormat.m in Sources */,
-				BC0C42511BA85B5F00055BB1 /* LKTimeLineViewController.m in Sources */,
+				BC0C42511BA85B5F00055BB1 /* LKMainFeedViewController.m in Sources */,
 				138EDEBD1AD7B0A30020957C /* LCUITextView.m in Sources */,
 				BC12A6251B9BEE2300B99CB5 /* LCBaseRequest.m in Sources */,
 				13FCC0961ADF67AF0008DB41 /* LKTagLikeModel.m in Sources */,

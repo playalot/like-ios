@@ -16,7 +16,7 @@
 #import "LKUserCenterViewController.h"
 #import "LKFollowingViewController.h"
 #import "LKHomeFeedViewController.h"
-#import "LKTimeLineViewController.h"
+#import "LKMainFeedViewController.h"
 #import "LKGroupViewController.h"
 #import "LKCameraRollViewController.h"
 
@@ -25,16 +25,14 @@ LC_NOTIFICATION_SET(LKSessionError);
 @interface AppDelegate : LCUIApplication
 
 LC_PROPERTY(strong) LKTabBarController *tabBarController;
-LC_PROPERTY(strong) LKTimeLineViewController *timeLineViewController;
-LC_PROPERTY(strong) LKHomeFeedViewController *feedViewController;
+LC_PROPERTY(strong) LKMainFeedViewController *mainFeedViewController;
 LC_PROPERTY(strong) LKHomeViewController *homeViewController;
-LC_PROPERTY(strong) LKFollowingViewController *followingViewController;
 LC_PROPERTY(strong) LKSearchViewController *searchViewController;
 LC_PROPERTY(strong) LKCameraRollViewController *cameraRollViewController;
 LC_PROPERTY(strong) LKNotificationViewController *notificationViewController;
 LC_PROPERTY(strong) LKUserCenterViewController *userCenterViewController;
 LC_PROPERTY(strong) LKGroupViewController *groupViewController;
-LC_PROPERTY(strong) UIViewController *none;
+LC_PROPERTY(strong) UIViewController * none;
 
 @end
 

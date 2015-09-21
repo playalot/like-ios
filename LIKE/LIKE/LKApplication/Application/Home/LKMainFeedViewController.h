@@ -1,5 +1,5 @@
 //
-//  LKTimeLineViewController.h
+//  LKMainFeedViewController.h
 //  LIKE
 //
 //  Created by huangweifeng on 9/15/15.
@@ -8,6 +8,6 @@
 
 #import "LCUIViewController.h"
 
-@interface LKTimeLineViewController : LCUIViewController
+@interface LKMainFeedViewController : LCUIViewController
 
 @end

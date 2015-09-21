@@ -37,105 +37,95 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
 
 @implementation AppDelegate
 
-- (void)setupRequestFilters {
+/**
+ *  应用程序启动就会调用此方法
+ */
+- (void)load:(NSDictionary *)launchOptions {
+    self.launchOptions = launchOptions;
+    
+    [self setupNetworkConfig];
+    [self setupCache];
+    [self setupMAMapServices];
+    [self setupSNSConfig];
+    [self setupFaultTolerance];
+    [self setupDebugger];
+    [self setupUmengStatistics];
+    [self setupCMD];
+    [self setupSMS];
+    [self setupNotificationObserving];
+    [self setupPushService:launchOptions];
+    [self setupViewControllers];
+    [self setupLoginValidation];
+}
+
+- (void)setupNetworkConfig {
     NSString *appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     LCNetworkConfig *config = [LCNetworkConfig sharedInstance];
     config.baseUrl = @"http://api.likeorz.com";
     LCUrlArgumentsFilter *urlFilter = [LCUrlArgumentsFilter filterWithArguments:@{@"version": appVersion}];
     [config addUrlFilter:urlFilter];
+    // 2.设置网络指示器
+    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
 }
 
-/**
- *  应用程序启动就会调用此方法
- */
--(void) load:(NSDictionary *)launchOptions {
-    
-    [self setupRequestFilters];
-    
-    self.launchOptions = launchOptions;
-    
+- (void)setupCache {
     // 1.设置缓存
     NSURLCache *cache = [[NSURLCache alloc] initWithMemoryCapacity:4 * 1024 * 1024 diskCapacity:20 * 1024 * 1024 diskPath:nil];
     [NSURLCache setSharedURLCache:cache];
-    
-    // 2.设置网络指示器
-    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
-    
-    
+}
+
+- (void)setupMAMapServices {
     [MAMapServices sharedServices].apiKey = @"4c0db296d4f4d092fdaa9004ee8c959a";
+}
 
-
-    // 全局容错
-    [LCSwizzle beginFaultTolerant];
-    
-    
-    // Debugger
-    [LCDebugger sharedInstance];
-    
-    
+- (void)setupSNSConfig {
     // 微信
     [WXApi registerApp:@"wxa3f301de2a84df8b"];
-    
-    
     // qq
     self.tencentOAuth = [[TencentOAuth alloc] initWithAppId:@"1104653828" andDelegate:nil];
-    
-    
     // facebook
     [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
-
-    
     // 微博
     [WeiboSDK registerApp:@"2142262721"];
-    
-    
+}
+
+- (void)setupFaultTolerance {
+    // 全局容错
+    [LCSwizzle beginFaultTolerant];
+}
+
+- (void)setupDebugger {
+    // Debugger
+    [LCDebugger sharedInstance];
+}
+
+- (void)setupUmengStatistics {
     // UMeng
     [MobClick startWithAppkey:@"54bf7949fd98c563bc00075d" reportPolicy:SENDWIFIONLY channelId:@"App Store"];
     [MobClick checkUpdate];
-    
-    
+}
+
+- (void)setupCMD {
     // CMD
     [LCCMD addObjectCMD:@"session" CMDType:LC_CMD_TYPE_SEE IMPObject:self CMDDescription:@"User session."];
     [LCCMD addObjectCMD:@"uid" CMDType:LC_CMD_TYPE_SEE IMPObject:self CMDDescription:@"User id."];
     [LCCMD addObjectCMD:@"refreshtoken" CMDType:LC_CMD_TYPE_SEE IMPObject:self CMDDescription:@"Refresh token."];
-    
-    
+}
+
+- (void)setupSMS {
     // Mob短信验证
     [SMS_SDK registerApp:@"81edd3d46294" withSecret:@"91a6694191e296937995cd3f66f5e9ca"];
+}
 
-    
-    // 会话错误通知
-    [self observeNotification:LKSessionError];
-    // 应用程序远程登录通知
-//    [self observeNotification:LCUIApplicationDidRegisterRemoteNotification];
-    [self observeNotification:kJPFNetworkDidRegisterNotification];
-    
-    // 应用程序远程登录失败通知
-//    [self observeNotification:LCUIApplicationDidRegisterRemoteFailNotification];
-    
-    // 应用程序接收到远程通知
-//    [self observeNotification:LCUIApplicationDidReceiveRemoteNotification];
-    [self observeNotification:kJPFNetworkDidReceiveMessageNotification];
-    
-    
-    self.homeViewController = [LKHomeViewController viewController];
-    self.timeLineViewController = [LKTimeLineViewController viewController];
-//    self.feedViewController = [LKHomeFeedViewController viewController];
-//    self.followingViewController = [LKFollowingViewController viewController];
-    self.searchViewController = [LKSearchViewController viewController];
-    self.cameraRollViewController = [LKCameraRollViewController viewController];
-    self.notificationViewController = [LKNotificationViewController viewController];
-    self.groupViewController = [LKGroupViewController viewController];
-    self.userCenterViewController = [[LKUserCenterViewController alloc] initWithUser:LKLocalUser.singleton.user];
-    
+- (void)setupPushService:(NSDictionary *)launchOptions {
     // 极光推送
     if (IOS8_OR_LATER) {
         
         // 若系统为iOS 8以后的版本,需要注册通知
-//        UIUserNotificationSettings * settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeAlert) categories:nil];
-//        
-//        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-//        [[UIApplication sharedApplication] registerForRemoteNotifications];
+        //        UIUserNotificationSettings * settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeAlert) categories:nil];
+        //
+        //        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+        //        [[UIApplication sharedApplication] registerForRemoteNotifications];
         
         [APService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
                                                        UIUserNotificationTypeAlert)
@@ -143,8 +133,8 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     }
     else{
         
-//        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
-//        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
+        //        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
+        //        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
         
         [APService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
                                                        UIRemoteNotificationTypeAlert)
@@ -161,16 +151,39 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     // Please notify the application each time the orientation is changed.
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     
-    
     // 判断是否为推送打开
     if (LKLocalUser.singleton.isLogin && launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
         [self.homeViewController performSelector:@selector(notificationAction) withObject:nil afterDelay:0.5];
     }
+}
+
+- (void)setupNotificationObserving {
+    // 会话错误通知
+    [self observeNotification:LKSessionError];
+    // 应用程序远程登录通知
+    //    [self observeNotification:LCUIApplicationDidRegisterRemoteNotification];
+    [self observeNotification:kJPFNetworkDidRegisterNotification];
+    
+    // 应用程序远程登录失败通知
+    //    [self observeNotification:LCUIApplicationDidRegisterRemoteFailNotification];
+    
+    // 应用程序接收到远程通知
+    //    [self observeNotification:LCUIApplicationDidReceiveRemoteNotification];
+    [self observeNotification:kJPFNetworkDidReceiveMessageNotification];
+}
+
+- (void)setupViewControllers {
+    self.homeViewController = [LKHomeViewController viewController];
+    self.mainFeedViewController = [LKMainFeedViewController viewController];
+    self.searchViewController = [LKSearchViewController viewController];
+    self.cameraRollViewController = [LKCameraRollViewController viewController];
+    self.notificationViewController = [LKNotificationViewController viewController];
+    self.userCenterViewController = [[LKUserCenterViewController alloc] initWithUser:LKLocalUser.singleton.user];
     
     // tabbarCtrl只放了一个主页控制器
     self.tabBarController = [[LKTabBarController alloc]
                              initWithViewControllers:@[
-                                                       LC_UINAVIGATION(self.timeLineViewController),
+                                                       LC_UINAVIGATION(self.mainFeedViewController),
                                                        LC_UINAVIGATION(self.searchViewController),
                                                        LC_UINAVIGATION(self.cameraRollViewController),
                                                        LC_UINAVIGATION(self.notificationViewController),
@@ -191,7 +204,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     for (UIView *view in self.tabBarController.tabBar.items) {
         
         if ([view isKindOfClass:[RDVTabBarItem class]]) {
-            
+
             RDVTabBarItem *item = (RDVTabBarItem *)view;
             [item setBackgroundSelectedImage:[UIImage imageNamed:selectedImageNames[i]]
                          withUnselectedImage:[UIImage imageNamed:imageNames[i]]];
@@ -199,10 +212,10 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
         }
     }
     
-    UINavigationController *rootNavigationViewController = LC_UINAVIGATION(self.tabBarController);
-    [rootNavigationViewController setNavigationBarHidden:YES];
-    
-    self.window.rootViewController = rootNavigationViewController;
+    self.window.rootViewController = self.tabBarController;
+}
+
+- (void)setupLoginValidation {
     
     if (!LKLocalUser.singleton.isLogin) {
         LCUIImageView * imageView = LCUIImageView.view;
@@ -211,41 +224,28 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
         imageView.viewFrameHeight = LC_DEVICE_HEIGHT + 20;
         imageView.contentMode = UIViewContentModeScaleAspectFit;
         [LC_KEYWINDOW addSubview:imageView];
-        
         LKLoginViewController * login = LKLoginViewController.viewController;
         [login view];
-        
         [self.tabBarController presentViewController:login animated:NO completion:^{
-            
             [UIView animateWithDuration:1.5 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
-                
                 imageView.transform = CGAffineTransformMakeScale(1.5, 1.5);
                 imageView.alpha = 0;
-                
             } completion:^(BOOL finished) {
-                
                 [imageView removeFromSuperview];
                 
             }];
         }];
     } else {
-        
         // 如果是第一次登陆,选择兴趣标签
         BOOL firstStart = [[NSUserDefaults standardUserDefaults] boolForKey:@"firstStart"];
-        
         // 判断是否是初次启动
         if (!firstStart) {
-            
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstStart"];
             [[NSUserDefaults standardUserDefaults] synchronize];
-            
             LKChooseTagView *chooseView = [LKChooseTagView chooseTagView];
             [UIApplication sharedApplication].keyWindow.ADD(chooseView);
         }
     }
-
-//    // welcom...
-//    [LKWelcome welcome];
 }
 
 - (void)tagsAliasCallback:(int)iResCode
@@ -253,7 +253,6 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
                     alias:(NSString *)alias {
     
     NSString *callbackString = [NSString stringWithFormat:@"%d, \nalias: %@\n", iResCode, alias];
-    
     NSLog(@"TagsAlias回调:%@", callbackString);
 }
 
@@ -366,29 +365,23 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
 }
 
 #pragma mark - ***** LC_CMD_IMP *****
--(NSString *) CMDSee:(NSString *)cmd
-{
+-(NSString *) CMDSee:(NSString *)cmd {
+    
     if ([cmd isEqualToString:@"session"]) {
-        
         return LKLocalUser.singleton.sessionToken;
-    }
-    else if ([cmd isEqualToString:@"uid"]){
-        
+    } else if ([cmd isEqualToString:@"uid"]) {
         return [NSString stringWithFormat:@"%@",LKLocalUser.singleton.user.id];
-    }
-    else if ([cmd isEqualToString:@"refreshtoken"]){
-        
+    } else if ([cmd isEqualToString:@"refreshtoken"]) {
         return LKLocalUser.singleton.refreshToken;
     }
-        
     return @"";
 }
 
 /**
  *  根据通知类型处理对应的操作
  */
--(void) handleNotification:(NSNotification *)notification
-{
+-(void) handleNotification:(NSNotification *)notification {
+    
     if ([notification is:LKSessionError]) {
         
         NSInteger errorCode = [notification.object integerValue];
@@ -396,8 +389,8 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
         if (errorCode == 4016) {
             
             [LKLocalUser regetSessionTokenAndUseLoadingTip:YES];
-        }
-        else if (errorCode == 4013){
+            
+        } else if (errorCode == 4013){
             
             [LKLocalUser logout];
             [LKLoginViewController needLoginOnViewController:nil];
@@ -415,14 +408,11 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
  *
  *  @return YES
  */
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
-{
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    
     [QQApiInterface handleOpenURL:url delegate:nil];
-    
     [WXApi handleOpenURL:url delegate:LKWeChatShare.singleton];
-    
     [WeiboSDK handleOpenURL:url delegate:LKSinaShare.singleton];
-    
     [[FBSDKApplicationDelegate sharedInstance] application:application
                                                    openURL:url
                                          sourceApplication:sourceApplication
@@ -437,7 +427,6 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     [super application:application didReceiveRemoteNotification:userInfo];
-    
     // 判断是否是活动状态
     if ( application.applicationState == UIApplicationStateActive ){
         // app was already in the foreground
@@ -465,10 +454,6 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     [[SDImageCache sharedImageCache] clearMemory];
     [[SDImageCache sharedImageCache] clearDisk];
 }
-
-//- (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err {
-//    NSLog(@"Error in registration. Error: %@", err);
-//}
 
 #pragma mark - ***** 懒加载 *****
 - (NSDictionary *)launchOptions {

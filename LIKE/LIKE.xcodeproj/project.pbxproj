@@ -818,6 +818,7 @@
 		BC484AAA1BAFC32800F69D50 /* LKFollowingInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484AA91BAFC32800F69D50 /* LKFollowingInterface.m */; settings = {ASSET_TAGS = (); }; };
 		BC484AAF1BAFC34200F69D50 /* LKBaseInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484AAC1BAFC34200F69D50 /* LKBaseInterface.m */; settings = {ASSET_TAGS = (); }; };
 		BC484AB01BAFC34200F69D50 /* LKHomeFeedInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484AAE1BAFC34200F69D50 /* LKHomeFeedInterface.m */; settings = {ASSET_TAGS = (); }; };
+		BC484AB31BAFDB3800F69D50 /* LKTopSearchInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484AB21BAFDB3800F69D50 /* LKTopSearchInterface.m */; settings = {ASSET_TAGS = (); }; };
 		BC810CAC1BABF4AA00AC956B /* LKTestHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC810CAB1BABF4AA00AC956B /* LKTestHomeViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -2386,6 +2387,8 @@
 		BC484AAC1BAFC34200F69D50 /* LKBaseInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKBaseInterface.m; path = Interface/LKBaseInterface.m; sourceTree = "<group>"; };
 		BC484AAD1BAFC34200F69D50 /* LKHomeFeedInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKHomeFeedInterface.h; path = Interface/LKHomeFeedInterface.h; sourceTree = "<group>"; };
 		BC484AAE1BAFC34200F69D50 /* LKHomeFeedInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKHomeFeedInterface.m; path = Interface/LKHomeFeedInterface.m; sourceTree = "<group>"; };
+		BC484AB11BAFDB3800F69D50 /* LKTopSearchInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKTopSearchInterface.h; path = Interface/LKTopSearchInterface.h; sourceTree = "<group>"; };
+		BC484AB21BAFDB3800F69D50 /* LKTopSearchInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKTopSearchInterface.m; path = Interface/LKTopSearchInterface.m; sourceTree = "<group>"; };
 		BC810CAA1BABF4AA00AC956B /* LKTestHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKTestHomeViewController.h; sourceTree = "<group>"; };
 		BC810CAB1BABF4AA00AC956B /* LKTestHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKTestHomeViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -5180,6 +5183,8 @@
 				BC484AAE1BAFC34200F69D50 /* LKHomeFeedInterface.m */,
 				BC484AA81BAFC32800F69D50 /* LKFollowingInterface.h */,
 				BC484AA91BAFC32800F69D50 /* LKFollowingInterface.m */,
+				BC484AB11BAFDB3800F69D50 /* LKTopSearchInterface.h */,
+				BC484AB21BAFDB3800F69D50 /* LKTopSearchInterface.m */,
 			);
 			name = Interface;
 			sourceTree = "<group>";
@@ -5978,6 +5983,7 @@
 				13E27F061AF9CBB700C17362 /* LKPopAnimation.m in Sources */,
 				BC12A5E31B9BD16100B99CB5 /* LKBatchRequest.m in Sources */,
 				139054CE1B994A6D00DBF34A /* GPUImageBoxBlurFilter.m in Sources */,
+				BC484AB31BAFDB3800F69D50 /* LKTopSearchInterface.m in Sources */,
 				139054E91B994A6D00DBF34A /* GPUImageEmbossFilter.m in Sources */,
 				139055851B9EDB3700DBF34A /* LKChooseTag.m in Sources */,
 				139054F81B994A6D00DBF34A /* GPUImageGlassSphereFilter.m in Sources */,

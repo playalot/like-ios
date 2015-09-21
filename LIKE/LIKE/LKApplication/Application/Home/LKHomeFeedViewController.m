@@ -18,7 +18,7 @@
 #import "LikeApi.h"
 #import "LKHomeFeedInterface.h"
 
-@interface LKHomeFeedViewController () <UITableViewDataSource, UITableViewDelegate, LKHomeTableViewCellDelegate, LKPostDetailViewControllerDelegate>
+@interface LKHomeFeedViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerDelegate>
 
 LC_PROPERTY(strong) NSMutableArray *datasource;
 LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
@@ -108,6 +108,8 @@ LC_PROPERTY(weak) id delegate;
     [self.tableView reloadData];
 }
 
+#pragma mark Handle Signal
+
 LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
     [LKUserCenterViewController pushUserCenterWithUser:signal.object navigationController:self.navigationController];
     [LC_APPDELEGATE.tabBarController hideBar];
@@ -177,28 +179,20 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     @weakly(self);
     
     cell.addTag = ^(LKPost * value){
-        
         @normally(self);
-        
         if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
-            
             self.inputView.userInfo = value;
             self.inputView.tag = indexPath.row;
-            
             [self.inputView becomeFirstResponder];
         }
     };
     
     cell.removedTag = ^(LKPost * value){
-        
         @normally(self);
-        
         [self.tableView beginUpdates];
         [self reloadData];
         [self.tableView endUpdates];
     };
-    
-    //    [cell cellOnTableView:self.tableView didScrollOnView:self.view];
     
     return cell;
 }
@@ -208,48 +202,6 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
  */
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [LKHomeTableViewCell height:self.datasource[indexPath.row]];
-}
-
--(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-}
-
--(void) scrollViewDidScroll:(UIScrollView *)scrollView {
-    
-}
-
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    if (decelerate) {
-        // 减速的时候调用
-        if (scrollView.contentOffset.y < -80) {
-            self.needRefresh = YES;
-        }
-    }
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    if (self.needRefresh) {
-        [self loadData:LCUIPullLoaderDiretionTop];
-        self.needRefresh = NO;
-    }
-}
-
-#pragma mark - ***** LKHomeTableViewCellDelegate *****
-- (void)homeTableViewCell:(LKHomeTableViewCell *)cell didClickReasonBtn:(LCUIButton *)reasonBtn {
-}
-
-
--(void) setDelegate:(id)delegate
-{
-    _delegate = delegate;
-    
-    self.tableView.delegate = delegate;
-    self.tableView.dataSource = delegate;
 }
 
 @end

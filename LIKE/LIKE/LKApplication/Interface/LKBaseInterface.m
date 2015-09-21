@@ -17,6 +17,7 @@
     if (sessionToken) {
         [resultDic setValue:sessionToken forKey:@"LIKE-SESSION-TOKEN"];
     }
+    [resultDic setValue:@"application/json" forKey:@"Content-Type"];
     return resultDic;
 }
 

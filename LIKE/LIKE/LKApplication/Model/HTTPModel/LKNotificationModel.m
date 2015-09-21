@@ -7,6 +7,7 @@
 //
 
 #import "LKNotificationModel.h"
+#import "LKNotificationInterface.h"
 
 @implementation LKNotificationModel
 
@@ -34,56 +35,101 @@
 
 - (void)getNotificationsAtFirstPage:(BOOL)firstPage requestFinished:(LKNotificationModelRequestFinished)requestFinished
 {
-    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"notification"].AUTO_SESSION();
-    
-    if (!firstPage) {
-        
-        [interface addParameter:@(self.timestamp) key:@"ts"];
-    }
-    
     @weakly(self);
     
-    [self request:interface complete:^(LKHttpRequestResult *result) {
-       
+    LKNotificationInterface *notificationInterface = [[LKNotificationInterface alloc] initWithTimestamp:self.timestamp firstPage:firstPage];
+    
+    @weakly(notificationInterface);
+    
+    [notificationInterface startWithCompletionBlockWithSuccess:^(LCBaseRequest *request) {
+        
+        @normally(notificationInterface);
         @normally(self);
-        
-        if (result.state == LKHttpRequestStateFinished) {
-                        
-            NSArray *tmp = result.json[@"data"][@"notifications"];
-            
-            NSMutableArray *datasource = [NSMutableArray array];
-            
-            for (NSDictionary *dic in tmp) {
 
-                [datasource addObject:[[LKNotification alloc] initWithDictionary:dic error:nil]];
-            }
+        NSArray *tmp = notificationInterface.notifications;
+        
+        NSMutableArray *datasource = [NSMutableArray array];
+        
+        for (NSDictionary *dic in tmp) {
             
-            if (firstPage) {
-                
-                self.datasource = datasource;
-                
-                // save cache...
-                LKUserDefaults.singleton[self.class.description] = tmp;
-            }
-            else{
-                
-                [self.datasource addObjectsFromArray:datasource];
-            }
-            
-            self.timestamp = ((LKComment *)self.datasource.lastObject).timestamp.integerValue;
-            
-            if (requestFinished) {
-                requestFinished(nil);
-            }
-        }
-        else if (result.state == LKHttpRequestStateFailed){
-            
-            if (requestFinished) {
-                requestFinished(result.error);
-            }
+            [datasource addObject:[[LKNotification alloc] initWithDictionary:dic error:nil]];
         }
         
+        if (firstPage) {
+            
+            self.datasource = datasource;
+            
+            // save cache...
+            LKUserDefaults.singleton[self.class.description] = tmp;
+        }
+        else{
+            
+            [self.datasource addObjectsFromArray:datasource];
+        }
+        
+        self.timestamp = ((LKComment *)self.datasource.lastObject).timestamp.integerValue;
+        
+        if (requestFinished) {
+            requestFinished(nil);
+        }
+
+    } failure:^(LCBaseRequest *request) {
+        
+//        if (requestFinished) {
+//            requestFinished(result.error);
+//        }
     }];
+    
+//    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"notification"].AUTO_SESSION();
+//    
+//    if (!firstPage) {
+//        
+//        [interface addParameter:@(self.timestamp) key:@"ts"];
+//    }
+//    
+//    @weakly(self);
+//    
+//    [self request:interface complete:^(LKHttpRequestResult *result) {
+//       
+//        @normally(self);
+//        
+//        if (result.state == LKHttpRequestStateFinished) {
+//                        
+//            NSArray *tmp = result.json[@"data"][@"notifications"];
+//            
+//            NSMutableArray *datasource = [NSMutableArray array];
+//            
+//            for (NSDictionary *dic in tmp) {
+//
+//                [datasource addObject:[[LKNotification alloc] initWithDictionary:dic error:nil]];
+//            }
+//            
+//            if (firstPage) {
+//                
+//                self.datasource = datasource;
+//                
+//                // save cache...
+//                LKUserDefaults.singleton[self.class.description] = tmp;
+//            }
+//            else{
+//                
+//                [self.datasource addObjectsFromArray:datasource];
+//            }
+//            
+//            self.timestamp = ((LKComment *)self.datasource.lastObject).timestamp.integerValue;
+//            
+//            if (requestFinished) {
+//                requestFinished(nil);
+//            }
+//        }
+//        else if (result.state == LKHttpRequestStateFailed){
+//            
+//            if (requestFinished) {
+//                requestFinished(result.error);
+//            }
+//        }
+//        
+//    }];
 }
 
 @end

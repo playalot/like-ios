@@ -54,6 +54,7 @@ LC_PROPERTY(strong) LCUIPullLoader *pullLoader;
     
     self.tableView = [[LCUITableView alloc] initWithFrame:CGRectZero];
     self.tableView.frame = self.view.bounds;
+    self.tableView.viewFrameHeight -= 49;
     self.tableView.backgroundView = nil;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;

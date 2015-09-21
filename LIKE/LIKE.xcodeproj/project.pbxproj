@@ -34,6 +34,10 @@
 		130CF5901BAFE07D002F4189 /* tabbar_userCenter_selected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 130CF5861BAFE07D002F4189 /* tabbar_userCenter_selected@3x.png */; };
 		130CF5911BAFE07D002F4189 /* tabbar_userCenter@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 130CF5871BAFE07D002F4189 /* tabbar_userCenter@3x.png */; };
 		130CF5971BAFE846002F4189 /* LKNotificationInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 130CF5961BAFE846002F4189 /* LKNotificationInterface.m */; };
+		130CF59C1BB00CD8002F4189 /* segment_fans@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 130CF5981BB00CD8002F4189 /* segment_fans@3x.png */; };
+		130CF59D1BB00CD8002F4189 /* segment_favor@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 130CF5991BB00CD8002F4189 /* segment_favor@3x.png */; };
+		130CF59E1BB00CD8002F4189 /* segment_follow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 130CF59A1BB00CD8002F4189 /* segment_follow@3x.png */; };
+		130CF59F1BB00CD8002F4189 /* segment_photo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 130CF59B1BB00CD8002F4189 /* segment_photo@3x.png */; };
 		13101D2D1B12DE5F00FBE516 /* LKShareMaskImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 13101D2C1B12DE5F00FBE516 /* LKShareMaskImage.m */; };
 		13101D301B13074700FBE516 /* LKShareTagsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13101D2F1B13074700FBE516 /* LKShareTagsView.m */; };
 		13101D351B1332DE00FBE516 /* LikeIconSmall@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13101D341B1332DE00FBE516 /* LikeIconSmall@3x.png */; };
@@ -894,6 +898,10 @@
 		130CF5871BAFE07D002F4189 /* tabbar_userCenter@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_userCenter@3x.png"; sourceTree = "<group>"; };
 		130CF5951BAFE846002F4189 /* LKNotificationInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKNotificationInterface.h; sourceTree = "<group>"; };
 		130CF5961BAFE846002F4189 /* LKNotificationInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKNotificationInterface.m; sourceTree = "<group>"; };
+		130CF5981BB00CD8002F4189 /* segment_fans@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "segment_fans@3x.png"; sourceTree = "<group>"; };
+		130CF5991BB00CD8002F4189 /* segment_favor@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "segment_favor@3x.png"; sourceTree = "<group>"; };
+		130CF59A1BB00CD8002F4189 /* segment_follow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "segment_follow@3x.png"; sourceTree = "<group>"; };
+		130CF59B1BB00CD8002F4189 /* segment_photo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "segment_photo@3x.png"; sourceTree = "<group>"; };
 		13101D2B1B12DE5F00FBE516 /* LKShareMaskImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKShareMaskImage.h; sourceTree = "<group>"; };
 		13101D2C1B12DE5F00FBE516 /* LKShareMaskImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKShareMaskImage.m; sourceTree = "<group>"; };
 		13101D2E1B13074700FBE516 /* LKShareTagsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKShareTagsView.h; sourceTree = "<group>"; };
@@ -4836,6 +4844,10 @@
 		13E1A2CC1AE644B400E24C3C /* UserCenter */ = {
 			isa = PBXGroup;
 			children = (
+				130CF5981BB00CD8002F4189 /* segment_fans@3x.png */,
+				130CF5991BB00CD8002F4189 /* segment_favor@3x.png */,
+				130CF59A1BB00CD8002F4189 /* segment_follow@3x.png */,
+				130CF59B1BB00CD8002F4189 /* segment_photo@3x.png */,
 				1387C34A1B31643D00B065A7 /* SettingBinding@3x.png */,
 				1388B4F51B00C0DD006F36AB /* SettingHead@3x.png */,
 				1388B4F61B00C0DD006F36AB /* SettingNick@3x.png */,
@@ -5345,6 +5357,7 @@
 				13892C3B1B1C31E40053303E /* HomepageIcon@3x.png in Resources */,
 				13F505101B0C5EAC00D8D484 /* QQIcon@3x.png in Resources */,
 				13DA0FC61AEB8AFE005B9476 /* CameraFocus@3x.png in Resources */,
+				130CF59C1BB00CD8002F4189 /* segment_fans@3x.png in Resources */,
 				135D5C951AE113BA00811B06 /* CameraClose@3x.png in Resources */,
 				138EDE8C1AD7B0A30020957C /* LCInternationalization.bundle in Resources */,
 				13B5B4E61B15CB6800252A78 /* TalkIcon@3x.png in Resources */,
@@ -5401,6 +5414,7 @@
 				13F505151B0C5EAC00D8D484 /* WeChatFriendIcon@3x.png in Resources */,
 				1388B4F71B00C0DD006F36AB /* SettingHead@3x.png in Resources */,
 				13E27EF51AF8B7D000C17362 /* cellLine@2x.png in Resources */,
+				130CF59E1BB00CD8002F4189 /* segment_follow@3x.png in Resources */,
 				134765361AE2564D0055D099 /* PostNavigationBar@3x.png in Resources */,
 				1387C3491B315FA200B065A7 /* NSDateTimeAgo.bundle in Resources */,
 				13FCC09B1ADF86050008DB41 /* KeyboardDismiss@3x.png in Resources */,
@@ -5465,6 +5479,8 @@
 				1387C3501B316CC400B065A7 /* FacebookIcon@3x.png in Resources */,
 				1357480F1BA05CAD00855603 /* 2048.jpg in Resources */,
 				13E27EEA1AF89BDD00C17362 /* CodeIcon@3x.png in Resources */,
+				130CF59D1BB00CD8002F4189 /* segment_favor@3x.png in Resources */,
+				130CF59F1BB00CD8002F4189 /* segment_photo@3x.png in Resources */,
 				134765341AE2564D0055D099 /* PostDidFinish@3x.png in Resources */,
 				134D92F41B8DA8A0004CFAC8 /* 喷漆.png in Resources */,
 				13892C3D1B1C44780053303E /* NavigationBarDismiss@3x.png in Resources */,
@@ -6224,8 +6240,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Zhenjun Wang (BT5C5YCZ44)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zhenjun Wang (BT5C5YCZ44)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -6269,8 +6285,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Zhenjun Wang (BT5C5YCZ44)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zhenjun Wang (BT5C5YCZ44)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -6296,48 +6312,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Weifeng Huang (M2RTDV28NJ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Weifeng Huang (M2RTDV28NJ)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/LIKE/LKExternal/Tencent",
-					"$(PROJECT_DIR)/LIKE/LKExternal/SMS_SDK",
-					"$(PROJECT_DIR)/LIKE/LKExternal/Facebook",
-					"$(PROJECT_DIR)/LIKE/LKExternal/MKMap",
-				);
-				GCC_PREFIX_HEADER = "$(SRCROOT)/LIKE/LIKE.pch";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SDK_ROOT)/usr/include/libxml2",
-				);
-				INFOPLIST_FILE = LIKE/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/LIKE/LCFramework/Foundation/Resource/LevelDB",
-					"$(PROJECT_DIR)/LIKE/LKExternal/UMAnalytics",
-					"$(PROJECT_DIR)/LIKE/LKExternal/WeChat",
-					"$(PROJECT_DIR)/LIKE/LKExternal/Weibo",
-					"$(PROJECT_DIR)/LIKE/LKExternal/JPush",
-				);
-				OTHER_LDFLAGS = (
-					"-all_load",
-					"-ObjC",
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "754781b9-21ae-4625-8691-cc5f03c7f257";
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		138EDC121AD7B08A0020957C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Weifeng Huang (M2RTDV28NJ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6368,7 +6343,48 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "754781b9-21ae-4625-8691-cc5f03c7f257";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		138EDC121AD7B08A0020957C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/LIKE/LKExternal/Tencent",
+					"$(PROJECT_DIR)/LIKE/LKExternal/SMS_SDK",
+					"$(PROJECT_DIR)/LIKE/LKExternal/Facebook",
+					"$(PROJECT_DIR)/LIKE/LKExternal/MKMap",
+				);
+				GCC_PREFIX_HEADER = "$(SRCROOT)/LIKE/LIKE.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SDK_ROOT)/usr/include/libxml2",
+				);
+				INFOPLIST_FILE = LIKE/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/LIKE/LCFramework/Foundation/Resource/LevelDB",
+					"$(PROJECT_DIR)/LIKE/LKExternal/UMAnalytics",
+					"$(PROJECT_DIR)/LIKE/LKExternal/WeChat",
+					"$(PROJECT_DIR)/LIKE/LKExternal/Weibo",
+					"$(PROJECT_DIR)/LIKE/LKExternal/JPush",
+				);
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

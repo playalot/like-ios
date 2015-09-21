@@ -19,7 +19,7 @@
 
 #define FOCUS_FEED_CACHE_KEY [NSString stringWithFormat:@"LKFocusFeedKey-%@", LKLocalUser.singleton.user.id]
 
-@interface LKFollowingViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerDelegate>
+@interface LKFollowingViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerDelegate, LKHomeTableViewCellDelegate>
 
 LC_PROPERTY(strong) NSMutableArray *datasource;
 LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
@@ -64,11 +64,11 @@ LC_PROPERTY(weak) id delegate;
 - (void)loadData:(LCUIPullLoaderDiretion)diretion {
     
     NSTimeInterval time = [[NSDate date] timeIntervalSince1970];
-    if (diretion == LCUIPullLoaderDiretionTop) {
-        self.next = nil;
-    }
     
-    LKFollowingInterface *followingInterface = [[LKFollowingInterface alloc] initWithNext:self.next];
+    LKFollowingInterface *followingInterface = [[LKFollowingInterface alloc] init];
+    if (self.next && diretion == LCUIPullLoaderDiretionBottom) {
+        followingInterface.timestamp = self.next;
+    }
     
     @weakly(self);
     @weakly(followingInterface);
@@ -77,8 +77,9 @@ LC_PROPERTY(weak) id delegate;
         
         @normally(self);
         @normally(followingInterface);
-
+        
         NSNumber *resultNext = followingInterface.next;
+        
         if (resultNext)
             self.next = resultNext;
         
@@ -205,6 +206,11 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
         }
     }
     [self.tableView reloadData];
+}
+
+#pragma mark - ***** LKHomeTableViewCellDelegate *****
+- (void)homeTableViewCell:(LKHomeTableViewCell *)cell didClickReasonBtn:(LCUIButton *)reasonBtn {
+    
 }
 
 @end

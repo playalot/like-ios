@@ -10,21 +10,14 @@
 
 @implementation LKFollowingInterface
 
-- (instancetype)initWithNext:(NSNumber *)next {
-    self = [super init];
-    if (self) {
-        self.next = next;
-    }
-    return self;
-}
-
 - (NSString *)requestUrl {
     return @"/v1/followingFeeds";
 }
 
 - (id)requestArgument {
-    if (self.next)
-        return @{@"ts": self.next};
+    if (self.timestamp) {
+        return @{@"ts": self.timestamp};
+    }
     return nil;
 }
 
@@ -36,5 +29,8 @@
     return self.responseJSONObject[@"data"][@"posts"];
 }
 
+- (NSDictionary *)responseObject {
+    return self.responseJSONObject;
+}
 
 @end

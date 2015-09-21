@@ -10,9 +10,7 @@
 
 @interface LKHomeFeedInterface : LKBaseInterface
 
-- (instancetype)initWithNext:(NSNumber *)next;
-
-LC_PROPERTY(copy)NSNumber *next;
+LC_PROPERTY(copy)NSNumber *timestamp;
 
 - (NSNumber *)next;
 - (NSArray *)posts;

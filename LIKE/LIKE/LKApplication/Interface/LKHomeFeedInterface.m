@@ -10,21 +10,13 @@
 
 @implementation LKHomeFeedInterface
 
-- (instancetype)initWithNext:(NSNumber *)next {
-    self = [super init];
-    if (self) {
-        self.next = next;
-    }
-    return self;
-}
-
 - (NSString *)requestUrl {
     return @"/v1/homeFeeds";
 }
 
 - (id)requestArgument {
-    if (self.next)
-        return @{@"ts": self.next};
+    if (self.timestamp)
+        return @{@"ts": self.timestamp};
     return nil;
 }
 

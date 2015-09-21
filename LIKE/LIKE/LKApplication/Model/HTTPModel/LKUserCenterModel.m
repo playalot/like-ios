@@ -48,7 +48,7 @@ LC_PROPERTY(assign) NSInteger index;
 }
 
 
--(void) getDataAtFirstPage:(BOOL)isFirstPage
+- (void)getDataAtFirstPage:(BOOL)isFirstPage
                       type:(LKUserCenterModelType)type
                        uid:(NSNumber *)uid {
     NSInteger page = 0;

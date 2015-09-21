@@ -69,6 +69,7 @@ LC_PROPERTY(assign) BOOL isLocalUser;
 
 + (LKUserCenterViewController *)pushUserCenterWithUser:(LKUser *)user navigationController:(UINavigationController *)navigationController {
     LKUserCenterViewController * userCenter = [[LKUserCenterViewController alloc] initWithUser:user];
+    userCenter.needBackButton = YES;
     [navigationController pushViewController:userCenter animated:YES];
     return userCenter;
 }
@@ -179,6 +180,18 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     
     self.header.labelAction = ^(id value){};
     
+    if (self.needBackButton) {
+        LCUIButton * backButton = LCUIButton.view;
+        backButton.viewFrameWidth = 50;
+        backButton.viewFrameHeight = 54 / 3 + 40;
+        backButton.viewFrameY = 10;
+        backButton.buttonImage = [UIImage imageNamed:@"NavigationBarBack.png" useCache:YES];
+        backButton.showsTouchWhenHighlighted = YES;
+        [backButton addTarget:self action:@selector(dismissAction) forControlEvents:UIControlEventTouchUpInside];
+        backButton.tag = 1002;
+        [self.header addSubview:backButton];
+    }
+    
     if (self.isLocalUser) {
         
         LCUIButton * setButton = LCUIButton.view;
@@ -192,16 +205,6 @@ LC_PROPERTY(assign) BOOL isLocalUser;
         [self.header addSubview:setButton];
         
     } else {
-        
-        LCUIButton * backButton = LCUIButton.view;
-        backButton.viewFrameWidth = 50;
-        backButton.viewFrameHeight = 54 / 3 + 40;
-        backButton.viewFrameY = 10;
-        backButton.buttonImage = [UIImage imageNamed:@"NavigationBarBack.png" useCache:YES];
-        backButton.showsTouchWhenHighlighted = YES;
-        [backButton addTarget:self action:@selector(dismissAction) forControlEvents:UIControlEventTouchUpInside];
-        backButton.tag = 1002;
-        [self.header addSubview:backButton];
         
         self.friendshipButton = LCUIButton.view;
         self.friendshipButton.viewFrameWidth = 64 / 3 + 40;
@@ -311,8 +314,7 @@ LC_PROPERTY(assign) BOOL isLocalUser;
 
 #pragma mark -
 
--(void) handleNotification:(NSNotification *)notification
-{
+-(void) handleNotification:(NSNotification *)notification {
     if ([notification is:LKUserCenterViewControllerReloadingData]) {
         [self loadData:self.currentType diretion:LCUIPullLoaderDiretionTop];
     }

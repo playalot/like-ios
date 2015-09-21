@@ -175,8 +175,7 @@
 
 #pragma mark - 
 
--(void) $setItemIcon:(NSString *)imageName superView:(UIView *)superView
-{
+-(void) $setItemIcon:(NSString *)imageName superView:(UIView *)superView {
     LCUIImageView * icon = [LCUIImageView viewWithImage:[UIImage imageNamed:imageName useCache:YES]];
     icon.viewFrameX = superView.viewMidWidth - icon.viewMidWidth;
     icon.viewFrameY = superView.viewMidWidth - icon.viewMidHeight;
@@ -185,9 +184,8 @@
 
 #pragma mark -
 
-+(UIViewController *) hiddenBottomBarWhenPushed:(UIViewController *)viewController
-{
-    [LC_APPDELEGATE.tabBarController hideBar];
++(UIViewController *) hiddenBottomBarWhenPushed:(UIViewController *)viewController {
+//    [LC_APPDELEGATE.tabBarController hideBar];
     
     return viewController;
 }

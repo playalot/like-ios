@@ -77,4 +77,8 @@ LC_PROPERTY(weak) LCUIViewController *currentViewController;
     }
 }
 
+LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
+    [LKUserCenterViewController pushUserCenterWithUser:signal.object navigationController:self.navigationController];
+}
+
 @end

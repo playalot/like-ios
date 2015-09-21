@@ -120,8 +120,7 @@ LC_PROPERTY(assign) LCUIPullLoaderStyle style;
     }
 }
 
--(void)handRefresh:(LCUIPullLoaderDiretion)diretion
-{
+-(void)handRefresh:(LCUIPullLoaderDiretion)diretion {
     if (self.beginRefresh) {
         self.beginRefresh(diretion);
     }

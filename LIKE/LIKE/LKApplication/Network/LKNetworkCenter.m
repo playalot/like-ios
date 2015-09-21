@@ -42,7 +42,6 @@
 
     [LCNetworkCenter.singleton.sessionManager.requestSerializer setValue:sesstionToken forHTTPHeaderField:@"LIKE-SESSION-TOKEN"];
     [LCNetworkCenter.singleton.sessionManager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-
     
     NSString *url = nil;
     

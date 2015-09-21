@@ -1,12 +1,12 @@
 //
-//  LKFeedViewController.m
+//  LKHomeFeedViewController.m
 //  LIKE
 //
 //  Created by huangweifeng on 9/15/15.
 //  Copyright (c) 2015 Beijing Like Technology Co.Ltd . ( http://www.likeorz.com ). All rights reserved.
 //
 
-#import "LKFeedViewController.h"
+#import "LKHomeFeedViewController.h"
 #import "LKHomeViewController.h"
 #import "LKPost.h"
 #import "LKNewPostUploadCenter.h"
@@ -15,8 +15,10 @@
 #import "LKLoginViewController.h"
 #import "LKInputView.h"
 #import "LKPostDetailViewController.h"
+#import "LikeApi.h"
+#import "LKHomeFeedInterface.h"
 
-@interface LKFeedViewController () <UITableViewDataSource, UITableViewDelegate, LKHomeTableViewCellDelegate, LKPostDetailViewControllerDelegate>
+@interface LKHomeFeedViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerDelegate>
 
 LC_PROPERTY(strong) NSMutableArray *datasource;
 LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
@@ -27,16 +29,16 @@ LC_PROPERTY(copy) NSNumber * next;
 LC_PROPERTY(assign) NSTimeInterval lastFocusLoadTime;
 LC_PROPERTY(assign) BOOL needRefresh;
 
+LC_PROPERTY(strong) LKHomeFeedInterface *homeFeedInterface;
+
 LC_PROPERTY(weak) id delegate;
 
 @end
 
-@implementation LKFeedViewController
+@implementation LKHomeFeedViewController
 
 - (void)buildUI {
     self.view.backgroundColor = LKColor.backgroundColor;
-    
-    self.view.viewFrameHeight = self.view.viewFrameHeight - 200;
     
     self.tableView = [[LCUITableView alloc] initWithFrame:self.view.frame];
     self.tableView.delegate = self;
@@ -46,7 +48,7 @@ LC_PROPERTY(weak) id delegate;
     self.tableView.backgroundColor = [UIColor clearColor];
     self.view.ADD(self.tableView);
     
-    self.pullLoader = [LCUIPullLoader pullLoaderWithScrollView:self.tableView pullStyle:LCUIPullLoaderStyleFooter];
+    self.pullLoader = [LCUIPullLoader pullLoaderWithScrollView:self.tableView pullStyle:LCUIPullLoaderStyleHeaderAndFooter];
     self.pullLoader.indicatorViewStyle = UIActivityIndicatorViewStyleWhite;
     
     @weakly(self);
@@ -60,72 +62,53 @@ LC_PROPERTY(weak) id delegate;
 }
 
 // 这个方法同时负责主页和关注的人列表的请求
--(void) loadData:(LCUIPullLoaderDiretion)diretion {
-    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"homeFeeds"].AUTO_SESSION();
+- (void)loadData:(LCUIPullLoaderDiretion)diretion {
     
-    if (self.next && diretion == LCUIPullLoaderDiretionBottom) {
-        [interface addParameter:self.next key:@"ts"];
+    if (diretion == LCUIPullLoaderDiretionTop) {
+        self.next = nil;
     }
     
     @weakly(self);
-    
-    [self request:interface complete:^(LKHttpRequestResult *result) {
-        
+    LKHomeFeedInterface *homeFeedInterface = [[LKHomeFeedInterface alloc] initWithNext:self.next];
+    @weakly(homeFeedInterface);
+    [homeFeedInterface startWithCompletionBlockWithSuccess:^(LCBaseRequest *request) {
+        @normally(homeFeedInterface);
         @normally(self);
         
-        if (result.state == LKHttpRequestStateFinished) {
-            
-            NSNumber *resultNext = result.json[@"data"][@"next"];
-            if (resultNext) {
-                self.next = resultNext;
-            }
-            
-            NSArray * resultData = result.json[@"data"][@"posts"];
-            NSMutableArray * datasource = [NSMutableArray array];
-            
-            for (NSDictionary * tmp in resultData) {
-                [datasource addObject:[LKPost objectFromDictionary:tmp]];
-            }
-            
-            if (diretion == LCUIPullLoaderDiretionTop) {
-                // Change datasource and save cache...
-                self.datasource = datasource;
-                LKUserDefaults.singleton[self.class.description] = resultData;
-            } else {
-                [self.datasource addObjectsFromArray:datasource];
-            }
-            
-            if (diretion == LCUIPullLoaderDiretionBottom) {
-                [self.pullLoader endRefresh];
-            }
-            
-            LC_FAST_ANIMATIONS(0.25, ^{
-                [self.tableView reloadData];
-            });
-            
-//            LC_APPDELEGATE.tabBarController.loading = NO;
+        if (homeFeedInterface.next) {
+            self.next = homeFeedInterface.next;
         }
-        else if (result.state == LKHttpRequestStateFailed){
-            
-            [self.pullLoader endRefresh];
-            [self showTopMessageErrorHud:result.error];
-            
-//            LC_APPDELEGATE.tabBarController.loading = NO;
-        }
-        else if (result.state == LKHttpRequestStateCanceled){
-            
-            [self.pullLoader endRefresh];
-            
-//            LC_APPDELEGATE.tabBarController.loading = NO;
+
+        NSArray * resultData = homeFeedInterface.posts;
+        NSMutableArray * datasource = [NSMutableArray array];
+        
+        for (NSDictionary * tmp in resultData) {
+            [datasource addObject:[LKPost objectFromDictionary:tmp]];
         }
         
+        if (diretion == LCUIPullLoaderDiretionTop) {
+            // Change datasource and save cache...
+            self.datasource = datasource;
+            LKUserDefaults.singleton[self.class.description] = resultData;
+        } else {
+            [self.datasource addObjectsFromArray:datasource];
+        }
+        
+        [self.pullLoader endRefresh];
+        LC_FAST_ANIMATIONS(0.25, ^{
+            [self.tableView reloadData];
+        });
+        
+    } failure:^(LCBaseRequest *request) {
+        
     }];
-    
 }
 
 - (void)reloadData {
     [self.tableView reloadData];
 }
+
+#pragma mark Handle Signal
 
 LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
     [LKUserCenterViewController pushUserCenterWithUser:signal.object navigationController:self.navigationController];
@@ -196,28 +179,20 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     @weakly(self);
     
     cell.addTag = ^(LKPost * value){
-        
         @normally(self);
-        
         if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
-            
             self.inputView.userInfo = value;
             self.inputView.tag = indexPath.row;
-            
             [self.inputView becomeFirstResponder];
         }
     };
     
     cell.removedTag = ^(LKPost * value){
-        
         @normally(self);
-        
         [self.tableView beginUpdates];
         [self reloadData];
         [self.tableView endUpdates];
     };
-    
-    //    [cell cellOnTableView:self.tableView didScrollOnView:self.view];
     
     return cell;
 }
@@ -227,48 +202,6 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
  */
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [LKHomeTableViewCell height:self.datasource[indexPath.row]];
-}
-
--(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-}
-
--(void) scrollViewDidScroll:(UIScrollView *)scrollView {
-    
-}
-
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    if (decelerate) {
-        // 减速的时候调用
-        if (scrollView.contentOffset.y < -80) {
-            self.needRefresh = YES;
-        }
-    }
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    if (self.needRefresh) {
-        [self loadData:LCUIPullLoaderDiretionTop];
-        self.needRefresh = NO;
-    }
-}
-
-#pragma mark - ***** LKHomeTableViewCellDelegate *****
-- (void)homeTableViewCell:(LKHomeTableViewCell *)cell didClickReasonBtn:(LCUIButton *)reasonBtn {
-}
-
-
--(void) setDelegate:(id)delegate
-{
-    _delegate = delegate;
-    
-    self.tableView.delegate = delegate;
-    self.tableView.dataSource = delegate;
 }
 
 @end

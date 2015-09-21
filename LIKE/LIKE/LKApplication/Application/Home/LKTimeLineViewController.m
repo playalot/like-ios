@@ -7,13 +7,13 @@
 //
 
 #import "LKTimeLineViewController.h"
-#import "LKFeedViewController.h"
+#import "LKHomeFeedViewController.h"
 #import "LKFollowingViewController.h"
 
 
 @interface LKTimeLineViewController ()
 
-LC_PROPERTY(strong) LKFeedViewController *feedViewController;
+LC_PROPERTY(strong) LKHomeFeedViewController *feedViewController;
 LC_PROPERTY(strong) LKFollowingViewController *followingViewController;
 LC_PROPERTY(weak) LCUIViewController *currentViewController;
 
@@ -27,13 +27,13 @@ LC_PROPERTY(weak) LCUIViewController *currentViewController;
 }
 
 - (void)buildViewController {
-    self.feedViewController = [LKFeedViewController viewController];
+    self.feedViewController = [LKHomeFeedViewController viewController];
     self.followingViewController = [LKFollowingViewController viewController];
     
     [self addChildViewController:self.feedViewController];
     [self addChildViewController:self.followingViewController];
     
-    self.currentViewController = self.feedViewController;
+    self.currentViewController = self.followingViewController;
     self.view.ADD(self.currentViewController.view);
 }
 
@@ -43,7 +43,6 @@ LC_PROPERTY(weak) LCUIViewController *currentViewController;
     
     LCUIButton *titleBtn = [[LCUIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];
     [titleBtn setImage:[UIImage imageNamed:@"HomeLikeIcon" useCache:YES] forState:UIControlStateNormal];
-    //    self.titleView = [LCUIImageView viewWithImage:[UIImage imageNamed:@"HomeLikeIcon.png" useCache:YES]];
     self.titleView = (UIView *)titleBtn;
     
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
@@ -59,7 +58,7 @@ LC_PROPERTY(weak) LCUIViewController *currentViewController;
             @normally(self);
             self.currentViewController.view.alpha = 0;
             
-        }, ^(BOOL finished){
+        }, ^(BOOL finished) {
             
             @normally(self);
             [self.currentViewController.view removeFromSuperview];

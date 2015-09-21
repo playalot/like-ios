@@ -15,10 +15,11 @@
 #import "LKLoginViewController.h"
 #import "LKInputView.h"
 #import "LKPostDetailViewController.h"
+#import "LKFollowingInterface.h"
 
 #define FOCUS_FEED_CACHE_KEY [NSString stringWithFormat:@"LKFocusFeedKey-%@", LKLocalUser.singleton.user.id]
 
-@interface LKFollowingViewController () <UITableViewDataSource, UITableViewDelegate, LKHomeTableViewCellDelegate, LKPostDetailViewControllerDelegate>
+@interface LKFollowingViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerDelegate>
 
 LC_PROPERTY(strong) NSMutableArray *datasource;
 LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
@@ -46,7 +47,7 @@ LC_PROPERTY(weak) id delegate;
     self.tableView.backgroundColor = [UIColor clearColor];
     self.view.ADD(self.tableView);
     
-    self.pullLoader = [LCUIPullLoader pullLoaderWithScrollView:self.tableView pullStyle:LCUIPullLoaderStyleFooter];
+    self.pullLoader = [LCUIPullLoader pullLoaderWithScrollView:self.tableView pullStyle:LCUIPullLoaderStyleHeaderAndFooter];
     self.pullLoader.indicatorViewStyle = UIActivityIndicatorViewStyleWhite;
     
     @weakly(self);
@@ -60,86 +61,50 @@ LC_PROPERTY(weak) id delegate;
 }
 
 // 这个方法同时负责主页和关注的人列表的请求
--(void) loadData:(LCUIPullLoaderDiretion)diretion
-{
-    //    if (LC_APPDELEGATE.tabBarController.loading) {
-    //        [self.pullLoader endRefresh];
-    //        return;
-    //    }
+- (void)loadData:(LCUIPullLoaderDiretion)diretion {
     
     NSTimeInterval time = [[NSDate date] timeIntervalSince1970];
-    
-    //    if (self.feedType == LKHomepageFeedTypeFocus && diretion == LCUIPullLoaderDiretionTop) {
-    //        if (time - self.lastFocusLoadTime < 30) {
-    //            return;
-    //        }
-    //    }
-    
-    //    LC_APPDELEGATE.tabBarController.loading = YES;
-    
-    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"followingFeeds"].AUTO_SESSION();
-    
-    if (self.next && diretion == LCUIPullLoaderDiretionBottom) {
-        [interface addParameter:self.next key:@"ts"];
+    if (diretion == LCUIPullLoaderDiretionTop) {
+        self.next = nil;
     }
     
-    @weakly(self);
+    LKFollowingInterface *followingInterface = [[LKFollowingInterface alloc] initWithNext:self.next];
     
-    [self request:interface complete:^(LKHttpRequestResult *result) {
+    @weakly(self);
+    @weakly(followingInterface);
+    
+    [followingInterface startWithCompletionBlockWithSuccess:^(LCBaseRequest *request) {
         
         @normally(self);
+        @normally(followingInterface);
+
+        NSNumber *resultNext = followingInterface.next;
+        if (resultNext)
+            self.next = resultNext;
         
-        if (result.state == LKHttpRequestStateFinished) {
-            
-            NSNumber *resultNext = result.json[@"data"][@"next"];
-            if (resultNext)
-                self.next = resultNext;
-            
-            NSArray * resultData = result.json[@"data"][@"posts"];
-            NSMutableArray * datasource = [NSMutableArray array];
-            
-            for (NSDictionary * tmp in resultData) {
-                [datasource addObject:[LKPost objectFromDictionary:tmp]];
-            }
-            
-            if (diretion == LCUIPullLoaderDiretionTop) {
-                
-                self.datasource = datasource;
-                LKUserDefaults.singleton[FOCUS_FEED_CACHE_KEY] = resultData;
-                
-                self.lastFocusLoadTime = time;
-            }
-            else{
-                
-                [self.datasource addObjectsFromArray:datasource];
-            }
-            
-            if (diretion == LCUIPullLoaderDiretionBottom) {
-                
-                [self.pullLoader endRefresh];
-                
-            }
-            
-            LC_FAST_ANIMATIONS(0.25, ^{
-                [self.tableView reloadData];
-            });
-            
-            //            [LC_APPDELEGATE.tabBarController.loading = NO;
+        NSArray * resultData = followingInterface.posts;
+        NSMutableArray * datasource = [NSMutableArray array];
+        
+        for (NSDictionary * tmp in resultData) {
+            [datasource addObject:[LKPost objectFromDictionary:tmp]];
         }
-        else if (result.state == LKHttpRequestStateFailed){
-            
-            [self.pullLoader endRefresh];
-            
-            //            LC_APPDELEGATE.tabBarController.loading = NO;
+        
+        if (diretion == LCUIPullLoaderDiretionTop) {
+            self.datasource = datasource;
+            LKUserDefaults.singleton[FOCUS_FEED_CACHE_KEY] = resultData;
+            self.lastFocusLoadTime = time;
+        } else {
+            [self.datasource addObjectsFromArray:datasource];
         }
-        else if (result.state == LKHttpRequestStateCanceled){
-            
-            [self.pullLoader endRefresh];
-            
-            //            LC_APPDELEGATE.tabBarController.loading = NO;
-        }
+        
+        [self.pullLoader endRefresh];
+        LC_FAST_ANIMATIONS(0.25, ^{
+            [self.tableView reloadData];
+        });
+        
+    } failure:^(LCBaseRequest *request) {
+        
     }];
-    
 }
 
 -(void) reloadData {
@@ -167,28 +132,21 @@ LC_PROPERTY(weak) id delegate;
     @weakly(self);
     
     cell.addTag = ^(LKPost * value){
-        
         @normally(self);
         
         if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
-            
             self.inputView.userInfo = value;
             self.inputView.tag = indexPath.row;
-            
             [self.inputView becomeFirstResponder];
         }
     };
     
     cell.removedTag = ^(LKPost * value){
-        
         @normally(self);
-        
         [self.tableView beginUpdates];
         [self reloadData];
         [self.tableView endUpdates];
     };
-    
-//    [cell cellOnTableView:self.tableView didScrollOnView:self.view];
     
     return cell;
 }
@@ -200,34 +158,8 @@ LC_PROPERTY(weak) id delegate;
     return [LKHomeTableViewCell height:self.datasource[indexPath.row]];
 }
 
--(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-}
 
--(void) scrollViewDidScroll:(UIScrollView *)scrollView {
-    
-}
-
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    if (decelerate) {
-        // 减速的时候调用
-        if (scrollView.contentOffset.y < -80) {
-            self.needRefresh = YES;
-        }
-    }
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    if (self.needRefresh) {
-        [self loadData:LCUIPullLoaderDiretionTop];
-        self.needRefresh = NO;
-    }
-}
+#pragma mark Handle Signal
 
 LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
     [LKUserCenterViewController pushUserCenterWithUser:signal.object navigationController:self.navigationController];
@@ -273,25 +205,6 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
         }
     }
     [self.tableView reloadData];
-}
-
-#pragma mark - ***** LKHomeTableViewCellDelegate *****
-- (void)homeTableViewCell:(LKHomeTableViewCell *)cell didClickReasonBtn:(LCUIButton *)reasonBtn {
-    
-//    if (reasonBtn.title != nil) {
-//        
-//        LKSearchResultsViewController *searchResultCtrl = [[LKSearchResultsViewController alloc] initWithSearchString:reasonBtn.title];
-//        [self.navigationController pushViewController:searchResultCtrl animated:YES];
-//    }
-}
-
-
--(void) setDelegate:(id)delegate
-{
-    _delegate = delegate;
-    
-    self.tableView.delegate = delegate;
-    self.tableView.dataSource = delegate;
 }
 
 @end

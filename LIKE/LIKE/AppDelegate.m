@@ -24,6 +24,8 @@
 #import "APService.h"
 #import "LKChooseTagView.h"
 #import "RDVTabBarItem.h"
+#import "LCNetworkConfig.h"
+#import "LCUrlArgumentsFilter.h"
 
 @interface AppDelegate () <LC_CMD_IMP>
 
@@ -35,11 +37,20 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
 
 @implementation AppDelegate
 
+- (void)setupRequestFilters {
+    NSString *appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    LCNetworkConfig *config = [LCNetworkConfig sharedInstance];
+    config.baseUrl = @"http://api.likeorz.com";
+    LCUrlArgumentsFilter *urlFilter = [LCUrlArgumentsFilter filterWithArguments:@{@"version": appVersion}];
+    [config addUrlFilter:urlFilter];
+}
+
 /**
  *  应用程序启动就会调用此方法
  */
--(void) load:(NSDictionary *)launchOptions
-{
+-(void) load:(NSDictionary *)launchOptions {
+    
+    [self setupRequestFilters];
     
     self.launchOptions = launchOptions;
     
@@ -109,7 +120,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     
     self.homeViewController = [LKHomeViewController viewController];
     self.timeLineViewController = [LKTimeLineViewController viewController];
-//    self.feedViewController = [LKFeedViewController viewController];
+//    self.feedViewController = [LKHomeFeedViewController viewController];
 //    self.followingViewController = [LKFollowingViewController viewController];
     self.searchViewController = [LKSearchViewController viewController];
     self.notificationViewController = [LKNotificationViewController viewController];

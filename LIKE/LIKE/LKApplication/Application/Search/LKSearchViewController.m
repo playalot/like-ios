@@ -14,6 +14,7 @@
 #import "LKTag.h"
 #import "LKSearchHistory.h"
 #import "LKPostTableViewController.h"
+#import "LKTopSearchInterface.h"
 
 @interface LKSearchViewController () <LKSearchBarDelegate>
 
@@ -216,29 +217,18 @@ LC_PROPERTY(strong) LKSearchView *searchView;
         return;
     }
     
-    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"search/topsearch/%@" ,searchString.URLCODE()]].AUTO_SESSION();
+    LKTopSearchInterface *searchInterface = [[LKTopSearchInterface alloc] initWithSearchString:searchString.URLCODE()];
     @weakly(self);
-    [self.suggestionView request:interface complete:^(LKHttpRequestResult *result) {
+    @weakly(searchInterface);
+    [searchInterface startWithCompletionBlockWithSuccess:^(LCBaseRequest *request) {
         @normally(self);
+        @normally(searchInterface);
         
-        if (result.state == LKHttpRequestStateFinished) {
-            NSArray * array0 = result.json[@"data"][@"users"];
-            NSMutableArray * users = [NSMutableArray array];
-            for (NSDictionary * dic in array0) {
-                [users addObject:[LKUser objectFromDictionary:dic]];
-            }
-            self.suggestionView.users = users;
-            NSArray * array = result.json[@"data"][@"tags"];
-            NSMutableArray * tags = [NSMutableArray array];
-            for (NSDictionary * dic in array) {
-                LKTag * tag = [LKTag objectFromDictionary:dic];
-                [tags addObject:tag];
-            }
-            self.suggestionView.tags = tags;
-            
-        } else if (result.state == LKHttpRequestStateFailed){
-            
-        }
+        self.suggestionView.users = searchInterface.users;
+        self.suggestionView.tags = searchInterface.tags;
+        
+    } failure:^(LCBaseRequest *request) {
+        
     }];
     
 }

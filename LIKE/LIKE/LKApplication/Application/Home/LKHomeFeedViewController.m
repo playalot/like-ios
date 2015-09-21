@@ -15,10 +15,11 @@
 #import "LKLoginViewController.h"
 #import "LKInputView.h"
 #import "LKPostDetailViewController.h"
-#import "LikeApi.h"
 #import "LKHomeFeedInterface.h"
+#import "LCUIKeyBoard.h"
+#import "LKTagAddModel.h"
 
-@interface LKHomeFeedViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerDelegate>
+@interface LKHomeFeedViewController () <UITableViewDataSource, UITableViewDelegate, LKHomeTableViewCellDelegate, LKPostDetailViewControllerDelegate>
 
 LC_PROPERTY(strong) NSMutableArray *datasource;
 LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
@@ -40,6 +41,14 @@ LC_PROPERTY(weak) id delegate;
 - (void)buildUI {
     self.view.backgroundColor = LKColor.backgroundColor;
     
+    [self buildInputView];
+    [self buildTableView];
+    [self buildPullLoader];
+    
+    [self loadData:LCUIPullLoaderDiretionTop];
+}
+
+- (void)buildTableView {
     self.tableView = [[LCUITableView alloc] initWithFrame:self.view.frame];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -47,7 +56,9 @@ LC_PROPERTY(weak) id delegate;
     self.tableView.scrollsToTop = YES;
     self.tableView.backgroundColor = [UIColor clearColor];
     self.view.ADD(self.tableView);
-    
+}
+
+- (void)buildPullLoader {
     self.pullLoader = [LCUIPullLoader pullLoaderWithScrollView:self.tableView pullStyle:LCUIPullLoaderStyleHeaderAndFooter];
     self.pullLoader.indicatorViewStyle = UIActivityIndicatorViewStyleWhite;
     
@@ -57,8 +68,107 @@ LC_PROPERTY(weak) id delegate;
         @normally(self);
         [self loadData:diretion];
     };
+}
+
+- (void)buildInputView {
     
-    [self loadData:LCUIPullLoaderDiretionTop];
+    @weakly(self);
+    
+    self.inputView = LKInputView.view;
+    self.inputView.viewFrameY = self.view.viewFrameHeight;
+    self.view.ADD(self.inputView);
+    
+    self.inputView.sendAction = ^(NSString * string){
+        
+        @normally(self);
+        
+        if (string.trim.length == 0) {
+            [self showTopMessageErrorHud:LC_LO(@"标签不能为空")];
+            return;
+        }
+        
+        if (string.length > 12) {
+            [self showTopMessageErrorHud:LC_LO(@"标签长度不能大于12位")];
+            return;
+        }
+        
+        LKHomeTableViewCell * cell = (LKHomeTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:1]];
+        
+        // 调加标签接口
+        if ([self checkTag:string onTags:((LKPost *)self.inputView.userInfo).tags]) {
+            [self addTag:string onPost:self.inputView.userInfo onCell:cell];
+        } else {
+            [self.view showTopMessageErrorHud:LC_LO(@"该标签已存在")];
+            [self.inputView resignFirstResponder];
+            self.inputView.textField.text = @"";
+        }
+    };
+    
+    self.inputView.didShow = ^(){
+        
+        @normally(self);
+        
+        // scroll...
+        LKHomeTableViewCell * cell = (LKHomeTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:1]];;
+        CGFloat height1 = LC_DEVICE_HEIGHT - cell.viewFrameHeight;
+        CGFloat height2 = LCUIKeyBoard.singleton.height + self.inputView.viewFrameHeight - height1;
+        
+        [self.tableView setContentOffset:LC_POINT(0, cell.viewFrameY + height2 - 25 + 10 + 63) animated:YES];
+    };
+    
+    self.inputView.willDismiss = ^(id value){
+    };
+}
+
+- (BOOL)checkTag:(NSString *)tag onTags:(NSArray *)onTags {
+    for (LKTag * oTag in onTags) {
+        if ([oTag.tag isEqualToString:tag]) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
+- (void)addTag:(NSString *)tag onPost:(LKPost *)post onCell:(LKHomeTableViewCell *)cell {
+    
+    @weakly(self);
+    LKTag * tagValue = [[LKTag alloc] init];
+    tagValue.tag = tag;
+    tagValue.likes = @1;
+    tagValue.createTime = @([[NSDate date] timeIntervalSince1970]);
+    tagValue.isLiked = YES;
+    tagValue.user = LKLocalUser.singleton.user;
+    tagValue.id = @99999999;
+    
+    [post.tags insertObject:tagValue atIndex:0];
+    [cell reloadTags];
+    
+    NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
+    
+    if (indexPath) {
+        post.user.likes = @(post.user.likes.integerValue + 1);
+        [self.tableView beginUpdates];
+        cell.post = post;
+        [self.tableView endUpdates];
+        [cell newTagAnimation:^(BOOL finished) {}];
+    }
+    
+    [self.inputView resignFirstResponder];
+    self.inputView.textField.text = @"";
+    
+    [LKTagAddModel addTagString:tag onPost:post requestFinished:^(LKHttpRequestResult *result, NSString *error) {
+        @normally(self);
+        if (error) {
+            [self showTopMessageErrorHud:error];
+        } else {
+            LKTag * tag = [LKTag objectFromDictionary:result.json[@"data"]];
+            if (tag) {
+                tagValue.id = tag.id;
+                return;
+            }
+        }
+        
+    }];
 }
 
 // 这个方法同时负责主页和关注的人列表的请求
@@ -159,7 +269,6 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
 }
 
 #pragma mark - ***** 数据源方法 *****
-
 -(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
@@ -202,6 +311,11 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
  */
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [LKHomeTableViewCell height:self.datasource[indexPath.row]];
+}
+
+#pragma mark *****数据源******
+- (void)homeTableViewCell:(LKHomeTableViewCell *)cell didClickReasonBtn:(LCUIButton *)reasonBtn {
+    
 }
 
 @end

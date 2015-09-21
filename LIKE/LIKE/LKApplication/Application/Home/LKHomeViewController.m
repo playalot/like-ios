@@ -476,6 +476,15 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
     };
 }
 
+- (BOOL)checkTag:(NSString *)tag onTags:(NSArray *)onTags {
+    for (LKTag * oTag in onTags) {
+        if ([oTag.tag isEqualToString:tag]) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
 #pragma mark -
 
 -(void) handleNavigationBarButton:(LCUINavigationBarButtonType)type
@@ -600,19 +609,6 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
         
         [self notificationAction];
     }
-}
-
--(BOOL) checkTag:(NSString *)tag onTags:(NSArray *)onTags
-{
-    for (LKTag * oTag in onTags) {
-        
-        if ([oTag.tag isEqualToString:tag]) {
-            
-            return NO;
-        }
-    }
-    
-    return YES;
 }
 
 -(void) handleNotification:(NSNotification *)notification
@@ -740,14 +736,10 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
         @normally(self);
         
         if (error) {
-            
             [self showTopMessageErrorHud:error];
-        }
-        else{
-            
+        } else {
             // insert...
             LKTag * tag = [LKTag objectFromDictionary:result.json[@"data"]];
-            
             if (tag) {
                 tagValue.id = tag.id;
                 return;

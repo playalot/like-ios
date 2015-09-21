@@ -31,9 +31,17 @@ LC_PROPERTY(strong) UIImageView *line;
         self.iconView.viewFrameWidth = 35;
         self.iconView.viewFrameHeight = 35;
         self.iconView.backgroundColor = [UIColor whiteColor];
-        self.iconView.cornerRadius = 35 / 2;
+        self.iconView.cornerRadius = 35 * 0.5;
         self.iconView.userInteractionEnabled = YES;
         self.ADD(self.iconView);
+        
+        
+        CGFloat badgeX = self.iconView.viewRightX - 12;
+        CGFloat badgeY = self.iconView.viewFrameY - 4;
+        self.badgeView = [[LCUIBadgeView alloc] initWithFrame:CGRectMake(badgeX, badgeY, 4, 4) valueString:[NSString stringWithFormat:@"%d", arc4random_uniform(10) + 1]];
+        self.badgeView.backgroundColor = LKColor.color;
+        self.badgeView.cornerRadius = self.badgeView.viewFrameWidth * 0.5;
+        self.ADD(self.badgeView);
         
         
         self.titleLbl = LCUILabel.view;

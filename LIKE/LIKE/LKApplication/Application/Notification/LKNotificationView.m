@@ -231,8 +231,9 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
     }
     else{
         
-        return [LKNotificationCell height:notification];
-    }    
+//        return [LKNotificationCell height:notification];
+        return 100;
+    }
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

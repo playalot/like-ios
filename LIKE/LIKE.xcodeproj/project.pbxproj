@@ -11,6 +11,17 @@
 		1304ABC21BAAB57D00C9EA2D /* LKLikeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1304ABC11BAAB57D00C9EA2D /* LKLikeViewController.m */; };
 		1304ABC51BAAB59000C9EA2D /* LKFansViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1304ABC41BAAB59000C9EA2D /* LKFansViewController.m */; };
 		1304ABC81BAAB5B500C9EA2D /* LKMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1304ABC71BAAB5B500C9EA2D /* LKMessageViewController.m */; };
+		1304ABCF1BABB62300C9EA2D /* GBTagListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1304ABCE1BABB62300C9EA2D /* GBTagListView.m */; };
+		1304ABD71BABC8C500C9EA2D /* NotificationFocusIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1304ABD21BABC8C500C9EA2D /* NotificationFocusIcon@3x.png */; };
+		1304ABD81BABC8C500C9EA2D /* NotificationLikeIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1304ABD31BABC8C500C9EA2D /* NotificationLikeIcon@3x.png */; };
+		1304ABD91BABC8C500C9EA2D /* NotificationOfficalIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1304ABD41BABC8C500C9EA2D /* NotificationOfficalIcon@3x.png */; };
+		1304ABDA1BABC8C500C9EA2D /* NotificationTagIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1304ABD51BABC8C500C9EA2D /* NotificationTagIcon@3x.png */; };
+		1304ABDC1BAC09A000C9EA2D /* NotificationCommentIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1304ABDB1BAC09A000C9EA2D /* NotificationCommentIcon@3x.png */; };
+		1304ABDF1BAC150500C9EA2D /* LKNormalOfficialCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1304ABDE1BAC150500C9EA2D /* LKNormalOfficialCell.m */; };
+		1304ABE21BAC159E00C9EA2D /* LKNotificationOfficialCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1304ABE11BAC159E00C9EA2D /* LKNotificationOfficialCell.m */; };
+		1304ABE51BAC208C00C9EA2D /* LKOfficialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1304ABE41BAC208C00C9EA2D /* LKOfficialViewController.m */; };
+		1304ABE81BAC2B1900C9EA2D /* LKOfficialDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1304ABE71BAC2B1900C9EA2D /* LKOfficialDetailViewController.m */; };
+		1304ABEA1BAC334200C9EA2D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1304ABE91BAC334200C9EA2D /* WebKit.framework */; };
 		13101D2D1B12DE5F00FBE516 /* LKShareMaskImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 13101D2C1B12DE5F00FBE516 /* LKShareMaskImage.m */; };
 		13101D301B13074700FBE516 /* LKShareTagsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13101D2F1B13074700FBE516 /* LKShareTagsView.m */; };
 		13101D351B1332DE00FBE516 /* LikeIconSmall@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13101D341B1332DE00FBE516 /* LikeIconSmall@3x.png */; };
@@ -168,10 +179,6 @@
 		1373C4721B847A6000A6C55A /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1373C4621B847A6000A6C55A /* UIView+WebCacheOperation.m */; };
 		137750F11B2AB185006AA43D /* LKNewPostUploadCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 137750F01B2AB185006AA43D /* LKNewPostUploadCenter.m */; };
 		137750F41B2AD1CE006AA43D /* LKUploadingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 137750F31B2AD1CE006AA43D /* LKUploadingCell.m */; };
-		1377F03A1B5E1240008E21BC /* NotificationCommentIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1377F0361B5E1240008E21BC /* NotificationCommentIcon@3x.png */; };
-		1377F03B1B5E1240008E21BC /* NotificationFocusIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1377F0371B5E1240008E21BC /* NotificationFocusIcon@3x.png */; };
-		1377F03C1B5E1240008E21BC /* NotificationLikeIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1377F0381B5E1240008E21BC /* NotificationLikeIcon@3x.png */; };
-		1377F03D1B5E1240008E21BC /* NotificationTagIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1377F0391B5E1240008E21BC /* NotificationTagIcon@3x.png */; };
 		1377F0401B5E1702008E21BC /* LKAttentionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1377F03F1B5E1702008E21BC /* LKAttentionView.m */; };
 		1377F04B1B5E35D8008E21BC /* UIKit+Doppelganger.m in Sources */ = {isa = PBXBuildFile; fileRef = 1377F0451B5E35D8008E21BC /* UIKit+Doppelganger.m */; };
 		1377F04C1B5E35D8008E21BC /* WMLArrayDiff.m in Sources */ = {isa = PBXBuildFile; fileRef = 1377F0481B5E35D8008E21BC /* WMLArrayDiff.m */; };
@@ -846,6 +853,22 @@
 		1304ABC41BAAB59000C9EA2D /* LKFansViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKFansViewController.m; sourceTree = "<group>"; };
 		1304ABC61BAAB5B500C9EA2D /* LKMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKMessageViewController.h; sourceTree = "<group>"; };
 		1304ABC71BAAB5B500C9EA2D /* LKMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKMessageViewController.m; sourceTree = "<group>"; };
+		1304ABCD1BABB62300C9EA2D /* GBTagListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBTagListView.h; sourceTree = "<group>"; };
+		1304ABCE1BABB62300C9EA2D /* GBTagListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBTagListView.m; sourceTree = "<group>"; };
+		1304ABD21BABC8C500C9EA2D /* NotificationFocusIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationFocusIcon@3x.png"; sourceTree = "<group>"; };
+		1304ABD31BABC8C500C9EA2D /* NotificationLikeIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationLikeIcon@3x.png"; sourceTree = "<group>"; };
+		1304ABD41BABC8C500C9EA2D /* NotificationOfficalIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationOfficalIcon@3x.png"; sourceTree = "<group>"; };
+		1304ABD51BABC8C500C9EA2D /* NotificationTagIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationTagIcon@3x.png"; sourceTree = "<group>"; };
+		1304ABDB1BAC09A000C9EA2D /* NotificationCommentIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationCommentIcon@3x.png"; sourceTree = "<group>"; };
+		1304ABDD1BAC150500C9EA2D /* LKNormalOfficialCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKNormalOfficialCell.h; sourceTree = "<group>"; };
+		1304ABDE1BAC150500C9EA2D /* LKNormalOfficialCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKNormalOfficialCell.m; sourceTree = "<group>"; };
+		1304ABE01BAC159E00C9EA2D /* LKNotificationOfficialCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKNotificationOfficialCell.h; sourceTree = "<group>"; };
+		1304ABE11BAC159E00C9EA2D /* LKNotificationOfficialCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKNotificationOfficialCell.m; sourceTree = "<group>"; };
+		1304ABE31BAC208C00C9EA2D /* LKOfficialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKOfficialViewController.h; sourceTree = "<group>"; };
+		1304ABE41BAC208C00C9EA2D /* LKOfficialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKOfficialViewController.m; sourceTree = "<group>"; };
+		1304ABE61BAC2B1900C9EA2D /* LKOfficialDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKOfficialDetailViewController.h; sourceTree = "<group>"; };
+		1304ABE71BAC2B1900C9EA2D /* LKOfficialDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKOfficialDetailViewController.m; sourceTree = "<group>"; };
+		1304ABE91BAC334200C9EA2D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		13101D2B1B12DE5F00FBE516 /* LKShareMaskImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKShareMaskImage.h; sourceTree = "<group>"; };
 		13101D2C1B12DE5F00FBE516 /* LKShareMaskImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKShareMaskImage.m; sourceTree = "<group>"; };
 		13101D2E1B13074700FBE516 /* LKShareTagsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKShareTagsView.h; sourceTree = "<group>"; };
@@ -1108,10 +1131,6 @@
 		137750F01B2AB185006AA43D /* LKNewPostUploadCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKNewPostUploadCenter.m; sourceTree = "<group>"; };
 		137750F21B2AD1CE006AA43D /* LKUploadingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKUploadingCell.h; sourceTree = "<group>"; };
 		137750F31B2AD1CE006AA43D /* LKUploadingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKUploadingCell.m; sourceTree = "<group>"; };
-		1377F0361B5E1240008E21BC /* NotificationCommentIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationCommentIcon@3x.png"; sourceTree = "<group>"; };
-		1377F0371B5E1240008E21BC /* NotificationFocusIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationFocusIcon@3x.png"; sourceTree = "<group>"; };
-		1377F0381B5E1240008E21BC /* NotificationLikeIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationLikeIcon@3x.png"; sourceTree = "<group>"; };
-		1377F0391B5E1240008E21BC /* NotificationTagIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationTagIcon@3x.png"; sourceTree = "<group>"; };
 		1377F03E1B5E1702008E21BC /* LKAttentionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKAttentionView.h; sourceTree = "<group>"; };
 		1377F03F1B5E1702008E21BC /* LKAttentionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKAttentionView.m; sourceTree = "<group>"; };
 		1377F0421B5E35D8008E21BC /* Doppelganger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Doppelganger.h; sourceTree = "<group>"; };
@@ -2376,6 +2395,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1304ABEA1BAC334200C9EA2D /* WebKit.framework in Frameworks */,
 				132622AC1B93FCCC0074C589 /* Security.framework in Frameworks */,
 				132622AA1B93FCB50074C589 /* CoreGraphics.framework in Frameworks */,
 				132622A81B93FCA60074C589 /* SystemConfiguration.framework in Frameworks */,
@@ -2413,6 +2433,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1304ABCC1BABB62300C9EA2D /* GBTagListView2.0 */ = {
+			isa = PBXGroup;
+			children = (
+				1304ABCD1BABB62300C9EA2D /* GBTagListView.h */,
+				1304ABCE1BABB62300C9EA2D /* GBTagListView.m */,
+			);
+			path = GBTagListView2.0;
+			sourceTree = "<group>";
+		};
+		1304ABD01BABC8BF00C9EA2D /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				1304ABDB1BAC09A000C9EA2D /* NotificationCommentIcon@3x.png */,
+				1304ABD21BABC8C500C9EA2D /* NotificationFocusIcon@3x.png */,
+				1304ABD31BABC8C500C9EA2D /* NotificationLikeIcon@3x.png */,
+				1304ABD41BABC8C500C9EA2D /* NotificationOfficalIcon@3x.png */,
+				1304ABD51BABC8C500C9EA2D /* NotificationTagIcon@3x.png */,
+			);
+			path = Notification;
+			sourceTree = "<group>";
+		};
 		1319155F1B8C267900EC0F42 /* SMS_SDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -2466,6 +2507,10 @@
 				133D3C861AE79667008F303D /* LKNotificationCell.m */,
 				1304ABBD1BAAAE0B00C9EA2D /* LKNotificationGroupCell.h */,
 				1304ABBE1BAAAE0B00C9EA2D /* LKNotificationGroupCell.m */,
+				1304ABDD1BAC150500C9EA2D /* LKNormalOfficialCell.h */,
+				1304ABDE1BAC150500C9EA2D /* LKNormalOfficialCell.m */,
+				1304ABE01BAC159E00C9EA2D /* LKNotificationOfficialCell.h */,
+				1304ABE11BAC159E00C9EA2D /* LKNotificationOfficialCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2813,6 +2858,7 @@
 		138EDBE41AD7B08A0020957C = {
 			isa = PBXGroup;
 			children = (
+				1304ABE91BAC334200C9EA2D /* WebKit.framework */,
 				BC12A6621BA7BE6000B99CB5 /* CloudKit.framework */,
 				132622AB1B93FCCC0074C589 /* Security.framework */,
 				132622A91B93FCB50074C589 /* CoreGraphics.framework */,
@@ -3713,6 +3759,7 @@
 		138EDECA1AD7B65B0020957C /* LKResource */ = {
 			isa = PBXGroup;
 			children = (
+				1304ABD01BABC8BF00C9EA2D /* Notification */,
 				1357351A1B2EDFC50032515C /* Data */,
 				13F505091B0C5EA100D8D484 /* Share */,
 				13B6C19A1AE8FFBE008912C0 /* Welcome */,
@@ -3774,6 +3821,7 @@
 		138EDECC1AD7B70F0020957C /* LKExternal */ = {
 			isa = PBXGroup;
 			children = (
+				1304ABCC1BABB62300C9EA2D /* GBTagListView2.0 */,
 				132E6F861BA970E5001DF4BF /* GCPlaceholderTextView */,
 				BC12A5CF1B9BD14E00B99CB5 /* LKNetwork */,
 				1326229D1B93FC0D0074C589 /* JPush */,
@@ -4039,6 +4087,10 @@
 				1304ABC41BAAB59000C9EA2D /* LKFansViewController.m */,
 				1304ABC61BAAB5B500C9EA2D /* LKMessageViewController.h */,
 				1304ABC71BAAB5B500C9EA2D /* LKMessageViewController.m */,
+				1304ABE31BAC208C00C9EA2D /* LKOfficialViewController.h */,
+				1304ABE41BAC208C00C9EA2D /* LKOfficialViewController.m */,
+				1304ABE61BAC2B1900C9EA2D /* LKOfficialDetailViewController.h */,
+				1304ABE71BAC2B1900C9EA2D /* LKOfficialDetailViewController.m */,
 			);
 			path = Notification;
 			sourceTree = "<group>";
@@ -4994,10 +5046,6 @@
 				13478CB61B6636770012EDA2 /* LittleYouLike@3x.png */,
 				13D549E61B61114B00D3CA2C /* LittleTag@3x.png */,
 				138C84761B6B650C00C2AC62 /* LittleFollowing@3x.png */,
-				1377F0361B5E1240008E21BC /* NotificationCommentIcon@3x.png */,
-				1377F0371B5E1240008E21BC /* NotificationFocusIcon@3x.png */,
-				1377F0381B5E1240008E21BC /* NotificationLikeIcon@3x.png */,
-				1377F0391B5E1240008E21BC /* NotificationTagIcon@3x.png */,
 				133A31841B5D0D3400AB74A4 /* SearchPlaceholderIcon@3x.png */,
 				133A31821B5D09C500AB74A4 /* CollectionIcon@3x.png */,
 				13892C3A1B1C31E30053303E /* HomepageIcon@3x.png */,
@@ -5224,6 +5272,7 @@
 			files = (
 				135D5C031ADFD21E00811B06 /* CameraChange@3x.png in Resources */,
 				13FCC0851ADE3DAB0008DB41 /* PullLoaderSmallArrow@2x.png in Resources */,
+				1304ABDC1BAC09A000C9EA2D /* NotificationCommentIcon@3x.png in Resources */,
 				138EDEE61AD7D1020020957C /* TabBarLike@3x.png in Resources */,
 				134765351AE2564D0055D099 /* PostDismiss@3x.png in Resources */,
 				1390557B1B9DA47D00DBF34A /* LKChooseTagView.xib in Resources */,
@@ -5240,8 +5289,10 @@
 				135748151BA1887C00855603 /* Vxgaga.png in Resources */,
 				135DBAF91AE60590004AD150 /* NavigationBarBack@3x.png in Resources */,
 				13F505111B0C5EAC00D8D484 /* ShareIcon@3x.png in Resources */,
+				1304ABDA1BABC8C500C9EA2D /* NotificationTagIcon@3x.png in Resources */,
 				13B5B4E81B15CB6800252A78 /* TalkTip@3x.png in Resources */,
 				1369D0D21B82E7EE00498950 /* more.png in Resources */,
+				1304ABD91BABC8C500C9EA2D /* NotificationOfficalIcon@3x.png in Resources */,
 				135D5C041ADFD21E00811B06 /* CameraCut@3x.png in Resources */,
 				138EDF0C1AD7E19D0020957C /* LoginBackground@3x.jpg in Resources */,
 				139054C21B994A6D00DBF34A /* Info.plist in Resources */,
@@ -5255,7 +5306,6 @@
 				13F505101B0C5EAC00D8D484 /* QQIcon@3x.png in Resources */,
 				13DA0FC61AEB8AFE005B9476 /* CameraFocus@3x.png in Resources */,
 				135D5C951AE113BA00811B06 /* CameraClose@3x.png in Resources */,
-				1377F03B1B5E1240008E21BC /* NotificationFocusIcon@3x.png in Resources */,
 				138EDE8C1AD7B0A30020957C /* LCInternationalization.bundle in Resources */,
 				13B5B4E61B15CB6800252A78 /* TalkIcon@3x.png in Resources */,
 				132622AE1B93FD4C0074C589 /* PushConfig.plist in Resources */,
@@ -5289,23 +5339,22 @@
 				139C737F1B553EC20051B2C3 /* __LKFilterConsole.xib in Resources */,
 				13925A951B1477D2004D0656 /* NavBarIconSearchCircle_blue@2x.png in Resources */,
 				13DEEC171AE789E6005E01A6 /* LC_WebForward.png in Resources */,
+				1304ABD81BABC8C500C9EA2D /* NotificationLikeIcon@3x.png in Resources */,
 				13DEEC1B1AE789E6005E01A6 /* LC_WebStop.png in Resources */,
 				13D9BF2D1AEB997E0020C94F /* Vivid.png in Resources */,
 				13DEEC051AE7733C005E01A6 /* Appstore@3x.png in Resources */,
 				1388B6B31B34272A006ACA44 /* CameraRollIcon@3x.png in Resources */,
 				135CF64E1B37E52500DB24D6 /* CameraMagic@3x.png in Resources */,
+				1304ABD71BABC8C500C9EA2D /* NotificationFocusIcon@3x.png in Resources */,
 				1357352D1B2EF44E0032515C /* WeiboLogin@3x.png in Resources */,
 				138EDE431AD7B0A30020957C /* web.bundle in Resources */,
 				131915691B8C625A00EC0F42 /* 二维码.png in Resources */,
 				13DEEBF91AE75585005E01A6 /* AlreadyFocusWrite@3x.png in Resources */,
-				1377F03D1B5E1240008E21BC /* NotificationTagIcon@3x.png in Resources */,
-				1377F03A1B5E1240008E21BC /* NotificationCommentIcon@3x.png in Resources */,
 				1387C3441B31508A00B065A7 /* FacebookLogin@3x.png in Resources */,
 				134D92F11B8DA8A0004CFAC8 /* 狗.png in Resources */,
 				1388B4FE1B01EFFB006F36AB /* FocusLG@3x.png in Resources */,
 				1359F4A41B6A24B800A0ABE9 /* Gta-walking@3x.png in Resources */,
 				13F505151B0C5EAC00D8D484 /* WeChatFriendIcon@3x.png in Resources */,
-				1377F03C1B5E1240008E21BC /* NotificationLikeIcon@3x.png in Resources */,
 				1388B4F71B00C0DD006F36AB /* SettingHead@3x.png in Resources */,
 				13E27EF51AF8B7D000C17362 /* cellLine@2x.png in Resources */,
 				134765361AE2564D0055D099 /* PostNavigationBar@3x.png in Resources */,
@@ -5397,6 +5446,7 @@
 			files = (
 				138EDE751AD7B0A30020957C /* UIView+LCUIAnimation.m in Sources */,
 				138EDE8A1AD7B0A30020957C /* LCUserDefaults.mm in Sources */,
+				1304ABE81BAC2B1900C9EA2D /* LKOfficialDetailViewController.m in Sources */,
 				13D63AE01AEA2DB3001587C0 /* JTSImageInfo.m in Sources */,
 				138EDEA01AD7B0A30020957C /* UIView+LCTag.m in Sources */,
 				138EDE791AD7B0A30020957C /* LCAVAudioPlayer.m in Sources */,
@@ -5667,6 +5717,7 @@
 				138EDE631AD7B0A30020957C /* JSONModelError.m in Sources */,
 				138EDE1B1AD7B0A30020957C /* LCUtils.m in Sources */,
 				139055411B994A6D00DBF34A /* GPUImageSharpenFilter.m in Sources */,
+				1304ABDF1BAC150500C9EA2D /* LKNormalOfficialCell.m in Sources */,
 				13E27EF61AF8B7D000C17362 /* TRActionSheet.m in Sources */,
 				138EDE311AD7B0A30020957C /* LCHandleViewTreeRequest.m in Sources */,
 				138EDE5C1AD7B0A30020957C /* FMDatabaseAdditions.m in Sources */,
@@ -5868,6 +5919,7 @@
 				1373C46C1B847A6000A6C55A /* UIButton+WebCache.m in Sources */,
 				139054F41B994A6D00DBF34A /* GPUImageGammaFilter.m in Sources */,
 				139054C51B994A6D00DBF34A /* GPUImage3x3ConvolutionFilter.m in Sources */,
+				1304ABE21BAC159E00C9EA2D /* LKNotificationOfficialCell.m in Sources */,
 				138EDE7C1AD7B0A30020957C /* LCFoundation.m in Sources */,
 				13D63AE71AEA3896001587C0 /* LKPhotoAlbum.m in Sources */,
 				BC12A6301B9BF04F00B99CB5 /* LCUrlArgumentsFilter.m in Sources */,
@@ -5921,6 +5973,7 @@
 				138EDE761AD7B0A30020957C /* LCAppVersion.m in Sources */,
 				138EDE981AD7B0A30020957C /* LCUISignal.m in Sources */,
 				13BCD8CC1ADBA93000A0CBF5 /* CALayer+MCShorthand.m in Sources */,
+				1304ABCF1BABB62300C9EA2D /* GBTagListView.m in Sources */,
 				138EDE6C1AD7B0A30020957C /* UIScrollView+SVInfiniteScrolling.m in Sources */,
 				13E27F061AF9CBB700C17362 /* LKPopAnimation.m in Sources */,
 				BC12A5E31B9BD16100B99CB5 /* LKBatchRequest.m in Sources */,
@@ -6008,6 +6061,7 @@
 				13BCD8C81ADBA93000A0CBF5 /* MCAnimationGroup.m in Sources */,
 				139055611B994A6D00DBF34A /* GPUImageView.m in Sources */,
 				1390552F1B994A6D00DBF34A /* GPUImagePixellateFilter.m in Sources */,
+				1304ABE51BAC208C00C9EA2D /* LKOfficialViewController.m in Sources */,
 				138EDE9A1AD7B0A30020957C /* UIColor+LCExtension.m in Sources */,
 				138EDE651AD7B0A30020957C /* JSONAPI.m in Sources */,
 				13FCC07F1ADE3B340008DB41 /* LKPost.m in Sources */,

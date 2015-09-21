@@ -66,6 +66,8 @@ LC_PROPERTY_MODEL(LKPostTagsDetailModel, tagsListModel);
 
 - (void)buildUI {
     
+    self.view.backgroundColor = LKColor.backgroundColor;
+    
     self.title = LC_LO(@"群组");
     
     [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[UIImage imageNamed:@"NavigationBarBack.png" useCache:YES] selectImage:nil];

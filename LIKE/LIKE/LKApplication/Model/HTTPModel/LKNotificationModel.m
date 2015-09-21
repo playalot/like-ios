@@ -7,6 +7,7 @@
 //
 
 #import "LKNotificationModel.h"
+#import "LKNotificationInterface.h"
 
 @implementation LKNotificationModel
 
@@ -23,92 +24,112 @@
 
         self.datasource = [NSMutableArray array];
 
-//        for (NSDictionary *data in tmp) {
-//            
-//            [self.datasource addObject:[[LKNotification alloc] initWithDictionary:data error:nil]];
-//        }
-        
-        for (NSInteger i = 0; i < tmp.count; i++) {
+        for (NSDictionary *data in tmp) {
             
-            NSDictionary *dict = tmp[i];
-            NSDictionary *nextNoti = nil;
-            
-            if (i != tmp.count - 1) {
-                
-                nextNoti = tmp[i + 1];
-            }
-            [self.datasource addObject:[[LKNotification alloc] initWithDictionary:dict nextDict:nextNoti error:nil]];
+            [self.datasource addObject:[[LKNotification alloc] initWithDictionary:data error:nil]];
         }
-    
+            
     }
     return self;
 }
 
 - (void)getNotificationsAtFirstPage:(BOOL)firstPage requestFinished:(LKNotificationModelRequestFinished)requestFinished
 {
-    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"notification"].AUTO_SESSION();
-    
-    if (!firstPage) {
-        
-        [interface addParameter:@(self.timestamp) key:@"ts"];
-    }
-    
     @weakly(self);
     
-    [self request:interface complete:^(LKHttpRequestResult *result) {
-       
-        @normally(self);
+    LKNotificationInterface *notificationInterface = [[LKNotificationInterface alloc] initWithTimestamp:self.timestamp firstPage:firstPage];
+    
+    @weakly(notificationInterface);
+    
+    [notificationInterface startWithCompletionBlockWithSuccess:^(LCBaseRequest *request) {
         
-        if (result.state == LKHttpRequestStateFinished) {
-                        
-            NSArray *tmp = result.json[@"data"][@"notifications"];
+        @normally(notificationInterface);
+        @normally(self);
+
+        NSArray *tmp = notificationInterface.notifications;
+        
+        NSMutableArray *datasource = [NSMutableArray array];
+        
+        for (NSDictionary *dic in tmp) {
             
-            NSMutableArray *datasource = [NSMutableArray array];
+            [datasource addObject:[[LKNotification alloc] initWithDictionary:dic error:nil]];
+        }
+        
+        if (firstPage) {
             
+            self.datasource = datasource;
+            
+            // save cache...
+            LKUserDefaults.singleton[self.class.description] = tmp;
+        }
+        else{
+            
+            [self.datasource addObjectsFromArray:datasource];
+        }
+        
+        self.timestamp = ((LKComment *)self.datasource.lastObject).timestamp.integerValue;
+        
+        if (requestFinished) {
+            requestFinished(nil);
+        }
+
+    } failure:^(LCBaseRequest *request) {
+        
+//        if (requestFinished) {
+//            requestFinished(result.error);
+//        }
+    }];
+    
+//    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"notification"].AUTO_SESSION();
+//    
+//    if (!firstPage) {
+//        
+//        [interface addParameter:@(self.timestamp) key:@"ts"];
+//    }
+//    
+//    @weakly(self);
+//    
+//    [self request:interface complete:^(LKHttpRequestResult *result) {
+//       
+//        @normally(self);
+//        
+//        if (result.state == LKHttpRequestStateFinished) {
+//                        
+//            NSArray *tmp = result.json[@"data"][@"notifications"];
+//            
+//            NSMutableArray *datasource = [NSMutableArray array];
+//            
 //            for (NSDictionary *dic in tmp) {
 //
 //                [datasource addObject:[[LKNotification alloc] initWithDictionary:dic error:nil]];
 //            }
-            
-            for (NSInteger i = 0; i < tmp.count; i++) {
-                
-                NSDictionary *dict = tmp[i];
-                NSDictionary *nextNoti = nil;
-
-                if (i != tmp.count - 1) {
-
-                    nextNoti = tmp[i + 1];
-                }
-                [datasource addObject:[[LKNotification alloc] initWithDictionary:dict nextDict:nextNoti error:nil]];
-            }
-            
-            
-            if (firstPage) {
-                
-                self.datasource = datasource;
-                
-                // save cache...
-                LKUserDefaults.singleton[self.class.description] = tmp;
-            }
-            else{
-                
-                [self.datasource addObjectsFromArray:datasource];
-            }
-            
-            self.timestamp = ((LKComment *)self.datasource.lastObject).timestamp.integerValue;
-            
-            if (requestFinished) {
-                requestFinished(nil);
-            }
-        }
-        else if (result.state == LKHttpRequestStateFailed){
-            
-            if (requestFinished) {
-                requestFinished(result.error);
-            }
-        }
-        
-    }];
+//            
+//            if (firstPage) {
+//                
+//                self.datasource = datasource;
+//                
+//                // save cache...
+//                LKUserDefaults.singleton[self.class.description] = tmp;
+//            }
+//            else{
+//                
+//                [self.datasource addObjectsFromArray:datasource];
+//            }
+//            
+//            self.timestamp = ((LKComment *)self.datasource.lastObject).timestamp.integerValue;
+//            
+//            if (requestFinished) {
+//                requestFinished(nil);
+//            }
+//        }
+//        else if (result.state == LKHttpRequestStateFailed){
+//            
+//            if (requestFinished) {
+//                requestFinished(result.error);
+//            }
+//        }
+//        
+//    }];
 }
 
 @end

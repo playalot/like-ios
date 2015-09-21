@@ -54,6 +54,7 @@ LC_PROPERTY(strong) LCUIPullLoader *pullLoader;
     
     self.tableView = [[LCUITableView alloc] initWithFrame:CGRectZero];
     self.tableView.frame = self.view.bounds;
+    self.tableView.viewFrameHeight -= 49;
     self.tableView.backgroundView = nil;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -119,18 +120,25 @@ LC_PROPERTY(strong) LCUIPullLoader *pullLoader;
     return cell;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (CGFloat)tableView:(LCUITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    LKNotification *notification = self.notificationModel.datasource[indexPath.row];
+    return 60;
+}
+
+- (CGFloat)tableView:(LCUITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (notification.posts.count >= 2) {
-        
-        return 110;
-        
-    } else {
-        
-        return [LKNotificationCell height:notification];
-    }
+    LKNotificationCell *notiCell = (LKNotificationCell *)[self tableView:tableView cellForRowAtIndexPath:indexPath];
+    return notiCell.cellHeight;
+
+//    LKNotification *notification = self.notificationModel.datasource[indexPath.row];
+//    if (notification.posts.count >= 2) {
+//        
+//        return 110;
+//        
+//    } else {
+//        
+//        return [LKNotificationCell height:notification];
+//    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -168,11 +176,11 @@ LC_PROPERTY(strong) LCUIPullLoader *pullLoader;
             NSString *content = result.json[@"data"][@"content"];
             post.content = content;
             
-//            LKPostDetailViewController *detailViewController = [[LKPostDetailViewController alloc] initWithPost:post];
-//            [self.navigationController presentViewController:detailViewController animated:YES completion:^{}];
+            LKPostDetailViewController *detailViewController = [[LKPostDetailViewController alloc] initWithPost:post];
+            [self.navigationController presentViewController:detailViewController animated:YES completion:^{}];
 
-            LKOfficialDetailViewController *detailCtrl = [[LKOfficialDetailViewController alloc] init];
-            [self.navigationController pushViewController:detailCtrl animated:YES];
+//            LKOfficialDetailViewController *detailCtrl = [[LKOfficialDetailViewController alloc] init];
+//            [self.navigationController pushViewController:detailCtrl animated:YES];
 
         } else if (result.state == LKHttpRequestStateFailed) {
             

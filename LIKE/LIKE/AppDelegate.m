@@ -176,8 +176,8 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     self.homeViewController = [LKHomeViewController viewController];
     self.mainFeedViewController = [LKMainFeedViewController viewController];
     self.searchViewController = [LKSearchViewController viewController];
+    self.cameraRollViewController = [LKCameraRollViewController viewController];
     self.notificationViewController = [LKNotificationViewController viewController];
-    self.groupViewController = [LKGroupViewController viewController];
     self.userCenterViewController = [[LKUserCenterViewController alloc] initWithUser:LKLocalUser.singleton.user];
     
     // tabbarCtrl只放了一个主页控制器
@@ -185,17 +185,29 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
                              initWithViewControllers:@[
                                                        LC_UINAVIGATION(self.mainFeedViewController),
                                                        LC_UINAVIGATION(self.searchViewController),
+                                                       LC_UINAVIGATION(self.cameraRollViewController),
                                                        LC_UINAVIGATION(self.notificationViewController),
                                                        LC_UINAVIGATION(self.userCenterViewController)]];
-    
-    NSArray *titles = @[@"主页", @"发现", @"通知", @"个人"];
+
+    NSArray *imageNames = @[@"tabbar_homeLine",
+                            @"tabbar_search",
+                            @"tabbar_camera",
+                            @"tabbar_notification",
+                            @"tabbar_userCenter"];
+    NSArray *selectedImageNames = @[@"tabbar_homeLine_selected",
+                                    @"tabbar_search_selected",
+                                    @"tabbar_camera",
+                                    @"tabbar_notification_selected",
+                                    @"tabbar_userCenter_selected"];
     NSInteger i = 0;
     
     for (UIView *view in self.tabBarController.tabBar.items) {
+        
         if ([view isKindOfClass:[RDVTabBarItem class]]) {
-            view.backgroundColor = [UIColor colorWithRed:arc4random_uniform(255.0)/255.0 green:arc4random_uniform(255.0)/255.0 blue:arc4random_uniform(255.0)/255.0 alpha:1];
+
             RDVTabBarItem *item = (RDVTabBarItem *)view;
-            item.title = titles[i];
+            [item setBackgroundSelectedImage:[UIImage imageNamed:selectedImageNames[i]]
+                         withUnselectedImage:[UIImage imageNamed:imageNames[i]]];
             i++;
         }
     }
@@ -204,6 +216,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
 }
 
 - (void)setupLoginValidation {
+    
     if (!LKLocalUser.singleton.isLogin) {
         LCUIImageView * imageView = LCUIImageView.view;
         imageView.image = [LKWelcome image];
@@ -353,6 +366,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
 
 #pragma mark - ***** LC_CMD_IMP *****
 -(NSString *) CMDSee:(NSString *)cmd {
+    
     if ([cmd isEqualToString:@"session"]) {
         return LKLocalUser.singleton.sessionToken;
     } else if ([cmd isEqualToString:@"uid"]) {
@@ -367,11 +381,17 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
  *  根据通知类型处理对应的操作
  */
 -(void) handleNotification:(NSNotification *)notification {
+    
     if ([notification is:LKSessionError]) {
+        
         NSInteger errorCode = [notification.object integerValue];
+        
         if (errorCode == 4016) {
+            
             [LKLocalUser regetSessionTokenAndUseLoadingTip:YES];
+            
         } else if (errorCode == 4013){
+            
             [LKLocalUser logout];
             [LKLoginViewController needLoginOnViewController:nil];
         }
@@ -389,6 +409,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
  *  @return YES
  */
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    
     [QQApiInterface handleOpenURL:url delegate:nil];
     [WXApi handleOpenURL:url delegate:LKWeChatShare.singleton];
     [WeiboSDK handleOpenURL:url delegate:LKSinaShare.singleton];

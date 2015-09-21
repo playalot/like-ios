@@ -18,6 +18,7 @@
 #import "LKHomeFeedViewController.h"
 #import "LKMainFeedViewController.h"
 #import "LKGroupViewController.h"
+#import "LKCameraRollViewController.h"
 
 LC_NOTIFICATION_SET(LKSessionError);
 
@@ -27,6 +28,7 @@ LC_PROPERTY(strong) LKTabBarController *tabBarController;
 LC_PROPERTY(strong) LKMainFeedViewController *mainFeedViewController;
 LC_PROPERTY(strong) LKHomeViewController *homeViewController;
 LC_PROPERTY(strong) LKSearchViewController *searchViewController;
+LC_PROPERTY(strong) LKCameraRollViewController *cameraRollViewController;
 LC_PROPERTY(strong) LKNotificationViewController *notificationViewController;
 LC_PROPERTY(strong) LKUserCenterViewController *userCenterViewController;
 LC_PROPERTY(strong) LKGroupViewController *groupViewController;

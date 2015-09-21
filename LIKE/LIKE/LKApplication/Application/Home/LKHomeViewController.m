@@ -798,12 +798,9 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
         if (result.state == LKHttpRequestStateFinished) {
             
             if (self.feedType == LKHomepageFeedTypeFocus) {
-                
                 self.focusNext = result.json[@"data"][@"next"] ? result.json[@"data"][@"next"] : nil;
-            }
-            else{
-                
-                self.next = result.json[@"data"][@"next"] ? result.json[@"data"][@"next"] : nil/*@""*/;
+            } else {
+                self.next = result.json[@"data"][@"next"] ? result.json[@"data"][@"next"] : nil;
             }
             
             NSArray * resultData = result.json[@"data"][@"posts"];

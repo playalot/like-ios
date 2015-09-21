@@ -174,12 +174,12 @@ LC_PROPERTY(weak) id delegate;
 // 这个方法同时负责主页和关注的人列表的请求
 - (void)loadData:(LCUIPullLoaderDiretion)diretion {
     
-    if (diretion == LCUIPullLoaderDiretionTop) {
-        self.next = nil;
+    @weakly(self);
+    LKHomeFeedInterface *homeFeedInterface = [[LKHomeFeedInterface alloc] init];
+    if (self.next && diretion == LCUIPullLoaderDiretionBottom) {
+        homeFeedInterface.timestamp = self.next;
     }
     
-    @weakly(self);
-    LKHomeFeedInterface *homeFeedInterface = [[LKHomeFeedInterface alloc] initWithNext:self.next];
     @weakly(homeFeedInterface);
     [homeFeedInterface startWithCompletionBlockWithSuccess:^(LCBaseRequest *request) {
         @normally(homeFeedInterface);

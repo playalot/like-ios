@@ -67,7 +67,7 @@ LC_PROPERTY(assign) BOOL isLocalUser;
     ((LCUINavigationController *)self.navigationController).animationHandler = nil;
 }
 
-+ (LKUserCenterViewController *) pushUserCenterWithUser:(LKUser *)user navigationController:(UINavigationController *)navigationController {
++ (LKUserCenterViewController *)pushUserCenterWithUser:(LKUser *)user navigationController:(UINavigationController *)navigationController {
     LKUserCenterViewController * userCenter = [[LKUserCenterViewController alloc] initWithUser:user];
     [navigationController pushViewController:userCenter animated:YES];
     return userCenter;
@@ -404,7 +404,7 @@ LC_PROPERTY(assign) BOOL isLocalUser;
 #pragma mark -
 
 - (void)scrollToPostByIndex:(NSInteger)index {
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:(index / 3) inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+//    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:(index / 3) inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
 }
 
 - (void)setCurrentType:(LKUserCenterModelType)currentType {
@@ -501,25 +501,19 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     } else if (self.currentType == LKUserCenterModelTypeFocus){
         
         LKUserCenterUserCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Focus" andClass:[LKUserCenterUserCell class]];
-        
         cell.user = self.userCenterModel.focusArray[indexPath.row];
-        
         return cell;
         
     } else if (self.currentType == LKUserCenterModelTypeFans){
         
         LKUserCenterUserCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Fans" andClass:[LKUserCenterUserCell class]];
-        
         cell.user = self.userCenterModel.fansArray[indexPath.row];
-        
         return cell;
         
     } else if (self.currentType == LKUserCenterModelTypeFavor) {
         
         LKUserCenterPhotoCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Favor" andClass:[LKUserCenterPhotoCell class]];
-        
         NSInteger index = indexPath.row * 3;
-        
         NSArray * datasource = [self.userCenterModel dataWithType:LKUserCenterModelTypeFavor];
         
         LKPost * post = datasource[index];
@@ -527,26 +521,19 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
         LKPost * post2 = index + 2 < datasource.count ? datasource[index + 2] : nil;
         
         NSMutableArray * array = [NSMutableArray array];
-        
         if (post) {
             [array addObject:post];
         }
-        
         if (post1) {
             [array addObject:post1];
         }
-        
         if (post2) {
             [array addObject:post2];
         }
-        
         cell.posts = array;
         
         return cell;
-        
     }
-    
-    ERROR(@"Crash...");
     return nil;
 }
 

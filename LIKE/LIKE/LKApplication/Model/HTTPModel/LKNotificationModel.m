@@ -23,23 +23,11 @@
 
         self.datasource = [NSMutableArray array];
 
-//        for (NSDictionary *data in tmp) {
-//            
-//            [self.datasource addObject:[[LKNotification alloc] initWithDictionary:data error:nil]];
-//        }
-        
-        for (NSInteger i = 0; i < tmp.count; i++) {
+        for (NSDictionary *data in tmp) {
             
-            NSDictionary *dict = tmp[i];
-            NSDictionary *nextNoti = nil;
-            
-            if (i != tmp.count - 1) {
-                
-                nextNoti = tmp[i + 1];
-            }
-            [self.datasource addObject:[[LKNotification alloc] initWithDictionary:dict nextDict:nextNoti error:nil]];
+            [self.datasource addObject:[[LKNotification alloc] initWithDictionary:data error:nil]];
         }
-    
+            
     }
     return self;
 }
@@ -65,23 +53,10 @@
             
             NSMutableArray *datasource = [NSMutableArray array];
             
-//            for (NSDictionary *dic in tmp) {
-//
-//                [datasource addObject:[[LKNotification alloc] initWithDictionary:dic error:nil]];
-//            }
-            
-            for (NSInteger i = 0; i < tmp.count; i++) {
-                
-                NSDictionary *dict = tmp[i];
-                NSDictionary *nextNoti = nil;
+            for (NSDictionary *dic in tmp) {
 
-                if (i != tmp.count - 1) {
-
-                    nextNoti = tmp[i + 1];
-                }
-                [datasource addObject:[[LKNotification alloc] initWithDictionary:dict nextDict:nextNoti error:nil]];
+                [datasource addObject:[[LKNotification alloc] initWithDictionary:dic error:nil]];
             }
-            
             
             if (firstPage) {
                 

@@ -31,6 +31,6 @@ LC_PROPERTY(copy) NSString *tag;
 LC_PROPERTY(strong) NSMutableArray *tags;
 LC_PROPERTY(strong) NSNumber *tagID;
 
-- (instancetype)initWithDictionary:(NSDictionary *)dict nextDict:(NSDictionary *)nextDict error:(NSError *__autoreleasing *)err;
+- (instancetype)initWithDictionary:(NSDictionary *)dict error:(NSError *__autoreleasing *)err;
 
 @end

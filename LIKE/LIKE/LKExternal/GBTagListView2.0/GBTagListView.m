@@ -28,7 +28,6 @@ alpha:1.0]
         totalHeight = 0;
         self.frame = frame;
         _tagArr = [[NSMutableArray alloc]init];
-        self.backgroundColor = [UIColor cyanColor];
     }
     return self;
 }
@@ -58,8 +57,6 @@ alpha:1.0]
         //            tagBtn.userInteractionEnabled=NO;
         //        }
         
-        tagBtn.backgroundColor = LKColor.color;
-        
         tagBtn.userInteractionEnabled = NO;
         //        [tagBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         tagBtn.titleLabel.font = LK_FONT_B(11);
@@ -88,12 +85,20 @@ alpha:1.0]
         newRect.size = Size_str;
         [tagBtn setFrame:newRect];
         previousFrame = tagBtn.frame;
-        [self setHight:self andHight:totalHeight+Size_str.height + BOTTOM_MARGIN];
+        [self setHight:self andHight:totalHeight + Size_str.height];
         [self addSubview:tagBtn];
+        
+        if (arr.count == 2) {
+            
+            tagBtn.backgroundColor = LKColor.color;
+        } else {
+            
+            tagBtn.backgroundColor = [UIColor colorWithRed:255 green:112 blue:108 alpha:1];
+        }
         
     }];
     
-//    self.backgroundColor = LKColor.backgroundColor;
+    self.backgroundColor = LKColor.backgroundColor;
 }
 
 #pragma mark-改变控件高度

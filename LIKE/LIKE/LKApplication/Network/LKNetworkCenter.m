@@ -44,7 +44,15 @@
     [LCNetworkCenter.singleton.sessionManager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
 
     
-    NSString * url = [LK_API stringByAppendingString:interface.type];
+    NSString *url = nil;
+    
+    if ([interface.type rangeOfString:@"notification"].location != NSNotFound) {
+        
+        url = [[LK_API stringByReplacingOccurrencesOfString:@"v1" withString:@"v2"] stringByAppendingString:interface.type];
+    } else {
+        
+        url = [LK_API stringByAppendingString:interface.type];
+    }
     
     [LCNetworkCenter requestURL:url
                          method:interface.methodType

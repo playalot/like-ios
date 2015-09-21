@@ -15,6 +15,7 @@
 #import "LKLoginViewController.h"
 #import "LKInputView.h"
 #import "LKPostDetailViewController.h"
+#import "LKFollowingInterface.h"
 
 #define FOCUS_FEED_CACHE_KEY [NSString stringWithFormat:@"LKFocusFeedKey-%@", LKLocalUser.singleton.user.id]
 
@@ -46,7 +47,7 @@ LC_PROPERTY(weak) id delegate;
     self.tableView.backgroundColor = [UIColor clearColor];
     self.view.ADD(self.tableView);
     
-    self.pullLoader = [LCUIPullLoader pullLoaderWithScrollView:self.tableView pullStyle:LCUIPullLoaderStyleFooter];
+    self.pullLoader = [LCUIPullLoader pullLoaderWithScrollView:self.tableView pullStyle:LCUIPullLoaderStyleHeaderAndFooter];
     self.pullLoader.indicatorViewStyle = UIActivityIndicatorViewStyleWhite;
     
     @weakly(self);
@@ -60,14 +61,54 @@ LC_PROPERTY(weak) id delegate;
 }
 
 // 这个方法同时负责主页和关注的人列表的请求
--(void) loadData:(LCUIPullLoaderDiretion)diretion
-{
-    //    if (LC_APPDELEGATE.tabBarController.loading) {
-    //        [self.pullLoader endRefresh];
-    //        return;
-    //    }
+- (void)loadData:(LCUIPullLoaderDiretion)diretion {
     
     NSTimeInterval time = [[NSDate date] timeIntervalSince1970];
+    if (diretion == LCUIPullLoaderDiretionTop) {
+        self.next = nil;
+    }
+    
+    LKFollowingInterface *followingInterface = [[LKFollowingInterface alloc] initWithNext:self.next];
+    
+    @weakly(self);
+    @weakly(followingInterface);
+    
+    [followingInterface startWithCompletionBlockWithSuccess:^(LCBaseRequest *request) {
+        
+        @normally(self);
+        @normally(followingInterface);
+
+        NSNumber *resultNext = followingInterface.next;
+        if (resultNext)
+            self.next = resultNext;
+        
+        NSArray * resultData = followingInterface.posts;
+        NSMutableArray * datasource = [NSMutableArray array];
+        
+        for (NSDictionary * tmp in resultData) {
+            [datasource addObject:[LKPost objectFromDictionary:tmp]];
+        }
+        
+        if (diretion == LCUIPullLoaderDiretionTop) {
+            
+            self.datasource = datasource;
+            LKUserDefaults.singleton[FOCUS_FEED_CACHE_KEY] = resultData;
+            self.lastFocusLoadTime = time;
+        } else {
+            [self.datasource addObjectsFromArray:datasource];
+        }
+        
+        [self.pullLoader endRefresh];
+        LC_FAST_ANIMATIONS(0.25, ^{
+            [self.tableView reloadData];
+        });
+        
+    } failure:^(LCBaseRequest *request) {
+        
+    }];
+    
+    return;
+    
     
     //    if (self.feedType == LKHomepageFeedTypeFocus && diretion == LCUIPullLoaderDiretionTop) {
     //        if (time - self.lastFocusLoadTime < 30) {
@@ -77,68 +118,68 @@ LC_PROPERTY(weak) id delegate;
     
     //    LC_APPDELEGATE.tabBarController.loading = YES;
     
-    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"followingFeeds"].AUTO_SESSION();
-    
-    if (self.next && diretion == LCUIPullLoaderDiretionBottom) {
-        [interface addParameter:self.next key:@"ts"];
-    }
-    
-    @weakly(self);
-    
-    [self request:interface complete:^(LKHttpRequestResult *result) {
-        
-        @normally(self);
-        
-        if (result.state == LKHttpRequestStateFinished) {
-            
-            NSNumber *resultNext = result.json[@"data"][@"next"];
-            if (resultNext)
-                self.next = resultNext;
-            
-            NSArray * resultData = result.json[@"data"][@"posts"];
-            NSMutableArray * datasource = [NSMutableArray array];
-            
-            for (NSDictionary * tmp in resultData) {
-                [datasource addObject:[LKPost objectFromDictionary:tmp]];
-            }
-            
-            if (diretion == LCUIPullLoaderDiretionTop) {
-                
-                self.datasource = datasource;
-                LKUserDefaults.singleton[FOCUS_FEED_CACHE_KEY] = resultData;
-                
-                self.lastFocusLoadTime = time;
-            }
-            else{
-                
-                [self.datasource addObjectsFromArray:datasource];
-            }
-            
-            if (diretion == LCUIPullLoaderDiretionBottom) {
-                
-                [self.pullLoader endRefresh];
-                
-            }
-            
-            LC_FAST_ANIMATIONS(0.25, ^{
-                [self.tableView reloadData];
-            });
-            
-            //            [LC_APPDELEGATE.tabBarController.loading = NO;
-        }
-        else if (result.state == LKHttpRequestStateFailed){
-            
-            [self.pullLoader endRefresh];
-            
-            //            LC_APPDELEGATE.tabBarController.loading = NO;
-        }
-        else if (result.state == LKHttpRequestStateCanceled){
-            
-            [self.pullLoader endRefresh];
-            
-            //            LC_APPDELEGATE.tabBarController.loading = NO;
-        }
-    }];
+//    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"followingFeeds"].AUTO_SESSION();
+//    
+//    if (self.next && diretion == LCUIPullLoaderDiretionBottom) {
+//        [interface addParameter:self.next key:@"ts"];
+//    }
+//    
+//    @weakly(self);
+//    
+//    [self request:interface complete:^(LKHttpRequestResult *result) {
+//        
+//        @normally(self);
+//        
+//        if (result.state == LKHttpRequestStateFinished) {
+//            
+//            NSNumber *resultNext = result.json[@"data"][@"next"];
+//            if (resultNext)
+//                self.next = resultNext;
+//            
+//            NSArray * resultData = result.json[@"data"][@"posts"];
+//            NSMutableArray * datasource = [NSMutableArray array];
+//            
+//            for (NSDictionary * tmp in resultData) {
+//                [datasource addObject:[LKPost objectFromDictionary:tmp]];
+//            }
+//            
+//            if (diretion == LCUIPullLoaderDiretionTop) {
+//                
+//                self.datasource = datasource;
+//                LKUserDefaults.singleton[FOCUS_FEED_CACHE_KEY] = resultData;
+//                
+//                self.lastFocusLoadTime = time;
+//            }
+//            else{
+//                
+//                [self.datasource addObjectsFromArray:datasource];
+//            }
+//            
+//            if (diretion == LCUIPullLoaderDiretionBottom) {
+//                
+//                [self.pullLoader endRefresh];
+//                
+//            }
+//            
+//            LC_FAST_ANIMATIONS(0.25, ^{
+//                [self.tableView reloadData];
+//            });
+//            
+//            //            [LC_APPDELEGATE.tabBarController.loading = NO;
+//        }
+//        else if (result.state == LKHttpRequestStateFailed){
+//            
+//            [self.pullLoader endRefresh];
+//            
+//            //            LC_APPDELEGATE.tabBarController.loading = NO;
+//        }
+//        else if (result.state == LKHttpRequestStateCanceled){
+//            
+//            [self.pullLoader endRefresh];
+//            
+//            //            LC_APPDELEGATE.tabBarController.loading = NO;
+//        }
+//    }];
     
 }
 

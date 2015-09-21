@@ -1,5 +1,5 @@
 //
-//  LKFeedViewController.h
+//  LKHomeFeedViewController.h
 //  LIKE
 //
 //  Created by huangweifeng on 9/15/15.
@@ -8,6 +8,6 @@
 
 #import "LCUIViewController.h"
 
-@interface LKFeedViewController : LCUIViewController
+@interface LKHomeFeedViewController : LCUIViewController
 
 @end

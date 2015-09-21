@@ -47,7 +47,7 @@ LC_PROPERTY(strong) NSMutableDictionary * requests;
                               sender:(NSObject *)sender
                          updateBlock:(LCNetworkCenterBlock)updateBlock;
 
-+(void) cancelRequestsWithObject:(NSObject *)object;
--(void) cancelRequestsWithObject:(NSObject *)object;
++ (void)cancelRequestsWithObject:(NSObject *)object;
+- (void)cancelRequestsWithObject:(NSObject *)object;
 
 @end

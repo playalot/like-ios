@@ -310,6 +310,11 @@ LC_IMP_SIGNAL(PushPostDetail);
             return [NSString stringWithFormat:@" %@ ", LC_LO(@"评论了标签")];
 
             break;
+        case LKNotificationTypeOfficial:
+            
+            return [NSString stringWithFormat:@" %@ ", LC_LO(@"给你发了一条消息")];
+            
+            break;
         default:
             break;
     }
@@ -341,6 +346,11 @@ LC_IMP_SIGNAL(PushPostDetail);
         case LKNotificationTypeComment:
             
             return [UIImage imageNamed:@"NotificationCommentIcon.png" useCache:YES];
+            
+            break;
+        case LKNotificationTypeOfficial:
+            
+            return [UIImage imageNamed:@"NotificationOfficalIcon.png" useCache:YES];
             
             break;
         default:

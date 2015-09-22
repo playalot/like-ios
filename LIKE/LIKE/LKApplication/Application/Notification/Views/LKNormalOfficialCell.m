@@ -10,10 +10,10 @@
 
 @interface LKNormalOfficialCell ()
 
-LC_PROPERTY(strong) LCUILabel *titleLbl;
-LC_PROPERTY(strong) LCUILabel *subTitleLbl;
-LC_PROPERTY(strong) LCUIView *cellBackgroundView;
-LC_PROPERTY(strong) LCUIImageView *iconView;
+//LC_PROPERTY(strong) LCUILabel *titleLbl;
+//LC_PROPERTY(strong) LCUILabel *subTitleLbl;
+//LC_PROPERTY(strong) LCUIView *cellBackgroundView;
+//LC_PROPERTY(strong) LCUIImageView *iconView;
 
 @end
 
@@ -31,12 +31,12 @@ LC_PROPERTY(strong) LCUIImageView *iconView;
         self.cellBackgroundView.viewFrameX = 12;
         self.cellBackgroundView.viewFrameY = 12;
         self.cellBackgroundView.viewFrameWidth = LC_DEVICE_WIDTH - 12 * 2;
-        self.cellBackgroundView.viewFrameHeight = 100;
         self.ADD(self.cellBackgroundView);
         
         
         self.titleLbl = LCUILabel.view;
         self.titleLbl.font = LK_FONT_B(15);
+        self.titleLbl.textColor = [UIColor blackColor];
         self.titleLbl.viewFrameX = 15;
         self.titleLbl.viewFrameY = 15;
         self.titleLbl.viewFrameWidth = self.cellBackgroundView.viewFrameWidth - 15 * 4;
@@ -45,7 +45,7 @@ LC_PROPERTY(strong) LCUIImageView *iconView;
         
         
         self.iconView = LCUIImageView.view;
-        self.iconView.image = [UIImage imageNamed:@"NotificationOfficalIcon.png" useCache:YES];
+        self.iconView.image = [UIImage imageNamed:@"NotificationOfficalMessage.png" useCache:YES];
         self.iconView.viewFrameWidth = 15;
         self.iconView.viewFrameHeight = 15;
         self.iconView.viewFrameX = self.cellBackgroundView.viewFrameWidth - self.iconView.viewFrameWidth - 15;
@@ -55,12 +55,17 @@ LC_PROPERTY(strong) LCUIImageView *iconView;
         
         self.subTitleLbl = LCUILabel.view;
         self.subTitleLbl.font = LK_FONT(10);
+        self.subTitleLbl.textColor = [UIColor blackColor];
         self.subTitleLbl.viewFrameX = self.titleLbl.viewFrameX;
         self.subTitleLbl.viewFrameY = self.titleLbl.viewBottomY + 20;
         self.subTitleLbl.viewFrameWidth = self.cellBackgroundView.viewFrameWidth - 15 * 2;
         self.subTitleLbl.numberOfLines = 0;
+        self.subTitleLbl.viewFrameHeight = self.subTitleLbl.font.lineHeight * 3;
         self.cellBackgroundView.ADD(self.subTitleLbl);
         
+        
+        self.cellBackgroundView.viewFrameHeight = self.subTitleLbl.viewBottomY + 15;
+        self.cellHeight = self.cellBackgroundView.viewFrameHeight + 12;
     }
     return self;
 }

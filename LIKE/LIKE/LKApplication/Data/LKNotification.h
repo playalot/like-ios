@@ -16,6 +16,7 @@ typedef NS_ENUM(NSInteger, LKNotificationType)
     LKNotificationTypeFocus,
     LKNotificationTypeReply,
     LKNotificationTypeComment,
+    LKNotificationTypeOfficial
 };
 
 @interface LKNotification : LCDataModel

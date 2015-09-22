@@ -10,6 +10,11 @@
 
 @interface LKNotificationOfficialCell : LCUITableViewCell
 
+LC_PROPERTY(strong) LCUILabel *titleLbl;
+LC_PROPERTY(strong) LCUILabel *subTitleLbl;
+LC_PROPERTY(strong) LCUIView *cellBackgroundView;
+LC_PROPERTY(strong) LCUIImageView *iconView;
+LC_PROPERTY(strong) LCUIImageView *contentImage;
 LC_PROPERTY(assign) CGFloat cellHeight;
 
 @end

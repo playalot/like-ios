@@ -19,6 +19,7 @@
 #import "LKFansViewController.h"
 #import "LKMessageViewController.h"
 #import "LKOfficialDetailViewController.h"
+#import "LKOfficialViewController.h"
 
 @interface LKNotificationViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerDelegate>
 
@@ -142,22 +143,18 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
     
     LKNotificationCell *notiCell = (LKNotificationCell *)[self tableView:tableView cellForRowAtIndexPath:indexPath];
     return notiCell.cellHeight;
-
-//    LKNotification *notification = self.notificationModel.datasource[indexPath.row];
-//    if (notification.posts.count >= 2) {
-//        
-//        return 110;
-//        
-//    } else {
-//        
-//        return [LKNotificationCell height:notification];
-//    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     LKNotification *notification = self.notificationModel.datasource[indexPath.row];
     
+    if (indexPath.row == 0) {
+        
+        LKOfficialViewController *officialViewController = [LKOfficialViewController viewController];
+        [self.navigationController pushViewController:officialViewController animated:YES];
+        return;
+    }
     if (notification.type == LKNotificationTypeFocus) {
         [LKUserCenterViewController pushUserCenterWithUser:notification.user navigationController:self.navigationController];
         

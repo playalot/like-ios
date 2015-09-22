@@ -31,9 +31,9 @@ LC_PROPERTY(strong) UIProgressView *progressView;
     self.progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 0, LC_DEVICE_WIDTH, 1)];
     self.view.ADD(self.progressView);
     
-    [self.webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
+    [self.webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:NULL];
     
-    NSURL *url = [NSURL URLWithString:@"http://www.likeorz.com"];
+    NSURL *url = [NSURL URLWithString:@"http://www.apple.com"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [self.webView loadRequest:request];
 }
@@ -41,8 +41,27 @@ LC_PROPERTY(strong) UIProgressView *progressView;
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     
     if ([keyPath isEqualToString:@"estimatedProgress"]) {
-        self.progressView.hidden = self.webView.estimatedProgress == 1;
-        [self.progressView setProgress:(CGFloat)self.webView.estimatedProgress animated:YES];
+        
+        if (object == self.webView) {
+            
+            [self.progressView setAlpha:1.0f];
+            [self.progressView setProgress:(CGFloat)self.webView.estimatedProgress animated:YES];
+            
+            if(self.webView.estimatedProgress >= 1.0f) {
+                
+                [UIView animateWithDuration:0.3 delay:0.3 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                    [self.progressView setAlpha:0.0f];
+                } completion:^(BOOL finished) {
+                    [self.progressView setProgress:0.0f animated:NO];
+                }];
+            }
+        } else {
+            
+            [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+        }
+    } else {
+        
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
 }
 
@@ -67,6 +86,11 @@ LC_PROPERTY(strong) UIProgressView *progressView;
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     
+    if (webView.isLoading) {
+        
+        return;
+    }
+    
     [self.progressView setProgress:0.0 animated:NO];
 }
 
@@ -76,6 +100,11 @@ LC_PROPERTY(strong) UIProgressView *progressView;
     [LCUIAlertView showWithTitle:LC_LO(@"提示") message:@"测试wkWebView" cancelTitle:@"取消" otherTitle:@"确定" didTouchedBlock:^(NSInteger integerValue) {
         
     }];
+}
+
+- (void)dealloc {
+    
+    [self.webView removeObserver:self forKeyPath:@"estimatedProgress"];
 }
 
 @end

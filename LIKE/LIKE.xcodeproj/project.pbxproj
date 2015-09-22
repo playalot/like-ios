@@ -106,7 +106,6 @@
 		134B0B731B56293C00A195BE /* LKHotTagsSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 134B0B721B56293C00A195BE /* LKHotTagsSegmentView.m */; };
 		134B0B7A1B5634E700A195BE /* LKHotTagsScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 134B0B791B5634E700A195BE /* LKHotTagsScrollView.m */; };
 		134B0B7D1B5656DE00A195BE /* LKSearchHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 134B0B7C1B5656DE00A195BE /* LKSearchHistory.m */; };
-		134B0B801B5667F200A195BE /* LKHotTagsPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 134B0B7F1B5667F200A195BE /* LKHotTagsPage.m */; };
 		134B0B831B5688D700A195BE /* LKHotUserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 134B0B821B5688D700A195BE /* LKHotUserView.m */; };
 		134D92E81B8D6A4A004CFAC8 /* NSArray+Ext.m in Sources */ = {isa = PBXBuildFile; fileRef = 134D92E61B8D6A4A004CFAC8 /* NSArray+Ext.m */; };
 		134D92F01B8DA8A0004CFAC8 /* 高达.png in Resources */ = {isa = PBXBuildFile; fileRef = 134D92E91B8DA8A0004CFAC8 /* 高达.png */; };
@@ -1024,8 +1023,6 @@
 		134B0B791B5634E700A195BE /* LKHotTagsScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKHotTagsScrollView.m; sourceTree = "<group>"; };
 		134B0B7B1B5656DE00A195BE /* LKSearchHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKSearchHistory.h; sourceTree = "<group>"; };
 		134B0B7C1B5656DE00A195BE /* LKSearchHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKSearchHistory.m; sourceTree = "<group>"; };
-		134B0B7E1B5667F200A195BE /* LKHotTagsPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKHotTagsPage.h; sourceTree = "<group>"; };
-		134B0B7F1B5667F200A195BE /* LKHotTagsPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKHotTagsPage.m; sourceTree = "<group>"; };
 		134B0B811B5688D700A195BE /* LKHotUserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKHotUserView.h; sourceTree = "<group>"; };
 		134B0B821B5688D700A195BE /* LKHotUserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKHotUserView.m; sourceTree = "<group>"; };
 		134D92E61B8D6A4A004CFAC8 /* NSArray+Ext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Ext.m"; sourceTree = "<group>"; };
@@ -2673,8 +2670,6 @@
 				134B0B791B5634E700A195BE /* LKHotTagsScrollView.m */,
 				134B0B5E1B5624A400A195BE /* LKSearchPlaceholderView.h */,
 				134B0B5F1B5624A400A195BE /* LKSearchPlaceholderView.m */,
-				134B0B7E1B5667F200A195BE /* LKHotTagsPage.h */,
-				134B0B7F1B5667F200A195BE /* LKHotTagsPage.m */,
 				1371069E1B58E201008BCD66 /* LKSearchResultCollectionViewCell.h */,
 				1371069F1B58E201008BCD66 /* LKSearchResultCollectionViewCell.m */,
 				134B0B811B5688D700A195BE /* LKHotUserView.h */,
@@ -5644,7 +5639,6 @@
 				138EDE191AD7B0A30020957C /* LCHardcodedDeviceData.m in Sources */,
 				139054EC1B994A6D00DBF34A /* GPUImageExposureFilter.m in Sources */,
 				139054FC1B994A6D00DBF34A /* GPUImageHarrisCornerDetectionFilter.m in Sources */,
-				134B0B801B5667F200A195BE /* LKHotTagsPage.m in Sources */,
 				13BCA6611B5CCC7600DC0549 /* LKHomeHeader.m in Sources */,
 				139054D21B994A6D00DBF34A /* GPUImageCannyEdgeDetectionFilter.m in Sources */,
 				139055651B994A6D00DBF34A /* GPUImageWhiteBalanceFilter.m in Sources */,

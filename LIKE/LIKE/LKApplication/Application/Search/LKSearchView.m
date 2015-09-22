@@ -14,7 +14,6 @@
 #import "LKHotTagsSegmentView.h"
 #import "LKSearchHistory.h"
 #import "LKHotTagsTableView.h"
-#import "LKHotTagsPage.h"
 
 @interface LKSearchView ()<UIScrollViewDelegate>
 
@@ -225,7 +224,6 @@ LC_PROPERTY(assign) NSInteger page;
         
         LKTag * tag = tags[i];
         LKHotTagsTableView * page = [[LKHotTagsTableView alloc] initWithFrame:CGRectZero tag:tag];
-//        LKHotTagsPage *page = [[LKHotTagsPage alloc] initWithTag:tag];
         page.frame = CGRectMake(0, 0, self.scrollView.viewFrameWidth, self.scrollView.viewFrameHeight);
         page.viewFrameX = self.viewFrameWidth * i;
         page.tag = 100 + i;

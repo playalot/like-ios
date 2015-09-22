@@ -201,7 +201,7 @@ LC_IMP_SIGNAL(PushPostDetail);
             
             self.tagListView = GBTagListView.view;
             self.tagListView.viewFrameX = self.nameLabel.viewFrameX - 10;
-            self.tagListView.viewFrameWidth = LC_DEVICE_WIDTH - self.tagListView.viewFrameX - 37 - 20;
+            self.tagListView.viewFrameWidth = LC_DEVICE_WIDTH - self.tagListView.viewFrameX - 37;
             self.ADD(self.tagListView);
 
             self.tagButton.hidden = YES;

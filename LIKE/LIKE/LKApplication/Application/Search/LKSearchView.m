@@ -29,13 +29,11 @@ LC_PROPERTY(assign) NSInteger page;
 
 @implementation LKSearchView
 
--(void) dealloc
-{
+- (void)dealloc {
     [self cancelAllRequests];
 }
 
--(instancetype) init
-{
+- (instancetype)init {
     if (self = [super initWithFrame:CGRectMake(0, 0, LC_DEVICE_WIDTH, LC_DEVICE_HEIGHT + 20 - 60 + 5)]) {
         
         [self buildUI];
@@ -46,26 +44,7 @@ LC_PROPERTY(assign) NSInteger page;
 
 -(void) buildUI {
     
-//    UIView * header = UIView.view;
-//    header.frame = CGRectMake(0, 0, self.viewFrameWidth, 64);
-//    [header addTapGestureRecognizer:self selector:@selector(hide)];
-//    self.ADD(header);
-//    
-//    
-//    LCUIButton * backButton = LCUIButton.view;
-//    backButton.viewFrameWidth = 48;
-//    backButton.viewFrameHeight = 55 / 3 + 44;
-//    backButton.viewFrameY = 10;
-//    backButton.buttonImage = [UIImage imageNamed:@"NavigationBarDismiss.png" useCache:YES];
-//    backButton.showsTouchWhenHighlighted = YES;
-//    [backButton addTarget:self action:@selector(hideAction) forControlEvents:UIControlEventTouchUpInside];
-//    backButton.tag = 1002;
-//    [self addSubview:backButton];
-//
-//
-    UIView * view = nil;
-
-    view = UIView.view;
+    UIView * view = UIView.view;
     view.backgroundColor = LC_RGB(231, 231, 231);
     
     self.blur = view;
@@ -83,12 +62,6 @@ LC_PROPERTY(assign) NSInteger page;
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.showsVerticalScrollIndicator = NO;
     self.ADD(self.scrollView);
-    
-
-//    self.searchBar = [[LKSearchBar alloc] initWithFrame:LC_RECT(backButton.viewRightX, 20 + (22 - 90 / 3 / 2), LC_DEVICE_WIDTH - backButton.viewFrameWidth - backButton.viewMidWidth, 30)];
-//    self.searchBar.searchField.placeholder = LC_LO(@"搜索标签");
-//    self.searchBar.delegate = self;
-//    self.ADD(self.searchBar);
 
     self.hotTags = LKHotTagsSegmentView.view;
     self.ADD(self.hotTags);
@@ -135,8 +108,7 @@ LC_PROPERTY(assign) NSInteger page;
 
 #pragma mark - LKSearchBarDelegate
 
-- (void)searchBarTextDidChange:(LKSearchBar *)searchBar
-{
+- (void)searchBarTextDidChange:(LKSearchBar *)searchBar {
     LC_FAST_ANIMATIONS(0.25, ^{
         self.placeholderView.alpha = 1;
         self.placeholderView.searchString = searchBar.searchField.text;
@@ -144,8 +116,7 @@ LC_PROPERTY(assign) NSInteger page;
     });
 }
 
--(void) searchBarDidBeginEditing:(LKSearchBar *)searchBar editing:(BOOL)editing
-{
+-(void) searchBarDidBeginEditing:(LKSearchBar *)searchBar editing:(BOOL)editing {
     [self searchBarTextDidChange:searchBar];
 }
 
@@ -154,7 +125,6 @@ LC_PROPERTY(assign) NSInteger page;
         
         [LKSearchHistory addHistory:searchBar.searchField.text];
     }
-
     LKSearchResultsViewController * searchResultsViewController = [[LKSearchResultsViewController alloc] initWithSearchString:searchBar.searchField.text];
     [LC_APPDELEGATE.homeViewController.navigationController pushViewController:searchResultsViewController animated:YES];
 }
@@ -167,21 +137,16 @@ LC_PROPERTY(assign) NSInteger page;
     }
 }
 
--(void) hideAction
-{
+-(void) hideAction {
     if (self.placeholderView.alpha != 0) {
-        
         LC_FAST_ANIMATIONS(0.25, ^{
-           
             self.placeholderView.alpha = 0;
             self.placeholderView.searchString = @"";
             self.placeholderView.tags = nil;
             self.searchBar.searchField.text = @"";
             [self.searchBar.searchField resignFirstResponder];
         });
-    }
-    else{
-        
+    } else {
         [self hide];
     }
 }
@@ -190,32 +155,6 @@ LC_PROPERTY(assign) NSInteger page;
     if (self.willHide) {
         self.willHide(nil);
     }
-    
-//    UIView * view = self.FIND(1002);
-//    self.userInteractionEnabled = NO;
-    
-//    LC_FAST_ANIMATIONS_F(0.25, ^{
-//    
-//        view.alpha = 0;
-//        self.searchBar.alpha = 0;
-//        ((UIView *)self.FIND(1002)).alpha = 0;
-//        
-//    }, ^(BOOL finished){
-//        
-//        [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:3 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-//            
-//            view.alpha = 0;
-//            self.searchBar.alpha = 0;
-//            self.blur.viewFrameY = self.viewFrameHeight;
-//            self.placeholderView.viewFrameY = self.viewFrameHeight;
-//            
-//            
-//        } completion:^(BOOL finished) {
-    
-            //[self removeFromSuperview];
-//        }];
-//
-//    });
 }
 
 - (void)buildPages:(NSArray *)tags {

@@ -1,12 +1,12 @@
 //
-//  LKFollowingViewController.m
+//  LKFollowingFeedViewController.m
 //  LIKE
 //
 //  Created by huangweifeng on 9/15/15.
 //  Copyright (c) 2015 Beijing Like Technology Co.Ltd . ( http://www.likeorz.com ). All rights reserved.
 //
 
-#import "LKFollowingViewController.h"
+#import "LKFollowingFeedViewController.h"
 #import "LKHomeViewController.h"
 #import "LKPost.h"
 #import "LKNewPostUploadCenter.h"
@@ -16,10 +16,11 @@
 #import "LKInputView.h"
 #import "LKPostDetailViewController.h"
 #import "LKFollowingInterface.h"
+#import "LKSearchResultsViewController.h"
 
 #define FOCUS_FEED_CACHE_KEY [NSString stringWithFormat:@"LKFocusFeedKey-%@", LKLocalUser.singleton.user.id]
 
-@interface LKFollowingViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerDelegate, LKHomeTableViewCellDelegate>
+@interface LKFollowingFeedViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerDelegate, LKHomeTableViewCellDelegate>
 
 LC_PROPERTY(strong) NSMutableArray *datasource;
 LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
@@ -34,7 +35,7 @@ LC_PROPERTY(weak) id delegate;
 
 @end
 
-@implementation LKFollowingViewController
+@implementation LKFollowingFeedViewController
 
 - (void)buildUI {
     self.view.backgroundColor = LKColor.backgroundColor;
@@ -209,7 +210,10 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
 
 #pragma mark - ***** LKHomeTableViewCellDelegate *****
 - (void)homeTableViewCell:(LKHomeTableViewCell *)cell didClickReasonBtn:(LCUIButton *)reasonBtn {
-    
+    if (reasonBtn.title != nil) {
+        LKSearchResultsViewController *searchResultCtrl = [[LKSearchResultsViewController alloc] initWithSearchString:reasonBtn.title];
+        [self.navigationController pushViewController:searchResultCtrl animated:YES];
+    }
 }
 
 @end

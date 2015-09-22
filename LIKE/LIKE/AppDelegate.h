@@ -14,7 +14,7 @@
 #import "LKSearchViewController.h"
 #import "LKNotificationViewController.h"
 #import "LKUserCenterViewController.h"
-#import "LKFollowingViewController.h"
+#import "LKFollowingFeedViewController.h"
 #import "LKHomeFeedViewController.h"
 #import "LKMainFeedViewController.h"
 #import "LKGroupViewController.h"

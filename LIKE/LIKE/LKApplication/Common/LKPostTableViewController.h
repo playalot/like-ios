@@ -10,11 +10,26 @@
 #import "LKPost.h"
 #import "LKTagsView.h"
 
+@protocol LKPostTableViewControllerDelegate;
+
 @interface LKPostTableViewController : LCUIViewController <UITableViewDataSource, UITableViewDelegate>
 
-LC_PROPERTY(strong) NSMutableArray * datasource;
+LC_PROPERTY(assign) id<LKPostTableViewControllerDelegate> delegate;
+
+LC_PROPERTY(strong) NSMutableArray *datasource;
 LC_PROPERTY(strong) LCUITableView *tableView;
 LC_PROPERTY(assign) NSInteger currentIndex;
 LC_PROPERTY(assign) BOOL cellHeadLineHidden;
+
+- (void)watchForChangeOfDatasource:(id)observedDataSourceObject
+                     dataSourceKey:(NSString *)observedDataSourceKeyPath;
+
+@end
+
+@protocol LKPostTableViewControllerDelegate <NSObject>
+
+- (void)willLoadData:(LCUIPullLoaderDiretion)direction;
+
+- (void)willNavigationBack:(NSInteger)currentIndex;
 
 @end

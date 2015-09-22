@@ -12,7 +12,7 @@
 #import "LKSearchSuggestionView.h"
 #import "LKSearchResultsViewController.h"
 #import "LKTag.h"
-#import "LKSearchHistory.h"
+#import "LKSearchHistory.h"LKPostTableViewControllerDelegate
 #import "LKPostTableViewController.h"
 #import "LKTopSearchInterface.h"
 

@@ -1,5 +1,5 @@
 //
-//  LKFollowingViewController.h
+//  LKFollowingFeedViewController.h
 //  LIKE
 //
 //  Created by huangweifeng on 9/15/15.
@@ -9,6 +9,6 @@
 #import "LCUIViewController.h"
 #import "LCUIViewController.h"
 
-@interface LKFollowingViewController : LCUIViewController
+@interface LKFollowingFeedViewController : LCUIViewController
 
 @end

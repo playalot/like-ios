@@ -15,7 +15,6 @@
 #import "LCUIKeyBoard.h"
 #import "LKLikesPage.h"
 #import "LKUserCenterViewController.h"
-#import "LKHotUserView.h"
 #import "UIImageView+WebCache.h"
 
 #define iconWH 33

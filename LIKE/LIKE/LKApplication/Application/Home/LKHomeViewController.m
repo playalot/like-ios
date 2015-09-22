@@ -493,11 +493,10 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
         if (self.feedType == LKHomepageFeedTypeMain) {
             
             if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
-            
                 self.feedType = LKHomepageFeedTypeFocus;
             }
-        }
-        else{
+            
+        } else {
             
             // 如果当前是关注的人feed，那左上角就是主页按钮
             if (self.feedType == LKHomepageFeedTypeFocus) {
@@ -506,7 +505,6 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
                 [self cancelAllRequests];
                 
                 self.feedType = LKHomepageFeedTypeMain;
-                
                 
                 self.attentionViewController.tableView.tableHeaderView = UIView.view.WIDTH(LC_DEVICE_WIDTH).HEIGHT(150);
                 self.tableView.tableHeaderView = self.header;
@@ -520,9 +518,7 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
                         if (point.y > self.tableView.contentSize.height - self.tableView.bounds.size.height)
                             point.y = self.tableView.contentSize.height - self.tableView.bounds.size.height;
                         [self.tableView setContentOffset:point animated:NO];
-                    }
-                    else{
-                        
+                    } else {
                         //[self.tableView setContentOffset:self.attentionViewController.tableView.contentOffset animated:NO];
                     }
                 }
@@ -540,13 +536,9 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
                     self.attentionViewController.alpha = 0;
                     
                     for (UIView * view in self.attentionViewController.tableView.subviews) {
-                        
                         if ([view.class.description isEqualToString:@"UITableViewWrapperView"]) {
-                            
                             for (UIView * subview in view.subviews) {
-                                
                                 if (subview != self.header && [subview isKindOfClass:[UITableViewCell class]]) {
-                                    
                                     view.alpha = 0;
                                 }
                             }
@@ -555,13 +547,9 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
                     }
                     
                     for (UIView * view in self.tableView.subviews) {
-                        
                         if ([view.class.description isEqualToString:@"UITableViewWrapperView"]) {
-                            
                             for (UIView * subview in view.subviews) {
-                                
                                 if (subview != self.header && [subview isKindOfClass:[UITableViewCell class]]) {
-                                    
                                     view.alpha = 1;
                                 }
                             }
@@ -578,22 +566,18 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
                 }];
                 
                 [self scrollViewDidScroll:self.tableView];
-            }
-            else{
+                
+            } else {
                 
                 if (self.notificationViewController) {
-                    
                     LC_APPDELEGATE.tabBarController.assistiveTouchButton.hidden = NO;
                 }
                 
                 if (self.notificationViewController.fromType == LKHomepageFeedTypeMain) {
-                    
                     self.attentionViewController.tableView.scrollsToTop = NO;
                     self.tableView.scrollsToTop = YES;
                     self.feedType = LKHomepageFeedTypeMain;
-                }
-                else{
-                    
+                } else {
                     self.attentionViewController.tableView.scrollsToTop = YES;
                     self.tableView.scrollsToTop = NO;
                     self.feedType = LKHomepageFeedTypeFocus;
@@ -604,42 +588,24 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
     
     // 右边只有消息按钮
     else if (type == LCUINavigationBarButtonTypeRight) {
-        
         [self notificationAction];
     }
 }
 
--(void) handleNotification:(NSNotification *)notification
-{
+-(void) handleNotification:(NSNotification *)notification {
     if ([notification is:LKHomeViewControllerAddNewPost]) {
-        
         if (notification.object) {
-            
             if (self.feedType == LKHomepageFeedTypeFocus) {
-                
                 [self handleNavigationBarButton:LCUINavigationBarButtonTypeLeft];
             }
-            
             [self.datasource insertObject:notification.object atIndex:0];
             [self reloadData];
-            
             [self performSelector:@selector(scrollViewScrollToTop) withObject:nil afterDelay:0.5];
         }
-    }
-    else if([notification is:LKHomeViewControllerUpdateHeader]){
-        
+    } else if([notification is:LKHomeViewControllerUpdateHeader]){
         [self.header updateWithUser:LKLocalUser.singleton.user];
-        
-    }
-    else if ([notification is:LKHomeViewControllerReloadingData]){
-        
-//        if (self.feedType == LKHomepageFeedTypeFocus) {
-//            
-//            [self handleNavigationBarButton:LCUINavigationBarButtonTypeLeft];
-//        }
-        
+    } else if ([notification is:LKHomeViewControllerReloadingData]){
         [self loadData:LCUIPullLoaderDiretionTop];
-        
     }
 }
 

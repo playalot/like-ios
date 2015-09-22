@@ -12,25 +12,23 @@
 #import "LKPostDetailViewController.h"
 #import "LKLoginViewController.h"
 
+static NSString* const KVO_CONTEXT_DATASOURCE_CHANGED = @"KVO_CONTEXT_DATASOURCE_CHANGED";
+
 @interface LKPostTableViewController () <LKPostDetailViewControllerDelegate>
 
 LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
+
+LC_PROPERTY(assign) id observedDataSourceObject;
+LC_PROPERTY(copy) NSString *observedDataSourceKeyPath;
 
 @end
 
 @implementation LKPostTableViewController
 
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        
-    }
-    return self;
-}
-
 - (void)dealloc {
     [self cancelAllRequests];
     [self unobserveAllNotifications];
+    [self.observedDataSourceObject removeObserver:self forKeyPath:self.observedDataSourceKeyPath];
 }
 
 - (void)viewDidLoad {
@@ -55,11 +53,61 @@ LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
     self.view.ADD(self.tableView);
     
     [self setNavigationBarHidden:NO animated:YES];
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
+    [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[UIImage imageNamed:@"NavigationBarBack.png" useCache:YES] selectImage:nil];
+    
+    self.pullLoader = [LCUIPullLoader pullLoaderWithScrollView:self.tableView pullStyle:LCUIPullLoaderStyleHeaderAndFooter];
+    @weakly(self);
+    self.pullLoader.beginRefresh = ^(LCUIPullLoaderDiretion diretion) {
+        @normally(self);
+        [self loadData:diretion];
+    };
+    
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:self.currentIndex inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+}
+
+- (void)setCurrentIndex:(NSInteger)currentIndex {
+    _currentIndex = currentIndex;
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:self.currentIndex inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+}
+
+- (void)loadData:(LCUIPullLoaderDiretion)diretion {
+    if (self.delegate) {
+        [self.delegate willLoadData:diretion];
+    }
 }
 
 - (void)handleNavigationBarButton:(LCUINavigationBarButtonType)type {
     if (type == LCUINavigationBarButtonTypeLeft) {
         [self.navigationController popViewControllerAnimated:YES];
+        
+        NSIndexPath *visibleIndexPath = [[self.tableView indexPathsForVisibleRows] objectAtIndex:0];
+        if (self.delegate) {
+            [self.delegate willNavigationBack:visibleIndexPath.row];
+        }
+        
+    }
+}
+
+- (void)watchForChangeOfDatasource:(id)observedDataSourceObject
+                     dataSourceKey:(NSString *)observedDataSourceKeyPath {
+    
+    self.observedDataSourceObject = observedDataSourceObject;
+    self.observedDataSourceKeyPath = observedDataSourceKeyPath;
+    
+    [observedDataSourceObject addObserver:self
+                               forKeyPath:observedDataSourceKeyPath
+                                  options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
+                                  context:(__bridge_retained void *)KVO_CONTEXT_DATASOURCE_CHANGED];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if(context == (__bridge_retained void *)KVO_CONTEXT_DATASOURCE_CHANGED){
+        NSArray *datasource = [object valueForKey:self.observedDataSourceKeyPath];
+        self.datasource = [NSMutableArray arrayWithArray:datasource];
+        [self.pullLoader endRefresh];
+        [self reloadData];
     }
 }
 
@@ -170,15 +218,14 @@ LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
 }
 
 -(void) scrollViewScrollToTop {
-    NSLog(@"scrollViewScrollToTop");
 }
 
 -(void) reloadData {
     [self.tableView reloadData];
 }
 
-LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
-{
+LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
+    
     if (self.inputView.isFirstResponder) {
         [self.inputView resignFirstResponder];
         return;

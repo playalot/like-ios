@@ -10,18 +10,17 @@
 #import "LKPostThumbnailTableViewCell.h"
 #import "LKPostDetailViewController.h"
 #import "UIImageView+WebCache.h"
-#import "LKSearchResultsBrowsingViewController.h"
 
-@interface LKSearchResultsViewController ()
+@interface LKSearchResultsViewController () <LKPostTableViewControllerDelegate>
 
 LC_PROPERTY(copy) NSString * searchString;
-LC_PROPERTY(strong) NSMutableArray * datasource;
 LC_PROPERTY(assign) NSInteger page;
 LC_PROPERTY(strong) NSDictionary * info;
 LC_PROPERTY(strong) NSDictionary *tagInfo;
 LC_PROPERTY(strong) LCUIButton *subscribeBtn;
 LC_PROPERTY(getter=isSubscribed) BOOL subscribed;
-LC_PROPERTY(strong) LKSearchResultsBrowsingViewController *searchResultsBrowsingViewController;
+
+LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 
 @end
 
@@ -31,7 +30,7 @@ LC_PROPERTY(strong) LKSearchResultsBrowsingViewController *searchResultsBrowsing
     [self cancelAllRequests];
 }
 
--(instancetype) initWithSearchString:(NSString *)searchString {
+- (instancetype)initWithSearchString:(NSString *)searchString {
     if (self = [super init]) {
         self.initTableViewStyle = UITableViewStyleGrouped;
         self.searchString = searchString;
@@ -39,8 +38,7 @@ LC_PROPERTY(strong) LKSearchResultsBrowsingViewController *searchResultsBrowsing
     return self;
 }
 
--(void) buildUI
-{
+-(void) buildUI {
     self.title = self.searchString;
     
     [self buildNavigationBar];
@@ -164,17 +162,14 @@ LC_PROPERTY(strong) LKSearchResultsBrowsingViewController *searchResultsBrowsing
             if (diretion == LCUIPullLoaderDiretionTop) {
                 self.datasource = resultData;
             } else {
-                [self.datasource addObjectsFromArray:resultData];
+                NSMutableArray *newDataSource = [NSMutableArray arrayWithArray:self.datasource];
+                [newDataSource addObjectsFromArray:resultData];
+                self.datasource = newDataSource;
             }
             
             self.page = page;
             [self.pullLoader endRefresh];
             [self reloadData];
-            
-            if (self.searchResultsBrowsingViewController) {
-                self.searchResultsBrowsingViewController.datasource = self.datasource;
-                [self.searchResultsBrowsingViewController reloadData];
-            }
             
         } else if (result.state == LKHttpRequestStateFailed){
             [self showTopMessageErrorHud:result.error];
@@ -186,7 +181,7 @@ LC_PROPERTY(strong) LKSearchResultsBrowsingViewController *searchResultsBrowsing
 
 #pragma mark -
 
--(UIView *) buildHeader {
+- (UIView *)buildHeader {
     
     if (!self.info) {
         return nil;
@@ -293,15 +288,23 @@ LC_PROPERTY(strong) LKSearchResultsBrowsingViewController *searchResultsBrowsing
     
 }
 
+#pragma mark - LKPostTableViewControllerDelegate
+- (void)willLoadData:(LCUIPullLoaderDiretion)direction {
+    [self loadData:direction];
+}
+
+- (void)willNavigationBack:(NSInteger)index {
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:(index / 3) inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+}
+
 LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
-    if (self.searchResultsBrowsingViewController == nil) {
-        self.searchResultsBrowsingViewController = [LKSearchResultsBrowsingViewController viewController];
-        self.searchResultsBrowsingViewController.parentSearchResultsViewController = self;
-    }
-    self.searchResultsBrowsingViewController.datasource = self.datasource;
-    self.searchResultsBrowsingViewController.currentIndex = [self.datasource indexOfObject:signal.object];
-    self.searchResultsBrowsingViewController.title = self.searchString;
-    [self.navigationController pushViewController:self.searchResultsBrowsingViewController animated:YES];
+    self.browsingViewController = [[LKPostTableViewController alloc] init];
+    self.browsingViewController.delegate = self;
+    self.browsingViewController.datasource = self.datasource;
+    self.browsingViewController.currentIndex = [self.datasource indexOfObject:signal.object];
+    self.browsingViewController.title = self.searchString;
+    [self.browsingViewController watchForChangeOfDatasource:self dataSourceKey:@"datasource"];
+    [self.navigationController pushViewController:self.browsingViewController animated:YES];
 }
 
 @end

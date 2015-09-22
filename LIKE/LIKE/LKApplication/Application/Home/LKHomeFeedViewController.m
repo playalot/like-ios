@@ -19,6 +19,7 @@
 #import "LCUIKeyBoard.h"
 #import "LKTagAddModel.h"
 #import "UIImageView+WebCache.h"
+#import "LKSearchResultsViewController.h"
 
 @interface LKHomeFeedViewController () <UITableViewDataSource, UITableViewDelegate, LKHomeTableViewCellDelegate, LKPostDetailViewControllerDelegate>
 
@@ -316,7 +317,10 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
 
 #pragma mark *****数据源******
 - (void)homeTableViewCell:(LKHomeTableViewCell *)cell didClickReasonBtn:(LCUIButton *)reasonBtn {
-    
+    if (reasonBtn.title != nil) {
+        LKSearchResultsViewController *searchResultCtrl = [[LKSearchResultsViewController alloc] initWithSearchString:reasonBtn.title];
+        [self.navigationController pushViewController:searchResultCtrl animated:YES];
+    }
 }
 
 @end

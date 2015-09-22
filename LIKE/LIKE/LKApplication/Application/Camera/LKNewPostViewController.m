@@ -45,18 +45,12 @@ LC_PROPERTY(strong) NSString * locationName;
 
 @implementation LKNewPostViewController
 
--(void) dealloc
-{
-    
+- (void)dealloc {
 }
 
--(void) viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     [self setNavigationBarHidden:NO animated:animated];
-    
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
 }
 
 -(void) viewWillDisappear:(BOOL)animated

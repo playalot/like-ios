@@ -16,14 +16,17 @@ LC_BLOCK(void, LKAssistiveTouchButtonTouchEnd, ());
  *  主页相机按钮
  */
 LC_PROPERTY(strong) UIView * view;
+
 /**
  *  选中状态
  */
 LC_PROPERTY(copy) LKAssistiveTouchButtonTouchEnd didSelected;
+
 /**
  *  按下状态
  */
 LC_PROPERTY(copy) LKAssistiveTouchButtonTouchDown touchDown;
+
 /**
  *  点击结束状态
  */

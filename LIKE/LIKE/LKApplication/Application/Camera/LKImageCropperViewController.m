@@ -82,11 +82,8 @@ LC_PROPERTY(strong) UIView *wastedView;
     [self setNavigationBarHidden:YES animated:animated];    
 }
 
--(void) viewDidAppear:(BOOL)animated
-{
+-(void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:animated];
 }
 
 - (id)initWithImage:(UIImage *)originalImage
@@ -699,23 +696,16 @@ LC_PROPERTY(strong) UIView *wastedView;
     UIImage * image = [self currentImage];
 
     if (!self.dontSaveToAblum) {
-        
         if ((self.filterIndex != 0 || self.needCut)) {
-            
             [LKPhotoAlbum saveImage:image showTip:NO];
         }
     }
     
     if (self.didFinishedPickImage) {
         self.didFinishedPickImage(image);
-        
         [self dismissViewControllerAnimated:YES completion:nil];
         [self postNotification:LKCameraViewControllerDismiss];
-    }
-    else{
-        
-//        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
-
+    } else {
         // push 发布控制器
         [self.navigationController pushViewController:[[LKNewPostViewController alloc] initWithImage:image] animated:YES];
     }

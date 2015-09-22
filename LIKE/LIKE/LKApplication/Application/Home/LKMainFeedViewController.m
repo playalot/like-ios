@@ -8,13 +8,13 @@
 
 #import "LKMainFeedViewController.h"
 #import "LKHomeFeedViewController.h"
-#import "LKFollowingViewController.h"
+#import "LKFollowingFeedViewController.h"
 
 
 @interface LKMainFeedViewController ()
 
 LC_PROPERTY(strong) LKHomeFeedViewController *feedViewController;
-LC_PROPERTY(strong) LKFollowingViewController *followingViewController;
+LC_PROPERTY(strong) LKFollowingFeedViewController *followingViewController;
 LC_PROPERTY(weak) LCUIViewController *currentViewController;
 
 @end
@@ -28,7 +28,7 @@ LC_PROPERTY(weak) LCUIViewController *currentViewController;
 
 - (void)buildViewController {
     self.feedViewController = [LKHomeFeedViewController viewController];
-    self.followingViewController = [LKFollowingViewController viewController];
+    self.followingViewController = [LKFollowingFeedViewController viewController];
     
     [self addChildViewController:self.feedViewController];
     [self addChildViewController:self.followingViewController];

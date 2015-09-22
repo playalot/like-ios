@@ -25,6 +25,7 @@ LC_PROPERTY(strong) LKSearchBar *searchBar;
 LC_PROPERTY(strong) UIView * blurView;
 LC_PROPERTY(strong) LCUIButton *searchTip;
 LC_PROPERTY(strong) LCUIButton *doneButton;
+
 LC_PROPERTY(strong) LKSearchView *searchView;
 
 @end

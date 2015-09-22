@@ -159,9 +159,7 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
     LKNotification *notification = self.notificationModel.datasource[indexPath.row];
     
     if (notification.type == LKNotificationTypeFocus) {
-        
-        LKUserCenterViewController *userCenterViewController = [[LKUserCenterViewController alloc] initWithUser:notification.user];
-        [self.navigationController presentViewController:userCenterViewController animated:YES completion:nil];
+        [LKUserCenterViewController pushUserCenterWithUser:notification.user navigationController:self.navigationController];
         
     } else {
         

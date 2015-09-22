@@ -1,44 +1,38 @@
 //
-//  LKUserCenterPhotoCell.m
+//  LKPostThumbnailTableViewCell.m
 //  LIKE
 //
-//  Created by Licheng Guo ( http://nsobjet.me ) on 15/4/15.
-//  Copyright (c) 2015年 Beijing Like Technology Co.Ltd . ( http://www.likeorz.com ). All rights reserved.
+//  Created by huangweifeng on 9/21/15.
+//  Copyright © 2015 Beijing Like Technology Co.Ltd . ( http://www.likeorz.com ). All rights reserved.
 //
 
-#import "LKUserCenterPhotoCell.h"
+#import "LKPostThumbnailTableViewCell.h"
 #import "UIImageView+WebCache.h"
-#import "LKLoginViewController.h"
 #import "LKPostDetailViewController.h"
+#import "LKLoginViewController.h"
 
-@interface __LKUserCenterPhotoItem : UIView
+@interface __LKHotTagsPhotoItem : UIView
 
 LC_PROPERTY(strong) LCUIImageView * imageView;
 
 @end
 
-@implementation __LKUserCenterPhotoItem
+@implementation __LKHotTagsPhotoItem
 
--(instancetype) init
-{
+- (instancetype)init {
     if (self = [super init]) {
-        
         self.imageView = LCUIImageView.view;
         self.imageView.animationDuration = 0.35;
         self.imageView.contentMode = UIViewContentModeScaleAspectFill;
         self.imageView.backgroundColor = LKColor.backgroundColor;
         self.ADD(self.imageView);
-        
         self.clipsToBounds = YES;
     }
-    
     return self;
 }
 
--(void) setFrame:(CGRect)frame
-{
+- (void)setFrame:(CGRect)frame {
     [super setFrame:frame];
-    
     self.imageView.viewFrameX = 0;
     self.imageView.viewFrameY = 0;
     self.imageView.viewFrameWidth = frame.size.width;
@@ -47,35 +41,27 @@ LC_PROPERTY(strong) LCUIImageView * imageView;
 
 @end
 
-#pragma mark - 
-
-@interface LKUserCenterPhotoCell ()
+@interface LKPostThumbnailTableViewCell ()
 
 LC_PROPERTY(strong) NSMutableArray * items;
 
 @end
 
-@implementation LKUserCenterPhotoCell
-
+@implementation LKPostThumbnailTableViewCell
 
 LC_IMP_SIGNAL(PushPostDetail);
 
--(void) buildUI
-{
+- (void)buildUI {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.backgroundColor = [UIColor whiteColor];
     self.contentView.backgroundColor = [UIColor whiteColor];
-
+    
     self.items = [NSMutableArray array];
-
+    
     CGFloat padding = 3;
-    
-    
     CGFloat width = (LC_DEVICE_WIDTH - padding * 4) / 3;
-    
     for (NSInteger i = 0; i < 3; i++) {
-        
-        __LKUserCenterPhotoItem * item = __LKUserCenterPhotoItem.view;
+        __LKHotTagsPhotoItem * item = __LKHotTagsPhotoItem.view;
         item.viewFrameWidth = width;
         item.viewFrameX = i * item.viewFrameWidth + padding * (i + 1);
         item.viewFrameHeight = item.viewFrameWidth;
@@ -86,50 +72,38 @@ LC_IMP_SIGNAL(PushPostDetail);
     }
 }
 
--(void) setPosts:(NSArray *)posts
-{
+- (void)setPosts:(NSArray *)posts {
     _posts = posts;
-    
     for (NSInteger i = 0; i< self.items.count; i++) {
-        
         LKPost * post = nil;
-        
         if (i < posts.count) {
             post = posts[i];
         }
         
-        __LKUserCenterPhotoItem * item = self.items[i];
+        __LKHotTagsPhotoItem * item = self.items[i];
         item.imageView.image = nil;
         item.hidden = YES;
         item.tag = i;
         
         if (post) {
-            
             item.hidden = NO;
-//            item.imageView.url = post.content;
             [item.imageView sd_setImageWithURL:[NSURL URLWithString:post.content] placeholderImage:nil];
         }
     }
 }
 
--(void) handleItemTap:(UITapGestureRecognizer *)tap
-{
+- (void)handleItemTap:(UITapGestureRecognizer *)tap {
     if (tap.view.tag < self.posts.count) {
-
         // 游客不能访问图片详情页
         if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
-            
             self.SEND(self.PushPostDetail).object = self.posts[tap.view.tag];
         }
     }
 }
 
-+(CGFloat) height
-{
++ (CGFloat)height {
     CGFloat padding = 3;
-    
     CGFloat width = (LC_DEVICE_WIDTH - padding * 4) / 3;
-
     return width + padding;
 }
 

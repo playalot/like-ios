@@ -1,21 +1,21 @@
 //
-//  LKHotUser.m
+//  LKHotTagsUsersView.m
 //  LIKE
 //
-//  Created by Licheng Guo ( http://nsobjet.me ) on 15/7/15.
-//  Copyright (c) 2015年 Beijing Like Technology Co.Ltd . ( http://www.likeorz.com ). All rights reserved.
+//  Created by huangweifeng on 9/22/15.
+//  Copyright © 2015 Beijing Like Technology Co.Ltd . ( http://www.likeorz.com ). All rights reserved.
 //
 
-#import "LKHotUserView.h"
+#import "LKHotTagsUsersView.h"
 #import "UIImageView+WebCache.h"
 
-@interface LKHotUserView ()
+@interface LKHotTagsUsersView ()
 
 LC_PROPERTY(strong) UIScrollView * scrollView;
 
 @end
 
-@implementation LKHotUserView
+@implementation LKHotTagsUsersView
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
@@ -36,8 +36,7 @@ LC_PROPERTY(strong) UIScrollView * scrollView;
     return self;
 }
 
--(void) setHotUsers:(NSArray *)hotUsers
-{
+- (void)setHotUsers:(NSArray *)hotUsers {
     _hotUsers = hotUsers;
     
     [self.scrollView removeAllSubviews];
@@ -52,15 +51,11 @@ LC_PROPERTY(strong) UIScrollView * scrollView;
     hot.text = LC_LO(@"热门用户");
     self.scrollView.ADD(hot);
     
-
     CGFloat padding = 5;
-    
     UIView * preview = nil;
     
     for (NSInteger i = 0; i < self.hotUsers.count; i++) {
-        
         LKUser * user = self.hotUsers[i];
-        
         LCUIImageView * item = LCUIImageView.view;
         item.viewFrameWidth = 35;
         item.viewFrameHeight = 35;
@@ -77,7 +72,7 @@ LC_PROPERTY(strong) UIScrollView * scrollView;
         
         preview = item;
     }
-
+    
     self.scrollView.contentSize = CGSizeMake(preview.viewRightX + padding, self.scrollView.viewFrameHeight);
 }
 

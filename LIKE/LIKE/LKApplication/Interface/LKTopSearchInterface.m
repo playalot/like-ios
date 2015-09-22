@@ -20,7 +20,10 @@
 }
 
 - (NSString *)requestUrl {
-    return [NSString stringWithFormat:@"/v1/search/topsearch/%@", self.searchString];
+    if (self.searchString) {
+        return [NSString stringWithFormat:@"/v1/search/topsearch/%@", self.searchString];
+    }
+    return nil;
 }
 
 - (NSArray *)users {

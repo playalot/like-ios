@@ -13,7 +13,7 @@
 #import "AppDelegate.h"
 #import "LKHotTagsSegmentView.h"
 #import "LKSearchHistory.h"
-#import "LKHotTagsPage.h"
+#import "LKHotTagsTableView.h"
 
 @interface LKSearchView ()<UIScrollViewDelegate>
 
@@ -44,8 +44,8 @@ LC_PROPERTY(assign) NSInteger page;
     return self;
 }
 
--(void) buildUI
-{
+-(void) buildUI {
+    
 //    UIView * header = UIView.view;
 //    header.frame = CGRectMake(0, 0, self.viewFrameWidth, 64);
 //    [header addTapGestureRecognizer:self selector:@selector(hide)];
@@ -65,15 +65,8 @@ LC_PROPERTY(assign) NSInteger page;
 //
     UIView * view = nil;
 
-//    if (IOS8_OR_LATER) {
-//        
-//        view = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
-//    }
-//    else{
-    
-        view = UIView.view;
-        view.backgroundColor = LC_RGB(231, 231, 231);
-//    }
+    view = UIView.view;
+    view.backgroundColor = LC_RGB(231, 231, 231);
     
     self.blur = view;
     self.blur.viewFrameY = 0;
@@ -81,7 +74,6 @@ LC_PROPERTY(assign) NSInteger page;
     self.blur.viewFrameHeight = self.viewFrameHeight;
     self.ADD(self.blur);
 
-    
     self.scrollView = UIScrollView.view;
     self.scrollView.viewFrameY = 38;
     self.scrollView.viewFrameWidth = self.viewFrameWidth;
@@ -98,36 +90,26 @@ LC_PROPERTY(assign) NSInteger page;
 //    self.searchBar.delegate = self;
 //    self.ADD(self.searchBar);
 
-    
     self.hotTags = LKHotTagsSegmentView.view;
     self.ADD(self.hotTags);
     
     @weakly(self);
-
+    
     self.hotTags.itemDidLoad = ^(NSArray * value){
-        
         @normally(self);
-        
         [self performSelector:@selector(buildPages:) withObject:value afterDelay:0];
     };
     
     self.hotTags.itemDidTap = ^(NSNumber * index){
-      
         @normally(self);
-        
         LC_FAST_ANIMATIONS_F(0.25, ^{
-        
             [self.scrollView setContentOffset:CGPointMake(index.integerValue * self.scrollView.viewFrameWidth, 0) animated:NO];
-            
         }, ^(BOOL finished){
-        
-            
         });
     };
     
     
     [self.hotTags performSelector:@selector(loadHotTags) withObject:nil afterDelay:0];
-    
     
     self.placeholderView = LKSearchPlaceholderView.view;
     self.placeholderView.viewFrameWidth = self.viewFrameWidth;
@@ -137,16 +119,13 @@ LC_PROPERTY(assign) NSInteger page;
     self.ADD(self.placeholderView);
     
     self.placeholderView.didTap = ^(){
-        
         @normally(self);
-        
         [self.searchBar.searchField resignFirstResponder];
     };
     
     self.placeholderView.didSelectRow = ^(NSString * tagString){
         
         @normally(self);
-        
         if (self.parentViewController) {
             LKSearchResultsViewController * search = [[LKSearchResultsViewController alloc] initWithSearchString:tagString];
             [self.parentViewController.navigationController pushViewController:search animated:YES];
@@ -170,33 +149,22 @@ LC_PROPERTY(assign) NSInteger page;
     [self searchBarTextDidChange:searchBar];
 }
 
-- (void)searchBarDidTapReturn:(LKSearchBar *)searchBar
-{
+- (void)searchBarDidTapReturn:(LKSearchBar *)searchBar {
     if (LKLocalUser.singleton.isLogin) {
         
         [LKSearchHistory addHistory:searchBar.searchField.text];
     }
 
     LKSearchResultsViewController * searchResultsViewController = [[LKSearchResultsViewController alloc] initWithSearchString:searchBar.searchField.text];
-    
     [LC_APPDELEGATE.homeViewController.navigationController pushViewController:searchResultsViewController animated:YES];
 }
 
 #pragma mark -
 
--(void) showInViewController:(UIViewController *)viewController
-{
+-(void) showInViewController:(UIViewController *)viewController {
     if (self.willShow) {
         self.willShow(nil);
     }
-    
-//    [viewController.view addSubview:self];
-//    
-//    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:3 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-//        
-//    } completion:^(BOOL finished) {
-//        
-//    }];
 }
 
 -(void) hideAction
@@ -218,8 +186,7 @@ LC_PROPERTY(assign) NSInteger page;
     }
 }
 
--(void) hide
-{
+- (void)hide {
     if (self.willHide) {
         self.willHide(nil);
     }
@@ -249,68 +216,50 @@ LC_PROPERTY(assign) NSInteger page;
 //        }];
 //
 //    });
-    
 }
 
-#pragma mark -
-
--(void) buildPages:(NSArray *)tags
-{
+- (void)buildPages:(NSArray *)tags {
     self.scrollView.contentSize = CGSizeMake(self.scrollView.viewFrameWidth * tags.count, self.scrollView.viewFrameHeight);
-    
     for (NSInteger i = 0; i<tags.count; i++) {
         
         LKTag * tag = tags[i];
-
-        LKHotTagsPage * page = [[LKHotTagsPage alloc] initWithTag:tag];
+        LKHotTagsTableView * page = [[LKHotTagsTableView alloc] initWithFrame:CGRectZero tag:tag];
         page.frame = CGRectMake(0, 0, self.scrollView.viewFrameWidth, self.scrollView.viewFrameHeight);
         page.viewFrameX = self.viewFrameWidth * i;
         page.tag = 100 + i;
         self.scrollView.ADD(page);
 
         if (i == 0) {
-            
             [page performSelector:@selector(show) withObject:nil afterDelay:0];
         }
     }
 }
 
--(void) scrollViewDidScroll:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     int page = (scrollView.contentOffset.x + LC_DEVICE_WIDTH / 2.0) / LC_DEVICE_WIDTH;
-
     if (self.page == page) {
         return;
     }
     
-    LKHotTagsPage * pageView = self.scrollView.FIND(100 + page);
-    
+    LKHotTagsTableView * pageView = self.scrollView.FIND(100 + page);
     if (pageView) {
         [pageView show];
     }
-    else{
-    
-    }
     
     self.page = page;
-    
     self.hotTags.selectIndex = page;
 }
 
--(void) scrollViewWillBeginDragging:(UIScrollView *)scrollView
-{
+-(void) scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     //self.paging = NO;
 }
 
--(void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
+-(void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     //self.paging = NO;
 }
 
--(void) searchPlaceHolderTags:(NSString *)searchString
-{
+-(void) searchPlaceHolderTags:(NSString *)searchString {
     [self.placeholderView cancelAllRequests];
-
     
     if (searchString.length == 0) {
         

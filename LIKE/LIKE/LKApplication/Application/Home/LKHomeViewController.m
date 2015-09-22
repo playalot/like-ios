@@ -278,9 +278,7 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
         @normally(self);
         
         if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
-            
-            [self.navigationController pushViewController:[LKTabBarController hiddenBottomBarWhenPushed:[[LKUserCenterViewController alloc] initWithUser:self.header.user]] animated:YES];
-            
+            [LKUserCenterViewController pushUserCenterWithUser:self.header.user navigationController:self.navigationController];
         };
         
     };
@@ -1246,7 +1244,6 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
 
 LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
     [LKUserCenterViewController pushUserCenterWithUser:signal.object navigationController:self.navigationController];
-    [LC_APPDELEGATE.tabBarController hideBar];
 }
 
 LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {

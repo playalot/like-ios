@@ -11,7 +11,7 @@
 #import "SquareCashStyleBehaviorDefiner.h"
 #import "BLKDelegateSplitter.h"
 #import "LKUserCenterModel.h"
-#import "LKUserCenterPhotoCell.h"
+#import "LKPostThumbnailTableViewCell.h"
 #import "LKUserInfoModel.h"
 #import "LKUserCenterUserCell.h"
 #import "LKUploadAvatarAndCoverModel.h"
@@ -28,22 +28,17 @@
 
 @interface LKUserCenterViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerCancelFavorDelegate>
 
-//
 LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
 LC_PROPERTY(strong) LCUITableView * tableView;
 LC_PROPERTY(strong) LKHomepageHeader * header;
 LC_PROPERTY(strong) BLKDelegateSplitter * delegateSplitter;
 
 LC_PROPERTY(strong) LCUIButton * friendshipButton;
-
 LC_PROPERTY(strong) LKInputView * inputView;
-
 LC_PROPERTY(strong) LCUIActivityIndicatorView * loadingActivity;
-//
+
 LC_PROPERTY(strong) LKUserCenterModel * userCenterModel;
-
 LC_PROPERTY(assign) LKUserCenterModelType currentType;
-
 LC_PROPERTY(assign) BOOL isLocalUser;
 LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
 
@@ -70,6 +65,7 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
 
 + (LKUserCenterViewController *)pushUserCenterWithUser:(LKUser *)user navigationController:(UINavigationController *)navigationController {
     LKUserCenterViewController * userCenter = [[LKUserCenterViewController alloc] initWithUser:user];
+    userCenter.needBackButton = YES;
     [navigationController pushViewController:userCenter animated:YES];
     return userCenter;
 }
@@ -103,7 +99,7 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
     }
 }
 
--(void) buildUI {
+- (void)buildUI {
     
     if (!self.isLocalUser) {
         [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[UIImage imageNamed:@"NavigationBarBack.png" useCache:YES] selectImage:nil];
@@ -122,7 +118,6 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.alpha = 0;
     self.view.ADD(self.tableView);
-    
     
     self.cartoonImageView = LCUIImageView.view;
     self.cartoonImageView.viewFrameWidth = 169;
@@ -190,6 +185,18 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
     
     self.header.labelAction = ^(id value){};
     
+    if (self.needBackButton) {
+        LCUIButton * backButton = LCUIButton.view;
+        backButton.viewFrameWidth = 50;
+        backButton.viewFrameHeight = 54 / 3 + 40;
+        backButton.viewFrameY = 10;
+        backButton.buttonImage = [UIImage imageNamed:@"NavigationBarBack.png" useCache:YES];
+        backButton.showsTouchWhenHighlighted = YES;
+        [backButton addTarget:self action:@selector(dismissAction) forControlEvents:UIControlEventTouchUpInside];
+        backButton.tag = 1002;
+        [self.header addSubview:backButton];
+    }
+    
     if (self.isLocalUser) {
         
         LCUIButton * setButton = LCUIButton.view;
@@ -203,16 +210,6 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
         [self.header addSubview:setButton];
         
     } else {
-        
-        LCUIButton * backButton = LCUIButton.view;
-        backButton.viewFrameWidth = 50;
-        backButton.viewFrameHeight = 54 / 3 + 40;
-        backButton.viewFrameY = 10;
-        backButton.buttonImage = [UIImage imageNamed:@"NavigationBarBack.png" useCache:YES];
-        backButton.showsTouchWhenHighlighted = YES;
-        [backButton addTarget:self action:@selector(dismissAction) forControlEvents:UIControlEventTouchUpInside];
-        backButton.tag = 1002;
-        [self.header addSubview:backButton];
         
         self.friendshipButton = LCUIButton.view;
         self.friendshipButton.viewFrameWidth = 64 / 3 + 40;
@@ -349,8 +346,7 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
 
 #pragma mark -
 
--(void) handleNotification:(NSNotification *)notification
-{
+-(void) handleNotification:(NSNotification *)notification {
     if ([notification is:LKUserCenterViewControllerReloadingData]) {
         [self loadData:self.currentType diretion:LCUIPullLoaderDiretionTop];
     }
@@ -504,11 +500,10 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     }
 }
 
-- (UITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.currentType == LKUserCenterModelTypePhotos) {
         
-        LKUserCenterPhotoCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Photos" andClass:[LKUserCenterPhotoCell class]];
+        LKPostThumbnailTableViewCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Photos" andClass:[LKPostThumbnailTableViewCell class]];
         
         NSInteger index = indexPath.row * 3;
         
@@ -551,7 +546,7 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
         
     } else if (self.currentType == LKUserCenterModelTypeFavor) {
         
-        LKUserCenterPhotoCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Favor" andClass:[LKUserCenterPhotoCell class]];
+        LKPostThumbnailTableViewCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Favor" andClass:[LKPostThumbnailTableViewCell class]];
         NSInteger index = indexPath.row * 3;
         NSArray * datasource = [self.userCenterModel dataWithType:LKUserCenterModelTypeFavor];
         
@@ -582,7 +577,7 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
             
         case LKUserCenterModelTypePhotos:
         case LKUserCenterModelTypeFavor:
-            return [LKUserCenterPhotoCell height];
+            return [LKPostThumbnailTableViewCell height];
         case LKUserCenterModelTypeFocus:
         case LKUserCenterModelTypeFans:
             return 58;

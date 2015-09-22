@@ -80,37 +80,27 @@ LC_PROPERTY(strong) LKNotificationModel *notificationModel;
 
 #pragma mark - ***** tableView dataSource *****
 - (NSInteger)tableView:(LCUITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
     return self.notificationModel.followsArray.count;
 }
 
 - (LCUITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     LKNotificationCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Cell" andClass:[LKNotificationCell class]];
     cell.notification = self.notificationModel.followsArray[indexPath.row];
-    
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     LKNotification *notification = self.notificationModel.followsArray[indexPath.row];
-    
     if (notification.posts.count >= 2) {
-        
         return 110;
     } else {
-        
         return [LKNotificationCell height:notification];
     }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     LKNotification *notification = self.notificationModel.followsArray[indexPath.row];
-
-    LKUserCenterViewController *userCenterViewController = [[LKUserCenterViewController alloc] initWithUser:notification.user];
-    [self.navigationController presentViewController:userCenterViewController animated:YES completion:nil];
+    [LKUserCenterViewController pushUserCenterWithUser:notification.user navigationController:self.navigationController];
 }
 
 @end

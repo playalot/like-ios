@@ -60,8 +60,7 @@ LC_PROPERTY(strong) UICollectionView * collectionView;
 
 @implementation LKCameraRollViewController
 
--(void) dealloc
-{
+-(void) dealloc {
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:YES];
     // 取消所有的通知监听
     [self unobserveAllNotifications];

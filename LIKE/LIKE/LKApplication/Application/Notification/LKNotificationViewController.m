@@ -19,6 +19,7 @@
 #import "LKFansViewController.h"
 #import "LKMessageViewController.h"
 #import "LKOfficialDetailViewController.h"
+#import "LKOfficialViewController.h"
 
 @interface LKNotificationViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerDelegate>
 
@@ -26,6 +27,7 @@ LC_PROPERTY(strong) LKNotificationModel *notificationModel;
 LC_PROPERTY(strong) LKNotificationHeader *notificationHeader;
 LC_PROPERTY(strong) LCUITableView *tableView;
 LC_PROPERTY(strong) LCUIPullLoader *pullLoader;
+LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
 
 @end
 
@@ -63,6 +65,17 @@ LC_PROPERTY(strong) LCUIPullLoader *pullLoader;
     self.tableView.backgroundColor = [UIColor clearColor];
     self.view.ADD(self.tableView);
     
+    
+    self.cartoonImageView = LCUIImageView.view;
+    self.cartoonImageView.viewFrameWidth = 169;
+    self.cartoonImageView.viewFrameHeight = 245;
+    self.cartoonImageView.viewCenterX = self.tableView.viewCenterX;
+    self.cartoonImageView.viewFrameY = 52 + 48;
+    self.cartoonImageView.image = [UIImage imageNamed:@"NotificationNoMessage.png" useCache:YES];
+    self.cartoonImageView.hidden = YES;
+    self.tableView.ADD(self.cartoonImageView);
+    
+    
     @weakly(self);
     
     self.pullLoader = [[LCUIPullLoader alloc] initWithScrollView:self.tableView pullStyle:LCUIPullLoaderStyleHeaderAndFooter];
@@ -96,13 +109,14 @@ LC_PROPERTY(strong) LCUIPullLoader *pullLoader;
         
         @normally(self);
         
+        self.cartoonImageView.hidden = self.notificationModel.datasource.count ? YES : NO;
+        
         if (diretion == LCUIPullLoaderDiretionTop) {
             [LKNotificationCount cleanBadge];
         }
         
         [self.pullLoader endRefresh];
         [self.tableView reloadData];
-        
     }];
 }
 
@@ -129,22 +143,18 @@ LC_PROPERTY(strong) LCUIPullLoader *pullLoader;
     
     LKNotificationCell *notiCell = (LKNotificationCell *)[self tableView:tableView cellForRowAtIndexPath:indexPath];
     return notiCell.cellHeight;
-
-//    LKNotification *notification = self.notificationModel.datasource[indexPath.row];
-//    if (notification.posts.count >= 2) {
-//        
-//        return 110;
-//        
-//    } else {
-//        
-//        return [LKNotificationCell height:notification];
-//    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     LKNotification *notification = self.notificationModel.datasource[indexPath.row];
     
+    if (indexPath.row == 0) {
+        
+        LKOfficialViewController *officialViewController = [LKOfficialViewController viewController];
+        [self.navigationController pushViewController:officialViewController animated:YES];
+        return;
+    }
     if (notification.type == LKNotificationTypeFocus) {
         [LKUserCenterViewController pushUserCenterWithUser:notification.user navigationController:self.navigationController];
         

@@ -183,7 +183,7 @@ LC_IMP_SIGNAL(PushPostDetail);
             
             CGFloat cellHeight = [[self class] height:notification];
             
-            if (self.nameLabel.viewRightX + tagSize.width + 15 < self.preview.viewFrameX - 15) {
+            if (self.nameLabel.viewRightX + tagSize.width + 20 + 15 < self.preview.viewFrameX - 15) {
                 
                 self.tagButton.viewFrameX = self.nameLabel.viewRightX + 15;
                 self.tagButton.viewCenterY = cellHeight * 0.5;
@@ -201,7 +201,7 @@ LC_IMP_SIGNAL(PushPostDetail);
             
             self.tagListView = GBTagListView.view;
             self.tagListView.viewFrameX = self.nameLabel.viewFrameX - 10;
-            self.tagListView.viewFrameWidth = LC_DEVICE_WIDTH - self.tagListView.viewFrameX - 37 - 20;
+            self.tagListView.viewFrameWidth = LC_DEVICE_WIDTH - self.tagListView.viewFrameX - 37;
             self.ADD(self.tagListView);
 
             self.tagButton.hidden = YES;
@@ -310,6 +310,11 @@ LC_IMP_SIGNAL(PushPostDetail);
             return [NSString stringWithFormat:@" %@ ", LC_LO(@"评论了标签")];
 
             break;
+        case LKNotificationTypeOfficial:
+            
+            return [NSString stringWithFormat:@" %@ ", LC_LO(@"给你发了一条消息")];
+            
+            break;
         default:
             break;
     }
@@ -341,6 +346,11 @@ LC_IMP_SIGNAL(PushPostDetail);
         case LKNotificationTypeComment:
             
             return [UIImage imageNamed:@"NotificationCommentIcon.png" useCache:YES];
+            
+            break;
+        case LKNotificationTypeOfficial:
+            
+            return [UIImage imageNamed:@"NotificationOfficalIcon.png" useCache:YES];
             
             break;
         default:

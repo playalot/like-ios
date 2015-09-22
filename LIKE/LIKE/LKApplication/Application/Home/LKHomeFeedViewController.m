@@ -18,6 +18,7 @@
 #import "LKHomeFeedInterface.h"
 #import "LCUIKeyBoard.h"
 #import "LKTagAddModel.h"
+#import "UIImageView+WebCache.h"
 #import "LKSearchResultsViewController.h"
 
 @interface LKHomeFeedViewController () <UITableViewDataSource, UITableViewDelegate, LKHomeTableViewCellDelegate, LKPostDetailViewControllerDelegate>
@@ -284,6 +285,7 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     
     LKPost * post = self.datasource[indexPath.row];
     cell.post = post;
+//    [cell.coverPhoto sd_setImageWithURL:[NSURL URLWithString:post.content] placeholderImage:nil];
     
     @weakly(self);
     

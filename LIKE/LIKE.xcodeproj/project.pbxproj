@@ -676,6 +676,8 @@
 		13BCD8D81ADBB00500A0CBF5 /* LKHttpRequestInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BCD8D51ADBB00500A0CBF5 /* LKHttpRequestInterface.m */; };
 		13BCD8DC1ADBCD1000A0CBF5 /* LKUserInfoCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BCD8DB1ADBCD1000A0CBF5 /* LKUserInfoCache.m */; };
 		13BCD8DF1ADBD0C700A0CBF5 /* LKUserInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BCD8DE1ADBD0C700A0CBF5 /* LKUserInfoModel.m */; };
+		13C363CC1BB030A8004CE0FA /* NotificationNoMessage@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13C363CB1BB030A8004CE0FA /* NotificationNoMessage@3x.png */; };
+		13C363CE1BB112F7004CE0FA /* NotificationOfficalMessage@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13C363CD1BB112F7004CE0FA /* NotificationOfficalMessage@3x.png */; };
 		13D549DD1B60E90F00D3CA2C /* ADTickerLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D549DC1B60E90F00D3CA2C /* ADTickerLabel.m */; };
 		13D549E71B61114B00D3CA2C /* LittleTag@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13D549E61B61114B00D3CA2C /* LittleTag@3x.png */; };
 		13D63AC81AE9FBFD001587C0 /* LKInputTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D63AC71AE9FBFD001587C0 /* LKInputTextViewController.m */; };
@@ -829,11 +831,11 @@
 		BC484AAF1BAFC34200F69D50 /* LKBaseInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484AAC1BAFC34200F69D50 /* LKBaseInterface.m */; };
 		BC484AB01BAFC34200F69D50 /* LKHomeFeedInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484AAE1BAFC34200F69D50 /* LKHomeFeedInterface.m */; };
 		BC484AB31BAFDB3800F69D50 /* LKTopSearchInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484AB21BAFDB3800F69D50 /* LKTopSearchInterface.m */; };
-		BC484AB91BB0404800F69D50 /* LKTagExploreInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484AB81BB0404800F69D50 /* LKTagExploreInterface.m */; settings = {ASSET_TAGS = (); }; };
-		BC484ABC1BB0428F00F69D50 /* LKHotTagsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484ABB1BB0428F00F69D50 /* LKHotTagsTableView.m */; settings = {ASSET_TAGS = (); }; };
-		BC484AC21BB048BD00F69D50 /* LKPostThumbnailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484AC11BB048BD00F69D50 /* LKPostThumbnailTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
-		BC484AC51BB050C700F69D50 /* LKHotUserHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484AC41BB050C700F69D50 /* LKHotUserHeaderView.m */; settings = {ASSET_TAGS = (); }; };
-		BC484AC81BB0F6B400F69D50 /* LKHotTagsUsersView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484AC71BB0F6B400F69D50 /* LKHotTagsUsersView.m */; settings = {ASSET_TAGS = (); }; };
+		BC484AB91BB0404800F69D50 /* LKTagExploreInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484AB81BB0404800F69D50 /* LKTagExploreInterface.m */; };
+		BC484ABC1BB0428F00F69D50 /* LKHotTagsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484ABB1BB0428F00F69D50 /* LKHotTagsTableView.m */; };
+		BC484AC21BB048BD00F69D50 /* LKPostThumbnailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484AC11BB048BD00F69D50 /* LKPostThumbnailTableViewCell.m */; };
+		BC484AC51BB050C700F69D50 /* LKHotUserHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484AC41BB050C700F69D50 /* LKHotUserHeaderView.m */; };
+		BC484AC81BB0F6B400F69D50 /* LKHotTagsUsersView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484AC71BB0F6B400F69D50 /* LKHotTagsUsersView.m */; };
 		BC810CAC1BABF4AA00AC956B /* LKTestHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC810CAB1BABF4AA00AC956B /* LKTestHomeViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -2134,6 +2136,8 @@
 		13BCD8DB1ADBCD1000A0CBF5 /* LKUserInfoCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKUserInfoCache.m; sourceTree = "<group>"; };
 		13BCD8DD1ADBD0C700A0CBF5 /* LKUserInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKUserInfoModel.h; sourceTree = "<group>"; };
 		13BCD8DE1ADBD0C700A0CBF5 /* LKUserInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKUserInfoModel.m; sourceTree = "<group>"; };
+		13C363CB1BB030A8004CE0FA /* NotificationNoMessage@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationNoMessage@3x.png"; sourceTree = "<group>"; };
+		13C363CD1BB112F7004CE0FA /* NotificationOfficalMessage@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationOfficalMessage@3x.png"; sourceTree = "<group>"; };
 		13D549DB1B60E90F00D3CA2C /* ADTickerLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTickerLabel.h; sourceTree = "<group>"; };
 		13D549DC1B60E90F00D3CA2C /* ADTickerLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADTickerLabel.m; sourceTree = "<group>"; };
 		13D549E61B61114B00D3CA2C /* LittleTag@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LittleTag@3x.png"; sourceTree = "<group>"; };
@@ -2479,6 +2483,8 @@
 		1304ABD01BABC8BF00C9EA2D /* Notification */ = {
 			isa = PBXGroup;
 			children = (
+				13C363CD1BB112F7004CE0FA /* NotificationOfficalMessage@3x.png */,
+				13C363CB1BB030A8004CE0FA /* NotificationNoMessage@3x.png */,
 				1304ABDB1BAC09A000C9EA2D /* NotificationCommentIcon@3x.png */,
 				1304ABD21BABC8C500C9EA2D /* NotificationFocusIcon@3x.png */,
 				1304ABD31BABC8C500C9EA2D /* NotificationLikeIcon@3x.png */,
@@ -5361,6 +5367,7 @@
 				135D5C951AE113BA00811B06 /* CameraClose@3x.png in Resources */,
 				138EDE8C1AD7B0A30020957C /* LCInternationalization.bundle in Resources */,
 				13B5B4E61B15CB6800252A78 /* TalkIcon@3x.png in Resources */,
+				13C363CC1BB030A8004CE0FA /* NotificationNoMessage@3x.png in Resources */,
 				132622AE1B93FD4C0074C589 /* PushConfig.plist in Resources */,
 				13DFCECF1B3D105000DC0CF7 /* Localizable.strings in Resources */,
 				13DEEC1A1AE789E6005E01A6 /* LC_WebReload@2x.png in Resources */,
@@ -5389,6 +5396,7 @@
 				1388B4FD1B01EFFB006F36AB /* EachOtherFocusLG@3x.png in Resources */,
 				130CF58F1BAFE07D002F4189 /* tabbar_search@3x.png in Resources */,
 				13DEEC141AE789E6005E01A6 /* LC_navbar_bg@2x.png in Resources */,
+				13C363CE1BB112F7004CE0FA /* NotificationOfficalMessage@3x.png in Resources */,
 				138C84771B6B650C00C2AC62 /* LittleFollowing@3x.png in Resources */,
 				1387C34B1B31643D00B065A7 /* SettingBinding@3x.png in Resources */,
 				139C737F1B553EC20051B2C3 /* __LKFilterConsole.xib in Resources */,

@@ -20,6 +20,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 \
 alpha:1.0]
 
 @implementation GBTagListView
+
 -(id)initWithFrame:(CGRect)frame{
     
     self = [super initWithFrame:frame];
@@ -31,7 +32,8 @@ alpha:1.0]
     }
     return self;
 }
--(void)setTagWithTagArray:(NSArray*)arr{
+
+- (void)setTagWithTagArray:(NSArray*)arr{
     
     previousFrame = CGRectZero;
     [_tagArr addObjectsFromArray:arr];
@@ -88,15 +90,22 @@ alpha:1.0]
         [self setHight:self andHight:totalHeight + Size_str.height];
         [self addSubview:tagBtn];
         
-        if (arr.count == 2) {
+    }];
+    
+
+    if (self.viewFrameHeight < 2 * 19) {
+        
+        for (LCUIButton *tagBtn in self.subviews) {
             
             tagBtn.backgroundColor = LKColor.color;
-        } else {
-            
-            tagBtn.backgroundColor = [UIColor colorWithRed:255 green:112 blue:108 alpha:1];
         }
+    } else {
         
-    }];
+        for (LCUIButton *tagBtn in self.subviews) {
+            
+            tagBtn.backgroundColor = LC_RGBA(255, 112, 108, 1);
+        }
+    }
     
     self.backgroundColor = LKColor.backgroundColor;
 }

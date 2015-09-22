@@ -446,7 +446,14 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     completionHandler(UIBackgroundFetchResultNewData);
     
     // Bind badge.
-    [LKNotificationCount bindView:self.homeViewController.navigationItem.rightBarButtonItem.customView withBadgeCount:[userInfo[@"aps"][@"badge"] integerValue]];
+    NSInteger badgeCount = [userInfo[@"aps"][@"badge"] integerValue];
+    if (badgeCount > 0) {
+        
+        RDVTabBarItem *item = self.tabBarController.tabBar.items[3];
+        [item setBackgroundSelectedImage:[UIImage imageNamed:@"tabbar_notification_selected.png"]
+                     withUnselectedImage:[UIImage imageNamed:@"tabbar_notification_badge.png"]];
+        [LKNotificationCount bindView:item withBadgeCount:badgeCount];
+    }
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {

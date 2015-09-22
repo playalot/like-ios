@@ -14,17 +14,15 @@
 
 @interface LKHomeTableViewCell()
 
-LC_PROPERTY(strong) LCUIImageView * head;
-LC_PROPERTY(strong) LCUILabel * title;
-LC_PROPERTY(strong) ADTickerLabel * likes;
-LC_PROPERTY(strong) LCUILabel * likesTip;
-LC_PROPERTY(strong) LCUIButton * friendshipButton;
-LC_PROPERTY(strong) LCUIActivityIndicatorView * loadingActivity;
-
-LC_PROPERTY(strong) LCUIButton * recommendedReason;
-LC_PROPERTY(strong) LCUIButton * recommendedReasonWithTag;
-
-LC_PROPERTY(strong) UIView * blackMask;
+LC_PROPERTY(strong) LCUIImageView *head;
+LC_PROPERTY(strong) LCUILabel *title;
+LC_PROPERTY(strong) ADTickerLabel *likes;
+LC_PROPERTY(strong) LCUILabel *likesTip;
+LC_PROPERTY(strong) LCUIButton *friendshipButton;
+LC_PROPERTY(strong) LCUIActivityIndicatorView *loadingActivity;
+LC_PROPERTY(strong) LCUIButton *recommendedReason;
+LC_PROPERTY(strong) LCUIButton *recommendedReasonWithTag;
+LC_PROPERTY(strong) UIView *blackMask;
 
 @end
 
@@ -79,6 +77,10 @@ LC_IMP_SIGNAL(PushPostDetail);
     [self.contentImage addTapGestureRecognizer:self selector:@selector(contentImageTapAction)];
     self.contentBack.ADD(self.contentImage);
     
+    
+//    self.contentImage.image = nil;
+//    self.coverPhoto = LCUIImageView.view;
+//    [self.contentImage addSubview:self.coverPhoto];
     
     
     UIView * headerBack = UIView.view.X(5).Y(5).WIDTH(LC_DEVICE_WIDTH - 10).HEIGHT(55);

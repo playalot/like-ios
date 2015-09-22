@@ -26,6 +26,7 @@ LC_PROPERTY(strong) LKNotificationModel *notificationModel;
 LC_PROPERTY(strong) LKNotificationHeader *notificationHeader;
 LC_PROPERTY(strong) LCUITableView *tableView;
 LC_PROPERTY(strong) LCUIPullLoader *pullLoader;
+LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
 
 @end
 
@@ -63,6 +64,17 @@ LC_PROPERTY(strong) LCUIPullLoader *pullLoader;
     self.tableView.backgroundColor = [UIColor clearColor];
     self.view.ADD(self.tableView);
     
+    
+    self.cartoonImageView = LCUIImageView.view;
+    self.cartoonImageView.viewFrameWidth = 169;
+    self.cartoonImageView.viewFrameHeight = 245;
+    self.cartoonImageView.viewCenterX = self.tableView.viewCenterX;
+    self.cartoonImageView.viewFrameY = 52 + 48;
+    self.cartoonImageView.image = [UIImage imageNamed:@"NotificationNoMessage.png" useCache:YES];
+    self.cartoonImageView.hidden = YES;
+    self.tableView.ADD(self.cartoonImageView);
+    
+    
     @weakly(self);
     
     self.pullLoader = [[LCUIPullLoader alloc] initWithScrollView:self.tableView pullStyle:LCUIPullLoaderStyleHeaderAndFooter];
@@ -96,13 +108,14 @@ LC_PROPERTY(strong) LCUIPullLoader *pullLoader;
         
         @normally(self);
         
+        self.cartoonImageView.hidden = self.notificationModel.datasource.count ? YES : NO;
+        
         if (diretion == LCUIPullLoaderDiretionTop) {
             [LKNotificationCount cleanBadge];
         }
         
         [self.pullLoader endRefresh];
         [self.tableView reloadData];
-        
     }];
 }
 

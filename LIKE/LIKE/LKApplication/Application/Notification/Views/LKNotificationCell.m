@@ -183,7 +183,7 @@ LC_IMP_SIGNAL(PushPostDetail);
             
             CGFloat cellHeight = [[self class] height:notification];
             
-            if (self.nameLabel.viewRightX + tagSize.width + 15 < self.preview.viewFrameX - 15) {
+            if (self.nameLabel.viewRightX + tagSize.width + 20 + 15 < self.preview.viewFrameX - 15) {
                 
                 self.tagButton.viewFrameX = self.nameLabel.viewRightX + 15;
                 self.tagButton.viewCenterY = cellHeight * 0.5;

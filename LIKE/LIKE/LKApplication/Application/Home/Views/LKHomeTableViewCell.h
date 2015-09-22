@@ -21,22 +21,23 @@ LC_BLOCK(void, LKHomeCellCustomAction, (LKPost * post));
 LC_ST_SIGNAL(PushUserCenter);
 LC_ST_SIGNAL(PushPostDetail);
 
-LC_PROPERTY(strong) LKPost * post;
+LC_PROPERTY(strong) LKPost *post;
 LC_PROPERTY(copy) LKHomeCellAddTag addTag;
 LC_PROPERTY(copy) LKHomeCellRemovedTag removedTag;
 LC_PROPERTY(copy) LKHomeCellCustomAction customAction;
 
-+(CGFloat) height:(LKPost *)post;
++ (CGFloat)height:(LKPost *)post;
 
--(void) reloadTags;
+- (void)reloadTags;
 
--(void)cellOnTableView:(UITableView *)tableView didScrollOnView:(UIView *)view;
+- (void)cellOnTableView:(UITableView *)tableView didScrollOnView:(UIView *)view;
 
-LC_PROPERTY(strong) LCUIImageView * contentImage;
-LC_PROPERTY(strong) UIView * contentBack;
-LC_PROPERTY(strong) LKTagsView * tagsView;
+LC_PROPERTY(strong) LCUIImageView *contentImage;
+LC_PROPERTY(strong) UIView *contentBack;
+LC_PROPERTY(strong) LKTagsView *tagsView;
+//LC_PROPERTY(strong) LCUIImageView *coverPhoto;
 
--(void) newTagAnimation:(void (^)(BOOL finished))completion;
+- (void)newTagAnimation:(void (^)(BOOL finished))completion;
 
 @property (nonatomic, weak) id <LKHomeTableViewCellDelegate> delegate;
 

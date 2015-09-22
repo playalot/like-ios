@@ -7,7 +7,7 @@
 //
 
 #import "LKSearchResultsViewController.h"
-#import "LKUserCenterPhotoCell.h"
+#import "LKPostThumbnailTableViewCell.h"
 #import "LKPostDetailViewController.h"
 #import "UIImageView+WebCache.h"
 #import "LKSearchResultsBrowsingViewController.h"
@@ -261,7 +261,7 @@ LC_PROPERTY(strong) LKSearchResultsBrowsingViewController *searchResultsBrowsing
 }
 
 - (UITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    LKUserCenterPhotoCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Photos" andClass:[LKUserCenterPhotoCell class]];
+    LKPostThumbnailTableViewCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Photos" andClass:[LKPostThumbnailTableViewCell class]];
     NSInteger index = indexPath.row * 3;
     
     NSArray * datasource = self.datasource;
@@ -286,7 +286,7 @@ LC_PROPERTY(strong) LKSearchResultsBrowsingViewController *searchResultsBrowsing
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [LKUserCenterPhotoCell height];
+    return [LKPostThumbnailTableViewCell height];
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

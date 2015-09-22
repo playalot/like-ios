@@ -21,7 +21,6 @@
 }
 
 - (NSString *)requestUrl {
-    
     return @"/v2/notification";
 }
 

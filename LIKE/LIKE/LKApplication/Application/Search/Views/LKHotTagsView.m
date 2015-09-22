@@ -18,8 +18,7 @@ LC_PROPERTY(strong) UIView * maskView;
 
 @implementation LKHotTagItem
 
--(instancetype) init
-{
+-(instancetype) init {
     if (self = [super init]) {
         
         self.contentMode = UIViewContentModeScaleAspectFill;
@@ -27,19 +26,15 @@ LC_PROPERTY(strong) UIView * maskView;
         self.layer.masksToBounds = NO;
         self.backgroundColor = LC_RGB(245, 240, 236);
 
-        
         self.maskView = UIView.view.COLOR([[UIColor blackColor] colorWithAlphaComponent:0.12]);
         self.ADD(self.maskView);
-        
         
         self.tagLabel = LCUILabel.view;
         self.tagLabel.font = LK_FONT_B(11);
         self.tagLabel.textColor = [UIColor whiteColor];
         self.ADD(self.tagLabel);
 
-        
         self.maskView.hidden = YES;
-        
         
         [self addTapGestureRecognizer:self selector:@selector(didTapAction)];
     }
@@ -47,15 +42,13 @@ LC_PROPERTY(strong) UIView * maskView;
     return self;
 }
 
--(void) didTapAction
-{
+- (void)didTapAction {
     if (self.didTap) {
         self.didTap(self);
     }
 }
 
--(void) setTagString:(NSString *)tagString
-{
+- (void)setTagString:(NSString *)tagString {
     _tagString = tagString;
     
     CGFloat topPadding = 6;
@@ -70,20 +63,17 @@ LC_PROPERTY(strong) UIView * maskView;
     self.viewFrameHeight = self.tagLabel.viewBottomY + topPadding;
     self.viewFrameWidth = self.viewFrameWidth < self.viewFrameHeight ? self.viewFrameHeight : self.viewFrameWidth;
 
-    
     self.cornerRadius = self.viewMidHeight;
     self.maskView.frame = self.bounds;
 }
 
--(void) setUrl:(NSString *)url
-{
+- (void)setUrl:(NSString *)url {
     [super setUrl:url];
     
     self.maskView.hidden = NO;
 }
 
--(void) setSelected:(BOOL)selected
-{
+- (void)setSelected:(BOOL)selected {
     if (selected) {
         
         self.backgroundColor = LKColor.color;

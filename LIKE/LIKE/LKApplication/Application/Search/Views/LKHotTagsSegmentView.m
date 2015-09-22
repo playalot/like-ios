@@ -11,31 +11,25 @@
 
 @interface LKHotTagsSegmentView ()
 
-LC_PROPERTY(strong) NSMutableArray * itemArray;
-LC_PROPERTY(strong) UIScrollView * scrollView;
-LC_PROPERTY(strong) UIView * line;
+LC_PROPERTY(strong) NSMutableArray *itemArray;
+LC_PROPERTY(strong) UIScrollView *scrollView;
+LC_PROPERTY(strong) UIView *line;
 
 @end
 
 @implementation LKHotTagsSegmentView
 
--(instancetype) init
-{
+-(instancetype) init {
     if (self = [super initWithFrame:CGRectMake(0, 0, LC_DEVICE_WIDTH, 38)]) {
-        
         self.itemArray = [NSMutableArray array];
-        
         self.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:1];
         self.alpha = 0;
     }
-    
     return self;
 }
 
--(void) loadHotTags
-{
+-(void) loadHotTags {
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"tag/hot"].AUTO_SESSION();
-    
     @weakly(self);
     
     [self request:interface complete:^(LKHttpRequestResult *result) {

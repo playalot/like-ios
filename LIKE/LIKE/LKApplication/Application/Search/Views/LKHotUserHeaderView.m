@@ -1,21 +1,21 @@
 //
-//  LKHotUser.m
+//  LKHotUserHeaderView.m
 //  LIKE
 //
-//  Created by Licheng Guo ( http://nsobjet.me ) on 15/7/15.
-//  Copyright (c) 2015年 Beijing Like Technology Co.Ltd . ( http://www.likeorz.com ). All rights reserved.
+//  Created by huangweifeng on 9/21/15.
+//  Copyright © 2015 Beijing Like Technology Co.Ltd . ( http://www.likeorz.com ). All rights reserved.
 //
 
-#import "LKHotUserView.h"
+#import "LKHotUserHeaderView.h"
 #import "UIImageView+WebCache.h"
 
-@interface LKHotUserView ()
+@interface LKHotUserHeaderView ()
 
 LC_PROPERTY(strong) UIScrollView * scrollView;
 
 @end
 
-@implementation LKHotUserView
+@implementation LKHotUserHeaderView
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
@@ -31,13 +31,11 @@ LC_PROPERTY(strong) UIScrollView * scrollView;
         self.scrollView.backgroundColor = [UIColor whiteColor];
         self.scrollView.cornerRadius = 2;
         self.ADD(self.scrollView);
-        
     }
     return self;
 }
 
--(void) setHotUsers:(NSArray *)hotUsers
-{
+- (void)setHotUsers:(NSArray *)hotUsers {
     _hotUsers = hotUsers;
     
     [self.scrollView removeAllSubviews];
@@ -52,11 +50,9 @@ LC_PROPERTY(strong) UIScrollView * scrollView;
     hot.text = LC_LO(@"热门用户");
     self.scrollView.ADD(hot);
     
-
+    
     CGFloat padding = 5;
-    
     UIView * preview = nil;
-    
     for (NSInteger i = 0; i < self.hotUsers.count; i++) {
         
         LKUser * user = self.hotUsers[i];
@@ -65,6 +61,7 @@ LC_PROPERTY(strong) UIScrollView * scrollView;
         item.viewFrameWidth = 35;
         item.viewFrameHeight = 35;
         item.cornerRadius = 17.5;
+        
         [item sd_setImageWithURL:[NSURL URLWithString:user.avatar] placeholderImage:nil];
         item.backgroundColor = LKColor.backgroundColor;
         item.userInteractionEnabled = YES;
@@ -77,11 +74,11 @@ LC_PROPERTY(strong) UIScrollView * scrollView;
         
         preview = item;
     }
-
+    
     self.scrollView.contentSize = CGSizeMake(preview.viewRightX + padding, self.scrollView.viewFrameHeight);
 }
 
--(void) itemTapAction:(UITapGestureRecognizer *)tap {
+- (void)itemTapAction:(UITapGestureRecognizer *)tap {
     self.SEND(@"PushUserCenter").object = self.hotUsers[tap.view.tag];
 }
 

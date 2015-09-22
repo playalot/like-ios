@@ -786,7 +786,6 @@
 		13FCC07F1ADE3B340008DB41 /* LKPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FCC07E1ADE3B340008DB41 /* LKPost.m */; };
 		13FCC0821ADE3B960008DB41 /* LKTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FCC0811ADE3B960008DB41 /* LKTag.m */; };
 		13FCC0851ADE3DAB0008DB41 /* PullLoaderSmallArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13FCC0841ADE3DAB0008DB41 /* PullLoaderSmallArrow@2x.png */; };
-		13FCC0891ADE40AC0008DB41 /* LKUserCenterPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FCC0881ADE40AC0008DB41 /* LKUserCenterPhotoCell.m */; };
 		13FCC08B1ADE521D0008DB41 /* LKUIKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FCC08A1ADE4B650008DB41 /* LKUIKit.m */; };
 		13FCC08D1ADE74DE0008DB41 /* Refresh@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13FCC08C1ADE74DE0008DB41 /* Refresh@3x.png */; };
 		13FCC0901ADE84DF0008DB41 /* LKTagsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FCC08F1ADE84DF0008DB41 /* LKTagsView.m */; };
@@ -834,6 +833,11 @@
 		BC484AAF1BAFC34200F69D50 /* LKBaseInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484AAC1BAFC34200F69D50 /* LKBaseInterface.m */; };
 		BC484AB01BAFC34200F69D50 /* LKHomeFeedInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484AAE1BAFC34200F69D50 /* LKHomeFeedInterface.m */; };
 		BC484AB31BAFDB3800F69D50 /* LKTopSearchInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484AB21BAFDB3800F69D50 /* LKTopSearchInterface.m */; };
+		BC484AB91BB0404800F69D50 /* LKTagExploreInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484AB81BB0404800F69D50 /* LKTagExploreInterface.m */; settings = {ASSET_TAGS = (); }; };
+		BC484ABC1BB0428F00F69D50 /* LKHotTagsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484ABB1BB0428F00F69D50 /* LKHotTagsTableView.m */; settings = {ASSET_TAGS = (); }; };
+		BC484AC21BB048BD00F69D50 /* LKPostThumbnailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484AC11BB048BD00F69D50 /* LKPostThumbnailTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
+		BC484AC51BB050C700F69D50 /* LKHotUserHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484AC41BB050C700F69D50 /* LKHotUserHeaderView.m */; settings = {ASSET_TAGS = (); }; };
+		BC484AC81BB0F6B400F69D50 /* LKHotTagsUsersView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484AC71BB0F6B400F69D50 /* LKHotTagsUsersView.m */; settings = {ASSET_TAGS = (); }; };
 		BC810CAC1BABF4AA00AC956B /* LKTestHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC810CAB1BABF4AA00AC956B /* LKTestHomeViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -2327,8 +2331,6 @@
 		13FCC0801ADE3B960008DB41 /* LKTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKTag.h; sourceTree = "<group>"; };
 		13FCC0811ADE3B960008DB41 /* LKTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKTag.m; sourceTree = "<group>"; };
 		13FCC0841ADE3DAB0008DB41 /* PullLoaderSmallArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PullLoaderSmallArrow@2x.png"; sourceTree = "<group>"; };
-		13FCC0871ADE40AC0008DB41 /* LKUserCenterPhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKUserCenterPhotoCell.h; sourceTree = "<group>"; };
-		13FCC0881ADE40AC0008DB41 /* LKUserCenterPhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKUserCenterPhotoCell.m; sourceTree = "<group>"; };
 		13FCC08A1ADE4B650008DB41 /* LKUIKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKUIKit.m; sourceTree = "<group>"; };
 		13FCC08C1ADE74DE0008DB41 /* Refresh@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Refresh@3x.png"; sourceTree = "<group>"; };
 		13FCC08E1ADE84DF0008DB41 /* LKTagsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKTagsView.h; sourceTree = "<group>"; };
@@ -2420,6 +2422,16 @@
 		BC484AAE1BAFC34200F69D50 /* LKHomeFeedInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKHomeFeedInterface.m; path = Interface/LKHomeFeedInterface.m; sourceTree = "<group>"; };
 		BC484AB11BAFDB3800F69D50 /* LKTopSearchInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKTopSearchInterface.h; path = Interface/LKTopSearchInterface.h; sourceTree = "<group>"; };
 		BC484AB21BAFDB3800F69D50 /* LKTopSearchInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKTopSearchInterface.m; path = Interface/LKTopSearchInterface.m; sourceTree = "<group>"; };
+		BC484AB71BB0404800F69D50 /* LKTagExploreInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKTagExploreInterface.h; path = Interface/LKTagExploreInterface.h; sourceTree = "<group>"; };
+		BC484AB81BB0404800F69D50 /* LKTagExploreInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKTagExploreInterface.m; path = Interface/LKTagExploreInterface.m; sourceTree = "<group>"; };
+		BC484ABA1BB0428F00F69D50 /* LKHotTagsTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKHotTagsTableView.h; sourceTree = "<group>"; };
+		BC484ABB1BB0428F00F69D50 /* LKHotTagsTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKHotTagsTableView.m; sourceTree = "<group>"; };
+		BC484AC01BB048BD00F69D50 /* LKPostThumbnailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKPostThumbnailTableViewCell.h; path = Common/LKPostThumbnailTableViewCell.h; sourceTree = "<group>"; };
+		BC484AC11BB048BD00F69D50 /* LKPostThumbnailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKPostThumbnailTableViewCell.m; path = Common/LKPostThumbnailTableViewCell.m; sourceTree = "<group>"; };
+		BC484AC31BB050C700F69D50 /* LKHotUserHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKHotUserHeaderView.h; sourceTree = "<group>"; };
+		BC484AC41BB050C700F69D50 /* LKHotUserHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKHotUserHeaderView.m; sourceTree = "<group>"; };
+		BC484AC61BB0F6B400F69D50 /* LKHotTagsUsersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKHotTagsUsersView.h; sourceTree = "<group>"; };
+		BC484AC71BB0F6B400F69D50 /* LKHotTagsUsersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKHotTagsUsersView.m; sourceTree = "<group>"; };
 		BC810CAA1BABF4AA00AC956B /* LKTestHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKTestHomeViewController.h; sourceTree = "<group>"; };
 		BC810CAB1BABF4AA00AC956B /* LKTestHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKTestHomeViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2669,6 +2681,12 @@
 				134B0B821B5688D700A195BE /* LKHotUserView.m */,
 				137106A11B58FBE7008BCD66 /* LKMoreContentButton.h */,
 				137106A21B58FBE7008BCD66 /* LKMoreContentButton.m */,
+				BC484ABA1BB0428F00F69D50 /* LKHotTagsTableView.h */,
+				BC484ABB1BB0428F00F69D50 /* LKHotTagsTableView.m */,
+				BC484AC31BB050C700F69D50 /* LKHotUserHeaderView.h */,
+				BC484AC41BB050C700F69D50 /* LKHotUserHeaderView.m */,
+				BC484AC61BB0F6B400F69D50 /* LKHotTagsUsersView.h */,
+				BC484AC71BB0F6B400F69D50 /* LKHotTagsUsersView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -5076,8 +5094,6 @@
 		13FCC0861ADE40790008DB41 /* Views(Cell) */ = {
 			isa = PBXGroup;
 			children = (
-				13FCC0871ADE40AC0008DB41 /* LKUserCenterPhotoCell.h */,
-				13FCC0881ADE40AC0008DB41 /* LKUserCenterPhotoCell.m */,
 				13E1A2C91AE6439F00E24C3C /* LKUserCenterUserCell.h */,
 				13E1A2CA1AE6439F00E24C3C /* LKUserCenterUserCell.m */,
 			);
@@ -5201,6 +5217,8 @@
 				BC12A6511BA023E600B99CB5 /* LKPostTableViewController.m */,
 				BC12A6531BA0240200B99CB5 /* LKPostTableViewCell.h */,
 				BC12A6541BA0240200B99CB5 /* LKPostTableViewCell.m */,
+				BC484AC01BB048BD00F69D50 /* LKPostThumbnailTableViewCell.h */,
+				BC484AC11BB048BD00F69D50 /* LKPostThumbnailTableViewCell.m */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -5232,6 +5250,8 @@
 				BC484AB21BAFDB3800F69D50 /* LKTopSearchInterface.m */,
 				130CF5951BAFE846002F4189 /* LKNotificationInterface.h */,
 				130CF5961BAFE846002F4189 /* LKNotificationInterface.m */,
+				BC484AB71BB0404800F69D50 /* LKTagExploreInterface.h */,
+				BC484AB81BB0404800F69D50 /* LKTagExploreInterface.m */,
 			);
 			name = Interface;
 			sourceTree = "<group>";
@@ -5588,7 +5608,6 @@
 				13B5B4EB1B15EE1300252A78 /* LKComment.m in Sources */,
 				13BCD8C21ADBA93000A0CBF5 /* MCBasicAnimation.m in Sources */,
 				13E1A4EB1AE65FE300E24C3C /* FastttEmptyFilter.m in Sources */,
-				13FCC0891ADE40AC0008DB41 /* LKUserCenterPhotoCell.m in Sources */,
 				139054FE1B994A6D00DBF34A /* GPUImageHighlightShadowFilter.m in Sources */,
 				138EDDFF1AD7B0A30020957C /* LCCrashReport.m in Sources */,
 				1390551E1B994A6D00DBF34A /* GPUImageMotionDetector.m in Sources */,
@@ -5751,6 +5770,7 @@
 				1347655F1AE25EA40055D099 /* QNAsyncRun.m in Sources */,
 				138EDE131AD7B0A30020957C /* LCGLCommon.m in Sources */,
 				1390551A1B994A6D00DBF34A /* GPUImageMissEtikateFilter.m in Sources */,
+				BC484ABC1BB0428F00F69D50 /* LKHotTagsTableView.m in Sources */,
 				138EDE781AD7B0A30020957C /* LCAudio.m in Sources */,
 				1377F04B1B5E35D8008E21BC /* UIKit+Doppelganger.m in Sources */,
 				138EDE421AD7B0A30020957C /* LCWebServerConnection.m in Sources */,
@@ -5764,6 +5784,7 @@
 				BC12A6611BA696F700B99CB5 /* LKNotificationHeader.m in Sources */,
 				139055511B994A6D00DBF34A /* GPUImageTextureOutput.m in Sources */,
 				139055591B994A6D00DBF34A /* GPUImageTransformFilter.m in Sources */,
+				BC484AC21BB048BD00F69D50 /* LKPostThumbnailTableViewCell.m in Sources */,
 				BC12A6291B9BEE2300B99CB5 /* LCChainRequestAgent.m in Sources */,
 				13A951A61B4CE528002B73ED /* AFURLRequestSerialization.m in Sources */,
 				134765621AE25EA40055D099 /* QNEtag.m in Sources */,
@@ -5899,6 +5920,7 @@
 				1390553A1B994A6D00DBF34A /* GPUImageRGBErosionFilter.m in Sources */,
 				BC12A6371B9BF1BE00B99CB5 /* LKTabBarController.mm in Sources */,
 				138EDE941AD7B0A30020957C /* LCNetwork.m in Sources */,
+				BC484AB91BB0404800F69D50 /* LKTagExploreInterface.m in Sources */,
 				1373C4371B846FDA00A6C55A /* MJPropertyKey.m in Sources */,
 				13B5B4F61B1710AE00252A78 /* LKTagCommentCell.m in Sources */,
 				138EDE5E1AD7B0A30020957C /* FMDatabaseQueue.m in Sources */,
@@ -5969,6 +5991,7 @@
 				130CF5971BAFE846002F4189 /* LKNotificationInterface.m in Sources */,
 				137106991B576212008BCD66 /* LKHotTagDetail.m in Sources */,
 				1377F04C1B5E35D8008E21BC /* WMLArrayDiff.m in Sources */,
+				BC484AC81BB0F6B400F69D50 /* LKHotTagsUsersView.m in Sources */,
 				139054D51B994A6D00DBF34A /* GPUImageChromaKeyFilter.m in Sources */,
 				1373C4351B846FDA00A6C55A /* MJFoundation.m in Sources */,
 				139054F01B994A6D00DBF34A /* GPUImageFilterGroup.m in Sources */,
@@ -6013,6 +6036,7 @@
 				13BCD8921ADBA92200A0CBF5 /* POPCGUtils.mm in Sources */,
 				138EDEA81AD7B0A30020957C /* LCUIAlertView.m in Sources */,
 				138EDDF71AD7B0A30020957C /* LCSQLite.m in Sources */,
+				BC484AC51BB050C700F69D50 /* LKHotUserHeaderView.m in Sources */,
 				139055071B994A6D00DBF34A /* GPUImageiOSBlurFilter.m in Sources */,
 				13BCD8C11ADBA93000A0CBF5 /* MCAnimationProxy.m in Sources */,
 				138EDE9E1AD7B0A30020957C /* UIView+LCFrameLayout.m in Sources */,

@@ -32,14 +32,14 @@ LC_IMP_SIGNAL(PushUserCenter);
 LC_IMP_SIGNAL(PushPostDetail);
 
 
-+(CGFloat) height:(LKPost *)post
-{
-    CGSize size = [LKUIKit parsingImageSizeWithURL:post.content constSize:CGSizeMake(LC_DEVICE_WIDTH - 10, LC_DEVICE_WIDTH - 10)];
++ (CGFloat)height:(LKPost *)post {
     
-    if (size.width > LC_DEVICE_WIDTH - 10) {
+    CGSize size = [LKUIKit parsingImageSizeWithURL:post.content constSize:CGSizeMake(LC_DEVICE_WIDTH, LC_DEVICE_WIDTH)];
+    
+    if (size.width > LC_DEVICE_WIDTH) {
         
-        size.height = (LC_DEVICE_WIDTH - 10) / size.width * size.height;
-        size.width = (LC_DEVICE_WIDTH - 10);
+        size.height = LC_DEVICE_WIDTH / size.width * size.height;
+        size.width = LC_DEVICE_WIDTH;
     }
     
     
@@ -48,12 +48,12 @@ LC_IMP_SIGNAL(PushPostDetail);
     if (!__tagsView) {
         
         __tagsView = LKTagsView.view;
-        __tagsView.viewFrameWidth = LC_DEVICE_WIDTH - 10;
+        __tagsView.viewFrameWidth = LC_DEVICE_WIDTH;
     }
     
     __tagsView.tags = post.tags;
     
-    return size.height + __tagsView.viewFrameHeight + 55;
+    return size.height + __tagsView.viewFrameHeight + 54;
 }
 
 -(void) buildUI
@@ -76,28 +76,25 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.contentImage.showIndicator = YES;
     [self.contentImage addTapGestureRecognizer:self selector:@selector(contentImageTapAction)];
     self.contentBack.ADD(self.contentImage);
+//    self.ADD(self.contentImage);
     
     
-//    self.contentImage.image = nil;
-//    self.coverPhoto = LCUIImageView.view;
-//    [self.contentImage addSubview:self.coverPhoto];
+//    UIView *headerBack = UIView.view.X(0).Y(0).WIDTH(LC_DEVICE_WIDTH).HEIGHT(66);
+//    headerBack.backgroundColor = [UIColor whiteColor];
+//    self.ADD(headerBack);
     
     
-    UIView * headerBack = UIView.view.X(5).Y(5).WIDTH(LC_DEVICE_WIDTH - 10).HEIGHT(55);
-    headerBack.backgroundColor = [UIColor whiteColor];
-    self.ADD(headerBack);
-    
-    
-    [LKHomeTableViewCell roundCorners:UIRectCornerTopLeft | UIRectCornerTopRight forView:headerBack];
+//    [LKHomeTableViewCell roundCorners:UIRectCornerTopLeft | UIRectCornerTopRight forView:headerBack];
     
     
     // 头像
     self.head = LCUIImageView.view;
-    self.head.viewFrameX = 15;
-    self.head.viewFrameY = 55 / 2 - 35 / 2 + 5;
-    self.head.viewFrameWidth = 35;
-    self.head.viewFrameHeight = 35;
-    self.head.cornerRadius = 35. / 2.;
+    self.head.viewFrameX = 14;
+//    self.head.viewFrameY = 55 / 2 - 35 / 2 + 5;
+    self.head.viewFrameY = 10;
+    self.head.viewFrameWidth = 34;
+    self.head.viewFrameHeight = 34;
+    self.head.cornerRadius = 34 * 0.5;
     self.head.layer.shouldRasterize = NO;
     self.head.backgroundColor = LKColor.backgroundColor;
     self.head.userInteractionEnabled = YES;
@@ -107,11 +104,11 @@ LC_IMP_SIGNAL(PushPostDetail);
     
     // 昵称
     self.title = LCUILabel.view;
-    self.title.viewFrameX = self.head.viewRightX + 10;
+    self.title.viewFrameX = self.head.viewRightX + 12;
     self.title.viewFrameY = self.head.viewFrameY;
     self.title.viewFrameWidth = LC_DEVICE_WIDTH - 150;
     self.title.viewFrameHeight = LK_FONT(13).lineHeight;
-    self.title.font = LK_FONT(13);
+    self.title.font = LK_FONT(14);
     self.title.textColor = LC_RGB(51, 51, 51);
     [self.title addTapGestureRecognizer:self selector:@selector(handleHeadTap:)];
     self.ADD(self.title);
@@ -121,9 +118,9 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.likes = ADTickerLabel.view;
     self.likes.viewFrameWidth = LC_DEVICE_WIDTH / 2 - 10 - 5;
     self.likes.viewFrameX = self.title.viewFrameX;
-    self.likes.viewFrameHeight = LK_FONT(13).lineHeight;
-    self.likes.viewFrameY = self.title.viewBottomY;
-    self.likes.font = LK_FONT(13);
+    self.likes.viewFrameHeight = LK_FONT(10).lineHeight;
+    self.likes.viewFrameY = self.title.viewBottomY + 2;
+    self.likes.font = LK_FONT(10);
     self.likes.textAlignment = UITextAlignmentLeft;
     self.likes.textColor = LC_RGB(51, 51, 51);
     self.likes.changeTextAnimationDuration = 0.25;
@@ -134,12 +131,12 @@ LC_IMP_SIGNAL(PushPostDetail);
     // like数量后缀
     self.likesTip = LCUILabel.view;
     self.likesTip.viewFrameY = self.likes.viewFrameY;
-    self.likesTip.font = LK_FONT(13);
+    self.likesTip.font = LK_FONT(10);
     self.likesTip.textAlignment = UITextAlignmentLeft;
     self.likesTip.textColor = LC_RGB(51, 51, 51);
     self.likesTip.text = @"likes";
     self.likesTip.FIT();
-    self.likesTip.viewFrameHeight = LK_FONT(13).lineHeight;
+    self.likesTip.viewFrameHeight = LK_FONT(10).lineHeight;
     [self.likesTip addTapGestureRecognizer:self selector:@selector(handleHeadTap:)];
     self.ADD(self.likesTip);
     
@@ -147,10 +144,10 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.recommendedReason = LCUIButton.view;
     self.recommendedReason.viewFrameY = self.title.viewFrameY + 2;
     self.recommendedReason.title = LC_LO(@"共同兴趣");
-    self.recommendedReason.titleFont = LK_FONT(11);
-    self.recommendedReason.titleColor = LC_RGB(155, 155, 155);
+    self.recommendedReason.titleFont = LK_FONT(13);
+    self.recommendedReason.titleColor = LC_RGB(217, 217, 217);
     self.recommendedReason.buttonImage = [UIImage imageNamed:@"LittleTag" useCache:YES];
-    self.recommendedReason.viewFrameHeight = LK_FONT(11).lineHeight;
+    self.recommendedReason.viewFrameHeight = LK_FONT(13).lineHeight;
     self.recommendedReason.viewFrameX = LC_DEVICE_WIDTH - self.recommendedReasonWithTag.viewFrameWidth - 15;
     self.recommendedReason.titleEdgeInsets = UIEdgeInsetsMake(1, 0, 0, 0);
     [self.recommendedReason addTarget:self action:@selector(recommendedReasonBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -160,7 +157,7 @@ LC_IMP_SIGNAL(PushPostDetail);
 //    self.recommendedReasonWithTag = LCUILabel.view;
     self.recommendedReasonWithTag = LCUIButton.view;
     self.recommendedReasonWithTag.viewFrameWidth = LC_DEVICE_WIDTH / 2;
-    self.recommendedReasonWithTag.viewFrameHeight = LK_FONT(11).lineHeight;
+    self.recommendedReasonWithTag.viewFrameHeight = LK_FONT(13).lineHeight;
     self.recommendedReasonWithTag.viewFrameX = LC_DEVICE_WIDTH / 2 - 15;
 //    [self.recommendedReasonWithTag sizeToFit];
 //    self.recommendedReasonWithTag.viewFrameX = CGRectGetMaxX(self.recommendedReason.frame) - self.recommendedReasonWithTag.viewFrameWidth;
@@ -169,9 +166,9 @@ LC_IMP_SIGNAL(PushPostDetail);
 //    self.recommendedReasonWithTag.text = LC_LO(@"有故事的人");
     self.recommendedReasonWithTag.title = LC_LO(@"有故事的人");
 //    self.recommendedReasonWithTag.textColor = LC_RGB(155, 155, 155);
-    self.recommendedReasonWithTag.titleColor = LC_RGB(155, 155, 155);
+    self.recommendedReasonWithTag.titleColor = LC_RGB(217, 217, 217);
 //    self.recommendedReasonWithTag.font = LK_FONT(11);
-    self.recommendedReasonWithTag.titleFont = LK_FONT(11);
+    self.recommendedReasonWithTag.titleFont = LK_FONT(13);
 //    self.recommendedReasonWithTag.textAlignment = UITextAlignmentRight;
     self.recommendedReasonWithTag.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     self.recommendedReasonWithTag.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 1);
@@ -180,9 +177,9 @@ LC_IMP_SIGNAL(PushPostDetail);
     
     
     self.tagsView = LKTagsView.view;
-    self.tagsView.viewFrameX = 5;
-    self.tagsView.viewFrameWidth = LC_DEVICE_WIDTH - 10;
-    self.tagsView.backgroundColor = [UIColor whiteColor];
+    self.tagsView.viewFrameX = 0;
+    self.tagsView.viewFrameWidth = LC_DEVICE_WIDTH;
+    self.tagsView.backgroundColor = LC_RGB(245, 245, 245);
     self.ADD(self.tagsView);
     
     
@@ -260,15 +257,16 @@ LC_IMP_SIGNAL(PushPostDetail);
     
     CGSize size = [LKUIKit parsingImageSizeWithURL:post.content constSize:CGSizeMake(LC_DEVICE_WIDTH - 10, LC_DEVICE_WIDTH - 10)];
     
-    if (size.width > LC_DEVICE_WIDTH - 10) {
+    if (size.width > LC_DEVICE_WIDTH) {
         
-        size.height = (LC_DEVICE_WIDTH - 10) / size.width * size.height;
-        size.width = (LC_DEVICE_WIDTH - 10);
+        size.height = LC_DEVICE_WIDTH / size.width * size.height;
+        size.width = LC_DEVICE_WIDTH;
     }
     
     // 设置图片的frame
-    self.contentBack.viewFrameX = 5 + (LC_DEVICE_WIDTH - 10) / 2 - size.width / 2;
-    self.contentBack.viewFrameY = 55;
+//    self.contentImage.viewFrameX = 5 + (LC_DEVICE_WIDTH - 10) / 2 - size.width / 2;
+    self.contentBack.viewFrameX = 0;
+    self.contentBack.viewFrameY = 54;
     self.contentBack.viewFrameWidth = size.width;
     self.contentBack.viewFrameHeight = size.height;
     
@@ -478,6 +476,11 @@ LC_IMP_SIGNAL(PushPostDetail);
         
         [self.delegate homeTableViewCell:self didClickReasonBtn:self.recommendedReasonWithTag];
     }
+}
+
+- (void)prepareForReuse {
+    
+    [self.contentImage sd_cancelCurrentImageLoad];
 }
 
 @end

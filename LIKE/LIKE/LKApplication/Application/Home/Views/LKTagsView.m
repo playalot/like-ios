@@ -27,16 +27,20 @@ LC_PROPERTY(assign) BOOL custom;
         self.showNumber = YES;
 
         self.tagLabel = LCUILabel.view;
-        self.tagLabel.font = LK_FONT(11);
+        self.tagLabel.font = LK_FONT(14);
         self.tagLabel.textColor = [UIColor whiteColor];//LC_RGB(74, 74, 74);
         self.ADD(self.tagLabel);
         
+    
+        self.lineView = LCUIImageView.view;
+        self.ADD(self.lineView);
+        
 
         self.likesLabel = LCUILabel.view;
-        self.likesLabel.font = LK_FONT(11);
+        self.likesLabel.font = LK_FONT_B(14);
         self.likesLabel.textColor = [UIColor whiteColor];
-        self.likesLabel.borderWidth = 1;
-        self.likesLabel.borderColor = [[UIColor whiteColor] colorWithAlphaComponent:0.4];
+//        self.likesLabel.borderWidth = 1;
+//        self.likesLabel.borderColor = [[UIColor whiteColor] colorWithAlphaComponent:0.4];
         self.likesLabel.textAlignment = UITextAlignmentCenter;
         self.likesLabel.layer.shouldRasterize = YES;
         self.ADD(self.likesLabel);
@@ -65,8 +69,8 @@ LC_PROPERTY(assign) BOOL custom;
         self.likesLabel = LCUILabel.view;
         self.likesLabel.font = font;
         self.likesLabel.textColor = [UIColor whiteColor];
-        self.likesLabel.borderWidth = 1;
-        self.likesLabel.borderColor = [[UIColor whiteColor] colorWithAlphaComponent:0.4];
+//        self.likesLabel.borderWidth = 1;
+//        self.likesLabel.borderColor = [[UIColor whiteColor] colorWithAlphaComponent:0.4];
         self.likesLabel.textAlignment = UITextAlignmentCenter;
         self.likesLabel.layer.shouldRasterize = YES;
         self.ADD(self.likesLabel);
@@ -302,26 +306,54 @@ LC_PROPERTY(assign) BOOL custom;
     self.tagLabel.FIT();
     
     
-    CGFloat topPadding = 2.;
-    CGFloat leftPadding = 9.;
+    CGFloat tagHeight = self.tagLabel.font.lineHeight;
+    CGFloat topPadding = (26 - tagHeight) * 0.5;
+    CGFloat leftPadding = 8;
     
     self.tagLabel.viewFrameX = leftPadding;
-    self.tagLabel.viewFrameY = topPadding + 1.5;
+//    self.tagLabel.viewFrameY = topPadding + 1.5;
+    self.tagLabel.viewFrameY = topPadding;
     
     if (self.showNumber) {
+        
+        self.lineView.viewFrameHeight = 16;
+        self.lineView.viewFrameWidth = 1;
+        self.lineView.viewFrameX = self.tagLabel.viewRightX + 6;
+        self.lineView.viewFrameY = 5;
+        self.lineView.image = [UIImage imageNamed:@"SeparateLine.png" useCache:YES];
+        
+//        UIGraphicsBeginImageContext(CGSizeMake(50, 50));
+//        CGContextRef context = UIGraphicsGetCurrentContext();
+//        CGContextSetLineWidth(context, 0.5);
+//        CGContextSetRGBStrokeColor(context, 0.314, 0.486, 0.859, 1.0);
+//        CGContextBeginPath(context);
+//        CGContextMoveToPoint(context, self.tagLabel.viewRightX + 8, 5);
+//        CGContextAddLineToPoint(context, self.tagLabel.viewRightX + 8, 27);
+//        CGContextStrokePath(context);
+//        UIImage *line = UIGraphicsGetImageFromCurrentImageContext();
+//        UIGraphicsEndImageContext();
+//        self.lineView.image = line;
+        
         
         self.likesLabel.text = LC_NSSTRING_FORMAT(@"%@", customCount ? customCount : tagValue.likes);
         self.likesLabel.FIT();
         
-        self.likesLabel.viewFrameX = self.tagLabel.viewRightX + leftPadding - 2;
-        self.likesLabel.viewFrameY = topPadding / 2. + 1;
-        self.likesLabel.viewFrameHeight = (self.tagLabel.viewFrameHeight + topPadding * 2.) - topPadding;
-        self.likesLabel.viewFrameWidth = self.likesLabel.viewFrameWidth < self.likesLabel.viewFrameHeight ? self.likesLabel.viewFrameHeight + 4 : self.likesLabel.viewFrameWidth + 4;
-        self.likesLabel.cornerRadius = self.likesLabel.viewMidHeight;
+//        self.likesLabel.viewFrameX = self.tagLabel.viewRightX + leftPadding - 2;
+        self.likesLabel.viewFrameX = self.lineView.viewRightX + 6;
+//        self.likesLabel.viewFrameY = topPadding / 2. + 1;
+        self.likesLabel.viewCenterY = self.tagLabel.viewCenterY;
+//        self.likesLabel.viewFrameHeight = (self.tagLabel.viewFrameHeight + topPadding * 2.) - topPadding;
+        self.likesLabel.viewFrameHeight = self.likesLabel.font.lineHeight;
+//        self.likesLabel.viewFrameWidth = self.likesLabel.viewFrameWidth < self.likesLabel.viewFrameHeight ? self.likesLabel.viewFrameHeight + 4 : self.likesLabel.viewFrameWidth + 4;
+        CGSize likesLabelSize = [[tagValue.likes stringValue] sizeWithFont:self.likesLabel.font byHeight:self.likesLabel.viewFrameHeight];
+        self.likesLabel.viewFrameWidth = likesLabelSize.width;
+//        self.likesLabel.cornerRadius = self.likesLabel.viewMidHeight;
         
         
-        self.viewFrameWidth = self.likesLabel.viewRightX + topPadding;
-        self.viewFrameHeight = self.likesLabel.viewBottomY + topPadding;
+//        self.viewFrameWidth = self.likesLabel.viewRightX + topPadding;
+        self.viewFrameWidth = self.likesLabel.viewRightX + 8;
+//        self.viewFrameHeight = self.likesLabel.viewBottomY + topPadding;
+        self.viewFrameHeight = 26;
     }
     else{
         
@@ -330,7 +362,8 @@ LC_PROPERTY(assign) BOOL custom;
     }
     
     
-    self.cornerRadius = self.viewMidHeight;
+//    self.cornerRadius = self.viewMidHeight;
+    self.cornerRadius = 4;
     self.layer.masksToBounds = NO;
     
     self.custom = customLiked ? YES : NO;
@@ -341,7 +374,8 @@ LC_PROPERTY(assign) BOOL custom;
         
         self.backgroundColor = [LKColor.color colorWithAlphaComponent:1];
         self.likesLabel.textColor = [UIColor whiteColor];
-        self.likesLabel.borderColor = [[UIColor whiteColor] colorWithAlphaComponent:0.4];
+//        self.likesLabel.borderColor = [[UIColor whiteColor] colorWithAlphaComponent:0.4];
+        self.lineView.image = [UIImage imageNamed:@"SeparateLine_selected.png" useCache:YES];
         self.tagLabel.textColor = [UIColor whiteColor];
         
         if (self.maskView) {
@@ -351,10 +385,10 @@ LC_PROPERTY(assign) BOOL custom;
     }
     else{
         
-        self.backgroundColor = LC_RGB(245, 240, 236);
-        self.likesLabel.textColor = [LC_RGB(74, 74, 74) colorWithAlphaComponent:0.9];
-        self.tagLabel.textColor = [LC_RGB(74, 74, 74) colorWithAlphaComponent:0.9];
-        self.likesLabel.borderColor = LC_RGB(220, 215, 209);
+        self.backgroundColor = LC_RGB(229, 229, 229);
+        self.likesLabel.textColor = LC_RGB(75, 75, 75);
+        self.tagLabel.textColor = LC_RGB(75, 75, 75);
+//        self.likesLabel.borderColor = LC_RGB(220, 215, 209);
         
         if (self.maskView) {
             
@@ -362,7 +396,6 @@ LC_PROPERTY(assign) BOOL custom;
             self.likesLabel.textColor = [UIColor whiteColor];
             self.backgroundImageView.hidden = NO;
         }
-
     }
     
     self.maskView.frame = self.bounds;
@@ -410,7 +443,8 @@ LC_PROPERTY(assign) BOOL custom;
     }
     
     
-    self.cornerRadius = self.viewMidHeight;
+//    self.cornerRadius = self.viewMidHeight;
+    self.cornerRadius = 4;
     self.layer.masksToBounds = NO;
     self.custom = NO;
     
@@ -491,8 +525,10 @@ LC_PROPERTY(strong) UIView * tipLine;
     
     self.viewFrameHeight = 0;
     
-    CGFloat topPadding = 12;
-    CGFloat leftPadding = 12;
+    CGFloat leftMargin = 14;
+    CGFloat topMargin = 14;
+    CGFloat topPadding = 10;
+    CGFloat leftPadding = 10;
     CGFloat maxHeight = 0;
 
     
@@ -502,15 +538,16 @@ LC_PROPERTY(strong) UIView * tipLine;
     NSInteger page = 0;
     NSInteger line = 0;
     
-    for (NSInteger i = 0 ; i< self.tags.count ; i++) {
+    for (NSInteger i = 0; i < self.tags.count; i++) {
         
-        LKTag * tag = self.tags[i];
+        LKTag *tag = self.tags[i];
 
         if(tag.likes.integerValue == 0){
+            
             continue;
         }
         
-        LKTagItem * item = self.FIND(tag.id.integerValue);
+        LKTagItem *item = self.FIND(tag.id.integerValue);
         
         if (!item) {
             
@@ -522,7 +559,7 @@ LC_PROPERTY(strong) UIView * tipLine;
         
         @weakly(self);
         
-        item.didRemoved = ^(LKTagItem * cache){
+        item.didRemoved = ^(LKTagItem *cache){
             
             @normally(self);
             
@@ -540,7 +577,7 @@ LC_PROPERTY(strong) UIView * tipLine;
             });
         };
         
-        item.willRequest = ^(LKTagItem * cache){
+        item.willRequest = ^(LKTagItem *cache){
             
             @normally(self);
             
@@ -551,7 +588,7 @@ LC_PROPERTY(strong) UIView * tipLine;
             //self.userInteractionEnabled = NO;
         };
         
-        item.requestFinished = ^(LKTagItem * cache){
+        item.requestFinished = ^(LKTagItem *cache){
             
             @normally(self);
             
@@ -568,11 +605,11 @@ LC_PROPERTY(strong) UIView * tipLine;
         
         if (!lastItem){
             
-            item.frame = CGRectMake(leftPadding, topPadding, item.viewFrameWidth, item.viewFrameHeight);
+            item.frame = CGRectMake(leftMargin, topMargin, item.viewFrameWidth, item.viewFrameHeight);
             
         }else{
             
-            CGFloat test = lastItem.viewRightX + leftPadding * 2 + item.viewFrameWidth - (page * self.viewFrameWidth);
+            CGFloat test = lastItem.viewRightX + leftPadding + leftMargin + item.viewFrameWidth - (page * self.viewFrameWidth);
             
             if (test > self.viewFrameWidth) {
                 
@@ -586,12 +623,12 @@ LC_PROPERTY(strong) UIView * tipLine;
                     line += 1;
                 }
                 
-                item.frame = CGRectMake(leftPadding + (page * self.viewFrameWidth), (line + 1) * topPadding + line * item.viewFrameHeight, item.viewFrameWidth, item.viewFrameHeight);
+                item.frame = CGRectMake(leftMargin + (page * self.viewFrameWidth), line * topPadding + topMargin + line * item.viewFrameHeight, item.viewFrameWidth, item.viewFrameHeight);
                 
                 
             }else{
                 
-                item.frame = CGRectMake(lastItem.viewFrameX + lastItem.viewFrameWidth + leftPadding, (line + 1) * topPadding + line * item.viewFrameHeight, item.viewFrameWidth, item.viewFrameHeight);
+                item.frame = CGRectMake(lastItem.viewFrameX + lastItem.viewFrameWidth + leftPadding, line * topPadding + topMargin + line * item.viewFrameHeight, item.viewFrameWidth, item.viewFrameHeight);
             }
             
         }
@@ -599,16 +636,13 @@ LC_PROPERTY(strong) UIView * tipLine;
         lastItem = item;
         
         
-        CGFloat height = lastItem.viewBottomY + topPadding;
+        CGFloat height = lastItem.viewBottomY + topMargin;
         maxHeight = height > maxHeight ? height : maxHeight;
         
     }
+
     
-    
-    
-    
-    
-    UIView * newItem = self.FIND(-3);
+    UIView *newItem = self.FIND(-3);
     
     if (!newItem) {
         
@@ -621,11 +655,12 @@ LC_PROPERTY(strong) UIView * tipLine;
     
     if (!lastItem){
         
-        newItem.frame = CGRectMake(leftPadding, topPadding, newItem.viewFrameWidth, newItem.viewFrameHeight);
+        newItem.frame = CGRectMake(leftMargin, topMargin, newItem.viewFrameWidth, newItem.viewFrameHeight);
         
     }else{
         
-        CGFloat test = lastItem.viewRightX + leftPadding * 2 + newItem.viewFrameWidth - (page * self.viewFrameWidth);
+//        CGFloat test = lastItem.viewRightX + leftPadding * 2 + newItem.viewFrameWidth - (page * self.viewFrameWidth);
+        CGFloat test = lastItem.viewRightX + newItem.viewFrameWidth + 16 + 20;
         
         if (test > self.viewFrameWidth) {
             
@@ -639,19 +674,18 @@ LC_PROPERTY(strong) UIView * tipLine;
                 line += 1;
             }
             
-            newItem.frame = CGRectMake(leftPadding + (page * self.viewFrameWidth), (line + 1) * topPadding + line * newItem.viewFrameHeight, newItem.viewFrameWidth, newItem.viewFrameHeight);
+            newItem.frame = CGRectMake(leftMargin + (page * self.viewFrameWidth), line * topPadding + topMargin + line * lastItem.viewFrameHeight, newItem.viewFrameWidth, newItem.viewFrameHeight);
             
             
         }else{
             
-            newItem.frame = CGRectMake(lastItem.viewFrameX + lastItem.viewFrameWidth + leftPadding, (line + 1) * topPadding + line * newItem.viewFrameHeight, newItem.viewFrameWidth, newItem.viewFrameHeight);
+            newItem.frame = CGRectMake(lastItem.viewFrameX + lastItem.viewFrameWidth + leftPadding, line * topPadding + topMargin + line * lastItem.viewFrameHeight, newItem.viewFrameWidth, newItem.viewFrameHeight);
         }
         
     }
     
     newItem.viewFrameX = self.viewFrameWidth - newItem.viewFrameWidth - 10;
     [newItem addTapGestureRecognizer:self selector:@selector(newTagAction)];
-    lastItem = (LKTagItem *)newItem;
     
     //    newItem.customAction = ^(LKTagItem * item){
     //
@@ -664,7 +698,7 @@ LC_PROPERTY(strong) UIView * tipLine;
     
     lastItem = (LKTagItem *)newItem;
 
-    CGFloat height = lastItem.viewBottomY + topPadding;
+    CGFloat height = lastItem.viewBottomY + topMargin;
     maxHeight = height > maxHeight ? height : maxHeight;
     
     self.ADD(newItem);
@@ -696,7 +730,8 @@ LC_PROPERTY(strong) UIView * tipLine;
 //    [self cancelAllTimers];
 }
 
--(void) handleTimer:(NSTimer *)timer {
+- (void)handleTimer:(NSTimer *)timer {
+
     LC_FAST_ANIMATIONS(0.5, ^{
         if (self.tipLine.alpha == 0) {
             self.tipLine.alpha = 0.2;
@@ -708,35 +743,37 @@ LC_PROPERTY(strong) UIView * tipLine;
     });
 }
 
--(UIView *) buildNewActionTag
-{
-    UIView * newTagView = UIView.view;
+- (UIView *)buildNewActionTag {
     
-    UIImage * icon = [[UIImage imageNamed:@"NotificationTagIcon.png" useCache:YES] imageWithTintColor:LKColor.color];
+    UIView *newTagView = UIView.view;
     
-    LCUIImageView * imageView = [LCUIImageView viewWithImage:icon];
-    imageView.viewFrameHeight = 22;
-    imageView.viewFrameWidth = 22;
+    UIImage *icon = [[UIImage imageNamed:@"AddNewTag.png" useCache:YES] imageWithTintColor:LKColor.color];
+    
+    LCUIImageView *imageView = [LCUIImageView viewWithImage:icon];
+    imageView.viewFrameHeight = 26;
+    imageView.viewFrameWidth = 26;
     newTagView.ADD(imageView);
     
     
-    NSString * addNewTagString = LC_LO(@"添加标签");
+//    NSString * addNewTagString = LC_LO(@"添加标签");
+//    
+//    LCUILabel * tip = LCUILabel.view;
+//    tip.font = LK_FONT(11);
+//    tip.text = addNewTagString;
+//    tip.textColor = LKColor.color;
+//    tip.FIT();
+//    tip.viewFrameX = imageView.viewRightX + 5;
+//    tip.viewFrameY = imageView.viewMidHeight - tip.viewMidHeight + 0.5;
+//    newTagView.ADD(tip);
     
-    LCUILabel * tip = LCUILabel.view;
-    tip.font = LK_FONT(11);
-    tip.text = addNewTagString;
-    tip.textColor = LKColor.color;
-    tip.FIT();
-    tip.viewFrameX = imageView.viewRightX + 5;
-    tip.viewFrameY = imageView.viewMidHeight - tip.viewMidHeight + 0.5;
-    newTagView.ADD(tip);
     
-    
-    newTagView.viewFrameWidth = imageView.viewFrameWidth + 5 + tip.viewFrameWidth + 10;
+//    newTagView.viewFrameWidth = imageView.viewFrameWidth + 5 + tip.viewFrameWidth + 10;
+//    newTagView.viewFrameHeight = imageView.viewFrameHeight;
+//    newTagView.cornerRadius = newTagView.viewMidHeight;
+//    newTagView.borderColor = LKColor.color;
+//    newTagView.borderWidth = 1;
+    newTagView.viewFrameWidth = imageView.viewFrameWidth;
     newTagView.viewFrameHeight = imageView.viewFrameHeight;
-    newTagView.cornerRadius = newTagView.viewMidHeight;
-    newTagView.borderColor = LKColor.color;
-    newTagView.borderWidth = 1;
     
     return newTagView;
 }

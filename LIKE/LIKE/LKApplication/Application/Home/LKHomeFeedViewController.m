@@ -20,6 +20,7 @@
 #import "LKTagAddModel.h"
 #import "UIImageView+WebCache.h"
 #import "LKSearchResultsViewController.h"
+#import "SDWebImagePrefetcher.h"
 
 @interface LKHomeFeedViewController () <UITableViewDataSource, UITableViewDelegate, LKHomeTableViewCellDelegate, LKPostDetailViewControllerDelegate>
 
@@ -41,7 +42,7 @@ LC_PROPERTY(weak) id delegate;
 @implementation LKHomeFeedViewController
 
 - (void)buildUI {
-    self.view.backgroundColor = LKColor.backgroundColor;
+//    self.view.backgroundColor = LKColor.backgroundColor;
     
     [self buildInputView];
     [self buildTableView];
@@ -206,6 +207,17 @@ LC_PROPERTY(weak) id delegate;
             [self.datasource addObjectsFromArray:datasource];
         }
         
+        NSMutableArray *prefetchs = nil;
+        for (LKPost *post in self.datasource) {
+            
+            if (post.content) {
+                
+                [prefetchs addObject:post.content];
+            }
+        }
+        
+        [[SDWebImagePrefetcher sharedImagePrefetcher] prefetchURLs:prefetchs.copy];
+        
         [self.pullLoader endRefresh];
         LC_FAST_ANIMATIONS(0.25, ^{
             [self.tableView reloadData];
@@ -279,13 +291,13 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
 }
 
 - (UITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     LKHomeTableViewCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Content" andClass:[LKHomeTableViewCell class]];
     // 设置cell的代理
     cell.delegate = self;
     
     LKPost * post = self.datasource[indexPath.row];
     cell.post = post;
-//    [cell.coverPhoto sd_setImageWithURL:[NSURL URLWithString:post.content] placeholderImage:nil];
     
     @weakly(self);
     

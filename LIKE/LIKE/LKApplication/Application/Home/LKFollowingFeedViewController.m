@@ -17,6 +17,7 @@
 #import "LKPostDetailViewController.h"
 #import "LKFollowingInterface.h"
 #import "LKSearchResultsViewController.h"
+#import "SDWebImagePrefetcher.h"
 
 #define FOCUS_FEED_CACHE_KEY [NSString stringWithFormat:@"LKFocusFeedKey-%@", LKLocalUser.singleton.user.id]
 
@@ -38,7 +39,7 @@ LC_PROPERTY(weak) id delegate;
 @implementation LKFollowingFeedViewController
 
 - (void)buildUI {
-    self.view.backgroundColor = LKColor.backgroundColor;
+//    self.view.backgroundColor = LKColor.backgroundColor;
     
     self.tableView = [[LCUITableView alloc] initWithFrame:self.view.frame];
     self.tableView.delegate = self;
@@ -98,6 +99,17 @@ LC_PROPERTY(weak) id delegate;
         } else {
             [self.datasource addObjectsFromArray:datasource];
         }
+        
+        NSMutableArray *prefetchs = nil;
+        for (LKPost *post in self.datasource) {
+            
+            if (post.content) {
+                
+                [prefetchs addObject:post.content];
+            }
+        }
+        
+        [[SDWebImagePrefetcher sharedImagePrefetcher] prefetchURLs:prefetchs.copy];
         
         [self.pullLoader endRefresh];
         LC_FAST_ANIMATIONS(0.25, ^{

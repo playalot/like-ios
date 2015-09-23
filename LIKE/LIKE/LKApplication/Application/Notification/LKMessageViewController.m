@@ -94,13 +94,11 @@ LC_PROPERTY(strong) LKNotificationModel *notificationModel;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    LKNotification *notification = self.notificationModel.followsArray[indexPath.row];
     return 100;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    LKNotification *notification = self.notificationModel.followsArray[indexPath.row];
     
 }
 

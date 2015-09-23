@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LKTag.h"
 
 @interface LKHotTagsTableView : LCUITableView
+
+LC_PROPERTY(strong) NSMutableArray *posts;
 
 - (instancetype)initWithFrame:(CGRect)frame tag:(LKTag *)tag;
 

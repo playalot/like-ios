@@ -14,7 +14,6 @@
 -(instancetype) initWithDictionary:(NSDictionary *)dict error:(NSError *__autoreleasing *)err
 {
     if (self = [super init]) {
-        
         self.id = dict[@"post_id"];
         self.type = [dict[@"type"] integerValue];
         self.content = dict[@"content"];

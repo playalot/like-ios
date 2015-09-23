@@ -122,7 +122,7 @@
 /**
  *  选中了相机按钮就会执行
  */
--(void) didTap
+- (void)didTap
 {
     if(![LKLoginViewController needLoginOnViewController:self]){
 
@@ -130,7 +130,7 @@
     }
 }
 
--(void) touchDown:(UIView *)button
+- (void)touchDown:(UIView *)button
 {
     [@[button] pop_sequenceWithInterval:0 animations:^(UIView *circle, NSInteger index){
         
@@ -144,7 +144,7 @@
     }];
 }
 
--(void) touchEnd:(UIView *)button
+- (void)touchEnd:(UIView *)button
 {
     [@[button] pop_sequenceWithInterval:0 animations:^(id object, NSInteger index) {
 

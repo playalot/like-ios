@@ -12,13 +12,8 @@
 
 @interface LKSearchView : UIView <LKSearchBarDelegate>
 
-LC_PROPERTY(copy) LKValueChanged willShow;
 LC_PROPERTY(copy) LKValueChanged willHide;
-LC_PROPERTY(strong) LKSearchPlaceholderView * placeholderView;
+LC_PROPERTY(strong) LKSearchPlaceholderView *placeholderView;
 LC_PROPERTY(weak) LCUIViewController *parentViewController;
-
--(void) showInViewController:(UIViewController *)viewController;
--(void) hide;
-
 
 @end

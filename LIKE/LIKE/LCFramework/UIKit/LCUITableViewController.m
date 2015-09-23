@@ -52,33 +52,24 @@
     return NO;
 }
 
--(void) buildUI
-{
+-(void) buildUI {
     
 }
 
--(void) setPullLoaderStyle:(LCUIPullLoaderStyle)style beginRefresh:(LCUIPullLoaderDidBeginRefresh)beginRefresh
-{
+-(void) setPullLoaderStyle:(LCUIPullLoaderStyle)style beginRefresh:(LCUIPullLoaderDidBeginRefresh)beginRefresh {
     self.pullLoader = [LCUIPullLoader pullLoaderWithScrollView:self.tableView pullStyle:style];
-    
     self.pullLoader.beginRefresh = beginRefresh;
 }
 
-- (void) reloadData
-{
+- (void) reloadData {
     LC_GCD_SYNCHRONOUS(^{
-    
         [self.tableView reloadData];
-    
     });
 }
 
--(LCUITableViewCell *) tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{    
+-(LCUITableViewCell *) tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     LCUITableViewCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"cell" andClass:[LCUITableViewCell class]];
-    
     cell.textLabel.text = LC_NSSTRING_FORMAT(@"%@",@(indexPath.row));
-    
     return cell;
 }
 

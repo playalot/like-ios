@@ -8,6 +8,10 @@
 
 #import "LKUserCenterModel.h"
 #import "LKPost.h"
+#import "LKUserPostsInterface.h"
+#import "LKUserFollowsInterface.h"
+#import "LKUserFansInterface.h"
+#import "LKUserFavouritesInterface.h"
 
 @interface LKUserCenterModel ()
 
@@ -47,7 +51,6 @@ LC_PROPERTY(assign) NSInteger index;
     return self;
 }
 
-
 - (void)getDataAtFirstPage:(BOOL)isFirstPage
                       type:(LKUserCenterModelType)type
                        uid:(NSNumber *)uid {
@@ -57,8 +60,145 @@ LC_PROPERTY(assign) NSInteger index;
         page = [self pageWithType:type] + 1;
     }
     
-    LKHttpRequestInterface * interface = nil;
+    LKBaseInterface *interface = nil;
     
+    switch (type) {
+        case LKUserCenterModelTypePhotos: {
+            interface = [[LKUserPostsInterface alloc] initWithUid:uid page:page];
+            break;
+        }
+        case LKUserCenterModelTypeFocus:
+            interface = [[LKUserFollowsInterface alloc] initWithUid:uid page:page];
+            break;
+            
+        case LKUserCenterModelTypeFans:
+            interface = [[LKUserFansInterface alloc] initWithUid:uid page:page];
+            break;
+            
+        case LKUserCenterModelTypeFavor:
+            interface = [[LKUserFavouritesInterface alloc] initWithTimeStamp:self.timestamp];
+            break;
+            
+        default:
+            break;
+    }
+    
+    @weakly(interface);
+    
+    [interface startWithCompletionBlockWithSuccess:^(LCBaseRequest *request) {
+        
+        @normally(interface);
+        
+        switch (type) {
+                
+            case LKUserCenterModelTypePhotos: {
+                LKUserPostsInterface *userPostsInterface = (LKUserPostsInterface *)interface;
+                
+                NSArray *datasource = userPostsInterface.posts;
+                if (isFirstPage) {
+                    self.photoArray = [NSMutableArray arrayWithArray:datasource];
+                } else {
+                    NSMutableArray *newPosts = self.photoArray;
+                    [newPosts addObjectsFromArray:datasource];
+                    self.photoArray = newPosts;
+                }
+                
+                if (datasource.count == 0) {
+                    self.photoCanLoadMore = NO;
+                }
+                
+                break;
+            }
+                
+            case LKUserCenterModelTypeFocus: {
+                LKUserFollowsInterface *userFollowsInterface = (LKUserFollowsInterface *)interface;
+                
+                NSArray * datasource = userFollowsInterface.follows;
+                if (isFirstPage) {
+                    self.focusArray = [NSMutableArray arrayWithArray:datasource];
+                } else {
+                    NSMutableArray *newUsers = [NSMutableArray arrayWithArray:self.focusArray];
+                    [newUsers addObjectsFromArray:datasource];
+                    [self.focusArray addObjectsFromArray:newUsers];
+                }
+                
+                if (datasource.count == 0) {
+                    self.focusCanLoadMore = NO;
+                }
+                
+                break;
+            }
+                
+            case LKUserCenterModelTypeFans: {
+                LKUserFansInterface *userFansInterface = (LKUserFansInterface *)interface;
+                
+                NSArray *datasource = userFansInterface.fans;
+                
+                if (isFirstPage) {
+                    self.fansArray = [NSMutableArray arrayWithArray:datasource];;
+                } else {
+                    NSMutableArray *newFans = [NSMutableArray arrayWithArray:self.fansArray];
+                    [newFans addObjectsFromArray:datasource];
+                    self.fansArray = newFans;
+                }
+                
+                if (datasource.count == 0) {
+                    self.fansCanLoadMore = NO;
+                }
+            }
+                break;
+                
+            case LKUserCenterModelTypeFavor: {
+                
+                LKUserFavouritesInterface *favorInterface = (LKUserFavouritesInterface *)interface;
+                NSArray *datasource = favorInterface.posts;
+                NSNumber *timestamp = favorInterface.next;
+                self.timestamp = timestamp;
+                
+                if (isFirstPage) {
+                    self.favorArray = [NSMutableArray arrayWithArray:datasource];
+                } else {
+                    NSMutableArray *newFavors = [NSMutableArray arrayWithArray:self.favorArray];
+                    [newFavors addObjectsFromArray:datasource];
+                    self.favorArray = newFavors;
+                }
+                
+                if (datasource.count == 0) {
+                    self.favorCanLoadMore = NO;
+                }
+                
+            }
+                break;
+                
+            default:
+                break;
+        }
+        
+        if (self.requestFinished) {
+            self.requestFinished(type, nil);
+        }
+        
+    } failure:^(LCBaseRequest *request) {
+        
+        if (self.requestFinished) {
+            self.requestFinished(type, @"404");
+        }
+        
+    }];
+}
+
+ /*
+
+- (void)getDataAtFirstPage:(BOOL)isFirstPage
+                      type:(LKUserCenterModelType)type
+                       uid:(NSNumber *)uid {
+    NSInteger page = 0;
+    
+    if (!isFirstPage) {
+        page = [self pageWithType:type] + 1;
+    }
+
+    LKHttpRequestInterface * interface = nil;
     switch (type) {
             
         case LKUserCenterModelTypePhotos:
@@ -96,28 +236,22 @@ LC_PROPERTY(assign) NSInteger index;
     @weakly(self);
     
     [self request:interface complete:^(LKHttpRequestResult *result) {
-        
         @normally(self);
-        
         if (result.state == LKHttpRequestStateFinished) {
-            
             [self handleResultWithType:type isFirstPage:isFirstPage result:result];
-        
             [self setPageWithType:type page:page];
-            
             if (self.requestFinished) {
-                self.requestFinished(type, result, nil);
+                self.requestFinished(type, result);
             }
-        }
-        else if (result.state == LKHttpRequestStateFailed){
-            
+        } else if (result.state == LKHttpRequestStateFailed) {
             if (self.requestFinished) {
-                self.requestFinished(type, result, result.error);
+                self.requestFinished(type, result);
             }
         }
     }];
 
 }
+ */
 
 -(BOOL) canLoadMoreWithType:(LKUserCenterModelType)type
 {
@@ -150,27 +284,19 @@ LC_PROPERTY(assign) NSInteger index;
     }
 }
 
--(void) handleResultWithType:(LKUserCenterModelType)type isFirstPage:(BOOL)isFirstPage result:(LKHttpRequestResult *)result
-{
+- (void)handleResultWithType:(LKUserCenterModelType)type isFirstPage:(BOOL)isFirstPage result:(LKHttpRequestResult *)result {
     switch (type) {
             
-        case LKUserCenterModelTypePhotos:
-        {
+        case LKUserCenterModelTypePhotos: {
             NSArray * datasource = result.json[@"data"][@"posts"];
-            
             NSMutableArray * resultData = [NSMutableArray array];
-            
             for (NSDictionary * tmp in datasource) {
-                
                 [resultData addObject:[LKPost objectFromDictionary:tmp]];
             }
             
             if (isFirstPage) {
-                
                 self.photoArray = resultData;
-            }
-            else{
-                
+            } else {
                 [self.photoArray addObjectsFromArray:resultData];
             }
             
@@ -182,8 +308,8 @@ LC_PROPERTY(assign) NSInteger index;
         }
             break;
             
-        case LKUserCenterModelTypeFocus:
-        {
+        case LKUserCenterModelTypeFocus: {
+            
             NSArray * datasource = result.json[@"data"][@"follows"];
             
             NSMutableArray * resultData = [NSMutableArray array];
@@ -209,8 +335,7 @@ LC_PROPERTY(assign) NSInteger index;
         }
             break;
             
-        case LKUserCenterModelTypeFans:
-        {
+        case LKUserCenterModelTypeFans: {
             NSArray * datasource = result.json[@"data"][@"fans"];
             
             NSMutableArray * resultData = [NSMutableArray array];
@@ -236,8 +361,8 @@ LC_PROPERTY(assign) NSInteger index;
         }
             break;
             
-        case LKUserCenterModelTypeFavor:
-        {
+        case LKUserCenterModelTypeFavor: {
+            
             NSArray *datasource = result.json[@"data"][@"posts"];
             NSNumber *timestamp = result.json[@"data"][@"next"];
             
@@ -261,8 +386,6 @@ LC_PROPERTY(assign) NSInteger index;
             } else{
                 
                 if (self.timestamp.integerValue != timestamp.integerValue) {
-                
-//                    [self sendRequestWithTimestamp:timestamp];
                     [self.favorArray addObjectsFromArray:resultData];
                     self.timestamp = timestamp;
                 }
@@ -281,8 +404,7 @@ LC_PROPERTY(assign) NSInteger index;
     }
 }
 
--(NSMutableArray *) dataWithType:(LKUserCenterModelType)type
-{
+- (NSMutableArray *)dataWithType:(LKUserCenterModelType)type {
     switch (type) {
             
         case LKUserCenterModelTypePhotos:
@@ -306,8 +428,7 @@ LC_PROPERTY(assign) NSInteger index;
     }
 }
 
--(NSInteger) pageWithType:(LKUserCenterModelType)type
-{
+- (NSInteger)pageWithType:(LKUserCenterModelType)type {
     switch (type) {
             
         case LKUserCenterModelTypePhotos:
@@ -331,8 +452,7 @@ LC_PROPERTY(assign) NSInteger index;
     }
 }
 
--(void) setPageWithType:(LKUserCenterModelType)type page:(NSInteger)page
-{
+- (void)setPageWithType:(LKUserCenterModelType)type page:(NSInteger)page {
     switch (type) {
             
         case LKUserCenterModelTypePhotos:
@@ -354,43 +474,6 @@ LC_PROPERTY(assign) NSInteger index;
         default:
             break;
     }
-}
-
-- (void)sendRequestWithTimestamp:(NSNumber *)timestamp {
-    
-    LKHttpRequestInterface *interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"user/favorites?ts=%@", timestamp]].AUTO_SESSION();
-    
-    @weakly(self);
-    
-    [self request:interface complete:^(LKHttpRequestResult *result) {
-        
-        @normally(self);
-        
-        if (result.state == LKHttpRequestStateFinished) {
-            
-            NSArray *postsDic = result.json[@"data"][@"posts"];
-            
-            for (NSDictionary *post in postsDic) {
-                
-                [self.favorArray addObject:[LKPost objectFromDictionary:post]];
-                
-                self.favorCanLoadMore = YES;
-                
-            }
-            
-            if (postsDic.count == 0) {
-                
-                self.favorCanLoadMore = NO;
-            }
-
-            
-        } else if (result.state == LKHttpRequestStateFailed){
-
-            
-        }
-
-    }];
-
 }
 
 @end

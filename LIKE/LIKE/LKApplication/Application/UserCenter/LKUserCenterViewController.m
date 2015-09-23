@@ -24,7 +24,7 @@
 #import "LKUserInfoCache.h"
 #import "JTSImageViewController.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
-#import "LKUserCenterBrowsingViewController.h"
+#import "LKPostTableViewController.h"
 
 @interface LKUserCenterViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerCancelFavorDelegate, LKPostTableViewControllerDelegate>
 
@@ -314,7 +314,6 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
             [self updateFriendButton];
             
             if (self.currentType == LKUserCenterModelTypePhotos) {
-                
                 self.cartoonImageView.hidden = self.userCenterModel.photoArray.count ? YES : NO;
             }
         }
@@ -454,15 +453,16 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 - (void)loadData:(LKUserCenterModelType)type diretion:(LCUIPullLoaderDiretion)diretion {
     [self.userCenterModel getDataAtFirstPage:diretion == LCUIPullLoaderDiretionTop type:type uid:self.user.id];
     @weakly(self);
-    self.userCenterModel.requestFinished = ^(LKUserCenterModelType type, LKHttpRequestResult * result, NSString * error){
+    self.userCenterModel.requestFinished = ^(LKUserCenterModelType type, NSString * error){
         @normally(self);
         [self.pullLoader endRefresh];
-        // Update header user information
+        // Update header user informatio
         [self.userInfoModel getUserInfo:self.user.id];
+        
         // Reload data
         [self.tableView reloadData];
         if (error) {
-            [self showTopMessageErrorHud:error];;
+            [self showTopMessageErrorHud:error];
         }
         self.pullLoader.canLoadMore = [self.userCenterModel canLoadMoreWithType:type];
     };
@@ -573,10 +573,8 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     return nil;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (self.currentType) {
-            
         case LKUserCenterModelTypePhotos:
         case LKUserCenterModelTypeFavor:
             return [LKPostThumbnailTableViewCell height];
@@ -587,13 +585,11 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
             return 0;
             break;
     }
-    
     return 30;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSArray * data = [self.userCenterModel dataWithType:self.currentType];
-    
     switch (self.currentType) {
         case LKUserCenterModelTypePhotos:
         case LKUserCenterModelTypeFavor:
@@ -608,7 +604,7 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     }
 }
 
--(void) scrollViewDidScroll:(UIScrollView *)scrollView {
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [self.inputView resignFirstResponder];
     [self.header handleScrollDidScroll:scrollView];
 }

@@ -8,6 +8,7 @@
 
 #import "LKTopSearchInterface.h"
 #import "LKUser.h"
+#import "LKTag.h"
 
 @implementation LKTopSearchInterface
 

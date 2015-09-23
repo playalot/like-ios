@@ -433,7 +433,6 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     }else{
         // 判断本地用户是否是登录状态
         if (LKLocalUser.singleton.isLogin) {
-            
 //            [self.home performSelector:@selector(notificationAction) withObject:nil afterDelay:0.5];
         }
     }

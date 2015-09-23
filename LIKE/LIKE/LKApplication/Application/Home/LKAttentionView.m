@@ -15,8 +15,7 @@
 
 @implementation LKAttentionView
 
--(instancetype) init
-{
+-(instancetype) init {
     if (self = [super initWithFrame:CGRectMake(0, 0, LC_DEVICE_WIDTH, LC_DEVICE_HEIGHT + 20 - 64)]) {
         
         self.backgroundImageView.backgroundColor = LKColor.backgroundColor;

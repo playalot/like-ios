@@ -9,7 +9,6 @@
 #import "LCUIViewController.h"
 #import "LKUserCenterModel.h"
 #import "LKUserInfoModel.h"
-#import "LKUserCenterBrowsingViewController.h"
 
 LC_NOTIFICATION_SET(LKUserCenterViewControllerReloadingData);
 
@@ -18,7 +17,6 @@ LC_NOTIFICATION_SET(LKUserCenterViewControllerReloadingData);
 LC_PROPERTY(assign) BOOL needBackButton;
 LC_PROPERTY(strong) LKUserInfoModel *userInfoModel;;
 LC_PROPERTY(strong) LKUser *user;
-LC_PROPERTY(strong) LKUserCenterBrowsingViewController *browsingViewController;
 
 - (void)scrollToPostByIndex:(NSInteger)index;
 - (void)loadData:(LKUserCenterModelType)type diretion:(LCUIPullLoaderDiretion)diretion;

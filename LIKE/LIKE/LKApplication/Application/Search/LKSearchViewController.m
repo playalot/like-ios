@@ -12,7 +12,7 @@
 #import "LKSearchSuggestionView.h"
 #import "LKSearchResultsViewController.h"
 #import "LKTag.h"
-#import "LKSearchHistory.h"LKPostTableViewControllerDelegate
+#import "LKSearchHistory.h"
 #import "LKPostTableViewController.h"
 #import "LKTopSearchInterface.h"
 
@@ -27,6 +27,7 @@ LC_PROPERTY(strong) LCUIButton *searchTip;
 LC_PROPERTY(strong) LCUIButton *doneButton;
 
 LC_PROPERTY(strong) LKSearchView *searchView;
+LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 
 @end
 
@@ -50,10 +51,7 @@ LC_PROPERTY(strong) LKSearchView *searchView;
     [self.topBarSearchView setHidden:YES];
 }
 
-- (void)buildUI {
-    self.view.backgroundColor = [LKColor backgroundColor];
-    
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
+- (void)buildTopSearchBar {
     
     CGRect searchBarFrame = CGRectMake(5, 5, self.navigationController.navigationBar.viewFrameWidth - 10, 30);
     self.topBarSearchView = UIView.view;
@@ -109,17 +107,31 @@ LC_PROPERTY(strong) LKSearchView *searchView;
     self.topBarSearchView.ADD(self.doneButton);
     
     self.navigationController.navigationBar.ADD(self.topBarSearchView);
-    
+}
+
+- (void)buildHotTagsView {
     self.searchView = LKSearchView.view;
     self.searchView.parentViewController = self;
     self.view.ADD(self.searchView);
-    
+}
+
+- (void)buildSuggestionView {
     self.suggestionView = LKSearchSuggestionView.view;
     self.suggestionView.viewFrameWidth = self.view.viewFrameWidth;
     self.suggestionView.viewFrameHeight = self.view.viewFrameHeight;
     self.suggestionView.viewFrameY = 0;
     self.suggestionView.alpha = 0;
     self.view.ADD(self.suggestionView);
+}
+
+- (void)buildUI {
+    self.view.backgroundColor = [LKColor backgroundColor];
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
+    
+    [self buildTopSearchBar];
+    [self buildHotTagsView];
+    [self buildSuggestionView];
     
     @weakly(self);
     self.suggestionView.didTap = ^(){
@@ -127,14 +139,19 @@ LC_PROPERTY(strong) LKSearchView *searchView;
         [self.searchBar.searchField resignFirstResponder];
     };
     
-    self.suggestionView.didSelectRow = ^(NSString * tagString){
+    self.suggestionView.didSelectSearchTag = ^(NSString * tagString){
         @normally(self);
         LKSearchResultsViewController * searchViewController = [[LKSearchResultsViewController alloc] initWithSearchString:tagString];
         [self.navigationController pushViewController:searchViewController animated:YES];
     };
+    
+    self.suggestionView.didSelectUser = ^(LKUser *user){
+        @normally(self);
+        [LKUserCenterViewController pushUserCenterWithUser:user navigationController:self.navigationController];
+    };
 }
 
--(void) beginSearch {
+- (void)beginSearch {
     
     [self.searchBar.searchField becomeFirstResponder];
     
@@ -197,7 +214,7 @@ LC_PROPERTY(strong) LKSearchView *searchView;
     });
 }
 
--(void) searchBarDidBeginEditing:(LKSearchBar *)searchBar editing:(BOOL)editing {
+- (void)searchBarDidBeginEditing:(LKSearchBar *)searchBar editing:(BOOL)editing {
     [self searchBarTextDidChange:searchBar];
 }
 
@@ -209,8 +226,7 @@ LC_PROPERTY(strong) LKSearchView *searchView;
     [LC_APPDELEGATE.homeViewController.navigationController pushViewController:searchResultsViewController animated:YES];
 }
 
-- (void)searchSuggestionTags:(NSString *)searchString
-{
+- (void)searchSuggestionTags:(NSString *)searchString {
     [self.suggestionView cancelAllRequests];
     
     if (searchString.length == 0) {
@@ -231,8 +247,6 @@ LC_PROPERTY(strong) LKSearchView *searchView;
     } failure:^(LCBaseRequest *request) {
         
     }];
-    
 }
-
 
 @end

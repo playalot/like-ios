@@ -15,7 +15,7 @@
 #import "LKLoginViewController.h"
 #import "LKInputView.h"
 #import "LKPostDetailViewController.h"
-#import "LKFollowingInterface.h"
+#import "LKFollowingFeedInterface.h"
 #import "LKSearchResultsViewController.h"
 #import "SDWebImagePrefetcher.h"
 
@@ -67,7 +67,7 @@ LC_PROPERTY(weak) id delegate;
     
     NSTimeInterval time = [[NSDate date] timeIntervalSince1970];
     
-    LKFollowingInterface *followingInterface = [[LKFollowingInterface alloc] init];
+    LKFollowingFeedInterface *followingInterface = [[LKFollowingFeedInterface alloc] init];
     if (self.next && diretion == LCUIPullLoaderDiretionBottom) {
         followingInterface.timestamp = self.next;
     }

@@ -10,6 +10,7 @@
 #import "LKPostThumbnailTableViewCell.h"
 #import "LKPostDetailViewController.h"
 #import "UIImageView+WebCache.h"
+#import "LKPostTableViewController.h"
 
 @interface LKSearchResultsViewController () <LKPostTableViewControllerDelegate>
 

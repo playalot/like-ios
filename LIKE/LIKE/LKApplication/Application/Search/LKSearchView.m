@@ -14,6 +14,7 @@
 #import "LKHotTagsSegmentView.h"
 #import "LKSearchHistory.h"
 #import "LKHotTagsTableView.h"
+#import "LKTopSearchInterface.h"
 
 @interface LKSearchView ()<UIScrollViewDelegate>
 
@@ -42,7 +43,7 @@ LC_PROPERTY(assign) NSInteger page;
     return self;
 }
 
--(void) buildUI {
+- (void)buildUI {
     
     UIView * view = UIView.view;
     view.backgroundColor = LC_RGB(231, 231, 231);
@@ -80,7 +81,6 @@ LC_PROPERTY(assign) NSInteger page;
         }, ^(BOOL finished){
         });
     };
-    
     
     [self.hotTags performSelector:@selector(loadHotTags) withObject:nil afterDelay:0];
     
@@ -129,34 +129,6 @@ LC_PROPERTY(assign) NSInteger page;
     [LC_APPDELEGATE.homeViewController.navigationController pushViewController:searchResultsViewController animated:YES];
 }
 
-#pragma mark -
-
--(void) showInViewController:(UIViewController *)viewController {
-    if (self.willShow) {
-        self.willShow(nil);
-    }
-}
-
--(void) hideAction {
-    if (self.placeholderView.alpha != 0) {
-        LC_FAST_ANIMATIONS(0.25, ^{
-            self.placeholderView.alpha = 0;
-            self.placeholderView.searchString = @"";
-            self.placeholderView.tags = nil;
-            self.searchBar.searchField.text = @"";
-            [self.searchBar.searchField resignFirstResponder];
-        });
-    } else {
-        [self hide];
-    }
-}
-
-- (void)hide {
-    if (self.willHide) {
-        self.willHide(nil);
-    }
-}
-
 - (void)buildPages:(NSArray *)tags {
     self.scrollView.contentSize = CGSizeMake(self.scrollView.viewFrameWidth * tags.count, self.scrollView.viewFrameHeight);
     for (NSInteger i = 0; i<tags.count; i++) {
@@ -189,64 +161,27 @@ LC_PROPERTY(assign) NSInteger page;
     self.hotTags.selectIndex = page;
 }
 
--(void) scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    //self.paging = NO;
-}
-
--(void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    //self.paging = NO;
-}
-
--(void) searchPlaceHolderTags:(NSString *)searchString {
+- (void)searchPlaceHolderTags:(NSString *)searchString {
     [self.placeholderView cancelAllRequests];
     
     if (searchString.length == 0) {
-        
         self.placeholderView.tags = nil;
         return;
     }
     
-    
-    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"search/topsearch/%@" ,searchString.URLCODE()]].AUTO_SESSION();
+    LKTopSearchInterface *topSearchInterface = [[LKTopSearchInterface alloc] init];
+    topSearchInterface.searchString = searchString.URLCODE();
     
     @weakly(self);
+    @weakly(topSearchInterface);
     
-    [self.placeholderView request:interface complete:^(LKHttpRequestResult *result) {
-        
+    [topSearchInterface startWithCompletionBlockWithSuccess:^(LCBaseRequest *request) {
         @normally(self);
-        
-        if (result.state == LKHttpRequestStateFinished) {
-            
-            NSArray * array0 = result.json[@"data"][@"users"];
-            
-            NSMutableArray * users = [NSMutableArray array];
-            
-            for (NSDictionary * dic in array0) {
-                
-                [users addObject:[LKUser objectFromDictionary:dic]];
-            }
-            
-            self.placeholderView.users = users;
-            
-            NSArray * array = result.json[@"data"][@"tags"];
-            
-            NSMutableArray * tags = [NSMutableArray array];
-            
-            for (NSDictionary * dic in array) {
-                
-                LKTag * tag = [LKTag objectFromDictionary:dic];
-                [tags addObject:tag];
-            }
-            
-            self.placeholderView.tags = tags;
-
-        }
-        else if (result.state == LKHttpRequestStateFailed){
-            
-        }
-        
+        @normally(topSearchInterface);
+        self.placeholderView.users = topSearchInterface.users;
+        self.placeholderView.tags = topSearchInterface.tags;
+    } failure:^(LCBaseRequest *request) {
     }];
-
 }
 
 @end

@@ -10,15 +10,19 @@
 #import "LKHotTagsUsersView.h"
 #import "LKPostThumbnailTableViewCell.h"
 #import "LKTagExploreInterface.h"
+#import "LKPostTableViewController.h"
 
-@interface LKHotTagsTableView () <UITableViewDataSource, UITableViewDelegate>
+@interface LKHotTagsTableView () <UITableViewDataSource, UITableViewDelegate, LKPostTableViewControllerDelegate>
 
 LC_PROPERTY(strong) LKTag * tagValue;
 LC_PROPERTY(strong) LKHotTagsUsersView *hotUsersView;
-LC_PROPERTY(strong) NSMutableArray *posts;
 
 LC_PROPERTY(assign) BOOL loadFinished;
 LC_PROPERTY(assign) BOOL loading;
+LC_PROPERTY(assign) NSNumber *next;
+
+LC_PROPERTY(strong) LCUIPullLoader *pullLoader;
+LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 
 @end
 
@@ -28,13 +32,13 @@ LC_PROPERTY(assign) BOOL loading;
     if (self.loading || self.loadFinished) {
         return;
     }
-    [self sendNetWorkRequestWithTimestamp:nil];
+    [self loadData:LCUIPullLoaderDiretionTop];
 }
 
-- (void)sendNetWorkRequestWithTimestamp:(NSNumber *)timestamp {
+- (void)loadData:(LCUIPullLoaderDiretion)direction {
     LKTagExploreInterface *tagExploreInterface = [[LKTagExploreInterface alloc] init];
     tagExploreInterface.tagValue = [NSString stringWithFormat:@"%@", [self.tagValue.tag URLEncoding]];
-    tagExploreInterface.timestamp = timestamp;
+    tagExploreInterface.timestamp = self.next;
     
     @weakly(self);
     @weakly(tagExploreInterface);
@@ -44,16 +48,26 @@ LC_PROPERTY(assign) BOOL loading;
         @normally(self);
         @normally(tagExploreInterface);
         
-        self.hotUsersView.hotUsers = [tagExploreInterface users];
-        NSArray *posts = [tagExploreInterface posts];
+        NSArray *interfaceTagUsers = [tagExploreInterface users];
+        if (interfaceTagUsers && interfaceTagUsers.count) {
+            self.hotUsersView.hotUsers = [NSMutableArray arrayWithArray:interfaceTagUsers];
+        }
         
-        if (timestamp) {
-            [self.posts addObjectsFromArray:posts];
-        } else {
-            if (!posts) {
+        if (tagExploreInterface.next) {
+            self.next = tagExploreInterface.next;
+        }
+        
+        NSArray *posts = [tagExploreInterface posts];
+        if (direction == LCUIPullLoaderDiretionTop) {
+            if (!posts)
                 posts = [NSArray array];
-            }
             self.posts = [NSMutableArray arrayWithArray:posts];
+        } else {
+            if (posts && posts > 0) {
+                NSMutableArray *newPosts = [NSMutableArray arrayWithArray:self.posts];
+                [newPosts addObjectsFromArray:posts];
+                self.posts = newPosts;
+            }
         }
         
         [self reloadData];
@@ -63,8 +77,11 @@ LC_PROPERTY(assign) BOOL loading;
         
         self.loading = NO;
         self.loadFinished = YES;
+        [self.pullLoader endRefresh];
         
     } failure:^(LCBaseRequest *request) {
+        
+        [self.pullLoader endRefresh];
         
     }];
 }
@@ -83,9 +100,16 @@ LC_PROPERTY(assign) BOOL loading;
         self.alpha = 0;
         
         self.posts = [NSMutableArray array];
-        
         self.hotUsersView = [[LKHotTagsUsersView alloc] initWithFrame:CGRectMake(5, 5, LC_DEVICE_WIDTH - 10, 82)];
         self.tableHeaderView = self.hotUsersView;
+        
+        self.pullLoader = [LCUIPullLoader pullLoaderWithScrollView:self pullStyle:LCUIPullLoaderStyleHeaderAndFooter];
+        self.pullLoader.indicatorViewStyle = UIActivityIndicatorViewStyleWhite;
+        @weakly(self);
+        self.pullLoader.beginRefresh = ^(LCUIPullLoaderDiretion diretion) {
+            @normally(self);
+            [self loadData:diretion];
+        };
     }
     return self;
 }
@@ -130,6 +154,38 @@ LC_PROPERTY(assign) BOOL loading;
     return cell;
 }
 
+#pragma mark - LKPostTableViewControllerDelegate
+- (void)willLoadData:(LCUIPullLoaderDiretion)direction {
+    [self loadData:direction];
+}
 
+- (void)willNavigationBack:(NSInteger)index {
+    [self scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:(index / 3) inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+}
+
+LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
+    UIResponder *currentResponder = self;
+    while (![currentResponder isKindOfClass:[LKSearchViewController class]]) {
+        currentResponder = currentResponder.nextResponder;
+    }
+    LKSearchViewController *searchViewController = (LKSearchViewController *)currentResponder;
+    
+    self.browsingViewController = [[LKPostTableViewController alloc] init];
+    self.browsingViewController.delegate = self;
+    self.browsingViewController.datasource = self.posts;
+    self.browsingViewController.currentIndex = [self.posts indexOfObject:signal.object];
+    self.browsingViewController.title = self.tagValue.tag;
+    [self.browsingViewController watchForChangeOfDatasource:self dataSourceKey:@"posts"];
+    [searchViewController.navigationController pushViewController:self.browsingViewController animated:YES];
+}
+
+LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
+    UIResponder *currentResponder = self;
+    while (![currentResponder isKindOfClass:[LKSearchViewController class]]) {
+        currentResponder = currentResponder.nextResponder;
+    }
+    LKSearchViewController *searchViewController = (LKSearchViewController *)currentResponder;
+    [LKUserCenterViewController pushUserCenterWithUser:signal.object navigationController:searchViewController.navigationController];
+}
 
 @end

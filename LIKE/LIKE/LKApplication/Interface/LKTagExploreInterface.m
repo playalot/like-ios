@@ -7,6 +7,7 @@
 //
 
 #import "LKTagExploreInterface.h"
+#import "LKPost.h"
 
 @implementation LKTagExploreInterface
 
@@ -22,6 +23,10 @@
         return @{@"ts": self.timestamp};
     }
     return nil;
+}
+
+- (NSNumber *)next {
+    return self.responseJSONObject[@"data"][@"next"];
 }
 
 - (NSArray *)users {

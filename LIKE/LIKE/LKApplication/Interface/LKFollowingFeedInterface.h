@@ -1,5 +1,5 @@
 //
-//  LKFollowingInterface.h
+//  LKFollowingFeedInterface.h
 //  LIKE
 //
 //  Created by huangweifeng on 9/21/15.
@@ -8,7 +8,7 @@
 
 #import "LKBaseInterface.h"
 
-@interface LKFollowingInterface : LKBaseInterface
+@interface LKFollowingFeedInterface : LKBaseInterface
 
 LC_PROPERTY(copy)NSNumber *timestamp;
 

@@ -24,9 +24,9 @@
 #import "LKUserInfoCache.h"
 #import "JTSImageViewController.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
-#import "LKUserCenterBrowsingViewController.h"
+#import "LKPostTableViewController.h"
 
-@interface LKUserCenterViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerCancelFavorDelegate>
+@interface LKUserCenterViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerCancelFavorDelegate, LKPostTableViewControllerDelegate>
 
 LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
 LC_PROPERTY(strong) LCUITableView * tableView;
@@ -41,6 +41,10 @@ LC_PROPERTY(strong) LKUserCenterModel * userCenterModel;
 LC_PROPERTY(assign) LKUserCenterModelType currentType;
 LC_PROPERTY(assign) BOOL isLocalUser;
 LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
+
+LC_PROPERTY(strong) NSMutableArray *datasource;
+
+LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 
 @end
 
@@ -310,7 +314,6 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
             [self updateFriendButton];
             
             if (self.currentType == LKUserCenterModelTypePhotos) {
-                
                 self.cartoonImageView.hidden = self.userCenterModel.photoArray.count ? YES : NO;
             }
         }
@@ -448,44 +451,43 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
 }
 
 - (void)loadData:(LKUserCenterModelType)type diretion:(LCUIPullLoaderDiretion)diretion {
-    [self.tableView reloadData];
     [self.userCenterModel getDataAtFirstPage:diretion == LCUIPullLoaderDiretionTop type:type uid:self.user.id];
     @weakly(self);
-    self.userCenterModel.requestFinished = ^(LKUserCenterModelType type, LKHttpRequestResult * result, NSString * error){
+    self.userCenterModel.requestFinished = ^(LKUserCenterModelType type, NSString * error){
         @normally(self);
         [self.pullLoader endRefresh];
-        // Update header user information
+        // Update header user informatio
         [self.userInfoModel getUserInfo:self.user.id];
+        
         // Reload data
         [self.tableView reloadData];
         if (error) {
-            [self showTopMessageErrorHud:error];;
+            [self showTopMessageErrorHud:error];
         }
         self.pullLoader.canLoadMore = [self.userCenterModel canLoadMoreWithType:type];
-        
-        if (self.browsingViewController) {
-            NSArray *datasource = [self.userCenterModel dataWithType:self.currentType];
-            self.browsingViewController.datasource = [NSMutableArray arrayWithArray:datasource];
-            [self.browsingViewController reloadData];
-        }
     };
 }
 
 #pragma mark -
 
 LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
-    LKPost * post = signal.object;
-    if (!self.browsingViewController) {
-        self.browsingViewController = [[LKUserCenterBrowsingViewController alloc] init];
-    }
-    if (self.currentType == LKUserCenterModelTypePhotos) {
-        post.user = self.user;
-    }
-    NSArray *datasource = [self.userCenterModel dataWithType:self.currentType];
-    self.browsingViewController.datasource = [NSMutableArray arrayWithArray:datasource];
-    self.browsingViewController.parentUserCenterViewController = self;
-    self.browsingViewController.currentIndex = [datasource indexOfObject:post];
+    self.datasource = [NSMutableArray arrayWithArray:[self.userCenterModel dataWithType:self.currentType]];
+    self.browsingViewController = [[LKPostTableViewController alloc] init];
+    self.browsingViewController.delegate = self;
+    self.browsingViewController.datasource = self.datasource;
+    self.browsingViewController.cellHeadLineHidden = YES;
+    self.browsingViewController.currentIndex = [self.datasource indexOfObject:signal.object];
+    [self.browsingViewController watchForChangeOfDatasource:self dataSourceKey:@"datasource"];
     [self.navigationController pushViewController:self.browsingViewController animated:YES];
+}
+
+#pragma mark - LKPostTableViewControllerDelegate
+- (void)willLoadData:(LCUIPullLoaderDiretion)direction {
+    [self loadData:self.currentType diretion:direction];
+}
+
+- (void)willNavigationBack:(NSInteger)index {
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:(index / 3) inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
 }
 
 #pragma mark -
@@ -571,10 +573,8 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     return nil;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (self.currentType) {
-            
         case LKUserCenterModelTypePhotos:
         case LKUserCenterModelTypeFavor:
             return [LKPostThumbnailTableViewCell height];
@@ -585,13 +585,11 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
             return 0;
             break;
     }
-    
     return 30;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSArray * data = [self.userCenterModel dataWithType:self.currentType];
-    
     switch (self.currentType) {
         case LKUserCenterModelTypePhotos:
         case LKUserCenterModelTypeFavor:
@@ -606,7 +604,7 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     }
 }
 
--(void) scrollViewDidScroll:(UIScrollView *)scrollView {
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [self.inputView resignFirstResponder];
     [self.header handleScrollDidScroll:scrollView];
 }

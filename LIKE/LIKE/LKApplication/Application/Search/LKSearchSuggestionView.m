@@ -184,6 +184,7 @@ LC_PROPERTY(strong) NSArray * history;
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self deselectRowAtIndexPath:indexPath animated:YES];
+    NSLog(@"indexPath section: %ld", indexPath.section);
     if (indexPath.section == 1) {
         LKTag * tag = nil ;
         if (self.tags == nil) {
@@ -191,12 +192,14 @@ LC_PROPERTY(strong) NSArray * history;
         } else {
             tag = self.tags[indexPath.row];
         }
-        if (self.didSelectRow) {
-            self.didSelectRow(tag.tag);
+        if (self.didSelectSearchTag) {
+            self.didSelectSearchTag(tag.tag);
         }
     } else if (indexPath.section == 3) {
         LKUser * user = self.users[indexPath.row];
-        self.SEND(@"PushUserCenter").object = user;
+        if (self.didSelectUser) {
+            self.didSelectUser(user);
+        }
     }
 }
 

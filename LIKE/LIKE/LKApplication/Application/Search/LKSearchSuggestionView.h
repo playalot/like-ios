@@ -8,13 +8,15 @@
 
 #import "LCUIView.h"
 
-LC_BLOCK(void, LKSearchSuggestionViewDidSelectRow, (NSString * tagString));
+LC_BLOCK(void, LKSearchSuggestionViewDidSelectSearchTag, (NSString *tagString));
+LC_BLOCK(void, LKSearchSuggestionViewDidSelectSearchUser, (LKUser *user));
 
 @interface LKSearchSuggestionView : LCUITableView
 
 LC_PROPERTY(strong) NSArray * tags;
 LC_PROPERTY(copy) NSString * searchString;
-LC_PROPERTY(copy) LKSearchSuggestionViewDidSelectRow didSelectRow;
+LC_PROPERTY(copy) LKSearchSuggestionViewDidSelectSearchTag didSelectSearchTag;
+LC_PROPERTY(copy) LKSearchSuggestionViewDidSelectSearchUser didSelectUser;
 LC_PROPERTY(strong) NSArray * users;
 
 @end

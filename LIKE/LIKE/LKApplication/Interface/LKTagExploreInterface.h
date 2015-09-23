@@ -13,6 +13,7 @@
 LC_PROPERTY(copy) NSString *tagValue;
 LC_PROPERTY(copy) NSNumber *timestamp;
 
+- (NSNumber *)next;
 - (NSArray *)users;
 - (NSArray *)posts;
 

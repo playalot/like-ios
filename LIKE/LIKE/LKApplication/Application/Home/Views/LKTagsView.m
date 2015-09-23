@@ -471,20 +471,16 @@ LC_PROPERTY(strong) UIView * tipLine;
 }
 
 
--(void) setTags:(NSMutableArray *)tags
-{
+- (void)setTags:(NSMutableArray *)tags {
     _tags = tags;
-    
     [self reloadData];
 }
 
--(void) reloadData
-{
+- (void)reloadData {
     [self reloadDataAndRemoveAll:YES];
 }
 
--(void) reloadDataAndRemoveAll:(BOOL)removeAll
-{
+- (void)reloadDataAndRemoveAll:(BOOL)removeAll {
     if (removeAll) {
         [self removeAllSubviews];
     }
@@ -494,10 +490,8 @@ LC_PROPERTY(strong) UIView * tipLine;
     CGFloat topPadding = 12;
     CGFloat leftPadding = 12;
     CGFloat maxHeight = 0;
-
     
     LKTagItem * lastItem = nil;
-    
     
     NSInteger page = 0;
     NSInteger line = 0;

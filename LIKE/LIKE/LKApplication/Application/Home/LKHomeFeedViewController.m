@@ -21,6 +21,7 @@
 #import "UIImageView+WebCache.h"
 #import "LKSearchResultsViewController.h"
 
+
 @interface LKHomeFeedViewController () <UITableViewDataSource, UITableViewDelegate, LKHomeTableViewCellDelegate, LKPostDetailViewControllerDelegate>
 
 LC_PROPERTY(strong) NSMutableArray *datasource;
@@ -33,6 +34,7 @@ LC_PROPERTY(assign) NSTimeInterval lastFocusLoadTime;
 LC_PROPERTY(assign) BOOL needRefresh;
 
 LC_PROPERTY(strong) LKHomeFeedInterface *homeFeedInterface;
+LC_PROPERTY(strong) NSMutableArray *heightList;
 
 LC_PROPERTY(weak) id delegate;
 
@@ -40,13 +42,18 @@ LC_PROPERTY(weak) id delegate;
 
 @implementation LKHomeFeedViewController
 
+- (void)calculateHeightList {
+    self.heightList = [NSMutableArray array];
+    for (LKPost *post in self.datasource) {
+        [self.heightList addObject:[NSNumber numberWithFloat:[LKHomeTableViewCell height:post]]];
+    }
+}
+
 - (void)buildUI {
     self.view.backgroundColor = LKColor.backgroundColor;
-    
     [self buildInputView];
     [self buildTableView];
     [self buildPullLoader];
-    
     [self loadData:LCUIPullLoaderDiretionTop];
 }
 
@@ -206,6 +213,8 @@ LC_PROPERTY(weak) id delegate;
             [self.datasource addObjectsFromArray:datasource];
         }
         
+        [self calculateHeightList];
+        
         [self.pullLoader endRefresh];
         LC_FAST_ANIMATIONS(0.25, ^{
             [self.tableView reloadData];
@@ -312,7 +321,8 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
  *  根据cell计算行高
  */
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [LKHomeTableViewCell height:self.datasource[indexPath.row]];
+    return [self.heightList[indexPath.row] floatValue];
+//    return [LKHomeTableViewCell height:self.datasource[indexPath.row]];
 }
 
 #pragma mark *****数据源******

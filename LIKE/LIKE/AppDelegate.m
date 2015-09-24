@@ -206,9 +206,13 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
         if ([view isKindOfClass:[RDVTabBarItem class]]) {
 
             RDVTabBarItem *item = (RDVTabBarItem *)view;
-            [item setBackgroundSelectedImage:[UIImage imageNamed:selectedImageNames[i]]
-                         withUnselectedImage:[UIImage imageNamed:imageNames[i]]];
+
+            [item setFinishedSelectedImage:[[UIImage imageNamed:selectedImageNames[i]]
+                    imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
+               withFinishedUnselectedImage:[[UIImage imageNamed:imageNames[i]]
+                    imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
             [item setBackgroundColor:[UIColor whiteColor]];
+            
             i++;
         }
     }

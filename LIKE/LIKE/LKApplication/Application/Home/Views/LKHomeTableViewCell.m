@@ -146,12 +146,18 @@ LC_IMP_SIGNAL(PushPostDetail);
     // 推荐理由标签
     self.recommendedReasonWithTag = LCUIButton.view;
     self.recommendedReasonWithTag.viewFrameWidth = LC_DEVICE_WIDTH / 2;
-    self.recommendedReasonWithTag.viewFrameHeight = LK_FONT(13).lineHeight;
+    self.recommendedReasonWithTag.viewFrameHeight = LK_FONT(10).lineHeight;
     self.recommendedReasonWithTag.viewFrameX = LC_DEVICE_WIDTH / 2 - 15;
     self.recommendedReasonWithTag.viewFrameY = self.likesTip.viewFrameY + 2;
     self.recommendedReasonWithTag.title = LC_LO(@"有故事的人");
     self.recommendedReasonWithTag.titleColor = LC_RGB(217, 217, 217);
+<<<<<<< HEAD
     self.recommendedReasonWithTag.titleFont = LK_FONT(13);
+=======
+//    self.recommendedReasonWithTag.font = LK_FONT(11);
+    self.recommendedReasonWithTag.titleFont = LK_FONT(10);
+//    self.recommendedReasonWithTag.textAlignment = UITextAlignmentRight;
+>>>>>>> 7bdd654649167f751ac5229e7d0df8282a44c7f1
     self.recommendedReasonWithTag.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     self.recommendedReasonWithTag.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 1);
     [self.recommendedReasonWithTag addTarget:self action:@selector(recommendedReasonBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -176,7 +182,13 @@ LC_IMP_SIGNAL(PushPostDetail);
         }
         
         self.likes.text = LC_NSSTRING_FORMAT(@"%@", self.post.user.likes);
+<<<<<<< HEAD
         CGSize likeSize = [self.post.user.likes.description sizeWithFont:LK_FONT(13) byWidth:200];
+=======
+        
+        CGSize likeSize = [self.post.user.likes.description sizeWithFont:LK_FONT(10) byWidth:200];
+        
+>>>>>>> 7bdd654649167f751ac5229e7d0df8282a44c7f1
         [UIView animateWithDuration:0.25 animations:^{
             self.likesTip.viewFrameX = self.likes.viewFrameX + likeSize.width + 3;
         }];
@@ -216,7 +228,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.title.text = LC_NSSTRING_FORMAT(@"%@", post.user.name);
     [self.likes setText:LC_NSSTRING_FORMAT(@"%@", post.user.likes) animated:NO];
     
-    CGSize likeSize = [post.user.likes.description sizeWithFont:LK_FONT(13) byWidth:200];
+    CGSize likeSize = [post.user.likes.description sizeWithFont:LK_FONT(10) byWidth:200];
     
     self.likesTip.viewFrameX = self.likes.viewFrameX + likeSize.width + 3;
     

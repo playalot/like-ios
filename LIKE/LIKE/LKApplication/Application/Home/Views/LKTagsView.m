@@ -303,7 +303,11 @@ LC_PROPERTY(assign) BOOL custom;
     
     
     self.tagLabel.text = customTag ? customTag : tagValue.tag.description;
-    self.tagLabel.FIT();
+//    self.tagLabel.FIT();
+    UIFont *tagLabelFont = self.tagLabel.font;
+    CGSize tagLabelSize = [self.tagLabel.text sizeWithFont:tagLabelFont byHeight:tagLabelFont.lineHeight];
+    self.tagLabel.viewFrameWidth = tagLabelSize.width;
+    self.tagLabel.viewFrameHeight = tagLabelSize.height;
     
     
     CGFloat tagHeight = self.tagLabel.font.lineHeight;

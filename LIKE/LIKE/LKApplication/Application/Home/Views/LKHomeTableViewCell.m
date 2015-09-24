@@ -157,7 +157,7 @@ LC_IMP_SIGNAL(PushPostDetail);
 //    self.recommendedReasonWithTag = LCUILabel.view;
     self.recommendedReasonWithTag = LCUIButton.view;
     self.recommendedReasonWithTag.viewFrameWidth = LC_DEVICE_WIDTH / 2;
-    self.recommendedReasonWithTag.viewFrameHeight = LK_FONT(13).lineHeight;
+    self.recommendedReasonWithTag.viewFrameHeight = LK_FONT(10).lineHeight;
     self.recommendedReasonWithTag.viewFrameX = LC_DEVICE_WIDTH / 2 - 15;
 //    [self.recommendedReasonWithTag sizeToFit];
 //    self.recommendedReasonWithTag.viewFrameX = CGRectGetMaxX(self.recommendedReason.frame) - self.recommendedReasonWithTag.viewFrameWidth;
@@ -168,7 +168,7 @@ LC_IMP_SIGNAL(PushPostDetail);
 //    self.recommendedReasonWithTag.textColor = LC_RGB(155, 155, 155);
     self.recommendedReasonWithTag.titleColor = LC_RGB(217, 217, 217);
 //    self.recommendedReasonWithTag.font = LK_FONT(11);
-    self.recommendedReasonWithTag.titleFont = LK_FONT(13);
+    self.recommendedReasonWithTag.titleFont = LK_FONT(10);
 //    self.recommendedReasonWithTag.textAlignment = UITextAlignmentRight;
     self.recommendedReasonWithTag.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     self.recommendedReasonWithTag.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 1);
@@ -202,7 +202,7 @@ LC_IMP_SIGNAL(PushPostDetail);
         
         self.likes.text = LC_NSSTRING_FORMAT(@"%@", self.post.user.likes);
         
-        CGSize likeSize = [self.post.user.likes.description sizeWithFont:LK_FONT(13) byWidth:200];
+        CGSize likeSize = [self.post.user.likes.description sizeWithFont:LK_FONT(10) byWidth:200];
         
         [UIView animateWithDuration:0.25 animations:^{
             
@@ -250,7 +250,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.title.text = LC_NSSTRING_FORMAT(@"%@", post.user.name);
     [self.likes setText:LC_NSSTRING_FORMAT(@"%@", post.user.likes) animated:NO];
     
-    CGSize likeSize = [post.user.likes.description sizeWithFont:LK_FONT(13) byWidth:200];
+    CGSize likeSize = [post.user.likes.description sizeWithFont:LK_FONT(10) byWidth:200];
     
     self.likesTip.viewFrameX = self.likes.viewFrameX + likeSize.width + 3;
     

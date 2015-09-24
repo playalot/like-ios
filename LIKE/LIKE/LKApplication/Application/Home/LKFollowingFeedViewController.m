@@ -17,6 +17,10 @@
 #import "LKPostDetailViewController.h"
 #import "LKFollowingFeedInterface.h"
 #import "LKSearchResultsViewController.h"
+#import "SDWebImagePrefetcher.h"
+#import "LKLikeTagItemView.h"
+#import "LKPostTableViewCell.h"
+#import "LKPostView.h"
 
 #define FOCUS_FEED_CACHE_KEY [NSString stringWithFormat:@"LKFocusFeedKey-%@", LKLocalUser.singleton.user.id]
 
@@ -30,6 +34,7 @@ LC_PROPERTY(strong) LKInputView * inputView;
 LC_PROPERTY(copy) NSNumber * next;
 LC_PROPERTY(assign) NSTimeInterval lastFocusLoadTime;
 LC_PROPERTY(assign) BOOL needRefresh;
+LC_PROPERTY(strong) NSMutableArray *heightList;
 
 LC_PROPERTY(weak) id delegate;
 
@@ -37,8 +42,33 @@ LC_PROPERTY(weak) id delegate;
 
 @implementation LKFollowingFeedViewController
 
+- (void)calculateHeightList {
+    self.heightList = [NSMutableArray array];
+    for (LKPost *post in self.datasource) {
+        [self.heightList addObject:[NSNumber numberWithFloat:[LKHomeTableViewCell height:post]]];
+    }
+}
+
+- (void)buildTestTagsView {
+    
+    NSMutableArray *tagList = [NSMutableArray array];
+    
+    NSArray *tagStringList = @[@"海贼王", @"天使", @"火影忍者", @"海神", @"花千骨", @"变态", @"骨干", @"连接服务器", @"北京技术交流"];
+    
+    for (NSInteger i = 0; i < tagStringList.count; i++) {
+        LKTag *tag = [[LKTag alloc] init];
+        tag.tag = tagStringList[i];
+        [tagList addObject:tag];
+    }
+    
+    LKPostView *postView = [[LKPostView alloc] initWithFrame:self.view.bounds];
+    postView.tagList = tagList;
+    self.view = postView;
+}
+
 - (void)buildUI {
-    self.view.backgroundColor = LKColor.backgroundColor;
+    
+//    [self buildTestTagsView];
     
     self.tableView = [[LCUITableView alloc] initWithFrame:self.view.frame];
     self.tableView.delegate = self;
@@ -65,7 +95,6 @@ LC_PROPERTY(weak) id delegate;
 - (void)loadData:(LCUIPullLoaderDiretion)diretion {
     
     NSTimeInterval time = [[NSDate date] timeIntervalSince1970];
-    
     LKFollowingFeedInterface *followingInterface = [[LKFollowingFeedInterface alloc] init];
     if (self.next && diretion == LCUIPullLoaderDiretionBottom) {
         followingInterface.timestamp = self.next;
@@ -99,10 +128,19 @@ LC_PROPERTY(weak) id delegate;
             [self.datasource addObjectsFromArray:datasource];
         }
         
+        NSMutableArray *prefetchs = nil;
+        for (LKPost *post in self.datasource) {
+            if (post.content) {
+                [prefetchs addObject:post.content];
+            }
+        }
+        
+        [self calculateHeightList];
+        
+        [[SDWebImagePrefetcher sharedImagePrefetcher] prefetchURLs:prefetchs.copy];
+        
         [self.pullLoader endRefresh];
-        LC_FAST_ANIMATIONS(0.25, ^{
-            [self.tableView reloadData];
-        });
+        [self.tableView reloadData];
         
     } failure:^(LCBaseRequest *request) {
         
@@ -125,8 +163,11 @@ LC_PROPERTY(weak) id delegate;
 
 - (UITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     LKHomeTableViewCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Content" andClass:[LKHomeTableViewCell class]];
+    
+//    LKPostTableViewCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Content" andClass:[LKPostTableViewCell class]];
+    
     // 设置cell的代理
-    cell.delegate = self;
+//    cell.delegate = self;
     
     LKPost * post = self.datasource[indexPath.row];
     cell.post = post;
@@ -153,13 +194,9 @@ LC_PROPERTY(weak) id delegate;
     return cell;
 }
 
-/**
- *  根据cell计算行高
- */
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [LKHomeTableViewCell height:self.datasource[indexPath.row]];
+    return [self.heightList[indexPath.row] floatValue];
 }
-
 
 #pragma mark Handle Signal
 
@@ -193,14 +230,11 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
         for (LKTag *tag in post.tags) {
             
             if ([tag.tag isEqualToString:deleteTag.tag]) {
-                
                 // 删除标签
                 [post.tags removeObject:tag];
-                
                 [self.tableView beginUpdates];
                 [self.tableView reloadData];
                 [self.tableView endUpdates];
-                
                 break;
             }
         }

@@ -10,10 +10,8 @@
 
 @implementation UIView (LCExtension)
 
-- (LCUIViewAddSubview) ADD
-{
-    LCUIViewAddSubview block = ^ id (UIView * obj){
-
+- (LCUIViewAddSubview)ADD {
+    LCUIViewAddSubview block = ^ id (UIView * obj) {
         [self addSubview:obj];
         return self;
     };
@@ -21,10 +19,8 @@
     return block;
 }
 
-- (LCUIViewSizeToFit) FIT
-{
+- (LCUIViewSizeToFit)FIT {
     LCUIViewSizeToFit block = ^ id (){
-        
         [self sizeToFit];
         return self;
     };
@@ -32,10 +28,8 @@
     return block;
 }
 
-- (LCUIViewColor) COLOR
-{
+- (LCUIViewColor) COLOR {
     LCUIViewSizeToFit block = ^ id (UIColor * color){
-        
         self.backgroundColor = color;
         return self;
     };
@@ -43,13 +37,10 @@
     return block;
 }
 
-+ (LCUIViewCreate) CREATE
-{
++ (LCUIViewCreate) CREATE {
     LCUIViewCreate block = ^ id (CGFloat x, CGFloat y, CGFloat width, CGFloat height){
-        
         return [[self class] viewWithFrame:LC_RECT(x, y, width, height)];
     };
-    
     return block;
 }
 
@@ -79,16 +70,11 @@
 }
 
 
--(void) setCornerRadius:(CGFloat)cornerRadius
-{
+- (void)setCornerRadius:(CGFloat)cornerRadius {
     self.layer.cornerRadius = cornerRadius;
-    
     if ([self isKindOfClass:[UIImageView class]]) {
-        
         self.layer.masksToBounds = YES;
-    }
-    else{
-        
+    } else {
         self.layer.shouldRasterize = YES;
         self.layer.rasterizationScale = [UIScreen mainScreen].scale; // or [UIScreen mainScreen]
     }

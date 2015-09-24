@@ -57,7 +57,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     
     @weakly(self);
     
-    self.tagsView.itemRequestFinished = ^(LKTagItem * item){
+    self.tagsView.itemRequestFinished = ^(LKTagItemView * item){
         @normally(self);
         if (item.tagValue.isLiked) {
             self.post.user.likes = @(self.post.user.likes.integerValue + 1);
@@ -239,7 +239,7 @@ LC_IMP_SIGNAL(PushPostDetail);
         }
     };
     
-    self.tagsView.willRequest = ^(LKTagItem * item){
+    self.tagsView.willRequest = ^(LKTagItemView * item){
         @normally(self);
         if (item.tagValue.isLiked) {
             return;

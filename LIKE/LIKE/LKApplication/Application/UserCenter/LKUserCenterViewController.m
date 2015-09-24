@@ -281,7 +281,6 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
         [self loadMore];
     };
     
-    
     self.inputView = LKInputView.view;
     self.inputView.viewFrameY = self.view.viewFrameHeight;
     self.inputView.textField.placeholder = LC_LO(@"输入新昵称");

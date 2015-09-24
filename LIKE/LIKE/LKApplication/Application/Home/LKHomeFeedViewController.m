@@ -20,6 +20,7 @@
 #import "LKTagAddModel.h"
 #import "UIImageView+WebCache.h"
 #import "LKSearchResultsViewController.h"
+#import "SDWebImagePrefetcher.h"
 
 
 @interface LKHomeFeedViewController () <UITableViewDataSource, UITableViewDelegate, LKHomeTableViewCellDelegate, LKPostDetailViewControllerDelegate>
@@ -50,7 +51,6 @@ LC_PROPERTY(weak) id delegate;
 }
 
 - (void)buildUI {
-    self.view.backgroundColor = LKColor.backgroundColor;
     [self buildInputView];
     [self buildTableView];
     [self buildPullLoader];
@@ -206,7 +206,6 @@ LC_PROPERTY(weak) id delegate;
         }
         
         if (diretion == LCUIPullLoaderDiretionTop) {
-            // Change datasource and save cache...
             self.datasource = datasource;
             LKUserDefaults.singleton[self.class.description] = resultData;
         } else {
@@ -214,6 +213,15 @@ LC_PROPERTY(weak) id delegate;
         }
         
         [self calculateHeightList];
+        
+        NSMutableArray *prefetchs = nil;
+        for (LKPost *post in self.datasource) {
+            if (post.content) {
+                [prefetchs addObject:post.content];
+            }
+        }
+        
+        [[SDWebImagePrefetcher sharedImagePrefetcher] prefetchURLs:prefetchs.copy];
         
         [self.pullLoader endRefresh];
         LC_FAST_ANIMATIONS(0.25, ^{
@@ -288,13 +296,13 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
 }
 
 - (UITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     LKHomeTableViewCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Content" andClass:[LKHomeTableViewCell class]];
     // 设置cell的代理
     cell.delegate = self;
     
     LKPost * post = self.datasource[indexPath.row];
     cell.post = post;
-//    [cell.coverPhoto sd_setImageWithURL:[NSURL URLWithString:post.content] placeholderImage:nil];
     
     @weakly(self);
     
@@ -322,7 +330,6 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
  */
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [self.heightList[indexPath.row] floatValue];
-//    return [LKHomeTableViewCell height:self.datasource[indexPath.row]];
 }
 
 #pragma mark *****数据源******

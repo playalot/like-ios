@@ -94,7 +94,6 @@ LC_PROPERTY(strong) LKNotificationModel *notificationModel;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    LKNotification *notification = self.notificationModel.likesArray[indexPath.row];
     return 100;
 }
 

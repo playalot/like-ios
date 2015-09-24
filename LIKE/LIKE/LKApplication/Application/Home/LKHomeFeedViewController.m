@@ -190,7 +190,7 @@ LC_PROPERTY(weak) id delegate;
         @normally(homeFeedInterface);
         @normally(self);
         
-        dispatch_queue_t queue = dispatch_queue_create("Queue",NULL);
+        dispatch_queue_t queue = dispatch_queue_create("HomeFeedQueue",NULL);
         dispatch_async(queue, ^{
             
             if (homeFeedInterface.next) {

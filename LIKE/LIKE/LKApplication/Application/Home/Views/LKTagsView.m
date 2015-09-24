@@ -51,7 +51,6 @@ LC_PROPERTY(strong) UIView * tipLine;
 
 - (void)reloadDataAndRemoveAll:(BOOL)removeAll {
     if (removeAll) {
-//        [[LKTagItemViewCenter sharedInstance] addImageViews:self.subviews];
         [self removeAllSubviews];
     }
     

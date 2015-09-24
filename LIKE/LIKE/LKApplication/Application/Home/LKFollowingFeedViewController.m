@@ -109,7 +109,8 @@ LC_PROPERTY(weak) id delegate;
         @normally(self);
         @normally(followingInterface);
         
-        NSBlockOperation *dataHandlingOperation = [NSBlockOperation blockOperationWithBlock:^{
+        dispatch_queue_t queue = dispatch_queue_create("HomeFeedQueue",NULL);
+        dispatch_async(queue, ^{
             
             NSNumber *resultNext = followingInterface.next;
             
@@ -153,15 +154,12 @@ LC_PROPERTY(weak) id delegate;
             
             [[SDWebImagePrefetcher sharedImagePrefetcher] prefetchURLs:prefetchs.copy];
             
-            
-            NSBlockOperation *refreshOperation = [NSBlockOperation blockOperationWithBlock:^{
+            dispatch_async(dispatch_get_main_queue(), ^{
                 [self.pullLoader endRefresh];
                 [self.tableView reloadData];
-            }];
-            [[NSOperationQueue mainQueue] addOperation:refreshOperation];
-        }];
-        
-        [self.loadDataQueue addOperation:dataHandlingOperation];
+            });
+            
+        });
         
     } failure:^(LCBaseRequest *request) {
         

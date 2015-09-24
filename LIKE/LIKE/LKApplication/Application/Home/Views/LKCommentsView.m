@@ -31,12 +31,12 @@
         moreView.viewFrameWidth = self.viewFrameWidth;
         moreView.viewFrameHeight = 33;
         moreView.viewFrameY = lastView.viewBottomY;
-        moreView.backgroundColor = [UIColor whiteColor];
+        moreView.backgroundColor = LC_RGB(238, 238, 238);
         self.ADD(moreView);
         
         
         UIImageView * moreIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkMore.png" useCache:YES]];
-        moreIcon.viewFrameX = 20;
+        moreIcon.viewFrameX = 77;
         moreIcon.viewFrameY = moreView.viewMidHeight - moreIcon.viewMidHeight;
         moreView.ADD(moreIcon);
         
@@ -69,17 +69,17 @@
         UIView * contentView = UIView.view;
         contentView.viewFrameY = lastView.viewBottomY;
         contentView.viewFrameWidth = self.viewFrameWidth;
-        contentView.viewFrameHeight = 53;
-        contentView.backgroundColor = [UIColor whiteColor];
+        contentView.viewFrameHeight = 46;
+        contentView.backgroundColor = LC_RGB(238, 238, 238);
         self.ADD(contentView);
         
         
         LCUIImageView * head = LCUIImageView.view;
-        head.viewFrameX = 10;
-        head.viewFrameY = 10;
-        head.viewFrameWidth = 33;
-        head.viewFrameHeight = 33;
-        head.cornerRadius = 33 / 2;
+        head.viewFrameX = 70;
+        head.viewFrameY = 6;
+        head.viewFrameWidth = 30;
+        head.viewFrameHeight = 30;
+        head.cornerRadius = 30 / 2;
 //        head.url = comment.user.avatar;
         [head sd_setImageWithURL:[NSURL URLWithString:comment.user.avatar] placeholderImage:nil];
         head.userInteractionEnabled = YES;
@@ -90,7 +90,7 @@
         
         LCUILabel * contentLabel = LCUILabel.view;
         contentLabel.viewFrameX = head.viewRightX + 10;
-        contentLabel.viewFrameY = 11;
+        contentLabel.viewFrameY = 4;
         contentLabel.viewFrameWidth = self.viewFrameWidth - contentLabel.viewFrameX - 10;
         contentLabel.font = LK_FONT(12);
         contentLabel.textColor = LC_RGB(51, 51, 51);
@@ -113,10 +113,10 @@
         
         LCUILabel * timeLabel = LCUILabel.view;
         timeLabel.viewFrameX = contentLabel.viewFrameX;
-        timeLabel.viewFrameY = contentLabel.viewBottomY + 2;
+        timeLabel.viewFrameY = contentLabel.viewBottomY + 1;
         timeLabel.viewFrameWidth = contentLabel.viewFrameWidth;
-        timeLabel.font = LK_FONT(12);
-        timeLabel.textColor = LC_RGB(180, 180, 180);
+        timeLabel.font = LK_FONT(10);
+        timeLabel.textColor = LC_RGB(135, 135, 135);
         timeLabel.text = [NSString stringWithFormat:@"%@ %@ %@", [LKTime dateNearByTimestamp:comment.timestamp], comment.place ? LC_LO(@"来自") : @"", comment.place ? comment.place : @""];
         timeLabel.FIT();
         contentView.ADD(timeLabel);

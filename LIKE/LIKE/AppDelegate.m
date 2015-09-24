@@ -180,6 +180,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     self.notificationViewController = [LKNotificationViewController viewController];
     self.userCenterViewController = [[LKUserCenterViewController alloc] initWithUser:LKLocalUser.singleton.user];
     
+    
     // tabbarCtrl只放了一个主页控制器
     self.tabBarController = [[LKTabBarController alloc]
                              initWithViewControllers:@[
@@ -188,7 +189,8 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
                                                        LC_UINAVIGATION(self.cameraRollViewController),
                                                        LC_UINAVIGATION(self.notificationViewController),
                                                        LC_UINAVIGATION(self.userCenterViewController)]];
-
+    
+    
     NSArray *imageNames = @[@"tabbar_homeLine",
                             @"tabbar_search",
                             @"tabbar_camera",
@@ -199,6 +201,8 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
                                     @"tabbar_camera",
                                     @"tabbar_notification_selected",
                                     @"tabbar_userCenter_selected"];
+    
+    
     NSInteger i = 0;
     
     for (UIView *view in self.tabBarController.tabBar.items) {
@@ -206,12 +210,20 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
         if ([view isKindOfClass:[RDVTabBarItem class]]) {
 
             RDVTabBarItem *item = (RDVTabBarItem *)view;
-
+            
             [item setFinishedSelectedImage:[[UIImage imageNamed:selectedImageNames[i]]
                     imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
                withFinishedUnselectedImage:[[UIImage imageNamed:imageNames[i]]
                     imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-            [item setBackgroundColor:[UIColor whiteColor]];
+//            [item setBackgroundColor:[UIColor whiteColor]];
+            
+            if (i == 3) {
+                
+                LCUIBadgeView *badgeView = LCUIBadgeView.view;
+                badgeView.frame = CGRectMake(40 * LC_DEVICE_WIDTH / 414, 13, 2, 2);
+//                badgeView.valueString = @"9";
+                item.ADD(badgeView);
+            }
             
             i++;
         }

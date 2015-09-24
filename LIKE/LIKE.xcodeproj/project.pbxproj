@@ -126,16 +126,11 @@
 		135CF64E1B37E52500DB24D6 /* CameraMagic@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 135CF64D1B37E52500DB24D6 /* CameraMagic@3x.png */; };
 		135D58321ADFB15100811B06 /* LKCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 135D58311ADFB15100811B06 /* LKCameraViewController.m */; };
 		135D586E1ADFC3B700811B06 /* LKFilterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 135D586D1ADFC3B700811B06 /* LKFilterManager.m */; };
-		135D5C011ADFD21E00811B06 /* CameraCapture@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 135D5BFA1ADFD21E00811B06 /* CameraCapture@3x.png */; };
-		135D5C031ADFD21E00811B06 /* CameraChange@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 135D5BFC1ADFD21E00811B06 /* CameraChange@3x.png */; };
 		135D5C041ADFD21E00811B06 /* CameraCut@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 135D5BFD1ADFD21E00811B06 /* CameraCut@3x.png */; };
-		135D5C061ADFD21E00811B06 /* CameraFlash@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 135D5BFF1ADFD21E00811B06 /* CameraFlash@3x.png */; };
-		135D5C071ADFD21E00811B06 /* CameraPhotos@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 135D5C001ADFD21E00811B06 /* CameraPhotos@3x.png */; };
 		135D5C141AE0B0AE00811B06 /* LKFilterScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 135D5C131AE0B0AE00811B06 /* LKFilterScrollView.m */; };
 		135D5C261AE0DA9700811B06 /* FilterPreview@3x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 135D5C251AE0DA9700811B06 /* FilterPreview@3x.jpg */; };
 		135D5C281AE0E37800811B06 /* CameraFilter@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 135D5C271AE0E37800811B06 /* CameraFilter@3x.png */; };
 		135D5C931AE1013100811B06 /* LKImageCropperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 135D5C921AE1013100811B06 /* LKImageCropperViewController.m */; };
-		135D5C951AE113BA00811B06 /* CameraClose@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 135D5C941AE113BA00811B06 /* CameraClose@3x.png */; };
 		135DBAEC1AE4AC24004AD150 /* LKRecommendTagsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 135DBAEB1AE4AC24004AD150 /* LKRecommendTagsView.m */; };
 		135DBAEF1AE4EF79004AD150 /* LKPostDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 135DBAEE1AE4EF79004AD150 /* LKPostDetailViewController.m */; };
 		135DBAF21AE50A78004AD150 /* LKPostTagsDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 135DBAF11AE50A78004AD150 /* LKPostTagsDetailModel.m */; };
@@ -783,6 +778,14 @@
 		13F505151B0C5EAC00D8D484 /* WeChatFriendIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13F5050F1B0C5EAC00D8D484 /* WeChatFriendIcon@3x.png */; };
 		13F5051C1B0CA05600D8D484 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13F5051A1B0CA05600D8D484 /* TencentOpenAPI.framework */; };
 		13F5051D1B0CA05600D8D484 /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 13F5051B1B0CA05600D8D484 /* TencentOpenApi_IOS_Bundle.bundle */; };
+		13FC2C061BB4087D0036E514 /* CameraCapture@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13FC2BFE1BB4087D0036E514 /* CameraCapture@3x.png */; };
+		13FC2C071BB4087D0036E514 /* CameraChange_selected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13FC2BFF1BB4087D0036E514 /* CameraChange_selected@3x.png */; };
+		13FC2C081BB4087D0036E514 /* CameraChange@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13FC2C001BB4087D0036E514 /* CameraChange@3x.png */; };
+		13FC2C091BB4087D0036E514 /* CameraClose@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13FC2C011BB4087D0036E514 /* CameraClose@3x.png */; };
+		13FC2C0A1BB4087D0036E514 /* CameraFlash_selected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13FC2C021BB4087D0036E514 /* CameraFlash_selected@3x.png */; };
+		13FC2C0B1BB4087D0036E514 /* CameraFlash@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13FC2C031BB4087D0036E514 /* CameraFlash@3x.png */; };
+		13FC2C0C1BB4087D0036E514 /* CameraPhotos@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13FC2C041BB4087D0036E514 /* CameraPhotos@3x.png */; };
+		13FC2C0D1BB4087D0036E514 /* ProhibitionOfSelf@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13FC2C051BB4087D0036E514 /* ProhibitionOfSelf@3x.png */; };
 		13FCC0711ADE16DD0008DB41 /* LKUserCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FCC0701ADE16DD0008DB41 /* LKUserCenterViewController.m */; };
 		13FCC0741ADE17F70008DB41 /* LKSegmentHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FCC0731ADE17F70008DB41 /* LKSegmentHeader.m */; };
 		13FCC0781ADE2E5F0008DB41 /* LKHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FCC0761ADE2E5F0008DB41 /* LKHomeTableViewCell.m */; };
@@ -1060,18 +1063,13 @@
 		135D58311ADFB15100811B06 /* LKCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKCameraViewController.m; sourceTree = "<group>"; };
 		135D586C1ADFC3B700811B06 /* LKFilterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKFilterManager.h; sourceTree = "<group>"; };
 		135D586D1ADFC3B700811B06 /* LKFilterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKFilterManager.m; sourceTree = "<group>"; };
-		135D5BFA1ADFD21E00811B06 /* CameraCapture@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraCapture@3x.png"; sourceTree = "<group>"; };
-		135D5BFC1ADFD21E00811B06 /* CameraChange@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraChange@3x.png"; sourceTree = "<group>"; };
 		135D5BFD1ADFD21E00811B06 /* CameraCut@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraCut@3x.png"; sourceTree = "<group>"; };
-		135D5BFF1ADFD21E00811B06 /* CameraFlash@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraFlash@3x.png"; sourceTree = "<group>"; };
-		135D5C001ADFD21E00811B06 /* CameraPhotos@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraPhotos@3x.png"; sourceTree = "<group>"; };
 		135D5C121AE0B0AE00811B06 /* LKFilterScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKFilterScrollView.h; sourceTree = "<group>"; };
 		135D5C131AE0B0AE00811B06 /* LKFilterScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKFilterScrollView.m; sourceTree = "<group>"; };
 		135D5C251AE0DA9700811B06 /* FilterPreview@3x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "FilterPreview@3x.jpg"; sourceTree = "<group>"; };
 		135D5C271AE0E37800811B06 /* CameraFilter@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraFilter@3x.png"; sourceTree = "<group>"; };
 		135D5C911AE1013100811B06 /* LKImageCropperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKImageCropperViewController.h; sourceTree = "<group>"; };
 		135D5C921AE1013100811B06 /* LKImageCropperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKImageCropperViewController.m; sourceTree = "<group>"; };
-		135D5C941AE113BA00811B06 /* CameraClose@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraClose@3x.png"; sourceTree = "<group>"; };
 		135D5C961AE1181D00811B06 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		135D5C971AE1181D00811B06 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		135D5C981AE1182800811B06 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
@@ -2330,6 +2328,14 @@
 		13F5050F1B0C5EAC00D8D484 /* WeChatFriendIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WeChatFriendIcon@3x.png"; sourceTree = "<group>"; };
 		13F5051A1B0CA05600D8D484 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		13F5051B1B0CA05600D8D484 /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
+		13FC2BFE1BB4087D0036E514 /* CameraCapture@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraCapture@3x.png"; sourceTree = "<group>"; };
+		13FC2BFF1BB4087D0036E514 /* CameraChange_selected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraChange_selected@3x.png"; sourceTree = "<group>"; };
+		13FC2C001BB4087D0036E514 /* CameraChange@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraChange@3x.png"; sourceTree = "<group>"; };
+		13FC2C011BB4087D0036E514 /* CameraClose@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraClose@3x.png"; sourceTree = "<group>"; };
+		13FC2C021BB4087D0036E514 /* CameraFlash_selected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraFlash_selected@3x.png"; sourceTree = "<group>"; };
+		13FC2C031BB4087D0036E514 /* CameraFlash@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraFlash@3x.png"; sourceTree = "<group>"; };
+		13FC2C041BB4087D0036E514 /* CameraPhotos@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraPhotos@3x.png"; sourceTree = "<group>"; };
+		13FC2C051BB4087D0036E514 /* ProhibitionOfSelf@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ProhibitionOfSelf@3x.png"; sourceTree = "<group>"; };
 		13FCC06F1ADE16DD0008DB41 /* LKUserCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKUserCenterViewController.h; sourceTree = "<group>"; };
 		13FCC0701ADE16DD0008DB41 /* LKUserCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKUserCenterViewController.m; sourceTree = "<group>"; };
 		13FCC0721ADE17F70008DB41 /* LKSegmentHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKSegmentHeader.h; sourceTree = "<group>"; };
@@ -2722,19 +2728,22 @@
 		135D5BF91ADFD21400811B06 /* Camera */ = {
 			isa = PBXGroup;
 			children = (
+				13FC2BFE1BB4087D0036E514 /* CameraCapture@3x.png */,
+				13FC2BFF1BB4087D0036E514 /* CameraChange_selected@3x.png */,
+				13FC2C001BB4087D0036E514 /* CameraChange@3x.png */,
+				13FC2C011BB4087D0036E514 /* CameraClose@3x.png */,
+				13FC2C021BB4087D0036E514 /* CameraFlash_selected@3x.png */,
+				13FC2C031BB4087D0036E514 /* CameraFlash@3x.png */,
+				13FC2C041BB4087D0036E514 /* CameraPhotos@3x.png */,
+				13FC2C051BB4087D0036E514 /* ProhibitionOfSelf@3x.png */,
 				13DA0FC51AEB8AFE005B9476 /* CameraFocus@3x.png */,
 				134765311AE2564D0055D099 /* PostDidFinish@3x.png */,
 				134765321AE2564D0055D099 /* PostDismiss@3x.png */,
 				134765331AE2564D0055D099 /* PostNavigationBar@3x.png */,
 				1388B6B21B34272A006ACA44 /* CameraRollIcon@3x.png */,
-				135D5C941AE113BA00811B06 /* CameraClose@3x.png */,
 				135D5C271AE0E37800811B06 /* CameraFilter@3x.png */,
-				135D5BFA1ADFD21E00811B06 /* CameraCapture@3x.png */,
-				135D5BFC1ADFD21E00811B06 /* CameraChange@3x.png */,
 				135CF64D1B37E52500DB24D6 /* CameraMagic@3x.png */,
 				135D5BFD1ADFD21E00811B06 /* CameraCut@3x.png */,
-				135D5BFF1ADFD21E00811B06 /* CameraFlash@3x.png */,
-				135D5C001ADFD21E00811B06 /* CameraPhotos@3x.png */,
 			);
 			path = Camera;
 			sourceTree = "<group>";
@@ -5383,11 +5392,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				135D5C031ADFD21E00811B06 /* CameraChange@3x.png in Resources */,
 				13FCC0851ADE3DAB0008DB41 /* PullLoaderSmallArrow@2x.png in Resources */,
 				1304ABDC1BAC09A000C9EA2D /* NotificationCommentIcon@3x.png in Resources */,
 				138EDEE61AD7D1020020957C /* TabBarLike@3x.png in Resources */,
 				134765351AE2564D0055D099 /* PostDismiss@3x.png in Resources */,
+				13FC2C0B1BB4087D0036E514 /* CameraFlash@3x.png in Resources */,
 				1390557B1B9DA47D00DBF34A /* LKChooseTagView.xib in Resources */,
 				13D9BF2B1AEB997E0020C94F /* Midway.png in Resources */,
 				13925A941B1477D2004D0656 /* NavBarIconSearchBar2_blue@2x.png in Resources */,
@@ -5400,8 +5409,10 @@
 				138EDBFC1AD7B08A0020957C /* Main.storyboard in Resources */,
 				138EDC011AD7B08A0020957C /* LaunchScreen.xib in Resources */,
 				13478CB81B6636770012EDA2 /* LittleYouLike@3x.png in Resources */,
+				13FC2C081BB4087D0036E514 /* CameraChange@3x.png in Resources */,
 				135748151BA1887C00855603 /* Vxgaga.png in Resources */,
 				135DBAF91AE60590004AD150 /* NavigationBarBack@3x.png in Resources */,
+				13FC2C091BB4087D0036E514 /* CameraClose@3x.png in Resources */,
 				13F505111B0C5EAC00D8D484 /* ShareIcon@3x.png in Resources */,
 				1304ABDA1BABC8C500C9EA2D /* NotificationTagIcon@3x.png in Resources */,
 				13B5B4E81B15CB6800252A78 /* TalkTip@3x.png in Resources */,
@@ -5414,6 +5425,7 @@
 				1326229B1B8EF5850074C589 /* Wasted.png in Resources */,
 				13925A911B1477D2004D0656 /* NavBarIconSearch_blue@2x.png in Resources */,
 				13F21F3C1B0F1D6200124291 /* WeiboSDK.bundle in Resources */,
+				13FC2C0D1BB4087D0036E514 /* ProhibitionOfSelf@3x.png in Resources */,
 				13878E901BB39B0B00F4E27F /* tabbar_homeLine_selected@3x.png in Resources */,
 				13E3EE021B60955400A48E76 /* zh2TW.txt in Resources */,
 				139055781B9D9F1C00DBF34A /* avatar.png in Resources */,
@@ -5422,7 +5434,6 @@
 				131091B51BB2BD9A006518CA /* Favor_normal@3x.png in Resources */,
 				13DA0FC61AEB8AFE005B9476 /* CameraFocus@3x.png in Resources */,
 				130CF59C1BB00CD8002F4189 /* segment_fans@3x.png in Resources */,
-				135D5C951AE113BA00811B06 /* CameraClose@3x.png in Resources */,
 				138EDE8C1AD7B0A30020957C /* LCInternationalization.bundle in Resources */,
 				13B5B4E61B15CB6800252A78 /* TalkIcon@3x.png in Resources */,
 				13C363CC1BB030A8004CE0FA /* NotificationNoMessage@3x.png in Resources */,
@@ -5443,7 +5454,6 @@
 				13925A921B1477D2004D0656 /* NavBarIconSearch_white@2x.png in Resources */,
 				1359F4A31B6A24B800A0ABE9 /* Gta-driving@3x.png in Resources */,
 				1326228D1B8EE1150074C589 /* 变形金刚.png in Resources */,
-				135D5C061ADFD21E00811B06 /* CameraFlash@3x.png in Resources */,
 				138EDEFB1AD7DBA00020957C /* TabBarNotification@3x.png in Resources */,
 				1390557E1B9E93B900DBF34A /* cancelSubscribe.png in Resources */,
 				135D5C281AE0E37800811B06 /* CameraFilter@3x.png in Resources */,
@@ -5471,6 +5481,7 @@
 				131915691B8C625A00EC0F42 /* 二维码.png in Resources */,
 				13DEEBF91AE75585005E01A6 /* AlreadyFocusWrite@3x.png in Resources */,
 				1387C3441B31508A00B065A7 /* FacebookLogin@3x.png in Resources */,
+				13FC2C071BB4087D0036E514 /* CameraChange_selected@3x.png in Resources */,
 				134D92F11B8DA8A0004CFAC8 /* 狗.png in Resources */,
 				1388B4FE1B01EFFB006F36AB /* FocusLG@3x.png in Resources */,
 				1359F4A41B6A24B800A0ABE9 /* Gta-walking@3x.png in Resources */,
@@ -5501,10 +5512,12 @@
 				13CF229B1BB245E20087DD89 /* LittleSP@3x.png in Resources */,
 				1326228E1B8EE1150074C589 /* 钢铁侠.png in Resources */,
 				135DBAF71AE60577004AD150 /* NavigationBarMore@3x.png in Resources */,
+				13FC2C0C1BB4087D0036E514 /* CameraPhotos@3x.png in Resources */,
 				1319156B1B8C863100EC0F42 /* 旅行.png in Resources */,
 				133A31851B5D0D3400AB74A4 /* SearchPlaceholderIcon@3x.png in Resources */,
 				13D9BF251AEB997E0020C94F /* Ansel.png in Resources */,
 				1387C3521B31703300B065A7 /* MobileIcon@3x.png in Resources */,
+				13FC2C061BB4087D0036E514 /* CameraCapture@3x.png in Resources */,
 				13DEEC191AE789E6005E01A6 /* LC_WebReload.png in Resources */,
 				1357480E1BA05CAD00855603 /* 1024.jpg in Resources */,
 				134D92F21B8DA8A0004CFAC8 /* 猫.png in Resources */,
@@ -5544,6 +5557,7 @@
 				1387C3501B316CC400B065A7 /* FacebookIcon@3x.png in Resources */,
 				1357480F1BA05CAD00855603 /* 2048.jpg in Resources */,
 				13CF22A91BB281770087DD89 /* SeparateLine_selected@3x.png in Resources */,
+				13FC2C0A1BB4087D0036E514 /* CameraFlash_selected@3x.png in Resources */,
 				13E27EEA1AF89BDD00C17362 /* CodeIcon@3x.png in Resources */,
 				130CF59D1BB00CD8002F4189 /* segment_favor@3x.png in Resources */,
 				130CF59F1BB00CD8002F4189 /* segment_photo@3x.png in Resources */,
@@ -5552,13 +5566,11 @@
 				134765341AE2564D0055D099 /* PostDidFinish@3x.png in Resources */,
 				134D92F41B8DA8A0004CFAC8 /* 喷漆.png in Resources */,
 				13892C3D1B1C44780053303E /* NavigationBarDismiss@3x.png in Resources */,
-				135D5C011ADFD21E00811B06 /* CameraCapture@3x.png in Resources */,
 				139055791B9D9F1C00DBF34A /* edit.png in Resources */,
 				13DEEC151AE789E6005E01A6 /* LC_WebBack.png in Resources */,
 				13E27EF41AF8B7D000C17362 /* bgImage_HL@2x.png in Resources */,
 				13DEEC161AE789E6005E01A6 /* LC_WebBack@2x.png in Resources */,
 				13F5051D1B0CA05600D8D484 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
-				135D5C071ADFD21E00811B06 /* CameraPhotos@3x.png in Resources */,
 				13CF22AA1BB281770087DD89 /* SeparateLine@3x.png in Resources */,
 				13F505141B0C5EAC00D8D484 /* WeChatFeedIcon@3x.png in Resources */,
 			);

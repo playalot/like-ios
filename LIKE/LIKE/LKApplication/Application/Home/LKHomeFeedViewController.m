@@ -45,15 +45,19 @@ LC_PROPERTY(weak) id delegate;
 @implementation LKHomeFeedViewController
 
 - (void)buildUI {
+
     self.loadDataQueue = [[NSOperationQueue alloc] init];
-    [self buildInputView];
+
     [self buildTableView];
+    [self buildInputView];
     [self buildPullLoader];
     [self loadData:LCUIPullLoaderDiretionTop];
 }
 
 - (void)buildTableView {
-    self.tableView = [[LCUITableView alloc] initWithFrame:self.view.frame];
+    
+    CGRect viewRect = CGRectMake(0, 0, LC_DEVICE_WIDTH, LC_DEVICE_HEIGHT + 20 - 64 - 49);
+    self.tableView = [[LCUITableView alloc] initWithFrame:viewRect];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -81,7 +85,7 @@ LC_PROPERTY(weak) id delegate;
     self.inputView = LKInputView.view;
     self.inputView.viewFrameY = self.view.viewFrameHeight;
     self.view.ADD(self.inputView);
-    
+
     self.inputView.sendAction = ^(NSString * string){
         
         @normally(self);
@@ -96,7 +100,7 @@ LC_PROPERTY(weak) id delegate;
             return;
         }
         
-        LKHomeTableViewCell * cell = (LKHomeTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:1]];
+        LKHomeTableViewCell *cell = (LKHomeTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:1]];
         
         // 调加标签接口
         if ([self checkTag:string onTags:((LKPost *)self.inputView.userInfo).tags]) {
@@ -112,7 +116,9 @@ LC_PROPERTY(weak) id delegate;
         
         @normally(self);
         
-        LKHomeTableViewCell * cell = (LKHomeTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:1]];;
+        // scroll...
+        LKHomeTableViewCell * cell = (LKHomeTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:0]];;
+
         CGFloat height1 = LC_DEVICE_HEIGHT - cell.viewFrameHeight;
         CGFloat height2 = LCUIKeyBoard.singleton.height + self.inputView.viewFrameHeight - height1;
         
@@ -345,6 +351,11 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
         LKSearchResultsViewController *searchResultCtrl = [[LKSearchResultsViewController alloc] initWithSearchString:reasonBtn.title];
         [self.navigationController pushViewController:searchResultCtrl animated:YES];
     }
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    
+    [self.inputView resignFirstResponder];
 }
 
 @end

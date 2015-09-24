@@ -261,11 +261,11 @@ LC_PROPERTY(strong) UIView *wastedView;
 
 
     self.flashButton = LCUIButton.view;
-    self.flashButton.viewFrameY = - 10;
-    self.flashButton.viewFrameWidth = 64;
-    self.flashButton.viewFrameHeight = 80;
+    self.flashButton.viewFrameY = 0;
+    self.flashButton.viewFrameWidth = 51;
+    self.flashButton.viewFrameHeight = 64;
     [self.flashButton setImage:[UIImage imageNamed:@"CameraFlash.png" useCache:YES] forState:UIControlStateNormal];
-    [self.flashButton setImage:[[UIImage imageNamed:@"CameraFlash.png" useCache:YES] imageWithTintColor:LKColor.color] forState:UIControlStateSelected];
+    [self.flashButton setImage:[UIImage imageNamed:@"CameraFlash_selected.png" useCache:YES] forState:UIControlStateSelected];
     self.flashButton.selected = NO;
     self.flashButton.showsTouchWhenHighlighted = YES;
     [self.flashButton addTarget:self action:@selector(flash) forControlEvents:UIControlEventTouchUpInside];
@@ -273,11 +273,12 @@ LC_PROPERTY(strong) UIView *wastedView;
     
 
     self.switchCameraButton = LCUIButton.view;
-    self.switchCameraButton.viewFrameWidth = 80;
+    self.switchCameraButton.viewFrameWidth = 51;
     self.switchCameraButton.viewFrameHeight = 64;
     self.switchCameraButton.viewFrameX = LC_DEVICE_WIDTH - self.switchCameraButton.viewFrameWidth;
     self.switchCameraButton.viewFrameY = 0;
-    self.switchCameraButton.buttonImage = [UIImage imageNamed:@"CameraChange.png" useCache:YES];
+    [self.switchCameraButton setImage:[UIImage imageNamed:@"CameraChange.png" useCache:YES] forState:UIControlStateNormal];
+    [self.switchCameraButton setImage:[UIImage imageNamed:@"CameraChange_selected.png" useCache:YES] forState:UIControlStateSelected];
     self.switchCameraButton.showsTouchWhenHighlighted = YES;
     [self.switchCameraButton addTarget:self action:@selector(switchCamera) forControlEvents:UIControlEventTouchUpInside];
     self.view.ADD(self.switchCameraButton);

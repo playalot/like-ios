@@ -87,8 +87,8 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
 
 - (void)buildNavigationBar {
     LCUIButton *titleBtn = [[LCUIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];
-    
-    [titleBtn setImage:[UIImage imageNamed:@"HomeLikeIcon" useCache:YES] forState:UIControlStateNormal];
+    titleBtn.title = LC_LO(@"消息提醒");
+    titleBtn.titleFont = LK_FONT_B(16);
     self.titleView = (UIView *)titleBtn;
     
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];

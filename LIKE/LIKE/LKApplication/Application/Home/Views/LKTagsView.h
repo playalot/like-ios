@@ -10,8 +10,6 @@
 #import "LKTag.h"
 #import "LKTagItemView.h"
 
-#pragma mark -
-
 LC_BLOCK(void, LKTagsViewDidRemoveTag, (LKTag * tag));
 
 @interface LKTagsView : UIScrollView
@@ -23,7 +21,7 @@ LC_PROPERTY(copy) LKTagItemViewRequest itemRequestFinished;
 LC_PROPERTY(copy) LKTagItemViewRequest customAction;
 LC_PROPERTY(copy) LKTagItemViewRequest willRequest;
 
-- (void)reloadData; // [self reloadDataAndRemoveAll:YES]
+- (void)reloadData;
 - (void)reloadDataAndRemoveAll:(BOOL)removeAll;
 
 @end

@@ -35,6 +35,7 @@ LC_PROPERTY(copy) NSNumber * next;
 LC_PROPERTY(assign) NSTimeInterval lastFocusLoadTime;
 LC_PROPERTY(assign) BOOL needRefresh;
 LC_PROPERTY(strong) NSMutableArray *heightList;
+LC_PROPERTY(strong) NSOperationQueue *loadDataQueue;
 
 LC_PROPERTY(weak) id delegate;
 
@@ -68,7 +69,7 @@ LC_PROPERTY(weak) id delegate;
 
 - (void)buildUI {
     
-//    [self buildTestTagsView];
+    self.loadDataQueue = [[NSOperationQueue alloc] init];
     
     self.tableView = [[LCUITableView alloc] initWithFrame:self.view.frame];
     self.tableView.delegate = self;
@@ -108,39 +109,59 @@ LC_PROPERTY(weak) id delegate;
         @normally(self);
         @normally(followingInterface);
         
-        NSNumber *resultNext = followingInterface.next;
-        
-        if (resultNext)
-            self.next = resultNext;
-        
-        NSArray * resultData = followingInterface.posts;
-        NSMutableArray * datasource = [NSMutableArray array];
-        
-        for (NSDictionary * tmp in resultData) {
-            [datasource addObject:[LKPost objectFromDictionary:tmp]];
-        }
-        
-        if (diretion == LCUIPullLoaderDiretionTop) {
-            self.datasource = datasource;
-            LKUserDefaults.singleton[FOCUS_FEED_CACHE_KEY] = resultData;
-            self.lastFocusLoadTime = time;
-        } else {
-            [self.datasource addObjectsFromArray:datasource];
-        }
-        
-        NSMutableArray *prefetchs = nil;
-        for (LKPost *post in self.datasource) {
-            if (post.content) {
-                [prefetchs addObject:post.content];
+        NSBlockOperation *dataHandlingOperation = [NSBlockOperation blockOperationWithBlock:^{
+            
+            NSNumber *resultNext = followingInterface.next;
+            
+            if (resultNext)
+                self.next = resultNext;
+            
+            NSArray * resultData = followingInterface.posts;
+            NSMutableArray * datasource = [NSMutableArray array];
+            
+            for (NSDictionary * tmp in resultData) {
+                [datasource addObject:[LKPost objectFromDictionary:tmp]];
             }
-        }
+            
+            if (diretion == LCUIPullLoaderDiretionTop) {
+                self.datasource = datasource;
+                LKUserDefaults.singleton[FOCUS_FEED_CACHE_KEY] = resultData;
+                self.lastFocusLoadTime = time;
+                
+                self.heightList = [NSMutableArray array];
+                for (LKPost *post in self.datasource) {
+                    [self.heightList addObject:[NSNumber numberWithFloat:[LKHomeTableViewCell height:post]]];
+                }
+                
+            } else {
+                [self.datasource addObjectsFromArray:datasource];
+                
+                // Calculate Height List
+                for (LKPost *post in datasource) {
+                    [self.heightList addObject:[NSNumber numberWithFloat:[LKHomeTableViewCell height:post]]];
+                }
+            }
+            
+            NSMutableArray *prefetchs = nil;
+            for (LKPost *post in self.datasource) {
+                if (post.content) {
+                    [prefetchs addObject:post.content];
+                }
+            }
+            
+            [self calculateHeightList];
+            
+            [[SDWebImagePrefetcher sharedImagePrefetcher] prefetchURLs:prefetchs.copy];
+            
+            
+            NSBlockOperation *refreshOperation = [NSBlockOperation blockOperationWithBlock:^{
+                [self.pullLoader endRefresh];
+                [self.tableView reloadData];
+            }];
+            [[NSOperationQueue mainQueue] addOperation:refreshOperation];
+        }];
         
-        [self calculateHeightList];
-        
-        [[SDWebImagePrefetcher sharedImagePrefetcher] prefetchURLs:prefetchs.copy];
-        
-        [self.pullLoader endRefresh];
-        [self.tableView reloadData];
+        [self.loadDataQueue addOperation:dataHandlingOperation];
         
     } failure:^(LCBaseRequest *request) {
         

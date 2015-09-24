@@ -215,7 +215,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
                     imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
                withFinishedUnselectedImage:[[UIImage imageNamed:imageNames[i]]
                     imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-//            [item setBackgroundColor:[UIColor whiteColor]];
+            [item setBackgroundColor:[UIColor whiteColor]];
             
             if (i == 3) {
                 

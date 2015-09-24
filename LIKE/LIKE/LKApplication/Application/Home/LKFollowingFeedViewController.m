@@ -41,7 +41,8 @@ LC_PROPERTY(weak) id delegate;
 - (void)buildUI {
 //    self.view.backgroundColor = LKColor.backgroundColor;
     
-    self.tableView = [[LCUITableView alloc] initWithFrame:self.view.frame];
+    CGRect viewRect = CGRectMake(0, 0, LC_DEVICE_WIDTH, LC_DEVICE_HEIGHT + 20 - 64 - 49);
+    self.tableView = [[LCUITableView alloc] initWithFrame:viewRect];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;

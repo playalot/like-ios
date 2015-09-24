@@ -226,15 +226,15 @@ LC_PROPERTY(assign) BOOL favorited;
 
 -(void) buildUI
 {
-    self.view.backgroundColor = LKColor.backgroundColor;
+    self.view.backgroundColor = LC_RGB(245, 245, 245);
     
     self.tableView = [[LCUITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableView.viewFrameY = 30;
     self.tableView.viewFrameHeight = self.view.viewFrameHeight - 44;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.backgroundColor = LKColor.backgroundColor;
-    self.tableView.backgroundViewColor = LKColor.backgroundColor;
+    self.tableView.backgroundColor = LC_RGB(245, 245, 245);
+    self.tableView.backgroundViewColor = LC_RGB(245, 245, 245);
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.alpha = 0;
     self.view.ADD(self.tableView);
@@ -938,28 +938,28 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         LCUITableViewCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"User" andClass:[LCUITableViewCell class] configurationCell:^(LCUITableViewCell * configurationCell) {
             
             
-            configurationCell.backgroundColor = [UIColor clearColor];
-            configurationCell.contentView.backgroundColor = [UIColor clearColor];
+//            configurationCell.backgroundColor = [UIColor clearColor];
+            configurationCell.contentView.backgroundColor = [UIColor whiteColor];
             configurationCell.selectionStyle = UITableViewCellSelectionStyleNone;
 
             // 用户头像
             self.userHead = LCUIImageView.view;
-            self.userHead.viewFrameX = 10;
-            self.userHead.viewFrameY = 10;
-            self.userHead.viewFrameWidth = 33;
-            self.userHead.viewFrameHeight = 33;
-            self.userHead.cornerRadius = 33. / 2.;
+            self.userHead.viewFrameX = 16;
+            self.userHead.viewFrameY = 7;
+            self.userHead.viewFrameWidth = 40;
+            self.userHead.viewFrameHeight = 40;
+            self.userHead.cornerRadius = 40. / 2.;
             self.userHead.backgroundColor = [UIColor lightGrayColor];
             configurationCell.ADD(self.userHead);
             
             // 用户昵称
             self.userName = LCUILabel.view;
-            self.userName.viewFrameY = 11;
-            self.userName.viewFrameX = self.userHead.viewRightX + 10;
+            self.userName.viewFrameY = 9;
+            self.userName.viewFrameX = self.userHead.viewRightX + 14;
             self.userName.viewFrameWidth = LC_DEVICE_WIDTH - self.userName.viewFrameX - 75;
             self.userName.viewFrameHeight = 15;
             self.userName.textAlignment = UITextAlignmentLeft;
-            self.userName.font = LK_FONT_B(13);
+            self.userName.font = LK_FONT_B(14);
             self.userName.lineBreakMode = NSLineBreakByTruncatingTail;
             self.userName.textColor = LC_RGB(51, 51, 51);
             configurationCell.ADD(self.userName);
@@ -967,9 +967,9 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             // 用户like数量
             self.userLikes = ADTickerLabel.view;
             self.userLikes.viewFrameWidth = LC_DEVICE_WIDTH / 2 - 10 - 5;
-            self.userLikes.viewFrameHeight = LK_FONT(13).lineHeight;
-            self.userLikes.viewFrameY = self.userName.viewFrameY;
-            self.userLikes.font = LK_FONT(13);
+            self.userLikes.viewFrameHeight = LK_FONT(10).lineHeight;
+            self.userLikes.viewFrameY = self.userName.viewFrameY + 2;
+            self.userLikes.font = LK_FONT(10);
             self.userLikes.textAlignment = UITextAlignmentLeft;
             self.userLikes.textColor = LC_RGB(51, 51, 51);
             self.userLikes.changeTextAnimationDuration = 0.25;
@@ -977,13 +977,13 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             
             // like标识,用于和数量拼接
             self.likesTip = LCUILabel.view;
-            self.likesTip.font = LK_FONT(13);
+            self.likesTip.font = LK_FONT(10);
             self.likesTip.textAlignment = UITextAlignmentLeft;
             self.likesTip.textColor = LC_RGB(51, 51, 51);
             self.likesTip.text = @"likes";
             self.likesTip.FIT();
-            self.likesTip.viewFrameY = self.userName.viewFrameY;
-            self.likesTip.viewFrameHeight = LK_FONT(13).lineHeight;
+            self.likesTip.viewFrameY = self.userName.viewFrameY + 2;
+            self.likesTip.viewFrameHeight = LK_FONT(10).lineHeight;
             configurationCell.ADD(self.likesTip);
             
             // 发布时间
@@ -1649,7 +1649,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
 {
     if (indexPath.section == 0) {
         
-        return 33 + 20;
+        return 54;
     }
     
     LKTag * tag = self.tagsListModel.tags[indexPath.row];

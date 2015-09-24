@@ -134,7 +134,7 @@
 				}
 			}
 		}
-    }else if ([notification.name isEqualToString:UIKeyboardDidHideNotification]){
+    } else if ([notification.name isEqualToString:UIKeyboardDidHideNotification]){
     
         NSValue * value = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
         
@@ -177,11 +177,10 @@
         
         CGFloat containerHeight = _accessor.superview.bounds.size.height;
         CGRect newFrame = _accessorFrame;
-        newFrame.origin.y = containerHeight - (_accessorFrame.size.height + _height);
+        newFrame.origin.y = containerHeight + 49 - (_accessorFrame.size.height + _height);
         _accessor.frame = newFrame;
         
-    }
-    else{
+    } else {
         
         _accessor.frame = _accessorFrame;
     }

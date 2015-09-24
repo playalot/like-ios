@@ -33,16 +33,17 @@ LC_IMP_SIGNAL(PushUserCenter);
 {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.backgroundColor = LKColor.whiteColor;
-    self.contentView.backgroundColor = LKColor.backgroundColor;
+    self.contentView.backgroundColor = LC_RGB(245, 245, 245);
     
     
-    CGFloat padding = 10;
+    CGFloat LeftPadding = 20;
+    CGFloat topPadding = 7;
     
     self.headImageView = LCUIImageView.view;
-    self.headImageView.viewFrameX = padding;
-    self.headImageView.viewFrameY = padding;
-    self.headImageView.viewFrameWidth = 33;
-    self.headImageView.viewFrameHeight = 33;
+    self.headImageView.viewFrameX = LeftPadding;
+    self.headImageView.viewFrameY = topPadding;
+    self.headImageView.viewFrameWidth = 32;
+    self.headImageView.viewFrameHeight = 32;
     self.headImageView.cornerRadius = self.headImageView.viewMidWidth;
     self.headImageView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5];
     self.headImageView.userInteractionEnabled = YES;
@@ -51,20 +52,21 @@ LC_IMP_SIGNAL(PushUserCenter);
     self.ADD(self.headImageView);
     
     
-    UIImageView * tip = UIImageView.view;
-    tip.image = [UIImage imageNamed:@"TalkTip.png" useCache:YES];
-    tip.viewFrameWidth = 16 / 3;
-    tip.viewFrameHeight = 33 / 3;
-    tip.viewFrameX = self.headImageView.viewRightX + padding;
-    tip.viewCenterY =  self.headImageView.viewCenterY;
-    self.ADD(tip);
+//    UIImageView * tip = UIImageView.view;
+//    tip.image = [UIImage imageNamed:@"TalkTip.png" useCache:YES];
+//    tip.viewFrameWidth = 16 / 3;
+//    tip.viewFrameHeight = 33 / 3;
+//    tip.viewFrameX = self.headImageView.viewRightX + padding;
+//    tip.viewCenterY =  self.headImageView.viewCenterY;
+//    self.ADD(tip);
     
     
     
-    self.cellBackgroundView = UIView.view.X(tip.viewRightX).Y(padding);
+//    self.cellBackgroundView = UIView.view.X(tip.viewRightX).Y(padding);
+    self.cellBackgroundView = UIView.view.X(self.headImageView.viewRightX).Y(0);
     self.cellBackgroundView.viewFrameWidth = LC_DEVICE_WIDTH - self.cellBackgroundView.viewFrameX - 10;
-    self.cellBackgroundView.viewFrameHeight = 33;
-    self.cellBackgroundView.backgroundColor = [UIColor whiteColor];
+    self.cellBackgroundView.viewFrameHeight = 46;
+//    self.cellBackgroundView.backgroundColor = LC_RGB(245, 245, 245);
     
     // 取消cell的原本点击手势
 //    [self.cellBackgroundView addTapGestureRecognizer:self selector:@selector(likesTapAction)];
@@ -92,9 +94,9 @@ LC_IMP_SIGNAL(PushUserCenter);
     // 修改了评论的图片
     commentButton.buttonImage = [UIImage imageNamed:@"more.png" useCache:YES];
     commentButton.viewFrameHeight = 33;
-    commentButton.titleFont = LK_FONT(10);
+//    commentButton.titleFont = LK_FONT(10);
 //    commentButton.title = LC_LO(@"评论");
-    commentButton.titleColor = LC_RGB(140, 133, 126);
+//    commentButton.titleColor = LC_RGB(140, 133, 126);
     commentButton.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0);
     commentButton.imageEdgeInsets = UIEdgeInsetsMake(2, 0, 0, 0);
     commentButton.FIT();
@@ -106,11 +108,13 @@ LC_IMP_SIGNAL(PushUserCenter);
 
     
     self.commentsView = LKCommentsView.view;
-    self.commentsView.viewFrameX = self.cellBackgroundView.viewFrameX;
+    self.commentsView.viewFrameX = 0;
     self.commentsView.viewFrameY = self.cellBackgroundView.viewBottomY;
-    self.commentsView.viewFrameWidth = self.cellBackgroundView.viewFrameWidth;
+    self.commentsView.viewFrameWidth = LC_DEVICE_WIDTH;
     self.ADD(self.commentsView);
     
+    
+    [self lineInView:self];
     
     self.alpha = 0;
     
@@ -118,6 +122,13 @@ LC_IMP_SIGNAL(PushUserCenter);
        
         self.alpha = 1;
     });
+}
+
+- (void)lineInView:(UIView *)view
+{
+    UIImageView *line = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
+    line.viewFrameWidth = view.viewFrameWidth;
+    view.ADD(line);
 }
 
 -(void) handleHeadTap
@@ -147,8 +158,8 @@ LC_IMP_SIGNAL(PushUserCenter);
     }
     
     self.tagItem.tagValue = tagDetail;
-    self.tagItem.viewFrameX = 8;
-    self.tagItem.viewCenterY = 33 / 2;
+    self.tagItem.viewFrameX = 18;
+    self.tagItem.viewCenterY = 46 / 2;
     
     
     // 获取tag的宽度

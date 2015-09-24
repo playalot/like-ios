@@ -523,7 +523,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         }];
         
         LCUIImageView * head = cell.FIND(1001);
-        LKTagItem * item = cell.FIND(1002);
+        LKTagItemView * item = cell.FIND(1002);
         LCUILabel * time = cell.FIND(1003);
         
         if (item) {
@@ -534,7 +534,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         
         if (self.tagValue.tag.length) {
         
-            item = LKTagItem.view;
+            item = LKTagItemView.view;
             item.tag = 1002;
             cell.ADD(item);
         }

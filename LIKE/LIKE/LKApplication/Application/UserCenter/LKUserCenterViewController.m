@@ -212,9 +212,7 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
         setButton.showsTouchWhenHighlighted = YES;
         [setButton addTarget:self action:@selector(setAction) forControlEvents:UIControlEventTouchUpInside];
         [self.header addSubview:setButton];
-        
     } else {
-        
         self.friendshipButton = LCUIButton.view;
         self.friendshipButton.viewFrameWidth = 64 / 3 + 40;
         self.friendshipButton.viewFrameHeight = 64 / 3 + 40;
@@ -280,7 +278,6 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
         @normally(self);
         [self loadMore];
     };
-    
     
     self.inputView = LKInputView.view;
     self.inputView.viewFrameY = self.view.viewFrameHeight;
@@ -476,6 +473,11 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     self.browsingViewController.delegate = self;
     self.browsingViewController.datasource = self.datasource;
     self.browsingViewController.cellHeadLineHidden = YES;
+    if (self.currentType == LKUserCenterModelTypePhotos) {
+        self.browsingViewController.title = @"我的照片";
+    } else {
+        self.browsingViewController.title = @"我的收藏";
+    }
     self.browsingViewController.currentIndex = [self.datasource indexOfObject:signal.object];
     [self.browsingViewController watchForChangeOfDatasource:self dataSourceKey:@"datasource"];
     [self.navigationController pushViewController:self.browsingViewController animated:YES];

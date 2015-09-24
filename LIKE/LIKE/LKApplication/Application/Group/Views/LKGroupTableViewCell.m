@@ -213,7 +213,7 @@ LC_PROPERTY(strong) LKTag *testTag;
     // 删除添加标签按钮
     [[self.tagsView.subviews lastObject] removeFromSuperview];
     // 重新计算contentSize
-    LKTagItem *lastItem = [self.tagsView.subviews lastObject];
+    LKTagItemView *lastItem = [self.tagsView.subviews lastObject];
     self.tagsView.contentSize = CGSizeMake(0, lastItem.viewBottomY + 10);
 }
 

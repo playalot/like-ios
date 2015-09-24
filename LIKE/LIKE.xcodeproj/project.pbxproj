@@ -848,6 +848,11 @@
 		BC6ABE831BB27A1000B56E98 /* LKUserFollowsInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6ABE821BB27A1000B56E98 /* LKUserFollowsInterface.m */; };
 		BC6ABE861BB27C0900B56E98 /* LKUserFansInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6ABE851BB27C0900B56E98 /* LKUserFansInterface.m */; };
 		BC810CAC1BABF4AA00AC956B /* LKTestHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC810CAB1BABF4AA00AC956B /* LKTestHomeViewController.m */; };
+		BCD148101BB3A16A0062C463 /* LKLikeTagItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD1480F1BB3A16A0062C463 /* LKLikeTagItemView.m */; settings = {ASSET_TAGS = (); }; };
+		BCD148131BB3DCA60062C463 /* LKPostView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD148121BB3DCA60062C463 /* LKPostView.m */; settings = {ASSET_TAGS = (); }; };
+		BCD148161BB3F3AC0062C463 /* LKTagItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD148151BB3F3AC0062C463 /* LKTagItemView.m */; settings = {ASSET_TAGS = (); }; };
+		BCD148191BB3F4C20062C463 /* LKTagItemViewCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD148181BB3F4C20062C463 /* LKTagItemViewCenter.m */; settings = {ASSET_TAGS = (); }; };
+		BCD1481E1BB414900062C463 /* LKQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD1481B1BB414900062C463 /* LKQueue.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2451,6 +2456,16 @@
 		BC6ABE851BB27C0900B56E98 /* LKUserFansInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKUserFansInterface.m; path = Interface/LKUserFansInterface.m; sourceTree = "<group>"; };
 		BC810CAA1BABF4AA00AC956B /* LKTestHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKTestHomeViewController.h; sourceTree = "<group>"; };
 		BC810CAB1BABF4AA00AC956B /* LKTestHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKTestHomeViewController.m; sourceTree = "<group>"; };
+		BCD1480E1BB3A16A0062C463 /* LKLikeTagItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKLikeTagItemView.h; sourceTree = "<group>"; };
+		BCD1480F1BB3A16A0062C463 /* LKLikeTagItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKLikeTagItemView.m; sourceTree = "<group>"; };
+		BCD148111BB3DCA60062C463 /* LKPostView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKPostView.h; sourceTree = "<group>"; };
+		BCD148121BB3DCA60062C463 /* LKPostView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKPostView.m; sourceTree = "<group>"; };
+		BCD148141BB3F3AC0062C463 /* LKTagItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKTagItemView.h; sourceTree = "<group>"; };
+		BCD148151BB3F3AC0062C463 /* LKTagItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKTagItemView.m; sourceTree = "<group>"; };
+		BCD148171BB3F4C20062C463 /* LKTagItemViewCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKTagItemViewCenter.h; sourceTree = "<group>"; };
+		BCD148181BB3F4C20062C463 /* LKTagItemViewCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKTagItemViewCenter.m; sourceTree = "<group>"; };
+		BCD1481A1BB414900062C463 /* LKQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKQueue.h; sourceTree = "<group>"; };
+		BCD1481B1BB414900062C463 /* LKQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKQueue.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4544,6 +4559,8 @@
 		139B06901ADBF4E3006A260F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				BCD1481A1BB414900062C463 /* LKQueue.h */,
+				BCD1481B1BB414900062C463 /* LKQueue.m */,
 				139B06A71ADBF577006A260F /* LKHomepageHeader.h */,
 				139B06A81ADBF577006A260F /* LKHomepageHeader.m */,
 				13D63ACF1AEA13D8001587C0 /* LKDelegateHandler.h */,
@@ -4577,6 +4594,14 @@
 				139055731B9D9D4700DBF34A /* LKChooseTagView.h */,
 				139055741B9D9D4700DBF34A /* LKChooseTagView.m */,
 				1390557A1B9DA47D00DBF34A /* LKChooseTagView.xib */,
+				BCD1480E1BB3A16A0062C463 /* LKLikeTagItemView.h */,
+				BCD1480F1BB3A16A0062C463 /* LKLikeTagItemView.m */,
+				BCD148111BB3DCA60062C463 /* LKPostView.h */,
+				BCD148121BB3DCA60062C463 /* LKPostView.m */,
+				BCD148141BB3F3AC0062C463 /* LKTagItemView.h */,
+				BCD148151BB3F3AC0062C463 /* LKTagItemView.m */,
+				BCD148171BB3F4C20062C463 /* LKTagItemViewCenter.h */,
+				BCD148181BB3F4C20062C463 /* LKTagItemViewCenter.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -5699,6 +5724,7 @@
 				138EDE9B1AD7B0A30020957C /* UIImage+LCExtension.m in Sources */,
 				138EDE621AD7B0A30020957C /* JSONModelClassProperty.m in Sources */,
 				134765691AE25EA40055D099 /* QNFileRecorder.m in Sources */,
+				BCD148191BB3F4C20062C463 /* LKTagItemViewCenter.m in Sources */,
 				139054DE1B994A6D00DBF34A /* GPUImageContrastFilter.m in Sources */,
 				138EDE301AD7B0A30020957C /* LCHandleViewHighlightRequest.m in Sources */,
 				138EDE7A1AD7B0A30020957C /* LCDeviceIdentifier.m in Sources */,
@@ -5788,6 +5814,7 @@
 				BC484AAA1BAFC32800F69D50 /* LKFollowingFeedInterface.m in Sources */,
 				138EDF161AD7EC8D0020957C /* LKFont.m in Sources */,
 				1390554A1B994A6D00DBF34A /* GPUImageSourceOverBlendFilter.m in Sources */,
+				BCD148101BB3A16A0062C463 /* LKLikeTagItemView.m in Sources */,
 				BC12A5E81B9BD16100B99CB5 /* LKNetworkConfig.m in Sources */,
 				138EDEB71AD7B0A30020957C /* LCUITabBar.m in Sources */,
 				139055181B994A6D00DBF34A /* GPUImageMaskFilter.m in Sources */,
@@ -5999,6 +6026,7 @@
 				132E6F851BA9695B001DF4BF /* LKGroupInputView.m in Sources */,
 				138EDEA11AD7B0A30020957C /* UIView+LCUIBackground.m in Sources */,
 				1390553E1B994A6D00DBF34A /* GPUImageSaturationFilter.m in Sources */,
+				BCD148131BB3DCA60062C463 /* LKPostView.m in Sources */,
 				138EDE6B1AD7B0A30020957C /* Reachability.m in Sources */,
 				13E1A4EC1AE65FE300E24C3C /* FastttFilter.m in Sources */,
 				139054D01B994A6D00DBF34A /* GPUImageBuffer.m in Sources */,
@@ -6033,6 +6061,7 @@
 				138EDBF61AD7B08A0020957C /* AppDelegate.m in Sources */,
 				BC12A63B1B9BF24500B99CB5 /* LKContext.m in Sources */,
 				13E1A4EF1AE65FE300E24C3C /* UIImage+FastttFilters.m in Sources */,
+				BCD1481E1BB414900062C463 /* LKQueue.m in Sources */,
 				139055291B994A6D00DBF34A /* GPUImageOverlayBlendFilter.m in Sources */,
 				134B0B7D1B5656DE00A195BE /* LKSearchHistory.m in Sources */,
 				139054CD1B994A6D00DBF34A /* GPUImageBilateralFilter.m in Sources */,
@@ -6101,6 +6130,7 @@
 				1304ABCF1BABB62300C9EA2D /* GBTagListView.m in Sources */,
 				138EDE6C1AD7B0A30020957C /* UIScrollView+SVInfiniteScrolling.m in Sources */,
 				13E27F061AF9CBB700C17362 /* LKPopAnimation.m in Sources */,
+				BCD148161BB3F3AC0062C463 /* LKTagItemView.m in Sources */,
 				BC12A5E31B9BD16100B99CB5 /* LKBatchRequest.m in Sources */,
 				139054CE1B994A6D00DBF34A /* GPUImageBoxBlurFilter.m in Sources */,
 				BC484AB31BAFDB3800F69D50 /* LKTopSearchInterface.m in Sources */,

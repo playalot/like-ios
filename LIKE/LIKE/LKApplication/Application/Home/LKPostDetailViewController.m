@@ -1117,7 +1117,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             [self.shareTools hideTools];
         };
         
-        cell.willRequest = ^(LKTagItem * item){
+        cell.willRequest = ^(LKTagItemView * item){
           
             @normally(self);
             
@@ -1387,7 +1387,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     bottomView.ADD(tagsView);
     
     // 设置标签颜色
-    for (LKTagItem *item in tagsView.subviews) {
+    for (LKTagItemView *item in tagsView.subviews) {
         
         item.backgroundColor = [LKColor.color colorWithAlphaComponent:1];
         item.tagLabel.textColor = [UIColor whiteColor];

@@ -22,6 +22,7 @@
 #import "LKSearchResultsViewController.h"
 #import "SDWebImagePrefetcher.h"
 
+
 @interface LKHomeFeedViewController () <UITableViewDataSource, UITableViewDelegate, LKHomeTableViewCellDelegate, LKPostDetailViewControllerDelegate>
 
 LC_PROPERTY(strong) NSMutableArray *datasource;
@@ -34,6 +35,8 @@ LC_PROPERTY(assign) NSTimeInterval lastFocusLoadTime;
 LC_PROPERTY(assign) BOOL needRefresh;
 
 LC_PROPERTY(strong) LKHomeFeedInterface *homeFeedInterface;
+LC_PROPERTY(strong) NSMutableArray *heightList;
+LC_PROPERTY(strong) NSOperationQueue *loadDataQueue;
 
 LC_PROPERTY(weak) id delegate;
 
@@ -42,12 +45,12 @@ LC_PROPERTY(weak) id delegate;
 @implementation LKHomeFeedViewController
 
 - (void)buildUI {
-//    self.view.backgroundColor = LKColor.backgroundColor;
-    
+
+    self.loadDataQueue = [[NSOperationQueue alloc] init];
+
     [self buildTableView];
     [self buildInputView];
     [self buildPullLoader];
-    
     [self loadData:LCUIPullLoaderDiretionTop];
 }
 
@@ -115,6 +118,7 @@ LC_PROPERTY(weak) id delegate;
         
         // scroll...
         LKHomeTableViewCell * cell = (LKHomeTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:0]];;
+
         CGFloat height1 = LC_DEVICE_HEIGHT - cell.viewFrameHeight;
         CGFloat height2 = LCUIKeyBoard.singleton.height + self.inputView.viewFrameHeight - height1;
         
@@ -179,50 +183,65 @@ LC_PROPERTY(weak) id delegate;
 // 这个方法同时负责主页和关注的人列表的请求
 - (void)loadData:(LCUIPullLoaderDiretion)diretion {
     
-    @weakly(self);
     LKHomeFeedInterface *homeFeedInterface = [[LKHomeFeedInterface alloc] init];
     if (self.next && diretion == LCUIPullLoaderDiretionBottom) {
         homeFeedInterface.timestamp = self.next;
     }
     
+    @weakly(self);
     @weakly(homeFeedInterface);
+    
     [homeFeedInterface startWithCompletionBlockWithSuccess:^(LCBaseRequest *request) {
+        
         @normally(homeFeedInterface);
         @normally(self);
         
-        if (homeFeedInterface.next) {
-            self.next = homeFeedInterface.next;
-        }
-
-        NSArray * resultData = homeFeedInterface.posts;
-        NSMutableArray * datasource = [NSMutableArray array];
-        
-        for (NSDictionary * tmp in resultData) {
-            [datasource addObject:[LKPost objectFromDictionary:tmp]];
-        }
-        
-        if (diretion == LCUIPullLoaderDiretionTop) {
-            // Change datasource and save cache...
-            self.datasource = datasource;
-            LKUserDefaults.singleton[self.class.description] = resultData;
-        } else {
-            [self.datasource addObjectsFromArray:datasource];
-        }
-        
-        NSMutableArray *prefetchs = nil;
-        for (LKPost *post in self.datasource) {
+        dispatch_queue_t queue = dispatch_queue_create("Queue",NULL);
+        dispatch_async(queue, ^{
             
-            if (post.content) {
-                
-                [prefetchs addObject:post.content];
+            if (homeFeedInterface.next) {
+                self.next = homeFeedInterface.next;
             }
-        }
-        
-        [[SDWebImagePrefetcher sharedImagePrefetcher] prefetchURLs:prefetchs.copy];
-        
-        [self.pullLoader endRefresh];
-        LC_FAST_ANIMATIONS(0.25, ^{
-            [self.tableView reloadData];
+            
+            NSArray *resultData = homeFeedInterface.posts;
+            NSMutableArray * datasource = [NSMutableArray array];
+            
+            for (NSDictionary * tmp in resultData) {
+                [datasource addObject:[LKPost objectFromDictionary:tmp]];
+            }
+            
+            if (diretion == LCUIPullLoaderDiretionTop) {
+                self.datasource = datasource;
+                LKUserDefaults.singleton[self.class.description] = resultData;
+                
+                // Calculate Height List
+                self.heightList = [NSMutableArray array];
+                for (LKPost *post in self.datasource) {
+                    [self.heightList addObject:[NSNumber numberWithFloat:[LKHomeTableViewCell height:post]]];
+                }
+            } else {
+                [self.datasource addObjectsFromArray:datasource];
+                
+                // Calculate Height List
+                for (LKPost *post in datasource) {
+                    [self.heightList addObject:[NSNumber numberWithFloat:[LKHomeTableViewCell height:post]]];
+                }
+            }
+            
+            NSMutableArray *prefetchs = [NSMutableArray array];
+            for (LKPost *post in self.datasource) {
+                if (post.content) {
+                    [prefetchs addObject:post.content];
+                }
+            }
+            
+            [[SDWebImagePrefetcher sharedImagePrefetcher] prefetchURLs:prefetchs.copy];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.pullLoader endRefresh];
+                [self.tableView reloadData];
+                
+            });
         });
         
     } failure:^(LCBaseRequest *request) {
@@ -322,11 +341,8 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     return cell;
 }
 
-/**
- *  根据cell计算行高
- */
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [LKHomeTableViewCell height:self.datasource[indexPath.row]];
+    return [self.heightList[indexPath.row] floatValue];
 }
 
 #pragma mark *****数据源******

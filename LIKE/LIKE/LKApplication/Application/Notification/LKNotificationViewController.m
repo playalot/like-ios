@@ -65,7 +65,6 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
     self.tableView.backgroundColor = [UIColor clearColor];
     self.view.ADD(self.tableView);
     
-    
     self.cartoonImageView = LCUIImageView.view;
     self.cartoonImageView.viewFrameWidth = 169;
     self.cartoonImageView.viewFrameHeight = 245;
@@ -75,14 +74,11 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
     self.cartoonImageView.hidden = YES;
     self.tableView.ADD(self.cartoonImageView);
     
-    
     @weakly(self);
     
     self.pullLoader = [[LCUIPullLoader alloc] initWithScrollView:self.tableView pullStyle:LCUIPullLoaderStyleHeaderAndFooter];
-
     [self.pullLoader setBeginRefresh:^(LCUIPullLoaderDiretion diretion) {
         @normally(self);
-        
         [self loadData:diretion];
     }];
     
@@ -90,7 +86,6 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
 }
 
 - (void)buildNavigationBar {
-    
     LCUIButton *titleBtn = [[LCUIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];
     titleBtn.title = LC_LO(@"消息提醒");
     titleBtn.titleFont = LK_FONT_B(16);
@@ -99,8 +94,7 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
 }
 
--(void)loadData:(LCUIPullLoaderDiretion)diretion
-{
+-(void)loadData:(LCUIPullLoaderDiretion)diretion {
     [self.notificationModel cancelAllRequests];
     
     @weakly(self);
@@ -127,30 +121,23 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
 }
 
 - (UITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     LKNotificationCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Cell" andClass:[LKNotificationCell class]];
     cell.notification = self.notificationModel.datasource[indexPath.row];
-    
     return cell;
 }
 
 - (CGFloat)tableView:(LCUITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     return 60;
 }
 
 - (CGFloat)tableView:(LCUITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     LKNotificationCell *notiCell = (LKNotificationCell *)[self tableView:tableView cellForRowAtIndexPath:indexPath];
     return notiCell.cellHeight;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     LKNotification *notification = self.notificationModel.datasource[indexPath.row];
-    
     if (indexPath.row == 0) {
-        
         LKOfficialViewController *officialViewController = [LKOfficialViewController viewController];
         [self.navigationController pushViewController:officialViewController animated:YES];
         return;

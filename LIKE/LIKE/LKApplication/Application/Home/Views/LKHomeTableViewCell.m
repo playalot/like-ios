@@ -11,6 +11,7 @@
 #import "LKTagsView.h"
 #import "ADTickerLabel.h"
 #import "UIImageView+WebCache.h"
+#import "LKLikeTagItemView.h"
 
 @interface LKHomeTableViewCell()
 
@@ -33,20 +34,15 @@ LC_IMP_SIGNAL(PushPostDetail);
 
 
 + (CGFloat)height:(LKPost *)post {
-    
     CGSize size = [LKUIKit parsingImageSizeWithURL:post.content constSize:CGSizeMake(LC_DEVICE_WIDTH, LC_DEVICE_WIDTH)];
-    
     if (size.width > LC_DEVICE_WIDTH) {
         
         size.height = LC_DEVICE_WIDTH / size.width * size.height;
         size.width = LC_DEVICE_WIDTH;
     }
     
-    
     static LKTagsView * __tagsView = nil;
-    
     if (!__tagsView) {
-        
         __tagsView = LKTagsView.view;
         __tagsView.viewFrameWidth = LC_DEVICE_WIDTH;
     }
@@ -56,8 +52,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     return size.height + __tagsView.viewFrameHeight + 54;
 }
 
--(void) buildUI
-{
+-(void) buildUI {
     self.backgroundColor = [UIColor clearColor];
     self.contentView.backgroundColor = [UIColor clearColor];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -78,14 +73,12 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.contentBack.ADD(self.contentImage);
 //    self.ADD(self.contentImage);
     
-    
 //    UIView *headerBack = UIView.view.X(0).Y(0).WIDTH(LC_DEVICE_WIDTH).HEIGHT(66);
 //    headerBack.backgroundColor = [UIColor whiteColor];
 //    self.ADD(headerBack);
     
     
 //    [LKHomeTableViewCell roundCorners:UIRectCornerTopLeft | UIRectCornerTopRight forView:headerBack];
-    
     
     // 头像
     self.head = LCUIImageView.view;
@@ -101,7 +94,6 @@ LC_IMP_SIGNAL(PushPostDetail);
     [self.head addTapGestureRecognizer:self selector:@selector(handleHeadTap:)];
     self.ADD(self.head);
     
-    
     // 昵称
     self.title = LCUILabel.view;
     self.title.viewFrameX = self.head.viewRightX + 12;
@@ -112,7 +104,6 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.title.textColor = LC_RGB(51, 51, 51);
     [self.title addTapGestureRecognizer:self selector:@selector(handleHeadTap:)];
     self.ADD(self.title);
-    
     
     // like数量
     self.likes = ADTickerLabel.view;
@@ -126,7 +117,6 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.likes.changeTextAnimationDuration = 0.25;
     [self.likes addTapGestureRecognizer:self selector:@selector(handleHeadTap:)];
     self.ADD(self.likes);
-    
     
     // like数量后缀
     self.likesTip = LCUILabel.view;
@@ -154,18 +144,12 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.ADD(self.recommendedReason);
     
     // 推荐理由标签
-//    self.recommendedReasonWithTag = LCUILabel.view;
     self.recommendedReasonWithTag = LCUIButton.view;
     self.recommendedReasonWithTag.viewFrameWidth = LC_DEVICE_WIDTH / 2;
     self.recommendedReasonWithTag.viewFrameHeight = LK_FONT(10).lineHeight;
     self.recommendedReasonWithTag.viewFrameX = LC_DEVICE_WIDTH / 2 - 15;
-//    [self.recommendedReasonWithTag sizeToFit];
-//    self.recommendedReasonWithTag.viewFrameX = CGRectGetMaxX(self.recommendedReason.frame) - self.recommendedReasonWithTag.viewFrameWidth;
     self.recommendedReasonWithTag.viewFrameY = self.likesTip.viewFrameY + 2;
-//    self.recommendedReasonWithTag.viewFrameY = CGRectGetMaxY(self.recommendedReason.frame) + 5;
-//    self.recommendedReasonWithTag.text = LC_LO(@"有故事的人");
     self.recommendedReasonWithTag.title = LC_LO(@"有故事的人");
-//    self.recommendedReasonWithTag.textColor = LC_RGB(155, 155, 155);
     self.recommendedReasonWithTag.titleColor = LC_RGB(217, 217, 217);
 //    self.recommendedReasonWithTag.font = LK_FONT(11);
     self.recommendedReasonWithTag.titleFont = LK_FONT(10);
@@ -175,76 +159,60 @@ LC_IMP_SIGNAL(PushPostDetail);
     [self.recommendedReasonWithTag addTarget:self action:@selector(recommendedReasonBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     self.ADD(self.recommendedReasonWithTag);
     
-    
     self.tagsView = LKTagsView.view;
     self.tagsView.viewFrameX = 0;
     self.tagsView.viewFrameWidth = LC_DEVICE_WIDTH;
     self.tagsView.backgroundColor = LC_RGB(245, 245, 245);
     self.ADD(self.tagsView);
     
-    
-    
     @weakly(self);
     
-    self.tagsView.itemRequestFinished = ^(LKTagItem * item){
+    self.tagsView.itemRequestFinished = ^(LKTagItemView * item){
         
         @normally(self);
         
         if (item.tagValue.isLiked) {
-            
             self.post.user.likes = @(self.post.user.likes.integerValue + 1);
-        }
-        else{
-            
+        } else {
             self.post.user.likes = @(self.post.user.likes.integerValue - 1);
         }
         
-        
         self.likes.text = LC_NSSTRING_FORMAT(@"%@", self.post.user.likes);
-        
         CGSize likeSize = [self.post.user.likes.description sizeWithFont:LK_FONT(10) byWidth:200];
-        
         [UIView animateWithDuration:0.25 animations:^{
-            
             self.likesTip.viewFrameX = self.likes.viewFrameX + likeSize.width + 3;
         }];
     };
     
+    LKLikeTagItemView *tagsView = [[LKLikeTagItemView alloc] initWithFrame:CGRectMake(100, 100, 200, 50)];
+    self.ADD(tagsView);
 }
 
--(void) addTagAction
-{
+-(void) addTagAction {
     if (self.addTag) {
         self.addTag(self.post);
     }
 }
 
--(void) handleHeadTap:(UITapGestureRecognizer *)tap
-{
+-(void) handleHeadTap:(UITapGestureRecognizer *)tap {
     self.SEND(self.PushUserCenter).object = self.post.user;
 }
 
 /**
  *  点击主页cell里面的图片就会执行此方法
  */
--(void) contentImageTapAction {
+- (void)contentImageTapAction {
     self.SEND(self.PushPostDetail).object = self.post;
 }
 
--(void) setPost:(LKPost *)post
-{
+- (void)setPost:(LKPost *)post {
     _post = post;
-    
-    
     if (post.user.id.integerValue == LKLocalUser.singleton.user.id.integerValue) {
-
         post.user = LKLocalUser.singleton.user;
     }
-    
 
     // 设置cell内容
     self.head.image = nil;
-//    self.head.url = post.user.avatar;
     [self.head sd_setImageWithURL:[NSURL URLWithString:post.user.avatar] placeholderImage:nil];
     
     self.title.text = LC_NSSTRING_FORMAT(@"%@", post.user.name);
@@ -254,17 +222,14 @@ LC_IMP_SIGNAL(PushPostDetail);
     
     self.likesTip.viewFrameX = self.likes.viewFrameX + likeSize.width + 3;
     
-    
     CGSize size = [LKUIKit parsingImageSizeWithURL:post.content constSize:CGSizeMake(LC_DEVICE_WIDTH - 10, LC_DEVICE_WIDTH - 10)];
     
     if (size.width > LC_DEVICE_WIDTH) {
-        
         size.height = LC_DEVICE_WIDTH / size.width * size.height;
         size.width = LC_DEVICE_WIDTH;
     }
     
     // 设置图片的frame
-//    self.contentImage.viewFrameX = 5 + (LC_DEVICE_WIDTH - 10) / 2 - size.width / 2;
     self.contentBack.viewFrameX = 0;
     self.contentBack.viewFrameY = 54;
     self.contentBack.viewFrameWidth = size.width;
@@ -273,30 +238,25 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.contentImage.clipsToBounds = YES;
     self.contentImage.frame = self.contentBack.bounds;
     self.contentImage.image = nil;
-//    self.contentImage.url = post.content;
 
     [self.contentImage sd_setImageWithURL:[NSURL URLWithString:post.content] placeholderImage:nil options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
         
         if (self.contentImage.indicator.progress == 0) {
-            
             [self.contentImage.indicator setProgress:receivedSize * 1.0 / expectedSize animated:YES];
             self.contentImage.indicator.alpha = 1;
         }
         
     } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        
+
         self.contentImage.indicator.alpha = 0;
         [self.contentImage.indicator removeFromSuperview];
     }];
-    
-    
     
     // 设置标签的frame
     self.tagsView.tags = post.tags;
     self.tagsView.viewFrameY = self.contentBack.viewBottomY;
     
-    [LKHomeTableViewCell roundCorners:UIRectCornerBottomLeft | UIRectCornerBottomRight forView:self.tagsView];
-    
+//    [LKHomeTableViewCell roundCorners:UIRectCornerBottomLeft | UIRectCornerBottomRight forView:self.tagsView];
     
     @weakly(self);
     
@@ -318,7 +278,7 @@ LC_IMP_SIGNAL(PushPostDetail);
         }
     };
     
-    self.tagsView.willRequest = ^(LKTagItem * item){
+    self.tagsView.willRequest = ^(LKTagItemView * item){
         
         @normally(self);
         
@@ -339,25 +299,20 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.recommendedReason.FIT();
     self.recommendedReason.viewFrameX = LC_DEVICE_WIDTH - self.recommendedReason.viewFrameWidth - 15;
     self.recommendedReason.hidden = post.reason <= 0;
-    
-//    self.recommendedReasonWithTag.text = post.reasonTag;
     self.recommendedReasonWithTag.title = post.reasonTag;
     self.recommendedReasonWithTag.hidden = LC_NSSTRING_IS_INVALID(post.reasonTag);
     
     if (self.recommendedReasonWithTag.hidden == YES) {
-        
         self.recommendedReason.viewFrameY = 55 / 2 - self.recommendedReason.viewMidHeight + 5;
         self.recommendedReasonWithTag.viewFrameY = CGRectGetMaxY(self.recommendedReason.frame) - 5;
         self.recommendedReasonWithTag.viewFrameX = CGRectGetMaxX(self.recommendedReason.frame) - self.recommendedReasonWithTag.viewFrameWidth;
-//        [self.recommendedReasonWithTag sizeToFit];
     }
 }
 
 /**
  *  点击标签就会执行动画
  */
--(void) newTagAnimation:(void (^)(BOOL finished))completion
-{
+- (void) newTagAnimation:(void (^)(BOOL finished))completion {
     if (!self.blackMask) {
         
         self.blackMask = UIView.view;
@@ -404,8 +359,7 @@ LC_IMP_SIGNAL(PushPostDetail);
 
 }
 
--(void) reloadTags
-{
+-(void) reloadTags {
 //    LC_FAST_ANIMATIONS(1, ^{
 //
 //        [self.tagsView reloadDataAndRemoveAll:NO];
@@ -413,8 +367,7 @@ LC_IMP_SIGNAL(PushPostDetail);
 }
 
 
-- (void)cellOnTableView:(UITableView *)tableView didScrollOnView:(UIView *)view
-{
+- (void)cellOnTableView:(UITableView *)tableView didScrollOnView:(UIView *)view {
 //        CGRect rectInSuperview = [tableView convertRect:self.frame toView:view];
 //    
 //        CGFloat distanceFromCenter = CGRectGetHeight(view.frame)/2 - CGRectGetMinY(rectInSuperview);
@@ -429,51 +382,34 @@ LC_IMP_SIGNAL(PushPostDetail);
 /**
  *  裁剪圆角
  */
-+ (void)roundCorners:(UIRectCorner)corners forView:(UIView *)view
-{
++ (void)roundCorners:(UIRectCorner)corners forView:(UIView *)view {
     UIBezierPath * maskPath = [UIBezierPath bezierPathWithRoundedRect:view.bounds
-                               
                                                     byRoundingCorners:corners
-                               
                                                           cornerRadii:CGSizeMake(2, 2)];
     CAShapeLayer * maskLayer = [CAShapeLayer layer];
-    
     maskLayer.frame = view.bounds;
-    
     maskLayer.path = maskPath.CGPath;
-    
     view.layer.mask = maskLayer;
 }
 
 /**
  *  获取推荐理由图片
  */
--(UIImage *) getIconImage:(NSInteger)type
-{
+-(UIImage *) getIconImage:(NSInteger)type {
     if (type == 1) {
-        
         return [UIImage imageNamed:@"LittleTag.png" useCache:YES];
-    }
-    else if (type == 2){
-        
+    } else if (type == 2) {
         return [UIImage imageNamed:@"LittleSP.png" useCache:YES];
-    }
-    else if(type == 3){
-        
+    } else if(type == 3) {
         return [UIImage imageNamed:@"LittleYouLike.png" useCache:YES];
-    }
-    else if(type == 4){
-        
+    } else if(type == 4){
         return [UIImage imageNamed:@"LittleFollowing.png" useCache:YES];
     }
-    
     return nil;
 }
 
 - (void)recommendedReasonBtnClick:(LCUIButton *)reasonBtn {
-    
     if ([self.delegate respondsToSelector:@selector(homeTableViewCell:didClickReasonBtn:)]) {
-        
         [self.delegate homeTableViewCell:self didClickReasonBtn:self.recommendedReasonWithTag];
     }
 }

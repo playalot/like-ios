@@ -16,7 +16,7 @@
 @interface LKPostDetailCell ()
 
 LC_PROPERTY(strong) LCUIImageView * headImageView;
-LC_PROPERTY(strong) LKTagItem * tagItem;
+LC_PROPERTY(strong) LKTagItemView * tagItem;
 LC_PROPERTY(strong) LCUILabel * timeLabel;
 LC_PROPERTY(strong) UIView * cellBackgroundView;
 LC_PROPERTY(strong) LKCommentsView * commentsView;
@@ -74,7 +74,7 @@ LC_IMP_SIGNAL(PushUserCenter);
     self.ADD(self.cellBackgroundView);
     
     
-    self.tagItem = LKTagItem.view;
+    self.tagItem = LKTagItemView.view;
     self.tagItem.showNumber = YES;
 
     
@@ -152,7 +152,7 @@ LC_IMP_SIGNAL(PushUserCenter);
     
     if (!self.tagItem) {
         
-        self.tagItem = LKTagItem.view;
+        self.tagItem = LKTagItemView.view;
         self.tagItem.showNumber = YES;
 //        self.cellBackgroundView.ADD(self.tagItem);
     }
@@ -181,7 +181,7 @@ LC_IMP_SIGNAL(PushUserCenter);
     
     @weakly(self);
     
-    self.tagItem.requestFinished = ^(LKTagItem * item){
+    self.tagItem.requestFinished = ^(LKTagItemView * item){
       
         @normally(self);
         
@@ -202,7 +202,7 @@ LC_IMP_SIGNAL(PushUserCenter);
         }
     };
     
-    self.tagItem.willRequest = ^(LKTagItem * item){
+    self.tagItem.willRequest = ^(LKTagItemView * item){
       
         @normally(self);
         

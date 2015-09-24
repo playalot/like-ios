@@ -18,9 +18,11 @@ LC_NOTIFICATION_SET(LKHomeViewControllerReloadingData);
 LC_PROPERTY(strong) NSMutableArray * datasource;
 LC_PROPERTY(strong) NSMutableArray * focusDatasource;
 
--(void) notificationAction;
+- (void)notificationAction;
 
--(void) loadData:(LCUIPullLoaderDiretion)diretion;
+- (void)loadData:(LCUIPullLoaderDiretion)diretion;
+
+- (void)refresh;
 
 + (id)sharedInstance;
 

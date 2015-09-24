@@ -713,6 +713,9 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
     }];
 }
 
+- (void)refresh {
+    
+}
 
 // 这个方法同时负责主页和关注的人列表的请求
 -(void) loadData:(LCUIPullLoaderDiretion)diretion

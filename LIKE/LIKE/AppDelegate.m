@@ -27,7 +27,7 @@
 #import "LCNetworkConfig.h"
 #import "LCUrlArgumentsFilter.h"
 
-@interface AppDelegate () <LC_CMD_IMP>
+@interface AppDelegate () <LC_CMD_IMP, RDVTabBarControllerDelegate>
 
 LC_PROPERTY(strong) TencentOAuth * tencentOAuth;
 LC_PROPERTY(assign) NSTimeInterval enterBackgroundTimeInterval;
@@ -37,12 +37,23 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
 
 @implementation AppDelegate
 
+- (BOOL)tabBarController:(RDVTabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
+    
+    if (viewController == self.homeViewController) {
+    }
+    
+    return YES;
+}
+
+- (void)tabBarController:(RDVTabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
+    
+}
+
 /**
  *  应用程序启动就会调用此方法
  */
 - (void)load:(NSDictionary *)launchOptions {
     self.launchOptions = launchOptions;
-    
     [self setupNetworkConfig];
     [self setupCache];
     [self setupMAMapServices];
@@ -189,7 +200,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
                                                        LC_UINAVIGATION(self.cameraRollViewController),
                                                        LC_UINAVIGATION(self.notificationViewController),
                                                        LC_UINAVIGATION(self.userCenterViewController)]];
-    
+    self.tabBarController.delegate = self;
     
     NSArray *imageNames = @[@"tabbar_homeLine",
                             @"tabbar_search",

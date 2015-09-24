@@ -20,7 +20,6 @@ LC_PROPERTY(assign) BOOL custom;
 
 - (instancetype)init {
     if (self = [super init]) {
-        
         self.cornerRadius = 4;
         self.layer.masksToBounds = NO;
         self.showNumber = YES;
@@ -145,70 +144,8 @@ LC_PROPERTY(assign) BOOL custom;
         self.tagValue = self.tagValue;
     }
     
-    //    static int i = 1;
-    //
-    //    i++;
-    //
-    //    if (i % 2) {
-    //
-    //
-    //        if (self.tagValue.isLiked) {
-    //
-    //            self.backgroundColor = [UIColor whiteColor];
-    //
-    //            [self mdInflateAnimatedFromPoint:self.likesLabel.center backgroundColor:LKColor.color duration:0.5 completion:nil];
-    //
-    //        }
-    //        else{
-    //
-    //            self.backgroundColor = LKColor.color;
-    //
-    //            [self mdDeflateAnimatedToPoint:self.likesLabel.center backgroundColor:LC_RGB(245, 240, 236) duration:0.5 completion:nil];
-    //
-    //        }
-    //    }
-    //    else{
-    
     if (self.tagValue.isLiked) {
-        
-        /*
-         CGRect rect = [self convertRect:self.bounds toView:LC_KEYWINDOW];
-         
-         THLabel * label = [[THLabel alloc] init];
-         label.shadowColor = LKColor.color;
-         label.shadowOffset = CGSizeMake(0, 2);
-         label.shadowBlur = 5;
-         label.text = @"+1";
-         label.font = LK_FONT(18);
-         label.textColor = [UIColor whiteColor];
-         label.FIT();
-         label.viewCenterX = rect.origin.x + rect.size.width / 2;
-         label.viewCenterY = rect.origin.y + rect.size.height / 2;;
-         label.alpha = 0;
-         LC_KEYWINDOW.ADD(label);
-         
-         [UIView animateWithDuration:0.25 animations:^{
-         
-         label.alpha = 1;
-         label.viewCenterY -= 20;
-         
-         } completion:^(BOOL finished) {
-         
-         [UIView animateWithDuration:1 animations:^{
-         
-         label.alpha = 0;
-         
-         } completion:^(BOOL finished) {
-         
-         [label removeFromSuperview];
-         
-         }];
-         
-         }];
-         */
     }
-    //    }
-    
     
     self.userInteractionEnabled = NO;
     
@@ -276,18 +213,10 @@ LC_PROPERTY(assign) BOOL custom;
         return;
     }
     
-    //    CATransition * animation = [CATransition animation];
-    //    [animation setDuration:0.25];
-    //    [animation setType:kCATransitionFade];
-    //    [animation setSubtype:kCATransitionFromRight];
-    //    [self.layer addAnimation:animation forKey:@"transition"];
-    
     _tagValue = tagValue;
-    
     
     self.tagLabel.text = customTag ? customTag : tagValue.tag.description;
     self.tagLabel.FIT();
-    
     
     CGFloat tagHeight = self.tagLabel.font.lineHeight;
     CGFloat topPadding = (26 - tagHeight) * 0.5;
@@ -304,20 +233,6 @@ LC_PROPERTY(assign) BOOL custom;
         self.lineView.viewFrameX = self.tagLabel.viewRightX + 6;
         self.lineView.viewFrameY = 5;
         self.lineView.image = [UIImage imageNamed:@"SeparateLine.png" useCache:YES];
-        
-        //        UIGraphicsBeginImageContext(CGSizeMake(50, 50));
-        //        CGContextRef context = UIGraphicsGetCurrentContext();
-        //        CGContextSetLineWidth(context, 0.5);
-        //        CGContextSetRGBStrokeColor(context, 0.314, 0.486, 0.859, 1.0);
-        //        CGContextBeginPath(context);
-        //        CGContextMoveToPoint(context, self.tagLabel.viewRightX + 8, 5);
-        //        CGContextAddLineToPoint(context, self.tagLabel.viewRightX + 8, 27);
-        //        CGContextStrokePath(context);
-        //        UIImage *line = UIGraphicsGetImageFromCurrentImageContext();
-        //        UIGraphicsEndImageContext();
-        //        self.lineView.image = line;
-        
-        
         self.likesLabel.text = LC_NSSTRING_FORMAT(@"%@", customCount ? customCount : tagValue.likes);
         self.likesLabel.FIT();
         

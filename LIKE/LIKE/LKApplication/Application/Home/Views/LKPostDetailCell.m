@@ -90,19 +90,21 @@ LC_IMP_SIGNAL(PushUserCenter);
 //    self.ADD(self.likesView);
     
     
-    LCUIButton * commentButton = LCUIButton.view;
+    LCUIButton *commentButton = LCUIButton.view;
     // 修改了评论的图片
-    commentButton.buttonImage = [UIImage imageNamed:@"more.png" useCache:YES];
-    commentButton.viewFrameHeight = 33;
+    commentButton.buttonImage = [UIImage imageNamed:@"RightArrow.png" useCache:YES];
+    commentButton.viewFrameHeight = 22;
+    commentButton.viewFrameWidth = 13;
 //    commentButton.titleFont = LK_FONT(10);
 //    commentButton.title = LC_LO(@"评论");
 //    commentButton.titleColor = LC_RGB(140, 133, 126);
-    commentButton.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0);
-    commentButton.imageEdgeInsets = UIEdgeInsetsMake(2, 0, 0, 0);
-    commentButton.FIT();
-    commentButton.viewFrameWidth += 10;
-    commentButton.viewFrameX = self.cellBackgroundView.viewFrameWidth - commentButton.viewFrameWidth - 3;
-    commentButton.viewFrameY = 33 / 2 - commentButton.viewMidHeight;
+//    commentButton.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0);
+//    commentButton.imageEdgeInsets = UIEdgeInsetsMake(2, 0, 0, 0);
+//    commentButton.FIT();
+//    commentButton.viewFrameWidth += 10;
+//    commentButton.viewFrameX = self.cellBackgroundView.viewFrameWidth - commentButton.viewFrameWidth - 3;
+    commentButton.viewFrameX = self.cellBackgroundView.viewFrameWidth - commentButton.viewFrameWidth - 15;
+    commentButton.viewFrameY = 46 / 2 - commentButton.viewMidHeight;
     [commentButton addTarget:self action:@selector(commentTapAction) forControlEvents:UIControlEventTouchUpInside];
     self.cellBackgroundView.ADD(commentButton);
 
@@ -114,7 +116,7 @@ LC_IMP_SIGNAL(PushUserCenter);
     self.ADD(self.commentsView);
     
     
-    [self lineInView:self];
+    [self lineInView:self.contentView];
     
     self.alpha = 0;
     
@@ -127,7 +129,7 @@ LC_IMP_SIGNAL(PushUserCenter);
 - (void)lineInView:(UIView *)view
 {
     UIImageView *line = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
-    line.viewFrameWidth = view.viewFrameWidth;
+    line.viewFrameWidth = LC_DEVICE_WIDTH;
     view.ADD(line);
 }
 

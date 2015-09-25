@@ -196,9 +196,9 @@ LC_PROPERTY(weak) id delegate;
         @normally(homeFeedInterface);
         @normally(self);
         
-        dispatch_queue_t queue = dispatch_queue_create("HomeFeedQueue",NULL);
-        dispatch_async(queue, ^{
-            
+//        dispatch_queue_t queue = dispatch_queue_create("HomeFeedQueue",NULL);
+//        dispatch_async(queue, ^{
+        
             if (homeFeedInterface.next) {
                 self.next = homeFeedInterface.next;
             }
@@ -237,12 +237,12 @@ LC_PROPERTY(weak) id delegate;
             
             [[SDWebImagePrefetcher sharedImagePrefetcher] prefetchURLs:prefetchs.copy];
             
-            dispatch_async(dispatch_get_main_queue(), ^{
+//            dispatch_async(dispatch_get_main_queue(), ^{
                 [self.pullLoader endRefresh];
                 [self.tableView reloadData];
                 
-            });
-        });
+//            });
+//        });
         
     } failure:^(LCBaseRequest *request) {
         

@@ -129,7 +129,9 @@ LC_IMP_SIGNAL(PushUserCenter);
 - (void)lineInView:(UIView *)view
 {
     UIImageView *line = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
+    line.viewFrameY = 45;
     line.viewFrameWidth = LC_DEVICE_WIDTH;
+    line.viewFrameHeight = 1;
     view.ADD(line);
 }
 
@@ -319,15 +321,16 @@ LC_IMP_SIGNAL(PushUserCenter);
     view.layer.mask = maskLayer;
 }
 
-+(CGFloat) height:(LKTag *)tag
++ (CGFloat)height:(LKTag *)tag
 {
-    static LKCommentsView * commentsView = nil;
+    static LKCommentsView *commentsView = nil;
     //static LKLikesScrollView * likesView = nil;
 
     // 以下数字仅用于计算 不用细究
-    if (!commentsView) {
+    if (!commentsView){
         commentsView = LKCommentsView.view;
-        commentsView.viewFrameWidth = LC_DEVICE_WIDTH - (10 + 33 + 10 + 16 / 3) - 10;
+//        commentsView.viewFrameWidth = LC_DEVICE_WIDTH - (16 + 40 + 14 + 16 / 3) - 10;
+        commentsView.viewFrameWidth = LC_DEVICE_WIDTH;
     }
     
 //    if (!likesView) {
@@ -339,7 +342,7 @@ LC_IMP_SIGNAL(PushUserCenter);
     
     commentsView.tagValue = tag;
     
-    return 33 + 10 + commentsView.viewFrameHeight;// + (tag.likers.count > 0 ? 33 : 0);
+    return 32 + 14 + commentsView.viewFrameHeight;// + (tag.likers.count > 0 ? 33 : 0);
 }
 
 @end

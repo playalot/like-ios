@@ -97,8 +97,8 @@ LC_PROPERTY(strong) UIImageView * line;
     self.line.viewFrameY = self.timeLabel.viewBottomY + 7 - self.line.viewFrameHeight;
 }
 
-+(CGFloat) height:(LKComment *)comment
-{
++ (CGFloat)height:(LKComment *)comment {
+    
     CGFloat height = 10;
     
     NSString * content = [NSString stringWithFormat:@"%@：%@%@" ,comment.user.name, comment.replyUser ? [NSString stringWithFormat:@"@%@ ", comment.replyUser.name] : @"",comment.content];

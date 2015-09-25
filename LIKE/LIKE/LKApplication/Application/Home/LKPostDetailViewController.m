@@ -32,30 +32,32 @@
 #import "ADTickerLabel.h"
 #import "UIImageView+WebCache.h"
 
-@interface LKPostDetailViewController ()<UITableViewDataSource,UITableViewDelegate,JTSImageViewControllerDismissalDelegate,UINavigationControllerDelegate,UIViewControllerTransitioningDelegate, LKTagCommentsViewControllerDelegate>
+@interface LKPostDetailViewController () <UITableViewDataSource,UITableViewDelegate,JTSImageViewControllerDismissalDelegate,UINavigationControllerDelegate,UIViewControllerTransitioningDelegate, LKTagCommentsViewControllerDelegate>
 
-LC_PROPERTY(strong) BLKDelegateSplitter * delegateSplitter;
-LC_PROPERTY(strong) LKInputView * inputView;
+LC_PROPERTY(strong) BLKDelegateSplitter *delegateSplitter;
+LC_PROPERTY(strong) LKInputView *inputView;
 
-LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
+LC_PROPERTY(strong) LCUIPullLoader *pullLoader;
 
 
-LC_PROPERTY(strong) LCUIImageView * userHead;
-LC_PROPERTY(strong) LCUILabel * userName;
-LC_PROPERTY(strong) ADTickerLabel * userLikes;
-LC_PROPERTY(strong) LCUILabel * likesTip;
-LC_PROPERTY(strong) LCUILabel * postTime;
+LC_PROPERTY(strong) LCUIImageView *userHead;
+LC_PROPERTY(strong) LCUILabel *userName;
+LC_PROPERTY(strong) ADTickerLabel *userLikes;
+LC_PROPERTY(strong) LCUILabel *likesTip;
+LC_PROPERTY(strong) LCUILabel *postTime;
+LC_PROPERTY(strong) LCUIButton *location;
+LC_PROPERTY(strong) LCUILabel *timeLabel;
 
 
 LC_PROPERTY_MODEL(LKPostTagsDetailModel, tagsListModel);
 
-LC_PROPERTY(copy) NSString * bigContentURL;
-LC_PROPERTY(strong) AFHTTPRequestOperation * bigImageRequestOperation;
+LC_PROPERTY(copy) NSString *bigContentURL;
+LC_PROPERTY(strong) AFHTTPRequestOperation *bigImageRequestOperation;
 
-LC_PROPERTY(strong) LKPresentAnimation * animator;
-LC_PROPERTY(strong) UIView * blackMask;
+LC_PROPERTY(strong) LKPresentAnimation *animator;
+LC_PROPERTY(strong) UIView *blackMask;
 
-LC_PROPERTY(strong) LKShareTools * shareTools;
+LC_PROPERTY(strong) LKShareTools *shareTools;
 
 LC_PROPERTY(assign) BOOL favorited;
 
@@ -336,6 +338,24 @@ LC_PROPERTY(assign) BOOL favorited;
                 
             }
         };
+        
+        
+        LCUIView *navView = LCUIView.view;
+        navView.backgroundColor = LKColor.color;
+        navView.viewFrameWidth = LC_DEVICE_WIDTH;
+        navView.viewFrameHeight = 44;
+//        self.header.ADD(navView);
+        
+        LCUILabel *timeLabel = LCUILabel.view;
+        timeLabel.font = LK_FONT(18);
+        timeLabel.textAlignment = UITextAlignmentCenter;
+        timeLabel.viewFrameWidth = 200;
+        timeLabel.viewFrameHeight = timeLabel.font.lineHeight;
+        timeLabel.viewCenterX = navView.viewCenterX;
+        timeLabel.viewCenterY = navView.viewCenterY;
+        navView.ADD(timeLabel);
+        self.timeLabel = timeLabel;
+        
         
         // 导航栏返回上一级按钮
         LCUIButton * backButton = LCUIButton.view;
@@ -935,7 +955,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     if (indexPath.section == 0) {
      
         // 用户信息cell
-        LCUITableViewCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"User" andClass:[LCUITableViewCell class] configurationCell:^(LCUITableViewCell * configurationCell) {
+        LCUITableViewCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"User" andClass:[LCUITableViewCell class] configurationCell:^(LCUITableViewCell * configurationCell) {
             
             
 //            configurationCell.backgroundColor = [UIColor clearColor];
@@ -954,13 +974,13 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             
             // 用户昵称
             self.userName = LCUILabel.view;
+            self.userName.font = LK_FONT_B(14);
+            self.userName.textAlignment = UITextAlignmentLeft;
+            self.userName.lineBreakMode = NSLineBreakByTruncatingTail;
             self.userName.viewFrameY = 9;
             self.userName.viewFrameX = self.userHead.viewRightX + 14;
             self.userName.viewFrameWidth = LC_DEVICE_WIDTH - self.userName.viewFrameX - 75;
-            self.userName.viewFrameHeight = 15;
-            self.userName.textAlignment = UITextAlignmentLeft;
-            self.userName.font = LK_FONT_B(14);
-            self.userName.lineBreakMode = NSLineBreakByTruncatingTail;
+            self.userName.viewFrameHeight = self.userName.font.lineHeight;
             self.userName.textColor = LC_RGB(51, 51, 51);
             configurationCell.ADD(self.userName);
             
@@ -982,14 +1002,14 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             self.likesTip.textColor = LC_RGB(51, 51, 51);
             self.likesTip.text = @"likes";
             self.likesTip.FIT();
-            self.likesTip.viewFrameY = self.userName.viewFrameY + 2;
+            self.likesTip.viewFrameY = self.userLikes.viewFrameY;
             self.likesTip.viewFrameHeight = LK_FONT(10).lineHeight;
             configurationCell.ADD(self.likesTip);
             
             // 发布时间
             self.postTime = LCUILabel.view;
             self.postTime.viewFrameY = self.userName.viewBottomY + 5;
-            self.postTime.viewFrameX = self.userHead.viewRightX + 10;
+            self.postTime.viewFrameX = self.userHead.viewRightX + 14;
             self.postTime.viewFrameWidth = self.userName.viewFrameWidth;
             self.postTime.viewFrameHeight = 14;
             self.postTime.textAlignment = UITextAlignmentLeft;
@@ -997,6 +1017,19 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             self.postTime.lineBreakMode = NSLineBreakByTruncatingMiddle;
             self.postTime.textColor = LC_RGB(140, 133, 126);
             configurationCell.ADD(self.postTime);
+            
+            
+            // 定位
+//            self.location = LCUIButton.view;
+//            self.location.titleFont = LK_FONT(10);
+//            self.location.titleEdgeInsets = UIEdgeInsetsMake(0, 2, 0, 0);
+//            self.location.titleLabel.textAlignment = UITextAlignmentRight;
+//            self.location.titleColor = LC_RGB(136, 136, 136);
+//            self.location.viewFrameY = self.userName.viewBottomY + 2;
+//            self.location.viewFrameHeight = self.location.titleFont.lineHeight;
+//            self.location.hidden = YES;
+//            configurationCell.ADD(self.location);
+            
             
             // 分享工具
             self.shareTools = LKShareTools.view;
@@ -1018,7 +1051,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
                 self.postTime.alpha = 0;
                 self.likesTip.alpha = 0;
                 self.userLikes.alpha = 0;
-                
+//                self.location.alpha = 0;
             });
         };
         
@@ -1033,7 +1066,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
                 self.postTime.alpha = 1;
                 self.likesTip.alpha = 1;
                 self.userLikes.alpha = 1;
-                
+//                self.location.alpha = 1;
             });
         };
         
@@ -1045,13 +1078,15 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         };
         
         
+        self.timeLabel.text = [NSString stringWithFormat:@"%@",
+                             [LKTime dateNearByTimestamp:self.post.timestamp]];
         self.userHead.url = self.post.user.avatar;
 //        [self.userHead sd_setImageWithURL:[NSURL URLWithString:self.post.user.avatar] placeholderImage:nil];
         self.userName.text = self.post.user.name;
         [self.userLikes setText:self.post.user.likes.description animated:NO];
 
         
-        CGSize likeSize = [self.userLikes.text sizeWithFont:LK_FONT(13) byWidth:200];
+        CGSize likeSize = [self.userLikes.text sizeWithFont:LK_FONT(10) byWidth:200];
 
         self.userLikes.viewFrameWidth = likeSize.width;
         self.likesTip.FIT();
@@ -1068,6 +1103,16 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         self.likesTip.viewFrameX = self.userLikes.viewFrameX + width + 5;
         
         self.postTime.text = [NSString stringWithFormat:@"%@ %@ %@", [LKTime dateNearByTimestamp:self.post.timestamp], self.post.place.length ? LC_LO(@"来自") : @"", self.post.place.length ? self.post.place : @""];
+        
+//        if (self.post.place != nil) {
+//            
+//            self.location.hidden = NO;
+//            self.location.viewFrameX = self.likesTip.viewRightX + 10;
+//            [self.location setImage:[UIImage imageNamed:@"Location.png" useCache:YES] forState:UIControlStateNormal];
+//            self.location.title = self.post.place;
+//            CGSize locationSize = [self.location.title sizeWithFont:LK_FONT(10) byHeight:LK_FONT(10).lineHeight];
+//            self.location.viewFrameWidth = locationSize.width + 10;
+//        }
         
         return cell;
     }
@@ -1112,6 +1157,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
                 CGFloat width = [self.post.user.likes.description sizeWithFont:self.userLikes.font byWidth:1000].width;
                 
                 self.likesTip.viewFrameX = self.userLikes.viewFrameX + width + 5;
+                self.location.viewFrameX = self.likesTip.viewRightX + 10;
             }];
             
             [self.shareTools hideTools];

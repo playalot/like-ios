@@ -272,11 +272,8 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     
     // 设置代理
     detail.delegate = self;
-    
     LCUINavigationController * nav = LC_UINAVIGATION(detail);
-    
     [detail setPresendModelAnimationOpen];
-    
     [self.navigationController presentViewController:nav animated:YES completion:nil];
     
     LKPost * post = signal.object;

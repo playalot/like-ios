@@ -256,7 +256,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.tagsView.tags = post.tags;
     self.tagsView.viewFrameY = self.contentBack.viewBottomY;
     
-//    [LKHomeTableViewCell roundCorners:UIRectCornerBottomLeft | UIRectCornerBottomRight forView:self.tagsView];
+    [LKHomeTableViewCell roundCorners:UIRectCornerBottomLeft | UIRectCornerBottomRight forView:self.tagsView];
     
     @weakly(self);
     

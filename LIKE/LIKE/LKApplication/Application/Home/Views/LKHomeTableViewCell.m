@@ -263,7 +263,6 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.tagsView.didRemoveTag = ^(LKTag * tag){
         
         @normally(self);
-        
         if (self.removedTag) {
             self.removedTag(self.post);
         }
@@ -272,7 +271,6 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.tagsView.customAction = ^(id value){
         
         @normally(self);
-        
         if (self.addTag) {
             self.addTag(self.post);
         }

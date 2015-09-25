@@ -22,6 +22,7 @@
 #import "LKSearchResultsViewController.h"
 #import "SDWebImagePrefetcher.h"
 
+#import "LRUCache.h"
 
 @interface LKHomeFeedViewController () <UITableViewDataSource, UITableViewDelegate, LKHomeTableViewCellDelegate, LKPostDetailViewControllerDelegate>
 
@@ -39,6 +40,7 @@ LC_PROPERTY(strong) NSMutableArray *heightList;
 
 LC_PROPERTY(assign) BOOL isCellPrecomuted;
 LC_PROPERTY(strong) NSMutableArray *precomputedCells;
+LC_PROPERTY(strong) LRUCache *precomputedCellCache;
 
 LC_PROPERTY(weak) id delegate;
 
@@ -53,6 +55,7 @@ LC_PROPERTY(weak) id delegate;
     
     self.isCellPrecomuted = YES;
     self.precomputedCells = [NSMutableArray array];
+    self.precomputedCellCache = [[LRUCache alloc] initWithCapacity:10];
     
     [self loadData:LCUIPullLoaderDiretionTop];
 }
@@ -74,7 +77,6 @@ LC_PROPERTY(weak) id delegate;
     self.pullLoader.indicatorViewStyle = UIActivityIndicatorViewStyleWhite;
     
     @weakly(self);
-    
     self.pullLoader.beginRefresh = ^(LCUIPullLoaderDiretion diretion){
         @normally(self);
         [self loadData:diretion];
@@ -118,12 +120,9 @@ LC_PROPERTY(weak) id delegate;
     self.inputView.didShow = ^(){
         
         @normally(self);
-        
-        // scroll...
         LKHomeTableViewCell * cell = (LKHomeTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:0]];
         CGFloat height1 = LC_DEVICE_HEIGHT - cell.viewFrameHeight;
         CGFloat height2 = LCUIKeyBoard.singleton.height + self.inputView.viewFrameHeight - height1;
-        
         [self.tableView setContentOffset:LC_POINT(0, cell.viewFrameY + height2 - 25 + 10 + 63) animated:YES];
     };
     
@@ -210,6 +209,12 @@ LC_PROPERTY(weak) id delegate;
         }
         
         if (diretion == LCUIPullLoaderDiretionTop) {
+            
+            if (self.isCellPrecomuted) {
+                [self precomputeAllTableViewCellsWithDataSource:datasource];
+            }
+            
+            // 必须放在 precomputeAllTableViewCellsWithDataSource 之后
             self.datasource = datasource;
             LKUserDefaults.singleton[self.class.description] = resultData;
             
@@ -219,20 +224,18 @@ LC_PROPERTY(weak) id delegate;
                 [self.heightList addObject:[NSNumber numberWithFloat:[LKHomeTableViewCell height:post]]];
             }
             
+        } else {
+            
             if (self.isCellPrecomuted) {
-                [self precomputeAllTableViewCellsWithDataSource:datasource];
+                [self precomputeAdditionalTableViewCellsWithDataSource:datasource];
             }
             
-        } else {
+            // 必须放在 precomputeAdditionalTableViewCellsWithDataSource 之后
             [self.datasource addObjectsFromArray:datasource];
             
             // Calculate Height List
             for (LKPost *post in datasource) {
                 [self.heightList addObject:[NSNumber numberWithFloat:[LKHomeTableViewCell height:post]]];
-            }
-            
-            if (self.isCellPrecomuted) {
-                [self precomputeAdditionalTableViewCellsWithDataSource:datasource];
             }
         }
         
@@ -269,11 +272,8 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     
     // 设置代理
     detail.delegate = self;
-    
     LCUINavigationController * nav = LC_UINAVIGATION(detail);
-    
     [detail setPresendModelAnimationOpen];
-    
     [self.navigationController presentViewController:nav animated:YES completion:nil];
     
     LKPost * post = signal.object;
@@ -316,18 +316,21 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
 }
 
 - (void)precomputeAllTableViewCellsWithDataSource:(NSArray *)datasource {
-    self.precomputedCells = [NSMutableArray array];
     for (NSInteger i = 0; i < datasource.count; ++i) {
         LKPost *post = (LKPost *)datasource[i];
-        [self.precomputedCells addObject:[self getTableViewCell:post inputViewTag:i]];
+        NSString *key = [NSString stringWithFormat:@"%ld", (long)i];
+        UITableViewCell *precomputedCell = [self getTableViewCell:post inputViewTag:i];
+        [self.precomputedCellCache setObject:precomputedCell forKey:key];
     }
 }
 
 - (void)precomputeAdditionalTableViewCellsWithDataSource:(NSArray *)datasource {
-    NSInteger beg = self.precomputedCells.count;
+    NSInteger beg = self.datasource.count;
     for (NSInteger i = 0; i < datasource.count; ++i) {
         LKPost *post = (LKPost *)datasource[i];
-        [self.precomputedCells addObject:[self getTableViewCell:post inputViewTag:i + beg]];
+        NSString *key = [NSString stringWithFormat:@"%ld", (long)i + beg];
+        UITableViewCell *precomputedCell = [self getTableViewCell:post inputViewTag:i + beg];
+        [self.precomputedCellCache setObject:precomputedCell forKey:key];
     }
 }
 
@@ -335,11 +338,8 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     LKHomeTableViewCell *cell = [[LKHomeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Content"];
     // 设置cell的代理
     cell.delegate = self;
-    
     cell.post = post;
-    
     @weakly(self);
-    
     cell.addTag = ^(LKPost * value){
         @normally(self);
         if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
@@ -348,7 +348,6 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
             [self.inputView becomeFirstResponder];
         }
     };
-    
     cell.removedTag = ^(LKPost * value){
         @normally(self);
         [self.tableView beginUpdates];
@@ -361,11 +360,17 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
 
 - (UITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    LKHomeTableViewCell *cell = nil;
+    
     if (self.isCellPrecomuted) {
-        return [self.precomputedCells objectAtIndex:indexPath.row];
+        NSString *key = [NSString stringWithFormat:@"%ld", (long)indexPath.row];
+        cell = (LKHomeTableViewCell *)[self.precomputedCellCache objectForKey:key];
+        if (cell) {
+            return cell;
+        }
     }
     
-    LKHomeTableViewCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Content" andClass:[LKHomeTableViewCell class]];
+    cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Content" andClass:[LKHomeTableViewCell class]];
     // 设置cell的代理
     cell.delegate = self;
     

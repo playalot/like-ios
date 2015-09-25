@@ -828,7 +828,6 @@
 		BC12A6301B9BF04F00B99CB5 /* LCUrlArgumentsFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A62F1B9BF04F00B99CB5 /* LCUrlArgumentsFilter.m */; };
 		BC12A6371B9BF1BE00B99CB5 /* LKTabBarController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6341B9BF1BE00B99CB5 /* LKTabBarController.mm */; };
 		BC12A6381B9BF1BE00B99CB5 /* LKWelcome.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6361B9BF1BE00B99CB5 /* LKWelcome.m */; };
-		BC12A63B1B9BF24500B99CB5 /* LKContext.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A63A1B9BF24500B99CB5 /* LKContext.m */; };
 		BC12A6521BA023E600B99CB5 /* LKPostTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6511BA023E600B99CB5 /* LKPostTableViewController.m */; };
 		BC12A6551BA0240200B99CB5 /* LKPostTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6541BA0240200B99CB5 /* LKPostTableViewCell.m */; };
 		BC12A65B1BA5A36D00B99CB5 /* LKSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A65A1BA5A36D00B99CB5 /* LKSearchViewController.m */; };
@@ -851,7 +850,8 @@
 		BCD148101BB3A16A0062C463 /* LKLikeTagItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD1480F1BB3A16A0062C463 /* LKLikeTagItemView.m */; settings = {ASSET_TAGS = (); }; };
 		BCD148131BB3DCA60062C463 /* LKPostView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD148121BB3DCA60062C463 /* LKPostView.m */; settings = {ASSET_TAGS = (); }; };
 		BCD148161BB3F3AC0062C463 /* LKTagItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD148151BB3F3AC0062C463 /* LKTagItemView.m */; settings = {ASSET_TAGS = (); }; };
-		BCD1481E1BB414900062C463 /* LKQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD1481B1BB414900062C463 /* LKQueue.m */; settings = {ASSET_TAGS = (); }; };
+		BCD148271BB4FB9A0062C463 /* LRUCache.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD148241BB4FB9A0062C463 /* LRUCache.m */; settings = {ASSET_TAGS = (); }; };
+		BCD148281BB4FB9A0062C463 /* LRUCacheNode.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD148261BB4FB9A0062C463 /* LRUCacheNode.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2414,8 +2414,6 @@
 		BC12A6341B9BF1BE00B99CB5 /* LKTabBarController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = LKTabBarController.mm; path = Common/LKTabBarController.mm; sourceTree = "<group>"; };
 		BC12A6351B9BF1BE00B99CB5 /* LKWelcome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKWelcome.h; path = Common/LKWelcome.h; sourceTree = "<group>"; };
 		BC12A6361B9BF1BE00B99CB5 /* LKWelcome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKWelcome.m; path = Common/LKWelcome.m; sourceTree = "<group>"; };
-		BC12A6391B9BF24500B99CB5 /* LKContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKContext.h; path = LKCommon/LKContext.h; sourceTree = "<group>"; };
-		BC12A63A1B9BF24500B99CB5 /* LKContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKContext.m; path = LKCommon/LKContext.m; sourceTree = "<group>"; };
 		BC12A6501BA023E600B99CB5 /* LKPostTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKPostTableViewController.h; path = Common/LKPostTableViewController.h; sourceTree = "<group>"; };
 		BC12A6511BA023E600B99CB5 /* LKPostTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKPostTableViewController.m; path = Common/LKPostTableViewController.m; sourceTree = "<group>"; };
 		BC12A6531BA0240200B99CB5 /* LKPostTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKPostTableViewCell.h; path = Common/LKPostTableViewCell.h; sourceTree = "<group>"; };
@@ -2461,8 +2459,10 @@
 		BCD148121BB3DCA60062C463 /* LKPostView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKPostView.m; sourceTree = "<group>"; };
 		BCD148141BB3F3AC0062C463 /* LKTagItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKTagItemView.h; sourceTree = "<group>"; };
 		BCD148151BB3F3AC0062C463 /* LKTagItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKTagItemView.m; sourceTree = "<group>"; };
-		BCD1481A1BB414900062C463 /* LKQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKQueue.h; sourceTree = "<group>"; };
-		BCD1481B1BB414900062C463 /* LKQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKQueue.m; sourceTree = "<group>"; };
+		BCD148231BB4FB9A0062C463 /* LRUCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LRUCache.h; path = Utility/LRUCache.h; sourceTree = "<group>"; };
+		BCD148241BB4FB9A0062C463 /* LRUCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LRUCache.m; path = Utility/LRUCache.m; sourceTree = "<group>"; };
+		BCD148251BB4FB9A0062C463 /* LRUCacheNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LRUCacheNode.h; path = Utility/LRUCacheNode.h; sourceTree = "<group>"; };
+		BCD148261BB4FB9A0062C463 /* LRUCacheNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LRUCacheNode.m; path = Utility/LRUCacheNode.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2972,10 +2972,9 @@
 		138EDBEF1AD7B08A0020957C /* LIKE */ = {
 			isa = PBXGroup;
 			children = (
-				BC12A6311B9BF16D00B99CB5 /* LKCommon */,
+				138EDEC81AD7B65B0020957C /* LKApplication */,
 				138EDBF41AD7B08A0020957C /* AppDelegate.h */,
 				138EDBF51AD7B08A0020957C /* AppDelegate.m */,
-				138EDEC81AD7B65B0020957C /* LKApplication */,
 				138EDECA1AD7B65B0020957C /* LKResource */,
 				138EDECB1AD7B65B0020957C /* LKUIKit */,
 				138EDECC1AD7B70F0020957C /* LKExternal */,
@@ -3823,6 +3822,7 @@
 		138EDEC81AD7B65B0020957C /* LKApplication */ = {
 			isa = PBXGroup;
 			children = (
+				BCD148221BB4FB870062C463 /* Utility */,
 				BC484A981BAFA55800F69D50 /* Interface */,
 				BC12A6321B9BF18A00B99CB5 /* Common */,
 				138EDECD1AD7B7C00020957C /* Application */,
@@ -4556,8 +4556,6 @@
 		139B06901ADBF4E3006A260F /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				BCD1481A1BB414900062C463 /* LKQueue.h */,
-				BCD1481B1BB414900062C463 /* LKQueue.m */,
 				139B06A71ADBF577006A260F /* LKHomepageHeader.h */,
 				139B06A81ADBF577006A260F /* LKHomepageHeader.m */,
 				13D63ACF1AEA13D8001587C0 /* LKDelegateHandler.h */,
@@ -5234,15 +5232,6 @@
 			name = LCNetworking;
 			sourceTree = "<group>";
 		};
-		BC12A6311B9BF16D00B99CB5 /* LKCommon */ = {
-			isa = PBXGroup;
-			children = (
-				BC12A6391B9BF24500B99CB5 /* LKContext.h */,
-				BC12A63A1B9BF24500B99CB5 /* LKContext.m */,
-			);
-			name = LKCommon;
-			sourceTree = "<group>";
-		};
 		BC12A6321B9BF18A00B99CB5 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -5299,6 +5288,17 @@
 				BC6ABE851BB27C0900B56E98 /* LKUserFansInterface.m */,
 			);
 			name = Interface;
+			sourceTree = "<group>";
+		};
+		BCD148221BB4FB870062C463 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				BCD148231BB4FB9A0062C463 /* LRUCache.h */,
+				BCD148241BB4FB9A0062C463 /* LRUCache.m */,
+				BCD148251BB4FB9A0062C463 /* LRUCacheNode.h */,
+				BCD148261BB4FB9A0062C463 /* LRUCacheNode.m */,
+			);
+			name = Utility;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -5821,6 +5821,7 @@
 				138EDE861AD7B0A30020957C /* LCSystemInfo.mm in Sources */,
 				139054FD1B994A6D00DBF34A /* GPUImageHazeFilter.m in Sources */,
 				13BCD8C51ADBA93000A0CBF5 /* MCSpringAnimation.m in Sources */,
+				BCD148281BB4FB9A0062C463 /* LRUCacheNode.m in Sources */,
 				13BCD8D61ADBB00500A0CBF5 /* NSObject+LKNetworkInterface.m in Sources */,
 				139055271B994A6D00DBF34A /* GPUImageOpeningFilter.m in Sources */,
 				1347655F1AE25EA40055D099 /* QNAsyncRun.m in Sources */,
@@ -6053,9 +6054,7 @@
 				138EDE3E1AD7B0A30020957C /* HTTPServer.m in Sources */,
 				138EDDFD1AD7B0A30020957C /* LCCMDInput.m in Sources */,
 				138EDBF61AD7B08A0020957C /* AppDelegate.m in Sources */,
-				BC12A63B1B9BF24500B99CB5 /* LKContext.m in Sources */,
 				13E1A4EF1AE65FE300E24C3C /* UIImage+FastttFilters.m in Sources */,
-				BCD1481E1BB414900062C463 /* LKQueue.m in Sources */,
 				139055291B994A6D00DBF34A /* GPUImageOverlayBlendFilter.m in Sources */,
 				134B0B7D1B5656DE00A195BE /* LKSearchHistory.m in Sources */,
 				139054CD1B994A6D00DBF34A /* GPUImageBilateralFilter.m in Sources */,
@@ -6096,6 +6095,7 @@
 				13BCD8C11ADBA93000A0CBF5 /* MCAnimationProxy.m in Sources */,
 				BC6ABE801BB2787B00B56E98 /* LKUserPostsInterface.m in Sources */,
 				138EDE9E1AD7B0A30020957C /* UIView+LCFrameLayout.m in Sources */,
+				BCD148271BB4FB9A0062C463 /* LRUCache.m in Sources */,
 				BC6ABE7D1BB263AC00B56E98 /* LKUserFavouritesInterface.m in Sources */,
 				139055091B994A6D00DBF34A /* GPUImageKuwaharaFilter.m in Sources */,
 				139C712A1B54CAE60051B2C3 /* NSNull+LCExtension.m in Sources */,

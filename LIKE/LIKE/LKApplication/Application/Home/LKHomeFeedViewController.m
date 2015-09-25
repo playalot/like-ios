@@ -48,25 +48,7 @@ LC_PROPERTY(weak) id delegate;
 
 @implementation LKHomeFeedViewController
 
-- (void)testLRUCache {
-    LRUCache *cache = [[LRUCache alloc] initWithCapacity:20];
-    for (NSInteger i = 0; i < 100; i ++) {
-        NSString *key = [NSString stringWithFormat:@"key%ld", (long)i];
-        UIView *view = UIView.view;
-        view.tag = 1000;
-        [cache setObject:view forKey:key];
-    }
-    
-    for (NSInteger i = 0; i < 100; ++i) {
-        NSString *key = [NSString stringWithFormat:@"key%ld", (long)i];
-        NSLog(@"cache value for key %@: %@", key, [cache objectForKey:key]);
-    }
-}
-
 - (void)buildUI {
-    
-//    [self testLRUCache];
-    
     [self buildTableView];
     [self buildInputView];
     [self buildPullLoader];
@@ -340,7 +322,6 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     for (NSInteger i = 0; i < datasource.count; ++i) {
         LKPost *post = (LKPost *)datasource[i];
         NSString *key = [NSString stringWithFormat:@"%ld", (long)i];
-        NSLog(@"key: %@", key);
         UITableViewCell *precomputedCell = [self getTableViewCell:post inputViewTag:i];
         [self.precomputedCellCache setObject:precomputedCell forKey:key];
     }
@@ -348,11 +329,9 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
 
 - (void)precomputeAdditionalTableViewCellsWithDataSource:(NSArray *)datasource {
     NSInteger beg = self.datasource.count;
-    NSLog(@"beg: %ld", beg);
     for (NSInteger i = 0; i < datasource.count; ++i) {
         LKPost *post = (LKPost *)datasource[i];
         NSString *key = [NSString stringWithFormat:@"%ld", (long)i + beg];
-        NSLog(@"key: %@", key);
         UITableViewCell *precomputedCell = [self getTableViewCell:post inputViewTag:i + beg];
         [self.precomputedCellCache setObject:precomputedCell forKey:key];
     }
@@ -388,7 +367,6 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     
     if (self.isCellPrecomuted) {
         NSString *key = [NSString stringWithFormat:@"%ld", (long)indexPath.row];
-        NSLog(@"cell generated key: %@", key);
         cell = (LKHomeTableViewCell *)[self.precomputedCellCache objectForKey:key];
         if (cell) {
             return cell;

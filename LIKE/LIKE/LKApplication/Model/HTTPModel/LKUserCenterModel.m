@@ -92,8 +92,8 @@ LC_PROPERTY(assign) NSInteger index;
         switch (type) {
                 
             case LKUserCenterModelTypePhotos: {
-                LKUserPostsInterface *userPostsInterface = (LKUserPostsInterface *)interface;
                 
+                LKUserPostsInterface *userPostsInterface = (LKUserPostsInterface *)interface;
                 NSArray *datasource = userPostsInterface.posts;
                 if (isFirstPage) {
                     self.photoArray = [NSMutableArray arrayWithArray:datasource];
@@ -111,8 +111,8 @@ LC_PROPERTY(assign) NSInteger index;
             }
                 
             case LKUserCenterModelTypeFocus: {
-                LKUserFollowsInterface *userFollowsInterface = (LKUserFollowsInterface *)interface;
                 
+                LKUserFollowsInterface *userFollowsInterface = (LKUserFollowsInterface *)interface;
                 NSArray * datasource = userFollowsInterface.follows;
                 if (isFirstPage) {
                     self.focusArray = [NSMutableArray arrayWithArray:datasource];
@@ -185,6 +185,9 @@ LC_PROPERTY(assign) NSInteger index;
         }
         
     }];
+    
+    // set page with type...
+    [self setPageWithType:type page:page];
 }
 
  /*
@@ -285,6 +288,7 @@ LC_PROPERTY(assign) NSInteger index;
 }
 
 - (void)handleResultWithType:(LKUserCenterModelType)type isFirstPage:(BOOL)isFirstPage result:(LKHttpRequestResult *)result {
+    
     switch (type) {
             
         case LKUserCenterModelTypePhotos: {
@@ -301,10 +305,8 @@ LC_PROPERTY(assign) NSInteger index;
             }
             
             if (datasource.count == 0) {
-                
                 self.photoCanLoadMore = NO;
             }
-            
         }
             break;
             
@@ -313,43 +315,33 @@ LC_PROPERTY(assign) NSInteger index;
             NSArray * datasource = result.json[@"data"][@"follows"];
             
             NSMutableArray * resultData = [NSMutableArray array];
-            
             for (NSDictionary * tmp in datasource) {
-                
                 [resultData addObject:[LKUser objectFromDictionary:tmp]];
             }
             
             if (isFirstPage) {
-                
                 self.focusArray = resultData;
-            }
-            else{
-                
+            } else {
                 [self.focusArray addObjectsFromArray:resultData];
             }
             
             if (datasource.count == 0) {
-                
                 self.focusCanLoadMore = NO;
             }
         }
             break;
             
         case LKUserCenterModelTypeFans: {
+            
             NSArray * datasource = result.json[@"data"][@"fans"];
-            
             NSMutableArray * resultData = [NSMutableArray array];
-            
             for (NSDictionary * tmp in datasource) {
-                
                 [resultData addObject:[LKUser objectFromDictionary:tmp]];
             }
             
             if (isFirstPage) {
-                
                 self.fansArray = resultData;
-            }
-            else{
+            }  else {
                 
                 [self.fansArray addObjectsFromArray:resultData];
             }

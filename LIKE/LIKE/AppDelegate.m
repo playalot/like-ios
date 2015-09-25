@@ -38,10 +38,9 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
 @implementation AppDelegate
 
 - (BOOL)tabBarController:(RDVTabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
-    
     if (viewController == self.homeViewController) {
+        [self.homeViewController refresh];
     }
-    
     return YES;
 }
 

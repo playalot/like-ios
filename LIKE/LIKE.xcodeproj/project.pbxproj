@@ -851,7 +851,6 @@
 		BCD148101BB3A16A0062C463 /* LKLikeTagItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD1480F1BB3A16A0062C463 /* LKLikeTagItemView.m */; settings = {ASSET_TAGS = (); }; };
 		BCD148131BB3DCA60062C463 /* LKPostView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD148121BB3DCA60062C463 /* LKPostView.m */; settings = {ASSET_TAGS = (); }; };
 		BCD148161BB3F3AC0062C463 /* LKTagItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD148151BB3F3AC0062C463 /* LKTagItemView.m */; settings = {ASSET_TAGS = (); }; };
-		BCD148191BB3F4C20062C463 /* LKTagItemViewCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD148181BB3F4C20062C463 /* LKTagItemViewCenter.m */; settings = {ASSET_TAGS = (); }; };
 		BCD1481E1BB414900062C463 /* LKQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD1481B1BB414900062C463 /* LKQueue.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
@@ -2462,8 +2461,6 @@
 		BCD148121BB3DCA60062C463 /* LKPostView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKPostView.m; sourceTree = "<group>"; };
 		BCD148141BB3F3AC0062C463 /* LKTagItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKTagItemView.h; sourceTree = "<group>"; };
 		BCD148151BB3F3AC0062C463 /* LKTagItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKTagItemView.m; sourceTree = "<group>"; };
-		BCD148171BB3F4C20062C463 /* LKTagItemViewCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKTagItemViewCenter.h; sourceTree = "<group>"; };
-		BCD148181BB3F4C20062C463 /* LKTagItemViewCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKTagItemViewCenter.m; sourceTree = "<group>"; };
 		BCD1481A1BB414900062C463 /* LKQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKQueue.h; sourceTree = "<group>"; };
 		BCD1481B1BB414900062C463 /* LKQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKQueue.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -4600,8 +4597,6 @@
 				BCD148121BB3DCA60062C463 /* LKPostView.m */,
 				BCD148141BB3F3AC0062C463 /* LKTagItemView.h */,
 				BCD148151BB3F3AC0062C463 /* LKTagItemView.m */,
-				BCD148171BB3F4C20062C463 /* LKTagItemViewCenter.h */,
-				BCD148181BB3F4C20062C463 /* LKTagItemViewCenter.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -5724,7 +5719,6 @@
 				138EDE9B1AD7B0A30020957C /* UIImage+LCExtension.m in Sources */,
 				138EDE621AD7B0A30020957C /* JSONModelClassProperty.m in Sources */,
 				134765691AE25EA40055D099 /* QNFileRecorder.m in Sources */,
-				BCD148191BB3F4C20062C463 /* LKTagItemViewCenter.m in Sources */,
 				139054DE1B994A6D00DBF34A /* GPUImageContrastFilter.m in Sources */,
 				138EDE301AD7B0A30020957C /* LCHandleViewHighlightRequest.m in Sources */,
 				138EDE7A1AD7B0A30020957C /* LCDeviceIdentifier.m in Sources */,

@@ -9,7 +9,6 @@
 #import "LKTagsView.h"
 #import "LKTagLikeModel.h"
 #import "LKLoginViewController.h"
-#import "LKTagItemViewCenter.h"
 
 #define TAG_LEFT_PADDING 14.0f
 #define TAG_RIGHT_PADDING 14.0f
@@ -73,7 +72,7 @@ LC_PROPERTY(strong) UIView * tipLine;
             continue;
         }
         
-        LKTagItemView *item = [[LKTagItemViewCenter sharedInstance] getImageView];
+        LKTagItemView *item = self.FIND(tag.id.integerValue);
         if (!item) {
             item = LKTagItemView.view;
         }

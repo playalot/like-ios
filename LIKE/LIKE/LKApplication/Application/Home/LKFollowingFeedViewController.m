@@ -35,7 +35,6 @@ LC_PROPERTY(copy) NSNumber * next;
 LC_PROPERTY(assign) NSTimeInterval lastFocusLoadTime;
 LC_PROPERTY(assign) BOOL needRefresh;
 LC_PROPERTY(strong) NSMutableArray *heightList;
-LC_PROPERTY(strong) NSOperationQueue *loadDataQueue;
 
 LC_PROPERTY(weak) id delegate;
 
@@ -68,8 +67,6 @@ LC_PROPERTY(weak) id delegate;
 }
 
 - (void)buildUI {
-    
-    self.loadDataQueue = [[NSOperationQueue alloc] init];
     
     CGRect viewRect = CGRectMake(0, 0, LC_DEVICE_WIDTH, LC_DEVICE_HEIGHT + 20 - 64 - 49);
     self.tableView = [[LCUITableView alloc] initWithFrame:viewRect];
@@ -110,58 +107,51 @@ LC_PROPERTY(weak) id delegate;
         @normally(self);
         @normally(followingInterface);
         
-        dispatch_queue_t queue = dispatch_queue_create("HomeFeedQueue",NULL);
-        dispatch_async(queue, ^{
-            
-            NSNumber *resultNext = followingInterface.next;
-            
-            if (resultNext)
-                self.next = resultNext;
-            
-            NSArray * resultData = followingInterface.posts;
-            NSMutableArray * datasource = [NSMutableArray array];
-            
-            for (NSDictionary * tmp in resultData) {
-                [datasource addObject:[LKPost objectFromDictionary:tmp]];
-            }
-            
-            if (diretion == LCUIPullLoaderDiretionTop) {
-                self.datasource = datasource;
-                LKUserDefaults.singleton[FOCUS_FEED_CACHE_KEY] = resultData;
-                self.lastFocusLoadTime = time;
-                
-                self.heightList = [NSMutableArray array];
-                for (LKPost *post in self.datasource) {
-                    [self.heightList addObject:[NSNumber numberWithFloat:[LKHomeTableViewCell height:post]]];
-                }
-                
-            } else {
-                [self.datasource addObjectsFromArray:datasource];
-                
-                // Calculate Height List
-                for (LKPost *post in datasource) {
-                    [self.heightList addObject:[NSNumber numberWithFloat:[LKHomeTableViewCell height:post]]];
-                }
-            }
-            
-            NSMutableArray *prefetchs = nil;
-            for (LKPost *post in self.datasource) {
-                if (post.content) {
-                    [prefetchs addObject:post.content];
-                }
-            }
-            
-            [self calculateHeightList];
-            
-            [[SDWebImagePrefetcher sharedImagePrefetcher] prefetchURLs:prefetchs.copy];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.pullLoader endRefresh];
-                [self.tableView reloadData];
-            });
-            
-        });
+        NSNumber *resultNext = followingInterface.next;
         
+        if (resultNext)
+            self.next = resultNext;
+        
+        NSArray * resultData = followingInterface.posts;
+        NSMutableArray * datasource = [NSMutableArray array];
+        
+        for (NSDictionary * tmp in resultData) {
+            [datasource addObject:[LKPost objectFromDictionary:tmp]];
+        }
+        
+        if (diretion == LCUIPullLoaderDiretionTop) {
+            self.datasource = datasource;
+            LKUserDefaults.singleton[FOCUS_FEED_CACHE_KEY] = resultData;
+            self.lastFocusLoadTime = time;
+            
+            self.heightList = [NSMutableArray array];
+            for (LKPost *post in self.datasource) {
+                [self.heightList addObject:[NSNumber numberWithFloat:[LKHomeTableViewCell height:post]]];
+            }
+            
+        } else {
+            [self.datasource addObjectsFromArray:datasource];
+            
+            // Calculate Height List
+            for (LKPost *post in datasource) {
+                [self.heightList addObject:[NSNumber numberWithFloat:[LKHomeTableViewCell height:post]]];
+            }
+        }
+        
+        NSMutableArray *prefetchs = nil;
+        for (LKPost *post in self.datasource) {
+            if (post.content) {
+                [prefetchs addObject:post.content];
+            }
+        }
+        
+        [self calculateHeightList];
+        
+        [[SDWebImagePrefetcher sharedImagePrefetcher] prefetchURLs:prefetchs.copy];
+        
+        [self.pullLoader endRefresh];
+        [self.tableView reloadData];
+     
     } failure:^(LCBaseRequest *request) {
         
     }];
@@ -187,7 +177,7 @@ LC_PROPERTY(weak) id delegate;
 //    LKPostTableViewCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Content" andClass:[LKPostTableViewCell class]];
     
     // 设置cell的代理
-//    cell.delegate = self;
+    cell.delegate = self;
     
     LKPost * post = self.datasource[indexPath.row];
     cell.post = post;

@@ -19,6 +19,7 @@
 #import "LKMainFeedViewController.h"
 #import "LKGroupViewController.h"
 #import "LKCameraRollViewController.h"
+#import "LKTabbarViewController.h"
 
 LC_NOTIFICATION_SET(LKSessionError);
 

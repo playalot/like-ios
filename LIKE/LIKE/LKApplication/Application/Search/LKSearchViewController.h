@@ -7,9 +7,8 @@
 //
 
 #import "LCUIViewController.h"
+#import "LKSearchBar.h"
 
 @interface LKSearchViewController : LCUIViewController
-
-+ (id)sharedInstance;
 
 @end

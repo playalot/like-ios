@@ -12,66 +12,38 @@
 #import "LKPostDetailViewController.h"
 #import "LKLoginViewController.h"
 
-@interface LKPostTableViewController () <LKPostDetailViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
+static NSString* const KVO_CONTEXT_DATASOURCE_CHANGED = @"KVO_CONTEXT_DATASOURCE_CHANGED";
 
-LC_PROPERTY(strong) LCUITableView *tableView;
+@interface LKPostTableViewController () <LKPostDetailViewControllerDelegate>
+
+LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
+
+LC_PROPERTY(assign) id observedDataSourceObject;
+LC_PROPERTY(copy) NSString *observedDataSourceKeyPath;
 
 @end
 
 @implementation LKPostTableViewController
 
--(void) dealloc
-{
+- (void)dealloc {
     [self cancelAllRequests];
     [self unobserveAllNotifications];
+    [self.observedDataSourceObject removeObserver:self forKeyPath:self.observedDataSourceKeyPath];
 }
 
--(void) viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self reloadData];
-}
-
--(void) viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-}
-
--(void) viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
-    if (self.datasource.count == 0)
+    if (self.datasource == nil)
         self.datasource = [NSMutableArray array];
-    
     [self reloadData];
 }
 
--(void) buildUI
-{
+- (void)buildUI {
     self.view.backgroundColor = LKColor.backgroundColor;
     
-    LCUIButton *titleBtn = [[LCUIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];
-    [titleBtn setImage:[UIImage imageNamed:@"HomeLikeIcon" useCache:YES] forState:UIControlStateNormal];
-    //    self.titleView = [LCUIImageView viewWithImage:[UIImage imageNamed:@"HomeLikeIcon.png" useCache:YES]];
-    self.titleView = (UIView *)titleBtn;
-    [titleBtn addTarget:self action:@selector(scrollViewScrollToTop) forControlEvents:UIControlEventTouchUpInside];
-    
+    [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[UIImage imageNamed:@"NavigationBarBack.png" useCache:YES] selectImage:nil];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
-    
-    // 导航栏返回上一级按钮
-    LCUIButton * backButton = LCUIButton.view;
-    backButton.viewFrameWidth = 80;
-    backButton.viewFrameHeight = 80;
-    backButton.viewFrameY = -17;
-    backButton.viewFrameX = -15;
-    backButton.buttonImage = [UIImage imageNamed:@"NavigationBarBack.png" useCache:YES];
-    backButton.showsTouchWhenHighlighted = YES;
-    [backButton addTarget:self action:@selector(_dismissAction) forControlEvents:UIControlEventTouchUpInside];
-    backButton.tag = 1002;
-    
-    self.navigationItem.hidesBackButton = YES;
-    [self.navigationController.navigationBar addSubview:backButton];
 
     self.tableView = [[LCUITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.viewFrameWidth, self.view.viewFrameHeight - 64) style:UITableViewStylePlain];
     self.tableView.delegate = self;
@@ -79,18 +51,70 @@ LC_PROPERTY(strong) LCUITableView *tableView;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = [UIColor clearColor];
     self.view.ADD(self.tableView);
+    
+    [self setNavigationBarHidden:NO animated:YES];
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
+    [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[UIImage imageNamed:@"NavigationBarBack.png" useCache:YES] selectImage:nil];
+    
+    self.pullLoader = [LCUIPullLoader pullLoaderWithScrollView:self.tableView pullStyle:LCUIPullLoaderStyleHeaderAndFooter];
+    @weakly(self);
+    self.pullLoader.beginRefresh = ^(LCUIPullLoaderDiretion diretion) {
+        @normally(self);
+        [self loadData:diretion];
+    };
+    
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:self.currentIndex inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
 }
 
--(void) _dismissAction {
-    [self dismissOrPopViewController];
+- (void)setCurrentIndex:(NSInteger)currentIndex {
+    _currentIndex = currentIndex;
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:self.currentIndex inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+}
+
+- (void)loadData:(LCUIPullLoaderDiretion)diretion {
+    if (self.delegate) {
+        [self.delegate willLoadData:diretion];
+    }
+}
+
+- (void)handleNavigationBarButton:(LCUINavigationBarButtonType)type {
+    if (type == LCUINavigationBarButtonTypeLeft) {
+        [self.navigationController popViewControllerAnimated:YES];
+        
+        NSIndexPath *visibleIndexPath = [[self.tableView indexPathsForVisibleRows] objectAtIndex:0];
+        if (self.delegate) {
+            [self.delegate willNavigationBack:visibleIndexPath.row];
+        }
+        
+    }
+}
+
+- (void)watchForChangeOfDatasource:(id)observedDataSourceObject
+                     dataSourceKey:(NSString *)observedDataSourceKeyPath {
+    
+    self.observedDataSourceObject = observedDataSourceObject;
+    self.observedDataSourceKeyPath = observedDataSourceKeyPath;
+    
+    [observedDataSourceObject addObserver:self
+                               forKeyPath:observedDataSourceKeyPath
+                                  options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
+                                  context:(__bridge_retained void *)KVO_CONTEXT_DATASOURCE_CHANGED];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if(context == (__bridge_retained void *)KVO_CONTEXT_DATASOURCE_CHANGED){
+        NSArray *datasource = [object valueForKey:self.observedDataSourceKeyPath];
+        self.datasource = [NSMutableArray arrayWithArray:datasource];
+        [self.pullLoader endRefresh];
+        [self reloadData];
+    }
 }
 
 #pragma mark -
 
--(void) addTag:(NSString *)tag onPost:(LKPost *)post onCell:(LKPostTableViewCell *)cell
-{
+-(void) addTag:(NSString *)tag onPost:(LKPost *)post onCell:(LKPostTableViewCell *)cell {
     @weakly(self);
-    
     LKTag * tagValue = [[LKTag alloc] init];
     tagValue.tag = tag;
     tagValue.likes = @1;
@@ -101,7 +125,6 @@ LC_PROPERTY(strong) LCUITableView *tableView;
     
     [post.tags insertObject:tagValue atIndex:0];
     
-    
     // reload tags...
     [cell reloadTags];
     
@@ -110,11 +133,9 @@ LC_PROPERTY(strong) LCUITableView *tableView;
     // reload row...
     if (indexPath) {
         post.user.likes = @(post.user.likes.integerValue + 1);
-        
         [self.tableView beginUpdates];
         cell.post = post;
         [self.tableView endUpdates];
-    
         [cell newTagAnimation:^(BOOL finished) {}];
     }
     
@@ -138,12 +159,10 @@ LC_PROPERTY(strong) LCUITableView *tableView;
     }];
 }
 
-
 #pragma mark - ***** 数据源方法 *****
 
--(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 2;
+-(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -153,6 +172,8 @@ LC_PROPERTY(strong) LCUITableView *tableView;
 - (UITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     LKPostTableViewCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Content" andClass:[LKPostTableViewCell class]];
     
+    cell.headLineHidden = self.cellHeadLineHidden;
+    
     LKPost *post = self.datasource[indexPath.row];
     cell.post = post;
     
@@ -160,7 +181,7 @@ LC_PROPERTY(strong) LCUITableView *tableView;
     
     cell.addTag = ^(LKPost * value){
         
-    @normally(self);
+//    @normally(self);
         
 //        if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
 //            
@@ -189,7 +210,7 @@ LC_PROPERTY(strong) LCUITableView *tableView;
  *  根据cell计算行高
  */
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [LKPostTableViewCell height:self.datasource[indexPath.row]];
+    return [LKPostTableViewCell height:self.datasource[indexPath.row] headLineHidden:self.cellHeadLineHidden];
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -197,15 +218,14 @@ LC_PROPERTY(strong) LCUITableView *tableView;
 }
 
 -(void) scrollViewScrollToTop {
-    NSLog(@"scrollViewScrollToTop");
 }
 
 -(void) reloadData {
     [self.tableView reloadData];
 }
 
-LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
-{
+LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
+    
     if (self.inputView.isFirstResponder) {
         [self.inputView resignFirstResponder];
         return;

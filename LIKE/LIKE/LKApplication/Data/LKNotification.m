@@ -10,31 +10,35 @@
 
 @implementation LKNotification
 
--(instancetype) initWithDictionary:(NSDictionary *)dict error:(NSError *__autoreleasing *)err
+- (instancetype)initWithDictionary:(NSDictionary *)dict error:(NSError *__autoreleasing *)err
 {
     if (self = [super init]) {
         
-        NSString * type = dict[@"type"];
+        NSString *type = dict[@"type"];
         
         if ([type isEqualToString:@"MARK"]) {
             
             self.type = LKNotificationTypeNewTag;
-        }
-        else if ([type isEqualToString:@"LIKE"]){
+            
+        } else if ([type isEqualToString:@"LIKE"]){
             
             self.type = LKNotificationTypeLikeTag;
-        }
-        else if ([type isEqualToString:@"FOLLOW"]){
+            
+        } else if ([type isEqualToString:@"FOLLOW"]){
             
             self.type = LKNotificationTypeFocus;
-        }
-        else if ([type isEqualToString:@"REPLY"]){
+            
+        } else if ([type isEqualToString:@"REPLY"]){
             
             self.type = LKNotificationTypeReply;
-        }
-        else if ([type isEqualToString:@"COMMENT"]){
+            
+        } else if ([type isEqualToString:@"COMMENT"]){
             
             self.type = LKNotificationTypeComment;
+            
+        } else if ([type isEqualToString:@"OFFICIAL"]) {
+            
+            self.type = LKNotificationTypeOfficial;
         }
         
         self.user = [LKUser objectFromDictionary:dict[@"user"]];
@@ -43,9 +47,9 @@
         
         self.posts = [NSMutableArray array];
         
-        NSArray * tmp = dict[@"posts"];
+        NSArray *tmp = dict[@"posts"];
         
-        for (NSDictionary * post in tmp) {
+        for (NSDictionary *post in tmp) {
             
             [self.posts addObject:[LKPost objectFromDictionary:post]];
         }
@@ -54,6 +58,7 @@
         
         self.tag = dict[@"tag"];
         self.tagID = dict[@"mark_id"];
+        self.tags = dict[@"tags"];
     }
     
     return self;

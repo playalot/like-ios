@@ -14,8 +14,9 @@ LC_BLOCK(UIColor *, LCUIColorFromString, (NSString * string));
 
 @interface UIColor (LCExtension)
 
-+ (UIColor *) colorWithHex:(NSString *)hex;
-+ (UIColor *) colorWithString:(NSString *)string;
++ (UIColor *)colorWithHex:(NSString *)hex;
++ (UIColor *)colorWithString:(NSString *)string;
++ (UIColor *)randomColor;
 
 + (LCUIColorFromString) HEX;
 + (LCUIColorFromString) STRING; // lightgray / rgb(1,1,1) / #FFF / #FFFFFF / #FFFFFFFF

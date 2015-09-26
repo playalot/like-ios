@@ -9,18 +9,22 @@
 #import "LKNotificationCell.h"
 #import "LKTime.h"
 #import "UIImageView+WebCache.h"
+#import "GBTagListView.h"
 
 @interface LKNotificationCell ()
 
-LC_PROPERTY(strong) LCUIImageView * headImageView;
-LC_PROPERTY(strong) LCUIImageView * icon;
-LC_PROPERTY(strong) LCUILabel * nameLabel;
-LC_PROPERTY(strong) LCUILabel * titleLabel;
-LC_PROPERTY(strong) LCUILabel * timeLabel;
-LC_PROPERTY(strong) UIView * line;
+LC_PROPERTY(strong) LCUIImageView *headImageView;
+LC_PROPERTY(strong) LCUIImageView *icon;
+LC_PROPERTY(strong) LCUILabel *nameLabel;
+LC_PROPERTY(strong) LCUILabel *titleLabel;
+LC_PROPERTY(strong) LCUILabel *timeLabel;
+LC_PROPERTY(strong) LCUIButton *tagButton;
+LC_PROPERTY(strong) LCUIButton *moreButton;
+LC_PROPERTY(strong) GBTagListView *tagListView;
+LC_PROPERTY(strong) UIView *line;
 
-LC_PROPERTY(strong) LCUIImageView * preview;
-LC_PROPERTY(strong) UIScrollView * morePreview;
+LC_PROPERTY(strong) LCUIImageView *preview;
+//LC_PROPERTY(strong) UIScrollView *morePreview;
 
 @end
 
@@ -76,11 +80,21 @@ LC_IMP_SIGNAL(PushPostDetail);
 //        self.ADD(self.titleLabel);
         
         
+        self.tagButton = LCUIButton.view;
+        self.tagButton.backgroundColor = LKColor.color;
+        self.tagButton.titleFont = LK_FONT_B(11);
+        self.tagButton.viewFrameHeight = self.tagButton.titleFont.lineHeight + 4;
+        self.tagButton.viewCenterY = self.nameLabel.viewCenterY;
+        self.tagButton.cornerRadius = 9;
+        self.tagButton.hidden = YES;
+        self.ADD(self.tagButton);
+        
+        
         self.timeLabel = LCUILabel.view;
         self.timeLabel.font = LK_FONT(10);
         self.timeLabel.textColor = LC_RGBA(171, 164, 157, 1);
         self.ADD(self.timeLabel);
-    
+        
         
         self.preview = LCUIImageView.view;
         self.preview.viewFrameWidth = 35;
@@ -95,12 +109,21 @@ LC_IMP_SIGNAL(PushPostDetail);
         self.nameLabel.viewFrameWidth = LC_DEVICE_WIDTH - self.nameLabel.viewFrameX - self.preview.viewFrameWidth - ((self.preview.viewFrameY) * 2);
 
         
-        self.morePreview = UIScrollView.view;
-        self.morePreview.bounces = NO;
-        self.morePreview.showsHorizontalScrollIndicator = NO;
-        self.morePreview.showsVerticalScrollIndicator = NO;
-        self.morePreview.scrollsToTop = NO;
-        self.ADD(self.morePreview);
+//        self.morePreview = UIScrollView.view;
+//        self.morePreview.bounces = NO;
+//        self.morePreview.showsHorizontalScrollIndicator = NO;
+//        self.morePreview.showsVerticalScrollIndicator = NO;
+//        self.morePreview.scrollsToTop = NO;
+//        self.ADD(self.morePreview);
+        
+        
+        self.moreButton = LCUIButton.view;
+        self.moreButton.viewFrameX = LC_DEVICE_WIDTH - 25;
+        self.moreButton.viewCenterY = self.headImageView.viewCenterY;
+        self.moreButton.viewFrameWidth = 7;
+        self.moreButton.viewFrameHeight = 12;
+        self.moreButton.hidden = YES;
+        self.ADD(self.moreButton);
         
         
         self.line = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
@@ -113,8 +136,17 @@ LC_IMP_SIGNAL(PushPostDetail);
 }
 
 
--(void) setNotification:(LKNotification *)notification
+- (void)setNotification:(LKNotification *)notification
 {
+    
+    for (UIView *view in self.subviews) {
+        
+        if ([view isKindOfClass:[GBTagListView class]]) {
+        
+            [view removeFromSuperview];
+        }
+    }
+
     _notification = notification;
     
     self.headImageView.image = nil;
@@ -123,7 +155,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     
     self.nameLabel.text = [NSString stringWithFormat:@"%@%@", notification.user.name, [LKNotificationCell getTitle:notification]];
     
-    NSMutableAttributedString * attString = [[NSMutableAttributedString alloc] initWithString:self.nameLabel.text];
+    NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:self.nameLabel.text];
     [attString addAttribute:NSFontAttributeName value:LK_FONT_B(12) range:[self.nameLabel.text rangeOfString:notification.user.name]];
     
     self.nameLabel.attributedText = attString;
@@ -133,72 +165,107 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.nameLabel.viewFrameHeight = 1000;
     self.nameLabel.FIT();
     
+    
+    self.moreButton.image = [UIImage imageNamed:@"more" useCache:YES];
+    
+    
+    if (notification.type == LKNotificationTypeNewTag || notification.type == LKNotificationTypeLikeTag || notification.type == LKNotificationTypeReply || notification.type == LKNotificationTypeComment) {
+        
+        if (notification.tags.count == 1) {
+            
+            self.tagButton.hidden = NO;
+            self.moreButton.hidden = YES;
+            
+            NSString *tag = notification.tags[0];
+            UIFont *tagFont = LK_FONT_B(11);
+            CGSize tagSize = [tag sizeWithFont:tagFont byHeight:tagFont.lineHeight];
+            self.tagButton.viewFrameWidth = tagSize.width + 20;
+            
+            CGFloat cellHeight = [[self class] height:notification];
+            
+            if (self.nameLabel.viewRightX + tagSize.width + 20 + 15 < self.preview.viewFrameX - 15) {
+                
+                self.tagButton.viewFrameX = self.nameLabel.viewRightX + 15;
+                self.tagButton.viewCenterY = cellHeight * 0.5;
+                self.cellHeight = cellHeight;
+            } else {
+                
+                self.tagButton.viewFrameX = self.nameLabel.viewFrameX;
+                self.tagButton.viewFrameY = self.preview.viewBottomY + 10;
+                self.cellHeight = self.tagButton.viewBottomY + 10;
+            }
+            
+            self.tagButton.title = notification.tags[0];
+            
+        } else {
+            
+            self.tagListView = GBTagListView.view;
+            self.tagListView.viewFrameX = self.nameLabel.viewFrameX - 10;
+            self.tagListView.viewFrameWidth = LC_DEVICE_WIDTH - self.tagListView.viewFrameX - 37;
+            self.ADD(self.tagListView);
+
+            self.tagButton.hidden = YES;
+            [self.tagListView setTagWithTagArray:notification.tags];
+            
+        }
+        
+    } else if (notification.type == LKNotificationTypeFocus) {
+        
+        self.tagButton.hidden = YES;
+        self.moreButton.hidden = NO;
+        self.cellHeight = [[self class] height:notification];
+    }
+    
 
     self.timeLabel.text = [LKTime dateNearByTimestamp:notification.timestamp];
     self.timeLabel.FIT();
     self.timeLabel.viewFrameX = self.nameLabel.viewFrameX;
     self.timeLabel.viewFrameY = self.nameLabel.viewBottomY + 5;
     
+    self.tagListView.viewFrameY = self.timeLabel.viewBottomY + 9;
+    
+    if (notification.tags.count >= 2) {
+        
+        self.cellHeight = self.tagListView.viewBottomY + 10;
+    }
     
     self.icon.image = [LKNotificationCell getIcon:notification];
     
     
     // images...
-    [self.morePreview removeAllSubviews];
+//    [self.morePreview removeAllSubviews];
 
-    if (notification.posts.count >= 2) {
+    if (notification.type == LKNotificationTypeFocus) {
         
         self.preview.hidden = YES;
-        self.morePreview.hidden = NO;
         
-        self.morePreview.viewFrameX = self.timeLabel.viewFrameX;
-        self.morePreview.viewFrameY = 55;
-        self.morePreview.viewFrameWidth = LC_DEVICE_WIDTH - self.morePreview.viewFrameX;
-        self.morePreview.viewFrameHeight = 55;
-        
-        CGFloat padding = 5;
-        
-        
-        // add subviews..
-        for (NSInteger i = 0; i<notification.posts.count; i++) {
-            
-            LKPost * post = notification.posts[i];
-            
-            LCUIImageView * image = LCUIImageView.view;
-            image.viewFrameX = self.morePreview.viewFrameWidth - (padding * (i + 1) + 35 * (i + 1));
-            image.viewFrameY = 55 / 2 - 35 / 2;
-            image.viewFrameWidth = 35;
-            image.viewFrameHeight = 35;
-//            image.url = post.content;
-            [image sd_setImageWithURL:[NSURL URLWithString:post.content] placeholderImage:nil];
-            image.tag = i;
-            image.userInteractionEnabled = YES;
-            [self.morePreview addSubview:image];
-        }
-        
-        self.morePreview.contentSize = LC_SIZE(35 * notification.posts.count + padding * notification.posts.count, 55);
-    }
-    else if(notification.posts.count == 1){
+    } else {
         
         self.preview.hidden = NO;
-        self.preview.image = nil;
-        self.preview.tag = 0;
 //        self.preview.url = ((LKPost *)notification.posts[0]).content;
-        [self.preview sd_setImageWithURL:[NSURL URLWithString:((LKPost *)notification.posts[0]).content] placeholderImage:nil];
-        self.morePreview.hidden = YES;
+        [self.preview sd_setImageWithURL:[NSURL URLWithString:((LKPost *)notification.post).content] placeholderImage:nil];
     }
-    else{
+    
         
-        self.preview.hidden = YES;
-        self.preview.image = nil;
-        self.preview.tag = 0;
-        self.morePreview.hidden = YES;
+    if (notification.tags.count == 1) {
+        
+        if (self.timeLabel.viewBottomY > self.tagButton.viewBottomY) {
+            
+            self.line.viewFrameY = self.timeLabel.viewBottomY + 10;
+            
+        } else {
+            
+            self.line.viewFrameY = self.tagButton.viewBottomY + 10;
+        }
+        
+    } else if (notification.tags.count >= 2) {
+        
+        self.line.viewFrameY = self.tagListView.viewBottomY + 10;
+        
+    } else {
+        
+        self.line.viewFrameY = self.timeLabel.viewBottomY + 10;
     }
-
-    
-    CGFloat y = self.timeLabel.viewBottomY - self.line.viewFrameHeight + 10 < 55 ? 55 : self.timeLabel.viewBottomY - self.line.viewFrameHeight + 10;
-    
-    self.line.viewFrameY = y;
 }
 
 //-(void) handlePostImageTap:(UITapGestureRecognizer *)tap
@@ -209,17 +276,18 @@ LC_IMP_SIGNAL(PushPostDetail);
 /**
  *  点击头像执行
  */
--(void) handleHeadTap:(UITapGestureRecognizer *)tap
+- (void)handleHeadTap:(UITapGestureRecognizer *)tap
 {
     self.SEND(@"PushUserCenter").object = self.notification.user;
 }
 
-+(NSString *) getTitle:(LKNotification *)notification
++ (NSString *)getTitle:(LKNotification *)notification
 {
     switch (notification.type) {
+            
         case LKNotificationTypeNewTag:
             
-            return [NSString stringWithFormat:@" %@#%@#", LC_LO(@"为你图片添加了标签"), notification.tag];
+            return [NSString stringWithFormat:@" %@ ", LC_LO(@"添加了标签")];
             
             break;
         case LKNotificationTypeFocus:
@@ -229,25 +297,30 @@ LC_IMP_SIGNAL(PushPostDetail);
             break;
         case LKNotificationTypeLikeTag:
             
-            return [NSString stringWithFormat:@" %@#%@#", LC_LO(@"赞了标签"), notification.tag];
+            return [NSString stringWithFormat:@" %@ ", LC_LO(@"赞了标签")];
 
             break;
         case LKNotificationTypeReply:
             
-            return [[NSString stringWithFormat:@" %@", LC_LO(@"在#%@#中回复了你")] stringByReplacingOccurrencesOfString:@"%@" withString:notification.tag];;
+            return [NSString stringWithFormat:@" %@ ", LC_LO(@"回复了你的评论")]; //stringByReplacingOccurrencesOfString:@"%@" withString:notification.tag];
 
             break;
         case LKNotificationTypeComment:
             
-            return [NSString stringWithFormat:@" %@#%@#", LC_LO(@"评论了"), notification.tag];
+            return [NSString stringWithFormat:@" %@ ", LC_LO(@"评论了标签")];
 
+            break;
+        case LKNotificationTypeOfficial:
+            
+            return [NSString stringWithFormat:@" %@ ", LC_LO(@"给你发了一条消息")];
+            
             break;
         default:
             break;
     }
 }
 
-+(UIImage *) getIcon:(LKNotification *)notification
++ (UIImage *)getIcon:(LKNotification *)notification
 {
     switch (notification.type) {
         case LKNotificationTypeNewTag:
@@ -275,14 +348,19 @@ LC_IMP_SIGNAL(PushPostDetail);
             return [UIImage imageNamed:@"NotificationCommentIcon.png" useCache:YES];
             
             break;
+        case LKNotificationTypeOfficial:
+            
+            return [UIImage imageNamed:@"NotificationOfficalIcon.png" useCache:YES];
+            
+            break;
         default:
             break;
     }
 }
 
-+(CGFloat) height:(LKNotification *)notification
++ (CGFloat)height:(LKNotification *)notification
 {
-    static LCUILabel * label = nil;
+    static LCUILabel *label = nil;
     
     if (!label) {
         label = [LCUILabel new];
@@ -292,7 +370,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     
     label.text = [NSString stringWithFormat:@"%@%@", notification.user.name, [self getTitle:notification]];
     
-    NSMutableAttributedString * attString = [[NSMutableAttributedString alloc] initWithString:label.text];
+    NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:label.text];
     [attString addAttribute:NSFontAttributeName value:LK_FONT_B(12) range:[label.text rangeOfString:notification.user.name]];
     
     label.attributedText = attString;

@@ -12,8 +12,9 @@
 @interface LKNotificationCell : LCUITableViewCell
 
 LC_PROPERTY(strong) LKNotification * notification;
+LC_PROPERTY(assign) CGFloat cellHeight;
 
-+(CGFloat) height:(LKNotification *)notification;
++ (CGFloat)height:(LKNotification *)notification;
 
 LC_ST_SIGNAL(PushPostDetail);
 

@@ -18,5 +18,4 @@ LC_PROPERTY(copy) LKNotificationViewWillHide willHide;
 -(void) showInViewController:(UIViewController *)viewController;
 -(void) hide;
 
-
 @end

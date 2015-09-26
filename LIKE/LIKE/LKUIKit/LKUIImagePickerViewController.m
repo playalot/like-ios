@@ -49,6 +49,8 @@ static char cancelationBlockKey;
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
+    NSLog(@"info: %@", info);
+    
     if (self.finalizationBlock) {
         self.finalizationBlock(self, info);
     }
@@ -71,45 +73,30 @@ LC_PROPERTY(assign) UIStatusBarStyle barStyleCache;
 
 @implementation LKUIImagePickerViewController
 
--(void) viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:animated];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:animated];
 }
 
--(instancetype) init
-{
+- (instancetype)init {
     if (self = [super init]) {
-        
         self.barStyleCache = [UIApplication sharedApplication].statusBarStyle;
     }
-    
     return self;
 }
 
-- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
-{
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
     if ([viewController isKindOfClass:[LKCameraViewController class]] ||
         [viewController isKindOfClass:[LKImageCropperViewController class]] ||
          [viewController isKindOfClass:[LKNewPostViewController class]]) {
-        
-        
-        
-    }
-    else{
-        
+    } else {
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     }
-   
 }
 
-- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
-{
-    
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
 }
-
 
 @end

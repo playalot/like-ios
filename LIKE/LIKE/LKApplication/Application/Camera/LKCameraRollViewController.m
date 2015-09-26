@@ -60,8 +60,7 @@ LC_PROPERTY(strong) UICollectionView * collectionView;
 
 @implementation LKCameraRollViewController
 
--(void) dealloc
-{
+-(void) dealloc {
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:YES];
     // 取消所有的通知监听
     [self unobserveAllNotifications];
@@ -240,8 +239,14 @@ LC_PROPERTY(strong) UICollectionView * collectionView;
     // 从相册中选择图片的完成回调
     picker.finalizationBlock = ^(id _picker, NSDictionary * imageInfo){
         
+        UIImage *sourceImage = imageInfo[@"UIImagePickerControllerOriginalImage"];
+        
+        if (sourceImage == nil || sourceImage.size.width == CGSizeZero.width || sourceImage.size.height == CGSizeZero.height) {
+            return;
+        }
+        
         // 滤镜控制器
-        LKImageCropperViewController * cropper = [[LKImageCropperViewController alloc] initWithImage:imageInfo[@"UIImagePickerControllerOriginalImage"]];
+        LKImageCropperViewController * cropper = [[LKImageCropperViewController alloc] initWithImage:sourceImage];
         
         [cropper showBackButton];
         
@@ -348,6 +353,10 @@ static PHImageRequestOptions *requestOptions;
             [[PHImageManager defaultManager] requestImageDataForAsset:asset options:requestOptions resultHandler:^(NSData *imageData, NSString *dataUTI, UIImageOrientation orientation, NSDictionary *info) {
                 
                 UIImage *image = [UIImage imageWithData:imageData];
+                
+                if (image == nil || image.size.width == CGSizeZero.width || image.size.height == CGSizeZero.height) {
+                    return;
+                }
                 [self selectedImage:image];
             }];
             

@@ -12,8 +12,13 @@
 
 @implementation UIColor (LCExtension)
 
-+ (UIColor *) colorWithHex:(NSString *)hex
-{
++ (UIColor *)randomColor {
+    return [UIColor colorWithRed:(((CGFloat)(arc4random() % 255)) / 255.0f)
+                           green:(((CGFloat)(arc4random() % 255)) / 255.0f)
+                            blue:(((CGFloat)(arc4random() % 255)) / 255.0f) alpha:1.0f];
+}
+
++ (UIColor *) colorWithHex:(NSString *)hex {
     NSString *cString = [[hex stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] uppercaseString];
     
     // String should be 6 or 8 characters

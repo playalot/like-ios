@@ -8,16 +8,17 @@
 
 #import "LKNotificationCount.h"
 #import "M13BadgeView.h"
+#import "LKBadgeView.h"
 
 @interface LKNotificationCount ()
 
-LC_PROPERTY(strong) UIView * bindView;
+LC_PROPERTY(strong) UIView *bindView;
 
 @end
 
 @implementation LKNotificationCount
 
-+(void) bindView:(UIView *)bindView
++ (void)bindView:(UIView *)bindView
 {
     if (bindView == nil) return;
     [LKNotificationCount.singleton setBindView:bindView];
@@ -25,7 +26,8 @@ LC_PROPERTY(strong) UIView * bindView;
 
 + (void)bindView:(UIView *)bindView withBadgeCount:(NSInteger)badgeCount {
 
-    M13BadgeView *badge = bindView.FIND(100100);
+//    M13BadgeView *badge = bindView.FIND(100100);
+    LKBadgeView *badge = bindView.FIND(100100);
     NSString *cache =  LKUserDefaults.singleton[self.class.description];
     badge.text = LC_NSSTRING_FROM_INGERGER(cache.integerValue + badgeCount);
     LKUserDefaults.singleton[self.class.description] = LC_NSSTRING_FROM_INT(cache.integerValue + badgeCount);
@@ -102,7 +104,8 @@ LC_PROPERTY(strong) UIView * bindView;
 -(void) setBadgeCount:(NSInteger)badgeCount
 {
     if (self.bindView != nil) {
-        M13BadgeView * badge = self.bindView.FIND(100100);
+//        M13BadgeView * badge = self.bindView.FIND(100100);
+        LKBadgeView *badge = self.bindView.FIND(100100);
         if (badge)
             badge.text = LC_NSSTRING_FROM_INT(badgeCount);
     }
@@ -125,7 +128,8 @@ LC_PROPERTY(strong) UIView * bindView;
 {
     _bindView = bindView;
     
-    M13BadgeView * badge = _bindView.FIND(100100);
+//    M13BadgeView * badge = _bindView.FIND(100100);
+    LKBadgeView *badge = _bindView.FIND(100100);
     
     if (badge) {
         [badge removeFromSuperview];
@@ -133,16 +137,19 @@ LC_PROPERTY(strong) UIView * bindView;
 
     NSString * cache =  LKUserDefaults.singleton[self.class.description];
 
-    badge = [[M13BadgeView alloc] init];
-    badge.animateChanges = NO;
+//    badge = [[M13BadgeView alloc] init];
+    badge = LKBadgeView.view;
+//    badge.animateChanges = NO;
     badge.text = LC_NSSTRING_FROM_INGERGER(cache.integerValue);
     badge.textColor = LKColor.color;
-    badge.badgeBackgroundColor = [UIColor whiteColor];
+//    badge.badgeBackgroundColor = [UIColor whiteColor];
+    badge.backgroundColor = LKColor.color;
+    badge.badgeColor = [UIColor whiteColor];
     badge.font = LK_FONT(10);
-    badge.hidesWhenZero = YES;
+//    badge.hidesWhenZero = YES;
     badge.tag = 100100;
-    badge.verticalAlignment = M13BadgeViewVerticalAlignmentNone;
-    badge.horizontalAlignment = M13BadgeViewHorizontalAlignmentLeft;
+//    badge.verticalAlignment = M13BadgeViewVerticalAlignmentNone;
+    badge.horizontalAlignment = M13BadgeViewHorizontalAlignmentRight;
     badge.viewFrameY = 0;
     bindView.ADD(badge);
 }

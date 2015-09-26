@@ -15,10 +15,9 @@
 #import "LCUIKeyBoard.h"
 #import "LKLikesPage.h"
 #import "LKUserCenterViewController.h"
-#import "LKHotUserView.h"
 #import "UIImageView+WebCache.h"
 
-#define iconWH 33
+#define iconWH 30
 
 @interface LKTagCommentsViewController () <UITableViewDataSource,UITableViewDelegate>
 
@@ -465,26 +464,38 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     
     if (indexPath.section == 0) {
         
-        CGFloat padding = 10;
+        CGFloat leftPadding = 24;
+        CGFloat topPadding = 12;
 
-        LCUITableViewCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Header" andClass:[LCUITableViewCell class] configurationCell:^(LCUITableViewCell * configurationCell) {
+        LCUITableViewCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Header" andClass:[LCUITableViewCell class] configurationCell:^(LCUITableViewCell * configurationCell) {
             
             configurationCell.backgroundColor = [UIColor whiteColor];
             configurationCell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             
-            LCUIImageView * headImageView = LCUIImageView.view;
-            headImageView.viewFrameX = padding;
-            headImageView.viewFrameY = padding;
-            headImageView.viewFrameWidth = 33;
-            headImageView.viewFrameHeight = 33;
+            LCUIImageView *headImageView = LCUIImageView.view;
+            headImageView.viewFrameX = leftPadding;
+            headImageView.viewFrameY = topPadding;
+            headImageView.viewFrameWidth = 35;
+            headImageView.viewFrameHeight = 35;
             headImageView.cornerRadius = headImageView.viewMidWidth;
             headImageView.backgroundColor = LKColor.backgroundColor;
             headImageView.tag = 1001;
             configurationCell.ADD(headImageView);
             
             
-//            LCUILabel * timeLabel = LCUILabel.view;
+            LCUILabel *nameLable = LCUILabel.view;
+            nameLable.font = LK_FONT(12);
+            nameLable.textColor = [UIColor blackColor];
+            nameLable.viewFrameX = leftPadding;
+            nameLable.viewFrameY = headImageView.viewBottomY + topPadding;
+            nameLable.viewFrameHeight = nameLable.font.lineHeight;
+            nameLable.viewFrameWidth = 200;
+            nameLable.tag = 1004;
+            configurationCell.ADD(nameLable);
+            
+            
+//            LCUILabel *timeLabel = LCUILabel.view;
 //            timeLabel.viewFrameWidth = 100;
 //            timeLabel.viewFrameX = LC_DEVICE_WIDTH - timeLabel.viewFrameWidth - 10;
 //            timeLabel.viewFrameHeight = 53;
@@ -511,21 +522,21 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             configurationCell.ADD(deleteBtn);
     
             
-            
-            UIImageView * line = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
+            UIImageView *line = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
             line.viewFrameWidth = LC_DEVICE_WIDTH;
             configurationCell.ADD(line);
             
             
-            UIImageView * line1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
-            line1.viewFrameY = 53 + 33 - line1.viewFrameHeight;
+            UIImageView *line1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
+            line1.viewFrameY = 74 + 33 - line1.viewFrameHeight;
             line1.viewFrameWidth = LC_DEVICE_WIDTH;
             configurationCell.ADD(line1);
         }];
         
-        LCUIImageView * head = cell.FIND(1001);
-        LKTagItem * item = cell.FIND(1002);
-        LCUILabel * time = cell.FIND(1003);
+        LCUIImageView *head = cell.FIND(1001);
+        LKTagItemView *item = cell.FIND(1002);
+        LCUILabel *time = cell.FIND(1003);
+        LCUILabel *name = cell.FIND(1004);
         
         if (item) {
             
@@ -535,26 +546,29 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         
         if (self.tagValue.tag.length) {
         
-            item = LKTagItem.view;
+            item = LKTagItemView.view;
             item.tag = 1002;
             cell.ADD(item);
         }
         
+        LKUser *tagUser = self.tagValue.user;
 //        head.url = self.tagValue.user.avatar;
-        [head sd_setImageWithURL:[NSURL URLWithString:self.tagValue.user.avatar] placeholderImage:nil];
+        [head sd_setImageWithURL:[NSURL URLWithString:tagUser.avatar] placeholderImage:nil];
         item.tagValue = self.tagValue;
-        item.viewFrameX = head.viewRightX + padding;
-        item.viewFrameY = 53 / 2 - item.viewMidHeight;
+        item.viewFrameX = head.viewRightX + 19;
+//        item.viewFrameY = 53 / 2 - item.viewMidHeight;
+        item.viewCenterY = head.viewCenterY;
         time.text = [LKTime dateNearByTimestamp:self.tagValue.createTime];
+        name.text = [NSString stringWithFormat:@"%@  %@ likes", tagUser.name, tagUser.likes];
         
         
         // 添加一个scrollView用来显示标签用户
-        UIScrollView *tagUserView = [[UIScrollView alloc] init];
+        UIScrollView *tagUserView = UIScrollView.view;
 //        tagUserView.backgroundColor = [UIColor redColor];
         tagUserView.viewFrameX = item.viewFrameX;
-        tagUserView.viewFrameY = CGRectGetMaxY(item.frame) + 8;
+        tagUserView.viewFrameY = name.viewBottomY + 16;
         tagUserView.viewFrameWidth = LC_DEVICE_WIDTH - tagUserView.viewFrameX - 20;
-        tagUserView.viewFrameHeight = 33;
+//        tagUserView.viewFrameHeight = 33;
         self.tagUserView = tagUserView;
         cell.ADD(tagUserView);
         
@@ -623,7 +637,6 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         
         return cell;
     }
-    
 }
 
 /**
@@ -653,12 +666,15 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     // 头像间距
     CGFloat margin = 8;
     
+    LCUIImageView *lastIcon = nil;
     for (int i = 0; i < self.tagUsers.count; i++) {
         
         LKUser *user = self.tagUsers[i];
         
         LCUIImageView *iconView = LCUIImageView.view;
         iconView.viewFrameX = (iconWH + margin) * i;
+        
+        
         iconView.viewFrameY = 0;
         iconView.viewFrameWidth = iconWH;
         iconView.viewFrameHeight = iconWH;
@@ -677,6 +693,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         iconView.layer.cornerRadius = iconWH * 0.5;
         iconView.layer.masksToBounds = YES;
         
+        lastIcon = iconView;
     }
     
     for (LCUIImageView *iconView in self.iconViews) {
@@ -767,7 +784,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     if(indexPath.section == 0){
         
         // 待修改
-        return 53 + 33;
+        return 74 + 33;
     }
     else{
         
@@ -935,17 +952,15 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             
 //            [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:1]] withRowAnimation:UITableViewRowAnimationTop];
             
-        }
-        else if (result.state == LKHttpRequestStateFailed){
+        } else if (result.state == LKHttpRequestStateFailed){
             
             [self showTopMessageErrorHud:result.error];
         }
     }];
-    
 }
 
 #pragma mark - ***** scrollView代理方法 *****
--(void) scrollViewDidScroll:(UIScrollView *)scrollView
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if (self.canFirstResponder.boolValue) {
         

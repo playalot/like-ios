@@ -25,7 +25,7 @@ LC_PROPERTY(copy) LKValueChanged willEndSearch;
 LC_PROPERTY(copy) LKValueChanged headAction;
 LC_PROPERTY(copy) LKValueChanged backgroundAction;
 
-LC_PROPERTY(weak) LKSearchView * searchViewController;
+LC_PROPERTY(weak) LKSearchView *searchViewController;
 
 LC_PROPERTY(strong) LKUser * user;
 

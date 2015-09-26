@@ -42,13 +42,11 @@ LC_PROPERTY(strong) LCUIButton * doneButton;
 - (void) buildUI
 {
     [self addTapGestureRecognizer:self selector:@selector(backgroundViewTapAction)];
-
     
     self.scrollView = [UIScrollView viewWithFrame:self.bounds];
     self.scrollView.userInteractionEnabled = YES;
     self.scrollView.scrollsToTop = NO;
     self.ADD(self.scrollView);
-    
     
     self.backgroundView = LCUIImageView.view;
     self.backgroundView.frame = self.scrollView.bounds;
@@ -57,8 +55,6 @@ LC_PROPERTY(strong) LCUIButton * doneButton;
     self.backgroundView.userInteractionEnabled = YES;
     self.backgroundView.autoMask = YES;
     self.scrollView.ADD(self.backgroundView);
-    
-    
     
     if (IOS8_OR_LATER) {
         
@@ -197,13 +193,11 @@ LC_PROPERTY(strong) LCUIButton * doneButton;
             self.searchTip.viewFrameWidth = self.textField.viewFrameWidth;
             self.doneButton.viewFrameX = self.viewFrameWidth - self.doneButton.viewFrameWidth;
             
-            
             self.blurView.viewFrameY = self.viewFrameHeight - self.blurView.viewFrameHeight - 10;
             self.searchTip.viewFrameY = self.blurView.viewFrameY;
             self.textField.viewFrameY = self.blurView.viewFrameY;
             self.doneButton.viewFrameY = self.viewFrameHeight - self.doneButton.viewFrameHeight;
             
-
         });
     });
     

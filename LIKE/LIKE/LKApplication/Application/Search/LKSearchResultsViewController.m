@@ -7,60 +7,42 @@
 //
 
 #import "LKSearchResultsViewController.h"
-#import "LKUserCenterPhotoCell.h"
+#import "LKPostThumbnailTableViewCell.h"
 #import "LKPostDetailViewController.h"
 #import "UIImageView+WebCache.h"
 #import "LKPostTableViewController.h"
 
-@interface LKSearchResultsViewController ()
+@interface LKSearchResultsViewController () <LKPostTableViewControllerDelegate>
 
 LC_PROPERTY(copy) NSString * searchString;
-LC_PROPERTY(strong) NSMutableArray * datasource;
 LC_PROPERTY(assign) NSInteger page;
 LC_PROPERTY(strong) NSDictionary * info;
 LC_PROPERTY(strong) NSDictionary *tagInfo;
 LC_PROPERTY(strong) LCUIButton *subscribeBtn;
 LC_PROPERTY(getter=isSubscribed) BOOL subscribed;
 
+LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
+
 @end
 
 @implementation LKSearchResultsViewController
 
--(void) dealloc
-{
+- (void)dealloc {
     [self cancelAllRequests];
 }
 
--(instancetype) initWithSearchString:(NSString *)searchString
-{
+- (instancetype)initWithSearchString:(NSString *)searchString {
     if (self = [super init]) {
-        
         self.initTableViewStyle = UITableViewStyleGrouped;
         self.searchString = searchString;
     }
-    
     return self;
 }
 
--(void) viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    // hide status bar.
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:animated];
-    
-    
-    // hide navigation bar.
-    [self setNavigationBarHidden:NO animated:animated];
-    
-}
-
-
--(void) buildUI
-{
+-(void) buildUI {
     self.title = self.searchString;
     
-    [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[UIImage imageNamed:@"NavigationBarBack.png" useCache:YES] selectImage:nil];
+    [self buildNavigationBar];
     
     // 订阅标签按钮
     LCUIButton *subscribeBtn = LCUIButton.view;
@@ -79,46 +61,35 @@ LC_PROPERTY(getter=isSubscribed) BOOL subscribed;
     // 判别是否显示订阅标签
     [self judgeSubscribeTag];
     
-    
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
-
-    
     @weakly(self);
     
     [self setPullLoaderStyle:LCUIPullLoaderStyleHeaderAndFooter beginRefresh:^(LCUIPullLoaderDiretion diretion) {
-        
         @normally(self);
-        
         [self loadData:diretion];
-        
     }];
     
     [self.pullLoader performSelector:@selector(startRefresh) withObject:nil afterDelay:0.01];
 }
 
--(void) handleNavigationBarButton:(LCUINavigationBarButtonType)type
-{
+- (void)buildNavigationBar {
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
+    [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[UIImage imageNamed:@"NavigationBarBack.png" useCache:YES] selectImage:nil];
+}
+
+- (void)handleNavigationBarButton:(LCUINavigationBarButtonType)type {
     if (type == LCUINavigationBarButtonTypeLeft) {
-        
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
 
 // 判别是否显示订阅标签
 - (void)judgeSubscribeTag {
-    
     LKHttpRequestInterface *interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"tag/%@/subscribe", self.searchString.URLCODE()]].GET_METHOD();
-    
     @weakly(self);
-    
     [self request:interface complete:^(LKHttpRequestResult *result) {
-        
         @normally(self);
-
         if (result.state == LKHttpRequestStateFinished) {
-            
             NSDictionary *tmp = result.json[@"data"];
-            
             if (tmp[@"tag"]) {
                 
                 // 显示订阅按钮
@@ -133,9 +104,7 @@ LC_PROPERTY(getter=isSubscribed) BOOL subscribed;
                 // 隐藏订阅按钮
                 self.subscribeBtn.hidden = YES;
             }
-            
         } else if (result.state == LKHttpRequestStateFailed) {
-            
             [self showTopMessageErrorHud:result.error];
         }
     }];
@@ -149,89 +118,62 @@ LC_PROPERTY(getter=isSubscribed) BOOL subscribed;
     LKHttpRequestInterface *interface = nil;
     
     if (subscribeBtn.isSelected) {
-        
         interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"tag/%@/subscribe", self.tagInfo[@"id"]]].POST_METHOD();
     } else {
-        
         interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"tag/%@/subscribe", self.tagInfo[@"id"]]].DELETE_METHOD();
     }
     
     [self request:interface complete:^(LKHttpRequestResult *result) {
-        
         if (result.state == LKHttpRequestStateFinished) {
-            
-
         } else if (result.state == LKHttpRequestStateFailed) {
-            
             [self showTopMessageErrorHud:result.error];
         }
     }];
 }
 
--(void) loadData:(LCUIPullLoaderDiretion)diretion
-{
+- (void)scrollToPostByIndex:(NSInteger)index {
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:(index / 3) inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+}
+
+- (void)loadData:(LCUIPullLoaderDiretion)diretion {
     NSInteger page = 0;
-    
     if (diretion == LCUIPullLoaderDiretionBottom) {
         page = self.page + 1;
     }
     
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"search/tag/%@/%@", self.searchString.URLCODE(), @(page)]].GET_METHOD();
-
     @weakly(self);
-    
     [self request:interface complete:^(LKHttpRequestResult * result) {
-        
         @normally(self);
-        
         if (result.state == LKHttpRequestStateFinished) {
-            
             id tmp = result.json[@"data"];
-        
             NSArray * datasource = nil;
-        
             NSMutableArray * resultData = [NSMutableArray array];
-            
             if ([tmp isKindOfClass:[NSDictionary class]]) {
-                
                 datasource = tmp[@"posts"];
-                
                 self.info = tmp[@"info"];
-            }
-            else{
-                
+            } else {
                 datasource = tmp;
             }
             
             for (NSDictionary * tmp in datasource) {
-                
                 [resultData addObject:[LKPost objectFromDictionary:tmp]];
             }
             
             if (diretion == LCUIPullLoaderDiretionTop) {
-                
                 self.datasource = resultData;
-            }
-            else{
-                
-                [self.datasource addObjectsFromArray:resultData];
+            } else {
+                NSMutableArray *newDataSource = [NSMutableArray arrayWithArray:self.datasource];
+                [newDataSource addObjectsFromArray:resultData];
+                self.datasource = newDataSource;
             }
             
             self.page = page;
-            
-            
-            if (self.datasource.count) {
-                
-                
-            }
-            
             [self.pullLoader endRefresh];
             [self reloadData];
-        }
-        else if (result.state == LKHttpRequestStateFailed){
             
+        } else if (result.state == LKHttpRequestStateFailed){
             [self showTopMessageErrorHud:result.error];
-            
             [self.pullLoader endRefresh];
         }
     }];
@@ -240,29 +182,25 @@ LC_PROPERTY(getter=isSubscribed) BOOL subscribed;
 
 #pragma mark -
 
--(UIView *) buildHeader
-{
+- (UIView *)buildHeader {
+    
     if (!self.info) {
         return nil;
     }
-    
     
     NSString * avatar = self.info[@"avatar"];
     NSString * description = self.info[@"description"];
     
     UIView * view = [UIView view];
-
     LCUIImageView * head = LCUIImageView.view;
     head.viewFrameWidth = 66;
     head.viewFrameHeight = 66;
     head.viewFrameX = 15;
     head.viewFrameY = 15;
     head.backgroundColor = LKColor.backgroundColor;
-//    head.url = avatar;
     [head sd_setImageWithURL:[NSURL URLWithString:avatar] placeholderImage:nil];
     head.cornerRadius = 4;
     view.ADD(head);
-    
     
     LCUILabel * label = LCUILabel.view;
     label.viewFrameX = head.viewRightX + 15;
@@ -275,10 +213,8 @@ LC_PROPERTY(getter=isSubscribed) BOOL subscribed;
     label.FIT();
     view.ADD(label);
     
-    
     view.viewFrameWidth = LC_DEVICE_WIDTH;
     view.viewFrameHeight = label.viewBottomY + 15 < 96 ? 96 : label.viewBottomY + 15;
-    
     
     return view;
 }
@@ -317,60 +253,59 @@ LC_PROPERTY(getter=isSubscribed) BOOL subscribed;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSInteger remainder = self.datasource.count % 3;
-    
     return remainder ? self.datasource.count / 3 + 1 : self.datasource.count / 3;
 }
 
-- (UITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    LKUserCenterPhotoCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Photos" andClass:[LKUserCenterPhotoCell class]];
-    
+- (UITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    LKPostThumbnailTableViewCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Photos" andClass:[LKPostThumbnailTableViewCell class]];
     NSInteger index = indexPath.row * 3;
     
     NSArray * datasource = self.datasource;
-    
     LKPost * post = datasource[index];
     LKPost * post1 = index + 1 < datasource.count ? datasource[index + 1] : nil;
     LKPost * post2 = index + 2 < datasource.count ? datasource[index + 2] : nil;
     
     NSMutableArray * array = [NSMutableArray array];
     
-    if (post) {
+    if (post)
         [array addObject:post];
-    }
     
-    if (post1) {
+    if (post1)
         [array addObject:post1];
-    }
     
-    if (post2) {
+    if (post2)
         [array addObject:post2];
-    }
     
     cell.posts = array;
     
     return cell;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return [LKUserCenterPhotoCell height];
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [LKPostThumbnailTableViewCell height];
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
 }
 
+#pragma mark - LKPostTableViewControllerDelegate
+- (void)willLoadData:(LCUIPullLoaderDiretion)direction {
+    [self loadData:direction];
+}
+
+- (void)willNavigationBack:(NSInteger)index {
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:(index / 3) inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+}
+
 LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
-//    LKPost * post = signal.object;
-//    LKPostDetailViewController * postDetail = [[LKPostDetailViewController alloc] initWithPost:post];
-//    UINavigationController * nav = LC_UINAVIGATION(postDetail);
-//    [postDetail setPresendModelAnimationOpen];
-//    [self.navigationController  presentViewController:nav animated:YES completion:nil];
-    
-    LKPostTableViewController *postViewController = [LKPostTableViewController viewController];
-    postViewController.datasource = self.datasource;
-    [self.navigationController pushViewController:postViewController animated:YES];
+    self.browsingViewController = [[LKPostTableViewController alloc] init];
+    self.browsingViewController.delegate = self;
+    self.browsingViewController.datasource = self.datasource;
+    self.browsingViewController.currentIndex = [self.datasource indexOfObject:signal.object];
+    self.browsingViewController.title = self.searchString;
+    [self.browsingViewController watchForChangeOfDatasource:self dataSourceKey:@"datasource"];
+    [self.navigationController pushViewController:self.browsingViewController animated:YES];
 }
 
 @end

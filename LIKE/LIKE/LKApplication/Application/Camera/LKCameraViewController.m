@@ -20,13 +20,14 @@
 
 @interface LKCameraViewController () <FastttCameraDelegate>
 
-LC_PROPERTY(strong) FastttFilterCamera * fastCamera;
+LC_PROPERTY(strong) FastttFilterCamera *fastCamera;
 
-LC_PROPERTY(strong) LCUIButton * takePhotoButton;
-LC_PROPERTY(strong) LCUIButton * flashButton;
-LC_PROPERTY(strong) LCUIButton * switchCameraButton;
-LC_PROPERTY(strong) LCUIButton * photosButton;
-LC_PROPERTY(strong) LCUIButton * finishedButton;
+LC_PROPERTY(strong) LCUIButton *takePhotoButton;
+LC_PROPERTY(strong) LCUIButton *flashButton;
+LC_PROPERTY(strong) LCUIButton *switchCameraButton;
+LC_PROPERTY(strong) LCUIButton *photosButton;
+LC_PROPERTY(strong) LCUIButton *finishedButton;
+LC_PROPERTY(strong) LCUIImageView *prohibitionView;
 
 LC_PROPERTY(strong) UIView * bottomView;
 
@@ -261,11 +262,11 @@ LC_PROPERTY(strong) UIView *wastedView;
 
 
     self.flashButton = LCUIButton.view;
-    self.flashButton.viewFrameY = - 10;
-    self.flashButton.viewFrameWidth = 64;
-    self.flashButton.viewFrameHeight = 80;
+    self.flashButton.viewFrameY = 0;
+    self.flashButton.viewFrameWidth = 51;
+    self.flashButton.viewFrameHeight = 64;
     [self.flashButton setImage:[UIImage imageNamed:@"CameraFlash.png" useCache:YES] forState:UIControlStateNormal];
-    [self.flashButton setImage:[[UIImage imageNamed:@"CameraFlash.png" useCache:YES] imageWithTintColor:LKColor.color] forState:UIControlStateSelected];
+    [self.flashButton setImage:[UIImage imageNamed:@"CameraFlash_selected.png" useCache:YES] forState:UIControlStateSelected];
     self.flashButton.selected = NO;
     self.flashButton.showsTouchWhenHighlighted = YES;
     [self.flashButton addTarget:self action:@selector(flash) forControlEvents:UIControlEventTouchUpInside];
@@ -273,26 +274,39 @@ LC_PROPERTY(strong) UIView *wastedView;
     
 
     self.switchCameraButton = LCUIButton.view;
-    self.switchCameraButton.viewFrameWidth = 80;
+    self.switchCameraButton.viewFrameWidth = 51;
     self.switchCameraButton.viewFrameHeight = 64;
     self.switchCameraButton.viewFrameX = LC_DEVICE_WIDTH - self.switchCameraButton.viewFrameWidth;
     self.switchCameraButton.viewFrameY = 0;
-    self.switchCameraButton.buttonImage = [UIImage imageNamed:@"CameraChange.png" useCache:YES];
+    [self.switchCameraButton setImage:[UIImage imageNamed:@"CameraChange.png" useCache:YES] forState:UIControlStateNormal];
+    [self.switchCameraButton setImage:[UIImage imageNamed:@"CameraChange_selected.png" useCache:YES] forState:UIControlStateSelected];
     self.switchCameraButton.showsTouchWhenHighlighted = YES;
     [self.switchCameraButton addTarget:self action:@selector(switchCamera) forControlEvents:UIControlEventTouchUpInside];
     self.view.ADD(self.switchCameraButton);
+    
+    
+    self.prohibitionView = LCUIImageView.view;
+    self.prohibitionView.hidden = YES;
+    self.prohibitionView.viewFrameWidth = 200;
+    self.prohibitionView.viewFrameHeight = 200;
+    self.prohibitionView.viewCenterX = self.fastCamera.view.viewCenterX;
+    self.prohibitionView.viewCenterY = self.fastCamera.view.viewMidHeight;
+    self.prohibitionView.image = [UIImage imageNamed:@"ProhibitionOfSelf.png" useCache:YES];
+    self.fastCamera.view.ADD(self.prohibitionView);
 
 
-    self.bottomView = UIView.view.COLOR(LC_RGB(34, 34, 34));
+    self.bottomView = UIView.view.COLOR([UIColor whiteColor]);
     self.bottomView.viewFrameWidth = LC_DEVICE_WIDTH;
-    self.bottomView.viewFrameHeight = 54;
+    self.bottomView.viewFrameHeight = 83;
     self.bottomView.viewFrameY = self.view.viewFrameHeight - self.bottomView.viewFrameHeight;
     self.view.ADD(self.bottomView);
     
     
+    CGFloat equalWidth = LC_DEVICE_WIDTH / 3;
+    
     self.takePhotoButton = LCUIButton.view;
-    self.takePhotoButton.viewFrameWidth = 80;
-    self.takePhotoButton.viewFrameHeight = 54;
+    self.takePhotoButton.viewFrameWidth = 63;
+    self.takePhotoButton.viewFrameHeight = 63;
     self.takePhotoButton.viewCenterX = self.bottomView.viewMidWidth;
     self.takePhotoButton.viewCenterY = self.bottomView.viewMidHeight;
     self.takePhotoButton.buttonImage = [UIImage imageNamed:@"CameraCapture.png" useCache:YES];
@@ -302,8 +316,10 @@ LC_PROPERTY(strong) UIView *wastedView;
     
     
     self.photosButton = LCUIButton.view;
-    self.photosButton.viewFrameWidth = 80;
-    self.photosButton.viewFrameHeight = 54;
+    self.photosButton.viewFrameWidth = 32;
+    self.photosButton.viewFrameHeight = 32;
+    self.photosButton.viewCenterY = self.bottomView.viewMidHeight;
+    self.photosButton.viewFrameX = (equalWidth - self.photosButton.viewFrameWidth) * 0.5;
     self.photosButton.buttonImage = [UIImage imageNamed:@"CameraPhotos.png" useCache:YES];
     self.photosButton.showsTouchWhenHighlighted = YES;
     [self.photosButton addTarget:self action:@selector(photos) forControlEvents:UIControlEventTouchUpInside];
@@ -311,9 +327,12 @@ LC_PROPERTY(strong) UIView *wastedView;
     
     
     self.finishedButton = LCUIButton.view;
-    self.finishedButton.viewFrameWidth = 80;
-    self.finishedButton.viewFrameHeight = 54;
-    self.finishedButton.viewFrameX = LC_DEVICE_WIDTH - self.finishedButton.viewFrameWidth;
+    self.finishedButton.viewFrameWidth = 32;
+    self.finishedButton.viewFrameHeight = 32;
+    self.finishedButton.viewCenterY = self.bottomView.viewMidHeight;
+    self.finishedButton.viewFrameX = LC_DEVICE_WIDTH - (equalWidth
+                                                     - self.finishedButton.viewFrameWidth) * 0.5
+                                                     - self.finishedButton.viewFrameWidth;
     self.finishedButton.buttonImage = [UIImage imageNamed:@"CameraClose.png" useCache:YES];
     self.finishedButton.showsTouchWhenHighlighted = YES;
     [self.finishedButton addTarget:self action:@selector(finished) forControlEvents:UIControlEventTouchUpInside];
@@ -383,27 +402,28 @@ LC_PROPERTY(strong) UIView *wastedView;
 
 -(void) switchCamera
 {
-    FastttCameraDevice cameraDevice;
-    
-    switch (self.fastCamera.cameraDevice)
-    {
-        case FastttCameraDeviceFront:
-            cameraDevice = FastttCameraDeviceRear;
-            break;
-        case FastttCameraDeviceRear:
-        default:
-            cameraDevice = FastttCameraDeviceFront;
-            break;
-    }
-    
-    if ([FastttFilterCamera isCameraDeviceAvailable:cameraDevice]){
-        
-        [self.fastCamera setCameraDevice:cameraDevice];
-        
-        if (![self.fastCamera isFlashAvailableForCurrentDevice]) {
-            ;
-        }
-    }
+    self.prohibitionView.hidden = !self.prohibitionView.isHidden;
+//    FastttCameraDevice cameraDevice;
+//    
+//    switch (self.fastCamera.cameraDevice)
+//    {
+//        case FastttCameraDeviceFront:
+//            cameraDevice = FastttCameraDeviceRear;
+//            break;
+//        case FastttCameraDeviceRear:
+//        default:
+//            cameraDevice = FastttCameraDeviceFront;
+//            break;
+//    }
+//    
+//    if ([FastttFilterCamera isCameraDeviceAvailable:cameraDevice]){
+//        
+//        [self.fastCamera setCameraDevice:cameraDevice];
+//        
+//        if (![self.fastCamera isFlashAvailableForCurrentDevice]) {
+//            ;
+//        }
+//    }
 }
 
 -(void) photos
@@ -448,7 +468,8 @@ LC_PROPERTY(strong) UIView *wastedView;
 
 -(void) finished
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+//    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)switchFilterAtIndex:(NSInteger)index

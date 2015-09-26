@@ -22,15 +22,13 @@ LC_PROPERTY(copy) LKTagCommentsViewControllerWillHide willHide;
 -(void) showInViewController:(UIViewController *)viewController;
 -(void) hide;
 
-
 -(instancetype) initWithTag:(LKTag *)tag;
-
 -(void) update;
 
 -(void) inputBecomeFirstResponder;
 -(void) replyUserAction:(LKUser *)user;
 
-@property (nonatomic, weak) id <LKTagCommentsViewControllerDelegate> delegate;
+@property (nonatomic, weak) id<LKTagCommentsViewControllerDelegate> delegate;
 /**
  *  图片发布者
  */

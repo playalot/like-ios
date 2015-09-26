@@ -16,7 +16,7 @@ typedef NS_ENUM(NSInteger, LKUserCenterModelType)
     LKUserCenterModelTypeFavor
 };
 
-LC_BLOCK(void, LKUserCenterModelRequestFinished, (LKUserCenterModelType type, LKHttpRequestResult * result, NSString * error));
+LC_BLOCK(void, LKUserCenterModelRequestFinished, (LKUserCenterModelType type, NSString *error));
 
 @interface LKUserCenterModel : LCHTTPRequestModel
 
@@ -27,10 +27,12 @@ LC_PROPERTY(strong) NSMutableArray *favorArray;
 
 LC_PROPERTY(copy) LKUserCenterModelRequestFinished requestFinished;
 
--(void) getDataAtFirstPage:(BOOL)isFirstPage type:(LKUserCenterModelType)type uid:(NSNumber *)uid;
+- (void)getDataAtFirstPage:(BOOL)isFirstPage
+                      type:(LKUserCenterModelType)type
+                       uid:(NSNumber *)uid;
 
--(NSMutableArray *) dataWithType:(LKUserCenterModelType)type;
+- (NSMutableArray *)dataWithType:(LKUserCenterModelType)type;
 
--(BOOL) canLoadMoreWithType:(LKUserCenterModelType)type;
+- (BOOL)canLoadMoreWithType:(LKUserCenterModelType)type;
 
 @end

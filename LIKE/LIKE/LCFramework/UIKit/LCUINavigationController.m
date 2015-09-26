@@ -121,9 +121,17 @@
         }
     }
     
+    [self.rdv_tabBarController setTabBarHidden:YES animated:YES];
     [super pushViewController:viewController animated:animated];
     
 }
+
+- (UIViewController *)popViewControllerAnimated:(BOOL)animated {
+    
+    [self.rdv_tabBarController setTabBarHidden:NO animated:YES];
+    return [super popViewControllerAnimated:animated];
+}
+
 - (NSArray *)popToRootViewControllerAnimated:(BOOL)animated
 {
     if (IOS7_OR_LATER) {

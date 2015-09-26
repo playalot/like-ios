@@ -229,7 +229,6 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
             LKLocalUser.singleton.refreshToken = self.refreshToken;
             LKLocalUser.singleton.expiresIn = [NSString stringWithFormat:@"%@", self.expiresIn];
             
-            
             // 如果是第一次登陆,选择兴趣标签
             BOOL firstStart = [[NSUserDefaults standardUserDefaults] boolForKey:@"firstStart"];
             

@@ -7,18 +7,22 @@
 //
 
 #import "LCUIViewController.h"
-
-@class LKUserInfoModel;
+#import "LKUserCenterModel.h"
+#import "LKUserInfoModel.h"
 
 LC_NOTIFICATION_SET(LKUserCenterViewControllerReloadingData);
 
 @interface LKUserCenterViewController : LCUIViewController
 
-LC_PROPERTY(strong) LKUserInfoModel * userInfoModel;;
-LC_PROPERTY(strong) LKUser * user;
+LC_PROPERTY(assign) BOOL needBackButton;
+LC_PROPERTY(strong) LKUserInfoModel *userInfoModel;;
+LC_PROPERTY(strong) LKUser *user;
 
-+(LKUserCenterViewController *) pushUserCenterWithUser:(LKUser *)user navigationController:(UINavigationController *)navigationController;
+- (void)scrollToPostByIndex:(NSInteger)index;
+- (void)loadData:(LKUserCenterModelType)type diretion:(LCUIPullLoaderDiretion)diretion;
+- (void)updateUserMetaInfo;
+- (instancetype)initWithUser:(LKUser *)user;
 
--(instancetype) initWithUser:(LKUser *)user;
++ (LKUserCenterViewController *)pushUserCenterWithUser:(LKUser *)user navigationController:(UINavigationController *)navigationController;
 
 @end

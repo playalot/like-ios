@@ -27,64 +27,24 @@ LC_PROPERTY(strong) UIView * blur;
 
 @implementation LKNotificationView
 
--(void) dealloc
-{
+-(void) dealloc {
     [self cancelAllRequests];
 }
 
-//-(void) viewWillAppear:(BOOL)animated
-//{
-//    [super viewWillAppear:animated];
-//    
-//    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:animated];
-//
-//    [self setNavigationBarHidden:NO animated:animated];
-//    
-//
-//}
-
-
-//-(void) viewWillDisappear:(BOOL)animated
-//{
-//    [super viewWillDisappear:animated];
-//    
-//    ((LCUINavigationController *)self.navigationController).animationHandler = nil;
-//}
-//
-//- (void)viewDidAppear:(BOOL)animated
-//{
-//    [super viewDidAppear:animated];
-//    
-//    ((LCUINavigationController *)self.navigationController).animationHandler = ^id(UINavigationControllerOperation operation, UIViewController * fromVC, UIViewController * toVC){
-//        
-//        if (operation == UINavigationControllerOperationPush && [toVC isKindOfClass:[LKPostDetailViewController class]]) {
-//            return [[LKPushAnimation alloc] init];
-//        }
-//        
-//        return nil;
-//    };
-//}
-
--(instancetype) init
-{
+-(instancetype) init {
     if (self = [super initWithFrame:CGRectMake(0, 0, LC_DEVICE_WIDTH, LC_DEVICE_HEIGHT + 20 - 64)]) {
-        
         self.notificationModel = [[LKNotificationModel alloc] init];
-        
         [LKNotificationCount stopCheck];
-        
         [self buildUI];
         
         // 刷新页面,避免删除评论后还显示提醒
         [self loadData:LCUIPullLoaderDiretionTop];
     }
-    
     return self;
 }
 
 
--(void) buildUI
-{
+-(void) buildUI {
     self.blur = UIView.view;
     self.blur.viewFrameY = 0;
     self.blur.viewFrameWidth = self.viewFrameWidth;
@@ -231,8 +191,9 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
     }
     else{
         
-        return [LKNotificationCell height:notification];
-    }    
+//        return [LKNotificationCell height:notification];
+        return 100;
+    }
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

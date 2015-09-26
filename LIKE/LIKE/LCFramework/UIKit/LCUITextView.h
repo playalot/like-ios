@@ -9,18 +9,27 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GCPlaceholderTextView.h"
 
 @class LCUITextView;
 
-LC_BLOCK(void, LCUITextViewDidBeginEditing, (__weak LCUITextView * textView));
-LC_BLOCK(void, LCUITextViewDidChanged, (__weak LCUITextView * textView));
-LC_BLOCK(void, LCUITextViewDidEndEditing, (__weak LCUITextView * textView));
+LC_BLOCK(BOOL, LCTextViewShouldBeginEditing, (__weak LCUITextView * textView));
+LC_BLOCK(void, LCTextViewDidBeginEditing, (__weak LCUITextView * textView));
+LC_BLOCK(BOOL, LCTextViewShouldEndEditing, (__weak LCUITextView * textView));
+LC_BLOCK(void, LCTextViewDidEndEditing, (__weak LCUITextView * textView));
+LC_BLOCK(BOOL, LCTextViewShouldChangeText, (__weak LCUITextView * textView, NSRange range, NSString * text));
+LC_BLOCK(BOOL, LCTextViewShouldClear, (__weak LCUITextView * textView));
+LC_BLOCK(BOOL, LCTextViewShouldReturn, (__weak LCUITextView * textView));
 
 
-@interface LCUITextView : UITextView
+@interface LCUITextView : GCPlaceholderTextView
 
-LC_PROPERTY(copy) LCUITextViewDidBeginEditing didBeginEditing;
-LC_PROPERTY(copy) LCUITextViewDidChanged didChanged;
-LC_PROPERTY(copy) LCUITextViewDidEndEditing didEndEditing;
+LC_PROPERTY(copy) LCTextViewShouldBeginEditing shouldBeginEditing;
+LC_PROPERTY(copy) LCTextViewDidBeginEditing didBeginEditing;
+LC_PROPERTY(copy) LCTextViewShouldEndEditing shouldEndEditing;
+LC_PROPERTY(copy) LCTextViewDidEndEditing didEndEditing;
+LC_PROPERTY(copy) LCTextViewShouldChangeText shouldChangeText;
+LC_PROPERTY(copy) LCTextViewShouldClear shouldClear;
+LC_PROPERTY(copy) LCTextViewShouldReturn shouldReturn;
 
 @end

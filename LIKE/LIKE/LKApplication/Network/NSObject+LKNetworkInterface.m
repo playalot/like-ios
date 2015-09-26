@@ -11,7 +11,7 @@
 
 @implementation NSObject (LKNetworkInterface)
 
--(BOOL) request:(LKHttpRequestInterface *)request complete:(LKHTTPRequestComplete)complete {
+- (BOOL)request:(LKHttpRequestInterface *)request complete:(LKHTTPRequestComplete)complete {
     return [LKNetworkCenter request:request sender:self complete:complete];
 }
 

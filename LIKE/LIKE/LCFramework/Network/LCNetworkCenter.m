@@ -214,8 +214,7 @@ LC_PROPERTY(strong) NSLock * lock;
     }
 }
 
--(NSArray *) getTaskWithSender:(NSObject *)sender
-{
+-(NSArray *) getTaskWithSender:(NSObject *)sender {
     NSString * p = LC_NSSTRING_FORMAT(@"LCNetworkCenter-%p",sender);
     
     NSMutableArray * subArray = self.requests[p];
@@ -285,10 +284,9 @@ LC_PROPERTY(strong) NSLock * lock;
 
 -(void) handleFailureTask:(NSURLSessionDataTask *)task
                     error:(NSError *)error
-              updateBlock:(LCNetworkCenterBlock)updateBlock sender:(NSObject *)sender
-{
+              updateBlock:(LCNetworkCenterBlock)updateBlock sender:(NSObject *)sender {
+    
     [self postNotification:AFNetworkingTaskDidCompleteNotification withObject:task];
-
     
     if (error.code == -999) {
         

@@ -26,46 +26,34 @@ LC_PROPERTY(strong) LKUser * user;
 
 @implementation LKLocalUser
 
-+(void) login:(NSDictionary *)rawUserInfo
-{
++ (void)login:(NSDictionary *)rawUserInfo {
     [LKLocalUser.singleton login:rawUserInfo];
 }
 
-+(void) logout
-{
++ (void)logout {
     [LKLocalUser.singleton logoutCurrentUser];
 }
 
-
-
--(BOOL) isLogin
-{
+- (BOOL)isLogin {
     NSString * uid = self[LK_CURRENT_USER];
-    
     return uid ? YES : NO;
 }
 
--(void) setSessionToken:(NSString *)sessionToken
-{
+- (void)setSessionToken:(NSString *)sessionToken {
     self[LK_SESSION_TOKEN] = sessionToken;
-    
     [LCKeychain setObject:self.sessionToken forKey:LK_SESSION_TOKEN];
 }
 
--(NSString *) sessionToken
-{
+- (NSString *)sessionToken {
     return self[LK_SESSION_TOKEN];
 }
 
--(void) setRefreshToken:(NSString *)refreshToken
-{
+- (void)setRefreshToken:(NSString *)refreshToken {
     self[LK_REFRESH_TOKEN] = refreshToken;
-    
     [LCKeychain setObject:self.refreshToken forKey:LK_REFRESH_TOKEN];
 }
 
--(NSString *) refreshToken
-{
+-(NSString *) refreshToken {
     return self[LK_REFRESH_TOKEN];
 }
 

@@ -16,7 +16,7 @@
 @interface LKPostDetailCell ()
 
 LC_PROPERTY(strong) LCUIImageView * headImageView;
-LC_PROPERTY(strong) LKTagItem * tagItem;
+LC_PROPERTY(strong) LKTagItemView * tagItem;
 LC_PROPERTY(strong) LCUILabel * timeLabel;
 LC_PROPERTY(strong) UIView * cellBackgroundView;
 LC_PROPERTY(strong) LKCommentsView * commentsView;
@@ -33,16 +33,17 @@ LC_IMP_SIGNAL(PushUserCenter);
 {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.backgroundColor = LKColor.whiteColor;
-    self.contentView.backgroundColor = LKColor.backgroundColor;
+    self.contentView.backgroundColor = LC_RGB(245, 245, 245);
     
     
-    CGFloat padding = 10;
+    CGFloat LeftPadding = 20;
+    CGFloat topPadding = 7;
     
     self.headImageView = LCUIImageView.view;
-    self.headImageView.viewFrameX = padding;
-    self.headImageView.viewFrameY = padding;
-    self.headImageView.viewFrameWidth = 33;
-    self.headImageView.viewFrameHeight = 33;
+    self.headImageView.viewFrameX = LeftPadding;
+    self.headImageView.viewFrameY = topPadding;
+    self.headImageView.viewFrameWidth = 32;
+    self.headImageView.viewFrameHeight = 32;
     self.headImageView.cornerRadius = self.headImageView.viewMidWidth;
     self.headImageView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5];
     self.headImageView.userInteractionEnabled = YES;
@@ -51,20 +52,21 @@ LC_IMP_SIGNAL(PushUserCenter);
     self.ADD(self.headImageView);
     
     
-    UIImageView * tip = UIImageView.view;
-    tip.image = [UIImage imageNamed:@"TalkTip.png" useCache:YES];
-    tip.viewFrameWidth = 16 / 3;
-    tip.viewFrameHeight = 33 / 3;
-    tip.viewFrameX = self.headImageView.viewRightX + padding;
-    tip.viewCenterY =  self.headImageView.viewCenterY;
-    self.ADD(tip);
+//    UIImageView * tip = UIImageView.view;
+//    tip.image = [UIImage imageNamed:@"TalkTip.png" useCache:YES];
+//    tip.viewFrameWidth = 16 / 3;
+//    tip.viewFrameHeight = 33 / 3;
+//    tip.viewFrameX = self.headImageView.viewRightX + padding;
+//    tip.viewCenterY =  self.headImageView.viewCenterY;
+//    self.ADD(tip);
     
     
     
-    self.cellBackgroundView = UIView.view.X(tip.viewRightX).Y(padding);
+//    self.cellBackgroundView = UIView.view.X(tip.viewRightX).Y(padding);
+    self.cellBackgroundView = UIView.view.X(self.headImageView.viewRightX).Y(0);
     self.cellBackgroundView.viewFrameWidth = LC_DEVICE_WIDTH - self.cellBackgroundView.viewFrameX - 10;
-    self.cellBackgroundView.viewFrameHeight = 33;
-    self.cellBackgroundView.backgroundColor = [UIColor whiteColor];
+    self.cellBackgroundView.viewFrameHeight = 46;
+//    self.cellBackgroundView.backgroundColor = LC_RGB(245, 245, 245);
     
     // 取消cell的原本点击手势
 //    [self.cellBackgroundView addTapGestureRecognizer:self selector:@selector(likesTapAction)];
@@ -72,7 +74,7 @@ LC_IMP_SIGNAL(PushUserCenter);
     self.ADD(self.cellBackgroundView);
     
     
-    self.tagItem = LKTagItem.view;
+    self.tagItem = LKTagItemView.view;
     self.tagItem.showNumber = YES;
 
     
@@ -88,29 +90,33 @@ LC_IMP_SIGNAL(PushUserCenter);
 //    self.ADD(self.likesView);
     
     
-    LCUIButton * commentButton = LCUIButton.view;
+    LCUIButton *commentButton = LCUIButton.view;
     // 修改了评论的图片
-    commentButton.buttonImage = [UIImage imageNamed:@"more.png" useCache:YES];
-    commentButton.viewFrameHeight = 33;
-    commentButton.titleFont = LK_FONT(10);
+    commentButton.buttonImage = [UIImage imageNamed:@"RightArrow.png" useCache:YES];
+    commentButton.viewFrameHeight = 22;
+    commentButton.viewFrameWidth = 13;
+//    commentButton.titleFont = LK_FONT(10);
 //    commentButton.title = LC_LO(@"评论");
-    commentButton.titleColor = LC_RGB(140, 133, 126);
-    commentButton.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0);
-    commentButton.imageEdgeInsets = UIEdgeInsetsMake(2, 0, 0, 0);
-    commentButton.FIT();
-    commentButton.viewFrameWidth += 10;
-    commentButton.viewFrameX = self.cellBackgroundView.viewFrameWidth - commentButton.viewFrameWidth - 3;
-    commentButton.viewFrameY = 33 / 2 - commentButton.viewMidHeight;
+//    commentButton.titleColor = LC_RGB(140, 133, 126);
+//    commentButton.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0);
+//    commentButton.imageEdgeInsets = UIEdgeInsetsMake(2, 0, 0, 0);
+//    commentButton.FIT();
+//    commentButton.viewFrameWidth += 10;
+//    commentButton.viewFrameX = self.cellBackgroundView.viewFrameWidth - commentButton.viewFrameWidth - 3;
+    commentButton.viewFrameX = self.cellBackgroundView.viewFrameWidth - commentButton.viewFrameWidth - 15;
+    commentButton.viewFrameY = 46 / 2 - commentButton.viewMidHeight;
     [commentButton addTarget:self action:@selector(commentTapAction) forControlEvents:UIControlEventTouchUpInside];
     self.cellBackgroundView.ADD(commentButton);
 
     
     self.commentsView = LKCommentsView.view;
-    self.commentsView.viewFrameX = self.cellBackgroundView.viewFrameX;
+    self.commentsView.viewFrameX = 0;
     self.commentsView.viewFrameY = self.cellBackgroundView.viewBottomY;
-    self.commentsView.viewFrameWidth = self.cellBackgroundView.viewFrameWidth;
+    self.commentsView.viewFrameWidth = LC_DEVICE_WIDTH;
     self.ADD(self.commentsView);
     
+    
+    [self lineInView:self.contentView];
     
     self.alpha = 0;
     
@@ -118,6 +124,15 @@ LC_IMP_SIGNAL(PushUserCenter);
        
         self.alpha = 1;
     });
+}
+
+- (void)lineInView:(UIView *)view
+{
+    UIImageView *line = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
+    line.viewFrameY = 45;
+    line.viewFrameWidth = LC_DEVICE_WIDTH;
+    line.viewFrameHeight = 1;
+    view.ADD(line);
 }
 
 -(void) handleHeadTap
@@ -141,14 +156,14 @@ LC_IMP_SIGNAL(PushUserCenter);
     
     if (!self.tagItem) {
         
-        self.tagItem = LKTagItem.view;
+        self.tagItem = LKTagItemView.view;
         self.tagItem.showNumber = YES;
 //        self.cellBackgroundView.ADD(self.tagItem);
     }
     
     self.tagItem.tagValue = tagDetail;
-    self.tagItem.viewFrameX = 8;
-    self.tagItem.viewCenterY = 33 / 2;
+    self.tagItem.viewFrameX = 18;
+    self.tagItem.viewCenterY = 46 / 2;
     
     
     // 获取tag的宽度
@@ -170,7 +185,7 @@ LC_IMP_SIGNAL(PushUserCenter);
     
     @weakly(self);
     
-    self.tagItem.requestFinished = ^(LKTagItem * item){
+    self.tagItem.requestFinished = ^(LKTagItemView * item){
       
         @normally(self);
         
@@ -191,7 +206,7 @@ LC_IMP_SIGNAL(PushUserCenter);
         }
     };
     
-    self.tagItem.willRequest = ^(LKTagItem * item){
+    self.tagItem.willRequest = ^(LKTagItemView * item){
       
         @normally(self);
         
@@ -306,15 +321,16 @@ LC_IMP_SIGNAL(PushUserCenter);
     view.layer.mask = maskLayer;
 }
 
-+(CGFloat) height:(LKTag *)tag
++ (CGFloat)height:(LKTag *)tag
 {
-    static LKCommentsView * commentsView = nil;
+    static LKCommentsView *commentsView = nil;
     //static LKLikesScrollView * likesView = nil;
 
     // 以下数字仅用于计算 不用细究
-    if (!commentsView) {
+    if (!commentsView){
         commentsView = LKCommentsView.view;
-        commentsView.viewFrameWidth = LC_DEVICE_WIDTH - (10 + 33 + 10 + 16 / 3) - 10;
+//        commentsView.viewFrameWidth = LC_DEVICE_WIDTH - (16 + 40 + 14 + 16 / 3) - 10;
+        commentsView.viewFrameWidth = LC_DEVICE_WIDTH;
     }
     
 //    if (!likesView) {
@@ -326,7 +342,7 @@ LC_IMP_SIGNAL(PushUserCenter);
     
     commentsView.tagValue = tag;
     
-    return 33 + 10 + commentsView.viewFrameHeight;// + (tag.likers.count > 0 ? 33 : 0);
+    return 32 + 14 + commentsView.viewFrameHeight;// + (tag.likers.count > 0 ? 33 : 0);
 }
 
 @end

@@ -16,18 +16,22 @@ typedef NS_ENUM(NSInteger, LKNotificationType)
     LKNotificationTypeFocus,
     LKNotificationTypeReply,
     LKNotificationTypeComment,
+    LKNotificationTypeOfficial
 };
 
 @interface LKNotification : LCDataModel
 
 LC_PROPERTY(assign) LKNotificationType type;
-LC_PROPERTY(strong) LKUser * user;
+LC_PROPERTY(strong) LKUser *user;
 
-LC_PROPERTY(strong) LKPost * post;
-LC_PROPERTY(strong) NSMutableArray * posts;
+LC_PROPERTY(strong) LKPost *post;
+LC_PROPERTY(strong) NSMutableArray *posts;
 
-LC_PROPERTY(strong) NSNumber * timestamp;
-LC_PROPERTY(copy) NSString * tag;
-LC_PROPERTY(strong) NSNumber * tagID;
+LC_PROPERTY(strong) NSNumber *timestamp;
+LC_PROPERTY(copy) NSString *tag;
+LC_PROPERTY(strong) NSMutableArray *tags;
+LC_PROPERTY(strong) NSNumber *tagID;
+
+- (instancetype)initWithDictionary:(NSDictionary *)dict error:(NSError *__autoreleasing *)err;
 
 @end

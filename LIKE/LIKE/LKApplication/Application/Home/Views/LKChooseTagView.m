@@ -72,7 +72,7 @@ LC_PROPERTY(strong) LKSettingsViewController *settings;
     
     NSMutableArray *idArray = [NSMutableArray array];
     NSMutableArray *groupArray = [NSMutableArray array];
-    for (LKTagItem *item in self.tagsView.subviews) {
+    for (LKTagItemView *item in self.tagsView.subviews) {
         
         if (item.backgroundImageView.isHidden) {
             
@@ -179,7 +179,7 @@ LC_PROPERTY(strong) LKSettingsViewController *settings;
     CGFloat maxItemY = 0;
     for (NSInteger i = 0; i < tags.count; i++) {
         
-        LKTagItem *item = [[LKTagItem alloc] initWithFont:LK_FONT_B(14)];
+        LKTagItemView *item = [[LKTagItemView alloc] initWithFont:LK_FONT_B(14)];
         
         item.chooseTag = tags[i];
         [self.tagsView addSubview:item];

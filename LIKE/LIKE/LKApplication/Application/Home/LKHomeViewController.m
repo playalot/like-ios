@@ -86,13 +86,13 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
     return instance_;
 }
 
--(void) dealloc
+- (void)dealloc
 {
     [self cancelAllRequests];
     [self unobserveAllNotifications];
 }
 
--(void) viewWillAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
@@ -109,9 +109,7 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
     // hide navigation bar.
     if (self.searchView) {
         [self setNavigationBarHidden:YES animated:animated];
-    }
-    else{
-        
+    } else {
         [self setNavigationBarHidden:NO animated:animated];
     }
     
@@ -123,7 +121,6 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
     
     //
     [LKNotificationCount startCheck];
-    
     
     // update user.
     if (LKLocalUser.singleton.isLogin) {
@@ -250,7 +247,7 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
     // Bar item.
     [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image: [[UIImage imageNamed:@"CollectionIcon.png" useCache:YES] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]] selectImage:nil];
     
-    //    [self setNavigationBarButton:LCUINavigationBarButtonTypeRight image:[[UIImage imageNamed:@"NotificationIcon.png" useCache:YES] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]] selectImage:nil];
+    [self setNavigationBarButton:LCUINavigationBarButtonTypeRight image:[[UIImage imageNamed:@"NotificationIcon.png" useCache:YES] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]] selectImage:nil];
     
     // Bind badge.
     //    [LKNotificationCount bindView:self.navigationItem.rightBarButtonItem.customView];
@@ -281,9 +278,7 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
         @normally(self);
         
         if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
-            
-            [self.navigationController pushViewController:[LKTabBarController hiddenBottomBarWhenPushed:[[LKUserCenterViewController alloc] initWithUser:self.header.user]] animated:YES];
-            
+            [LKUserCenterViewController pushUserCenterWithUser:self.header.user navigationController:self.navigationController];
         };
         
     };
@@ -479,6 +474,15 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
     };
 }
 
+- (BOOL)checkTag:(NSString *)tag onTags:(NSArray *)onTags {
+    for (LKTag * oTag in onTags) {
+        if ([oTag.tag isEqualToString:tag]) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
 #pragma mark -
 
 -(void) handleNavigationBarButton:(LCUINavigationBarButtonType)type
@@ -489,11 +493,10 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
         if (self.feedType == LKHomepageFeedTypeMain) {
             
             if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
-            
                 self.feedType = LKHomepageFeedTypeFocus;
             }
-        }
-        else{
+            
+        } else {
             
             // 如果当前是关注的人feed，那左上角就是主页按钮
             if (self.feedType == LKHomepageFeedTypeFocus) {
@@ -502,7 +505,6 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
                 [self cancelAllRequests];
                 
                 self.feedType = LKHomepageFeedTypeMain;
-                
                 
                 self.attentionViewController.tableView.tableHeaderView = UIView.view.WIDTH(LC_DEVICE_WIDTH).HEIGHT(150);
                 self.tableView.tableHeaderView = self.header;
@@ -516,9 +518,7 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
                         if (point.y > self.tableView.contentSize.height - self.tableView.bounds.size.height)
                             point.y = self.tableView.contentSize.height - self.tableView.bounds.size.height;
                         [self.tableView setContentOffset:point animated:NO];
-                    }
-                    else{
-                        
+                    } else {
                         //[self.tableView setContentOffset:self.attentionViewController.tableView.contentOffset animated:NO];
                     }
                 }
@@ -536,13 +536,9 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
                     self.attentionViewController.alpha = 0;
                     
                     for (UIView * view in self.attentionViewController.tableView.subviews) {
-                        
                         if ([view.class.description isEqualToString:@"UITableViewWrapperView"]) {
-                            
                             for (UIView * subview in view.subviews) {
-                                
                                 if (subview != self.header && [subview isKindOfClass:[UITableViewCell class]]) {
-                                    
                                     view.alpha = 0;
                                 }
                             }
@@ -551,13 +547,9 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
                     }
                     
                     for (UIView * view in self.tableView.subviews) {
-                        
                         if ([view.class.description isEqualToString:@"UITableViewWrapperView"]) {
-                            
                             for (UIView * subview in view.subviews) {
-                                
                                 if (subview != self.header && [subview isKindOfClass:[UITableViewCell class]]) {
-                                    
                                     view.alpha = 1;
                                 }
                             }
@@ -574,22 +566,18 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
                 }];
                 
                 [self scrollViewDidScroll:self.tableView];
-            }
-            else{
+                
+            } else {
                 
                 if (self.notificationViewController) {
-                    
                     LC_APPDELEGATE.tabBarController.assistiveTouchButton.hidden = NO;
                 }
                 
                 if (self.notificationViewController.fromType == LKHomepageFeedTypeMain) {
-                    
                     self.attentionViewController.tableView.scrollsToTop = NO;
                     self.tableView.scrollsToTop = YES;
                     self.feedType = LKHomepageFeedTypeMain;
-                }
-                else{
-                    
+                } else {
                     self.attentionViewController.tableView.scrollsToTop = YES;
                     self.tableView.scrollsToTop = NO;
                     self.feedType = LKHomepageFeedTypeFocus;
@@ -600,55 +588,24 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
     
     // 右边只有消息按钮
     else if (type == LCUINavigationBarButtonTypeRight) {
-        
         [self notificationAction];
     }
 }
 
--(BOOL) checkTag:(NSString *)tag onTags:(NSArray *)onTags
-{
-    for (LKTag * oTag in onTags) {
-        
-        if ([oTag.tag isEqualToString:tag]) {
-            
-            return NO;
-        }
-    }
-    
-    return YES;
-}
-
--(void) handleNotification:(NSNotification *)notification
-{
+-(void) handleNotification:(NSNotification *)notification {
     if ([notification is:LKHomeViewControllerAddNewPost]) {
-        
         if (notification.object) {
-            
             if (self.feedType == LKHomepageFeedTypeFocus) {
-                
                 [self handleNavigationBarButton:LCUINavigationBarButtonTypeLeft];
             }
-            
             [self.datasource insertObject:notification.object atIndex:0];
             [self reloadData];
-            
             [self performSelector:@selector(scrollViewScrollToTop) withObject:nil afterDelay:0.5];
         }
-    }
-    else if([notification is:LKHomeViewControllerUpdateHeader]){
-        
+    } else if([notification is:LKHomeViewControllerUpdateHeader]){
         [self.header updateWithUser:LKLocalUser.singleton.user];
-        
-    }
-    else if ([notification is:LKHomeViewControllerReloadingData]){
-        
-//        if (self.feedType == LKHomepageFeedTypeFocus) {
-//            
-//            [self handleNavigationBarButton:LCUINavigationBarButtonTypeLeft];
-//        }
-        
+    } else if ([notification is:LKHomeViewControllerReloadingData]){
         [self loadData:LCUIPullLoaderDiretionTop];
-        
     }
 }
 
@@ -743,14 +700,10 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
         @normally(self);
         
         if (error) {
-            
             [self showTopMessageErrorHud:error];
-        }
-        else{
-            
+        } else {
             // insert...
             LKTag * tag = [LKTag objectFromDictionary:result.json[@"data"]];
-            
             if (tag) {
                 tagValue.id = tag.id;
                 return;
@@ -760,6 +713,9 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
     }];
 }
 
+- (void)refresh {
+    
+}
 
 // 这个方法同时负责主页和关注的人列表的请求
 -(void) loadData:(LCUIPullLoaderDiretion)diretion
@@ -809,12 +765,9 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
         if (result.state == LKHttpRequestStateFinished) {
             
             if (self.feedType == LKHomepageFeedTypeFocus) {
-                
                 self.focusNext = result.json[@"data"][@"next"] ? result.json[@"data"][@"next"] : nil;
-            }
-            else{
-                
-                self.next = result.json[@"data"][@"next"] ? result.json[@"data"][@"next"] : nil/*@""*/;
+            } else {
+                self.next = result.json[@"data"][@"next"] ? result.json[@"data"][@"next"] : nil;
             }
             
             NSArray * resultData = result.json[@"data"][@"posts"];
@@ -1180,8 +1133,8 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
 }
 
 
--(void) searchAction
-{
+- (void)searchAction {
+    
     [self.inputView resignFirstResponder];
     
 //    if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
@@ -1206,7 +1159,8 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
         LC_APPDELEGATE.tabBarController.assistiveTouchButton.hidden = YES;
         
         LKSearchView * view = LKSearchView.view;
-        
+    view.parentViewController = self;
+    
         self.header.searchViewController = view;
         self.searchView = view;
         
@@ -1257,20 +1211,15 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
 
 #pragma mark -
 
-LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
-{
+LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
     [LKUserCenterViewController pushUserCenterWithUser:signal.object navigationController:self.navigationController];
-    
-    [LC_APPDELEGATE.tabBarController hideBar];
 }
 
-LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
-{
+LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     if (self.inputView.isFirstResponder) {
         [self.inputView resignFirstResponder];
         return;
     }
-    
     if ([LKLoginViewController needLoginOnViewController:self.navigationController]) {
         return;
     }

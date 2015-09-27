@@ -117,7 +117,7 @@ LC_PROPERTY(strong) UICollectionView * collectionView;
     
     self.title = LC_LO(@"相机相册");
     
-//    [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft title:LC_LO(@"取消") titleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.8]];
+    [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft title:LC_LO(@"取消") titleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.8]];
     [self setNavigationBarButton:LCUINavigationBarButtonTypeRight title:LC_LO(@"相册") titleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.8]];
     
     

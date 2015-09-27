@@ -154,9 +154,9 @@ LC_PROPERTY(strong) UIView * tipLine;
             } else {
                 line += 1;
             }
-            newItem.frame = CGRectMake(leftMargin + (page * self.viewFrameWidth), line * topPadding + topMargin + line * lastItem.viewFrameHeight, newItem.viewFrameWidth, newItem.viewFrameHeight);
+            newItem.frame = CGRectMake(leftMargin + (page * self.viewFrameWidth), line * topPadding + topMargin + line * lastItem.viewFrameHeight + 2, newItem.viewFrameWidth, newItem.viewFrameHeight);
         } else {
-            newItem.frame = CGRectMake(lastItem.viewFrameX + lastItem.viewFrameWidth + leftPadding, line * topPadding + topMargin + line * lastItem.viewFrameHeight, newItem.viewFrameWidth, newItem.viewFrameHeight);
+            newItem.frame = CGRectMake(lastItem.viewFrameX + lastItem.viewFrameWidth + leftPadding, line * topPadding + topMargin + line * lastItem.viewFrameHeight + 2, newItem.viewFrameWidth, newItem.viewFrameHeight);
         }
         
     }
@@ -216,8 +216,8 @@ LC_PROPERTY(strong) UIView * tipLine;
     UIImage *icon = [[UIImage imageNamed:@"AddNewTag.png" useCache:YES] imageWithTintColor:LKColor.color];
     
     LCUIImageView *imageView = [LCUIImageView viewWithImage:icon];
-    imageView.viewFrameHeight = 26;
-    imageView.viewFrameWidth = 26;
+    imageView.viewFrameHeight = 24;
+    imageView.viewFrameWidth = 24;
     newTagView.ADD(imageView);
     
     

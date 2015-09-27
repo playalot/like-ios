@@ -132,12 +132,12 @@ LC_IMP_SIGNAL(PushPostDetail);
     
     // 推荐理由
     self.recommendedReason = LCUIButton.view;
-    self.recommendedReason.viewFrameY = self.title.viewFrameY + 2;
     self.recommendedReason.title = LC_LO(@"共同兴趣");
     self.recommendedReason.titleFont = LK_FONT(13);
     self.recommendedReason.titleColor = LC_RGB(217, 217, 217);
     self.recommendedReason.buttonImage = [UIImage imageNamed:@"LittleTag" useCache:YES];
     self.recommendedReason.viewFrameHeight = LK_FONT(13).lineHeight;
+    self.recommendedReason.viewFrameY = (54 - self.recommendedReason.viewFrameHeight) * 0.5;
     self.recommendedReason.viewFrameX = LC_DEVICE_WIDTH - self.recommendedReasonWithTag.viewFrameWidth - 15;
     self.recommendedReason.titleEdgeInsets = UIEdgeInsetsMake(1, 0, 0, 0);
     [self.recommendedReason addTarget:self action:@selector(recommendedReasonBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -301,7 +301,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.recommendedReasonWithTag.hidden = LC_NSSTRING_IS_INVALID(post.reasonTag);
     
     if (self.recommendedReasonWithTag.hidden == YES) {
-        self.recommendedReason.viewFrameY = 55 / 2 - self.recommendedReason.viewMidHeight + 5;
+        self.recommendedReason.viewFrameY = (54 - self.recommendedReason.viewFrameHeight) * 0.5;
         self.recommendedReasonWithTag.viewFrameY = CGRectGetMaxY(self.recommendedReason.frame) - 5;
         self.recommendedReasonWithTag.viewFrameX = CGRectGetMaxX(self.recommendedReason.frame) - self.recommendedReasonWithTag.viewFrameWidth;
     }

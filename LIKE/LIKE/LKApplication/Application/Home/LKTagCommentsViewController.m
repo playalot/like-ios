@@ -17,7 +17,7 @@
 #import "LKUserCenterViewController.h"
 #import "UIImageView+WebCache.h"
 
-#define iconWH 33
+#define iconWH 30
 
 @interface LKTagCommentsViewController () <UITableViewDataSource,UITableViewDelegate>
 
@@ -122,7 +122,7 @@ static NSString * __LKUserAddress = nil;
     self.ADD(self.header);
     
     
-    LCUIButton * backButton = LCUIButton.view;
+    LCUIButton *backButton = LCUIButton.view;
     backButton.viewFrameWidth = 54;
     backButton.viewFrameHeight = 55 / 3 + 28;
     backButton.viewFrameY = 0;
@@ -227,9 +227,10 @@ static NSString * __LKUserAddress = nil;
         [self performSelector:@selector(setCanFirstResponder:) withObject:@(YES) afterDelay:0.5];
     };
 
+    [self getTagUsers];
 }
 
--(void) update
+- (void)update
 {
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"mark/%@", self.tagValue.id]].AUTO_SESSION().GET_METHOD();
     
@@ -309,9 +310,6 @@ static NSString * __LKUserAddress = nil;
     self.inputView.textField.text = @"";
     self.replyUser = nil;
     self.inputView.textField.placeholder = LC_LO(@"发表评论（最多300个字）");
-    
-
-
 }
 
 /**
@@ -459,48 +457,59 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
 
 - (UITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    self.index++;
-    
     if (indexPath.section == 0) {
         
-        CGFloat padding = 10;
+        CGFloat leftPadding = 24;
+        CGFloat topPadding = 12;
 
-        LCUITableViewCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Header" andClass:[LCUITableViewCell class] configurationCell:^(LCUITableViewCell * configurationCell) {
+        LCUITableViewCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Header" andClass:[LCUITableViewCell class] configurationCell:^(LCUITableViewCell * configurationCell) {
             
             configurationCell.backgroundColor = [UIColor whiteColor];
             configurationCell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             
-            LCUIImageView * headImageView = LCUIImageView.view;
-            headImageView.viewFrameX = padding;
-            headImageView.viewFrameY = padding;
-            headImageView.viewFrameWidth = 33;
-            headImageView.viewFrameHeight = 33;
+            LCUIImageView *headImageView = LCUIImageView.view;
+            headImageView.viewFrameX = leftPadding;
+            headImageView.viewFrameY = topPadding;
+            headImageView.viewFrameWidth = 35;
+            headImageView.viewFrameHeight = 35;
             headImageView.cornerRadius = headImageView.viewMidWidth;
             headImageView.backgroundColor = LKColor.backgroundColor;
             headImageView.tag = 1001;
             configurationCell.ADD(headImageView);
             
             
-//            LCUILabel * timeLabel = LCUILabel.view;
-//            timeLabel.viewFrameWidth = 100;
-//            timeLabel.viewFrameX = LC_DEVICE_WIDTH - timeLabel.viewFrameWidth - 10;
-//            timeLabel.viewFrameHeight = 53;
-//            timeLabel.font = LK_FONT(13);
-//            timeLabel.textAlignment = UITextAlignmentRight;
-//            timeLabel.textColor = LC_RGB(171, 164, 157);
-//            timeLabel.tag = 1003;
-//            configurationCell.ADD(timeLabel);
+            LCUILabel *nameLable = LCUILabel.view;
+            nameLable.font = LK_FONT(12);
+            nameLable.textColor = [UIColor blackColor];
+            nameLable.viewFrameX = leftPadding;
+            nameLable.viewFrameY = headImageView.viewBottomY + topPadding;
+            nameLable.viewFrameHeight = nameLable.font.lineHeight;
+            nameLable.viewFrameWidth = 200;
+            nameLable.tag = 1004;
+            configurationCell.ADD(nameLable);
+            
+            
+            LCUILabel *timeLabel = LCUILabel.view;
+            timeLabel.font = LK_FONT(12);
+            timeLabel.viewFrameWidth = 100;
+            timeLabel.viewFrameHeight = timeLabel.font.lineHeight;
+            timeLabel.viewFrameX = LC_DEVICE_WIDTH - timeLabel.viewFrameWidth - 10;
+            timeLabel.viewFrameY = nameLable.viewFrameY;
+            timeLabel.textAlignment = UITextAlignmentRight;
+            timeLabel.textColor = LC_RGB(171, 164, 157);
+            timeLabel.tag = 1003;
+//            timeLabel.hidden = YES;
+            configurationCell.ADD(timeLabel);
             
             
             // 删除按钮
             LCUIButton *deleteBtn = LCUIButton.view;
+            [deleteBtn setTitleFont:LK_FONT(12)];
             [deleteBtn setTitle:LC_LO(@"删除") forState:UIControlStateNormal];
             [deleteBtn sizeToFit];
-            deleteBtn.viewFrameX = LC_DEVICE_WIDTH - deleteBtn.viewFrameWidth - 14;
+            deleteBtn.viewFrameX = LC_DEVICE_WIDTH - deleteBtn.viewFrameWidth - 6;
             deleteBtn.viewCenterY = headImageView.viewCenterY;
-            [deleteBtn setTitleFont:LK_FONT(10)];
             deleteBtn.titleLabel.textAlignment = UITextAlignmentRight;
             [deleteBtn setTitleColor:LC_RGB(180, 180, 180) forState:UIControlStateNormal];
             [deleteBtn addTarget:self action:@selector(deleteBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -510,21 +519,21 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             configurationCell.ADD(deleteBtn);
     
             
-            
-            UIImageView * line = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
+            UIImageView *line = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
             line.viewFrameWidth = LC_DEVICE_WIDTH;
             configurationCell.ADD(line);
             
             
-            UIImageView * line1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
-            line1.viewFrameY = 53 + 33 - line1.viewFrameHeight;
+            UIImageView *line1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
+            line1.viewFrameY = 74 + 8 - 1;
             line1.viewFrameWidth = LC_DEVICE_WIDTH;
             configurationCell.ADD(line1);
         }];
         
-        LCUIImageView * head = cell.FIND(1001);
-        LKTagItemView * item = cell.FIND(1002);
-        LCUILabel * time = cell.FIND(1003);
+        LCUIImageView *head = cell.FIND(1001);
+        LKTagItemView *item = cell.FIND(1002);
+        LCUILabel *time = cell.FIND(1003);
+        LCUILabel *name = cell.FIND(1004);
         
         if (item) {
             
@@ -539,90 +548,126 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             cell.ADD(item);
         }
         
+        LKUser *tagUser = self.tagValue.user;
 //        head.url = self.tagValue.user.avatar;
-        [head sd_setImageWithURL:[NSURL URLWithString:self.tagValue.user.avatar] placeholderImage:nil];
+        [head sd_setImageWithURL:[NSURL URLWithString:tagUser.avatar] placeholderImage:nil];
         item.tagValue = self.tagValue;
-        item.viewFrameX = head.viewRightX + padding;
-        item.viewFrameY = 53 / 2 - item.viewMidHeight;
+        item.viewFrameX = head.viewRightX + 19;
+//        item.viewFrameY = 53 / 2 - item.viewMidHeight;
+        item.viewCenterY = head.viewCenterY;
         time.text = [LKTime dateNearByTimestamp:self.tagValue.createTime];
+        name.text = [NSString stringWithFormat:@"%@  %@ likes", tagUser.name, tagUser.likes];
         
         
         // 添加一个scrollView用来显示标签用户
-        UIScrollView *tagUserView = [[UIScrollView alloc] init];
-//        tagUserView.backgroundColor = [UIColor redColor];
+        UIScrollView *tagUserView = UIScrollView.view;
         tagUserView.viewFrameX = item.viewFrameX;
-        tagUserView.viewFrameY = CGRectGetMaxY(item.frame) + 8;
+        tagUserView.viewFrameY = name.viewBottomY + 16;
         tagUserView.viewFrameWidth = LC_DEVICE_WIDTH - tagUserView.viewFrameX - 20;
-        tagUserView.viewFrameHeight = 33;
         self.tagUserView = tagUserView;
         cell.ADD(tagUserView);
         
         // 去掉水平滚动条
         tagUserView.showsHorizontalScrollIndicator = NO;
     
+        // 添加子控件
+        [self addChildViews:tagUserView];
         
-        LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"mark/%@/likes",self.tagValue.id]].AUTO_SESSION();
+        if (self.tagUserView.viewFrameHeight) {
+            
+            UIImageView *line2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
+            line2.viewFrameY = 74 + 16 + self.tagUserView.viewFrameHeight + 8 - 1;
+            line2.viewFrameWidth = LC_DEVICE_WIDTH;
+            cell.ADD(line2);
+        }
+
         
-        @weakly(self);
-        
-        [self request:interface complete:^(LKHttpRequestResult *result) {
-            
-            @normally(self);
-            
-            if (result.state == LKHttpRequestStateFinished) {
-                
-                NSArray *usersDic = result.json[@"data"][@"likes"];
-                
-                NSMutableArray *users = [NSMutableArray array];
-                
-                for (NSDictionary *dict in usersDic) {
-                    
-                    [users addObject:[LKUser objectFromDictionary:dict[@"user"]]];
-                }
-                
-                
-                // 添加子控件
-                self.tagUsers = users;
-
-                // 先判断是否有评论
-                if (self.commentList.count) {
-                    
-                    if (self.index >= 4) {
-                        
-                        [self addChildViews:tagUserView];
-                    }
-                } else {
-                    
-                    if (self.index == 3) {
-                        
-                        [self addChildViews:tagUserView];
-                        
-                    }
-                }
-
-                // 判断是否是用户或者标签所有者
-                BOOL canDelete = [self userOrTagOwner];
-                
-                self.deleteBtn.hidden = !canDelete;
-
-            }
-            else if (result.state == LKHttpRequestStateFailed){
-                
-            }
-            
-        }];
+//        LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"mark/%@/likes",self.tagValue.id]].AUTO_SESSION();
+//        
+//        @weakly(self);
+//        
+//        [self request:interface complete:^(LKHttpRequestResult *result) {
+//            
+//            @normally(self);
+//            
+//            if (result.state == LKHttpRequestStateFinished) {
+//                
+//                NSArray *usersDic = result.json[@"data"][@"likes"];
+//                
+//                NSMutableArray *users = [NSMutableArray array];
+//                
+//                for (NSDictionary *dict in usersDic) {
+//                    
+//                    [users addObject:[LKUser objectFromDictionary:dict[@"user"]]];
+//                }
+//                
+//                
+//                // 添加子控件
+//                self.tagUsers = users;
+//
+//                // 添加子控件
+//                [self addChildViews:tagUserView];
+//            
+//                // 判断是否是用户或者标签所有者
+//                BOOL canDelete = [self userOrTagOwner];
+//                
+//                self.deleteBtn.hidden = !canDelete;
+//
+//            }
+//            else if (result.state == LKHttpRequestStateFailed){
+//                
+//            }
+//            
+//        }];
 
         return cell;
-    }
-    else{
+        
+    } else {
         
         LKTagCommentCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Comments" andClass:[LKTagCommentCell class]];
         
         cell.comment = self.datasource[indexPath.row];
+        cell.backgroundColor = LC_RGB(238, 238, 238);
         
         return cell;
     }
+}
+
+- (void)getTagUsers {
     
+    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"mark/%@/likes",self.tagValue.id]].AUTO_SESSION();
+    
+    @weakly(self);
+    
+    [self request:interface complete:^(LKHttpRequestResult *result) {
+        
+        @normally(self);
+        
+        if (result.state == LKHttpRequestStateFinished) {
+            
+            NSArray *usersDic = result.json[@"data"][@"likes"];
+            
+            NSMutableArray *users = [NSMutableArray array];
+            
+            for (NSDictionary *dict in usersDic) {
+                
+                [users addObject:[LKUser objectFromDictionary:dict[@"user"]]];
+            }
+            
+            // 添加子控件
+            self.tagUsers = users;
+            
+            // 判断是否是用户或者标签所有者
+            BOOL canDelete = [self userOrTagOwner];
+            
+            self.deleteBtn.hidden = !canDelete;
+            
+        }
+        else if (result.state == LKHttpRequestStateFailed){
+            
+        }
+        
+    }];
 }
 
 /**
@@ -652,15 +697,24 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     // 头像间距
     CGFloat margin = 8;
     
+    LCUIImageView *lastIcon = nil;
     for (int i = 0; i < self.tagUsers.count; i++) {
         
+        NSInteger column = tagUserView.viewFrameWidth / (iconWH + margin);
         LKUser *user = self.tagUsers[i];
         
         LCUIImageView *iconView = LCUIImageView.view;
-        iconView.viewFrameX = (iconWH + margin) * i;
-        iconView.viewFrameY = 0;
+        iconView.viewFrameX = (iconWH + margin) * (i % column);
+        iconView.viewFrameY = lastIcon.viewFrameY;
         iconView.viewFrameWidth = iconWH;
         iconView.viewFrameHeight = iconWH;
+        
+        if (lastIcon.viewRightX + margin + iconWH > tagUserView.viewFrameWidth) {
+            
+            iconView.viewFrameX = 0;
+            iconView.viewFrameY = lastIcon.viewBottomY + 8;
+        }
+        
         
         [self.tagUserView addSubview:iconView];
         [self.iconViews addObject:iconView];
@@ -676,6 +730,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         iconView.layer.cornerRadius = iconWH * 0.5;
         iconView.layer.masksToBounds = YES;
         
+        lastIcon = iconView;
     }
     
     for (LCUIImageView *iconView in self.iconViews) {
@@ -685,10 +740,9 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         [iconView addTapGestureRecognizer:self selector:@selector(iconViewClick:)];
 
         // 设置scrollView的contentSize
-        self.tagUserView.contentSize = CGSizeMake(self.iconX + iconWH, 0);
+        self.tagUserView.viewFrameHeight = lastIcon.viewBottomY;
         self.tagUserView.scrollEnabled = YES;
     }
-    
 }
 
 /**
@@ -761,14 +815,18 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
 }
 
 #pragma mark - ***** tableView的代理方法 *****
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return 200;
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.section == 0){
+    if (indexPath.section == 0){
         
         // 待修改
-        return 53 + 33;
-    }
-    else{
+        return 74 + 16 + self.tagUserView.viewFrameHeight + 8;
+    } else {
         
         // 修改了cell的行高,解决左滑显示删除按钮错位的问题
         return [LKTagCommentCell height:self.datasource[indexPath.row]] - 4;
@@ -934,17 +992,15 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             
 //            [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:1]] withRowAnimation:UITableViewRowAnimationTop];
             
-        }
-        else if (result.state == LKHttpRequestStateFailed){
+        } else if (result.state == LKHttpRequestStateFailed){
             
             [self showTopMessageErrorHud:result.error];
         }
     }];
-    
 }
 
 #pragma mark - ***** scrollView代理方法 *****
--(void) scrollViewDidScroll:(UIScrollView *)scrollView
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if (self.canFirstResponder.boolValue) {
         

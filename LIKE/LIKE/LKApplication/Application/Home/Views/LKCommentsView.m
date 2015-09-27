@@ -66,20 +66,20 @@
         LKComment * comment = tagValue.comments[i];
         
         
-        UIView * contentView = UIView.view;
+        UIView *contentView = UIView.view;
         contentView.viewFrameY = lastView.viewBottomY;
         contentView.viewFrameWidth = self.viewFrameWidth;
-        contentView.viewFrameHeight = 46;
+        contentView.viewFrameHeight = 36;
         contentView.backgroundColor = LC_RGB(238, 238, 238);
         self.ADD(contentView);
         
         
-        LCUIImageView * head = LCUIImageView.view;
+        LCUIImageView *head = LCUIImageView.view;
         head.viewFrameX = 70;
         head.viewFrameY = 6;
-        head.viewFrameWidth = 30;
-        head.viewFrameHeight = 30;
-        head.cornerRadius = 30 / 2;
+        head.viewFrameWidth = 24;
+        head.viewFrameHeight = 24;
+        head.cornerRadius = 24 / 2;
 //        head.url = comment.user.avatar;
         [head sd_setImageWithURL:[NSURL URLWithString:comment.user.avatar] placeholderImage:nil];
         head.userInteractionEnabled = YES;
@@ -92,7 +92,7 @@
         contentLabel.viewFrameX = head.viewRightX + 10;
         contentLabel.viewFrameY = 4;
         contentLabel.viewFrameWidth = self.viewFrameWidth - contentLabel.viewFrameX - 10;
-        contentLabel.font = LK_FONT(12);
+        contentLabel.font = LK_FONT(14);
         contentLabel.textColor = LC_RGB(51, 51, 51);
         
         NSString * content = [NSString stringWithFormat:@"%@：%@%@" ,comment.user.name, comment.replyUser ? [NSString stringWithFormat:@"@%@ ", comment.replyUser.name] : @"",comment.content];
@@ -101,7 +101,7 @@
         
         
         NSMutableAttributedString * attString = [[NSMutableAttributedString alloc] initWithString:content];
-        [attString addAttribute:NSFontAttributeName value:LK_FONT_B(12) range:[content rangeOfString:comment.user.name]];
+        [attString addAttribute:NSFontAttributeName value:LK_FONT_B(14) range:[content rangeOfString:comment.user.name]];
         
         contentLabel.attributedText = attString;
         

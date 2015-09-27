@@ -26,13 +26,14 @@ LC_PROPERTY(strong) UIImageView * line;
     self.backgroundColor = [UIColor whiteColor];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
 
-    CGFloat padding = 10;
+    CGFloat leftPadding = 78;
+    CGFloat topPadding = 8;
     
     self.head = LCUIImageView.view;
-    self.head.viewFrameX = padding;
-    self.head.viewFrameY = padding;
-    self.head.viewFrameWidth = 33;
-    self.head.viewFrameHeight = 33;
+    self.head.viewFrameX = leftPadding;
+    self.head.viewFrameY = topPadding;
+    self.head.viewFrameWidth = 30;
+    self.head.viewFrameHeight = 30;
     self.head.cornerRadius = self.head.viewMidWidth;
     self.head.backgroundColor = [UIColor whiteColor];
     self.head.userInteractionEnabled = YES;
@@ -90,20 +91,20 @@ LC_PROPERTY(strong) UIImageView * line;
     self.contentLabel.FIT();
     
     self.timeLabel.viewFrameY = self.contentLabel.viewBottomY + 3;
-    self.timeLabel.text = [NSString stringWithFormat:@"%@ %@ %@", [LKTime dateNearByTimestamp:comment.timestamp], comment.place.length ? LC_LO(@"来自") : @"", comment.place.length ? comment.place : @""];
+    self.timeLabel.text = [NSString stringWithFormat:@"%@   %@ %@", [LKTime dateNearByTimestamp:comment.timestamp], comment.place.length ? LC_LO(@"来自") : @"", comment.place.length ? comment.place : @""];
     self.timeLabel.FIT();
     
     
     self.line.viewFrameY = self.timeLabel.viewBottomY + 7 - self.line.viewFrameHeight;
 }
 
-+(CGFloat) height:(LKComment *)comment
-{
++ (CGFloat)height:(LKComment *)comment {
+    
     CGFloat height = 10;
     
     NSString * content = [NSString stringWithFormat:@"%@：%@%@" ,comment.user.name, comment.replyUser ? [NSString stringWithFormat:@"@%@ ", comment.replyUser.name] : @"",comment.content];
     
-    CGSize size = [content sizeWithFont:LK_FONT(13) byWidth:LC_DEVICE_WIDTH - 53 - 10];
+    CGSize size = [content sizeWithFont:LK_FONT(13) byWidth:LC_DEVICE_WIDTH - 53 - 78];
     
     height += size.height;
     height += 5;

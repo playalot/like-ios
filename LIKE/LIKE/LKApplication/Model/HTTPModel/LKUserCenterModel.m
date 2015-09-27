@@ -103,9 +103,7 @@ LC_PROPERTY(assign) NSInteger index;
                     self.photoArray = newPosts;
                 }
                 
-                if (datasource.count == 0) {
-                    self.photoCanLoadMore = NO;
-                }
+                self.photoCanLoadMore = datasource.count != 0;
                 
                 break;
             }
@@ -121,10 +119,8 @@ LC_PROPERTY(assign) NSInteger index;
                     [newUsers addObjectsFromArray:datasource];
                     [self.focusArray addObjectsFromArray:newUsers];
                 }
-                
-                if (datasource.count == 0) {
-                    self.focusCanLoadMore = NO;
-                }
+
+                self.focusCanLoadMore = datasource.count != 0;
                 
                 break;
             }
@@ -142,11 +138,10 @@ LC_PROPERTY(assign) NSInteger index;
                     self.fansArray = newFans;
                 }
                 
-                if (datasource.count == 0) {
-                    self.fansCanLoadMore = NO;
-                }
-            }
+                self.fansCanLoadMore = datasource.count != 0;
+                
                 break;
+            }
                 
             case LKUserCenterModelTypeFavor: {
                 
@@ -163,12 +158,10 @@ LC_PROPERTY(assign) NSInteger index;
                     self.favorArray = newFavors;
                 }
                 
-                if (datasource.count == 0) {
-                    self.favorCanLoadMore = NO;
-                }
+                self.favorCanLoadMore = datasource.count != 0;
                 
-            }
                 break;
+            }
                 
             default:
                 break;

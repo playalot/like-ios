@@ -46,7 +46,7 @@ LC_PROPERTY(assign) BOOL isShow;
     
     self.title = LCUILabel.view;
     self.title.textColor = LC_RGB(171, 164, 157);
-    self.title.font = LK_FONT(13);
+    self.title.font = LK_FONT(14);
     self.title.text = LC_LO(@"分享");
     self.title.alpha = 1;
     self.title.FIT();

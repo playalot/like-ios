@@ -53,6 +53,8 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
  */
 - (void)load:(NSDictionary *)launchOptions {
     self.launchOptions = launchOptions;
+    [self setupLoginValidation];
+    [self setupViewControllers];
     [self setupNetworkConfig];
     [self setupCache];
     [self setupMAMapServices];
@@ -64,8 +66,6 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     [self setupSMS];
     [self setupNotificationObserving];
     [self setupPushService:launchOptions];
-    [self setupViewControllers];
-    [self setupLoginValidation];
 }
 
 - (void)setupNetworkConfig {
@@ -192,52 +192,52 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     
     
     // tabbarCtrl只放了一个主页控制器
-//    self.tabBarController = [[LKTabBarController alloc]
-//                             initWithViewControllers:@[
-//                                                       LC_UINAVIGATION(self.mainFeedViewController),
-//                                                       LC_UINAVIGATION(self.searchViewController),
-//                                                       LC_UINAVIGATION(self.cameraRollViewController),
-//                                                       LC_UINAVIGATION(self.notificationViewController),
-//                                                       LC_UINAVIGATION(self.userCenterViewController)]];
-//    self.tabBarController.delegate = self;
-//    
-//    NSArray *imageNames = @[@"tabbar_homeLine",
-//                            @"tabbar_search",
-//                            @"tabbar_camera",
-//                            @"tabbar_notification",
-//                            @"tabbar_userCenter"];
-//    NSArray *selectedImageNames = @[@"tabbar_homeLine_selected",
-//                                    @"tabbar_search_selected",
-//                                    @"tabbar_camera",
-//                                    @"tabbar_notification_selected",
-//                                    @"tabbar_userCenter_selected"];
-//    
-//    
-//    NSInteger i = 0;
-//    
-//    for (UIView *view in self.tabBarController.tabBar.items) {
-//        
-//        if ([view isKindOfClass:[RDVTabBarItem class]]) {
-//
-//            RDVTabBarItem *item = (RDVTabBarItem *)view;
-//            
-//            [item setFinishedSelectedImage:[[UIImage imageNamed:selectedImageNames[i]]
-//                    imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
-//               withFinishedUnselectedImage:[[UIImage imageNamed:imageNames[i]]
-//                    imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-//            [item setBackgroundColor:[UIColor whiteColor]];
-//            
-//            if (i == 3) {
-//                
-//                LCUIBadgeView *badgeView = LCUIBadgeView.view;
-//                badgeView.frame = CGRectMake(40 * LC_DEVICE_WIDTH / 414, 13, 2, 2);
-////                badgeView.valueString = @"9";
-//                item.ADD(badgeView);
-//            }
-//            
-//            i++;
-//        }
-//    }
+    self.tabBarController = [[LKTabBarController alloc]
+                             initWithViewControllers:@[
+                                                       LC_UINAVIGATION(self.mainFeedViewController),
+                                                       LC_UINAVIGATION(self.searchViewController),
+                                                       LC_UINAVIGATION(self.cameraRollViewController),
+                                                       LC_UINAVIGATION(self.notificationViewController),
+                                                       LC_UINAVIGATION(self.userCenterViewController)]];
+    self.tabBarController.delegate = self;
+    
+    NSArray *imageNames = @[@"tabbar_homeLine",
+                            @"tabbar_search",
+                            @"tabbar_camera",
+                            @"tabbar_notification",
+                            @"tabbar_userCenter"];
+    NSArray *selectedImageNames = @[@"tabbar_homeLine_selected",
+                                    @"tabbar_search_selected",
+                                    @"tabbar_camera",
+                                    @"tabbar_notification_selected",
+                                    @"tabbar_userCenter_selected"];
+    
+    
+    NSInteger i = 0;
+    
+    for (UIView *view in self.tabBarController.tabBar.items) {
+        
+        if ([view isKindOfClass:[RDVTabBarItem class]]) {
+
+            RDVTabBarItem *item = (RDVTabBarItem *)view;
+            
+            [item setFinishedSelectedImage:[[UIImage imageNamed:selectedImageNames[i]]
+                    imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
+               withFinishedUnselectedImage:[[UIImage imageNamed:imageNames[i]]
+                    imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+            [item setBackgroundColor:[UIColor whiteColor]];
+            
+            if (i == 3) {
+                
+                LCUIBadgeView *badgeView = LCUIBadgeView.view;
+                badgeView.frame = CGRectMake(40 * LC_DEVICE_WIDTH / 414, 13, 2, 2);
+//                badgeView.valueString = @"9";
+                item.ADD(badgeView);
+            }
+            
+            i++;
+        }
+    }
     
     self.window.rootViewController = [LKTabbarViewController viewController];
 }
@@ -286,18 +286,15 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
 /**
  *  禁止屏幕转向
  */
-- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
-{
+- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
     return UIInterfaceOrientationMaskPortrait;
 }
 
 /**
  *  获取当前的控制器
  */
-- (UIViewController *) getCurrentViewController
-{
+- (UIViewController *) getCurrentViewController {
     UIViewController * result = nil;
-    
     UIWindow * window = [[UIApplication sharedApplication] keyWindow];
     
     if (window.windowLevel != UIWindowLevelNormal){

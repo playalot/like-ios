@@ -53,7 +53,7 @@ LC_PROPERTY(weak) id delegate;
     [self buildInputView];
     [self buildPullLoader];
     
-    self.isCellPrecomuted = YES;
+    self.isCellPrecomuted = NO;
     self.precomputedCells = [NSMutableArray array];
     self.precomputedCellCache = [[LRUCache alloc] initWithCapacity:10];
     

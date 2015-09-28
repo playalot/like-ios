@@ -478,18 +478,12 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
 /**
  *  选择国家代号
  */
--(void) chooseCountryCode
-{
+-(void) chooseCountryCode {
     LKCountryCodeViewController * countryCode = [LKCountryCodeViewController viewController];
-    
     @weakly(self);
-    
     countryCode.didSelectedRow = ^(NSString * countryCode){
-        
         @normally(self);
-        
         NSArray * subString = [countryCode componentsSeparatedByString:@"+"];
-        
         self.countryName.text = subString[0];
         self.countryCode.text = [NSString stringWithFormat:@"+%@", subString[1]];
     };
@@ -571,7 +565,6 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     NSString * defaultCountryName = [locale displayNameForKey:NSLocaleCountryCode value:tt];
     
     if (!defaultCode || !defaultCountryName) {
-        
         defaultCode = @"86";
         defaultCountryName = @"China";
     }
@@ -584,16 +577,14 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
 /**
  *  dismiss modal出的登录控制器
  */
--(void) dismissAction
-{
+-(void) dismissAction {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 /**
  *  用户使用协议
  */
--(void) agreement
-{
+-(void) agreement {
     LCUIWebViewController * web = [[LCUIWebViewController alloc] initWithURL:[NSURL URLWithString:@"http://www.likeorz.com/terms"]];
     [self presentViewController:LC_UINAVIGATION(web) animated:YES completion:nil];
     
@@ -604,8 +595,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
 /**
  *  获取验证码
  */
--(void) getCode
-{
+- (void)getCode {
     if (![self $check:YES]) {
         return;
     }
@@ -803,35 +793,37 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     [interface addParameter:nick key:@"nickname"];
     
     @weakly(self);
-    
     [self request:interface complete:^(LKHttpRequestResult * result) {
-        
         @normally(self);
-        
         if (result.state == LKHttpRequestStateFinished) {
-            
-            self.sesstionToken = result.json[@"data"][@"session_token"];
-            self.refreshToken = result.json[@"data"][@"refresh_token"];
-            self.expiresIn = result.json[@"data"][@"expires_in"];
-            
+//            self.sesstionToken = result.json[@"data"][@"session_token"];
+//            self.refreshToken = result.json[@"data"][@"refresh_token"];
+//            self.expiresIn = result.json[@"data"][@"expires_in"];
             [self.userInfoModel getUserInfo:result.json[@"data"][@"user_id"]];
-        }
-        else if (result.state == LKHttpRequestStateFailed){
             
+            LKLocalUser.singleton.sessionToken = result.json[@"data"][@"session_token"];
+            LKLocalUser.singleton.refreshToken = result.json[@"data"][@"refresh_token"];
+            LKLocalUser.singleton.expiresIn = result.json[@"data"][@"expires_in"];
+            
+            if (self.delegate) {
+                [self.delegate didLoginSucceeded:result.json[@"data"]];
+            }
+            
+        } else if (result.state == LKHttpRequestStateFailed) {
             [self showTopMessageErrorHud:result.error];
+            
+            if (self.delegate) {
+                [self.delegate didLoginFailed];
+            }
         }
         
     }];
 }
 
-LC_HANDLE_TIMER(timer)
-{
+LC_HANDLE_TIMER(timer) {
     if ([timer is:@"CodeTimer"]) {
-        
         self.timeInterval -= 1;
-        
         if (self.timeInterval <= 0) {
-            
             [self $restoreTimer];
             return;
         }

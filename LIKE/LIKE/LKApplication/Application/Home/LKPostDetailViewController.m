@@ -228,15 +228,15 @@ LC_PROPERTY(assign) BOOL favorited;
 
 -(void) buildUI
 {
-    self.view.backgroundColor = LC_RGB(245, 245, 245);
+    self.view.backgroundColor = LKColor.backgroundColor;
     
     self.tableView = [[LCUITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableView.viewFrameY = 30;
     self.tableView.viewFrameHeight = self.view.viewFrameHeight - 44;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.backgroundColor = LC_RGB(245, 245, 245);
-    self.tableView.backgroundViewColor = LC_RGB(245, 245, 245);
+    self.tableView.backgroundColor = LKColor.backgroundColor;
+    self.tableView.backgroundViewColor = LKColor.backgroundColor;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.alpha = 0;
     self.view.ADD(self.tableView);

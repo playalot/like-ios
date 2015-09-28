@@ -28,16 +28,16 @@
 
 @interface LKUserCenterViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerCancelFavorDelegate, LKPostTableViewControllerDelegate>
 
-LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
-LC_PROPERTY(strong) LCUITableView * tableView;
-LC_PROPERTY(strong) LKHomepageHeader * header;
-LC_PROPERTY(strong) BLKDelegateSplitter * delegateSplitter;
+LC_PROPERTY(strong) LCUIPullLoader *pullLoader;
+LC_PROPERTY(strong) LCUITableView *tableView;
+LC_PROPERTY(strong) LKHomepageHeader *header;
+LC_PROPERTY(strong) BLKDelegateSplitter *delegateSplitter;
 
-LC_PROPERTY(strong) LCUIButton * friendshipButton;
-LC_PROPERTY(strong) LKInputView * inputView;
-LC_PROPERTY(strong) LCUIActivityIndicatorView * loadingActivity;
+LC_PROPERTY(strong) LCUIButton *friendshipButton;
+LC_PROPERTY(strong) LKInputView *inputView;
+LC_PROPERTY(strong) LCUIActivityIndicatorView *loadingActivity;
 
-LC_PROPERTY(strong) LKUserCenterModel * userCenterModel;
+LC_PROPERTY(strong) LKUserCenterModel *userCenterModel;
 LC_PROPERTY(assign) LKUserCenterModelType currentType;
 LC_PROPERTY(assign) BOOL isLocalUser;
 LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
@@ -115,10 +115,10 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
     
     self.tableView = [[LCUITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    self.tableView.viewFrameY = 30;
+    self.tableView.viewFrameY = 20;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.backgroundViewColor = [UIColor whiteColor];
+    self.tableView.backgroundViewColor = LKColor.backgroundColor;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.alpha = 0;
     self.view.ADD(self.tableView);
@@ -233,7 +233,7 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
     // Header.
     LKSegmentHeader * tableViewHeader = LKSegmentHeader.view;
     tableViewHeader.viewFrameWidth = LC_DEVICE_WIDTH;
-    tableViewHeader.viewFrameHeight = 52;
+    tableViewHeader.viewFrameHeight = 55;
     
     [tableViewHeader addTitle:[NSString stringWithFormat:@"%@", @(self.user.postCount.integerValue)] subTitle:LC_LO(@"照片")];
     [tableViewHeader addTitle:[NSString stringWithFormat:@"%@", @(self.user.followCount.integerValue)] subTitle:LC_LO(@"关注")];

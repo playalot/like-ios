@@ -33,7 +33,7 @@ LC_IMP_SIGNAL(PushUserCenter);
 {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.backgroundColor = LKColor.whiteColor;
-    self.contentView.backgroundColor = LC_RGB(245, 245, 245);
+    self.contentView.backgroundColor = LKColor.backgroundColor;
     
     
     CGFloat LeftPadding = 20;
@@ -66,7 +66,7 @@ LC_IMP_SIGNAL(PushUserCenter);
     self.cellBackgroundView = UIView.view.X(self.headImageView.viewRightX).Y(0);
     self.cellBackgroundView.viewFrameWidth = LC_DEVICE_WIDTH - self.cellBackgroundView.viewFrameX - 10;
     self.cellBackgroundView.viewFrameHeight = 46;
-//    self.cellBackgroundView.backgroundColor = LC_RGB(245, 245, 245);
+//    self.cellBackgroundView.backgroundColor = LKColor.backgroundColor;
     
     // 取消cell的原本点击手势
 //    [self.cellBackgroundView addTapGestureRecognizer:self selector:@selector(likesTapAction)];

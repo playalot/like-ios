@@ -17,7 +17,8 @@
 
 +(UIColor *)backgroundColor
 {
-    return LC_RGB(245, 240, 236);
+//    return LC_RGB(245, 240, 236);
+    return LC_RGB(245, 245, 245);
 }
 
 @end

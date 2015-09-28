@@ -41,25 +41,25 @@ LC_PROPERTY(strong) UIScrollView * scrollView;
     
     [self.scrollView removeAllSubviews];
     
-    LCUILabel * hot = LCUILabel.view;
-    hot.viewFrameX = 10;
-    hot.viewFrameY = 10;
-    hot.viewFrameWidth = 100;
-    hot.viewFrameHeight = 14;
-    hot.textColor = LC_RGB(184, 177, 171);
-    hot.font = LK_FONT(12);
-    hot.text = LC_LO(@"热门用户");
-    self.scrollView.ADD(hot);
+//    LCUILabel * hot = LCUILabel.view;
+//    hot.viewFrameX = 10;
+//    hot.viewFrameY = 10;
+//    hot.viewFrameWidth = 100;
+//    hot.viewFrameHeight = 14;
+//    hot.textColor = LC_RGB(184, 177, 171);
+//    hot.font = LK_FONT(12);
+//    hot.text = LC_LO(@"热门用户");
+//    self.scrollView.ADD(hot);
     
     CGFloat padding = 5;
-    UIView * preview = nil;
+    UIView *preview = nil;
     
     for (NSInteger i = 0; i < self.hotUsers.count; i++) {
-        LKUser * user = self.hotUsers[i];
+        LKUser *user = self.hotUsers[i];
         LCUIImageView * item = LCUIImageView.view;
-        item.viewFrameWidth = 35;
-        item.viewFrameHeight = 35;
-        item.cornerRadius = 17.5;
+        item.viewFrameWidth = 40;
+        item.viewFrameHeight = 40;
+        item.cornerRadius = 20;
         [item sd_setImageWithURL:[NSURL URLWithString:user.avatar] placeholderImage:nil];
         item.backgroundColor = LKColor.backgroundColor;
         item.userInteractionEnabled = YES;
@@ -68,7 +68,7 @@ LC_PROPERTY(strong) UIScrollView * scrollView;
         self.scrollView.ADD(item);
         
         item.viewFrameX = preview.viewRightX + 10;
-        item.viewFrameY = hot.viewBottomY + 10;
+        item.viewFrameY = 10;
         
         preview = item;
     }

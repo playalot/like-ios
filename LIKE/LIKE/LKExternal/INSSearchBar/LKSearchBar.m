@@ -89,7 +89,7 @@ static NSTimeInterval const kLKSearchBarAnimationStepDuration = 0.25;
 		self.searchFrame.backgroundColor = [UIColor clearColor];
 		self.searchFrame.opaque = NO;
 		self.searchFrame.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-		self.searchFrame.cornerRadius = CGRectGetHeight(self.bounds) / 2;
+		self.searchFrame.cornerRadius = 4;
 		self.searchFrame.contentMode = UIViewContentModeRedraw;
 		
 		[self addSubview:self.searchFrame];
@@ -112,27 +112,27 @@ static NSTimeInterval const kLKSearchBarAnimationStepDuration = 0.25;
 		
 		self.searchImageViewOn = [[UIImageView alloc] initWithFrame:searchImageViewOnContainerView.bounds];
 		self.searchImageViewOn.alpha = 0.0;
-		self.searchImageViewOn.image = [[UIImage imageNamed:@"NavBarIconSearch_blue"] imageWithTintColor:LC_RGB(216, 216, 216)];
+		self.searchImageViewOn.image = [[UIImage imageNamed:@"SearchIconClose.png"] imageWithTintColor:LC_RGB(216, 216, 216)];
         self.searchImageViewOn.contentMode = UIViewContentModeScaleAspectFit;
 		[searchImageViewOnContainerView addSubview:self.searchImageViewOn];
 		
 		self.searchImageCircle = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, 0.0, 18.0, 18.0)];
 		self.searchImageCircle.alpha = 0.0;
-        self.searchImageCircle.image = [[UIImage imageNamed:@"NavBarIconSearchCircle_blue"] imageWithTintColor:LC_RGB(216, 216, 216)];
+        self.searchImageCircle.image = [[UIImage imageNamed:@"SearchIconClose.png"] imageWithTintColor:LC_RGB(216, 216, 216)];
         self.searchImageCircle.contentMode = UIViewContentModeScaleAspectFit;
 
 		[searchImageViewOnContainerView addSubview:self.searchImageCircle];
 		
 		self.searchImageCrossLeft = [[UIImageView alloc] initWithFrame:CGRectMake(14.0, 14.0, 8.0, 8.0)];
 		self.searchImageCrossLeft.alpha = 0.0;
-		self.searchImageCrossLeft.image = [[UIImage imageNamed:@"NavBarIconSearchBar_blue"] imageWithTintColor:LC_RGB(216, 216, 216)];
+		self.searchImageCrossLeft.image = [[UIImage imageNamed:@"SearchIconClose.png"] imageWithTintColor:LC_RGB(216, 216, 216)];
         self.searchImageCrossLeft.contentMode = UIViewContentModeScaleAspectFit;
 
 		[searchImageViewOnContainerView addSubview:self.searchImageCrossLeft];
 
 		self.searchImageCrossRight = [[UIImageView alloc] initWithFrame:CGRectMake(7.0, 5.0, 8.0, 8.0)];
 		self.searchImageCrossRight.alpha = 0.0;
-		self.searchImageCrossRight.image = [[UIImage imageNamed:@"NavBarIconSearchBar2_blue"] imageWithTintColor:LC_RGB(216, 216, 216)];
+		self.searchImageCrossRight.image = [[UIImage imageNamed:@"SearchIconClose.png"] imageWithTintColor:LC_RGB(216, 216, 216)];
         self.searchImageCrossRight.contentMode = UIViewContentModeScaleAspectFit;
 
 		[searchImageViewOnContainerView addSubview:self.searchImageCrossRight];
@@ -140,7 +140,7 @@ static NSTimeInterval const kLKSearchBarAnimationStepDuration = 0.25;
 		self.searchImageViewOff = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.bounds) - kLKSearchBarInset - kLKSearchBarImageSize, (CGRectGetHeight(self.bounds) - kLKSearchBarImageSize) / 2, kLKSearchBarImageSize, kLKSearchBarImageSize)];
 		self.searchImageViewOff.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
         self.searchImageViewOff.alpha = 1.0;
-		self.searchImageViewOff.image = [UIImage imageNamed:@"NavBarIconSearch_white"];
+		self.searchImageViewOff.image = [UIImage imageNamed:@"SearchIconClose.png"];
         self.searchImageViewOff.contentMode = UIViewContentModeScaleAspectFit;
 
 		[self.searchFrame addSubview:self.searchImageViewOff];

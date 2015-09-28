@@ -15,14 +15,14 @@
     if (self = [super init]) {
         
         self.title = LCUILabel.view;
-        self.title.font = LK_FONT_B(16);
+        self.title.font = LK_FONT_B(14);
         self.title.textColor = LC_RGB(74, 74, 74);
         self.title.textAlignment = UITextAlignmentCenter;
         self.title.viewFrameHeight = 18;
         self.ADD(self.title);
         
         self.subTitle = LCUILabel.view;
-        self.subTitle.font = LK_FONT(10);
+        self.subTitle.font = LK_FONT(14);
         self.subTitle.textColor = LC_RGB(74, 74, 74);
         self.subTitle.textAlignment = UITextAlignmentCenter;
         self.subTitle.viewFrameHeight = 12;
@@ -77,15 +77,15 @@
 {
     LKSegmentHeaderItem * item = self.items[atIndex];
     
-    item.title.text = title;
-    item.subTitle.text = subTitle;
+    item.title.text = subTitle;
+    item.subTitle.text = title;
 }
 
 -(void) addTitle:(NSString *)title subTitle:(NSString *)subTitle
 {
     LKSegmentHeaderItem * item = LKSegmentHeaderItem.view;
-    item.title.text = title;
-    item.subTitle.text = subTitle;
+    item.title.text = subTitle;
+    item.subTitle.text = title;
     [item addTapGestureRecognizer:self selector:@selector(itemDidTap:)];
     
     self.ADD(item);

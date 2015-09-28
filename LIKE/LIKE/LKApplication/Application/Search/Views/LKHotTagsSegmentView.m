@@ -14,15 +14,16 @@
 LC_PROPERTY(strong) NSMutableArray *itemArray;
 LC_PROPERTY(strong) UIScrollView *scrollView;
 LC_PROPERTY(strong) UIView *line;
+LC_PROPERTY(strong) LCUIButton *buttonView;
 
 @end
 
 @implementation LKHotTagsSegmentView
 
 -(instancetype) init {
-    if (self = [super initWithFrame:CGRectMake(0, 0, LC_DEVICE_WIDTH, 38)]) {
+    if (self = [super initWithFrame:CGRectMake(0, 0, LC_DEVICE_WIDTH, 42)]) {
         self.itemArray = [NSMutableArray array];
-        self.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:1];
+        self.backgroundColor = LKColor.backgroundColor;
         self.alpha = 0;
     }
     return self;
@@ -70,7 +71,7 @@ LC_PROPERTY(strong) UIView *line;
 {
     self.scrollView = UIScrollView.view;
     self.scrollView.frame = self.bounds;
-    self.scrollView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:1];
+    self.scrollView.backgroundColor = LKColor.backgroundColor;
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.ADD(self.scrollView);
     
@@ -81,20 +82,28 @@ LC_PROPERTY(strong) UIView *line;
     
     UIView * preview = nil;
     
-    for (LKTag * tag in tags) {
+    for (LKTag *tag in tags) {
         
-        CGSize itemSize = [tag.tag sizeWithFont:LK_FONT(12) byHeight:self.viewFrameHeight];
+        CGSize itemSize = [tag.tag sizeWithFont:LK_FONT(14) byHeight:self.viewFrameHeight];
         
-        LCUIButton * button = LCUIButton.view;
+        LCUIButton *button = LCUIButton.view;
         button.title = tag.tag;
-        button.titleColor = LC_RGB(70, 62, 56);
-        button.titleFont = LK_FONT(12);
+        [button setTitleColor:LC_RGB(70, 62, 56) forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+        [button setBackgroundImage:[[UIImage imageNamed:@"HotTagButton_Gray.png" useCache:YES] stretchableImageWithLeftCapWidth:itemSize.width * 0.5 topCapHeight:13] forState:UIControlStateNormal];
+        [button setBackgroundImage:[[UIImage imageNamed:@"HotTagButton_Red.png" useCache:YES] stretchableImageWithLeftCapWidth:itemSize.width * 0.5 topCapHeight:13] forState:UIControlStateSelected];
+        button.titleFont = LK_FONT(14);
         button.tag = i + 100;
         [button addTarget:self action:@selector(menuItemAction:) forControlEvents:UIControlEventTouchUpInside];
-        button.viewFrameX = preview.viewRightX;
+        button.viewFrameX = preview.viewRightX + 5;
+        button.viewFrameY = 8;
         button.viewFrameWidth = itemSize.width + padding;
-        button.viewFrameHeight = self.viewFrameHeight;
+        button.viewFrameHeight = self.viewFrameHeight - 16;
         
+        if (i == 0) {
+            button.selected = YES;
+            self.buttonView = button;
+        }
         
         self.scrollView.ADD(button);
         [self.itemArray addObject:button];
@@ -136,7 +145,7 @@ LC_PROPERTY(strong) UIView *line;
     self.line.viewFrameHeight = 2;
     self.line.tag = 99999;
     self.line.viewFrameY = self.viewFrameHeight - self.line.viewFrameHeight;
-    self.scrollView.ADD(self.line);
+//    self.scrollView.ADD(self.line);
     
     [self menuItemAction:self.itemArray[0]];
 }
@@ -145,7 +154,10 @@ LC_PROPERTY(strong) UIView *line;
 {
     _selectIndex = index;
     
-    LCUIButton * view = self.FIND(index + 100);
+    self.buttonView.selected = NO;
+    LCUIButton *view = self.FIND(index + 100);
+    self.buttonView = view;
+    view.selected = YES;
     
     LKValueChanged block = [self.itemDidTap copy];
     self.itemDidTap = nil;

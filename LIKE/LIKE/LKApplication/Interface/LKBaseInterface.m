@@ -13,7 +13,6 @@
 
 - (NSDictionary *)requestHeaderFieldValueDictionary {
     NSString *sessionToken = LKLocalUser.singleton.sessionToken;
-    NSLog(@"sessionToken: %@", sessionToken);
     NSMutableDictionary *resultDic = [NSMutableDictionary dictionary];
     if (sessionToken) {
         [resultDic setValue:sessionToken forKey:@"LIKE-SESSION-TOKEN"];

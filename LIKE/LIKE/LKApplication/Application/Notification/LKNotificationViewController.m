@@ -50,7 +50,7 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
 
 - (void)buildUI {
     
-    self.view.backgroundColor = LKColor.backgroundColor;
+    self.view.backgroundColor = [UIColor whiteColor];
     
     [self buildNavigationBar];
     

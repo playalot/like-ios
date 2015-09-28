@@ -11,6 +11,7 @@
 
 #import "LC.h"
 #import "LKPrecompile.h"
+#import "LKNavigator.h"
 #import "AppDelegate.h"
 
 #endif

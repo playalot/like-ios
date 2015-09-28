@@ -20,6 +20,7 @@
 #import "LKMessageViewController.h"
 #import "LKOfficialDetailViewController.h"
 #import "LKOfficialViewController.h"
+#import "LRUCache.h"
 
 @interface LKNotificationViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerDelegate>
 
@@ -28,6 +29,10 @@ LC_PROPERTY(strong) LKNotificationHeader *notificationHeader;
 LC_PROPERTY(strong) LCUITableView *tableView;
 LC_PROPERTY(strong) LCUIPullLoader *pullLoader;
 LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
+
+LC_PROPERTY(assign) BOOL isCellPrecomuted;
+LC_PROPERTY(strong) NSMutableArray *precomputedCells;
+LC_PROPERTY(strong) LRUCache *precomputedCellCache;
 
 @end
 
@@ -39,13 +44,16 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
 }
 
 - (instancetype)init {
-    
     if (self = [super init]) {
-        
         self.notificationModel = [[LKNotificationModel alloc] init];
     }
-    
     return self;
+}
+
+- (void)buildCellCache {
+    self.isCellPrecomuted = YES;
+    self.precomputedCells = [NSMutableArray array];
+    self.precomputedCellCache = [[LRUCache alloc] initWithCapacity:10];
 }
 
 - (void)buildUI {
@@ -100,15 +108,11 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
     @weakly(self);
     
     [self.notificationModel getNotificationsAtFirstPage:diretion == LCUIPullLoaderDiretionTop requestFinished:^(NSString *error) {
-        
         @normally(self);
-        
         self.cartoonImageView.hidden = self.notificationModel.datasource.count ? YES : NO;
-        
         if (diretion == LCUIPullLoaderDiretionTop) {
             [LKNotificationCount cleanBadge];
         }
-        
         [self.pullLoader endRefresh];
         [self.tableView reloadData];
     }];
@@ -116,7 +120,6 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
     return self.notificationModel.datasource.count;
 }
 
@@ -148,11 +151,9 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
     } else {
         
         if ((notification.type == LKNotificationTypeComment ||
-             notification.type == LKNotificationTypeReply) && [notification.tagID isKindOfClass:[NSNumber class]]) {
-            
+            notification.type == LKNotificationTypeReply) && [notification.tagID isKindOfClass:[NSNumber class]]) {
             notification.post.tagString = [NSString stringWithFormat:@"Comment-%@",notification.tagID];
         }
-        
         [self getOriginPostWithPost:notification.post];
     }
 }

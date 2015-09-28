@@ -23,10 +23,10 @@ LC_PROPERTY(weak) LCUIViewController *currentViewController;
 
 - (void)buildUI {
     [self buildNavigationBar];
-    [self buildViewController];
+    [self buildViewControllers];
 }
 
-- (void)buildViewController {
+- (void)buildViewControllers {
     self.feedViewController = [LKHomeFeedViewController viewController];
     self.followingViewController = [LKFollowingFeedViewController viewController];
     
@@ -46,6 +46,10 @@ LC_PROPERTY(weak) LCUIViewController *currentViewController;
     self.titleView = (UIView *)titleBtn;
     
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
+}
+
+- (void)refresh {
+    
 }
 
 - (void)handleNavigationBarButton:(LCUINavigationBarButtonType)type {

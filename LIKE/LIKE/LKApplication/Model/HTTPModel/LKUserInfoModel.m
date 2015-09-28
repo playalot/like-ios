@@ -7,7 +7,6 @@
 //
 
 #import "LKUserInfoModel.h"
-#import "LKHomeViewController.h"
 #import "LKUserInfoCache.h"
 
 @implementation LKUserInfoModel
@@ -39,9 +38,6 @@
             if (self.user.id.integerValue == LKLocalUser.singleton.user.id.integerValue) {
                 
                 [LKLocalUser.singleton updateCurrentUserInfo:self.rawUserInfo];
-                
-                // 更新首页头部
-                [self postNotification:LKHomeViewControllerUpdateHeader];
             }
             
             // cache...

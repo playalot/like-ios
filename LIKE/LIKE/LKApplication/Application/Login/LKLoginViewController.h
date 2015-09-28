@@ -8,7 +8,12 @@
 
 #import "LCUITableViewController.h"
 
+@protocol LKLoginViewControllerDelegate;
+
 @interface LKLoginViewController : LCUITableViewController
+
+LC_PROPERTY(weak) id<LKLoginViewControllerDelegate> delegate;
+
 /**
  *  当前window背景虚化
  */
@@ -16,6 +21,16 @@
 /**
  *  是否需要登录
  */
-+(BOOL) needLoginOnViewController:(UIViewController *)viewController;
++ (BOOL)needLoginOnViewController:(UIViewController *)viewController;
+
+@end
+
+@protocol LKLoginViewControllerDelegate <NSObject>
+
+- (void)didLoginSucceeded:(NSDictionary *)userInfo;
+
+- (void)didLoginFailed;
+
+- (void)didGoToGuestFeed;
 
 @end

@@ -125,8 +125,8 @@ LC_PROPERTY(assign) NSInteger page;
         
         [LKSearchHistory addHistory:searchBar.searchField.text];
     }
-    LKSearchResultsViewController * searchResultsViewController = [[LKSearchResultsViewController alloc] initWithSearchString:searchBar.searchField.text];
-    [LC_APPDELEGATE.homeViewController.navigationController pushViewController:searchResultsViewController animated:YES];
+    LKSearchResultsViewController *searchResultsViewController = [[LKSearchResultsViewController alloc] initWithSearchString:searchBar.searchField.text];
+    [[LKNavigator navigator] pushViewController:searchResultsViewController animated:YES];
 }
 
 - (void)buildPages:(NSArray *)tags {

@@ -26,6 +26,7 @@
 #import "RDVTabBarItem.h"
 #import "LCNetworkConfig.h"
 #import "LCUrlArgumentsFilter.h"
+#import "LKNavigator.h"
 
 @interface AppDelegate () <LC_CMD_IMP, RDVTabBarControllerDelegate>
 
@@ -37,24 +38,17 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
 
 @implementation AppDelegate
 
-- (BOOL)tabBarController:(RDVTabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
-    if (viewController == self.homeViewController) {
-        [self.homeViewController refresh];
-    }
-    return YES;
-}
-
-- (void)tabBarController:(RDVTabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
-    
-}
-
 /**
  *  应用程序启动就会调用此方法
  */
+
 - (void)load:(NSDictionary *)launchOptions {
     self.launchOptions = launchOptions;
-    [self setupLoginValidation];
-    [self setupViewControllers];
+    
+    self.window.rootViewController = [LKNavigator navigator].mainViewController;
+    
+    // Mob短信验证
+    [self setupSMS];
     [self setupNetworkConfig];
     [self setupCache];
     [self setupMAMapServices];
@@ -63,9 +57,27 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     [self setupDebugger];
     [self setupUmengStatistics];
     [self setupCMD];
-    [self setupSMS];
-    [self setupNotificationObserving];
-    [self setupPushService:launchOptions];
+    
+    if (!LKLocalUser.singleton.isLogin) {
+        // 游客模式
+        [[LKNavigator navigator] launchGuestMode];
+    } else {
+        // 登陆成功
+        // 如果是第一次登陆,选择兴趣标签
+        BOOL firstStart = [[NSUserDefaults standardUserDefaults] boolForKey:@"firstStart"];
+        // 判断是否是初次启动
+        if (!firstStart) {
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstStart"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            LKChooseTagView *chooseView = [LKChooseTagView chooseTagView];
+            [UIApplication sharedApplication].keyWindow.ADD(chooseView);
+        }
+        
+        [[LKNavigator navigator] launchMasterMode];
+        
+        [self setupNotificationObserving];
+        [self setupPushService:launchOptions];
+    }
 }
 
 - (void)setupNetworkConfig {
@@ -163,7 +175,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     
     // 判断是否为推送打开
     if (LKLocalUser.singleton.isLogin && launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
-        [self.homeViewController performSelector:@selector(notificationAction) withObject:nil afterDelay:0.5];
+//        [self.homeViewController performSelector:@selector(notificationAction) withObject:nil afterDelay:0.5];
     }
 }
 
@@ -180,99 +192,6 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     // 应用程序接收到远程通知
     //    [self observeNotification:LCUIApplicationDidReceiveRemoteNotification];
     [self observeNotification:kJPFNetworkDidReceiveMessageNotification];
-}
-
-- (void)setupViewControllers {
-    self.homeViewController = [LKHomeViewController viewController];
-    self.mainFeedViewController = [LKMainFeedViewController viewController];
-    self.searchViewController = [LKSearchViewController viewController];
-    self.cameraRollViewController = [LKCameraRollViewController viewController];
-    self.notificationViewController = [LKNotificationViewController viewController];
-    self.userCenterViewController = [[LKUserCenterViewController alloc] initWithUser:LKLocalUser.singleton.user];
-    
-    
-    // tabbarCtrl只放了一个主页控制器
-    self.tabBarController = [[LKTabBarController alloc]
-                             initWithViewControllers:@[
-                                                       LC_UINAVIGATION(self.mainFeedViewController),
-                                                       LC_UINAVIGATION(self.searchViewController),
-                                                       LC_UINAVIGATION(self.cameraRollViewController),
-                                                       LC_UINAVIGATION(self.notificationViewController),
-                                                       LC_UINAVIGATION(self.userCenterViewController)]];
-    self.tabBarController.delegate = self;
-    
-    NSArray *imageNames = @[@"tabbar_homeLine",
-                            @"tabbar_search",
-                            @"tabbar_camera",
-                            @"tabbar_notification",
-                            @"tabbar_userCenter"];
-    NSArray *selectedImageNames = @[@"tabbar_homeLine_selected",
-                                    @"tabbar_search_selected",
-                                    @"tabbar_camera",
-                                    @"tabbar_notification_selected",
-                                    @"tabbar_userCenter_selected"];
-    
-    
-    NSInteger i = 0;
-    
-    for (UIView *view in self.tabBarController.tabBar.items) {
-        
-        if ([view isKindOfClass:[RDVTabBarItem class]]) {
-
-            RDVTabBarItem *item = (RDVTabBarItem *)view;
-            
-            [item setFinishedSelectedImage:[[UIImage imageNamed:selectedImageNames[i]]
-                    imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
-               withFinishedUnselectedImage:[[UIImage imageNamed:imageNames[i]]
-                    imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-            [item setBackgroundColor:[UIColor whiteColor]];
-            
-            if (i == 3) {
-                
-                LCUIBadgeView *badgeView = LCUIBadgeView.view;
-                badgeView.frame = CGRectMake(40 * LC_DEVICE_WIDTH / 414, 13, 2, 2);
-//                badgeView.valueString = @"9";
-                item.ADD(badgeView);
-            }
-            
-            i++;
-        }
-    }
-    
-    self.window.rootViewController = [LKTabbarViewController viewController];
-}
-
-- (void)setupLoginValidation {
-    
-    if (!LKLocalUser.singleton.isLogin) {
-        LCUIImageView * imageView = LCUIImageView.view;
-        imageView.image = [LKWelcome image];
-        imageView.viewFrameWidth = LC_DEVICE_WIDTH;
-        imageView.viewFrameHeight = LC_DEVICE_HEIGHT + 20;
-        imageView.contentMode = UIViewContentModeScaleAspectFit;
-        [LC_KEYWINDOW addSubview:imageView];
-        LKLoginViewController * login = LKLoginViewController.viewController;
-        [login view];
-        [self.tabBarController presentViewController:login animated:NO completion:^{
-            [UIView animateWithDuration:1.5 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
-                imageView.transform = CGAffineTransformMakeScale(1.5, 1.5);
-                imageView.alpha = 0;
-            } completion:^(BOOL finished) {
-                [imageView removeFromSuperview];
-                
-            }];
-        }];
-    } else {
-        // 如果是第一次登陆,选择兴趣标签
-        BOOL firstStart = [[NSUserDefaults standardUserDefaults] boolForKey:@"firstStart"];
-        // 判断是否是初次启动
-        if (!firstStart) {
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstStart"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            LKChooseTagView *chooseView = [LKChooseTagView chooseTagView];
-            [UIApplication sharedApplication].keyWindow.ADD(chooseView);
-        }
-    }
 }
 
 - (void)tagsAliasCallback:(int)iResCode
@@ -296,15 +215,10 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
 - (UIViewController *) getCurrentViewController {
     UIViewController * result = nil;
     UIWindow * window = [[UIApplication sharedApplication] keyWindow];
-    
-    if (window.windowLevel != UIWindowLevelNormal){
-        
+    if (window.windowLevel != UIWindowLevelNormal) {
         NSArray *windows = [[UIApplication sharedApplication] windows];
-        
-        for(UIWindow * tmpWin in windows){
-            
+        for(UIWindow * tmpWin in windows) {
             if (tmpWin.windowLevel == UIWindowLevelNormal){
-                
                 window = tmpWin;
                 break;
             }
@@ -364,7 +278,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
             
             // 判断是否为推送打开
             if ([UIApplication sharedApplication].applicationIconBadgeNumber) {
-                [self.homeViewController performSelector:@selector(notificationAction) withObject:nil afterDelay:0.5];
+//                [self.homeViewController performSelector:@selector(notificationAction) withObject:nil afterDelay:0.5];
             }
             
         }
@@ -376,7 +290,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     if (self.enterBackgroundTimeInterval > 60 * 5) {
         
         // 进入后台超过5分钟,发送重新加载数据的通知
-        [self postNotification:LKHomeViewControllerReloadingData];
+//        [self postNotification:LKHomeViewControllerReloadingData];
     }
 }
 
@@ -404,18 +318,12 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
 /**
  *  根据通知类型处理对应的操作
  */
--(void) handleNotification:(NSNotification *)notification {
-    
+- (void)handleNotification:(NSNotification *)notification {
     if ([notification is:LKSessionError]) {
-        
         NSInteger errorCode = [notification.object integerValue];
-        
         if (errorCode == 4016) {
-            
             [LKLocalUser regetSessionTokenAndUseLoadingTip:YES];
-            
         } else if (errorCode == 4013){
-            
             [LKLocalUser logout];
             [LKLoginViewController needLoginOnViewController:nil];
         }
@@ -448,8 +356,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
 /**
  *  接收到远程通知的时候调用
  */
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
-{
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     [super application:application didReceiveRemoteNotification:userInfo];
     // 判断是否是活动状态
     if ( application.applicationState == UIApplicationStateActive ){
@@ -470,13 +377,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     
     // Bind badge.
     NSInteger badgeCount = [userInfo[@"aps"][@"badge"] integerValue];
-    if (badgeCount > 0) {
-        
-        RDVTabBarItem *item = self.tabBarController.tabBar.items[3];
-        [item setBackgroundSelectedImage:[UIImage imageNamed:@"tabbar_notification_selected.png"]
-                     withUnselectedImage:[UIImage imageNamed:@"tabbar_notification_badge.png"]];
-        [LKNotificationCount bindView:item withBadgeCount:badgeCount];
-    }
+    [[LKNavigator navigator] bindBadgeForItemIndex:3 badgeCount:badgeCount];
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {

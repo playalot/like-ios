@@ -114,8 +114,7 @@
     }
 }
 
-- (void)_adjustBadgeFrameWith
-{
+- (void)_adjustBadgeFrameWith {
     CGSize suffixSize = [LK_BADGE_VIEW_TRUNCATED_SUFFIX sizeWithFont:self.font];
 
     CGFloat paddinWidth = LK_BADGE_VIEW_HORIZONTAL_PADDING*2;

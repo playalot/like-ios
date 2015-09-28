@@ -7,7 +7,6 @@
 //
 
 #import "LKPresentAnimation.h"
-#import "LKHomeViewController.h"
 #import "LKPostDetailViewController.h"
 
 @interface LKPresentAnimation ()
@@ -25,7 +24,7 @@ LC_PROPERTY(assign) BOOL isDismissed;
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext
 {
-    LKHomeViewController * fromViewController = (LKHomeViewController *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+    UIViewController * fromViewController = (UIViewController *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
     LKPostDetailViewController * toViewController = (LKPostDetailViewController *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
 
     if (self.isDismissed) {
@@ -33,43 +32,27 @@ LC_PROPERTY(assign) BOOL isDismissed;
         fromViewController.view.alpha = 1;
         toViewController.view.alpha = 1;
         toViewController.view.transform = CGAffineTransformMakeScale(1.1, 1.1);
-        
-        
         [[transitionContext containerView] insertSubview:toViewController.view belowSubview:fromViewController.view];
-        
-        
         [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
-            
             toViewController.view.transform = CGAffineTransformMakeScale(1.0, 1.0);
             toViewController.view.alpha = 1.0f;
-            
             fromViewController.view.transform = CGAffineTransformMakeScale(0.9, 0.9);
             fromViewController.view.alpha = 0.0f;
-            
         } completion:^(BOOL finished) {
-            
             fromViewController.view.transform = CGAffineTransformIdentity;
             [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
-            
         }];
     }
     else{
      
         [[transitionContext containerView] addSubview:toViewController.view];
-        
         toViewController.view.alpha = 0;
         toViewController.view.transform = CGAffineTransformMakeScale(0.9, 0.9);
-        
         [UIView animateWithDuration:[self transitionDuration:transitionContext]  animations:^{
-            
             fromViewController.view.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
             toViewController.view.alpha = 1;
             toViewController.view.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1, 1);
-            
         } completion:^(BOOL finished) {
-            //
-            //        fromViewController.header.alpha = 1;
-            
             fromViewController.view.transform = CGAffineTransformIdentity;
             [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
             

@@ -38,7 +38,7 @@
     }
 }
 
--(void) presentLoginViewController
+-(void) openLoginViewController
 {
 }
 

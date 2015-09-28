@@ -20,8 +20,7 @@
 
 @implementation LKNetworkCenter
 
--(instancetype) init
-{
+- (instancetype)init {
     if (self = [super init]) {
         
         [self addDefaultHeaderForURLSessionManager:LCNetworkCenter.singleton.sessionManager];
@@ -31,13 +30,11 @@
     return self;
 }
 
-+(BOOL) request:(LKHttpRequestInterface *)interface sender:(NSObject *)sender complete:(LKHTTPRequestComplete)complete
-{
++ (BOOL)request:(LKHttpRequestInterface *)interface sender:(NSObject *)sender complete:(LKHTTPRequestComplete)complete {
     return [LKNetworkCenter.singleton request:interface sender:sender complete:complete];
 }
 
--(BOOL) request:(LKHttpRequestInterface *)interface sender:(NSObject *)sender complete:(LKHTTPRequestComplete)complete
-{
+- (BOOL)request:(LKHttpRequestInterface *)interface sender:(NSObject *)sender complete:(LKHTTPRequestComplete)complete {
     NSString * sesstionToken = LKLocalUser.singleton.sessionToken;
 
     [LCNetworkCenter.singleton.sessionManager.requestSerializer setValue:sesstionToken forHTTPHeaderField:@"LIKE-SESSION-TOKEN"];
@@ -59,30 +56,8 @@
                      parameters:interface.interfaceParameters
                          sender:sender
                     updateBlock:^(LCHTTPRequestResult *result) {
-       
         [self handleUpdate:result complete:complete];
-        
     }];
-    
-//    switch (request.methodType) {
-//            
-//        case LKHttpRequestMethodTypeGet:
-//            [self requestGet:request sender:sender complete:complete];
-//            break;
-//        case LKHttpRequestMethodTypePost:
-//            [self requestPost:request sender:sender complete:complete];
-//            break;
-//        case LKHttpRequestMethodTypePut:
-//            [self requestPut:request sender:sender complete:complete];
-//            break;
-//        case LKHttpRequestMethodTypeDelete:
-//            [self requestDelete:request sender:sender complete:complete];
-//            break;
-//        default:
-//            
-//            return NO;
-//            break;
-//    }
     
     return YES;
 }

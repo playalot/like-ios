@@ -471,12 +471,10 @@ LC_PROPERTY(assign) CGFloat cacheSize;
     }];
 }
 
--(void) logout
-{
+- (void)logout {
     [self hide];
-    
     [LKLocalUser logout];
-    [self.fromViewController.navigationController popToRootViewControllerAnimated:YES];
+    [[LKNavigator navigator] launchGuestMode];
 }
 
 -(void) uploadFeedback:(NSString *)feedback

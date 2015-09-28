@@ -60,9 +60,12 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     [self setupCMD];
     
     if (!LKLocalUser.singleton.isLogin) {
+        
         // 游客模式
         [[LKNavigator navigator] launchGuestMode];
+        
     } else {
+        
         // 登陆成功
         // 如果是第一次登陆,选择兴趣标签
         BOOL firstStart = [[NSUserDefaults standardUserDefaults] boolForKey:@"firstStart"];

@@ -68,15 +68,9 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.contentBack.ADD(self.contentImage);
 //    self.ADD(self.contentImage);
     
-//    UIView *headerBack = UIView.view.X(0).Y(0).WIDTH(LC_DEVICE_WIDTH).HEIGHT(66);
-//    headerBack.backgroundColor = [UIColor whiteColor];
-//    self.ADD(headerBack);
-//    [LKHomeTableViewCell roundCorners:UIRectCornerTopLeft | UIRectCornerTopRight forView:headerBack];
-    
     // 头像
     self.head = LCUIImageView.view;
     self.head.viewFrameX = 14;
-//    self.head.viewFrameY = 55 / 2 - 35 / 2 + 5;
     self.head.viewFrameY = 10;
     self.head.viewFrameWidth = 34;
     self.head.viewFrameHeight = 34;
@@ -144,9 +138,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.recommendedReasonWithTag.viewFrameY = self.likesTip.viewFrameY + 2;
     self.recommendedReasonWithTag.title = LC_LO(@"有故事的人");
     self.recommendedReasonWithTag.titleColor = LC_RGB(217, 217, 217);
-//    self.recommendedReasonWithTag.font = LK_FONT(11);
     self.recommendedReasonWithTag.titleFont = LK_FONT(10);
-//    self.recommendedReasonWithTag.textAlignment = UITextAlignmentRight;
     self.recommendedReasonWithTag.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     self.recommendedReasonWithTag.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 1);
     [self.recommendedReasonWithTag addTarget:self action:@selector(recommendedReasonBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -163,13 +155,11 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.tagsView.itemRequestFinished = ^(LKTagItemView * item){
         
         @normally(self);
-        
         if (item.tagValue.isLiked) {
             self.post.user.likes = @(self.post.user.likes.integerValue + 1);
         } else {
             self.post.user.likes = @(self.post.user.likes.integerValue - 1);
         }
-        
         self.likes.text = LC_NSSTRING_FORMAT(@"%@", self.post.user.likes);
         CGSize likeSize = [self.post.user.likes.description sizeWithFont:LK_FONT(10) byWidth:200];
         [UIView animateWithDuration:0.25 animations:^{
@@ -181,7 +171,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.ADD(tagsView);
 }
 
--(void) addTagAction {
+- (void)addTagAction {
     if (self.addTag) {
         self.addTag(self.post);
     }
@@ -351,23 +341,9 @@ LC_IMP_SIGNAL(PushPostDetail);
 }
 
 -(void) reloadTags {
-//    LC_FAST_ANIMATIONS(1, ^{
-//
-//        [self.tagsView reloadDataAndRemoveAll:NO];
-//    });
 }
 
-
 - (void)cellOnTableView:(UITableView *)tableView didScrollOnView:(UIView *)view {
-//        CGRect rectInSuperview = [tableView convertRect:self.frame toView:view];
-//    
-//        CGFloat distanceFromCenter = CGRectGetHeight(view.frame)/2 - CGRectGetMinY(rectInSuperview);
-//        CGFloat difference = CGRectGetHeight(self.contentImage.frame) - CGRectGetHeight(self.frame);
-//        CGFloat move = (distanceFromCenter / CGRectGetHeight(view.frame)) * difference;
-//    
-//        CGRect imageRect = self.contentImage.frame;
-//        imageRect.origin.y = -(difference/2)+move;
-//        self.contentImage.frame = imageRect;
 }
 
 /**
@@ -406,7 +382,6 @@ LC_IMP_SIGNAL(PushPostDetail);
 }
 
 - (void)prepareForReuse {
-    
     [self.contentImage sd_cancelCurrentImageLoad];
 }
 

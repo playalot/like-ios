@@ -157,8 +157,7 @@ LC_PROPERTY(strong) LCUIButton * doneButton;
     self.textField.delegate = searchViewController;
 }
 
--(void) beginSearch
-{
+-(void) beginSearch {
 //    if([LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
 //    
 //        return;
@@ -204,8 +203,7 @@ LC_PROPERTY(strong) LCUIButton * doneButton;
     self.clipsToBounds = NO;
 }
 
--(void) endSearch
-{
+-(void) endSearch {
     if (self.searchViewController.placeholderView.alpha != 0) {
         
         LC_FAST_ANIMATIONS(UINavigationControllerHideShowBarDuration, ^{

@@ -208,37 +208,14 @@ LC_PROPERTY(strong) UIView * tipLine;
 }
 
 - (UIView *)buildNewActionTag {
-    
     UIView *newTagView = UIView.view;
-    
     UIImage *icon = [[UIImage imageNamed:@"AddNewTag.png" useCache:YES] imageWithTintColor:LKColor.color];
-    
     LCUIImageView *imageView = [LCUIImageView viewWithImage:icon];
     imageView.viewFrameHeight = 24;
     imageView.viewFrameWidth = 24;
     newTagView.ADD(imageView);
-    
-    
-    
-//    NSString * addNewTagString = LC_LO(@"添加标签");
-//    
-//    LCUILabel * tip = LCUILabel.view;
-//    tip.font = LK_FONT(11);
-//    tip.text = addNewTagString;
-//    tip.textColor = LKColor.color;
-//    tip.FIT();
-//    tip.viewFrameX = imageView.viewRightX + 5;
-//    tip.viewFrameY = imageView.viewMidHeight - tip.viewMidHeight + 0.5;
-//    newTagView.ADD(tip);
-    
-//    newTagView.viewFrameWidth = imageView.viewFrameWidth + 5 + tip.viewFrameWidth + 10;
-//    newTagView.viewFrameHeight = imageView.viewFrameHeight;
-//    newTagView.cornerRadius = newTagView.viewMidHeight;
-//    newTagView.borderColor = LKColor.color;
-//    newTagView.borderWidth = 1;
     newTagView.viewFrameWidth = imageView.viewFrameWidth;
     newTagView.viewFrameHeight = imageView.viewFrameHeight;
-    
     return newTagView;
 }
 

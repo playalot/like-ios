@@ -116,17 +116,16 @@ LC_PROPERTY(assign) NSInteger page;
     });
 }
 
--(void) searchBarDidBeginEditing:(LKSearchBar *)searchBar editing:(BOOL)editing {
+- (void)searchBarDidBeginEditing:(LKSearchBar *)searchBar editing:(BOOL)editing {
     [self searchBarTextDidChange:searchBar];
 }
 
 - (void)searchBarDidTapReturn:(LKSearchBar *)searchBar {
     if (LKLocalUser.singleton.isLogin) {
-        
         [LKSearchHistory addHistory:searchBar.searchField.text];
     }
     LKSearchResultsViewController *searchResultsViewController = [[LKSearchResultsViewController alloc] initWithSearchString:searchBar.searchField.text];
-    [[LKNavigator navigator] pushViewController:searchResultsViewController animated:YES];
+    [self.parentViewController.navigationController pushViewController:searchResultsViewController animated:YES];
 }
 
 - (void)buildPages:(NSArray *)tags {

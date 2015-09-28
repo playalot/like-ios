@@ -1,23 +1,35 @@
 //
-//  LKFollowingFeedInterface.m
+//  LKSearchTagInterface.m
 //  LIKE
 //
-//  Created by huangweifeng on 9/21/15.
+//  Created by huangweifeng on 9/28/15.
 //  Copyright © 2015 Beijing Like Technology Co.Ltd . ( http://www.likeorz.com ). All rights reserved.
 //
 
-#import "LKFollowingFeedInterface.h"
+#import "LKSearchTagInterface.h"
+#import "LKTag.h"
 #import "LKPost.h"
 
-@implementation LKFollowingFeedInterface
+@implementation LKSearchTagInterface
 
-- (NSString *)requestUrl {
-    return @"/v1/followingFeeds";
+- (instancetype)initWithSearchString:(NSString *)searchString {
+    self = [super init];
+    if (self) {
+        self.searchString = searchString;
+    }
+    return self;
 }
 
 - (id)requestArgument {
     if (self.timestamp) {
         return @{@"ts": self.timestamp};
+    }
+    return nil;
+}
+
+- (NSString *)requestUrl {
+    if (self.searchString) {
+        return [NSString stringWithFormat:@"/v1/search/tag/%@", self.searchString];
     }
     return nil;
 }
@@ -33,10 +45,6 @@
         [datasource addObject:[LKPost objectFromDictionary:tmp]];
     }
     return datasource;
-}
-
-- (NSDictionary *)responseObject {
-    return self.responseJSONObject;
 }
 
 @end

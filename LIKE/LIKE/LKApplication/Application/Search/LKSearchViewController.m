@@ -65,7 +65,7 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
         self.blurView.cornerRadius = 4;
         self.blurView.layer.shouldRasterize = NO;
         self.blurView.layer.rasterizationScale = 1;
-        UIView * view = UIView.view.COLOR([[UIColor whiteColor] colorWithAlphaComponent:0.15]);
+        UIView * view = UIView.view.COLOR([[UIColor whiteColor] colorWithAlphaComponent:1]);
         view.frame = self.blurView.bounds;
         ((UIVisualEffectView *)self.blurView).contentView.ADD(view);
     } else {
@@ -73,7 +73,7 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
         ((FXBlurView *)self.blurView).blurRadius = 10;
         self.blurView.cornerRadius = 4;
     }
-    self.blurView.tintColor = [[UIColor whiteColor] colorWithAlphaComponent:0.15];
+    self.blurView.tintColor = [[UIColor whiteColor] colorWithAlphaComponent:1];
     self.blurView.layer.masksToBounds = YES;
     self.topBarSearchView.ADD(self.blurView);
     

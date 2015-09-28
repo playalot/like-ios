@@ -61,13 +61,13 @@ alpha:1.0]
         
         tagBtn.userInteractionEnabled = NO;
         //        [tagBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        tagBtn.titleLabel.font = LK_FONT_B(11);
+        tagBtn.titleLabel.font = LK_FONT_B(14);
         
         [tagBtn setTitle:str forState:UIControlStateNormal];
         tagBtn.tag = KBtnTag + idx;
-        tagBtn.layer.cornerRadius = 9;
+        tagBtn.layer.cornerRadius = 4;
         tagBtn.clipsToBounds = YES;
-        NSDictionary *attrs = @{NSFontAttributeName : LK_FONT_B(11)};
+        NSDictionary *attrs = @{NSFontAttributeName : LK_FONT_B(14)};
         CGSize Size_str = [str sizeWithAttributes:attrs];
         Size_str.width += HORIZONTAL_PADDING;
         Size_str.height += VERTICAL_PADDING;
@@ -93,21 +93,21 @@ alpha:1.0]
     }];
     
 
-    if (self.viewFrameHeight < 2 * 19) {
-        
+//    if (self.viewFrameHeight < 2 * 19) {
+    
         for (LCUIButton *tagBtn in self.subviews) {
             
             tagBtn.backgroundColor = LKColor.color;
         }
-    } else {
-        
-        for (LCUIButton *tagBtn in self.subviews) {
-            
-            tagBtn.backgroundColor = LC_RGBA(255, 112, 108, 1);
-        }
-    }
+//    } else {
+//    
+//        for (LCUIButton *tagBtn in self.subviews) {
+//            
+//            tagBtn.backgroundColor = LC_RGBA(255, 112, 108, 1);
+//        }
+//    }
     
-    self.backgroundColor = LKColor.backgroundColor;
+//    self.backgroundColor = LKColor.backgroundColor;
 }
 
 #pragma mark-改变控件高度

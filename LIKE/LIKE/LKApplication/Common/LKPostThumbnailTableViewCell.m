@@ -21,6 +21,7 @@ LC_PROPERTY(strong) LCUIImageView * imageView;
 
 - (instancetype)init {
     if (self = [super init]) {
+        self.backgroundColor = LKColor.backgroundColor;
         self.imageView = LCUIImageView.view;
         self.imageView.animationDuration = 0.35;
         self.imageView.contentMode = UIViewContentModeScaleAspectFill;

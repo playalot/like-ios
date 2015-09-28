@@ -147,7 +147,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.tagsView = LKTagsView.view;
     self.tagsView.viewFrameX = 0;
     self.tagsView.viewFrameWidth = LC_DEVICE_WIDTH;
-    self.tagsView.backgroundColor = LC_RGB(245, 245, 245);
+    self.tagsView.backgroundColor = LKColor.backgroundColor;
     self.ADD(self.tagsView);
     
     @weakly(self);

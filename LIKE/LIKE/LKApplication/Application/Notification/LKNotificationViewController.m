@@ -58,7 +58,7 @@ LC_PROPERTY(strong) LRUCache *precomputedCellCache;
 
 - (void)buildUI {
     
-    self.view.backgroundColor = LKColor.backgroundColor;
+    self.view.backgroundColor = [UIColor whiteColor];
     
     [self buildNavigationBar];
     

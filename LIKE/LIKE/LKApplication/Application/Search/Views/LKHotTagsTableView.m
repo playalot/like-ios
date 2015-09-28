@@ -14,8 +14,11 @@
 
 @interface LKHotTagsTableView () <UITableViewDataSource, UITableViewDelegate, LKPostTableViewControllerDelegate>
 
-LC_PROPERTY(strong) LKTag * tagValue;
+LC_PROPERTY(strong) LKTag *tagValue;
 LC_PROPERTY(strong) LKHotTagsUsersView *hotUsersView;
+LC_PROPERTY(strong) LCUIImageView *recommendImageView;
+LC_PROPERTY(strong) LCUIImageView *lineView;
+LC_PROPERTY(strong) LCUIView *headerView;
 
 LC_PROPERTY(assign) BOOL loadFinished;
 LC_PROPERTY(assign) BOOL loading;
@@ -105,8 +108,23 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
         self.alpha = 0;
         
         self.posts = [NSMutableArray array];
-        self.hotUsersView = [[LKHotTagsUsersView alloc] initWithFrame:CGRectMake(5, 5, LC_DEVICE_WIDTH - 10, 82)];
-        self.tableHeaderView = self.hotUsersView;
+        self.headerView = [[LCUIView alloc] initWithFrame:CGRectMake(5, 5, LC_DEVICE_WIDTH - 10, 67)];
+        
+        self.recommendImageView = [[LCUIImageView alloc] initWithFrame:CGRectMake(20, 12, 32, 43)];
+        self.recommendImageView.image = [UIImage imageNamed:@"RecommendUser.png" useCache:YES];
+        self.headerView.ADD(self.recommendImageView);
+        
+        self.lineView = LCUIImageView.view;
+        self.lineView.viewFrameX = self.recommendImageView.viewRightX + 20;
+        self.lineView.viewFrameY = 13;
+        self.lineView.viewFrameWidth = 1;
+        self.lineView.viewFrameHeight = 40;
+        self.lineView.image = [UIImage imageNamed:@"SeparateLine.png" useCache:YES];
+        self.headerView.ADD(self.lineView);
+        
+        self.hotUsersView = [[LKHotTagsUsersView alloc] initWithFrame:CGRectMake(72, 0, LC_DEVICE_WIDTH - 10, 67)];
+        self.headerView.ADD (self.hotUsersView);
+        self.tableHeaderView = self.headerView;
         
         self.pullLoader = [LCUIPullLoader pullLoaderWithScrollView:self pullStyle:LCUIPullLoaderStyleHeaderAndFooter];
         self.pullLoader.indicatorViewStyle = UIActivityIndicatorViewStyleWhite;

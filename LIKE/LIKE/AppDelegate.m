@@ -345,7 +345,6 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
  *  @return YES
  */
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    
     [QQApiInterface handleOpenURL:url delegate:nil];
     [WXApi handleOpenURL:url delegate:LKWeChatShare.singleton];
     [WeiboSDK handleOpenURL:url delegate:LKSinaShare.singleton];

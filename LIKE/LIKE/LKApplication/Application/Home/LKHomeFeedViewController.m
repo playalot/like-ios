@@ -65,9 +65,10 @@ LC_PROPERTY(weak) id delegate;
 }
 
 - (void)buildCellCache {
+    NSInteger cacheCapacity = 10;
     self.isCellPrecomuted = YES;
     self.precomputedCells = [NSMutableArray array];
-    self.precomputedCellCache = [[LRUCache alloc] initWithCapacity:10];
+    self.precomputedCellCache = [[LRUCache alloc] initWithCapacity:cacheCapacity];
 }
 
 - (void)buildTableView {

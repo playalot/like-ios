@@ -13,8 +13,8 @@ LC_BLOCK(void, LKSinaLoginComplete, (NSString * uid, NSString * accessToken, NSS
 
 @interface LKSinaShare : NSObject <WeiboSDKDelegate>
 
-+(BOOL) shareImage:(UIImage *)image;
++ (BOOL)shareImage:(UIImage *)image;
 
--(void)login:(LKSinaLoginComplete)complete;
+- (void)login:(LKSinaLoginComplete)complete;
 
 @end

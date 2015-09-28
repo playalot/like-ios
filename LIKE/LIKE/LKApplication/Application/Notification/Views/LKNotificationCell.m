@@ -153,7 +153,7 @@ LC_IMP_SIGNAL(PushPostDetail);
 //    self.headImageView.url = notification.user.avatar;
     [self.headImageView sd_setImageWithURL:[NSURL URLWithString:notification.user.avatar] placeholderImage:nil];
     
-    self.nameLabel.text = [NSString stringWithFormat:@"%@%@", notification.user.name, [LKNotificationCell getTitle:notification]];
+    self.nameLabel.text = [NSString stringWithFormat:@"%@   %@", notification.user.name, [LKNotificationCell getTitle:notification]];
     
     NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:self.nameLabel.text];
     [attString addAttribute:NSFontAttributeName value:LK_FONT_B(14) range:[self.nameLabel.text rangeOfString:notification.user.name]];
@@ -243,7 +243,7 @@ LC_IMP_SIGNAL(PushPostDetail);
         
         self.preview.hidden = NO;
 //        self.preview.url = ((LKPost *)notification.posts[0]).content;
-        [self.preview sd_setImageWithURL:[NSURL URLWithString:((LKPost *)notification.post).content] placeholderImage:nil];
+        [self.preview sd_setImageWithURL:[NSURL URLWithString:((LKPost *)notification.post).thumbnail] placeholderImage:nil];
     }
     
         
@@ -370,18 +370,18 @@ LC_IMP_SIGNAL(PushPostDetail);
         label.numberOfLines = 0;
     }
     
-    label.text = [NSString stringWithFormat:@"%@%@", notification.user.name, [self getTitle:notification]];
+    label.text = [NSString stringWithFormat:@"%@   %@", notification.user.name, [self getTitle:notification]];
     
     NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:label.text];
     [attString addAttribute:NSFontAttributeName value:LK_FONT_B(14) range:[label.text rangeOfString:notification.user.name]];
     
     label.attributedText = attString;
     
-    label.viewFrameWidth = LC_DEVICE_WIDTH - 57 - 35 - 20 - 22 - 10;
+    label.viewFrameWidth = LC_DEVICE_WIDTH - 69 - 36 - 14 - 35 - 20;
     label.viewFrameHeight = 1000;
     label.FIT();
-    
-    CGFloat height = 10 + label.viewFrameHeight + 5 + 12 + 10;
+
+    CGFloat height = 10 + label.viewFrameHeight + 2 + 12 + 10;
     
     height = height < 57 ? 57 : height;
     

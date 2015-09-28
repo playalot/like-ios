@@ -34,7 +34,7 @@ LC_IMP_SIGNAL(PushPostDetail);
 
 
 + (CGFloat)height:(LKPost *)post {
-    CGSize size = [LKUIKit parsingImageSizeWithURL:post.content constSize:CGSizeMake(LC_DEVICE_WIDTH, LC_DEVICE_WIDTH)];
+    CGSize size = [LKUIKit parsingImageSizeWithURL:post.preview constSize:CGSizeMake(LC_DEVICE_WIDTH, LC_DEVICE_WIDTH)];
     if (size.width > LC_DEVICE_WIDTH) {
         size.height = LC_DEVICE_WIDTH / size.width * size.height;
         size.width = LC_DEVICE_WIDTH;
@@ -215,7 +215,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     
     self.likesTip.viewFrameX = self.likes.viewFrameX + likeSize.width + 3;
     
-    CGSize size = [LKUIKit parsingImageSizeWithURL:post.content constSize:CGSizeMake(LC_DEVICE_WIDTH - 10, LC_DEVICE_WIDTH - 10)];
+    CGSize size = [LKUIKit parsingImageSizeWithURL:post.preview constSize:CGSizeMake(LC_DEVICE_WIDTH - 10, LC_DEVICE_WIDTH - 10)];
     
     if (size.width > LC_DEVICE_WIDTH) {
         size.height = LC_DEVICE_WIDTH / size.width * size.height;
@@ -232,7 +232,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.contentImage.frame = self.contentBack.bounds;
     self.contentImage.image = nil;
 
-    [self.contentImage sd_setImageWithURL:[NSURL URLWithString:post.content] placeholderImage:nil options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+    [self.contentImage sd_setImageWithURL:[NSURL URLWithString:post.preview] placeholderImage:nil options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
         
         if (self.contentImage.indicator.progress == 0) {
             [self.contentImage.indicator setProgress:receivedSize * 1.0 / expectedSize animated:YES];

@@ -16,11 +16,14 @@
     if (self = [super init]) {
         self.id = dict[@"post_id"];
         self.type = [dict[@"type"] integerValue];
-        self.content = dict[@"content"];
+//        self.content = dict[@"content"];
         self.timestamp = dict[@"created"];
         self.user = [LKUser objectFromDictionary:dict[@"user"]];
         self.place = [dict[@"place"] isKindOfClass:[NSString class]] && [dict[@"place"] length] ? dict[@"place"] : nil;
         self.favorited = [dict[@"favorited"] boolValue];
+        self.raw_image = dict[@"raw_image"];
+        self.thumbnail = dict[@"thumbnail"];
+        self.preview = dict[@"preview"];
         self.tags = [NSMutableArray array];
         
         NSArray * tags = dict[@"marks"];

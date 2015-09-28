@@ -9,6 +9,7 @@
 //
 
 #import "LCUINavigationController.h"
+#import "UINavigationController+PopOnSwipeRight.h"
 
 #pragma mark -
 
@@ -29,6 +30,8 @@
 {
     [super viewDidLoad];
     
+    self.distanceToDrag = 145;
+    self.numberOfTouches = 1;
 
     [self setBarTitleTextColor:LC_UINAVIGATIONBAR_DEFAULT_TITLE_COLOR
                    shadowColor:LC_UINAVIGATIONBAR_DEFAULT_TITLE_SHADOW_COLOR];

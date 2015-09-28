@@ -83,7 +83,6 @@
     [super viewDidAppear:animated];
 }
 
-
 - (instancetype)initWithViewControllers:(NSArray *)viewControllers {
     if (self = [super init]) {
         self.viewControllers = viewControllers;
@@ -165,10 +164,8 @@
     });
 }
 
--(void) hideBar
-{
+-(void) hideBar {
     LC_FAST_ANIMATIONS(0.15, ^{
-        
         self.assistiveTouchButton.alpha = 0;
     });
 }

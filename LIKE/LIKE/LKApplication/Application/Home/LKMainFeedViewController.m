@@ -21,7 +21,7 @@ LC_PROPERTY(weak) LCUIViewController *currentViewController;
 
 @implementation LKMainFeedViewController
 
-- (void)buildUI {
+- (void)buildUI {    
     [self buildNavigationBar];
     [self buildViewControllers];
 }

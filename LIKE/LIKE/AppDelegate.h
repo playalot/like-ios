@@ -10,8 +10,6 @@
 
 #import "LKNotificationView.h"
 
-
-
 LC_NOTIFICATION_SET(LKSessionError);
 
 @interface AppDelegate : LCUIApplication

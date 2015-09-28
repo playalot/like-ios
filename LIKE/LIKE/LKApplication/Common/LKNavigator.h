@@ -31,7 +31,7 @@ LC_PROPERTY(strong) LKGroupViewController *groupViewController;
 
 + (instancetype)navigator;
 
-LC_PROPERTY(strong) UINavigationController *mainViewController;
+LC_PROPERTY(strong) LCUINavigationController *mainViewController;
 
 - (void)popToRootViewController:(BOOL)animated;
 

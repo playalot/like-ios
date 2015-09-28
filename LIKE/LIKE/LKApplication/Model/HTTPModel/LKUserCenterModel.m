@@ -58,6 +58,8 @@ LC_PROPERTY(assign) NSInteger index;
     
     if (!isFirstPage) {
         page = [self pageWithType:type] + 1;
+    } else {
+        self.timestamp = nil;
     }
     
     LKBaseInterface *interface = nil;
@@ -178,112 +180,36 @@ LC_PROPERTY(assign) NSInteger index;
         }
         
     }];
-    
-    // set page with type...
-    [self setPageWithType:type page:page];
 }
 
- /*
-
-- (void)getDataAtFirstPage:(BOOL)isFirstPage
-                      type:(LKUserCenterModelType)type
-                       uid:(NSNumber *)uid {
-    NSInteger page = 0;
-    
-    if (!isFirstPage) {
-        page = [self pageWithType:type] + 1;
-    }
-
-    LKHttpRequestInterface * interface = nil;
+- (BOOL)canLoadMoreWithType:(LKUserCenterModelType)type {
     switch (type) {
-            
         case LKUserCenterModelTypePhotos:
-            interface = [LKHttpRequestInterface interfaceType:LC_NSSTRING_FORMAT(@"user/%@/posts/%@", uid, @(page))].AUTO_SESSION();
-            break;
-            
-        case LKUserCenterModelTypeFocus:
-            interface = [LKHttpRequestInterface interfaceType:LC_NSSTRING_FORMAT(@"user/%@/follows/%@", uid, @(page))].AUTO_SESSION();
-            break;
-            
-        case LKUserCenterModelTypeFans:
-            interface = [LKHttpRequestInterface interfaceType:LC_NSSTRING_FORMAT(@"user/%@/fans/%@", uid, @(page))].AUTO_SESSION();
-            break;
-            
-        case LKUserCenterModelTypeFavor: {
-            
-            if (isFirstPage) {
-                interface = [LKHttpRequestInterface interfaceType:LC_NSSTRING_FORMAT(@"user/favorites")].AUTO_SESSION();
-            } else {
-                
-                if (self.timestamp) {
-                    interface = [LKHttpRequestInterface interfaceType:LC_NSSTRING_FORMAT(@"user/favorites?ts=%@", self.timestamp)].AUTO_SESSION();
-                } else {
-                    interface = [LKHttpRequestInterface interfaceType:LC_NSSTRING_FORMAT(@"user/favorites")].AUTO_SESSION();
-                }
-            }
-            
-            break;
-        }
-        default:
-            break;
-    }
-    
-    
-    @weakly(self);
-    
-    [self request:interface complete:^(LKHttpRequestResult *result) {
-        @normally(self);
-        if (result.state == LKHttpRequestStateFinished) {
-            [self handleResultWithType:type isFirstPage:isFirstPage result:result];
-            [self setPageWithType:type page:page];
-            if (self.requestFinished) {
-                self.requestFinished(type, result);
-            }
-        } else if (result.state == LKHttpRequestStateFailed) {
-            if (self.requestFinished) {
-                self.requestFinished(type, result);
-            }
-        }
-    }];
-
-}
- */
-
--(BOOL) canLoadMoreWithType:(LKUserCenterModelType)type
-{
-    switch (type) {
-            
-        case LKUserCenterModelTypePhotos:
-            
             return self.photoCanLoadMore;
             break;
             
         case LKUserCenterModelTypeFocus:
-            
             return self.focusCanLoadMore;
             break;
             
         case LKUserCenterModelTypeFans:
-            
             return self.fansCanLoadMore;
             break;
             
         case LKUserCenterModelTypeFavor:
-            
             return self.favorCanLoadMore;
             break;
             
         default:
-            
             return YES;
             break;
     }
 }
 
+
 - (void)handleResultWithType:(LKUserCenterModelType)type isFirstPage:(BOOL)isFirstPage result:(LKHttpRequestResult *)result {
     
     switch (type) {
-            
         case LKUserCenterModelTypePhotos: {
             NSArray * datasource = result.json[@"data"][@"posts"];
             NSMutableArray * resultData = [NSMutableArray array];
@@ -306,7 +232,6 @@ LC_PROPERTY(assign) NSInteger index;
         case LKUserCenterModelTypeFocus: {
             
             NSArray * datasource = result.json[@"data"][@"follows"];
-            
             NSMutableArray * resultData = [NSMutableArray array];
             for (NSDictionary * tmp in datasource) {
                 [resultData addObject:[LKUser objectFromDictionary:tmp]];
@@ -335,12 +260,10 @@ LC_PROPERTY(assign) NSInteger index;
             if (isFirstPage) {
                 self.fansArray = resultData;
             }  else {
-                
                 [self.fansArray addObjectsFromArray:resultData];
             }
             
             if (datasource.count == 0) {
-                
                 self.fansCanLoadMore = NO;
             }
         }
@@ -354,21 +277,17 @@ LC_PROPERTY(assign) NSInteger index;
             NSMutableArray *resultData = [NSMutableArray array];
             
             for (NSDictionary *tmp in datasource) {
-                
                 [resultData addObject:[LKPost objectFromDictionary:tmp]];
             }
             
             if (isFirstPage) {
-                
                 self.favorArray = resultData;
-                
                 self.index++;
                 if (self.index >= 2) {
-                
                     self.timestamp = timestamp;
                 }
                 
-            } else{
+            } else {
                 
                 if (self.timestamp.integerValue != timestamp.integerValue) {
                     [self.favorArray addObjectsFromArray:resultData];
@@ -377,7 +296,6 @@ LC_PROPERTY(assign) NSInteger index;
             }
             
             if (datasource.count == 0) {
-                
                 self.favorCanLoadMore = NO;
             }
             

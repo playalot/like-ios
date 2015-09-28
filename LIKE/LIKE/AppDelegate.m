@@ -28,6 +28,8 @@
 #import "LCUrlArgumentsFilter.h"
 #import "LKNavigator.h"
 
+#import "LCEncryptorAES.h"
+
 @interface AppDelegate () <LC_CMD_IMP, RDVTabBarControllerDelegate>
 
 LC_PROPERTY(strong) TencentOAuth * tencentOAuth;
@@ -44,7 +46,6 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
 
 - (void)load:(NSDictionary *)launchOptions {
     self.launchOptions = launchOptions;
-    
     self.window.rootViewController = [LKNavigator navigator].mainViewController;
     
     // Mob短信验证
@@ -369,7 +370,6 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     }
 }
 
-
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     
     [APService handleRemoteNotification:userInfo];
@@ -381,14 +381,12 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-    
     [[SDImageCache sharedImageCache] clearMemory];
     [[SDImageCache sharedImageCache] clearDisk];
 }
 
 #pragma mark - ***** 懒加载 *****
 - (NSDictionary *)launchOptions {
-    
     if (_launchOptions == nil) {
         _launchOptions = [[NSDictionary alloc] init];
     }

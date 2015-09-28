@@ -15,11 +15,8 @@
     LKHttpRequestInterface * interface = nil;
     
     if (!tag.isLiked) {
-        
         interface = [LKHttpRequestInterface interfaceType:LC_NSSTRING_FORMAT(@"mark/%@/like", tag.id)].AUTO_SESSION().DELETE_METHOD();
-    }
-    else{
-        
+    } else {
         interface = [LKHttpRequestInterface interfaceType:LC_NSSTRING_FORMAT(@"mark/%@/like", tag.id)].AUTO_SESSION().POST_METHOD();
     }
     

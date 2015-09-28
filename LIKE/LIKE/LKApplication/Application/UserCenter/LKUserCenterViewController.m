@@ -469,6 +469,7 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 
 LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     self.datasource = [NSMutableArray arrayWithArray:[self.userCenterModel dataWithType:self.currentType]];
+    
     self.browsingViewController = [[LKPostTableViewController alloc] init];
     self.browsingViewController.delegate = self;
     self.browsingViewController.datasource = self.datasource;

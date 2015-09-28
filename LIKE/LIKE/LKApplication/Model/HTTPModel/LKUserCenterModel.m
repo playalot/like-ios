@@ -58,6 +58,8 @@ LC_PROPERTY(assign) NSInteger index;
     
     if (!isFirstPage) {
         page = [self pageWithType:type] + 1;
+    } else {
+        self.timestamp = nil;
     }
     
     LKBaseInterface *interface = nil;
@@ -178,9 +180,6 @@ LC_PROPERTY(assign) NSInteger index;
         }
         
     }];
-    
-    // set page with type...
-    [self setPageWithType:type page:page];
 }
 
  /*
@@ -279,6 +278,7 @@ LC_PROPERTY(assign) NSInteger index;
             break;
     }
 }
+
 
 - (void)handleResultWithType:(LKUserCenterModelType)type isFirstPage:(BOOL)isFirstPage result:(LKHttpRequestResult *)result {
     

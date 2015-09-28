@@ -35,7 +35,7 @@ LC_PROPERTY(strong) LKGuestFeedViewController *guestFeedNavViewController; // LK
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.mainViewController = [[UINavigationController alloc] init];
+        self.mainViewController = [[LCUINavigationController alloc] init];
         self.mainViewController.navigationBarHidden = YES;
     }
     return self;

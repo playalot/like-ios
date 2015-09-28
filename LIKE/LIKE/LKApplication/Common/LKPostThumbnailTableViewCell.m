@@ -54,8 +54,8 @@ LC_IMP_SIGNAL(PushPostDetail);
 
 - (void)buildUI {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
-    self.backgroundColor = [UIColor whiteColor];
-    self.contentView.backgroundColor = [UIColor whiteColor];
+    self.backgroundColor = LKColor.backgroundColor;
+    self.contentView.backgroundColor = LKColor.backgroundColor;
     
     self.items = [NSMutableArray array];
     
@@ -88,7 +88,7 @@ LC_IMP_SIGNAL(PushPostDetail);
         
         if (post) {
             item.hidden = NO;
-            [item.imageView sd_setImageWithURL:[NSURL URLWithString:post.content] placeholderImage:nil];
+            [item.imageView sd_setImageWithURL:[NSURL URLWithString:post.thumbnail] placeholderImage:nil];
         }
     }
 }

@@ -25,7 +25,8 @@ LC_PROPERTY(assign) BOOL focusCanLoadMore;
 LC_PROPERTY(assign) BOOL fansCanLoadMore;
 LC_PROPERTY(assign) BOOL favorCanLoadMore;
 
-LC_PROPERTY(strong) NSNumber *timestamp;
+LC_PROPERTY(strong) NSNumber *favorTimestamp;
+LC_PROPERTY(strong) NSNumber *photoTimestamp;
 
 LC_PROPERTY(assign) NSInteger index;
 
@@ -59,14 +60,16 @@ LC_PROPERTY(assign) NSInteger index;
     if (!isFirstPage) {
         page = [self pageWithType:type] + 1;
     } else {
-        self.timestamp = nil;
+        self.photoTimestamp = nil;
+        self.favorTimestamp = nil;
     }
     
     LKBaseInterface *interface = nil;
     
     switch (type) {
         case LKUserCenterModelTypePhotos: {
-            interface = [[LKUserPostsInterface alloc] initWithUid:uid page:page];
+//            interface = [[LKUserPostsInterface alloc] initWithUid:uid page:page];
+            interface = [[LKUserPostsInterface alloc] initWithTimeStamp:self.photoTimestamp uid:uid];
             break;
         }
         case LKUserCenterModelTypeFocus:
@@ -78,7 +81,7 @@ LC_PROPERTY(assign) NSInteger index;
             break;
             
         case LKUserCenterModelTypeFavor:
-            interface = [[LKUserFavouritesInterface alloc] initWithTimeStamp:self.timestamp];
+            interface = [[LKUserFavouritesInterface alloc] initWithTimeStamp:self.favorTimestamp];
             break;
             
         default:
@@ -97,6 +100,9 @@ LC_PROPERTY(assign) NSInteger index;
                 
                 LKUserPostsInterface *userPostsInterface = (LKUserPostsInterface *)interface;
                 NSArray *datasource = userPostsInterface.posts;
+                NSNumber *photoTimestamp = userPostsInterface.next;
+                self.photoTimestamp = photoTimestamp;
+                
                 if (isFirstPage) {
                     self.photoArray = [NSMutableArray arrayWithArray:datasource];
                 } else {
@@ -149,8 +155,8 @@ LC_PROPERTY(assign) NSInteger index;
                 
                 LKUserFavouritesInterface *favorInterface = (LKUserFavouritesInterface *)interface;
                 NSArray *datasource = favorInterface.posts;
-                NSNumber *timestamp = favorInterface.next;
-                self.timestamp = timestamp;
+                NSNumber *favorTimestamp = favorInterface.next;
+                self.favorTimestamp = favorTimestamp;
                 
                 if (isFirstPage) {
                     self.favorArray = [NSMutableArray arrayWithArray:datasource];
@@ -211,16 +217,34 @@ LC_PROPERTY(assign) NSInteger index;
     
     switch (type) {
         case LKUserCenterModelTypePhotos: {
-            NSArray * datasource = result.json[@"data"][@"posts"];
+            NSArray *datasource = result.json[@"data"][@"posts"];
+            NSNumber *photoTimestamp = result.json[@"data"][@"next"];
+
             NSMutableArray * resultData = [NSMutableArray array];
+            
             for (NSDictionary * tmp in datasource) {
                 [resultData addObject:[LKPost objectFromDictionary:tmp]];
             }
             
+//            if (isFirstPage) {
+//                self.photoArray = resultData;
+//            } else {
+//                [self.photoArray addObjectsFromArray:resultData];
+//            }
+            
             if (isFirstPage) {
                 self.photoArray = resultData;
+                self.index++;
+                if (self.index >= 2) {
+                    self.photoTimestamp = photoTimestamp;
+                }
+                
             } else {
-                [self.photoArray addObjectsFromArray:resultData];
+                
+                if (self.photoTimestamp.integerValue != photoTimestamp.integerValue) {
+                    [self.photoArray addObjectsFromArray:resultData];
+                    self.photoTimestamp = photoTimestamp;
+                }
             }
             
             if (datasource.count == 0) {
@@ -272,7 +296,7 @@ LC_PROPERTY(assign) NSInteger index;
         case LKUserCenterModelTypeFavor: {
             
             NSArray *datasource = result.json[@"data"][@"posts"];
-            NSNumber *timestamp = result.json[@"data"][@"next"];
+            NSNumber *favorTimestamp = result.json[@"data"][@"next"];
             
             NSMutableArray *resultData = [NSMutableArray array];
             
@@ -284,14 +308,14 @@ LC_PROPERTY(assign) NSInteger index;
                 self.favorArray = resultData;
                 self.index++;
                 if (self.index >= 2) {
-                    self.timestamp = timestamp;
+                    self.favorTimestamp = favorTimestamp;
                 }
                 
             } else {
                 
-                if (self.timestamp.integerValue != timestamp.integerValue) {
+                if (self.favorTimestamp.integerValue != favorTimestamp.integerValue) {
                     [self.favorArray addObjectsFromArray:resultData];
-                    self.timestamp = timestamp;
+                    self.favorTimestamp = favorTimestamp;
                 }
             }
             

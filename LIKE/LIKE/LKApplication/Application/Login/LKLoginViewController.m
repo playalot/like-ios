@@ -697,7 +697,6 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
             
             self.loginButton.userInteractionEnabled = YES;
             //self.loginButton.title = @"进入Like";
-            
             self.sesstionToken = result.json[@"data"][@"session_token"];
             self.refreshToken = result.json[@"data"][@"refresh_token"];
             self.expiresIn = result.json[@"data"][@"expires_in"];
@@ -731,11 +730,8 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
             @normally(self);
             
             if (!error) {
-                
                 [self loginWithUID:uid accessToken:accessToken nick:@"" type:LKOtherLoginTypeWechat];
-            }
-            else{
-                
+            } else {
                 [self showTopMessageErrorHud:error];
             }
             
@@ -747,13 +743,9 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
         [LKSinaShare.singleton login:^(NSString *uid, NSString *accessToken, NSString *error) {
             
             @normally(self);
-            
             if (!error) {
-                
                 [self loginWithUID:uid accessToken:accessToken nick:@"" type:LKOtherLoginTypeWeibo];
-            }
-            else{
-                
+            } else {
                 [self showTopMessageErrorHud:error];
             }
             

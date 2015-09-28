@@ -848,6 +848,8 @@
 		BC6ABE861BB27C0900B56E98 /* LKUserFansInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6ABE851BB27C0900B56E98 /* LKUserFansInterface.m */; };
 		BC8F64E11BB7C9F00084B5CA /* LKNavigator.m in Sources */ = {isa = PBXBuildFile; fileRef = BC8F64E01BB7C9F00084B5CA /* LKNavigator.m */; settings = {ASSET_TAGS = (); }; };
 		BC8F64E41BB824E10084B5CA /* LKGuestFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC8F64E31BB824E10084B5CA /* LKGuestFeedViewController.m */; settings = {ASSET_TAGS = (); }; };
+		BC8F64F21BB913BF0084B5CA /* LCEncryptorAES.m in Sources */ = {isa = PBXBuildFile; fileRef = BC8F64EF1BB913BF0084B5CA /* LCEncryptorAES.m */; settings = {ASSET_TAGS = (); }; };
+		BC8F64F31BB913BF0084B5CA /* LCJSONUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = BC8F64F01BB913BF0084B5CA /* LCJSONUtility.m */; settings = {ASSET_TAGS = (); }; };
 		BCD148101BB3A16A0062C463 /* LKLikeTagItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD1480F1BB3A16A0062C463 /* LKLikeTagItemView.m */; settings = {ASSET_TAGS = (); }; };
 		BCD148131BB3DCA60062C463 /* LKPostView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD148121BB3DCA60062C463 /* LKPostView.m */; settings = {ASSET_TAGS = (); }; };
 		BCD148161BB3F3AC0062C463 /* LKTagItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD148151BB3F3AC0062C463 /* LKTagItemView.m */; settings = {ASSET_TAGS = (); }; };
@@ -2458,6 +2460,10 @@
 		BC8F64E01BB7C9F00084B5CA /* LKNavigator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKNavigator.m; path = Common/LKNavigator.m; sourceTree = "<group>"; };
 		BC8F64E21BB824E10084B5CA /* LKGuestFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKGuestFeedViewController.h; path = Common/LKGuestFeedViewController.h; sourceTree = "<group>"; };
 		BC8F64E31BB824E10084B5CA /* LKGuestFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKGuestFeedViewController.m; path = Common/LKGuestFeedViewController.m; sourceTree = "<group>"; };
+		BC8F64EE1BB913BF0084B5CA /* LCEncryptorAES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LCEncryptorAES.h; path = Security/LCEncryptorAES.h; sourceTree = "<group>"; };
+		BC8F64EF1BB913BF0084B5CA /* LCEncryptorAES.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LCEncryptorAES.m; path = Security/LCEncryptorAES.m; sourceTree = "<group>"; };
+		BC8F64F01BB913BF0084B5CA /* LCJSONUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LCJSONUtility.m; path = Security/LCJSONUtility.m; sourceTree = "<group>"; };
+		BC8F64F11BB913BF0084B5CA /* LCJSONUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LCJSONUtility.h; path = Security/LCJSONUtility.h; sourceTree = "<group>"; };
 		BCD1480E1BB3A16A0062C463 /* LKLikeTagItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKLikeTagItemView.h; sourceTree = "<group>"; };
 		BCD1480F1BB3A16A0062C463 /* LKLikeTagItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKLikeTagItemView.m; sourceTree = "<group>"; };
 		BCD148111BB3DCA60062C463 /* LKPostView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKPostView.h; sourceTree = "<group>"; };
@@ -3030,6 +3036,7 @@
 		138EDC161AD7B0A30020957C /* LCFramework */ = {
 			isa = PBXGroup;
 			children = (
+				BC8F64ED1BB913880084B5CA /* Security */,
 				138EDD891AD7B0A30020957C /* LC.h */,
 				138EDC171AD7B0A30020957C /* Database */,
 				138EDC1A1AD7B0A30020957C /* Debugger */,
@@ -5308,6 +5315,17 @@
 			name = Interface;
 			sourceTree = "<group>";
 		};
+		BC8F64ED1BB913880084B5CA /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				BC8F64EE1BB913BF0084B5CA /* LCEncryptorAES.h */,
+				BC8F64EF1BB913BF0084B5CA /* LCEncryptorAES.m */,
+				BC8F64F01BB913BF0084B5CA /* LCJSONUtility.m */,
+				BC8F64F11BB913BF0084B5CA /* LCJSONUtility.h */,
+			);
+			name = Security;
+			sourceTree = "<group>";
+		};
 		BCD148221BB4FB870062C463 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
@@ -5693,6 +5711,7 @@
 				13E1A4F01AE65FE300E24C3C /* IFTTTDeviceOrientation.m in Sources */,
 				138EDE2C1AD7B0A30020957C /* LCDeviceSpecificUI.m in Sources */,
 				133D3C8D1AE79F84008F303D /* LKNotification.m in Sources */,
+				BC8F64F31BB913BF0084B5CA /* LCJSONUtility.m in Sources */,
 				1390555B1B994A6D00DBF34A /* GPUImageTwoInputFilter.m in Sources */,
 				13E1A4E61AE65FE300E24C3C /* AVCaptureDevice+FastttCamera.m in Sources */,
 				13B5B4EE1B16F0EB00252A78 /* LKCommentsView.m in Sources */,
@@ -6017,6 +6036,7 @@
 				138EDEA21AD7B0A30020957C /* UIViewController+LCExtension.m in Sources */,
 				13A951A41B4CE528002B73ED /* AFSecurityPolicy.m in Sources */,
 				1373C4701B847A6000A6C55A /* UIImageView+HighlightedWebCache.m in Sources */,
+				BC8F64F21BB913BF0084B5CA /* LCEncryptorAES.m in Sources */,
 				139B06A41ADBF50F006A260F /* FacebookStyleBarBehaviorDefiner.m in Sources */,
 				BC12A62C1B9BEE2300B99CB5 /* LCNetworkPrivate.m in Sources */,
 				1390551C1B994A6D00DBF34A /* GPUImageMosaicFilter.m in Sources */,

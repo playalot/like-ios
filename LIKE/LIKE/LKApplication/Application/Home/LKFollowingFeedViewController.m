@@ -79,7 +79,6 @@ LC_PROPERTY(weak) id delegate;
         [self loadData:diretion];
     };
     
-    
     [self buildCellCache];
     [self loadData:LCUIPullLoaderDiretionTop];
 }

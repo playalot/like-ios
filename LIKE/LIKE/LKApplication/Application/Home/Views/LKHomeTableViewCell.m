@@ -36,23 +36,19 @@ LC_IMP_SIGNAL(PushPostDetail);
 + (CGFloat)height:(LKPost *)post {
     CGSize size = [LKUIKit parsingImageSizeWithURL:post.content constSize:CGSizeMake(LC_DEVICE_WIDTH, LC_DEVICE_WIDTH)];
     if (size.width > LC_DEVICE_WIDTH) {
-        
         size.height = LC_DEVICE_WIDTH / size.width * size.height;
         size.width = LC_DEVICE_WIDTH;
     }
-    
     static LKTagsView * __tagsView = nil;
     if (!__tagsView) {
         __tagsView = LKTagsView.view;
         __tagsView.viewFrameWidth = LC_DEVICE_WIDTH;
     }
-    
     __tagsView.tags = post.tags;
-    
     return size.height + __tagsView.viewFrameHeight + 54;
 }
 
--(void) buildUI {
+- (void)buildUI {
     self.backgroundColor = [UIColor clearColor];
     self.contentView.backgroundColor = [UIColor clearColor];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -60,7 +56,6 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.contentBack = UIView.view;
     self.contentBack.clipsToBounds = YES;
     self.ADD(self.contentBack);
-    
     
     // 内容图片
     self.contentImage = LCUIImageView.view;
@@ -76,8 +71,6 @@ LC_IMP_SIGNAL(PushPostDetail);
 //    UIView *headerBack = UIView.view.X(0).Y(0).WIDTH(LC_DEVICE_WIDTH).HEIGHT(66);
 //    headerBack.backgroundColor = [UIColor whiteColor];
 //    self.ADD(headerBack);
-    
-    
 //    [LKHomeTableViewCell roundCorners:UIRectCornerTopLeft | UIRectCornerTopRight forView:headerBack];
     
     // 头像

@@ -96,7 +96,6 @@ LC_PROPERTY(strong) UIProgressView *progressView;
 
 #pragma mark - ***** WKUIDelegate *****
 - (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)())completionHandler {
-    
     [LCUIAlertView showWithTitle:LC_LO(@"提示") message:@"测试wkWebView" cancelTitle:@"取消" otherTitle:@"确定" didTouchedBlock:^(NSInteger integerValue) {
         
     }];

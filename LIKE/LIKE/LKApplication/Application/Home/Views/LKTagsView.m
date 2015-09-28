@@ -38,7 +38,6 @@ LC_PROPERTY(strong) UIView * tipLine;
     return self;
 }
 
-
 - (void)setTags:(NSMutableArray *)tags {
     _tags = tags;
     [self reloadData];
@@ -54,7 +53,6 @@ LC_PROPERTY(strong) UIView * tipLine;
     }
     
     self.viewFrameHeight = 0;
-    
     CGFloat leftMargin = 14;
     CGFloat topMargin = 14;
     CGFloat topPadding = 10;
@@ -65,8 +63,8 @@ LC_PROPERTY(strong) UIView * tipLine;
     
     NSInteger page = 0;
     NSInteger line = 0;
-    
     for (NSInteger i = 0; i < self.tags.count; i++) {
+        
         LKTag *tag = self.tags[i];
         if(tag.likes.integerValue == 0){
             continue;

@@ -92,17 +92,13 @@ LC_PROPERTY(strong) NSMutableDictionary * parameters;
     _type = type;
 }
 
--(LKHttpRequestInterfaceAutoSession) AUTO_SESSION
-{
+-(LKHttpRequestInterfaceAutoSession) AUTO_SESSION {
     LKHttpRequestInterfaceAutoSession block = ^(){
-    
         if (LKLocalUser.singleton.isLogin) {
-            
             self.sessionToken = LKLocalUser.singleton.sessionToken;
         }
         return self;
     };
-    
     return block;
 }
 

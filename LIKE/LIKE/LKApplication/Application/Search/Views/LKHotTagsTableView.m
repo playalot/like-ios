@@ -38,6 +38,11 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 - (void)loadData:(LCUIPullLoaderDiretion)direction {
     LKTagExploreInterface *tagExploreInterface = [[LKTagExploreInterface alloc] init];
     tagExploreInterface.tagValue = [NSString stringWithFormat:@"%@", [self.tagValue.tag URLEncoding]];
+    
+    if (direction == LCUIPullLoaderDiretionTop) {
+        self.next = nil;
+    }
+    
     tagExploreInterface.timestamp = self.next;
     
     @weakly(self);

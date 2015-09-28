@@ -9,6 +9,7 @@
 #import "LKLocalUser.h"
 #import "AppDelegate.h"
 #import "LCKeychain.h"
+#import "LCEncryptorAES.H"
 
 #define LK_CURRENT_USER @"LKCurrentUser.Key"
 #define LK_USER_CACHE(uid) LC_NSSTRING_FORMAT(@"LKUserCache.Key.%@",uid)
@@ -17,6 +18,8 @@
 #define LK_REFRESH_TOKEN @"LKRefresh.Token.Key"
 #define LK_EXPIRES_IN @"LKExpires.In.Key"
 
+#define LK_AES_KEY @"abcdefgz"
+#define LK_VI_KEY @"zgfedcba"
 
 @interface LKLocalUser ()
 
@@ -41,10 +44,19 @@ LC_PROPERTY(strong) LKUser * user;
 
 - (void)setSessionToken:(NSString *)sessionToken {
     [LCKeychain setObject:self.sessionToken forKey:LK_SESSION_TOKEN];
+    
+    NSString *tmpToken = [LCKeychain objectForKey:LK_SESSION_TOKEN];
+    if (!tmpToken || tmpToken.length == 0) {
+        self[LK_SESSION_TOKEN] = [LCEncryptorAES encryptString:sessionToken keyString:LK_AES_KEY ivString:LK_VI_KEY];
+    }
 }
 
 - (NSString *)sessionToken {
-    return [LCKeychain objectForKey:LK_SESSION_TOKEN];
+    NSString *tmpToken = [LCKeychain objectForKey:LK_SESSION_TOKEN];
+    if (!tmpToken || tmpToken.length == 0) {
+        tmpToken = [LCEncryptorAES decryptData:self[LK_SESSION_TOKEN] keyString:LK_AES_KEY ivString:LK_VI_KEY];
+    }
+    return tmpToken;
 }
 
 - (void)setRefreshToken:(NSString *)refreshToken {

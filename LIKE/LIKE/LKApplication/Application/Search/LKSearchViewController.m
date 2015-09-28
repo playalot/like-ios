@@ -220,11 +220,12 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 }
 
 - (void)searchBarDidTapReturn:(LKSearchBar *)searchBar {
+    [searchBar.searchField resignFirstResponder];
     if (LKLocalUser.singleton.isLogin) {
         [LKSearchHistory addHistory:searchBar.searchField.text];
     }
     LKSearchResultsViewController * searchResultsViewController = [[LKSearchResultsViewController alloc] initWithSearchString:searchBar.searchField.text];
-    [[LKNavigator navigator] pushViewController:searchResultsViewController animated:YES];
+    [self.navigationController pushViewController:searchResultsViewController animated:YES];
 }
 
 - (void)searchSuggestionTags:(NSString *)searchString {

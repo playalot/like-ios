@@ -11,6 +11,7 @@
 #import "LKPostDetailViewController.h"
 #import "UIImageView+WebCache.h"
 #import "LKPostTableViewController.h"
+#import "LKSearchTagInterface.h"
 
 @interface LKSearchResultsViewController () <LKPostTableViewControllerDelegate>
 
@@ -20,6 +21,8 @@ LC_PROPERTY(strong) NSDictionary * info;
 LC_PROPERTY(strong) NSDictionary *tagInfo;
 LC_PROPERTY(strong) LCUIButton *subscribeBtn;
 LC_PROPERTY(getter=isSubscribed) BOOL subscribed;
+
+LC_PROPERTY(strong) NSNumber *timestamp;
 
 LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 
@@ -112,11 +115,8 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 
 // 订阅标签
 - (void)subscribeTag:(LCUIButton *)subscribeBtn {
-    
     subscribeBtn.selected = !subscribeBtn.isSelected;
-    
     LKHttpRequestInterface *interface = nil;
-    
     if (subscribeBtn.isSelected) {
         interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"tag/%@/subscribe", self.tagInfo[@"id"]]].POST_METHOD();
     } else {
@@ -141,7 +141,16 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
         page = self.page + 1;
     }
     
-    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"search/tag/%@/%@", self.searchString.URLCODE(), @(page)]].GET_METHOD();
+    if (diretion == LCUIPullLoaderDiretionTop) {
+        self.timestamp = nil;
+    }
+
+    LKHttpRequestInterface *interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"search/tag/%@", self.searchString.URLCODE()]].GET_METHOD();
+    
+    if (self.timestamp) {
+        interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"search/tag/%@?ts=%@", self.searchString.URLCODE(), self.timestamp]].GET_METHOD();
+    }
+    
     @weakly(self);
     [self request:interface complete:^(LKHttpRequestResult * result) {
         @normally(self);

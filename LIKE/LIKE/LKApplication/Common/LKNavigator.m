@@ -85,12 +85,14 @@ LC_PROPERTY(strong) LKGuestFeedViewController *guestFeedNavViewController; // LK
 }
 
 - (void)launchGuestMode {
+    [self.mainViewController popToRootViewControllerAnimated:NO];
     self.guestFeedNavViewController = [LKGuestFeedViewController viewController];
     [self.mainViewController pushViewController:self.guestFeedNavViewController animated:NO];
     [self openLoginViewController];
 }
 
 - (void)launchMasterMode {
+    [self.mainViewController popToRootViewControllerAnimated:NO];
     [self setupViewControllers];
     [[LKNavigator navigator] pushViewController:self.tabBarController animated:NO];
 }

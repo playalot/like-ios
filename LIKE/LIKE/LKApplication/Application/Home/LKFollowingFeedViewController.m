@@ -111,21 +111,16 @@ LC_PROPERTY(weak) id delegate;
         if (resultNext)
             self.next = resultNext;
         
-        NSArray * resultData = followingInterface.posts;
-        NSMutableArray * datasource = [NSMutableArray array];
-        
-        for (NSDictionary * tmp in resultData) {
-            [datasource addObject:[LKPost objectFromDictionary:tmp]];
-        }
+        NSArray *posts = followingInterface.posts;
         
         if (diretion == LCUIPullLoaderDiretionTop) {
             
             if (self.isCellPrecomuted) {
-                [self precomputeAllTableViewCellsWithDataSource:datasource];
+                [self precomputeAllTableViewCellsWithDataSource:posts];
             }
             
-            self.datasource = datasource;
-            LKUserDefaults.singleton[FOCUS_FEED_CACHE_KEY] = resultData;
+            self.datasource = [NSMutableArray arrayWithArray:posts];
+//            LKUserDefaults.singleton[FOCUS_FEED_CACHE_KEY] = resultData;
             self.lastFocusLoadTime = time;
             
             self.heightList = [NSMutableArray array];
@@ -136,13 +131,13 @@ LC_PROPERTY(weak) id delegate;
         } else {
             
             if (self.isCellPrecomuted) {
-                [self precomputeAdditionalTableViewCellsWithDataSource:datasource];
+                [self precomputeAdditionalTableViewCellsWithDataSource:posts];
             }
             
-            [self.datasource addObjectsFromArray:datasource];
+            [self.datasource addObjectsFromArray:posts];
             
             // Calculate Height List
-            for (LKPost *post in datasource) {
+            for (LKPost *post in posts) {
                 [self.heightList addObject:[NSNumber numberWithFloat:[LKHomeTableViewCell height:post]]];
             }
         }

@@ -32,7 +32,7 @@ LC_PROPERTY(strong) NSString * error;
 LC_PROPERTY(strong) id json;
 LC_PROPERTY(assign) CGFloat progress;
 
-+(instancetype) result;
++ (instancetype)result;
 
 @end
 

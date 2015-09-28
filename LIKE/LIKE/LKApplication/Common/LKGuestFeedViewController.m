@@ -20,7 +20,6 @@ LC_PROPERTY(strong) LKHomeFeedViewController *homeFeedViewController;
 
 - (void)buildUI {
     [self buildNavigationBar];
-    
     self.homeFeedViewController = [LKHomeFeedViewController viewController];
     [self addChildViewController:self.homeFeedViewController];
     self.homeFeedViewController.view.viewFrameY = CGRectGetMaxY(self.navigationBar.frame);
@@ -30,15 +29,14 @@ LC_PROPERTY(strong) LKHomeFeedViewController *homeFeedViewController;
 - (void)buildNavigationBar {
     LCUIButton *titleBtn = [[LCUIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];
     [titleBtn setImage:[UIImage imageNamed:@"HomeLikeIcon" useCache:YES] forState:UIControlStateNormal];
-//    self.titleView = (UIView *)titleBtn;
     
     self.navigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, LC_DEVICE_WIDTH, 64)];
     [self.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
     self.view.ADD(self.navigationBar);
     
-//    UINavigationItem *titleNavItem = [[UINavigationItem alloc] init];
-//    titleNavItem.titleView = titleBtn;
-    self.navigationBar.topItem.titleView = titleBtn;
+    titleBtn.viewFrameX = (self.navigationBar.viewFrameWidth - titleBtn.viewFrameWidth) / 2;
+    titleBtn.viewFrameY = (self.navigationBar.viewFrameHeight - titleBtn.viewFrameHeight) / 2;
+    self.navigationBar.ADD(titleBtn);
 }
 
 @end

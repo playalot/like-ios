@@ -11,7 +11,6 @@
 #import "LKInputView.h"
 #import "LKRecommendTagsView.h"
 #import "LKPost.h"
-#import "LKHomeViewController.h"
 #import "LKCameraViewController.h"
 #import "LKNewPostUploadCenter.h"
 #import "LKCameraRollViewController.h"

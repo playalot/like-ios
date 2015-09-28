@@ -51,13 +51,10 @@
     self.ADD(button);
 }
 
--(void) didTap
-{
+- (void)didTap {
     [LKSearchHistory addHistory:self.tagString];
-
-    LKSearchResultsViewController * search = [[LKSearchResultsViewController alloc] initWithSearchString:self.tagString];
-    
-    [LC_APPDELEGATE.homeViewController.navigationController pushViewController:search animated:YES];
+    LKSearchResultsViewController *searchResultsViewController = [[LKSearchResultsViewController alloc] initWithSearchString:self.tagString];
+    [[LKNavigator navigator] pushViewController:searchResultsViewController animated:YES];
 }
 
 @end

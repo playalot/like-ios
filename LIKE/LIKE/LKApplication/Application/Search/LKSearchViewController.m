@@ -15,6 +15,7 @@
 #import "LKSearchHistory.h"
 #import "LKPostTableViewController.h"
 #import "LKTopSearchInterface.h"
+#import "LKUserCenterViewController.h"
 
 @interface LKSearchViewController () <LKSearchBarDelegate>
 
@@ -223,7 +224,7 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
         [LKSearchHistory addHistory:searchBar.searchField.text];
     }
     LKSearchResultsViewController * searchResultsViewController = [[LKSearchResultsViewController alloc] initWithSearchString:searchBar.searchField.text];
-    [LC_APPDELEGATE.homeViewController.navigationController pushViewController:searchResultsViewController animated:YES];
+    [[LKNavigator navigator] pushViewController:searchResultsViewController animated:YES];
 }
 
 - (void)searchSuggestionTags:(NSString *)searchString {

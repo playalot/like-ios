@@ -7,6 +7,7 @@
 //
 
 #import "LKTestHomeViewController.h"
+#import "LKNavigator.h"
 
 @interface LKTestHomeViewController ()
 
@@ -16,7 +17,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    self.view.backgroundColor = [UIColor randomColor];
+    
+    [self.view addTapGestureRecognizer:self selector:@selector(clearAll)];
+}
+
+- (void)clearAll {
+    [[LKNavigator navigator] popToRootViewController:YES];
 }
 
 - (void)didReceiveMemoryWarning {

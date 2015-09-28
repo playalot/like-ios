@@ -83,13 +83,11 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
 
 @implementation LKLoginViewController
 
--(void) dealloc
-{
+- (void)dealloc {
     [self cancelAllRequests];
 }
 
-+(BOOL) needLoginOnViewController:(UIViewController *)viewController
-{
++(BOOL) needLoginOnViewController:(UIViewController *)viewController {
     if (LKLocalUser.singleton.isLogin) {
         return NO;
     }
@@ -98,9 +96,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
         LKLoginViewController * login = LKLoginViewController.viewController;
         
         for (UIView * view in login.view.subviews) {
-
             if (view != login.backgroundView) {
-
                 view.alpha = 0;
             }
         }
@@ -118,8 +114,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     }
 }
 
--(instancetype) init
-{
+-(instancetype) init {
     if (self = [super init]) {
         
         // 弹出时的动画风格为交叉溶解风格
@@ -129,8 +124,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     return self;
 }
 
--(void) currentWindowBlur:(UIViewController *)viewController
-{
+-(void) currentWindowBlur:(UIViewController *)viewController {
     if (!viewController) {
         return;
     }
@@ -149,9 +143,6 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     UIView * mask = UIView.view.COLOR([[UIColor blackColor] colorWithAlphaComponent:0.35]);
     mask.frame = self.backgroundView.bounds;
     self.backgroundView.ADD(mask);
-    
-    
-    
     self.backgroundView.alpha = 0;
     
     LC_FAST_ANIMATIONS(1, ^{
@@ -162,8 +153,8 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
 }
 
 
--(void) beginAnimation
-{
+-(void) beginAnimation {
+    
     LC_FAST_ANIMATIONS(1, ^{
         
         for (UIView * view in self.view.subviews) {
@@ -175,14 +166,6 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
         }
         
     });
-    
-    //    [UIView animateWithDuration:1 delay:5 options:UIViewAnimationOptionCurveLinear animations:^{
-    //
-    //
-    //
-    //    } completion:^(BOOL finished) {
-    //        ;
-    //    }];
 }
 
 
@@ -200,8 +183,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     return image;
 }
 
--(void) viewDidLoad
-{
+-(void) viewDidLoad {
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor clearColor];
@@ -217,8 +199,12 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
         if (error) {
             
             [self showTopMessageErrorHud:error];
-        }
-        else{
+            
+            if (self.delegate) {
+                [self.delegate didLoginFailed];
+            }
+            
+        } else {
             
             self.maskView.hidden = YES;
             
@@ -243,6 +229,10 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
             }
             
             [self dismissViewControllerAnimated:YES completion:nil];
+            
+            if (self.delegate) {
+                [self.delegate didLoginSucceeded:self.userInfoModel.rawUserInfo];
+            }
         }
     };
 }
@@ -625,19 +615,16 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     self.codeButton.userInteractionEnabled = NO;
     self.codeButton.title = LC_LO(@"获取中...");
     
-    
     // 使用mob来进行短信验证
     NSString *countryCode = [self.countryCode.text substringFromIndex:1];
     [SMS_SDK getVerificationCodeBySMSWithPhone:self.phoneField.text
                                           zone:countryCode
-                                        result:^(SMS_SDKError *error)
-     {
-         if (error)
-         {
+                                        result:^(SMS_SDKError *error) {
+         if (error) {
              UIAlertView *alert = [[UIAlertView alloc]
                                 initWithTitle:NSLocalizedString(@"codesenderrtitle", nil)
                                       message:[NSString
-                             stringWithFormat:@"状态码：%zi",error.errorCode]
+                             stringWithFormat:@"状态码：%zi", error.errorCode]
                                      delegate:self
                             cancelButtonTitle:NSLocalizedString(@"sure", nil)
                             otherButtonTitles:nil, nil];
@@ -714,16 +701,18 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
             self.sesstionToken = result.json[@"data"][@"session_token"];
             self.refreshToken = result.json[@"data"][@"refresh_token"];
             self.expiresIn = result.json[@"data"][@"expires_in"];
-            
             [self.userInfoModel getUserInfo:result.json[@"data"][@"user_id"]];
-        }
-        else if (result.state == LKHttpRequestStateFailed){
+            
+        } else if (result.state == LKHttpRequestStateFailed) {
             
             self.loginButton.userInteractionEnabled = YES;
             self.loginButton.title = LC_LO(@"进入like");
-            
             self.maskView.hidden = YES;
             [self showTopMessageErrorHud:result.error];
+            
+            if (self.delegate) {
+                [self.delegate didLoginFailed];
+            }
         }
     }];
 }

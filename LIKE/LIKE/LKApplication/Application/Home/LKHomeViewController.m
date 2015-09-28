@@ -1190,8 +1190,7 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
 
 }
 
--(void) notificationAction
-{
+-(void) notificationAction {
     if (!self.isCurrentDisplayController) {
         return;
     }
@@ -1203,8 +1202,7 @@ LC_PROPERTY(strong) LKAttentionView * attentionViewController;
     // inputView（导航栏）注销第一响应者
     [self.inputView resignFirstResponder];
     
-    if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
-    
+    if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]) {
         self.feedType = LKHomepageFeedTypeNotification;
     }
 }

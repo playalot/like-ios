@@ -10,4 +10,8 @@
 
 @interface LKHomeFeedViewController : LCUIViewController
 
+- (void)refresh;
+
+- (void)notificationAction;
+
 @end

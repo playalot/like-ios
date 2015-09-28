@@ -48,6 +48,14 @@ LC_PROPERTY(weak) id delegate;
 
 @implementation LKHomeFeedViewController
 
+- (void)refresh {
+    [self.tableView reloadData];
+}
+
+- (void)notificationAction {
+    
+}
+
 - (void)buildUI {
     [self buildTableView];
     [self buildInputView];
@@ -412,7 +420,6 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    
     [self.inputView resignFirstResponder];
 }
 

@@ -608,7 +608,6 @@
 		139B06861ADBE56A006A260F /* RKDropdownAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 139B06851ADBE56A006A260F /* RKDropdownAlert.m */; };
 		139B06891ADBE5F6006A260F /* NSObject+LKTopHud.m in Sources */ = {isa = PBXBuildFile; fileRef = 139B06881ADBE5F6006A260F /* NSObject+LKTopHud.m */; };
 		139B068C1ADBE7FA006A260F /* LCUIMaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 139B068B1ADBE7FA006A260F /* LCUIMaskView.m */; };
-		139B068F1ADBF161006A260F /* LKHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 139B068E1ADBF161006A260F /* LKHomeViewController.m */; };
 		139B06A01ADBF50F006A260F /* BLKDelegateSplitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 139B06931ADBF50F006A260F /* BLKDelegateSplitter.m */; };
 		139B06A11ADBF50F006A260F /* BLKFlexibleHeightBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 139B06951ADBF50F006A260F /* BLKFlexibleHeightBar.m */; };
 		139B06A21ADBF50F006A260F /* BLKFlexibleHeightBarBehaviorDefiner.m in Sources */ = {isa = PBXBuildFile; fileRef = 139B06971ADBF50F006A260F /* BLKFlexibleHeightBarBehaviorDefiner.m */; };
@@ -850,7 +849,8 @@
 		BC6ABE801BB2787B00B56E98 /* LKUserPostsInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6ABE7F1BB2787B00B56E98 /* LKUserPostsInterface.m */; };
 		BC6ABE831BB27A1000B56E98 /* LKUserFollowsInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6ABE821BB27A1000B56E98 /* LKUserFollowsInterface.m */; };
 		BC6ABE861BB27C0900B56E98 /* LKUserFansInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6ABE851BB27C0900B56E98 /* LKUserFansInterface.m */; };
-		BC810CAC1BABF4AA00AC956B /* LKTestHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC810CAB1BABF4AA00AC956B /* LKTestHomeViewController.m */; };
+		BC8F64E11BB7C9F00084B5CA /* LKNavigator.m in Sources */ = {isa = PBXBuildFile; fileRef = BC8F64E01BB7C9F00084B5CA /* LKNavigator.m */; settings = {ASSET_TAGS = (); }; };
+		BC8F64E41BB824E10084B5CA /* LKGuestFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC8F64E31BB824E10084B5CA /* LKGuestFeedViewController.m */; settings = {ASSET_TAGS = (); }; };
 		BCD148101BB3A16A0062C463 /* LKLikeTagItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD1480F1BB3A16A0062C463 /* LKLikeTagItemView.m */; settings = {ASSET_TAGS = (); }; };
 		BCD148131BB3DCA60062C463 /* LKPostView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD148121BB3DCA60062C463 /* LKPostView.m */; settings = {ASSET_TAGS = (); }; };
 		BCD148161BB3F3AC0062C463 /* LKTagItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD148151BB3F3AC0062C463 /* LKTagItemView.m */; settings = {ASSET_TAGS = (); }; };
@@ -2005,8 +2005,6 @@
 		139B06881ADBE5F6006A260F /* NSObject+LKTopHud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+LKTopHud.m"; sourceTree = "<group>"; };
 		139B068A1ADBE7FA006A260F /* LCUIMaskView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCUIMaskView.h; sourceTree = "<group>"; };
 		139B068B1ADBE7FA006A260F /* LCUIMaskView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCUIMaskView.m; sourceTree = "<group>"; };
-		139B068D1ADBF161006A260F /* LKHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKHomeViewController.h; sourceTree = "<group>"; };
-		139B068E1ADBF161006A260F /* LKHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKHomeViewController.m; sourceTree = "<group>"; };
 		139B06921ADBF50F006A260F /* BLKDelegateSplitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLKDelegateSplitter.h; sourceTree = "<group>"; };
 		139B06931ADBF50F006A260F /* BLKDelegateSplitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLKDelegateSplitter.m; sourceTree = "<group>"; };
 		139B06941ADBF50F006A260F /* BLKFlexibleHeightBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLKFlexibleHeightBar.h; sourceTree = "<group>"; };
@@ -2464,8 +2462,10 @@
 		BC6ABE821BB27A1000B56E98 /* LKUserFollowsInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKUserFollowsInterface.m; path = Interface/LKUserFollowsInterface.m; sourceTree = "<group>"; };
 		BC6ABE841BB27C0900B56E98 /* LKUserFansInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKUserFansInterface.h; path = Interface/LKUserFansInterface.h; sourceTree = "<group>"; };
 		BC6ABE851BB27C0900B56E98 /* LKUserFansInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKUserFansInterface.m; path = Interface/LKUserFansInterface.m; sourceTree = "<group>"; };
-		BC810CAA1BABF4AA00AC956B /* LKTestHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKTestHomeViewController.h; sourceTree = "<group>"; };
-		BC810CAB1BABF4AA00AC956B /* LKTestHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKTestHomeViewController.m; sourceTree = "<group>"; };
+		BC8F64DF1BB7C9F00084B5CA /* LKNavigator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKNavigator.h; path = Common/LKNavigator.h; sourceTree = "<group>"; };
+		BC8F64E01BB7C9F00084B5CA /* LKNavigator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKNavigator.m; path = Common/LKNavigator.m; sourceTree = "<group>"; };
+		BC8F64E21BB824E10084B5CA /* LKGuestFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKGuestFeedViewController.h; path = Common/LKGuestFeedViewController.h; sourceTree = "<group>"; };
+		BC8F64E31BB824E10084B5CA /* LKGuestFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKGuestFeedViewController.m; path = Common/LKGuestFeedViewController.m; sourceTree = "<group>"; };
 		BCD1480E1BB3A16A0062C463 /* LKLikeTagItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKLikeTagItemView.h; sourceTree = "<group>"; };
 		BCD1480F1BB3A16A0062C463 /* LKLikeTagItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKLikeTagItemView.m; sourceTree = "<group>"; };
 		BCD148111BB3DCA60062C463 /* LKPostView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKPostView.h; sourceTree = "<group>"; };
@@ -4144,8 +4144,6 @@
 			children = (
 				BC12A63D1B9BF51200B99CB5 /* Requests */,
 				139B06901ADBF4E3006A260F /* Views */,
-				139B068D1ADBF161006A260F /* LKHomeViewController.h */,
-				139B068E1ADBF161006A260F /* LKHomeViewController.m */,
 				135DBAED1AE4EF79004AD150 /* LKPostDetailViewController.h */,
 				135DBAEE1AE4EF79004AD150 /* LKPostDetailViewController.m */,
 				13B5B4F11B170DE600252A78 /* LKTagCommentsViewController.h */,
@@ -4160,8 +4158,6 @@
 				BC0C424D1BA8573C00055BB1 /* LKHomeFeedViewController.m */,
 				BC0C424F1BA85B5F00055BB1 /* LKMainFeedViewController.h */,
 				BC0C42501BA85B5F00055BB1 /* LKMainFeedViewController.m */,
-				BC810CAA1BABF4AA00AC956B /* LKTestHomeViewController.h */,
-				BC810CAB1BABF4AA00AC956B /* LKTestHomeViewController.m */,
 				BC07B2801BAC3FA600A0ED71 /* LKFocusRequest.h */,
 				BC07B2811BAC3FA600A0ED71 /* LKFocusRequest.m */,
 			);
@@ -5276,6 +5272,10 @@
 				BD51DE4A1BB6D11700DA2095 /* LKTabbarItem.m */,
 				BD51DE4C1BB6D12C00DA2095 /* LKTabbar.h */,
 				BD51DE4D1BB6D12C00DA2095 /* LKTabbar.m */,
+				BC8F64DF1BB7C9F00084B5CA /* LKNavigator.h */,
+				BC8F64E01BB7C9F00084B5CA /* LKNavigator.m */,
+				BC8F64E21BB824E10084B5CA /* LKGuestFeedViewController.h */,
+				BC8F64E31BB824E10084B5CA /* LKGuestFeedViewController.m */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -5741,7 +5741,6 @@
 				133D3C901AE7C63C008F303D /* LKTime.m in Sources */,
 				139054C61B994A6D00DBF34A /* GPUImage3x3TextureSamplingFilter.m in Sources */,
 				1390555E1B994A6D00DBF34A /* GPUImageUIElement.m in Sources */,
-				BC810CAC1BABF4AA00AC956B /* LKTestHomeViewController.m in Sources */,
 				1387C3551B32AE4B00B065A7 /* LKTimestampEncryption.m in Sources */,
 				138EDEAB1AD7B0A30020957C /* LCUIButton.m in Sources */,
 				138EDE2D1AD7B0A30020957C /* LCViewInspector.m in Sources */,
@@ -5782,7 +5781,6 @@
 				13A951A81B4CE528002B73ED /* AFURLSessionManager.m in Sources */,
 				1390552C1B994A6D00DBF34A /* GPUImagePicture+TextureSubimage.m in Sources */,
 				1347656C1AE25EA40055D099 /* QNUploadManager.m in Sources */,
-				139B068F1ADBF161006A260F /* LKHomeViewController.m in Sources */,
 				139B06A31ADBF50F006A260F /* BLKFlexibleHeightBarSubviewLayoutAttributes.m in Sources */,
 				139054C41B994A6D00DBF34A /* GLProgram.m in Sources */,
 				134765721AE25ED90055D099 /* LKFileUploaderConfig.m in Sources */,
@@ -5828,6 +5826,7 @@
 				139055301B994A6D00DBF34A /* GPUImagePixellatePositionFilter.m in Sources */,
 				139055041B994A6D00DBF34A /* GPUImageHSBFilter.m in Sources */,
 				138EDE201AD7B0A30020957C /* LCActiveConnection.m in Sources */,
+				BC8F64E41BB824E10084B5CA /* LKGuestFeedViewController.m in Sources */,
 				138EDEAF1AD7B0A30020957C /* LCUIImageLoader.m in Sources */,
 				138EDE8F1AD7B0A30020957C /* LCHTTPRequestModel.m in Sources */,
 				139054F51B994A6D00DBF34A /* GPUImageGaussianBlurFilter.m in Sources */,
@@ -6014,6 +6013,7 @@
 				BC484AB91BB0404800F69D50 /* LKTagExploreInterface.m in Sources */,
 				1373C4371B846FDA00A6C55A /* MJPropertyKey.m in Sources */,
 				13B5B4F61B1710AE00252A78 /* LKTagCommentCell.m in Sources */,
+				BC8F64E11BB7C9F00084B5CA /* LKNavigator.m in Sources */,
 				138EDE5E1AD7B0A30020957C /* FMDatabaseQueue.m in Sources */,
 				139054EB1B994A6D00DBF34A /* GPUImageExclusionBlendFilter.m in Sources */,
 				139055131B994A6D00DBF34A /* GPUImageLowPassFilter.m in Sources */,

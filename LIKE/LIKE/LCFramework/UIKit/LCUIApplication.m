@@ -11,7 +11,6 @@
 #import "LCUIApplication.h"
 #import "APService.h"
 #import "LKNotificationView.h"
-#import "LKHomeViewController.h"
 #import "LCNetworkConfig.h"
 #import "LCUrlArgumentsFilter.h"
 

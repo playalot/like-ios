@@ -10,4 +10,6 @@
 
 @interface LKMainFeedViewController : LCUIViewController
 
+- (void)refresh;
+
 @end

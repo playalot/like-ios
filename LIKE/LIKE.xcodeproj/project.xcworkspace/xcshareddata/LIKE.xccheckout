@@ -7,21 +7,21 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>D6D53683-2659-465A-BA1F-2E6C2FC964D6</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>LIKE</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>EE7854D7FA048EDF57F3F5C59F13AD4C0D41A4C3</key>
-		<string>github.com:likeapp/like-ios.git</string>
+		<string>https://github.com/likeapp/like-ios.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>LIKE/LIKE.xcodeproj/project.xcworkspace</string>
+	<string>LIKE/LIKE.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>EE7854D7FA048EDF57F3F5C59F13AD4C0D41A4C3</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>github.com:likeapp/like-ios.git</string>
+	<string>https://github.com/likeapp/like-ios.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>

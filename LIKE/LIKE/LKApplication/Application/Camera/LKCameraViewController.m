@@ -400,9 +400,21 @@ LC_PROPERTY(strong) UIView *wastedView;
     }
 }
 
--(void) switchCamera
-{
+- (void)switchCamera {
+    
     self.prohibitionView.hidden = !self.prohibitionView.isHidden;
+    
+    if (!self.prohibitionView.isHidden) {
+        
+        CAKeyframeAnimation *anim = [CAKeyframeAnimation animationWithKeyPath:@"transform.rotation"];
+        
+        anim.values = @[@(M_PI_4 * 0.1), @(-M_PI_4 * 0.1), @(M_PI_4 * 0.1)];
+        
+        anim.duration = 0.25;
+        anim.repeatCount = 3;
+        
+        [self.prohibitionView.layer addAnimation:anim forKey:nil];
+    }
 //    FastttCameraDevice cameraDevice;
 //    
 //    switch (self.fastCamera.cameraDevice)

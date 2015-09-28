@@ -52,16 +52,17 @@ LC_PROPERTY(weak) id delegate;
     [self buildTableView];
     [self buildInputView];
     [self buildPullLoader];
-    
-    self.isCellPrecomuted = YES;
-    self.precomputedCells = [NSMutableArray array];
-    self.precomputedCellCache = [[LRUCache alloc] initWithCapacity:10];
-    
+    [self buildCellCache];
     [self loadData:LCUIPullLoaderDiretionTop];
 }
 
+- (void)buildCellCache {
+    self.isCellPrecomuted = YES;
+    self.precomputedCells = [NSMutableArray array];
+    self.precomputedCellCache = [[LRUCache alloc] initWithCapacity:10];
+}
+
 - (void)buildTableView {
-    
     CGRect viewRect = CGRectMake(0, 0, LC_DEVICE_WIDTH, LC_DEVICE_HEIGHT + 20 - 64 - 49);
     self.tableView = [[LCUITableView alloc] initWithFrame:viewRect];
     self.tableView.delegate = self;

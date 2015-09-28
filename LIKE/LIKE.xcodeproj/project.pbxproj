@@ -853,6 +853,9 @@
 		BCD148161BB3F3AC0062C463 /* LKTagItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD148151BB3F3AC0062C463 /* LKTagItemView.m */; settings = {ASSET_TAGS = (); }; };
 		BCD148271BB4FB9A0062C463 /* LRUCache.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD148241BB4FB9A0062C463 /* LRUCache.m */; settings = {ASSET_TAGS = (); }; };
 		BCD148281BB4FB9A0062C463 /* LRUCacheNode.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD148261BB4FB9A0062C463 /* LRUCacheNode.m */; settings = {ASSET_TAGS = (); }; };
+		BD51DE481BB6D0F500DA2095 /* LKTabbarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BD51DE471BB6D0F500DA2095 /* LKTabbarViewController.m */; };
+		BD51DE4B1BB6D11700DA2095 /* LKTabbarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = BD51DE4A1BB6D11700DA2095 /* LKTabbarItem.m */; };
+		BD51DE4E1BB6D12C00DA2095 /* LKTabbar.m in Sources */ = {isa = PBXBuildFile; fileRef = BD51DE4D1BB6D12C00DA2095 /* LKTabbar.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2465,6 +2468,12 @@
 		BCD148241BB4FB9A0062C463 /* LRUCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LRUCache.m; path = Utility/LRUCache.m; sourceTree = "<group>"; };
 		BCD148251BB4FB9A0062C463 /* LRUCacheNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LRUCacheNode.h; path = Utility/LRUCacheNode.h; sourceTree = "<group>"; };
 		BCD148261BB4FB9A0062C463 /* LRUCacheNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LRUCacheNode.m; path = Utility/LRUCacheNode.m; sourceTree = "<group>"; };
+		BD51DE461BB6D0F500DA2095 /* LKTabbarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKTabbarViewController.h; sourceTree = "<group>"; };
+		BD51DE471BB6D0F500DA2095 /* LKTabbarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKTabbarViewController.m; sourceTree = "<group>"; };
+		BD51DE491BB6D11700DA2095 /* LKTabbarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKTabbarItem.h; sourceTree = "<group>"; };
+		BD51DE4A1BB6D11700DA2095 /* LKTabbarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKTabbarItem.m; sourceTree = "<group>"; };
+		BD51DE4C1BB6D12C00DA2095 /* LKTabbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKTabbar.h; sourceTree = "<group>"; };
+		BD51DE4D1BB6D12C00DA2095 /* LKTabbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKTabbar.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -5248,6 +5257,12 @@
 				BC12A6541BA0240200B99CB5 /* LKPostTableViewCell.m */,
 				BC484AC01BB048BD00F69D50 /* LKPostThumbnailTableViewCell.h */,
 				BC484AC11BB048BD00F69D50 /* LKPostThumbnailTableViewCell.m */,
+				BD51DE461BB6D0F500DA2095 /* LKTabbarViewController.h */,
+				BD51DE471BB6D0F500DA2095 /* LKTabbarViewController.m */,
+				BD51DE491BB6D11700DA2095 /* LKTabbarItem.h */,
+				BD51DE4A1BB6D11700DA2095 /* LKTabbarItem.m */,
+				BD51DE4C1BB6D12C00DA2095 /* LKTabbar.h */,
+				BD51DE4D1BB6D12C00DA2095 /* LKTabbar.m */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -5633,11 +5648,13 @@
 				138EDE911AD7B0A30020957C /* NSObject+LCHTTPRequest.m in Sources */,
 				139054D31B994A6D00DBF34A /* GPUImageCGAColorspaceFilter.m in Sources */,
 				138EDEF71AD7D8160020957C /* RDVTabBarItem.m in Sources */,
+				BD51DE4E1BB6D12C00DA2095 /* LKTabbar.m in Sources */,
 				139055441B994A6D00DBF34A /* GPUImageSketchFilter.m in Sources */,
 				138EDE031AD7B0A30020957C /* LCLogView.m in Sources */,
 				13FCC0781ADE2E5F0008DB41 /* LKHomeTableViewCell.m in Sources */,
 				134765681AE25EA40055D099 /* QNUserAgent.m in Sources */,
 				139055111B994A6D00DBF34A /* GPUImageLocalBinaryPatternFilter.m in Sources */,
+				BD51DE481BB6D0F500DA2095 /* LKTabbarViewController.m in Sources */,
 				139055161B994A6D00DBF34A /* GPUImageLuminosity.m in Sources */,
 				1390555A1B994A6D00DBF34A /* GPUImageTwoInputCrossTextureSamplingFilter.m in Sources */,
 				1390551D1B994A6D00DBF34A /* GPUImageMotionBlurFilter.m in Sources */,
@@ -5871,6 +5888,7 @@
 				138EDE5C1AD7B0A30020957C /* FMDatabaseAdditions.m in Sources */,
 				139055581B994A6D00DBF34A /* GPUImageToonFilter.m in Sources */,
 				135DBAEC1AE4AC24004AD150 /* LKRecommendTagsView.m in Sources */,
+				BD51DE4B1BB6D11700DA2095 /* LKTabbarItem.m in Sources */,
 				132E6F7B1BA93264001DF4BF /* LKGroupViewController.m in Sources */,
 				139054C91B994A6D00DBF34A /* GPUImageAlphaBlendFilter.m in Sources */,
 				13D63ACB1AEA01F1001587C0 /* LKNotificationCount.m in Sources */,

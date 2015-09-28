@@ -53,6 +53,8 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
  */
 - (void)load:(NSDictionary *)launchOptions {
     self.launchOptions = launchOptions;
+    [self setupLoginValidation];
+    [self setupViewControllers];
     [self setupNetworkConfig];
     [self setupCache];
     [self setupMAMapServices];
@@ -64,8 +66,6 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     [self setupSMS];
     [self setupNotificationObserving];
     [self setupPushService:launchOptions];
-    [self setupViewControllers];
-    [self setupLoginValidation];
 }
 
 - (void)setupNetworkConfig {
@@ -239,7 +239,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
         }
     }
     
-    self.window.rootViewController = self.tabBarController;
+    self.window.rootViewController = [LKTabbarViewController viewController];
 }
 
 - (void)setupLoginValidation {
@@ -286,18 +286,15 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
 /**
  *  禁止屏幕转向
  */
-- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
-{
+- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
     return UIInterfaceOrientationMaskPortrait;
 }
 
 /**
  *  获取当前的控制器
  */
-- (UIViewController *) getCurrentViewController
-{
+- (UIViewController *) getCurrentViewController {
     UIViewController * result = nil;
-    
     UIWindow * window = [[UIApplication sharedApplication] keyWindow];
     
     if (window.windowLevel != UIWindowLevelNormal){

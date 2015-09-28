@@ -192,7 +192,6 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
         currentResponder = currentResponder.nextResponder;
     }
     LKSearchViewController *searchViewController = (LKSearchViewController *)currentResponder;
-    
     self.browsingViewController = [[LKPostTableViewController alloc] init];
     self.browsingViewController.delegate = self;
     self.browsingViewController.datasource = self.posts;

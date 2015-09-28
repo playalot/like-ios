@@ -72,7 +72,7 @@
 
 -(void) handleNotification:(NSNotification *)notification
 {
-    NSDictionary * userInfo = [notification userInfo];
+    NSDictionary *userInfo = [notification userInfo];
     
 	if (userInfo){
         

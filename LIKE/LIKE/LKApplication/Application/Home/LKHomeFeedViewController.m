@@ -27,9 +27,9 @@
 @interface LKHomeFeedViewController () <UITableViewDataSource, UITableViewDelegate, LKHomeTableViewCellDelegate, LKPostDetailViewControllerDelegate>
 
 LC_PROPERTY(strong) NSMutableArray *datasource;
-LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
-LC_PROPERTY(strong) LCUITableView * tableView;
-LC_PROPERTY(strong) LKInputView * inputView;
+LC_PROPERTY(strong) LCUIPullLoader *pullLoader;
+LC_PROPERTY(strong) LCUITableView *tableView;
+LC_PROPERTY(strong) LKInputView *inputView;
 
 LC_PROPERTY(copy) NSNumber * next;
 LC_PROPERTY(assign) NSTimeInterval lastFocusLoadTime;
@@ -120,7 +120,7 @@ LC_PROPERTY(weak) id delegate;
             return;
         }
         
-        LKHomeTableViewCell *cell = (LKHomeTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:1]];
+        LKHomeTableViewCell *cell = (LKHomeTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:0]];
         
         // 调加标签接口
         if ([self checkTag:string onTags:((LKPost *)self.inputView.userInfo).tags]) {

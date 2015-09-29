@@ -36,6 +36,8 @@ LC_PROPERTY(strong) LKPost * post;
 
 - (void)postDetailViewController:(LKPostDetailViewController *)ctrl didDeletedTag:(LKTag *)deleteTag;
 
+- (void)postDetailViewController:(LKPostDetailViewController *)ctrl didUpdatedPost:(LKPost *)post;
+
 @end
 
 @protocol LKPostDetailViewControllerCancelFavorDelegate <NSObject>

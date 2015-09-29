@@ -287,9 +287,8 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     LKPostDetailViewController * detail = [[LKPostDetailViewController alloc] initWithPost:signal.object];
     // 设置代理
     detail.delegate = self;
-//    LCUINavigationController * nav = LC_UINAVIGATION(detail);
     [detail setPresendModelAnimationOpen];
-    [self.navigationController pushViewController:detail animated:YES];
+    [self.navigationController presentViewController:detail animated:YES completion:nil];
     
     LKPost * post = signal.object;
     if ([post.tagString rangeOfString:@"Comment-"].length) {
@@ -305,17 +304,13 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
         LKPost *selfPost = self.datasource[i];
         if ([selfPost.id isEqualToNumber:post.id]) {
             updatedIndex = i;
-            NSLog(@"selfPost: %@", selfPost.tags);
+            [self.datasource removeObjectAtIndex:updatedIndex];
+            selfPost.tags = post.tags;
+            [self.datasource insertObject:selfPost atIndex:updatedIndex];
             break;
         }
     }
-    NSLog(@"updatedIndex: %ld", updatedIndex);
-    NSLog(@"post tags: %@", post.tags);
-    if (updatedIndex >= 0) {
-        [self.datasource removeObjectAtIndex:updatedIndex];
-        [self.datasource insertObject:post atIndex:updatedIndex];
-        [self.tableView reloadData];
-    }
+    [self.tableView reloadData];
 }
 
 #pragma mark - ***** LKPostDetailViewControllerDelegate *****
@@ -335,6 +330,21 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
                 
                 break;
             }
+        }
+    }
+    [self.tableView reloadData];
+}
+
+- (void)postDetailViewController:(LKPostDetailViewController *)ctrl didUpdatedPost:(LKPost *)post {
+    NSInteger updatedIndex = -1;
+    for (NSInteger i = 0; i < self.datasource.count; ++i) {
+        LKPost *selfPost = self.datasource[i];
+        if ([selfPost.id isEqualToNumber:post.id]) {
+            updatedIndex = i;
+            [self.datasource removeObjectAtIndex:updatedIndex];
+            selfPost.tags = post.tags;
+            [self.datasource insertObject:selfPost atIndex:updatedIndex];
+            break;
         }
     }
     [self.tableView reloadData];

@@ -54,11 +54,11 @@ LC_PROPERTY(weak) LCUIViewController *currentViewController;
     
 }
 
-LC_HANDLE_NAVIGATION_SIGNAL(UpdatePostTags, signal) {
-    LKPost * post = signal.object;
-//    [self.followingFeedViewController updatePostFeed:post];
-    [self.homeFeedViewController updatePostFeed:post];
-}
+//LC_HANDLE_NAVIGATION_SIGNAL(UpdatePostTags, signal) {
+//    LKPost * post = signal.object;
+////    [self.followingFeedViewController updatePostFeed:post];
+//    [self.homeFeedViewController updatePostFeed:post];
+//}
 
 - (void)handleNavigationBarButton:(LCUINavigationBarButtonType)type {
     

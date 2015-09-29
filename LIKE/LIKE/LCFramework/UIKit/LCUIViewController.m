@@ -22,6 +22,7 @@
     [super viewWillAppear:animated];
     
     self.isCurrentDisplayController = YES;
+    [self setNeedsStatusBarAppearanceUpdate];
 }
 
 -(void) viewWillDisappear:(BOOL)animated

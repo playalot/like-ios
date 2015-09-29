@@ -82,11 +82,8 @@
         };
         
         self.textField.shouldBeginEditing = ^ BOOL (id value){
-          
             @normally(self);
-            
             [LCUIKeyBoard.singleton setAccessor:self];
-            
             return YES;
         };
         

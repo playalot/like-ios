@@ -193,9 +193,13 @@ LC_PROPERTY(assign) BOOL favorited;
         }
     };
     
-    
     // Load...
     [self.tagsListModel loadDataWithPostID:self.post.id getMore:NO];
+}
+
+- (BOOL)prefersStatusBarHidden {
+    
+    return YES;
 }
 
 -(void) buildUI
@@ -374,6 +378,12 @@ LC_PROPERTY(assign) BOOL favorited;
             [self showTopMessageErrorHud:LC_LO(@"该标签已存在")];
         }
     };
+    
+//    self.inputView.didShow = ^(){
+//        
+//        @normally(self);
+//        [self.tableView setContentOffset:LC_POINT(0, self.tableView.contentSize.height - (LC_DEVICE_HEIGHT + 20 - 258 - 44)) animated:NO];
+//    };
 }
 
 #pragma mark - ***** 放大后的headerView dismiss的时候调用 *****

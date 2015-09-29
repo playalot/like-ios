@@ -21,6 +21,7 @@
 #import "LKOfficialDetailViewController.h"
 #import "LKOfficialViewController.h"
 #import "LRUCache.h"
+#import "LKNotificationMiniCell.h"
 
 @interface LKNotificationViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerDelegate>
 
@@ -124,7 +125,8 @@ LC_PROPERTY(strong) LRUCache *precomputedCellCache;
 }
 
 - (UITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    LKNotificationCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Cell" andClass:[LKNotificationCell class]];
+//    LKNotificationCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Cell" andClass:[LKNotificationCell class]];
+    LKNotificationMiniCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Cell" andClass:[LKNotificationMiniCell class]];
     cell.notification = self.notificationModel.datasource[indexPath.row];
     return cell;
 }
@@ -134,7 +136,8 @@ LC_PROPERTY(strong) LRUCache *precomputedCellCache;
 }
 
 - (CGFloat)tableView:(LCUITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    LKNotificationCell *notiCell = (LKNotificationCell *)[self tableView:tableView cellForRowAtIndexPath:indexPath];
+//    LKNotificationCell *notiCell = (LKNotificationCell *)[self tableView:tableView cellForRowAtIndexPath:indexPath];
+    LKNotificationMiniCell *notiCell = (LKNotificationMiniCell *)[self tableView:tableView cellForRowAtIndexPath:indexPath];
     return notiCell.cellHeight;
 }
 

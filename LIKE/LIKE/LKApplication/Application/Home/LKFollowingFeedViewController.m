@@ -81,12 +81,7 @@ LC_PROPERTY(weak) id delegate;
 }
 
 - (void)buildTableView {
-    CGRect viewRect;
-    if (LKLocalUser.singleton.isLogin) {
-        viewRect = CGRectMake(0, 0, LC_DEVICE_WIDTH, LC_DEVICE_HEIGHT + 20 - 64 - 49);
-    } else {
-        viewRect = CGRectMake(0, 0, LC_DEVICE_WIDTH, LC_DEVICE_HEIGHT + 20 - 64);
-    }
+    CGRect viewRect = CGRectMake(0, 0, LC_DEVICE_WIDTH, LC_DEVICE_HEIGHT + 20 - 64 - 49);
     self.tableView = [[LCUITableView alloc] initWithFrame:viewRect];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;

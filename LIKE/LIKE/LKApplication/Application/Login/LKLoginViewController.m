@@ -318,7 +318,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     self.phoneField = LCUITextField.view;
     self.phoneField.viewFrameY = 0;
     self.phoneField.viewFrameX = phoneIcon.viewRightX + 15;
-    self.phoneField.viewFrameWidth = LC_DEVICE_WIDTH - self.phoneField.viewFrameX - 30;
+    self.phoneField.viewFrameWidth = 320 - self.phoneField.viewFrameX - 30;
     self.phoneField.viewFrameHeight = 46;
     self.phoneField.font = LK_FONT(16);
     self.phoneField.textColor = LC_RGB(153, 153, 153);
@@ -354,7 +354,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     
     self.codeField = LCUITextField.view;
     self.codeField.viewFrameX = codeIcon.viewRightX + 15;
-    self.codeField.viewFrameWidth = LC_DEVICE_WIDTH - self.codeField.viewFrameX - 100;
+    self.codeField.viewFrameWidth = 320 - self.codeField.viewFrameX - 100;
     self.codeField.viewFrameHeight = 46;
     self.codeField.font = LK_FONT(16);
     self.codeField.textColor = LC_RGB(153, 153, 153);

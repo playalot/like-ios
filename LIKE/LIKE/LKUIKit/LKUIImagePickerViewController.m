@@ -75,8 +75,19 @@ LC_PROPERTY(assign) UIStatusBarStyle barStyleCache;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:animated];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:animated];
+//    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:animated];
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:animated];
+    [self setNeedsStatusBarAppearanceUpdate];
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    
+    return UIStatusBarStyleLightContent;
+}
+
+- (BOOL)prefersStatusBarHidden {
+    
+    return NO;
 }
 
 - (instancetype)init {
@@ -91,8 +102,10 @@ LC_PROPERTY(assign) UIStatusBarStyle barStyleCache;
         [viewController isKindOfClass:[LKImageCropperViewController class]] ||
          [viewController isKindOfClass:[LKNewPostViewController class]]) {
     } else {
-        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+//        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
+//        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+        
+        [self setNeedsStatusBarAppearanceUpdate];
     }
 }
 

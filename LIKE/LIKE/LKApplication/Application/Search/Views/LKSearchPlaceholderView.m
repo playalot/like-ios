@@ -57,13 +57,13 @@ LC_PROPERTY(strong) NSArray * history;
         
         self.users = nil;
         
-        NSArray * history = [LKSearchHistory history];
+        NSArray *history = [LKSearchHistory history];
         
-        NSMutableArray * result = [NSMutableArray array];
+        NSMutableArray *result = [NSMutableArray array];
         
-        for (NSString * tagString in history) {
+        for (NSString *tagString in history) {
             
-            LKTag * tag = [[LKTag alloc] init];
+            LKTag *tag = [[LKTag alloc] init];
             tag.tag = tagString;
             
             [result addObject:tag];
@@ -75,7 +75,7 @@ LC_PROPERTY(strong) NSArray * history;
     [self reloadData];
 }
 
--(void) setSearchString:(NSString *)searchString tags:(NSArray *)tags
+- (void)setSearchString:(NSString *)searchString tags:(NSArray *)tags
 {
     self.searchString = searchString;
     self.tags = tags;
@@ -126,41 +126,39 @@ LC_PROPERTY(strong) NSArray * history;
     
     if (indexPath.section == 0 || indexPath.section == 1) {
         
-        LCUITableViewCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Content" andClass:[LCUITableViewCell class] configurationCell:^(LCUITableViewCell * configurationCell) {
+        LCUITableViewCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Content" andClass:[LCUITableViewCell class] configurationCell:^(LCUITableViewCell *configurationCell) {
             
-            LCUILabel * label = LCUILabel.view;
-            label.viewFrameX = 20;
+            LCUILabel *label = LCUILabel.view;
+            label.viewFrameX = 28;
             label.viewFrameWidth = self.viewFrameWidth;
-            label.viewFrameHeight = 117. / 3.;
-            label.font = LK_FONT(13);
-            label.textColor = LC_RGB(79, 62, 56);
+            label.viewFrameHeight = 46;
+            label.font = LK_FONT(14);
+            label.textColor = LC_RGB(74, 74, 74);
             label.tag = 1000;
             configurationCell.ADD(label);
             
             
-            UIView * line = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
+            UIView *line = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
             line.viewFrameWidth = LC_DEVICE_WIDTH;
-            line.viewFrameY = 117. / 3. - line.viewFrameHeight - 0.5;
+            line.viewFrameY = 46 - line.viewFrameHeight - 0.5;
             configurationCell.ADD(line);
             
         }];
         
-        LCUILabel * label = cell.FIND(1000);
+        LCUILabel *label = cell.FIND(1000);
         
         if (indexPath.section == 0) {
             
             if (self.tags == nil) {
                 
                 label.text = LC_LO(@"最近搜索过的标签");
-            }
-            else{
+            } else {
                 
                 label.text = [NSString stringWithFormat:LC_LO(@"搜索相关内容"), self.searchString];
             }
-        }
-        else{
+        } else {
             
-            LKTag * tag = nil ;
+            LKTag *tag = nil ;
             
             if (self.tags == nil) {
                 
@@ -178,56 +176,55 @@ LC_PROPERTY(strong) NSArray * history;
 
     }
     
-    LCUITableViewCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"User" andClass:[LCUITableViewCell class] configurationCell:^(LCUITableViewCell * configurationCell) {
+    LCUITableViewCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"User" andClass:[LCUITableViewCell class] configurationCell:^(LCUITableViewCell *configurationCell) {
         
 
-        LCUIImageView * head = LCUIImageView.view;
-        head.viewFrameWidth = 25;
-        head.viewFrameHeight = 25;
-        head.cornerRadius = 25 / 2;
-        head.viewFrameX = 20;
-        head.viewFrameY = 117 / 3 / 2 - 25 / 2;
+        LCUIImageView *head = LCUIImageView.view;
+        head.viewFrameWidth = 32;
+        head.viewFrameHeight = 32;
+        head.cornerRadius = 32 * 0.5;
+        head.viewFrameX = LC_DEVICE_WIDTH - 32 - 17;
+        head.viewFrameY = 7;
         head.tag = 1001;
         configurationCell.ADD(head);
         
         
-        LCUILabel * label = LCUILabel.view;
-        label.viewFrameX = head.viewRightX + 10;
-        label.viewFrameWidth = self.viewFrameWidth;
-        label.viewFrameHeight = 117. / 3.;
-        label.font = LK_FONT(13);
-        label.textColor = LC_RGB(79, 62, 56);
+        LCUILabel *label = LCUILabel.view;
+        label.viewFrameX = 28;
+        label.viewFrameWidth = self.viewFrameWidth - 70;
+        label.viewFrameHeight = 46;
+        label.font = LK_FONT(14);
+        label.textColor = LC_RGB(168, 168, 168);
         label.tag = 1000;
         configurationCell.ADD(label);
         
         
-        UIView * line = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
+        UIView *line = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
         line.viewFrameWidth = LC_DEVICE_WIDTH;
-        line.viewFrameY = 117. / 3. - line.viewFrameHeight - 0.5;
+        line.viewFrameY = 46 - line.viewFrameHeight - 0.5;
         configurationCell.ADD(line);
         
     }];
     
-    LCUIImageView * head = cell.FIND(1001);
-    LCUILabel * label = cell.FIND(1000);
+    LCUIImageView *head = cell.FIND(1001);
+    LCUILabel *label = cell.FIND(1000);
 
     if (indexPath.section == 2) {
         
         head.alpha = 0;
-        label.viewFrameX = 20;
+//        label.viewFrameX = 20;
         
         label.text = [NSString stringWithFormat:LC_LO(@"搜索相关用户"), self.searchString];
-    }
-    else{
+    } else {
      
-        LKUser * user = self.users[indexPath.row];
+        LKUser *user = self.users[indexPath.row];
         
 //        head.url = user.avatar;
         [head sd_setImageWithURL:[NSURL URLWithString:user.avatar] placeholderImage:nil];
         label.text = user.name;
         
         head.alpha = 1;
-        label.viewFrameX = head.viewRightX + 10;
+//        label.viewFrameX = head.viewRightX + 10;
     }
     
     return cell;
@@ -235,22 +232,21 @@ LC_PROPERTY(strong) NSArray * history;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 117 / 3;
+    return 46;
 }
 
--(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self deselectRowAtIndexPath:indexPath animated:YES];
     
     if (indexPath.section == 1) {
         
-        LKTag * tag = nil ;
+        LKTag *tag = nil;
         
         if (self.tags == nil) {
             
             tag = self.history[indexPath.row];
-        }
-        else{
+        } else {
             
             tag = self.tags[indexPath.row];
         }
@@ -258,14 +254,12 @@ LC_PROPERTY(strong) NSArray * history;
         if (self.didSelectRow) {
             self.didSelectRow(tag.tag);
         }
-    }
-    else if (indexPath.section == 3){
+    } else if (indexPath.section == 3) {
      
-        LKUser * user = self.users[indexPath.row];
+        LKUser *user = self.users[indexPath.row];
         
         self.SEND(@"PushUserCenter").object = user;
     }
-    
 }
 
 @end

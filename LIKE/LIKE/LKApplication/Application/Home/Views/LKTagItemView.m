@@ -376,7 +376,7 @@ LC_PROPERTY(assign) BOOL custom;
     }
     
     self.maskView.frame = self.bounds;
-    self.backgroundImageView.layer.cornerRadius = 15;
+    self.backgroundImageView.layer.cornerRadius = 4;
     self.backgroundImageView.layer.masksToBounds = YES;
     
 }

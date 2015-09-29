@@ -82,10 +82,17 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>weixin</string>
+		<string>wechat</string>
 		<string>mqq</string>
+		<string>mqqbrowser</string>
+		<string>mqqapi</string>
+		<string>mqqopensdkapiV2</string>
 		<string>sinaweibo</string>
 		<string>fb</string>
+		<string>fbauth2</string>
 		<string>sinaweibohd</string>
+		<string>weibosdk</string>
+		<string>weibosdk2.5</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -120,6 +127,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
+	<true/>
 </dict>
 </plist>

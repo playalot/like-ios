@@ -31,6 +31,10 @@
     self.isCurrentDisplayController = NO;
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    
+    return UIStatusBarStyleLightContent;
+}
 
 -(void) dealloc
 {

@@ -104,7 +104,7 @@
 		}
 
 
-    }else if ([notification.name isEqualToString:UIKeyboardWillChangeFrameNotification]){
+    } else if ([notification.name isEqualToString:UIKeyboardWillChangeFrameNotification]){
         
         NSValue * value1 = [userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey];
 		NSValue * value2 = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
@@ -174,14 +174,23 @@
     [UIView setAnimationBeginsFromCurrentState:YES];
     
     if (_isShowing){
-        
-        CGFloat containerHeight = _accessor.superview.bounds.size.height;
+        CGFloat containerHeight = [UIApplication sharedApplication].keyWindow.bounds.size.height;
         CGRect newFrame = _accessorFrame;
-        newFrame.origin.y = containerHeight + 49 - (_accessorFrame.size.height + _height);
+        
+        UIResponder *responder = _accessor;
+        while (![responder isKindOfClass:[UIViewController class]]) {
+            responder = responder.nextResponder;
+        }
+        UIViewController *viewController = (UIViewController *)responder;
+        CGFloat offset = 0;
+        if (!viewController.navigationController.navigationBarHidden) {
+            offset = 64;
+        }
+        
+        newFrame.origin.y = containerHeight - offset - (_accessorFrame.size.height + _height);
         _accessor.frame = newFrame;
         
     } else {
-        
         _accessor.frame = _accessorFrame;
     }
     

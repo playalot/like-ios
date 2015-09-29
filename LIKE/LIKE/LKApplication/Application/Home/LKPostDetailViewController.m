@@ -243,7 +243,7 @@ LC_PROPERTY(assign) BOOL favorited;
     
     // Header
     {
-        CGSize size = [LKUIKit parsingImageSizeWithURL:self.post.content];
+        CGSize size = [LKUIKit parsingImageSizeWithURL:self.post.preview];
         
         // Header
         if (size.width > LC_DEVICE_WIDTH) {
@@ -259,7 +259,7 @@ LC_PROPERTY(assign) BOOL favorited;
         self.header.scrollView = self.tableView;
         self.header.backgroundView.showIndicator = YES;
 //        self.header.backgroundView.url = self.post.content;
-        [self.header.backgroundView sd_setImageWithURL:[NSURL URLWithString:self.post.content] placeholderImage:nil];
+        [self.header.backgroundView sd_setImageWithURL:[NSURL URLWithString:self.post.preview] placeholderImage:nil];
         
         self.header.backgroundView.frame = CGRectMake(0, 0, size.width, size.height);
         self.header.maskView.backgroundColor = [UIColor clearColor];
@@ -314,8 +314,8 @@ LC_PROPERTY(assign) BOOL favorited;
                 
                 NSString * content = nil;
                 
-                if (self.post.content) {
-                    NSArray * contents = [self.post.content componentsSeparatedByString:@"?"];
+                if (self.post.raw_image) {
+                    NSArray * contents = [self.post.raw_image componentsSeparatedByString:@"?"];
                     if (contents.count) {
                         content = [contents[0] stringByAppendingString:@"?imageView2/4/q/85"];
                     }
@@ -728,14 +728,14 @@ LC_PROPERTY(assign) BOOL favorited;
         
         if (result.state == LKHttpRequestStateFinished) {
             
-            if ([self.post.content isEqualToString:result.json[@"data"][@"content"]]) {
+            if ([self.post.raw_image isEqualToString:result.json[@"data"][@"raw_image"]]) {
                 return;
             }
             
             self.post.place = [result.json[@"data"][@"place"] isKindOfClass:[NSString class]] ? result.json[@"data"][@"place"] : nil;
             self.post.timestamp = result.json[@"data"][@"created"];
             //self.post.content = result.json[@"data"][@"content"];
-            self.bigContentURL = result.json[@"data"][@"content"];
+            self.bigContentURL = result.json[@"data"][@"raw_image"];
             
             UIImage * image = [LCUIImageCache.singleton imageWithKey:self.bigContentURL];
             

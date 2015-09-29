@@ -10,7 +10,7 @@
 
 @interface LKPostThumbnailTableViewCell : LCUITableViewCell
 
-LC_PROPERTY(strong) NSArray * posts;
+LC_PROPERTY(strong) NSArray *posts;
 
 LC_ST_SIGNAL(PushPostDetail);
 

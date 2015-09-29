@@ -11,18 +11,24 @@
 
 @implementation LKUserPostsInterface
 
-- (instancetype)initWithUid:(NSNumber *)uid page:(NSInteger)page {
-    self =  [super init];
+- (instancetype)initWithTimeStamp:(NSNumber *)timestamp uid:(NSNumber *)uid {
+    self = [super init];
     if (self) {
         self.uid = uid;
-        self.page = page;
+        self.timestamp = timestamp;
     }
     return self;
 }
 
 - (NSString *)requestUrl {
     if (!self.uid) return nil;
-    return [NSString stringWithFormat:@"/v1/user/%@/posts/%ld", self.uid, self.page];
+    return [NSString stringWithFormat:@"/v1/user/%@/posts", self.uid];
+}
+
+- (id)requestArgument {
+    if (self.timestamp)
+        return @{@"ts": self.timestamp};
+    return nil;
 }
 
 - (NSArray *)posts {
@@ -32,6 +38,10 @@
         [posts addObject:[LKPost objectFromDictionary:post]];
     }
     return posts;
+}
+
+- (NSNumber *)next {
+    return self.responseJSONObject[@"data"][@"next"];
 }
 
 @end

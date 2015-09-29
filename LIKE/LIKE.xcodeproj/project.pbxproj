@@ -36,7 +36,6 @@
 		131915671B8C26C400EC0F42 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 131915661B8C26C400EC0F42 /* MessageUI.framework */; };
 		131915691B8C625A00EC0F42 /* 二维码.png in Resources */ = {isa = PBXBuildFile; fileRef = 131915681B8C625A00EC0F42 /* 二维码.png */; };
 		1319156B1B8C863100EC0F42 /* 旅行.png in Resources */ = {isa = PBXBuildFile; fileRef = 1319156A1B8C863100EC0F42 /* 旅行.png */; };
-		132622881B8EC5290074C589 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 132622851B8EC5290074C589 /* libMobClickLibrary.a */; };
 		1326228D1B8EE1150074C589 /* 变形金刚.png in Resources */ = {isa = PBXBuildFile; fileRef = 132622891B8EE1150074C589 /* 变形金刚.png */; };
 		1326228E1B8EE1150074C589 /* 钢铁侠.png in Resources */ = {isa = PBXBuildFile; fileRef = 1326228A1B8EE1150074C589 /* 钢铁侠.png */; };
 		1326228F1B8EE1150074C589 /* 手办.png in Resources */ = {isa = PBXBuildFile; fileRef = 1326228B1B8EE1150074C589 /* 手办.png */; };
@@ -642,6 +641,9 @@
 		13B9A20E1BB91C56007D2893 /* RecommendUser@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13B9A20D1BB91C56007D2893 /* RecommendUser@3x.png */; settings = {ASSET_TAGS = (); }; };
 		13B9A21A1BB9343A007D2893 /* HotTagButton_Gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13B9A2181BB9343A007D2893 /* HotTagButton_Gray@3x.png */; settings = {ASSET_TAGS = (); }; };
 		13B9A21B1BB9343A007D2893 /* HotTagButton_Red@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13B9A2191BB9343A007D2893 /* HotTagButton_Red@3x.png */; settings = {ASSET_TAGS = (); }; };
+		13B9A2281BB974D9007D2893 /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 13B9A21C1BB974D9007D2893 /* libWeiboSDK.a */; settings = {ASSET_TAGS = (); }; };
+		13B9A2291BB974D9007D2893 /* WeiboSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 13B9A2251BB974D9007D2893 /* WeiboSDK.bundle */; settings = {ASSET_TAGS = (); }; };
+		13B9A22D1BB976D3007D2893 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 13B9A22A1BB976D3007D2893 /* libMobClickLibrary.a */; settings = {ASSET_TAGS = (); }; };
 		13BCA65E1B5CB28F00DC0549 /* LKPresentAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BCA65D1B5CB28F00DC0549 /* LKPresentAnimation.m */; };
 		13BCA6611B5CCC7600DC0549 /* LKHomeHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BCA6601B5CCC7600DC0549 /* LKHomeHeader.m */; };
 		13BCA6641B5CDCF200DC0549 /* LCBlurSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BCA6631B5CDCF200DC0549 /* LCBlurSearchBar.m */; };
@@ -772,8 +774,6 @@
 		13E491051BB57188009840B9 /* ProhibitionOfSelf@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13E491041BB57188009840B9 /* ProhibitionOfSelf@3x.png */; settings = {ASSET_TAGS = (); }; };
 		13E491081BB57547009840B9 /* ShareIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13E491061BB57547009840B9 /* ShareIcon@3x.png */; settings = {ASSET_TAGS = (); }; };
 		13E491091BB57547009840B9 /* ShareIconSelect@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13E491071BB57547009840B9 /* ShareIconSelect@3x.png */; settings = {ASSET_TAGS = (); }; };
-		13F21F3B1B0F1D6200124291 /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 13F21F301B0F1D6200124291 /* libWeiboSDK.a */; };
-		13F21F3C1B0F1D6200124291 /* WeiboSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 13F21F381B0F1D6200124291 /* WeiboSDK.bundle */; };
 		13F504EF1B0AF4EA00D8D484 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 13F504EB1B0AF4EA00D8D484 /* libWeChatSDK.a */; };
 		13F504F31B0B120F00D8D484 /* LKWeChatShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 13F504F21B0B120F00D8D484 /* LKWeChatShare.m */; };
 		13F504F61B0B121F00D8D484 /* LKSinaShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 13F504F51B0B121F00D8D484 /* LKSinaShare.m */; };
@@ -936,9 +936,6 @@
 		131915661B8C26C400EC0F42 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		131915681B8C625A00EC0F42 /* 二维码.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "二维码.png"; sourceTree = "<group>"; };
 		1319156A1B8C863100EC0F42 /* 旅行.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "旅行.png"; sourceTree = "<group>"; };
-		132622851B8EC5290074C589 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
-		132622861B8EC5290074C589 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
-		132622871B8EC5290074C589 /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickSocialAnalytics.h; sourceTree = "<group>"; };
 		132622891B8EE1150074C589 /* 变形金刚.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "变形金刚.png"; sourceTree = "<group>"; };
 		1326228A1B8EE1150074C589 /* 钢铁侠.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "钢铁侠.png"; sourceTree = "<group>"; };
 		1326228B1B8EE1150074C589 /* 手办.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "手办.png"; sourceTree = "<group>"; };
@@ -2074,6 +2071,21 @@
 		13B9A20D1BB91C56007D2893 /* RecommendUser@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "RecommendUser@3x.png"; path = "../Home/RecommendUser@3x.png"; sourceTree = "<group>"; };
 		13B9A2181BB9343A007D2893 /* HotTagButton_Gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HotTagButton_Gray@3x.png"; sourceTree = "<group>"; };
 		13B9A2191BB9343A007D2893 /* HotTagButton_Red@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HotTagButton_Red@3x.png"; sourceTree = "<group>"; };
+		13B9A21C1BB974D9007D2893 /* libWeiboSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeiboSDK.a; sourceTree = "<group>"; };
+		13B9A21D1BB974D9007D2893 /* WBHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBHttpRequest.h; sourceTree = "<group>"; };
+		13B9A21E1BB974D9007D2893 /* WBHttpRequest+WeiboGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBHttpRequest+WeiboGame.h"; sourceTree = "<group>"; };
+		13B9A21F1BB974D9007D2893 /* WBHttpRequest+WeiboShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBHttpRequest+WeiboShare.h"; sourceTree = "<group>"; };
+		13B9A2201BB974D9007D2893 /* WBHttpRequest+WeiboToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBHttpRequest+WeiboToken.h"; sourceTree = "<group>"; };
+		13B9A2211BB974D9007D2893 /* WBHttpRequest+WeiboUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBHttpRequest+WeiboUser.h"; sourceTree = "<group>"; };
+		13B9A2221BB974D9007D2893 /* WBSDKBasicButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBSDKBasicButton.h; sourceTree = "<group>"; };
+		13B9A2231BB974D9007D2893 /* WBSDKCommentButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBSDKCommentButton.h; sourceTree = "<group>"; };
+		13B9A2241BB974D9007D2893 /* WBSDKRelationshipButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBSDKRelationshipButton.h; sourceTree = "<group>"; };
+		13B9A2251BB974D9007D2893 /* WeiboSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = WeiboSDK.bundle; sourceTree = "<group>"; };
+		13B9A2261BB974D9007D2893 /* WeiboSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboSDK.h; sourceTree = "<group>"; };
+		13B9A2271BB974D9007D2893 /* WeiboUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboUser.h; sourceTree = "<group>"; };
+		13B9A22A1BB976D3007D2893 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
+		13B9A22B1BB976D3007D2893 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
+		13B9A22C1BB976D3007D2893 /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickSocialAnalytics.h; sourceTree = "<group>"; };
 		13BCA65C1B5CB28F00DC0549 /* LKPresentAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKPresentAnimation.h; sourceTree = "<group>"; };
 		13BCA65D1B5CB28F00DC0549 /* LKPresentAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKPresentAnimation.m; sourceTree = "<group>"; };
 		13BCA65F1B5CCC7600DC0549 /* LKHomeHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKHomeHeader.h; sourceTree = "<group>"; };
@@ -2322,17 +2334,6 @@
 		13EE16151AEF72210054E182 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		13EE16171AEF72210054E182 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		13EE16191AEF72210054E182 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		13F21F301B0F1D6200124291 /* libWeiboSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeiboSDK.a; sourceTree = "<group>"; };
-		13F21F311B0F1D6200124291 /* WBHttpRequest+WeiboShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBHttpRequest+WeiboShare.h"; sourceTree = "<group>"; };
-		13F21F321B0F1D6200124291 /* WBHttpRequest+WeiboToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBHttpRequest+WeiboToken.h"; sourceTree = "<group>"; };
-		13F21F331B0F1D6200124291 /* WBHttpRequest+WeiboUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBHttpRequest+WeiboUser.h"; sourceTree = "<group>"; };
-		13F21F341B0F1D6200124291 /* WBHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBHttpRequest.h; sourceTree = "<group>"; };
-		13F21F351B0F1D6200124291 /* WBSDKBasicButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBSDKBasicButton.h; sourceTree = "<group>"; };
-		13F21F361B0F1D6200124291 /* WBSDKCommentButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBSDKCommentButton.h; sourceTree = "<group>"; };
-		13F21F371B0F1D6200124291 /* WBSDKRelationshipButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBSDKRelationshipButton.h; sourceTree = "<group>"; };
-		13F21F381B0F1D6200124291 /* WeiboSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = WeiboSDK.bundle; sourceTree = "<group>"; };
-		13F21F391B0F1D6200124291 /* WeiboSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboSDK.h; sourceTree = "<group>"; };
-		13F21F3A1B0F1D6200124291 /* WeiboUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboUser.h; sourceTree = "<group>"; };
 		13F504EB1B0AF4EA00D8D484 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		13F504ED1B0AF4EA00D8D484 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
 		13F504EE1B0AF4EA00D8D484 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
@@ -2521,17 +2522,17 @@
 				132622A21B93FC6F0074C589 /* CFNetwork.framework in Frameworks */,
 				131915671B8C26C400EC0F42 /* MessageUI.framework in Frameworks */,
 				132622A01B93FC0D0074C589 /* libPushSDK-1.8.5.a in Frameworks */,
+				13B9A22D1BB976D3007D2893 /* libMobClickLibrary.a in Frameworks */,
 				135E8A9E1B45114600C2270C /* libstdc++.6.0.9.dylib in Frameworks */,
+				13B9A2281BB974D9007D2893 /* libWeiboSDK.a in Frameworks */,
 				131915651B8C267900EC0F42 /* SMS_SDK.framework in Frameworks */,
 				135E8A9C1B45112300C2270C /* libstdc++.dylib in Frameworks */,
 				135735191B2EC6FC0032515C /* libicucore.dylib in Frameworks */,
 				138EDEC71AD7B1DA0020957C /* libxml2.dylib in Frameworks */,
 				1387C33F1B313B5300B065A7 /* FBSDKLoginKit.framework in Frameworks */,
-				132622881B8EC5290074C589 /* libMobClickLibrary.a in Frameworks */,
 				138EDEC51AD7B1D20020957C /* libz.dylib in Frameworks */,
 				1387C33D1B3139B700B065A7 /* FBSDKCoreKit.framework in Frameworks */,
 				13F504EF1B0AF4EA00D8D484 /* libWeChatSDK.a in Frameworks */,
-				13F21F3B1B0F1D6200124291 /* libWeiboSDK.a in Frameworks */,
 				138EDEC31AD7B1CB0020957C /* libsqlite3.dylib in Frameworks */,
 				135E8A991B450DA200C2270C /* AMapSearchKit.framework in Frameworks */,
 				138EDE8D1AD7B0A30020957C /* libleveldb.a in Frameworks */,
@@ -4922,9 +4923,9 @@
 		13DA0FC71AEB8D8E005B9476 /* UMAnalytics */ = {
 			isa = PBXGroup;
 			children = (
-				132622851B8EC5290074C589 /* libMobClickLibrary.a */,
-				132622861B8EC5290074C589 /* MobClick.h */,
-				132622871B8EC5290074C589 /* MobClickSocialAnalytics.h */,
+				13B9A22A1BB976D3007D2893 /* libMobClickLibrary.a */,
+				13B9A22B1BB976D3007D2893 /* MobClick.h */,
+				13B9A22C1BB976D3007D2893 /* MobClickSocialAnalytics.h */,
 			);
 			path = UMAnalytics;
 			sourceTree = "<group>";
@@ -5087,17 +5088,18 @@
 		13F21F2F1B0F1D6200124291 /* Weibo */ = {
 			isa = PBXGroup;
 			children = (
-				13F21F301B0F1D6200124291 /* libWeiboSDK.a */,
-				13F21F311B0F1D6200124291 /* WBHttpRequest+WeiboShare.h */,
-				13F21F321B0F1D6200124291 /* WBHttpRequest+WeiboToken.h */,
-				13F21F331B0F1D6200124291 /* WBHttpRequest+WeiboUser.h */,
-				13F21F341B0F1D6200124291 /* WBHttpRequest.h */,
-				13F21F351B0F1D6200124291 /* WBSDKBasicButton.h */,
-				13F21F361B0F1D6200124291 /* WBSDKCommentButton.h */,
-				13F21F371B0F1D6200124291 /* WBSDKRelationshipButton.h */,
-				13F21F381B0F1D6200124291 /* WeiboSDK.bundle */,
-				13F21F391B0F1D6200124291 /* WeiboSDK.h */,
-				13F21F3A1B0F1D6200124291 /* WeiboUser.h */,
+				13B9A21C1BB974D9007D2893 /* libWeiboSDK.a */,
+				13B9A21D1BB974D9007D2893 /* WBHttpRequest.h */,
+				13B9A21E1BB974D9007D2893 /* WBHttpRequest+WeiboGame.h */,
+				13B9A21F1BB974D9007D2893 /* WBHttpRequest+WeiboShare.h */,
+				13B9A2201BB974D9007D2893 /* WBHttpRequest+WeiboToken.h */,
+				13B9A2211BB974D9007D2893 /* WBHttpRequest+WeiboUser.h */,
+				13B9A2221BB974D9007D2893 /* WBSDKBasicButton.h */,
+				13B9A2231BB974D9007D2893 /* WBSDKCommentButton.h */,
+				13B9A2241BB974D9007D2893 /* WBSDKRelationshipButton.h */,
+				13B9A2251BB974D9007D2893 /* WeiboSDK.bundle */,
+				13B9A2261BB974D9007D2893 /* WeiboSDK.h */,
+				13B9A2271BB974D9007D2893 /* WeiboUser.h */,
 			);
 			path = Weibo;
 			sourceTree = "<group>";
@@ -5501,11 +5503,11 @@
 				135D5C041ADFD21E00811B06 /* CameraCut@3x.png in Resources */,
 				138EDF0C1AD7E19D0020957C /* LoginBackground@3x.jpg in Resources */,
 				139054C21B994A6D00DBF34A /* Info.plist in Resources */,
+				13B9A2291BB974D9007D2893 /* WeiboSDK.bundle in Resources */,
 				132622901B8EE1150074C589 /* 星球大战.png in Resources */,
 				1326229B1B8EF5850074C589 /* Wasted.png in Resources */,
 				13B9A20E1BB91C56007D2893 /* RecommendUser@3x.png in Resources */,
 				13925A911B1477D2004D0656 /* NavBarIconSearch_blue@2x.png in Resources */,
-				13F21F3C1B0F1D6200124291 /* WeiboSDK.bundle in Resources */,
 				13B9A21B1BB9343A007D2893 /* HotTagButton_Red@3x.png in Resources */,
 				13878E901BB39B0B00F4E27F /* tabbar_homeLine_selected@3x.png in Resources */,
 				13E3EE021B60955400A48E76 /* zh2TW.txt in Resources */,

@@ -10,11 +10,14 @@
 
 @interface LKUserPostsInterface : LKBaseInterface
 
-LC_PROPERTY(strong) NSNumber *uid;
-LC_PROPERTY(assign) NSInteger page;
+LC_PROPERTY(strong) NSNumber *timestamp;
 
-- (instancetype)initWithUid:(NSNumber *)uid page:(NSInteger)page;
+- (instancetype)initWithTimeStamp:(NSNumber *)timestamp uid:(NSNumber *)uid;
+
+LC_PROPERTY(strong) NSNumber *uid;
 
 - (NSArray *)posts;
+
+- (NSNumber *)next;
 
 @end

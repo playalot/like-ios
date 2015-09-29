@@ -859,6 +859,7 @@
 		BC8F64F31BB913BF0084B5CA /* LCJSONUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = BC8F64F01BB913BF0084B5CA /* LCJSONUtility.m */; settings = {ASSET_TAGS = (); }; };
 		BC8F64F61BB924720084B5CA /* UINavigationController+PopOnSwipeRight.m in Sources */ = {isa = PBXBuildFile; fileRef = BC8F64F51BB924720084B5CA /* UINavigationController+PopOnSwipeRight.m */; settings = {ASSET_TAGS = (); }; };
 		BC8F64F91BB93D890084B5CA /* LKSearchTagInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = BC8F64F81BB93D890084B5CA /* LKSearchTagInterface.m */; settings = {ASSET_TAGS = (); }; };
+		BC8F64FC1BBA2FAE0084B5CA /* LKLRUCache.m in Sources */ = {isa = PBXBuildFile; fileRef = BC8F64FB1BBA2FAE0084B5CA /* LKLRUCache.m */; settings = {ASSET_TAGS = (); }; };
 		BCD148101BB3A16A0062C463 /* LKLikeTagItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD1480F1BB3A16A0062C463 /* LKLikeTagItemView.m */; settings = {ASSET_TAGS = (); }; };
 		BCD148131BB3DCA60062C463 /* LKPostView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD148121BB3DCA60062C463 /* LKPostView.m */; settings = {ASSET_TAGS = (); }; };
 		BCD148161BB3F3AC0062C463 /* LKTagItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD148151BB3F3AC0062C463 /* LKTagItemView.m */; settings = {ASSET_TAGS = (); }; };
@@ -2487,6 +2488,8 @@
 		BC8F64F51BB924720084B5CA /* UINavigationController+PopOnSwipeRight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+PopOnSwipeRight.m"; sourceTree = "<group>"; };
 		BC8F64F71BB93D890084B5CA /* LKSearchTagInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKSearchTagInterface.h; path = Interface/LKSearchTagInterface.h; sourceTree = "<group>"; };
 		BC8F64F81BB93D890084B5CA /* LKSearchTagInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKSearchTagInterface.m; path = Interface/LKSearchTagInterface.m; sourceTree = "<group>"; };
+		BC8F64FA1BBA2FAE0084B5CA /* LKLRUCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKLRUCache.h; path = Utility/LKLRUCache.h; sourceTree = "<group>"; };
+		BC8F64FB1BBA2FAE0084B5CA /* LKLRUCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKLRUCache.m; path = Utility/LKLRUCache.m; sourceTree = "<group>"; };
 		BCD1480E1BB3A16A0062C463 /* LKLikeTagItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKLikeTagItemView.h; sourceTree = "<group>"; };
 		BCD1480F1BB3A16A0062C463 /* LKLikeTagItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKLikeTagItemView.m; sourceTree = "<group>"; };
 		BCD148111BB3DCA60062C463 /* LKPostView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKPostView.h; sourceTree = "<group>"; };
@@ -5374,6 +5377,8 @@
 		BCD148221BB4FB870062C463 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				BC8F64FA1BBA2FAE0084B5CA /* LKLRUCache.h */,
+				BC8F64FB1BBA2FAE0084B5CA /* LKLRUCache.m */,
 				BCD148231BB4FB9A0062C463 /* LRUCache.h */,
 				BCD148241BB4FB9A0062C463 /* LRUCache.m */,
 				BCD148251BB4FB9A0062C463 /* LRUCacheNode.h */,
@@ -6287,6 +6292,7 @@
 				139054EF1B994A6D00DBF34A /* GPUImageFilter.m in Sources */,
 				139055551B994A6D00DBF34A /* GPUImageThresholdSketchFilter.m in Sources */,
 				13478CB41B65F5D20012EDA2 /* M13BadgeView.m in Sources */,
+				BC8F64FC1BBA2FAE0084B5CA /* LKLRUCache.m in Sources */,
 				BC07B2821BAC3FA600A0ED71 /* LKFocusRequest.m in Sources */,
 				138EDE1C1AD7B0A30020957C /* LCRAMInfo.m in Sources */,
 				138EDF011AD7DC760020957C /* LKUser.m in Sources */,

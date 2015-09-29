@@ -26,6 +26,8 @@ LC_PROPERTY(copy) LKHomeCellAddTag addTag;
 LC_PROPERTY(copy) LKHomeCellRemovedTag removedTag;
 LC_PROPERTY(copy) LKHomeCellCustomAction customAction;
 
+- (void)setPost:(LKPost *)post cellRow:(NSInteger)row;
+
 + (CGFloat)height:(LKPost *)post;
 
 - (void)reloadTags;

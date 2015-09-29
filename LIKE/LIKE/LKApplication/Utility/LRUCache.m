@@ -89,7 +89,6 @@ static const char *kLRUCacheQueue = "kLRUCacheQueue";
     
     dispatch_sync(self.queue, ^{
         node = self.dictionary[key];
-        
         if (node) {
             [self putNodeToTop:node];
         }
@@ -97,6 +96,20 @@ static const char *kLRUCacheQueue = "kLRUCacheQueue";
     });
     
     return node.value;
+}
+
+- (void)show {
+    NSArray *keyArray = [self.dictionary allKeys];
+    NSArray *sortedArray = [keyArray sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+    NSMutableString *cellStr = [NSMutableString string];
+    for (NSString *key in sortedArray) {
+        LRUCacheNode *node = self.dictionary[key];
+        if (node) {
+            [cellStr appendFormat:@"%@\n", key];
+        }
+    }
+     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Precomputed Cells" message:cellStr delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
 }
 
 #pragma mark - helper methods

@@ -194,7 +194,7 @@ LC_PROPERTY(weak) id delegate;
 }
 
 - (void)buildCellCache {
-    self.isCellPrecomuted = YES;
+    self.isCellPrecomuted = NO;
     self.precomputedCells = [NSMutableArray array];
     self.precomputedCellCache = [[LRUCache alloc] initWithCapacity:10];
 }

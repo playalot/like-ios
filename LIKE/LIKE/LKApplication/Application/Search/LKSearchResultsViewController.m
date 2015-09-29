@@ -53,8 +53,8 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
     subscribeBtn.hidden = YES;
     subscribeBtn.viewFrameWidth = 56;
     subscribeBtn.viewFrameHeight = 29;
-    [subscribeBtn setImage:[UIImage imageNamed:@"subscribe.png" useCache:YES] forState:UIControlStateNormal];
-    [subscribeBtn setImage:[UIImage imageNamed:@"cancelSubscribe.png" useCache:YES] forState:UIControlStateSelected];
+    [subscribeBtn setImage:[UIImage imageNamed:@"Subscribe.png" useCache:YES] forState:UIControlStateNormal];
+    [subscribeBtn setImage:[UIImage imageNamed:@"CancelSubscribe.png" useCache:YES] forState:UIControlStateSelected];
     // 添加弹簧
     UIBarButtonItem *fixedSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     fixedSpace.width = -8;

@@ -52,6 +52,9 @@ LC_PROPERTY(weak) id delegate;
 @implementation LKHomeFeedViewController
 
 - (void)refresh {
+    
+    
+    
     [self.tableView reloadData];
 }
 
@@ -176,6 +179,7 @@ LC_PROPERTY(weak) id delegate;
         post.user.likes = @(post.user.likes.integerValue + 1);
         [self.tableView beginUpdates];
         cell.post = post;
+        
         [self.tableView endUpdates];
         [cell newTagAnimation:^(BOOL finished) {}];
     }
@@ -236,10 +240,10 @@ LC_PROPERTY(weak) id delegate;
             LKUserDefaults.singleton[self.class.description] = resultData;
             
             // Calculate Height List
-            self.heightList = [NSMutableArray array];
-            for (LKPost *post in self.datasource) {
-                [self.heightList addObject:[NSNumber numberWithFloat:[LKHomeTableViewCell height:post]]];
-            }
+//            self.heightList = [NSMutableArray array];
+//            for (LKPost *post in self.datasource) {
+//                [self.heightList addObject:[NSNumber numberWithFloat:[LKHomeTableViewCell height:post]]];
+//            }
             
         } else {
             
@@ -251,9 +255,9 @@ LC_PROPERTY(weak) id delegate;
             [self.datasource addObjectsFromArray:datasource];
             
             // Calculate Height List
-            for (LKPost *post in datasource) {
-                [self.heightList addObject:[NSNumber numberWithFloat:[LKHomeTableViewCell height:post]]];
-            }
+//            for (LKPost *post in datasource) {
+//                [self.heightList addObject:[NSNumber numberWithFloat:[LKHomeTableViewCell height:post]]];
+//            }
         }
         
         NSMutableArray *prefetchs = [NSMutableArray array];
@@ -284,9 +288,8 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
 }
 
 LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
-    
+    // Detail
     LKPostDetailViewController * detail = [[LKPostDetailViewController alloc] initWithPost:signal.object];
-    
     // 设置代理
     detail.delegate = self;
     LCUINavigationController * nav = LC_UINAVIGATION(detail);
@@ -302,22 +305,16 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
 }
 
 #pragma mark - ***** LKPostDetailViewControllerDelegate *****
-- (void)postDetailViewController:(LKPostDetailViewController *)ctrl didDeletedTag:(LKTag *)deleteTag {
-    
-    for (LKPost *post in self.datasource) {
-        for (LKTag *tag in post.tags) {
-            
-            if ([tag.tag isEqualToString:deleteTag.tag]) {
-                
-                // 删除标签
-                [post.tags removeObject:tag];
-                
-                [self.tableView beginUpdates];
-                [self.tableView reloadData];
-                [self.tableView endUpdates];
-                
-                break;
-            }
+- (void)postDetailViewController:(LKPostDetailViewController *)ctrl didUpdatedPost:(LKPost *)post {
+    NSInteger updatedIndex = -1;
+    for (NSInteger i = 0; i < self.datasource.count; ++i) {
+        LKPost *selfPost = self.datasource[i];
+        if ([selfPost.id isEqualToNumber:post.id]) {
+            updatedIndex = i;
+            [self.datasource removeObjectAtIndex:updatedIndex];
+            selfPost.tags = post.tags;
+            [self.datasource insertObject:selfPost atIndex:updatedIndex];
+            break;
         }
     }
     [self.tableView reloadData];
@@ -417,7 +414,8 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [self.heightList[indexPath.row] floatValue];
+    return [LKHomeTableViewCell height:self.datasource[indexPath.row]];
+//    return [self.heightList[indexPath.row] floatValue];
 }
 
 #pragma mark *****数据源******

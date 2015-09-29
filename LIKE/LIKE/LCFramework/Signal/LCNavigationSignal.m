@@ -73,19 +73,13 @@
     }
     
     NSString * selectorName = [NSString stringWithFormat:@"handleNavigationSignal$%@:", signal.name];
-    
     SEL selector = NSSelectorFromString(selectorName);
-    
     if(signal.to){
-        
         ((NSObject *)signal.to).PERFORM(selector, signal);
     }
-    else{
-        
-        NSArray * viewControllers = [self.navigationController.viewControllers reverseObjectEnumerator].allObjects;
-        
+    else {
+        NSArray *viewControllers = [self.navigationController.viewControllers reverseObjectEnumerator].allObjects;
         for (id viewController in viewControllers) {
-            
             ((NSObject *)viewController).PERFORM(selector, signal);
         }
     }

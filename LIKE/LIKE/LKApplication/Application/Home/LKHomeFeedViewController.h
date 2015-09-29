@@ -14,4 +14,6 @@
 
 - (void)notificationAction;
 
+- (void)updatePostFeed:(LKPost *)post;
+
 @end

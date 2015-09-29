@@ -54,10 +54,10 @@ LC_PROPERTY(weak) id delegate;
 }
 
 - (void)calculateHeightList {
-    self.heightList = [NSMutableArray array];
-    for (LKPost *post in self.datasource) {
-        [self.heightList addObject:[NSNumber numberWithFloat:[LKHomeTableViewCell height:post]]];
-    }
+//    self.heightList = [NSMutableArray array];
+//    for (LKPost *post in self.datasource) {
+//        [self.heightList addObject:[NSNumber numberWithFloat:[LKHomeTableViewCell height:post]]];
+//    }
 }
 
 - (void)buildUI {
@@ -233,10 +233,10 @@ LC_PROPERTY(weak) id delegate;
 //            LKUserDefaults.singleton[FOCUS_FEED_CACHE_KEY] = resultData;
             self.lastFocusLoadTime = time;
             
-            self.heightList = [NSMutableArray array];
-            for (LKPost *post in self.datasource) {
-                [self.heightList addObject:[NSNumber numberWithFloat:[LKHomeTableViewCell height:post]]];
-            }
+//            self.heightList = [NSMutableArray array];
+//            for (LKPost *post in self.datasource) {
+//                [self.heightList addObject:[NSNumber numberWithFloat:[LKHomeTableViewCell height:post]]];
+//            }
             
         } else {
             
@@ -247,9 +247,9 @@ LC_PROPERTY(weak) id delegate;
             [self.datasource addObjectsFromArray:posts];
             
             // Calculate Height List
-            for (LKPost *post in posts) {
-                [self.heightList addObject:[NSNumber numberWithFloat:[LKHomeTableViewCell height:post]]];
-            }
+//            for (LKPost *post in posts) {
+//                [self.heightList addObject:[NSNumber numberWithFloat:[LKHomeTableViewCell height:post]]];
+//            }
         }
         
         NSMutableArray *prefetchs = nil;
@@ -259,7 +259,7 @@ LC_PROPERTY(weak) id delegate;
             }
         }
         
-        [self calculateHeightList];
+//        [self calculateHeightList];
         
         [[SDWebImagePrefetcher sharedImagePrefetcher] prefetchURLs:prefetchs.copy];
         
@@ -314,8 +314,17 @@ LC_PROPERTY(weak) id delegate;
     return cell;
 }
 
--(void) reloadData {
+- (void)reloadData {
     [self.tableView reloadData];
+}
+
+- (void)updatePostFeed:(LKPost *)post {
+    NSInteger updatedIndex = [self.datasource indexOfObject:post];
+    if (updatedIndex >= 0) {
+        [self.datasource removeObjectAtIndex:updatedIndex];
+        [self.datasource insertObject:post atIndex:updatedIndex];
+        [self.tableView reloadData];
+    }
 }
 
 #pragma mark - ***** 数据源方法 *****
@@ -371,7 +380,8 @@ LC_PROPERTY(weak) id delegate;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [self.heightList[indexPath.row] floatValue];
+    return [LKHomeTableViewCell height:self.datasource[indexPath.row]];
+//    return [self.heightList[indexPath.row] floatValue];
 }
 
 #pragma mark Handle Signal
@@ -385,9 +395,7 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     LKPostDetailViewController * detail = [[LKPostDetailViewController alloc] initWithPost:signal.object];
     // 设置代理
     detail.delegate = self;
-
     LCUINavigationController * nav = LC_UINAVIGATION(detail);
-    
     [detail setPresendModelAnimationOpen];
     [self.navigationController presentViewController:nav animated:YES completion:nil];
 
@@ -400,19 +408,16 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
 }
 
 #pragma mark - ***** LKPostDetailViewControllerDelegate *****
-- (void)postDetailViewController:(LKPostDetailViewController *)ctrl didDeletedTag:(LKTag *)deleteTag {
-    
-    for (LKPost *post in self.datasource) {
-        for (LKTag *tag in post.tags) {
-            
-            if ([tag.tag isEqualToString:deleteTag.tag]) {
-                // 删除标签
-                [post.tags removeObject:tag];
-                [self.tableView beginUpdates];
-                [self.tableView reloadData];
-                [self.tableView endUpdates];
-                break;
-            }
+- (void)postDetailViewController:(LKPostDetailViewController *)ctrl didUpdatedPost:(LKPost *)post {
+    NSInteger updatedIndex = -1;
+    for (NSInteger i = 0; i < self.datasource.count; ++i) {
+        LKPost *selfPost = self.datasource[i];
+        if ([selfPost.id isEqualToNumber:post.id]) {
+            updatedIndex = i;
+            [self.datasource removeObjectAtIndex:updatedIndex];
+            selfPost.tags = post.tags;
+            [self.datasource insertObject:selfPost atIndex:updatedIndex];
+            break;
         }
     }
     [self.tableView reloadData];

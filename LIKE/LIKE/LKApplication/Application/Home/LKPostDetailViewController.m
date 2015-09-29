@@ -74,6 +74,8 @@ LC_PROPERTY(assign) BOOL favorited;
 
 @implementation LKPostDetailViewController
 
+LC_IMP_SIGNAL(UpdatePostTags);
+
 -(void) dealloc
 {
     [self.bigImageRequestOperation cancel];
@@ -127,29 +129,12 @@ LC_PROPERTY(assign) BOOL favorited;
 
 #pragma mark -
 
-//- (id <UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC
-//{
-//    if (operation == UINavigationControllerOperationPop) {
-//        return [[LKPopAnimation alloc] init];
-//    }
-//    
-//    return nil;
-//}
-
-#pragma mark -
-
--(instancetype) initWithPost:(LKPost *)post
-{
+-(instancetype) initWithPost:(LKPost *)post {
     if (self = [super init]) {
-        
         self.post = post;
-        
         if (self.post.user.id.integerValue) {
-            
             LKUser * user = LKUserInfoCache.singleton[self.post.user.id.description];
-            
             if(!self.post.user.likes && user){
-                
                 self.post.user = user;
             }            
         }
@@ -179,12 +164,9 @@ LC_PROPERTY(assign) BOOL favorited;
 /**
  *  设置打开页面的动画样式
  */
--(void) setPresendModelAnimationOpen
-{
+-(void) setPresendModelAnimationOpen {
     self.navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
-
     self.animator = [[LKPresentAnimation alloc] init];
-    
     self.navigationController.transitioningDelegate = self.animator;
 }
 
@@ -208,16 +190,8 @@ LC_PROPERTY(assign) BOOL favorited;
 
         if (error) {
             [self showTopMessageErrorHud:error];
-        }
-        else{
-            
+        } else {
             [self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.25];
-            
-//            if (!self.bigContentURL) {
-//                
-//                // Big image...
-//                [self performSelector:@selector(loadBigImage) withObject:nil afterDelay:0.25];
-//            }
         }
     };
     
@@ -309,8 +283,6 @@ LC_PROPERTY(assign) BOOL favorited;
                 });
                 
                 JTSImageInfo * info = [[JTSImageInfo alloc] init];
-                
-                //if (self.bigContentURL) {
                 
                 NSString * content = nil;
                 
@@ -485,10 +457,9 @@ LC_PROPERTY(assign) BOOL favorited;
         else{
             
             // insert...
-            LKTag * tag = [LKTag objectFromDictionary:result.json[@"data"]];
+            LKTag *tag = [LKTag objectFromDictionary:result.json[@"data"]];
             
             if (!tag) {
-                
                 // input view...
                 [self.inputView resignFirstResponder];
                 self.inputView.textField.text = @"";
@@ -497,7 +468,6 @@ LC_PROPERTY(assign) BOOL favorited;
             
             tag.user = LKLocalUser.singleton.user;
             
-            [post.tags insertObject:tag atIndex:0];
             [self.tagsListModel.tags insertObject:tag atIndex:0];
             
             post.user.likes = @(post.user.likes.integerValue + 1);
@@ -510,7 +480,12 @@ LC_PROPERTY(assign) BOOL favorited;
             //
             self.inputView.textField.text = @"";
             
-            [self newTagAnimation];
+//            [self newTagAnimation];
+            
+            self.post.tags = self.tagsListModel.tags;
+            if (self.delegate && [self.delegate respondsToSelector:@selector(postDetailViewController:didUpdatedPost:)]) {
+                [self.delegate postDetailViewController:self didUpdatedPost:self.post];
+            }
         }
         
     }];
@@ -858,8 +833,7 @@ LC_PROPERTY(assign) BOOL favorited;
 /**
  *  开启评论页
  */
--(void) _beginComment:(LKTag *)tag
-{
+-(void) _beginComment:(LKTag *)tag {
     // check
     if(![LKLoginViewController needLoginOnViewController:self]){
         
@@ -883,7 +857,6 @@ LC_PROPERTY(assign) BOOL favorited;
             
             [self hideMoreButton:NO];
             [self.tableView reloadData];
-            
         };
     }
 
@@ -899,11 +872,11 @@ LC_PROPERTY(assign) BOOL favorited;
             [self.tagsListModel.tags removeObject:tag];
             
             // 调用代理
-            if ([self.delegate respondsToSelector:@selector(postDetailViewController:didDeletedTag:)]) {
-                
-                [self.delegate postDetailViewController:self didDeletedTag:tag];
+            self.post.tags = self.tagsListModel.tags;
+            if (self.delegate && [self.delegate respondsToSelector:@selector(postDetailViewController:didUpdatedPost:)]) {
+                [self.delegate postDetailViewController:self didUpdatedPost:self.post];
             }
-    
+            
             // 刷新数据
             [self.tableView beginUpdates];
             [self.tableView reloadData];
@@ -913,13 +886,14 @@ LC_PROPERTY(assign) BOOL favorited;
         }
     }
     
-//    if ([self.delegate respondsToSelector:@selector(posetDetailViewControllerDidDeleteTag:)]) {
-//        
-//        [self.delegate posetDetailViewControllerDidDeleteTag:self];
-//    }
+    // 调用代理
+    self.post.tags = self.tagsListModel.tags;
+    if (self.delegate && [self.delegate respondsToSelector:@selector(postDetailViewController:didUpdatedPost:)]) {
+        [self.delegate postDetailViewController:self didUpdatedPost:self.post];
+    }
     
     // 刷新数据
-//    [self.tableView reloadData];
+    [self.tableView reloadData];
 }
 
 #pragma mark -
@@ -1133,6 +1107,14 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             [self.tagsListModel.tags removeObjectAtIndex:_indexPath.row];
             
             self.PERFORM_DELAY(@selector(reloadDataAndUpdate), nil, 0);
+            
+//            self.post.tags = self.tagsListModel.tags;
+//            self.SEND(self.UpdatePostTags).object = self.post;
+            
+            self.post.tags = self.tagsListModel.tags;
+            if (self.delegate && [self.delegate respondsToSelector:@selector(postDetailViewController:didUpdatedPost:)]) {
+                [self.delegate postDetailViewController:self didUpdatedPost:self.post];
+            }
         };
         
         // 标签被改变
@@ -1161,14 +1143,19 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             }];
             
             [self.shareTools hideTools];
+            
+//            self.post.tags = self.tagsListModel.tags;
+//            self.SEND(self.UpdatePostTags).object = self.post;
+            
+            self.post.tags = self.tagsListModel.tags;
+            if (self.delegate && [self.delegate respondsToSelector:@selector(postDetailViewController:didUpdatedPost:)]) {
+                [self.delegate postDetailViewController:self didUpdatedPost:self.post];
+            }
         };
         
         cell.willRequest = ^(LKTagItemView * item){
-          
             @normally(self);
-            
             if (item.tagValue.isLiked == NO) {
-                
                 [self newTagAnimation];
             }
         };
@@ -1179,8 +1166,6 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             @normally(self);
             
             //[self _beginComment:tag];
-            
-            
 
             UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
             
@@ -1191,11 +1176,8 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
                                                        user:tag.user];
             
             @weakly(page);
-            
             page.resetPointWhenOutOfSide = ^(id value){
-                
                 @normally(page);
-                
                 [UIView animateWithDuration:0.5 animations:^{
                     
                     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
@@ -1302,10 +1284,8 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     return nil;
 }
 
--(void) newTagAnimation
-{
+-(void) newTagAnimation {
     if (!self.blackMask) {
-        
         self.blackMask = UIView.view;
         self.blackMask.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
         self.header.ADD(self.blackMask);

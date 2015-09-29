@@ -13,8 +13,8 @@
 
 @interface LKMainFeedViewController ()
 
-LC_PROPERTY(strong) LKHomeFeedViewController *feedViewController;
-LC_PROPERTY(strong) LKFollowingFeedViewController *followingViewController;
+LC_PROPERTY(strong) LKHomeFeedViewController *homeFeedViewController;
+LC_PROPERTY(strong) LKFollowingFeedViewController *followingFeedViewController;
 LC_PROPERTY(weak) LCUIViewController *currentViewController;
 
 @end
@@ -27,13 +27,13 @@ LC_PROPERTY(weak) LCUIViewController *currentViewController;
 }
 
 - (void)buildViewControllers {
-    self.feedViewController = [LKHomeFeedViewController viewController];
-    self.followingViewController = [LKFollowingFeedViewController viewController];
+    self.homeFeedViewController = [LKHomeFeedViewController viewController];
+    self.followingFeedViewController = [LKFollowingFeedViewController viewController];
     
-    [self addChildViewController:self.feedViewController];
-    [self addChildViewController:self.followingViewController];
+    [self addChildViewController:self.homeFeedViewController];
+    [self addChildViewController:self.followingFeedViewController];
     
-    self.currentViewController = self.feedViewController;
+    self.currentViewController = self.homeFeedViewController;
     self.view.ADD(self.currentViewController.view);
 }
 
@@ -49,8 +49,16 @@ LC_PROPERTY(weak) LCUIViewController *currentViewController;
 }
 
 - (void)refresh {
+    [self.followingFeedViewController refresh];
+    [self.homeFeedViewController refresh];
     
 }
+
+//LC_HANDLE_NAVIGATION_SIGNAL(UpdatePostTags, signal) {
+//    LKPost * post = signal.object;
+////    [self.followingFeedViewController updatePostFeed:post];
+//    [self.homeFeedViewController updatePostFeed:post];
+//}
 
 - (void)handleNavigationBarButton:(LCUINavigationBarButtonType)type {
     
@@ -72,8 +80,8 @@ LC_PROPERTY(weak) LCUIViewController *currentViewController;
             
             @normally(self);
             [self.currentViewController.view removeFromSuperview];
-            if (self.currentViewController == self.feedViewController) {
-                self.currentViewController = self.followingViewController;
+            if (self.currentViewController == self.homeFeedViewController) {
+                self.currentViewController = self.followingFeedViewController;
                 [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[[UIImage imageNamed:@"Favor_selected.png" useCache:YES] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]] selectImage:nil];
 
                 if (self.titleView) {
@@ -86,7 +94,7 @@ LC_PROPERTY(weak) LCUIViewController *currentViewController;
                     self.titleView = (UIView *)titleBtn;
                 }
             } else {
-                self.currentViewController = self.feedViewController;
+                self.currentViewController = self.homeFeedViewController;
                 [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[[UIImage imageNamed:@"Favor_normal.png" useCache:YES] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]] selectImage:nil];
                 
                 if (self.titleView) {

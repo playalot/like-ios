@@ -390,7 +390,7 @@ LC_IMP_SIGNAL(PushPostDetail);
 
 - (void)recommendedReasonBtnClick:(LCUIButton *)reasonBtn {
     if ([self.delegate respondsToSelector:@selector(homeTableViewCell:didClickReasonBtn:)]) {
-        [self.delegate homeTableViewCell:self didClickReasonBtn:self.recommendedReasonWithTag];
+        [self.delegate homeTableViewCell:self didClickReasonBtn:self.recommendedReasonWithTag.title ? self.recommendedReasonWithTag : self.recommendedReason];
     }
 }
 

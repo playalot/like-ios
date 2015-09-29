@@ -20,12 +20,18 @@
 
 @implementation LCUIImagePickerViewController
 
--(void) dealloc
+- (void)dealloc
 {
-    [[UIApplication sharedApplication] setStatusBarStyle:_cache animated:YES];
+//    [[UIApplication sharedApplication] setStatusBarStyle:_cache animated:YES];
+    [self setNeedsStatusBarAppearanceUpdate];
 }
 
--(void) viewWillAppear:(BOOL)animated
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    
+    return UIStatusBarStyleLightContent;
+}
+
+- (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
@@ -141,11 +147,12 @@
         [self dismissViewControllerAnimated:YES completion:nil];
     }
     
-    if (IOS7_OR_LATER) {
-        
-        [[UIApplication sharedApplication] setStatusBarStyle:_cache animated:YES];
-    }
+//    if (IOS7_OR_LATER) {
+//        
+//        [[UIApplication sharedApplication] setStatusBarStyle:_cache animated:YES];
+//    }
     
+    [self setNeedsStatusBarAppearanceUpdate];
 }
 
 

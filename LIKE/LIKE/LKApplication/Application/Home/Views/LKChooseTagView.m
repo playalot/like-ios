@@ -12,6 +12,7 @@
 #import "LKSettingsViewController.h"
 #import "LKUploadAvatarAndCoverModel.h"
 #import "LKChooseTag.h"
+#import "UIImageView+WebCache.h"
 
 @interface LKChooseTagView ()
 
@@ -99,10 +100,9 @@ LC_PROPERTY(strong) LKSettingsViewController *settings;
             
         } else if (result.state == LKHttpRequestStateFailed) {
             
-            
+            [self showTopMessageErrorHud:result.error];
         }
     }];
-    
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
@@ -133,7 +133,7 @@ LC_PROPERTY(strong) LKSettingsViewController *settings;
     
     self.frame = CGRectMake(0, 0, LC_DEVICE_WIDTH, LC_DEVICE_HEIGHT + 20);
     self.tagsView.viewFrameWidth = 200;
-    self.tagsView.viewFrameY = CGRectGetMaxY(self.slogan.frame) + 10;
+    self.tagsView.viewFrameY = self.slogan.viewBottomY + 30;
 //    self.tagsView.viewFrameHeight = self.enterBtn.viewFrameY - self.tagsView.viewFrameY - 10;
     self.tagsView.viewFrameHeight = LC_DEVICE_HEIGHT - 70 - self.tagsView.viewFrameY;
     self.tagsView.viewCenterX = LC_DEVICE_WIDTH * 0.5;
@@ -183,8 +183,8 @@ LC_PROPERTY(strong) LKSettingsViewController *settings;
         
         item.chooseTag = tags[i];
         [self.tagsView addSubview:item];
-        item.backgroundImageView.url = (NSString *)[tags[i] image];
-
+//        item.backgroundImageView.url = (NSString *)[tags[i] image];
+        [item.backgroundImageView sd_setImageWithURL:[NSURL URLWithString:(NSString *)[tags[i] image]] placeholderImage:nil];
 
         CGFloat margin = 10;
         item.viewFrameWidth = CGRectGetMaxX(item.likesLabel.frame) + 2;

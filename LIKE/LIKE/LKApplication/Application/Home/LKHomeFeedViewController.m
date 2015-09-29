@@ -24,6 +24,7 @@
 
 #import "LRUCache.h"
 #import "LKLRUCache.h"
+#import "LKEditorPickInterface.h"
 
 @interface LKHomeFeedViewController () <UITableViewDataSource, UITableViewDelegate, LKHomeTableViewCellDelegate, LKPostDetailViewControllerDelegate>
 
@@ -32,7 +33,8 @@ LC_PROPERTY(strong) LCUIPullLoader *pullLoader;
 LC_PROPERTY(strong) LCUITableView *tableView;
 LC_PROPERTY(strong) LKInputView *inputView;
 
-LC_PROPERTY(copy) NSNumber * next;
+LC_PROPERTY(copy) NSNumber *next;
+LC_PROPERTY(copy) NSNumber *editorPickNext;
 LC_PROPERTY(assign) NSTimeInterval lastFocusLoadTime;
 LC_PROPERTY(assign) BOOL needRefresh;
 
@@ -425,9 +427,46 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
 //    return;
     
     if (reasonBtn.title != nil) {
-        LKSearchResultsViewController *searchResultCtrl = [[LKSearchResultsViewController alloc] initWithSearchString:reasonBtn.title];
-        [self.navigationController pushViewController:searchResultCtrl animated:YES];
+        
+        if ([reasonBtn.title hasSuffix:LC_LO(@"  Like推荐")]) {
+            
+            [self editorPickRequest];
+            
+        } else {
+            
+            LKSearchResultsViewController *searchResultCtrl = [[LKSearchResultsViewController alloc] initWithSearchString:reasonBtn.title];
+            [self.navigationController pushViewController:searchResultCtrl animated:YES];
+        }
     }
+}
+
+- (void)editorPickRequest {
+    
+    LKEditorPickInterface *editorPickInterface = [[LKEditorPickInterface alloc] init];
+    editorPickInterface.timestamp = self.editorPickNext;
+    
+    @weakly(self);
+    @weakly(editorPickInterface);
+    
+    [editorPickInterface startWithCompletionBlockWithSuccess:^(LCBaseRequest *request) {
+        
+        @normally(editorPickInterface);
+        @normally(self);
+        
+        if (editorPickInterface.next) {
+            self.editorPickNext = editorPickInterface.next;
+        }
+        
+        NSArray *resultData = editorPickInterface.posts;
+        NSMutableArray *datasource = [NSMutableArray array];
+        
+        for (NSDictionary *tmp in resultData) {
+            [datasource addObject:[LKPost objectFromDictionary:tmp]];
+        }
+        
+    } failure:^(LCBaseRequest *request) {
+        
+    }];
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {

@@ -209,7 +209,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
 /**
  *  禁止屏幕转向
  */
-- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
     return UIInterfaceOrientationMaskPortrait;
 }
 

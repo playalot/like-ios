@@ -95,18 +95,18 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
         
         LKLoginViewController * login = LKLoginViewController.viewController;
         
-        for (UIView * view in login.view.subviews) {
-            if (view != login.backgroundView) {
-                view.alpha = 0;
-            }
-        }
+//        for (UIView * view in login.view.subviews) {
+//            if (view != login.backgroundView) {
+//                view.alpha = 0;
+//            }
+//        }
 
         [login performSelector:@selector(beginAnimation) withObject:0 afterDelay:0.01];
         
         // 弹出时的动画风格为交叉溶解风格
         login.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         // 背景虚化
-        [login currentWindowBlur:viewController];
+//        [login currentWindowBlur:viewController];
         
         [[LCUIApplication sharedInstance] presentViewController:login animation:YES];
         
@@ -129,7 +129,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
         return;
     }
     
-    UIImage * image = [[self snapshotFromParentmostViewController:viewController] imageWithBlurValue:15];
+    UIImage *image = [[self snapshotFromParentmostViewController:viewController] imageWithBlurValue:15];
     
     [self.backgroundView removeFromSuperview];
     
@@ -140,20 +140,20 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     [self.view insertSubview:self.backgroundView atIndex:0];
     
     
-    UIView * mask = UIView.view.COLOR([[UIColor blackColor] colorWithAlphaComponent:0.35]);
+    UIView *mask = UIView.view.COLOR([[UIColor blackColor] colorWithAlphaComponent:0.35]);
     mask.frame = self.backgroundView.bounds;
     self.backgroundView.ADD(mask);
-    self.backgroundView.alpha = 0;
-    
-    LC_FAST_ANIMATIONS(1, ^{
-        
-        self.backgroundView.alpha = 1;
-        
-    });
+//    self.backgroundView.alpha = 0;
+//    
+//    LC_FAST_ANIMATIONS(1, ^{
+//        
+//        self.backgroundView.alpha = 1;
+//        
+//    });
 }
 
 
--(void) beginAnimation {
+- (void)beginAnimation {
     
     LC_FAST_ANIMATIONS(1, ^{
         
@@ -183,16 +183,16 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     return image;
 }
 
--(void) viewDidLoad {
+- (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor clearColor];
+//    self.view.backgroundColor = [UIColor clearColor];
     self.tableView.scrollEnabled = NO;
     self.userInfoModel = LKUserInfoModel.new.OBSERVER(self);
     
     @weakly(self);
     
-    self.userInfoModel.requestFinished = ^(LKHttpRequestResult * result, NSString * error){
+    self.userInfoModel.requestFinished = ^(LKHttpRequestResult *result, NSString *error){
         
         @normally(self);
         
@@ -208,7 +208,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
             
             self.maskView.hidden = YES;
             
-            NSMutableDictionary * dic =  [self.userInfoModel.rawUserInfo mutableCopy];
+            NSMutableDictionary *dic =  [self.userInfoModel.rawUserInfo mutableCopy];
             
             [LKLocalUser login:dic];
             LKLocalUser.singleton.sessionToken = self.sesstionToken;
@@ -239,6 +239,8 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
 
 -(void) buildUI
 {
+    self.view.backgroundColor = LKColor.backgroundColor;
+    
     @weakly(self);
     
     self.tableView.didTap = ^(){
@@ -254,56 +256,60 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     self.backgroundView.viewFrameWidth = LC_DEVICE_WIDTH * 1.5;
     self.backgroundView.viewFrameHeight = (LC_DEVICE_HEIGHT + 20) * 1.5;
     self.backgroundView.center = self.view.center;
-    self.view.ADD(self.backgroundView);
+//    self.view.ADD(self.backgroundView);
     
     // 遮罩层
-    UIView * mask = UIView.view.COLOR([[UIColor blackColor] colorWithAlphaComponent:0.35]);
+    UIView *mask = UIView.view.COLOR([[UIColor blackColor] colorWithAlphaComponent:0.35]);
     mask.frame = self.backgroundView.bounds;
-    self.backgroundView.ADD(mask);
+//    self.backgroundView.ADD(mask);
     
     // like logo
-    LCUIImageView * icon = [LCUIImageView viewWithImage:UIImage.IMAGE(@"LikeIcon.png")];
+    LCUIImageView *icon = [LCUIImageView viewWithImage:UIImage.IMAGE(@"LikeIconRed.png")];
     icon.viewFrameX = self.view.viewMidWidth - icon.viewMidWidth;
-    icon.viewFrameY = 50;
+    icon.viewFrameY = 40;
     self.view.ADD(icon);
     
     // country.
-    UIView * countryBack = UIView.view.Y(icon.viewBottomY + 30).WIDTH(LC_DEVICE_WIDTH).HEIGHT(35).COLOR([[UIColor whiteColor] colorWithAlphaComponent:0.05]);
+    UIView *countryBack = UIView.view.Y(icon.viewBottomY + 40).WIDTH(320).HEIGHT(46).COLOR([[UIColor whiteColor] colorWithAlphaComponent:0.05]);
+    countryBack.viewCenterX = self.view.viewCenterX;
+    countryBack.backgroundColor = [UIColor whiteColor];
     [countryBack addTapGestureRecognizer:self selector:@selector(chooseCountryCode)];
     self.view.ADD(countryBack);
     
     // 实质上就是创建label设置frame并添加到view中
     self.countryCode = LCUILabel.view;
-    self.countryCode.viewFrameWidth = 80;
+    self.countryCode.viewFrameWidth = 45;
     self.countryCode.viewFrameHeight = countryBack.viewFrameHeight;
-    self.countryCode.font = LK_FONT(13);
-    self.countryCode.textColor = [UIColor whiteColor];
+    self.countryCode.font = LK_FONT(14);
+    self.countryCode.textColor = LC_RGB(123, 123, 123);
     self.countryCode.textAlignment = UITextAlignmentCenter;
     countryBack.ADD(self.countryCode);
     
     // 添加国家名称
     self.countryName = LCUILabel.view;
-    self.countryName.viewFrameX = self.countryCode.viewRightX + 30;
+    self.countryName.viewFrameX = self.countryCode.viewRightX + 15;
     self.countryName.viewFrameWidth = 200;
     self.countryName.viewFrameHeight = countryBack.viewFrameHeight;
-    self.countryName.font = LK_FONT(13);
-    self.countryName.textColor = [[UIColor whiteColor] colorWithAlphaComponent:0.6];
+    self.countryName.font = LK_FONT(14);
+    self.countryName.textColor = LC_RGB(153, 153, 153);
     countryBack.ADD(self.countryName);
     
     // 更多国家
-    LCUIImageView * countryMore = [LCUIImageView viewWithImage:[[[UIImage imageNamed:@"PullLoaderSmallArrow.png" useCache:YES] imageWithTintColor:LKColor.color] scaleToWidth:15]];
+    LCUIImageView *countryMore = [LCUIImageView viewWithImage:[[[UIImage imageNamed:@"SmallRedArrow.png" useCache:YES] imageWithTintColor:LKColor.color] scaleToWidth:15]];
     countryMore.viewFrameY = countryBack.viewMidHeight - countryMore.viewMidHeight;
-    countryMore.viewFrameX = LC_DEVICE_WIDTH - countryMore.viewFrameWidth - 15;
+    countryMore.viewFrameX = 320 - countryMore.viewFrameWidth - 15;
     countryBack.ADD(countryMore);
     
     
     // phone.
-    UIView * phoneBack = UIView.view.Y(countryBack.viewBottomY + 1).WIDTH(LC_DEVICE_WIDTH).HEIGHT(40).COLOR([[UIColor whiteColor] colorWithAlphaComponent:0.05]);
+    UIView *phoneBack = UIView.view.Y(countryBack.viewBottomY + 2).WIDTH(320).HEIGHT(46).COLOR([[UIColor whiteColor] colorWithAlphaComponent:0.05]);
+    phoneBack.viewCenterX = self.view.viewCenterX;
+    phoneBack.backgroundColor = [UIColor whiteColor];
     self.view.ADD(phoneBack);
     
     
-    UIImageView * phoneIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PhoneIcon.png" useCache:YES]];
-    phoneIcon.viewFrameX = 30;
+    UIImageView *phoneIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PhoneIcon.png" useCache:YES]];
+    phoneIcon.viewFrameX = 15;
     phoneIcon.viewFrameY = phoneBack.viewMidHeight - phoneIcon.viewMidHeight;
     phoneBack.ADD(phoneIcon);
     
@@ -311,13 +317,13 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     
     self.phoneField = LCUITextField.view;
     self.phoneField.viewFrameY = 0;
-    self.phoneField.viewFrameX = phoneIcon.viewRightX + 30;
+    self.phoneField.viewFrameX = phoneIcon.viewRightX + 15;
     self.phoneField.viewFrameWidth = LC_DEVICE_WIDTH - self.phoneField.viewFrameX - 30;
-    self.phoneField.viewFrameHeight = 40;
-    self.phoneField.font = LK_FONT(13);
-    self.phoneField.textColor = [[UIColor whiteColor] colorWithAlphaComponent:0.8];
+    self.phoneField.viewFrameHeight = 46;
+    self.phoneField.font = LK_FONT(16);
+    self.phoneField.textColor = LC_RGB(153, 153, 153);
     self.phoneField.placeholder = LC_LO(@"输入手机号码");
-    self.phoneField.placeholderColor = [[UIColor whiteColor] colorWithAlphaComponent:0.6];
+    self.phoneField.placeholderColor = LC_RGB(153, 153, 153);
     self.phoneField.returnKeyType = UIReturnKeyNext;
     self.phoneField.keyboardType = UIKeyboardTypeNumberPad;
     self.phoneField.clearButtonMode = UITextFieldViewModeWhileEditing;
@@ -334,24 +340,26 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     self.countryName.viewFrameX = self.phoneField.viewFrameX;
     
     // code.
-    UIView * codeBack = UIView.view.Y(phoneBack.viewBottomY + 1).WIDTH(LC_DEVICE_WIDTH).HEIGHT(40).COLOR([[UIColor whiteColor] colorWithAlphaComponent:0.05]);
+    UIView *codeBack = UIView.view.Y(phoneBack.viewBottomY + 2).WIDTH(320).HEIGHT(46).COLOR([[UIColor whiteColor] colorWithAlphaComponent:0.05]);
+    codeBack.viewCenterX = self.view.viewCenterX;
+    codeBack.backgroundColor = [UIColor whiteColor];
     self.view.ADD(codeBack);
     
     
-    UIImageView * codeIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"CodeIcon.png" useCache:YES]];
-    codeIcon.viewFrameX = 30;
+    UIImageView *codeIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"CodeIcon.png" useCache:YES]];
+    codeIcon.viewFrameX = 15;
     codeIcon.viewFrameY = codeBack.viewMidHeight - codeIcon.viewMidHeight;
     codeBack.ADD(codeIcon);
     
     
     self.codeField = LCUITextField.view;
-    self.codeField.viewFrameX = codeIcon.viewRightX + 30;
+    self.codeField.viewFrameX = codeIcon.viewRightX + 15;
     self.codeField.viewFrameWidth = LC_DEVICE_WIDTH - self.codeField.viewFrameX - 100;
-    self.codeField.viewFrameHeight = 40;
-    self.codeField.font = LK_FONT(13);
-    self.codeField.textColor = [[UIColor whiteColor] colorWithAlphaComponent:0.8];
+    self.codeField.viewFrameHeight = 46;
+    self.codeField.font = LK_FONT(16);
+    self.codeField.textColor = LC_RGB(153, 153, 153);
     self.codeField.placeholder = LC_LO(@"输入验证码");
-    self.codeField.placeholderColor = [[UIColor whiteColor] colorWithAlphaComponent:0.6];
+    self.codeField.placeholderColor = LC_RGB(153, 153, 153);
     self.codeField.returnKeyType = UIReturnKeyJoin;
     self.codeField.keyboardType = UIKeyboardTypeNumberPad;
     self.codeField.clearButtonMode = UITextFieldViewModeWhileEditing;
@@ -368,101 +376,134 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     
     self.codeButton = LCUIButton.view;
     self.codeButton.viewFrameWidth = 100;
-    self.codeButton.viewFrameHeight = 40;
-    self.codeButton.viewFrameX = LC_DEVICE_WIDTH - self.codeButton.viewFrameWidth;
+    self.codeButton.viewFrameHeight = 46;
+    self.codeButton.viewFrameX = 320 - self.codeButton.viewFrameWidth;
     self.codeButton.title = LC_LO(@"获取验证码");
-    self.codeButton.titleColor = [UIColor whiteColor];
-    self.codeButton.titleFont = LK_FONT(13);
+    self.codeButton.titleColor = LC_RGB(153, 153, 153);
+    self.codeButton.titleFont = LK_FONT(14);
     self.codeButton.showsTouchWhenHighlighted = YES;
     [self.codeButton addTarget:self action:@selector(getCode) forControlEvents:UIControlEventTouchUpInside];
     codeBack.ADD(self.codeButton);
     
     // login.
     self.loginButton = LCUIButton.view;
-    self.loginButton.viewFrameWidth = 110;
-    self.loginButton.viewFrameHeight = 30;
-    self.loginButton.viewFrameY = codeBack.viewBottomY + 30;
+    self.loginButton.viewFrameWidth = 320;
+    self.loginButton.viewFrameHeight = 46;
+    self.loginButton.viewFrameY = codeBack.viewBottomY + 6;
     self.loginButton.viewCenterX = self.view.viewMidWidth;
-    self.loginButton.cornerRadius = 30 / 2;
-    self.loginButton.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.2];
+//    self.loginButton.cornerRadius = 30 / 2;
+    self.loginButton.backgroundColor = LKColor.color;
     self.loginButton.title = LC_LO(@"进入like");
-    self.loginButton.titleFont = LK_FONT(13);
+    self.loginButton.titleFont = LK_FONT(14);
     self.loginButton.titleColor = [UIColor whiteColor];
     self.loginButton.showsTouchWhenHighlighted = YES;
     [self.loginButton addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
     self.view.ADD(self.loginButton);
     
     // 用户使用协议
-    LCUILabel * agreement = LCUILabel.view;
-    agreement.viewFrameY = self.loginButton.viewBottomY + 20;
-    agreement.viewFrameWidth = self.view.viewFrameWidth;
-    agreement.viewFrameHeight = 20;
-    agreement.viewFrameX = LC_DEVICE_WIDTH / 2 - agreement.viewMidWidth;
-    agreement.textAlignment = UITextAlignmentCenter;
+    LCUILabel *agreement = LCUILabel.view;
     agreement.font = LK_FONT(10);
     agreement.text = LC_LO(@"用户使用协议");
-    agreement.textColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5];
+    agreement.textAlignment = UITextAlignmentCenter;
+    agreement.textColor = LC_RGB(153, 153, 153);
+    agreement.viewFrameY = self.loginButton.viewBottomY + 10;
+    agreement.viewFrameHeight = agreement.font.lineHeight;
+    agreement.viewFrameWidth = [agreement.text sizeWithFont:agreement.font
+                                                   byHeight:agreement.viewFrameHeight].width;
+    agreement.viewFrameX = LC_DEVICE_WIDTH / 2 - agreement.viewMidWidth;
     [agreement addTapGestureRecognizer:self selector:@selector(agreement)];
     self.view.ADD(agreement);
     
+    // line
+    UIView *lineView = UIView.view;
+    lineView.backgroundColor = LC_RGB(153, 153, 153);
+    lineView.viewFrameWidth = agreement.viewFrameWidth;
+    lineView.viewFrameHeight = 1;
+    lineView.viewCenterX = self.view.viewCenterX;
+    lineView.viewFrameY = agreement.viewBottomY + 2;
+    self.view.ADD(lineView);
+    
+    // 游客访问
+    LCUIButton *visitorIcon = LCUIButton.view;
+    visitorIcon.viewFrameWidth = 34;
+    visitorIcon.viewFrameHeight = 21;
+    visitorIcon.viewCenterX = self.view.viewCenterX;
+    visitorIcon.viewFrameY = lineView.viewBottomY + 20;
+    visitorIcon.buttonImage = [UIImage imageNamed:@"VisitorIcon.png" useCache:YES];
+    [visitorIcon addTarget:self action:@selector(dismissAction) forControlEvents:UIControlEventTouchUpInside];
+    self.view.ADD(visitorIcon);
+    
+    LCUIButton *visitor = LCUIButton.view;
+    visitor.viewFrameWidth = 100;
+    visitor.viewCenterX = self.view.viewMidWidth;
+    visitor.viewFrameY = visitorIcon.viewBottomY + 6;
+    visitor.viewFrameHeight = 20;
+    visitor.title = LC_LO(@"游客访问");
+    visitor.titleFont = LK_FONT(14);
+    visitor.titleColor = LC_RGB(153, 153, 153);
+    [visitor addTarget:self action:@selector(dismissAction) forControlEvents:UIControlEventTouchUpInside];
+    //    visitor.buttonImage = [UIImage imageNamed:@"VisitorIcon.png" useCache:YES];
+    //    visitor.imageEdgeInsets = UIEdgeInsetsMake(0, 80, 0, 0);
+    self.view.ADD(visitor);
+    
     // third login.
-    LCUILabel * thirdLoginTip = LCUILabel.view;
-    thirdLoginTip.font = LK_FONT(10);
-    thirdLoginTip.textColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5];
-    thirdLoginTip.text = LC_LO(@"社交账号快速登录");
+    LCUILabel *thirdLoginTip = LCUILabel.view;
+    thirdLoginTip.font = LK_FONT(14);
+    thirdLoginTip.textColor = LC_RGB(153, 153, 153);
+    thirdLoginTip.text = LC_LO(@"社交账号登录");
     thirdLoginTip.FIT();
     thirdLoginTip.viewCenterX = self.view.viewMidWidth;
-    thirdLoginTip.viewCenterY = self.view.viewFrameHeight - 115;
+    thirdLoginTip.viewCenterY = self.view.viewFrameHeight - 95;
     self.view.ADD(thirdLoginTip);
     
     // 第三方登录图片
-    NSMutableArray * loginImages = [NSMutableArray array];
+    NSMutableArray *loginImages = [NSMutableArray array];
+    NSMutableArray *loginLabels = [NSMutableArray array];
     
     if ([WXApi isWXAppInstalled]) {
         
         [loginImages addObject:@"WeChatLogin"];
+        [loginLabels addObject:LC_LO(@"微信")];
     }
     
     if ([WeiboSDK isWeiboAppInstalled]) {
         
         [loginImages addObject:@"WeiboLogin"];
+        [loginLabels addObject:LC_LO(@"微博")];
     }
     // 若安装了微博,默认会显示Facebook
     if ([WeiboSDK isWeiboAppInstalled]) {
         
         [loginImages addObject:@"FacebookLogin"];
+        [loginLabels addObject:LC_LO(@"facebook")];
     }
     
-    CGFloat loginButtonX = (LC_DEVICE_WIDTH - (85 * loginImages.count)) / 2;
+    CGFloat loginButtonX = (LC_DEVICE_WIDTH - (68 * loginImages.count)) / 2;
     
-    for (NSInteger i = 0; i<loginImages.count; i++) {
+    for (NSInteger i = 0; i <loginImages.count; i++) {
         
-        LCUIButton * loginButton = LCUIButton.view;
-        loginButton.viewFrameWidth = 85;
+        LCUIButton *loginButton = LCUIButton.view;
+        loginButton.viewFrameWidth = 68;
         loginButton.viewFrameHeight = 35;
         loginButton.viewFrameX = loginButtonX + loginButton.viewFrameWidth * i;
-        loginButton.viewFrameY = thirdLoginTip.viewBottomY + 20;
+        loginButton.viewFrameY = thirdLoginTip.viewBottomY + 10;
         loginButton.buttonImage = [[UIImage imageNamed:loginImages[i] useCache:YES] scaleToWidth:35];
         loginButton.showsTouchWhenHighlighted = YES;
         loginButton.tagString = loginImages[i];
         [loginButton addTarget:self action:@selector(otherLogin:) forControlEvents:UIControlEventTouchUpInside];
         self.view.ADD(loginButton);
         
+        LCUILabel *loginLabel = LCUILabel.view;
+        loginLabel.font = LK_FONT(10);
+        loginLabel.viewFrameWidth = 68;
+        loginLabel.viewFrameHeight = loginLabel.font.lineHeight;
+        loginLabel.viewFrameY = loginButton.viewBottomY + 2;
+        loginLabel.viewFrameX = loginButton.viewFrameX;
+        loginLabel.textAlignment = NSTextAlignmentCenter;
+        loginLabel.text = loginLabels[i];
+        loginLabel.textColor = LC_RGB(153, 153, 153);
+        self.view.ADD(loginLabel);
     }
-    
-    // 游客访问
-    LCUIButton * visitor = LCUIButton.view;
-    visitor.viewFrameWidth = 100;
-    visitor.viewCenterX = self.view.viewMidWidth - 15;
-    visitor.viewFrameY = self.view.viewFrameHeight - 40;
-    visitor.viewFrameHeight = 20;
-    visitor.title = LC_LO(@"游客访问     ");
-    visitor.titleFont = LK_FONT(10);
-    visitor.titleColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5];
-    [visitor addTarget:self action:@selector(dismissAction) forControlEvents:UIControlEventTouchUpInside];
-    visitor.buttonImage = [[[UIImage imageNamed:@"VisitorIcon.png" useCache:YES] scaleToWidth:13] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5]];
-    visitor.imageEdgeInsets = UIEdgeInsetsMake(0, 80, 0, 0);
-    self.view.ADD(visitor);
     
     // 用button添加一个遮罩层
     self.maskView = LCUIButton.view;
@@ -478,7 +519,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
 /**
  *  选择国家代号
  */
--(void) chooseCountryCode {
+- (void)chooseCountryCode {
     LKCountryCodeViewController * countryCode = [LKCountryCodeViewController viewController];
     @weakly(self);
     countryCode.didSelectedRow = ^(NSString * countryCode){

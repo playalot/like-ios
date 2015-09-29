@@ -27,7 +27,6 @@
         self.viewFrameWidth = LC_DEVICE_WIDTH;
         self.viewFrameHeight = 44;
         
-        
         self.dismissButton = LCUIButton.view;
         self.dismissButton.viewFrameWidth = 50;
         self.dismissButton.viewFrameHeight = self.viewFrameHeight;
@@ -40,7 +39,6 @@
         self.dismissButton.titleFont = LK_FONT(13);
         self.dismissButton.titleColor = LC_RGBA(99, 99, 99, 1);
         self.ADD(self.dismissButton);
-        
 
         self.textField = LCUITextField.view;
         self.textField.viewFrameX = 10;
@@ -60,7 +58,6 @@
         self.textField.borderWidth = 0.5;
         self.ADD(self.textField);
 
-        
         @weakly(self);
         
         self.textField.shouldReturn = ^BOOL(id value){

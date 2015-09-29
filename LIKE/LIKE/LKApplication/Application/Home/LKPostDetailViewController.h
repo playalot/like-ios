@@ -15,8 +15,6 @@
 
 @interface LKPostDetailViewController : LCUIViewController
 
-LC_ST_SIGNAL(UpdatePostTags);
-
 LC_PROPERTY(strong) LKHomepageHeader * header;
 LC_PROPERTY(strong) LCUITableView * tableView;
 LC_PROPERTY(strong) LKPost * post;

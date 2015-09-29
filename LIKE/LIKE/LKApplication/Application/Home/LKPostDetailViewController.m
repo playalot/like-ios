@@ -74,8 +74,6 @@ LC_PROPERTY(assign) BOOL favorited;
 
 @implementation LKPostDetailViewController
 
-LC_IMP_SIGNAL(UpdatePostTags);
-
 -(void) dealloc
 {
     [self.bigImageRequestOperation cancel];
@@ -1108,9 +1106,6 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             
             self.PERFORM_DELAY(@selector(reloadDataAndUpdate), nil, 0);
             
-//            self.post.tags = self.tagsListModel.tags;
-//            self.SEND(self.UpdatePostTags).object = self.post;
-            
             self.post.tags = self.tagsListModel.tags;
             if (self.delegate && [self.delegate respondsToSelector:@selector(postDetailViewController:didUpdatedPost:)]) {
                 [self.delegate postDetailViewController:self didUpdatedPost:self.post];
@@ -1143,9 +1138,6 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             }];
             
             [self.shareTools hideTools];
-            
-//            self.post.tags = self.tagsListModel.tags;
-//            self.SEND(self.UpdatePostTags).object = self.post;
             
             self.post.tags = self.tagsListModel.tags;
             if (self.delegate && [self.delegate respondsToSelector:@selector(postDetailViewController:didUpdatedPost:)]) {

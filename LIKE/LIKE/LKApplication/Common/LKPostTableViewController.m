@@ -35,7 +35,6 @@ LC_PROPERTY(copy) NSString *observedDataSourceKeyPath;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    
     return UIStatusBarStyleLightContent;
 }
 
@@ -285,7 +284,6 @@ LC_PROPERTY(copy) NSString *observedDataSourceKeyPath;
 }
 
 LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
-    
     if (self.inputView.isFirstResponder) {
         [self.inputView resignFirstResponder];
         return;
@@ -300,18 +298,14 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     // 设置代理
     detail.delegate = self;
     
-    LCUINavigationController * nav = LC_UINAVIGATION(detail);
-    
+    LCUINavigationController *nav = LC_UINAVIGATION(detail);
     [detail setPresendModelAnimationOpen];
-    
     [self.navigationController presentViewController:nav animated:YES completion:nil];
     
     LKPost * post = signal.object;
     if ([post.tagString rangeOfString:@"Comment-"].length) {
-        
         LKTag * tag = [[LKTag alloc] init];
         tag.id = @([post.tagString stringByReplacingOccurrencesOfString:@"Comment-" withString:@""].integerValue);
-        
         [detail performSelector:@selector(openCommentsView:) withObject:tag afterDelay:0.35];
     }
 }

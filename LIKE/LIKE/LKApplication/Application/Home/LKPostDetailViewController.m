@@ -436,6 +436,7 @@ LC_IMP_SIGNAL(UpdatePostTags);
 -(void) _addTag:(NSString *)tag onPost:(LKPost *)post
 {
     if([LKLoginViewController needLoginOnViewController:self.navigationController]){
+        
         return;
     }
     
@@ -456,10 +457,9 @@ LC_IMP_SIGNAL(UpdatePostTags);
         else{
             
             // insert...
-            LKTag * tag = [LKTag objectFromDictionary:result.json[@"data"]];
+            LKTag *tag = [LKTag objectFromDictionary:result.json[@"data"]];
             
             if (!tag) {
-                
                 // input view...
                 [self.inputView resignFirstResponder];
                 self.inputView.textField.text = @"";
@@ -468,7 +468,6 @@ LC_IMP_SIGNAL(UpdatePostTags);
             
             tag.user = LKLocalUser.singleton.user;
             
-            [post.tags insertObject:tag atIndex:0];
             [self.tagsListModel.tags insertObject:tag atIndex:0];
             
             post.user.likes = @(post.user.likes.integerValue + 1);
@@ -477,9 +476,11 @@ LC_IMP_SIGNAL(UpdatePostTags);
             
             // input view...
             [self.inputView resignFirstResponder];
+            
+            //
             self.inputView.textField.text = @"";
             
-            [self newTagAnimation];
+//            [self newTagAnimation];
             
             self.post.tags = self.tagsListModel.tags;
             if (self.delegate && [self.delegate respondsToSelector:@selector(postDetailViewController:didUpdatedPost:)]) {
@@ -833,7 +834,6 @@ LC_IMP_SIGNAL(UpdatePostTags);
  *  开启评论页
  */
 -(void) _beginComment:(LKTag *)tag {
-    
     // check
     if(![LKLoginViewController needLoginOnViewController:self]){
         
@@ -877,10 +877,6 @@ LC_IMP_SIGNAL(UpdatePostTags);
                 [self.delegate postDetailViewController:self didUpdatedPost:self.post];
             }
             
-//            if ([self.delegate respondsToSelector:@selector(postDetailViewController:didDeletedTag:)]) {
-//                [self.delegate postDetailViewController:self didDeletedTag:tag];
-//            }
-    
             // 刷新数据
             [self.tableView beginUpdates];
             [self.tableView reloadData];
@@ -890,9 +886,6 @@ LC_IMP_SIGNAL(UpdatePostTags);
         }
     }
     
-//    self.post.tags = self.tagsListModel.tags;
-//    self.SEND(self.UpdatePostTags).object = self.post;
-    
     // 调用代理
     self.post.tags = self.tagsListModel.tags;
     if (self.delegate && [self.delegate respondsToSelector:@selector(postDetailViewController:didUpdatedPost:)]) {
@@ -900,7 +893,7 @@ LC_IMP_SIGNAL(UpdatePostTags);
     }
     
     // 刷新数据
-//    [self.tableView reloadData];
+    [self.tableView reloadData];
 }
 
 #pragma mark -

@@ -53,8 +53,6 @@ LC_PROPERTY(weak) id delegate;
 
 - (void)refresh {
     
-    
-    
     [self.tableView reloadData];
 }
 

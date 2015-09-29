@@ -31,6 +31,11 @@ LC_PROPERTY(copy) NSString *observedDataSourceKeyPath;
     [self.observedDataSourceObject removeObserver:self forKeyPath:self.observedDataSourceKeyPath];
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    
+    return UIStatusBarStyleLightContent;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

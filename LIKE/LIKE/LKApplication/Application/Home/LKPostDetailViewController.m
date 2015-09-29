@@ -195,9 +195,13 @@ LC_IMP_SIGNAL(UpdatePostTags);
         }
     };
     
-    
     // Load...
     [self.tagsListModel loadDataWithPostID:self.post.id getMore:NO];
+}
+
+- (BOOL)prefersStatusBarHidden {
+    
+    return YES;
 }
 
 -(void) buildUI

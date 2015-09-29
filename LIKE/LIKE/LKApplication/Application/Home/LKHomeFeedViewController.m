@@ -23,6 +23,7 @@
 #import "SDWebImagePrefetcher.h"
 
 #import "LRUCache.h"
+#import "LKLRUCache.h"
 
 @interface LKHomeFeedViewController () <UITableViewDataSource, UITableViewDelegate, LKHomeTableViewCellDelegate, LKPostDetailViewControllerDelegate>
 
@@ -40,7 +41,7 @@ LC_PROPERTY(strong) NSMutableArray *heightList;
 
 LC_PROPERTY(assign) BOOL isCellPrecomuted;
 LC_PROPERTY(strong) NSMutableArray *precomputedCells;
-LC_PROPERTY(strong) LRUCache *precomputedCellCache;
+LC_PROPERTY(strong) LKLRUCache *precomputedCellCache;
 
 LC_PROPERTY(weak) id delegate;
 
@@ -53,7 +54,6 @@ LC_PROPERTY(weak) id delegate;
 }
 
 - (void)notificationAction {
-    
 }
 
 - (void)buildUI {
@@ -66,9 +66,9 @@ LC_PROPERTY(weak) id delegate;
 
 - (void)buildCellCache {
     NSInteger cacheCapacity = 10;
-    self.isCellPrecomuted = YES;
+    self.isCellPrecomuted = NO;
     self.precomputedCells = [NSMutableArray array];
-    self.precomputedCellCache = [[LRUCache alloc] initWithCapacity:cacheCapacity];
+    self.precomputedCellCache = [[LKLRUCache alloc] initWithCapacity:cacheCapacity];
 }
 
 - (void)buildTableView {
@@ -354,6 +354,7 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     // 设置cell的代理
     cell.delegate = self;
     cell.post = post;
+    
     @weakly(self);
     cell.addTag = ^(LKPost * value){
         @normally(self);
@@ -419,6 +420,10 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
 
 #pragma mark *****数据源******
 - (void)homeTableViewCell:(LKHomeTableViewCell *)cell didClickReasonBtn:(LCUIButton *)reasonBtn {
+    
+//    [self.precomputedCellCache show];
+//    return;
+    
     if (reasonBtn.title != nil) {
         LKSearchResultsViewController *searchResultCtrl = [[LKSearchResultsViewController alloc] initWithSearchString:reasonBtn.title];
         [self.navigationController pushViewController:searchResultCtrl animated:YES];

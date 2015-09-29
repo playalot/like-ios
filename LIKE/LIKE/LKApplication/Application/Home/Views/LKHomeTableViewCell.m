@@ -24,6 +24,7 @@ LC_PROPERTY(strong) LCUIActivityIndicatorView *loadingActivity;
 LC_PROPERTY(strong) LCUIButton *recommendedReason;
 LC_PROPERTY(strong) LCUIButton *recommendedReasonWithTag;
 LC_PROPERTY(strong) UIView *blackMask;
+LC_PROPERTY(strong) UILabel *numLabel;
 
 @end
 
@@ -31,7 +32,6 @@ LC_PROPERTY(strong) UIView *blackMask;
 
 LC_IMP_SIGNAL(PushUserCenter);
 LC_IMP_SIGNAL(PushPostDetail);
-
 
 + (CGFloat)height:(LKPost *)post {
     CGSize size = [LKUIKit parsingImageSizeWithURL:post.preview constSize:CGSizeMake(LC_DEVICE_WIDTH, LC_DEVICE_WIDTH)];
@@ -150,6 +150,14 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.tagsView.backgroundColor = LKColor.backgroundColor;
     self.ADD(self.tagsView);
     
+//    self.numLabel = UILabel.view;
+//    self.numLabel.viewFrameWidth = 100.0f;
+//    self.numLabel.viewFrameHeight = 30.0f;
+//    self.numLabel.viewFrameX = (self.viewFrameWidth - self.numLabel.viewFrameWidth) / 2;
+//    self.numLabel.backgroundColor = [UIColor greenColor];
+//    self.numLabel.textColor = [UIColor redColor];
+//    self.ADD(self.numLabel);
+    
     @weakly(self);
     
     self.tagsView.itemRequestFinished = ^(LKTagItemView * item){
@@ -186,6 +194,11 @@ LC_IMP_SIGNAL(PushPostDetail);
  */
 - (void)contentImageTapAction {
     self.SEND(self.PushPostDetail).object = self.post;
+}
+
+- (void)setPost:(LKPost *)post cellRow:(NSInteger)row {
+    [self setPost:post];
+    self.numLabel.text = [NSString stringWithFormat:@"%ld", (long)row];
 }
 
 - (void)setPost:(LKPost *)post {

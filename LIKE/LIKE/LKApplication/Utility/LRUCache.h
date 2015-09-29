@@ -15,5 +15,6 @@
 - (instancetype)initWithCapacity:(NSUInteger)capacity;
 - (void)setObject:(id)object forKey:(id<NSCopying>)key;
 - (id)objectForKey:(id<NSCopying>)key;
+- (void)show;
 
 @end

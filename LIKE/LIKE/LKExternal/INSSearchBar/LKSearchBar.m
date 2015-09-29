@@ -300,40 +300,26 @@ static NSTimeInterval const kLKSearchBarAnimationStepDuration = 0.25;
 
 #pragma mark - keyboard handling
 
-- (void)keyboardWillShow:(NSNotification *)notification
-{
-	if ([self.searchField isFirstResponder])
-	{
-        if ([self.delegate respondsToSelector:@selector(searchBar:willStartTransitioningToState:)])
-        {
+- (void)keyboardWillShow:(NSNotification *)notification {
+	if ([self.searchField isFirstResponder]) {
+        if ([self.delegate respondsToSelector:@selector(searchBar:willStartTransitioningToState:)]) {
             [self.delegate searchBar:self willStartTransitioningToState:LKSearchBarStateSearchBarVisible];
         }
-        
         if ([self.delegate respondsToSelector:@selector(searchBarDidBeginEditing:editing:)]) {
-            
             [self.delegate searchBarDidBeginEditing:self editing:YES];
         }
-        
 		[self.window addGestureRecognizer:self.keyboardDismissGestureRecognizer];
 	}
-    
-    
 }
 
-- (void)keyboardWillHide:(NSNotification *)notification
-{
-	if ([self.searchField isFirstResponder])
-	{
-        if ([self.delegate respondsToSelector:@selector(searchBar:willStartTransitioningToState:)])
-        {
+- (void)keyboardWillHide:(NSNotification *)notification {
+	if ([self.searchField isFirstResponder]) {
+        if ([self.delegate respondsToSelector:@selector(searchBar:willStartTransitioningToState:)]) {
             [self.delegate searchBar:self willStartTransitioningToState:LKSearchBarStateNormal];
         }
-        
         if ([self.delegate respondsToSelector:@selector(searchBarDidBeginEditing:editing:)]) {
-            
             [self.delegate searchBarDidBeginEditing:self editing:NO];
         }
-        
 		[self.window removeGestureRecognizer:self.keyboardDismissGestureRecognizer];
 	}
 }
@@ -451,8 +437,7 @@ static NSTimeInterval const kLKSearchBarAnimationStepDuration = 0.25;
 
 #pragma mark - cleanup
 
-- (void)dealloc
-{
+- (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:self.searchField];

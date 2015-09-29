@@ -314,8 +314,17 @@ LC_PROPERTY(weak) id delegate;
     return cell;
 }
 
--(void) reloadData {
+- (void)reloadData {
     [self.tableView reloadData];
+}
+
+- (void)updatePostFeed:(LKPost *)post {
+    NSInteger updatedIndex = [self.datasource indexOfObject:post];
+    if (updatedIndex >= 0) {
+        [self.datasource removeObjectAtIndex:updatedIndex];
+        [self.datasource insertObject:post atIndex:updatedIndex];
+        [self.tableView reloadData];
+    }
 }
 
 #pragma mark - ***** 数据源方法 *****

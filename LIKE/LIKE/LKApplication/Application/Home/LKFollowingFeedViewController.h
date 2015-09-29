@@ -8,9 +8,12 @@
 
 #import "LCUIViewController.h"
 #import "LCUIViewController.h"
+#import "LKPost.h"
 
 @interface LKFollowingFeedViewController : LCUIViewController
 
 - (void)refresh;
+
+- (void)updatePostFeed:(LKPost *)post;
 
 @end

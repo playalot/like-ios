@@ -174,6 +174,7 @@ LC_PROPERTY(weak) id delegate;
         post.user.likes = @(post.user.likes.integerValue + 1);
         [self.tableView beginUpdates];
         cell.post = post;
+        
         [self.tableView endUpdates];
         [cell newTagAnimation:^(BOOL finished) {}];
     }
@@ -282,20 +283,38 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
 }
 
 LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
-    
+    // Detail
     LKPostDetailViewController * detail = [[LKPostDetailViewController alloc] initWithPost:signal.object];
-    
     // 设置代理
     detail.delegate = self;
-    LCUINavigationController * nav = LC_UINAVIGATION(detail);
+//    LCUINavigationController * nav = LC_UINAVIGATION(detail);
     [detail setPresendModelAnimationOpen];
-    [self.navigationController presentViewController:nav animated:YES completion:nil];
+    [self.navigationController pushViewController:detail animated:YES];
     
     LKPost * post = signal.object;
     if ([post.tagString rangeOfString:@"Comment-"].length) {
         LKTag * tag = [[LKTag alloc] init];
         tag.id = @([post.tagString stringByReplacingOccurrencesOfString:@"Comment-" withString:@""].integerValue);
         [detail performSelector:@selector(openCommentsView:) withObject:tag afterDelay:0.35];
+    }
+}
+
+- (void)updatePostFeed:(LKPost *)post {
+    NSInteger updatedIndex = -1;
+    for (NSInteger i = 0; i < self.datasource.count; ++i) {
+        LKPost *selfPost = self.datasource[i];
+        if ([selfPost.id isEqualToNumber:post.id]) {
+            updatedIndex = i;
+            NSLog(@"selfPost: %@", selfPost.tags);
+            break;
+        }
+    }
+    NSLog(@"updatedIndex: %ld", updatedIndex);
+    NSLog(@"post tags: %@", post.tags);
+    if (updatedIndex >= 0) {
+        [self.datasource removeObjectAtIndex:updatedIndex];
+        [self.datasource insertObject:post atIndex:updatedIndex];
+        [self.tableView reloadData];
     }
 }
 
@@ -415,6 +434,7 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    return [LKHomeTableViewCell height:self.datasource[indexPath.row]];
     return [self.heightList[indexPath.row] floatValue];
 }
 

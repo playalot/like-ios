@@ -32,7 +32,7 @@ LC_IMP_SIGNAL(PushUserCenter);
 LC_IMP_SIGNAL(PushPostDetail);
 
 + (CGFloat)height:(LKPost *)post headLineHidden:(BOOL)headHidden {
-    CGSize size = [LKUIKit parsingImageSizeWithURL:post.content constSize:CGSizeMake(LC_DEVICE_WIDTH - 10, LC_DEVICE_WIDTH - 10)];
+    CGSize size = [LKUIKit parsingImageSizeWithURL:post.preview constSize:CGSizeMake(LC_DEVICE_WIDTH - 10, LC_DEVICE_WIDTH - 10)];
     if (size.width > LC_DEVICE_WIDTH - 10) {
         size.height = (LC_DEVICE_WIDTH - 10) / size.width * size.height;
         size.width = (LC_DEVICE_WIDTH - 10);
@@ -210,7 +210,6 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.contentImageView.clipsToBounds = YES;
     self.contentImageView.frame = self.contentBack.bounds;
     self.contentImageView.image = nil;
-    //    self.contentImageView.url = post.content;
     
     [self.contentImageView sd_setImageWithURL:[NSURL URLWithString:post.preview] placeholderImage:nil options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
         [self.contentImageView.indicator setProgress:receivedSize * 1.0 / expectedSize animated:YES];

@@ -24,6 +24,8 @@ LC_PROPERTY(assign) BOOL cellHeadLineHidden;
 - (void)watchForChangeOfDatasource:(id)observedDataSourceObject
                      dataSourceKey:(NSString *)observedDataSourceKeyPath;
 
+- (void)refresh;
+
 @end
 
 @protocol LKPostTableViewControllerDelegate <NSObject>

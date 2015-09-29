@@ -15,16 +15,17 @@
 
 @interface LKPostDetailViewController : LCUIViewController
 
+LC_ST_SIGNAL(UpdatePostTags);
+
 LC_PROPERTY(strong) LKHomepageHeader * header;
 LC_PROPERTY(strong) LCUITableView * tableView;
-
 LC_PROPERTY(strong) LKPost * post;
 
--(instancetype) initWithPost:(LKPost *)post;
+- (instancetype)initWithPost:(LKPost *)post;
 
--(void) openCommentsView:(LKTag *)tag;
+- (void)openCommentsView:(LKTag *)tag;
 
--(void) setPresendModelAnimationOpen;
+- (void)setPresendModelAnimationOpen;
 
 @property (nonatomic, weak) id <LKPostDetailViewControllerDelegate> delegate;
 @property (nonatomic, weak) id <LKPostDetailViewControllerCancelFavorDelegate> cancelFavordelegate;

@@ -74,6 +74,8 @@ LC_PROPERTY(assign) BOOL favorited;
 
 @implementation LKPostDetailViewController
 
+LC_IMP_SIGNAL(UpdatePostTags);
+
 -(void) dealloc
 {
     [self.bigImageRequestOperation cancel];
@@ -138,18 +140,12 @@ LC_PROPERTY(assign) BOOL favorited;
 
 #pragma mark -
 
--(instancetype) initWithPost:(LKPost *)post
-{
+-(instancetype) initWithPost:(LKPost *)post {
     if (self = [super init]) {
-        
         self.post = post;
-        
         if (self.post.user.id.integerValue) {
-            
             LKUser * user = LKUserInfoCache.singleton[self.post.user.id.description];
-            
             if(!self.post.user.likes && user){
-                
                 self.post.user = user;
             }            
         }
@@ -309,8 +305,6 @@ LC_PROPERTY(assign) BOOL favorited;
                 });
                 
                 JTSImageInfo * info = [[JTSImageInfo alloc] init];
-                
-                //if (self.bigContentURL) {
                 
                 NSString * content = nil;
                 
@@ -1161,6 +1155,8 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             }];
             
             [self.shareTools hideTools];
+            
+            self.SEND(self.UpdatePostTags).object = self.post;
         };
         
         cell.willRequest = ^(LKTagItemView * item){
@@ -1179,8 +1175,6 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             @normally(self);
             
             //[self _beginComment:tag];
-            
-            
 
             UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
             

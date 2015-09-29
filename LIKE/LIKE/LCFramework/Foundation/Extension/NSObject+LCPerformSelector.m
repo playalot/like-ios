@@ -12,16 +12,13 @@
 
 -(LCPerformSelector) PERFORM
 {
-    LCPerformSelector block = ^ id (SEL selector, __strong id object){
-        
+    LCPerformSelector block = ^ id (SEL selector, __strong id object) {
         if ([self respondsToSelector:selector]) {
-            
             _Pragma("clang diagnostic push") \
             _Pragma("clang diagnostic ignored \"-Warc-performSelector-leaks\"") \
             return [self performSelector:selector withObject:object];
             _Pragma("clang diagnostic pop") \
         }
-        
         return nil;
     };
     

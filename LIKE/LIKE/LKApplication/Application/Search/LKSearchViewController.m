@@ -28,7 +28,6 @@ LC_PROPERTY(strong) LCUIButton *searchTip;
 LC_PROPERTY(strong) LCUIButton *doneButton;
 
 LC_PROPERTY(strong) LKSearchView *searchView;
-LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 
 @end
 

@@ -111,6 +111,12 @@ LC_PROPERTY(copy) NSString *observedDataSourceKeyPath;
     }
 }
 
+- (void)refresh {
+    if (self.tableView) {
+        [self.tableView reloadData];
+    }
+}
+
 #pragma mark -
 
 -(void) addTag:(NSString *)tag onPost:(LKPost *)post onCell:(LKPostTableViewCell *)cell {

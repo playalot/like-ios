@@ -192,12 +192,16 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
         currentResponder = currentResponder.nextResponder;
     }
     LKSearchViewController *searchViewController = (LKSearchViewController *)currentResponder;
-    self.browsingViewController = [[LKPostTableViewController alloc] init];
+    
+    if (!self.browsingViewController) {
+        self.browsingViewController = [[LKPostTableViewController alloc] init];
+    }
     self.browsingViewController.delegate = self;
     self.browsingViewController.datasource = self.posts;
     self.browsingViewController.currentIndex = [self.posts indexOfObject:signal.object];
     self.browsingViewController.title = self.tagValue.tag;
     [self.browsingViewController watchForChangeOfDatasource:self dataSourceKey:@"posts"];
+    [self.browsingViewController refresh];
     [searchViewController.navigationController pushViewController:self.browsingViewController animated:YES];
 }
 

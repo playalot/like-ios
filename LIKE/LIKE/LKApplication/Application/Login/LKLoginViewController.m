@@ -607,7 +607,6 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     }
     
     [self cancelAllRequests];
-    
     self.codeButton.userInteractionEnabled = NO;
     self.codeButton.title = LC_LO(@"获取中...");
     
@@ -632,33 +631,6 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
              self.codeButton.userInteractionEnabled = YES;
          }
      }];
-    
-//    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"sendSmsCode"].POST_METHOD();
-//    
-//    [interface addParameter:[LKTimestampEncryption encryption:[[NSDate date] timeIntervalSince1970]] key:@"token"];
-//    [interface addParameter:self.phoneField.text key:@"mobile"];
-//    [interface addParameter:[LKISOCountryCodes countryWithCode:self.countryCode.text] key:@"zone"];
-//    
-//    @weakly(self);
-//    
-//    [self request:interface complete:^(LKHttpRequestResult * result) {
-//        
-//        @normally(self);
-//        
-//        if (result.state == LKHttpRequestStateFinished) {
-//            
-//            [self $beginTimer];
-//            
-//            self.codeButton.userInteractionEnabled = YES;
-//        }
-//        else if (result.state == LKHttpRequestStateFailed){
-//            
-//            [self showTopMessageErrorHud:result.error];
-//            
-//            self.codeButton.title = LC_LO(@"获取验证码");
-//            self.codeButton.userInteractionEnabled = YES;
-//        }
-//    }];
 }
 
 /**

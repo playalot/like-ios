@@ -128,7 +128,7 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
     self.cartoonImageView.viewFrameHeight = 245;
     self.cartoonImageView.viewCenterX = self.tableView.viewCenterX;
     self.cartoonImageView.viewFrameY = 52 + 48;
-    self.cartoonImageView.image = [UIImage imageNamed:@"segment_photo.png" useCache:YES];
+//    self.cartoonImageView.image = [UIImage imageNamed:@"segment_photo.png" useCache:YES];
     self.cartoonImageView.hidden = YES;
     self.tableView.ADD(self.cartoonImageView);
     
@@ -246,28 +246,29 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
     tableViewHeader.didSelected = ^(NSInteger index){
         @normally(self);
         self.currentType = index;
+        self.cartoonImageView.image= nil;
         
-        switch (index) {
-            case 0:
-                self.cartoonImageView.hidden = self.userCenterModel.photoArray.count ? YES : NO;
-                self.cartoonImageView.image = [UIImage imageNamed:@"segment_photo.png" useCache:YES];
-                break;
-            case 1:
-                self.cartoonImageView.hidden = self.userCenterModel.focusArray.count ? YES : NO;
-                self.cartoonImageView.image = [UIImage imageNamed:@"segment_follow.png" useCache:YES];
-                break;
-            case 2:
-                self.cartoonImageView.hidden = self.userCenterModel.fansArray.count ? YES : NO;
-                self.cartoonImageView.image = [UIImage imageNamed:@"segment_fans.png" useCache:YES];
-                break;
-            case 3:
-                self.cartoonImageView.hidden = self.userCenterModel.favorArray.count ? YES : NO;
-                self.cartoonImageView.image = [UIImage imageNamed:@"segment_favor.png" useCache:YES];
-                break;
-                
-            default:
-                break;
-        }
+//        switch (index) {
+//            case 0:
+//                self.cartoonImageView.hidden = self.userCenterModel.photoArray.count ? YES : NO;
+//                self.cartoonImageView.image = [UIImage imageNamed:@"segment_photo.png" useCache:YES];
+//                break;
+//            case 1:
+//                self.cartoonImageView.hidden = self.userCenterModel.focusArray.count ? YES : NO;
+//                self.cartoonImageView.image = [UIImage imageNamed:@"segment_follow.png" useCache:YES];
+//                break;
+//            case 2:
+//                self.cartoonImageView.hidden = self.userCenterModel.fansArray.count ? YES : NO;
+//                self.cartoonImageView.image = [UIImage imageNamed:@"segment_fans.png" useCache:YES];
+//                break;
+//            case 3:
+//                self.cartoonImageView.hidden = self.userCenterModel.favorArray.count ? YES : NO;
+//                self.cartoonImageView.image = [UIImage imageNamed:@"segment_favor.png" useCache:YES];
+//                break;
+//                
+//            default:
+//                break;
+//        }
     };
     
     
@@ -312,6 +313,16 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
             
             if (self.currentType == LKUserCenterModelTypePhotos) {
                 self.cartoonImageView.hidden = self.userCenterModel.photoArray.count ? YES : NO;
+                self.cartoonImageView.image = [UIImage imageNamed:@"segment_photo.png" useCache:YES];
+            } else if (self.currentType == LKUserCenterModelTypeFocus) {
+                self.cartoonImageView.hidden = self.userCenterModel.focusArray.count ? YES : NO;
+                self.cartoonImageView.image = [UIImage imageNamed:@"segment_follow.png" useCache:YES];
+            } else if (self.currentType == LKUserCenterModelTypeFans) {
+                self.cartoonImageView.hidden = self.userCenterModel.fansArray.count ? YES : NO;
+                self.cartoonImageView.image = [UIImage imageNamed:@"segment_fans.png" useCache:YES];
+            } else if (self.currentType == LKUserCenterModelTypeFavor) {
+                self.cartoonImageView.hidden = self.userCenterModel.favorArray.count ? YES : NO;
+                self.cartoonImageView.image = [UIImage imageNamed:@"segment_favor.png" useCache:YES];
             }
         }
     };

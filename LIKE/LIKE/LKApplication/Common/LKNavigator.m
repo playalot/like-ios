@@ -172,10 +172,12 @@ LC_PROPERTY(strong) LKGuestFeedViewController *guestFeedNavViewController; // LK
 
 #pragma mark LKLoginViewControllerDelegate
 - (void)didLoginSucceeded:(NSDictionary *)userInfo {
+    NSLog(@"didLoginSucceeded");
     [self launchMasterMode];
 }
 
 - (void)didLoginFailed {
+    NSLog(@"didLoginFailed");
 }
 
 @end

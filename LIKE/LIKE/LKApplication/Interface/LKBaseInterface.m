@@ -44,4 +44,12 @@
     return resultDic;
 }
 
+- (NSInteger)errorCode {
+    return [self.responseJSONObject[@"code"] integerValue];
+}
+
+- (NSString *)errorMessage {
+    return self.responseJSONObject[@"message"];
+}
+
 @end

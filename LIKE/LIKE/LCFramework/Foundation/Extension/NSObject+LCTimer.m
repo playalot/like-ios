@@ -59,10 +59,8 @@ static NSMutableDictionary * __allTimers;
     [LCAssociate setAssociatedObject:self value:timers key:TIMER_SAVE_KEY];
 }
 
--(NSTimer *) fireTimer:(NSString *)name timeInterval:(NSTimeInterval)timeInterval repeat:(BOOL)repeat
-{
+-(NSTimer *) fireTimer:(NSString *)name timeInterval:(NSTimeInterval)timeInterval repeat:(BOOL)repeat {
     if ([self.timers objectForKey:name]){
-        
         return [self.timers objectForKey:name];
     }
     

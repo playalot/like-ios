@@ -477,8 +477,7 @@ LC_PROPERTY(assign) CGFloat cacheSize;
     [[LKNavigator navigator] launchGuestMode];
 }
 
--(void) uploadFeedback:(NSString *)feedback
-{
+-(void) uploadFeedback:(NSString *)feedback {
     [self showTopLoadingMessageHud:LC_LO(@"提交中...")];
     
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"feedback"].AUTO_SESSION().POST_METHOD();

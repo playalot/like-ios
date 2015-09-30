@@ -43,7 +43,6 @@ LC_PROPERTY(strong) LKUser * user;
 }
 
 - (void)setSessionToken:(NSString *)sessionToken {
-    if (!sessionToken) return;
     [LCKeychain setObject:sessionToken forKey:LK_SESSION_TOKEN];
     NSString *tmpToken = [LCKeychain objectForKey:LK_SESSION_TOKEN];
     if (!tmpToken) {
@@ -60,7 +59,6 @@ LC_PROPERTY(strong) LKUser * user;
 }
 
 - (void)setRefreshToken:(NSString *)refreshToken {
-    if (!refreshToken) return;
     [LCKeychain setObject:refreshToken forKey:LK_REFRESH_TOKEN];
     NSString *tmpToken = [LCKeychain objectForKey:LK_REFRESH_TOKEN];
     if (!tmpToken) {
@@ -77,9 +75,7 @@ LC_PROPERTY(strong) LKUser * user;
 }
 
 - (void)setExpiresIn:(NSString *)expiresIn {
-    if (!expiresIn) return;
     [LCKeychain setObject:expiresIn forKey:LK_EXPIRES_IN];
-    
     NSString *tmpToken = [LCKeychain objectForKey:LK_EXPIRES_IN];
     if (!tmpToken) {
         self[LK_EXPIRES_IN] = [LCEncryptorAES encryptString:expiresIn keyString:LK_AES_KEY ivString:LK_VI_KEY];
@@ -104,14 +100,6 @@ LC_PROPERTY(strong) LKUser * user;
                 self.user = [[LKUser alloc] init];
                 self.user.id = @(uid.integerValue);
             }
-            // 如果keychain没存数据，先存上
-//            id keyChainValue = [LCKeychain objectForKey:LK_CURRENT_USER];
-//            if (!keyChainValue) {
-//                [LCKeychain setObject:self.rawUserInfo forKey:LK_CURRENT_USER];
-//                [LCKeychain setObject:self.expiresIn forKey:LK_EXPIRES_IN];
-//                [LCKeychain setObject:self.sessionToken forKey:LK_SESSION_TOKEN];
-//                [LCKeychain setObject:self.refreshToken forKey:LK_REFRESH_TOKEN];
-//            }
         }
     }
     
@@ -133,10 +121,9 @@ LC_PROPERTY(strong) LKUser * user;
     self.rawUserInfo = nil;
     self.user = nil;
     self[LK_CURRENT_USER] = nil;
-    [LCKeychain removeObjectForKey:LK_SESSION_TOKEN];
-    [LCKeychain removeObjectForKey:LK_REFRESH_TOKEN];
-    [LCKeychain removeObjectForKey:LK_EXPIRES_IN];
-    [LCKeychain removeObjectForKey:LK_CURRENT_USER];
+    [self setSessionToken:nil];
+    [self setRefreshToken:nil];
+    [self setExpiresIn:nil];
 }
 
 - (void)setRawUserInfo:(NSDictionary *)rawUserInfo {

@@ -35,7 +35,7 @@ LC_PROPERTY(strong) LKHomeFeedViewController *homeFeedViewController;
     self.view.ADD(self.navigationBar);
     
     titleBtn.viewFrameX = (self.navigationBar.viewFrameWidth - titleBtn.viewFrameWidth) / 2;
-    titleBtn.viewFrameY = (self.navigationBar.viewFrameHeight - titleBtn.viewFrameHeight) / 2;
+    titleBtn.viewFrameY = 22 + (self.navigationBar.viewFrameHeight - 22 - titleBtn.viewFrameHeight) / 2;
     self.navigationBar.ADD(titleBtn);
 }
 

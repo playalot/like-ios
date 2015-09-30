@@ -21,7 +21,7 @@
 
 - (NSString *)requestUrl {
     if (!self.uid) return nil;
-    return [NSString stringWithFormat:@"/v1/user/%@/fans/%ld", self.uid, self.page
+    return [NSString stringWithFormat:@"/v1/user/%@/fans/%ld", self.uid, (long)self.page
             ];
 }
 

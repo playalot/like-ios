@@ -10,4 +10,8 @@
 
 @interface LKBaseInterface : LCBaseRequest
 
+- (NSInteger)errorCode;
+
+- (NSString *)errorMessage;
+
 @end

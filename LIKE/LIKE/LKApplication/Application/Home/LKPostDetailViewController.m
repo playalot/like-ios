@@ -274,18 +274,15 @@ LC_PROPERTY(assign) BOOL favorited;
                 
             
                 LC_FAST_ANIMATIONS_F(0.1, ^{
-                    
                     nav.alpha = 0;
                     back.alpha = 0;
                     more.alpha = 0;
-                    
                 }, ^(BOOL finished){
                 
                     
                 });
                 
                 JTSImageInfo * info = [[JTSImageInfo alloc] init];
-                
                 NSString * content = nil;
                 
                 if (self.post.raw_image) {
@@ -313,7 +310,6 @@ LC_PROPERTY(assign) BOOL favorited;
             }
         };
         
-        
         LCUIView *navView = LCUIView.view;
         navView.backgroundColor = LKColor.color;
         navView.viewFrameWidth = LC_DEVICE_WIDTH;
@@ -329,7 +325,6 @@ LC_PROPERTY(assign) BOOL favorited;
         timeLabel.viewCenterY = navView.viewCenterY;
         navView.ADD(timeLabel);
         self.timeLabel = timeLabel;
-        
         
         // 导航栏返回上一级按钮
         LCUIButton * backButton = LCUIButton.view;

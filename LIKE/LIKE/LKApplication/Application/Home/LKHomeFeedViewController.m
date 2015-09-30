@@ -62,9 +62,47 @@ LC_PROPERTY(weak) id delegate;
 - (void)buildUI {
     [self buildTableView];
     [self buildInputView];
+//    [self buildBottomBar];
     [self buildPullLoader];
     [self buildCellCache];
     [self loadData:LCUIPullLoaderDiretionTop];
+}
+
+- (void)buildBottomBar {
+    
+    UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0, LC_DEVICE_HEIGHT + 20 - 49 - 64, LC_DEVICE_WIDTH, 49)];
+    containerView.backgroundColor = [UIColor whiteColor];
+    
+    LCUIButton *loginButton = [[LCUIButton alloc] initWithFrame:CGRectMake(0, 0, containerView.viewMidWidth, 49)];
+    loginButton.title = LC_LO(@"登录");
+    loginButton.titleFont = LK_FONT(14);
+    loginButton.titleColor = [UIColor blackColor];
+    
+    LCUIButton *registButton = [[LCUIButton alloc] initWithFrame:CGRectMake(loginButton.viewRightX + 1, 0, containerView.viewMidWidth - 1, 49)];
+    registButton.title = LC_LO(@"注册");
+    registButton.titleFont = LK_FONT(14);
+    registButton.titleColor = [UIColor blackColor];
+    
+    LCUIImageView *lineView = [[LCUIImageView alloc] initWithImage:[UIImage imageNamed:@"SeparateLine.png" useCache:YES]];
+    lineView.viewFrameX = loginButton.viewRightX;
+    lineView.viewFrameY = 13;
+    lineView.viewFrameWidth = 1;
+    lineView.viewFrameHeight = 23;
+    
+    self.view.ADD(containerView);
+    containerView.ADD(loginButton);
+    containerView.ADD(lineView);
+    containerView.ADD(registButton);
+    
+    if (![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]) {
+        
+        self.tabBarController.tabBar.hidden = NO;
+        containerView.hidden = YES;
+    } else {
+        
+        self.tabBarController.tabBar.hidden = YES;
+        containerView.hidden = NO;
+    }
 }
 
 - (void)buildCellCache {

@@ -708,9 +708,13 @@ LC_PROPERTY(assign) BOOL favorited;
                         
             self.post.favorited = !favorited;
             
+            [LCUIAlertView showWithTitle:LC_LO(@"提醒") message:favorited ? LC_LO(@"取消收藏成功") : LC_LO(@"收藏成功") cancelTitle:LC_LO(@"确定")  otherTitle:nil didTouchedBlock:^(NSInteger integerValue) {
+                
+            }];
+            
         } else if (result.state == LKHttpRequestStateFailed) {
             
-            
+            [self showTopMessageErrorHud:result.error];
         }
     }];
 }

@@ -44,7 +44,6 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     self.launchOptions = launchOptions;
     
     self.home = [LKHomeViewController viewController];
-
     
     // 1.设置缓存
     NSURLCache *cache = [[NSURLCache alloc] initWithMemoryCapacity:4 * 1024 * 1024 diskCapacity:20 * 1024 * 1024 diskPath:nil];
@@ -145,6 +144,20 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     
     
+    NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    // 判断是否为推送打开
+    if(userInfo && LKLocalUser.singleton.isLogin)
+    {
+        //点击推送进来后
+        self.window.rootViewController = self.home;
+        //        [self.home performSelector:@selector(notificationAction) withObject:nil afterDelay:2];
+        return;
+    }
+    
+    self.tabBarController = [[LKTabBarController alloc] initWithViewControllers:@[LC_UINAVIGATION(self.home)]];
+    self.window.rootViewController = self.tabBarController;
+    
+
     if (!LKLocalUser.singleton.isLogin) {
 
         LCUIImageView * imageView = LCUIImageView.view;
@@ -186,20 +199,9 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
         }
     }
     
-    
-    NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-    // 判断是否为推送打开
-    if(userInfo && LKLocalUser.singleton.isLogin)
-    {
-        //点击推送进来后
-        self.window.rootViewController = self.home;
-        //        [self.home performSelector:@selector(notificationAction) withObject:nil afterDelay:2];
-        return;
-    }
-    
     // tabbarCtrl只放了一个主页控制器
-    self.tabBarController = [[LKTabBarController alloc] initWithViewControllers:@[LC_UINAVIGATION(self.home)]];
-    self.window.rootViewController = self.tabBarController;
+//    self.tabBarController = [[LKTabBarController alloc] initWithViewControllers:@[LC_UINAVIGATION(self.home)]];
+//    self.window.rootViewController = self.tabBarController;
 
 //    // welcom...
 //    [LKWelcome welcome];

@@ -700,9 +700,9 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal)
         
         if (favorPost.id.integerValue == post.id.integerValue) {
             
-            [self.tableView beginUpdates];
+//            [self.tableView beginUpdates];
             [self.userCenterModel.favorArray removeObject:favorPost];
-            [self.tableView endUpdates];
+//            [self.tableView endUpdates];
             
             [self.tableView reloadData];
             

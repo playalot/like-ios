@@ -362,15 +362,15 @@ LC_PROPERTY(getter=isSubscribed) BOOL subscribed;
 }
 
 LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
-//    LKPost * post = signal.object;
-//    LKPostDetailViewController * postDetail = [[LKPostDetailViewController alloc] initWithPost:post];
-//    UINavigationController * nav = LC_UINAVIGATION(postDetail);
-//    [postDetail setPresendModelAnimationOpen];
-//    [self.navigationController  presentViewController:nav animated:YES completion:nil];
+    LKPost * post = signal.object;
+    LKPostDetailViewController * postDetail = [[LKPostDetailViewController alloc] initWithPost:post];
+    UINavigationController * nav = LC_UINAVIGATION(postDetail);
+    [postDetail setPresendModelAnimationOpen];
+    [self.navigationController  presentViewController:nav animated:YES completion:nil];
     
-    LKPostTableViewController *postViewController = [LKPostTableViewController viewController];
-    postViewController.datasource = self.datasource;
-    [self.navigationController pushViewController:postViewController animated:YES];
+//    LKPostTableViewController *postViewController = [LKPostTableViewController viewController];
+//    postViewController.datasource = self.datasource;
+//    [self.navigationController pushViewController:postViewController animated:YES];
 }
 
 @end

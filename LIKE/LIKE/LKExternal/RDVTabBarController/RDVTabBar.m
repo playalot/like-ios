@@ -28,6 +28,7 @@
 
 @property (nonatomic) CGFloat itemWidth;
 @property (nonatomic) UIView *backgroundView;
+LC_PROPERTY(weak) LCUIButton *cameraButton;
 
 @end
 
@@ -37,6 +38,22 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self commonInitialization];
+        
+        // 初始化中间 plus 按钮
+        LCUIButton *cameraButton = LCUIButton.view;
+        self.cameraButton = cameraButton;
+        
+        // 设置 cameraButton 的属性
+        [cameraButton setImage:[UIImage imageNamed:@"tabbar_camera.png"]
+                      forState:UIControlStateNormal];
+        cameraButton.backgroundColor = [UIColor whiteColor];
+        
+        // 添加单击事件
+        [cameraButton addTarget:self action:@selector(cameraButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        
+        // 添加到视图中
+        [self addSubview:cameraButton];
+        
     }
     return self;
 }
@@ -61,6 +78,12 @@
 }
 
 - (void)layoutSubviews {
+    
+    // 设置button的frame
+    self.cameraButton.viewSize = CGSizeMake(82, 49);
+    self.cameraButton.viewCenterX = self.viewCenterX;
+    self.cameraButton.viewCenterY = self.viewFrameHeight * 0.5;
+
     CGSize frameSize = self.frame.size;
     CGFloat minimumContentHeight = [self minimumContentHeight];
     
@@ -68,7 +91,7 @@
                                             frameSize.width, frameSize.height)];
     
     [self setItemWidth:roundf((frameSize.width - [self contentEdgeInsets].left -
-                               [self contentEdgeInsets].right) / [[self items] count])];
+                               [self contentEdgeInsets].right) / ([[self items] count] + 1))];
     
     NSInteger index = 0;
     
@@ -85,6 +108,17 @@
                                   roundf(frameSize.height - itemHeight) - self.contentEdgeInsets.top,
                                   self.itemWidth, itemHeight - self.contentEdgeInsets.bottom)];
         [item setNeedsDisplay];
+        
+        // 从第三个开始,重新计算index
+        if (index == 2) {
+            index++;
+        }
+        
+        // 重新计算UITabBarButton的宽度
+        item.viewFrameWidth = self.viewFrameWidth / 5;
+        // 调整位置
+        item.viewFrameX = index * self.viewFrameWidth / 5;
+//        item.viewFrameY += 5;
         
         index++;
     }
@@ -166,6 +200,14 @@
                                                         green:245/255.0
                                                          blue:245/255.0
                                                         alpha:alpha]];
+}
+
+#pragma mark - cameraButton的单击事件
+- (void)cameraButtonClick:(LCUIButton *)cameraButton {
+    
+    if ([self.delegate respondsToSelector:@selector(tabBar:didClickCameraButton:)]) {
+        [self.delegate tabBar:self didClickCameraButton:cameraButton];
+    }
 }
 
 @end

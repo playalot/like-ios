@@ -37,6 +37,8 @@
  */
 - (void)tabBar:(RDVTabBar *)tabBar didSelectItemAtIndex:(NSInteger)index;
 
+- (void)tabBar:(RDVTabBar *)tabBar didClickCameraButton:(LCUIButton *)cameraButton;
+
 @end
 
 @interface RDVTabBar : UIView

@@ -417,7 +417,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     
     // Bind badge.
     NSInteger badgeCount = [userInfo[@"aps"][@"badge"] integerValue];
-    [[LKNavigator navigator] bindBadgeForItemIndex:3 badgeCount:badgeCount];
+    [[LKNavigator navigator] bindBadgeForItemIndex:2 badgeCount:badgeCount];
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {

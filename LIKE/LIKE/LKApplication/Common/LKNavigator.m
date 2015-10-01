@@ -13,6 +13,7 @@
 #import "RDVTabBarController.h"
 #import "RDVTabBarItem.h"
 #import "LKNotificationCount.h"
+#import "LKTabbarItem.h"
 
 @interface LKNavigator () <LKLoginViewControllerDelegate, RDVTabBarControllerDelegate>
 
@@ -93,9 +94,9 @@ LC_PROPERTY(strong) LKGuestFeedViewController *guestFeedNavViewController; // LK
 
 - (void)launchMasterMode {
     [self.mainViewController popToRootViewControllerAnimated:NO];
-//    [self setupViewControllers];
-    self.tabBarViewController = [LKTabbarViewController viewController];
-    [[LKNavigator navigator] pushViewController:self.tabBarViewController animated:NO];
+    [self setupViewControllers];
+//    self.tabBarViewController = [LKTabbarViewController viewController];
+    [[LKNavigator navigator] pushViewController:self.tabBarController animated:NO];
 }
 
 - (void)dismissAllViewControllers {

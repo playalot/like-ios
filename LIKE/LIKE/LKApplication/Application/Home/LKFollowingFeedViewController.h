@@ -12,8 +12,6 @@
 
 @interface LKFollowingFeedViewController : LCUIViewController
 
-- (void)refresh;
-
 - (void)updatePostFeed:(LKPost *)post;
 
 @end

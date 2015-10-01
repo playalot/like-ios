@@ -150,13 +150,13 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.tagsView.backgroundColor = LKColor.backgroundColor;
     self.ADD(self.tagsView);
     
-//    self.numLabel = UILabel.view;
-//    self.numLabel.viewFrameWidth = 100.0f;
-//    self.numLabel.viewFrameHeight = 30.0f;
-//    self.numLabel.viewFrameX = (self.viewFrameWidth - self.numLabel.viewFrameWidth) / 2;
-//    self.numLabel.backgroundColor = [UIColor greenColor];
-//    self.numLabel.textColor = [UIColor redColor];
-//    self.ADD(self.numLabel);
+    self.numLabel = UILabel.view;
+    self.numLabel.viewFrameWidth = 100.0f;
+    self.numLabel.viewFrameHeight = 30.0f;
+    self.numLabel.viewFrameX = (self.viewFrameWidth - self.numLabel.viewFrameWidth) / 2;
+    self.numLabel.backgroundColor = [UIColor greenColor];
+    self.numLabel.textColor = [UIColor redColor];
+    self.ADD(self.numLabel);
     
     @weakly(self);
     

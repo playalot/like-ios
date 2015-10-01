@@ -49,10 +49,6 @@ LC_PROPERTY(weak) id delegate;
 
 @implementation LKFollowingFeedViewController
 
-- (void)refresh {
-    [self.tableView reloadData];
-}
-
 - (void)calculateHeightList {
 //    self.heightList = [NSMutableArray array];
 //    for (LKPost *post in self.datasource) {

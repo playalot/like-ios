@@ -467,6 +467,20 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
         // Update header user informatio
         [self.userInfoModel getUserInfo:self.user.id];
         
+        if (type == LKUserCenterModelTypePhotos) {
+            self.cartoonImageView.hidden = self.userCenterModel.photoArray.count ? YES : NO;
+            self.cartoonImageView.image = [UIImage imageNamed:@"segment_photo.png" useCache:YES];
+        } else if (type == LKUserCenterModelTypeFocus) {
+            self.cartoonImageView.hidden = self.userCenterModel.focusArray.count ? YES : NO;
+            self.cartoonImageView.image = [UIImage imageNamed:@"segment_follow.png" useCache:YES];
+        } else if (type == LKUserCenterModelTypeFans) {
+            self.cartoonImageView.hidden = self.userCenterModel.fansArray.count ? YES : NO;
+            self.cartoonImageView.image = [UIImage imageNamed:@"segment_fans.png" useCache:YES];
+        } else if (type == LKUserCenterModelTypeFavor) {
+            self.cartoonImageView.hidden = self.userCenterModel.favorArray.count ? YES : NO;
+            self.cartoonImageView.image = [UIImage imageNamed:@"segment_favor.png" useCache:YES];
+        }
+        
         // Reload data
         [self.tableView reloadData];
         if (error) {

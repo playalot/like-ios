@@ -29,6 +29,7 @@
 #import "LKNavigator.h"
 
 #import "LCEncryptorAES.h"
+#import "LKChooseInterestView.h"
 
 @interface AppDelegate () <LC_CMD_IMP, RDVTabBarControllerDelegate>
 
@@ -73,7 +74,10 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
         if (!firstStart) {
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstStart"];
             [[NSUserDefaults standardUserDefaults] synchronize];
-            LKChooseTagView *chooseView = [LKChooseTagView chooseTagView];
+//            LKChooseTagView *chooseView = [LKChooseTagView chooseTagView];
+//            [UIApplication sharedApplication].keyWindow.ADD(chooseView);
+
+            LKChooseInterestView *chooseView = [[LKChooseInterestView alloc] initWithFrame:CGRectMake(0, 20, LC_DEVICE_WIDTH, LC_DEVICE_HEIGHT)];
             [UIApplication sharedApplication].keyWindow.ADD(chooseView);
         }
         

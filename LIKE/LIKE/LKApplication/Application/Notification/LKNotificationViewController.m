@@ -79,7 +79,7 @@ LC_PROPERTY(strong) LRUCache *precomputedCellCache;
     self.cartoonImageView.viewFrameHeight = 245;
     self.cartoonImageView.viewCenterX = self.tableView.viewCenterX;
     self.cartoonImageView.viewFrameY = 52 + 48;
-    self.cartoonImageView.image = [UIImage imageNamed:@"NotificationNoMessage.png" useCache:YES];
+    self.cartoonImageView.image = [UIImage imageNamed:@"NoFollowing.png" useCache:YES];
     self.cartoonImageView.hidden = YES;
     self.tableView.ADD(self.cartoonImageView);
     

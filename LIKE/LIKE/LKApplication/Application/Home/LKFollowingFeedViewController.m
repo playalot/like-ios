@@ -45,6 +45,8 @@ LC_PROPERTY(strong) LRUCache *precomputedCellCache;
 
 LC_PROPERTY(weak) id delegate;
 
+LC_PROPERTY(strong) LCUIImageView *noFollowingView;
+
 @end
 
 @implementation LKFollowingFeedViewController
@@ -64,6 +66,7 @@ LC_PROPERTY(weak) id delegate;
     
     [self buildTableView];
     [self buildInputView];
+    [self buildNoFollowingView];
     [self buildPullLoader];
     [self buildCellCache];
     [self loadData:LCUIPullLoaderDiretionTop];
@@ -136,6 +139,19 @@ LC_PROPERTY(weak) id delegate;
     
     self.inputView.willDismiss = ^(id value){
     };
+}
+
+- (void)buildNoFollowingView {
+    
+    LCUIImageView *noFollowingView = LCUIImageView.view;
+    noFollowingView.viewFrameWidth = 196;
+    noFollowingView.viewFrameHeight = 367;
+    noFollowingView.viewCenterX = self.view.viewCenterX;
+    noFollowingView.viewCenterY = self.view.viewCenterY;
+    noFollowingView.image = [UIImage imageNamed:@"NoFollowing.png" useCache:YES];
+    noFollowingView.hidden = YES;
+    self.noFollowingView = noFollowingView;
+    self.view.ADD(noFollowingView);
 }
 
 - (BOOL)checkTag:(NSString *)tag onTags:(NSArray *)onTags {
@@ -217,6 +233,11 @@ LC_PROPERTY(weak) id delegate;
             self.next = resultNext;
         
         NSArray *posts = followingInterface.posts;
+        
+        if (posts.count) {
+            
+            self.noFollowingView.hidden = NO;
+        }
         
         if (diretion == LCUIPullLoaderDiretionTop) {
             

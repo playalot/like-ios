@@ -211,6 +211,15 @@
 		1377F04C1B5E35D8008E21BC /* WMLArrayDiff.m in Sources */ = {isa = PBXBuildFile; fileRef = 1377F0481B5E35D8008E21BC /* WMLArrayDiff.m */; };
 		1377F04D1B5E35D8008E21BC /* WMLArrayDiffUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 1377F04A1B5E35D8008E21BC /* WMLArrayDiffUtility.m */; };
 		13877D081BBBFCE400521D2D /* Instant.png in Resources */ = {isa = PBXBuildFile; fileRef = 13877D071BBBFCE400521D2D /* Instant.png */; settings = {ASSET_TAGS = (); }; };
+		13877D0A1BBC197E00521D2D /* NoFollowing@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13877D091BBC197E00521D2D /* NoFollowing@3x.png */; settings = {ASSET_TAGS = (); }; };
+		13877D131BBCE49600521D2D /* Interest_aerolite@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13877D0C1BBCE49600521D2D /* Interest_aerolite@3x.png */; settings = {ASSET_TAGS = (); }; };
+		13877D141BBCE49600521D2D /* Interest_bottom@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13877D0D1BBCE49600521D2D /* Interest_bottom@3x.png */; settings = {ASSET_TAGS = (); }; };
+		13877D151BBCE49600521D2D /* Interest_Jupiter@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13877D0E1BBCE49600521D2D /* Interest_Jupiter@3x.png */; settings = {ASSET_TAGS = (); }; };
+		13877D161BBCE49600521D2D /* Interest_meteor@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13877D0F1BBCE49600521D2D /* Interest_meteor@3x.png */; settings = {ASSET_TAGS = (); }; };
+		13877D171BBCE49600521D2D /* Interest_mushroom@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13877D101BBCE49600521D2D /* Interest_mushroom@3x.png */; settings = {ASSET_TAGS = (); }; };
+		13877D181BBCE49600521D2D /* Interest_satellite_large@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13877D111BBCE49600521D2D /* Interest_satellite_large@3x.png */; settings = {ASSET_TAGS = (); }; };
+		13877D191BBCE49600521D2D /* Interest_satellite_small@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13877D121BBCE49600521D2D /* Interest_satellite_small@3x.png */; settings = {ASSET_TAGS = (); }; };
+		13877D1D1BBCE5EC00521D2D /* LKChooseInterestView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13877D1C1BBCE5EC00521D2D /* LKChooseInterestView.m */; settings = {ASSET_TAGS = (); }; };
 		13878E8F1BB39B0B00F4E27F /* tabbar_camera@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13878E851BB39B0B00F4E27F /* tabbar_camera@3x.png */; };
 		13878E901BB39B0B00F4E27F /* tabbar_homeLine_selected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13878E861BB39B0B00F4E27F /* tabbar_homeLine_selected@3x.png */; };
 		13878E911BB39B0B00F4E27F /* tabbar_homeLine@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13878E871BB39B0B00F4E27F /* tabbar_homeLine@3x.png */; };
@@ -1228,6 +1237,16 @@
 		1377F0491B5E35D8008E21BC /* WMLArrayDiffUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMLArrayDiffUtility.h; sourceTree = "<group>"; };
 		1377F04A1B5E35D8008E21BC /* WMLArrayDiffUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMLArrayDiffUtility.m; sourceTree = "<group>"; };
 		13877D071BBBFCE400521D2D /* Instant.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Instant.png; sourceTree = "<group>"; };
+		13877D091BBC197E00521D2D /* NoFollowing@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NoFollowing@3x.png"; sourceTree = "<group>"; };
+		13877D0C1BBCE49600521D2D /* Interest_aerolite@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Interest_aerolite@3x.png"; sourceTree = "<group>"; };
+		13877D0D1BBCE49600521D2D /* Interest_bottom@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Interest_bottom@3x.png"; sourceTree = "<group>"; };
+		13877D0E1BBCE49600521D2D /* Interest_Jupiter@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Interest_Jupiter@3x.png"; sourceTree = "<group>"; };
+		13877D0F1BBCE49600521D2D /* Interest_meteor@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Interest_meteor@3x.png"; sourceTree = "<group>"; };
+		13877D101BBCE49600521D2D /* Interest_mushroom@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Interest_mushroom@3x.png"; sourceTree = "<group>"; };
+		13877D111BBCE49600521D2D /* Interest_satellite_large@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Interest_satellite_large@3x.png"; sourceTree = "<group>"; };
+		13877D121BBCE49600521D2D /* Interest_satellite_small@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Interest_satellite_small@3x.png"; sourceTree = "<group>"; };
+		13877D1B1BBCE5EC00521D2D /* LKChooseInterestView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKChooseInterestView.h; sourceTree = "<group>"; };
+		13877D1C1BBCE5EC00521D2D /* LKChooseInterestView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKChooseInterestView.m; sourceTree = "<group>"; };
 		13878E851BB39B0B00F4E27F /* tabbar_camera@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_camera@3x.png"; sourceTree = "<group>"; };
 		13878E861BB39B0B00F4E27F /* tabbar_homeLine_selected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_homeLine_selected@3x.png"; sourceTree = "<group>"; };
 		13878E871BB39B0B00F4E27F /* tabbar_homeLine@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_homeLine@3x.png"; sourceTree = "<group>"; };
@@ -2970,6 +2989,20 @@
 			path = iOS;
 			sourceTree = "<group>";
 		};
+		13877D0B1BBCE47B00521D2D /* Interest */ = {
+			isa = PBXGroup;
+			children = (
+				13877D0C1BBCE49600521D2D /* Interest_aerolite@3x.png */,
+				13877D0D1BBCE49600521D2D /* Interest_bottom@3x.png */,
+				13877D0E1BBCE49600521D2D /* Interest_Jupiter@3x.png */,
+				13877D0F1BBCE49600521D2D /* Interest_meteor@3x.png */,
+				13877D101BBCE49600521D2D /* Interest_mushroom@3x.png */,
+				13877D111BBCE49600521D2D /* Interest_satellite_large@3x.png */,
+				13877D121BBCE49600521D2D /* Interest_satellite_small@3x.png */,
+			);
+			path = Interest;
+			sourceTree = "<group>";
+		};
 		1387C33B1B3139B700B065A7 /* Facebook */ = {
 			isa = PBXGroup;
 			children = (
@@ -3914,6 +3947,7 @@
 		138EDECA1AD7B65B0020957C /* LKResource */ = {
 			isa = PBXGroup;
 			children = (
+				13877D0B1BBCE47B00521D2D /* Interest */,
 				13B9A20F1BB92531007D2893 /* Search */,
 				1304ABD01BABC8BF00C9EA2D /* Notification */,
 				1357351A1B2EDFC50032515C /* Data */,
@@ -4671,6 +4705,8 @@
 				BCD148121BB3DCA60062C463 /* LKPostView.m */,
 				BCD148141BB3F3AC0062C463 /* LKTagItemView.h */,
 				BCD148151BB3F3AC0062C463 /* LKTagItemView.m */,
+				13877D1B1BBCE5EC00521D2D /* LKChooseInterestView.h */,
+				13877D1C1BBCE5EC00521D2D /* LKChooseInterestView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -5227,6 +5263,7 @@
 		13FCC0911ADF5E930008DB41 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				13877D091BBC197E00521D2D /* NoFollowing@3x.png */,
 				1351B2D01BBA8AFE004DFEEC /* CancelSubscribe@3x.png */,
 				1351B2D11BBA8AFE004DFEEC /* Subscribe@3x.png */,
 				13E491021BB5510D009840B9 /* AddNewTag@3x.png */,
@@ -5526,6 +5563,7 @@
 				138EDBFC1AD7B08A0020957C /* Main.storyboard in Resources */,
 				135E54DE1BB8E68A005FBB84 /* SettingBinding@3x.png in Resources */,
 				1351B2CA1BBA5BC3004DFEEC /* WeiboLogin@3x.png in Resources */,
+				13877D151BBCE49600521D2D /* Interest_Jupiter@3x.png in Resources */,
 				138EDC011AD7B08A0020957C /* LaunchScreen.xib in Resources */,
 				13478CB81B6636770012EDA2 /* LittleYouLike@3x.png in Resources */,
 				13FC2C081BB4087D0036E514 /* CameraChange@3x.png in Resources */,
@@ -5539,6 +5577,7 @@
 				1351B2EC1BBA916B004DFEEC /* NotificationOfficalIcon2@3x.png in Resources */,
 				13B5B4E81B15CB6800252A78 /* TalkTip@3x.png in Resources */,
 				1304ABD91BABC8C500C9EA2D /* NotificationOfficalIcon@3x.png in Resources */,
+				13877D181BBCE49600521D2D /* Interest_satellite_large@3x.png in Resources */,
 				135D5C041ADFD21E00811B06 /* CameraCut@3x.png in Resources */,
 				138EDF0C1AD7E19D0020957C /* LoginBackground@3x.jpg in Resources */,
 				139054C21B994A6D00DBF34A /* Info.plist in Resources */,
@@ -5555,10 +5594,12 @@
 				135E54DF1BB8E68A005FBB84 /* SettingHead@3x.png in Resources */,
 				13F505101B0C5EAC00D8D484 /* QQIcon@3x.png in Resources */,
 				131091B51BB2BD9A006518CA /* Favor_normal@3x.png in Resources */,
+				13877D171BBCE49600521D2D /* Interest_mushroom@3x.png in Resources */,
 				13DA0FC61AEB8AFE005B9476 /* CameraFocus@3x.png in Resources */,
 				130CF59C1BB00CD8002F4189 /* segment_fans@3x.png in Resources */,
 				138EDE8C1AD7B0A30020957C /* LCInternationalization.bundle in Resources */,
 				13B5B4E61B15CB6800252A78 /* TalkIcon@3x.png in Resources */,
+				13877D131BBCE49600521D2D /* Interest_aerolite@3x.png in Resources */,
 				13C363CC1BB030A8004CE0FA /* NotificationNoMessage@3x.png in Resources */,
 				1351B2EA1BBA916B004DFEEC /* NotificationFocusIcon2@3x.png in Resources */,
 				132622AE1B93FD4C0074C589 /* PushConfig.plist in Resources */,
@@ -5638,6 +5679,7 @@
 				135E54D01BB8DED2005FBB84 /* NotificationFocusIcon@3x.png in Resources */,
 				135DBAF71AE60577004AD150 /* NavigationBarMore@3x.png in Resources */,
 				13FC2C0C1BB4087D0036E514 /* CameraPhotos@3x.png in Resources */,
+				13877D161BBCE49600521D2D /* Interest_meteor@3x.png in Resources */,
 				1319156B1B8C863100EC0F42 /* 旅行.png in Resources */,
 				133A31851B5D0D3400AB74A4 /* SearchPlaceholderIcon@3x.png in Resources */,
 				13D9BF251AEB997E0020C94F /* Ansel.png in Resources */,
@@ -5661,8 +5703,10 @@
 				13CF22A01BB258C20087DD89 /* LittleTag@3x.png in Resources */,
 				13D9BF281AEB997E0020C94F /* Holga.png in Resources */,
 				1359F4A01B6A237400A0ABE9 /* GtaFranklin.png in Resources */,
+				13877D0A1BBC197E00521D2D /* NoFollowing@3x.png in Resources */,
 				1326228F1B8EE1150074C589 /* 手办.png in Resources */,
 				13D9BF2A1AEB997E0020C94F /* Luna.png in Resources */,
+				13877D191BBCE49600521D2D /* Interest_satellite_small@3x.png in Resources */,
 				1357352B1B2EF44E0032515C /* QQLogin@3x.png in Resources */,
 				13E27F0E1AFA1A4900C17362 /* HomeLikeIcon@3x.png in Resources */,
 				13877D081BBBFCE400521D2D /* Instant.png in Resources */,
@@ -5691,6 +5735,7 @@
 				13878E961BB39B0B00F4E27F /* tabbar_search@3x.png in Resources */,
 				1351B2C81BBA5BC3004DFEEC /* VisitorIcon@3x.png in Resources */,
 				134765341AE2564D0055D099 /* PostDidFinish@3x.png in Resources */,
+				13877D141BBCE49600521D2D /* Interest_bottom@3x.png in Resources */,
 				134D92F41B8DA8A0004CFAC8 /* 喷漆.png in Resources */,
 				13892C3D1B1C44780053303E /* NavigationBarDismiss@3x.png in Resources */,
 				1351B2C71BBA5BC3004DFEEC /* PhoneIcon@3x.png in Resources */,
@@ -6039,6 +6084,7 @@
 				1373C46D1B847A6000A6C55A /* UIImage+GIF.m in Sources */,
 				139054D11B994A6D00DBF34A /* GPUImageBulgeDistortionFilter.m in Sources */,
 				139B06891ADBE5F6006A260F /* NSObject+LKTopHud.m in Sources */,
+				13877D1D1BBCE5EC00521D2D /* LKChooseInterestView.m in Sources */,
 				1347656B1AE25EA40055D099 /* QNResumeUpload.m in Sources */,
 				138EDE841AD7B0A30020957C /* LCSanbox.m in Sources */,
 				BC12A6521BA023E600B99CB5 /* LKPostTableViewController.m in Sources */,

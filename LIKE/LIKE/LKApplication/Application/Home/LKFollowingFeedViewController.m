@@ -234,10 +234,7 @@ LC_PROPERTY(strong) LCUIImageView *noFollowingView;
         
         NSArray *posts = followingInterface.posts;
         
-        if (posts.count) {
-            
-            self.noFollowingView.hidden = NO;
-        }
+        self.noFollowingView.hidden = posts.count;
         
         if (diretion == LCUIPullLoaderDiretionTop) {
             

@@ -75,10 +75,10 @@ LC_PROPERTY(strong) LRUCache *precomputedCellCache;
     self.view.ADD(self.tableView);
     
     self.cartoonImageView = LCUIImageView.view;
-    self.cartoonImageView.viewFrameWidth = 169;
-    self.cartoonImageView.viewFrameHeight = 245;
+    self.cartoonImageView.viewFrameWidth = 196;
+    self.cartoonImageView.viewFrameHeight = 367;
     self.cartoonImageView.viewCenterX = self.tableView.viewCenterX;
-    self.cartoonImageView.viewFrameY = 52 + 48;
+    self.cartoonImageView.viewCenterY = self.tableView.viewCenterY;
     self.cartoonImageView.image = [UIImage imageNamed:@"NoFollowing.png" useCache:YES];
     self.cartoonImageView.hidden = YES;
     self.tableView.ADD(self.cartoonImageView);

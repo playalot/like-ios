@@ -93,8 +93,9 @@ LC_PROPERTY(strong) LKGuestFeedViewController *guestFeedNavViewController; // LK
 
 - (void)launchMasterMode {
     [self.mainViewController popToRootViewControllerAnimated:NO];
-    [self setupViewControllers];
-    [[LKNavigator navigator] pushViewController:self.tabBarController animated:NO];
+//    [self setupViewControllers];
+    self.tabBarViewController = [LKTabbarViewController viewController];
+    [[LKNavigator navigator] pushViewController:self.tabBarViewController animated:NO];
 }
 
 - (void)dismissAllViewControllers {
@@ -122,20 +123,20 @@ LC_PROPERTY(strong) LKGuestFeedViewController *guestFeedNavViewController; // LK
                              initWithViewControllers:@[
                                                        LC_UINAVIGATION(self.mainFeedViewController),
                                                        LC_UINAVIGATION(self.searchViewController),
-                                                       LC_UINAVIGATION(self.cameraRollViewController),
+//                                                       LC_UINAVIGATION(self.cameraRollViewController),
                                                        LC_UINAVIGATION(self.notificationViewController),
                                                        LC_UINAVIGATION(self.userCenterViewController)]];
     self.tabBarController.delegate = self;
     
     NSArray *imageNames = @[@"tabbar_homeLine",
                             @"tabbar_search",
-                            @"tabbar_camera",
+//                            @"tabbar_camera",
                             @"tabbar_notification",
                             @"tabbar_userCenter"];
     
     NSArray *selectedImageNames = @[@"tabbar_homeLine_selected",
                                     @"tabbar_search_selected",
-                                    @"tabbar_camera",
+//                                    @"tabbar_camera",
                                     @"tabbar_notification_selected",
                                     @"tabbar_userCenter_selected"];
     
@@ -159,6 +160,7 @@ LC_PROPERTY(strong) LKGuestFeedViewController *guestFeedNavViewController; // LK
     }
 }
 
+#pragma mark - ***** RDVTabBarControllerDelegate *****
 - (BOOL)tabBarController:(RDVTabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
     if (viewController == self.mainFeedViewController) {
         [self.mainFeedViewController refresh];

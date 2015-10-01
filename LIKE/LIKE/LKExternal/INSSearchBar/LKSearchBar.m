@@ -230,7 +230,7 @@ static NSTimeInterval const kLKSearchBarAnimationStepDuration = 0.25;
 				
 				self.searchFrame.layer.backgroundColor = [UIColor whiteColor].CGColor;
 				self.searchImageViewOff.alpha = 0.0;
-				self.searchImageViewOn.alpha = 1.0;
+				self.searchImageViewOn.alpha = 0.0;
 				self.searchField.alpha = 1.0;
 				
 			} completion:^(BOOL finished) {
@@ -390,7 +390,7 @@ static NSTimeInterval const kLKSearchBarAnimationStepDuration = 0.25;
             self.searchImageCrossRight.alpha = 0.0;
             self.searchImageCircle.frame = CGRectMake(0.0, -2, 18.0, 18.0);
             self.searchImageCrossLeft.frame = CGRectMake(14.0, 12.0, 8.0, 8.0);
-            self.searchImageViewOn.alpha = 1.0;
+            self.searchImageViewOn.alpha = 0.0;
             self.searchImageCircle.alpha = 0.0;
             self.searchImageCrossLeft.alpha = 0.0;
             

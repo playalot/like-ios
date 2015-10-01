@@ -696,11 +696,8 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
             } else {
                 [self showTopMessageErrorHud:error];
             }
-            
         }];
-        
-    }
-    else if ([view.tagString isEqualToString:@"WeiboLogin"]) {
+    } else if ([view.tagString isEqualToString:@"WeiboLogin"]) {
         
         [LKSinaShare.singleton login:^(NSString *uid, NSString *accessToken, NSString *error) {
             
@@ -710,10 +707,8 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
             } else {
                 [self showTopMessageErrorHud:error];
             }
-            
         }];
-    }
-    else if ([view.tagString isEqualToString:@"FacebookLogin"]){
+    } else if ([view.tagString isEqualToString:@"FacebookLogin"]){
         
         [LKFacebookShare.singleton login:^(NSString *uid, NSString *accessToken, NSString * nick, NSString *error) {
             
@@ -727,10 +722,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
                 
                 [self showTopMessageErrorHud:error];
             }
-            
         }];
-        
-        
     };
 }
 

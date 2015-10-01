@@ -125,10 +125,18 @@ LC_PROPERTY(strong) LRUCache *precomputedCellCache;
 }
 
 - (UITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    LKNotificationCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Cell" andClass:[LKNotificationCell class]];
-    LKNotificationMiniCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Cell" andClass:[LKNotificationMiniCell class]];
-    cell.notification = self.notificationModel.datasource[indexPath.row];
-    return cell;
+    
+    if (UI_IS_IPHONE6PLUS) {
+        
+        LKNotificationCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Cell" andClass:[LKNotificationCell class]];
+        cell.notification = self.notificationModel.datasource[indexPath.row];
+        return cell;
+    } else {
+        
+        LKNotificationMiniCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Cell" andClass:[LKNotificationMiniCell class]];
+        cell.notification = self.notificationModel.datasource[indexPath.row];
+        return cell;
+    }
 }
 
 - (CGFloat)tableView:(LCUITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -136,9 +144,16 @@ LC_PROPERTY(strong) LRUCache *precomputedCellCache;
 }
 
 - (CGFloat)tableView:(LCUITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    LKNotificationCell *notiCell = (LKNotificationCell *)[self tableView:tableView cellForRowAtIndexPath:indexPath];
-    LKNotificationMiniCell *notiCell = (LKNotificationMiniCell *)[self tableView:tableView cellForRowAtIndexPath:indexPath];
-    return notiCell.cellHeight;
+    
+    if (UI_IS_IPHONE6PLUS) {
+        
+        LKNotificationCell *notiCell = (LKNotificationCell *)[self tableView:tableView cellForRowAtIndexPath:indexPath];
+        return notiCell.cellHeight;
+    } else {
+        
+        LKNotificationMiniCell *notiCell = (LKNotificationMiniCell *)[self tableView:tableView cellForRowAtIndexPath:indexPath];
+        return notiCell.cellHeight;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

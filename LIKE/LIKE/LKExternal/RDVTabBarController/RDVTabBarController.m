@@ -262,11 +262,20 @@
 }
 
 - (void)tabBar:(RDVTabBar *)tabBar didSelectItemAtIndex:(NSInteger)index {
+    
+    NSLog(@"%zd", index);
     if (index < 0 || index >= [[self viewControllers] count]) {
         return;
     }
     
     [self setSelectedIndex:index];
+    
+    if (index == 2) {
+        
+        RDVTabBarItem *item = tabBar.items[index];
+        [item setFinishedSelectedImage:[UIImage imageNamed:@"tabbar_notification_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"tabbar_notification.png"]];
+        [item setNeedsDisplay];
+    }
     
     if ([[self delegate] respondsToSelector:@selector(tabBarController:didSelectViewController:)]) {
         [[self delegate] tabBarController:self didSelectViewController:[self viewControllers][index]];
@@ -277,6 +286,7 @@
     
     LKCameraRollViewController *composeCtrl = [LKCameraRollViewController viewController];
     [self presentViewController:LC_UINAVIGATION(composeCtrl) animated:YES completion:nil];
+//    [LCUIApplication presentViewController:LC_UINAVIGATION(composeCtrl) animation:YES];
 }
 
 @end

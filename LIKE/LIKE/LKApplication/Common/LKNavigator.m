@@ -106,8 +106,8 @@ LC_PROPERTY(strong) LKGuestFeedViewController *guestFeedNavViewController; // LK
 - (void)bindBadgeForItemIndex:(NSInteger)index badgeCount:(NSInteger)badgeCount {
     if (badgeCount > 0) {
         RDVTabBarItem *item = self.tabBarController.tabBar.items[index];
-        [item setBackgroundSelectedImage:[UIImage imageNamed:@"tabbar_notification_selected.png"]
-                     withUnselectedImage:[UIImage imageNamed:@"tabbar_notification_badge.png"]];
+        [item setFinishedSelectedImage:[UIImage imageNamed:@"tabbar_notification_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"tabbar_notification_badge.png"]];
+        [item setNeedsDisplay];
         [LKNotificationCount bindView:item withBadgeCount:badgeCount];
     }
 }
@@ -129,10 +129,11 @@ LC_PROPERTY(strong) LKGuestFeedViewController *guestFeedNavViewController; // LK
                                                        LC_UINAVIGATION(self.userCenterViewController)]];
     self.tabBarController.delegate = self;
     
+    NSString *cache =  LKUserDefaults.singleton[self.class.description];
     NSArray *imageNames = @[@"tabbar_homeLine",
                             @"tabbar_search",
 //                            @"tabbar_camera",
-                            @"tabbar_notification",
+                            cache != nil ? @"tabbar_notification_badge" : @"tabbar_notification",
                             @"tabbar_userCenter"];
     
     NSArray *selectedImageNames = @[@"tabbar_homeLine_selected",
@@ -144,6 +145,7 @@ LC_PROPERTY(strong) LKGuestFeedViewController *guestFeedNavViewController; // LK
     
     NSInteger i = 0;
     for (UIView *view in self.tabBarController.tabBar.items) {
+        
         if ([view isKindOfClass:[RDVTabBarItem class]]) {
             RDVTabBarItem *item = (RDVTabBarItem *)view;
             [item setFinishedSelectedImage:[[UIImage imageNamed:selectedImageNames[i]]
@@ -151,11 +153,7 @@ LC_PROPERTY(strong) LKGuestFeedViewController *guestFeedNavViewController; // LK
                withFinishedUnselectedImage:[[UIImage imageNamed:imageNames[i]]
                                             imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
             [item setBackgroundColor:[UIColor whiteColor]];
-            if (i == 3) {
-                LCUIBadgeView *badgeView = LCUIBadgeView.view;
-                badgeView.frame = CGRectMake(40 * LC_DEVICE_WIDTH / 414, 13, 2, 2);
-                item.ADD(badgeView);
-            }
+
             i++;
         }
     }

@@ -20,6 +20,7 @@
 #import <SMS_SDK/SMS_SDK.h>
 #import <SMS_SDK/CountryAndAreaCode.h>
 #import "LKChooseTagView.h"
+#import "LKChooseInterestView.h"
 
 typedef NS_ENUM(NSInteger, LKOtherLoginType)
 {
@@ -159,7 +160,65 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     return image;
 }
 
-- (void)buildUI {
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+//    self.view.backgroundColor = [UIColor clearColor];
+    self.tableView.scrollEnabled = NO;
+    self.userInfoModel = LKUserInfoModel.new.OBSERVER(self);
+    
+    @weakly(self);
+    
+    self.userInfoModel.requestFinished = ^(LKHttpRequestResult *result, NSString *error){
+        
+        @normally(self);
+        
+        if (error) {
+            
+            [self showTopMessageErrorHud:error];
+            
+            if (self.delegate) {
+                [self.delegate didLoginFailed];
+            }
+            
+        } else {
+            
+            self.maskView.hidden = YES;
+            
+            NSMutableDictionary *dic =  [self.userInfoModel.rawUserInfo mutableCopy];
+            
+            [LKLocalUser login:dic];
+            LKLocalUser.singleton.sessionToken = self.sesstionToken;
+            LKLocalUser.singleton.refreshToken = self.refreshToken;
+            LKLocalUser.singleton.expiresIn = [NSString stringWithFormat:@"%@", self.expiresIn];
+            
+            // 如果是第一次登陆,选择兴趣标签
+            BOOL firstStart = [[NSUserDefaults standardUserDefaults] boolForKey:@"firstStart"];
+            
+            // 判断是否是初次启动
+            if (!firstStart) {
+            
+                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstStart"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+
+//                LKChooseTagView *chooseView = [LKChooseTagView chooseTagView];
+//                [UIApplication sharedApplication].keyWindow.ADD(chooseView);
+
+                LKChooseInterestView *chooseView = [[LKChooseInterestView alloc] initWithFrame:CGRectMake(0, 20, LC_DEVICE_WIDTH, LC_DEVICE_HEIGHT)];
+                [UIApplication sharedApplication].keyWindow.ADD(chooseView);
+            }
+            
+            [self dismissViewControllerAnimated:YES completion:nil];
+            
+            if (self.delegate) {
+                [self.delegate didLoginSucceeded:self.userInfoModel.rawUserInfo];
+            }
+        }
+    };
+}
+
+-(void) buildUI
+{
     self.view.backgroundColor = LKColor.backgroundColor;
     
     @weakly(self);

@@ -100,7 +100,7 @@ LC_PROPERTY(strong) LKSearchView *searchView;
     self.doneButton.viewFrameWidth = 55;
     self.doneButton.viewFrameHeight = self.topBarSearchView.viewFrameHeight;
     self.doneButton.titleColor = [UIColor whiteColor];
-    self.doneButton.title = LC_LO(@"完成");
+    self.doneButton.title = LC_LO(@"取消");
     self.doneButton.titleFont = LK_FONT_B(14);
     self.doneButton.showsTouchWhenHighlighted = YES;
     [self.doneButton addTarget:self action:@selector(endSearch) forControlEvents:UIControlEventTouchUpInside];

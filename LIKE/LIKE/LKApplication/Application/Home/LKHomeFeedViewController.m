@@ -22,9 +22,11 @@
 #import "LKSearchResultsViewController.h"
 #import "SDWebImagePrefetcher.h"
 
-#import "LRUCache.h"
 #import "LKLRUCache.h"
 #import "LKEditorPickInterface.h"
+
+#define NORMAL_CELL_IDENTIFIER @"Content"
+#define PRECOMPUTED_CELL_IDENTIFIER @"Content2"
 
 @interface LKHomeFeedCellNode : NSObject
 
@@ -113,9 +115,11 @@ LC_PROPERTY(weak) id delegate;
 
 - (void)buildCellCache {
     NSInteger cacheCapacity = 10;
-    self.isCellCached = NO;
+    self.isCellCached = YES;
     self.cellCache = [[LKLRUCache alloc] initWithCapacity:cacheCapacity];
     self.cellHeightCache = [[LKLRUCache alloc] initWithCapacity:cacheCapacity];
+//    self.cellCache.countLimit = cacheCapacity;
+//    self.cellHeightCache.countLimit = cacheCapacity;
 }
 
 - (void)buildTableView {
@@ -377,7 +381,7 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
 }
 
 - (UITableViewCell *)genTableViewCell:(LKPost *)post index:(NSInteger)tagValue {
-    LKHomeTableViewCell *cell = [[LKHomeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Content"];
+    LKHomeTableViewCell *cell = [[LKHomeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:PRECOMPUTED_CELL_IDENTIFIER];
     
     // 设置cell的代理
     cell.delegate = self;
@@ -406,6 +410,8 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
 - (UITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     LKHomeTableViewCell *cell = nil;
     
+    NSLog(@"indexPath: %ld", indexPath.row);
+    
     if (self.isCellCached) {
         NSString *key = [NSString stringWithFormat:@"%ld", (long)indexPath.row];
         cell = (LKHomeTableViewCell *)[self.cellCache objectForKey:key];
@@ -414,7 +420,7 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
         }
     }
     
-    cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Content" andClass:[LKHomeTableViewCell class]];
+    cell = [tableView autoCreateDequeueReusableCellWithIdentifier:NORMAL_CELL_IDENTIFIER andClass:[LKHomeTableViewCell class]];
     // 设置cell的代理
     cell.delegate = self;
     

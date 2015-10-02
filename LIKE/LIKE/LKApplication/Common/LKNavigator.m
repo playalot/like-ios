@@ -13,6 +13,7 @@
 #import "RDVTabBarController.h"
 #import "RDVTabBarItem.h"
 #import "LKNotificationCount.h"
+#import "LKTabbarItem.h"
 
 @interface LKNavigator () <LKLoginViewControllerDelegate, RDVTabBarControllerDelegate>
 
@@ -94,6 +95,7 @@ LC_PROPERTY(strong) LKGuestFeedViewController *guestFeedNavViewController; // LK
 - (void)launchMasterMode {
     [self.mainViewController popToRootViewControllerAnimated:NO];
     [self setupViewControllers];
+//    self.tabBarViewController = [LKTabbarViewController viewController];
     [[LKNavigator navigator] pushViewController:self.tabBarController animated:NO];
 }
 
@@ -104,8 +106,8 @@ LC_PROPERTY(strong) LKGuestFeedViewController *guestFeedNavViewController; // LK
 - (void)bindBadgeForItemIndex:(NSInteger)index badgeCount:(NSInteger)badgeCount {
     if (badgeCount > 0) {
         RDVTabBarItem *item = self.tabBarController.tabBar.items[index];
-        [item setBackgroundSelectedImage:[UIImage imageNamed:@"tabbar_notification_selected.png"]
-                     withUnselectedImage:[UIImage imageNamed:@"tabbar_notification_badge.png"]];
+        [item setFinishedSelectedImage:[UIImage imageNamed:@"tabbar_notification_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"tabbar_notification_badge.png"]];
+        [item setNeedsDisplay];
         [LKNotificationCount bindView:item withBadgeCount:badgeCount];
     }
 }
@@ -122,26 +124,28 @@ LC_PROPERTY(strong) LKGuestFeedViewController *guestFeedNavViewController; // LK
                              initWithViewControllers:@[
                                                        LC_UINAVIGATION(self.mainFeedViewController),
                                                        LC_UINAVIGATION(self.searchViewController),
-                                                       LC_UINAVIGATION(self.cameraRollViewController),
+//                                                       LC_UINAVIGATION(self.cameraRollViewController),
                                                        LC_UINAVIGATION(self.notificationViewController),
                                                        LC_UINAVIGATION(self.userCenterViewController)]];
     self.tabBarController.delegate = self;
     
+    NSString *cache =  LKUserDefaults.singleton[self.class.description];
     NSArray *imageNames = @[@"tabbar_homeLine",
                             @"tabbar_search",
-                            @"tabbar_camera",
-                            @"tabbar_notification",
+//                            @"tabbar_camera",
+                            cache != nil ? @"tabbar_notification_badge" : @"tabbar_notification",
                             @"tabbar_userCenter"];
     
     NSArray *selectedImageNames = @[@"tabbar_homeLine_selected",
                                     @"tabbar_search_selected",
-                                    @"tabbar_camera",
+//                                    @"tabbar_camera",
                                     @"tabbar_notification_selected",
                                     @"tabbar_userCenter_selected"];
     
     
     NSInteger i = 0;
     for (UIView *view in self.tabBarController.tabBar.items) {
+        
         if ([view isKindOfClass:[RDVTabBarItem class]]) {
             RDVTabBarItem *item = (RDVTabBarItem *)view;
             [item setFinishedSelectedImage:[[UIImage imageNamed:selectedImageNames[i]]
@@ -149,16 +153,13 @@ LC_PROPERTY(strong) LKGuestFeedViewController *guestFeedNavViewController; // LK
                withFinishedUnselectedImage:[[UIImage imageNamed:imageNames[i]]
                                             imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
             [item setBackgroundColor:[UIColor whiteColor]];
-            if (i == 3) {
-                LCUIBadgeView *badgeView = LCUIBadgeView.view;
-                badgeView.frame = CGRectMake(40 * LC_DEVICE_WIDTH / 414, 13, 2, 2);
-                item.ADD(badgeView);
-            }
+
             i++;
         }
     }
 }
 
+#pragma mark - ***** RDVTabBarControllerDelegate *****
 - (BOOL)tabBarController:(RDVTabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
     if (viewController == self.mainFeedViewController) {
         [self.mainFeedViewController refresh];

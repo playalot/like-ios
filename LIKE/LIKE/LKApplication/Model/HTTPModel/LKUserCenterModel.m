@@ -94,6 +94,8 @@ LC_PROPERTY(assign) NSInteger index;
         
         @normally(interface);
         
+        [self setPageWithType:type page:page];
+        
         switch (type) {
                 
             case LKUserCenterModelTypePhotos: {
@@ -125,7 +127,8 @@ LC_PROPERTY(assign) NSInteger index;
                 } else {
                     NSMutableArray *newUsers = [NSMutableArray arrayWithArray:self.focusArray];
                     [newUsers addObjectsFromArray:datasource];
-                    [self.focusArray addObjectsFromArray:newUsers];
+//                    [self.focusArray addObjectsFromArray:newUsers];
+                    self.focusArray = newUsers;
                 }
 
                 self.focusCanLoadMore = datasource.count != 0;

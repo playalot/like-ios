@@ -21,7 +21,7 @@
 #import "LKLikeTagItemView.h"
 #import "LKPostTableViewCell.h"
 #import "LKPostView.h"
-#import "LRUCache.h"
+#import "LKLRUCache.h"
 #import "LCUIKeyBoard.h"
 #import "LKTagAddModel.h"
 
@@ -41,9 +41,11 @@ LC_PROPERTY(strong) NSMutableArray *heightList;
 
 LC_PROPERTY(assign) BOOL isCellPrecomuted;
 LC_PROPERTY(strong) NSMutableArray *precomputedCells;
-LC_PROPERTY(strong) LRUCache *precomputedCellCache;
+LC_PROPERTY(strong) LKLRUCache *precomputedCellCache;
 
 LC_PROPERTY(weak) id delegate;
+
+LC_PROPERTY(strong) LCUIImageView *noFollowingView;
 
 @end
 
@@ -60,6 +62,7 @@ LC_PROPERTY(weak) id delegate;
     
     [self buildTableView];
     [self buildInputView];
+    [self buildNoFollowingView];
     [self buildPullLoader];
     [self buildCellCache];
     [self loadData:LCUIPullLoaderDiretionTop];
@@ -134,6 +137,19 @@ LC_PROPERTY(weak) id delegate;
     };
 }
 
+- (void)buildNoFollowingView {
+    
+    LCUIImageView *noFollowingView = LCUIImageView.view;
+    noFollowingView.viewFrameWidth = 196;
+    noFollowingView.viewFrameHeight = 367;
+    noFollowingView.viewCenterX = self.view.viewCenterX;
+    noFollowingView.viewCenterY = self.view.viewCenterY;
+    noFollowingView.image = [UIImage imageNamed:@"NoFollowing.png" useCache:YES];
+    noFollowingView.hidden = YES;
+    self.noFollowingView = noFollowingView;
+    self.view.ADD(noFollowingView);
+}
+
 - (BOOL)checkTag:(NSString *)tag onTags:(NSArray *)onTags {
     for (LKTag * oTag in onTags) {
         if ([oTag.tag isEqualToString:tag]) {
@@ -187,7 +203,7 @@ LC_PROPERTY(weak) id delegate;
 - (void)buildCellCache {
     self.isCellPrecomuted = NO;
     self.precomputedCells = [NSMutableArray array];
-    self.precomputedCellCache = [[LRUCache alloc] initWithCapacity:10];
+    self.precomputedCellCache = [[LKLRUCache alloc] initWithCapacity:10];
 }
 
 // 这个方法同时负责主页和关注的人列表的请求
@@ -213,6 +229,8 @@ LC_PROPERTY(weak) id delegate;
             self.next = resultNext;
         
         NSArray *posts = followingInterface.posts;
+        
+        self.noFollowingView.hidden = posts.count;
         
         if (diretion == LCUIPullLoaderDiretionTop) {
             

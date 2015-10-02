@@ -709,7 +709,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         iconView.viewFrameWidth = iconWH;
         iconView.viewFrameHeight = iconWH;
         
-        if (lastIcon.viewRightX + margin + iconWH > tagUserView.viewFrameWidth) {
+        if (lastIcon.viewRightX + 2 * margin + iconWH > tagUserView.viewFrameWidth) {
             
             iconView.viewFrameX = 0;
             iconView.viewFrameY = lastIcon.viewBottomY + 8;
@@ -733,6 +733,8 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         lastIcon = iconView;
     }
     
+    self.tagUserView.viewFrameHeight = lastIcon.viewBottomY;
+    
     for (LCUIImageView *iconView in self.iconViews) {
     
         // 启用和用户的交互
@@ -740,7 +742,6 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         [iconView addTapGestureRecognizer:self selector:@selector(iconViewClick:)];
 
         // 设置scrollView的contentSize
-        self.tagUserView.viewFrameHeight = lastIcon.viewBottomY;
         self.tagUserView.scrollEnabled = YES;
     }
 }

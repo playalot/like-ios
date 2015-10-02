@@ -29,6 +29,7 @@
 #import "LKNavigator.h"
 
 #import "LCEncryptorAES.h"
+#import "LKChooseInterestView.h"
 
 @interface AppDelegate () <LC_CMD_IMP, RDVTabBarControllerDelegate>
 
@@ -71,7 +72,12 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
         if (!firstStart) {
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstStart"];
             [[NSUserDefaults standardUserDefaults] synchronize];
-            LKChooseTagView *chooseView = [LKChooseTagView chooseTagView];
+//            LKChooseTagView *chooseView = [LKChooseTagView chooseTagView];
+//            [UIApplication sharedApplication].keyWindow.ADD(chooseView);
+
+            [self checkAppUpdate];
+
+            LKChooseInterestView *chooseView = [[LKChooseInterestView alloc] initWithFrame:CGRectMake(0, 20, LC_DEVICE_WIDTH, LC_DEVICE_HEIGHT)];
             [UIApplication sharedApplication].keyWindow.ADD(chooseView);
         }
         
@@ -126,6 +132,38 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     // UMeng
     [MobClick startWithAppkey:@"54bf7949fd98c563bc00075d" reportPolicy:SENDWIFIONLY channelId:@"App Store"];
 //    [MobClick checkUpdate];
+}
+
+#define kStoreAppId                     @"975648403"  // （appid数字串）
+
+-(void)checkAppUpdate
+{
+    NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
+    
+    NSString *nowVersion = [infoDict objectForKey:@"CFBundleVersion"];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@", kStoreAppId]];
+    NSString * file =  [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
+    
+    NSRange substr = [file rangeOfString:@"\"version\":\""];
+    NSRange range1 = NSMakeRange(substr.location+substr.length,10);
+    NSRange substr2 =[file rangeOfString:@"\"" options:nil range:range1];
+    NSRange range2 = NSMakeRange(substr.location+substr.length, substr2.location-substr.location-substr.length);
+    NSString *newVersion =[file substringWithRange:range2];
+    if(![nowVersion isEqualToString:newVersion])
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"版本有更新" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"更新",nil];
+        [alert show];
+    }
+}
+
+- (void)alertView:(UIAlertView*)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex==1)
+    {
+        // 此处加入应用在app store的地址，方便用户去更新，一种实现方式如下：
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://itunes.apple.com/us/app/id%@?ls=1&mt=8", kStoreAppId]];
+        [[UIApplication sharedApplication] openURL:url];
+    }
 }
 
 - (void)setupCMD {
@@ -375,7 +413,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     
     // Bind badge.
     NSInteger badgeCount = [userInfo[@"aps"][@"badge"] integerValue];
-    [[LKNavigator navigator] bindBadgeForItemIndex:3 badgeCount:badgeCount];
+    [[LKNavigator navigator] bindBadgeForItemIndex:2 badgeCount:badgeCount];
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {

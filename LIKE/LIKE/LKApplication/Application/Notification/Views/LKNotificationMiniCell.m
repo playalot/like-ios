@@ -28,6 +28,7 @@ LC_PROPERTY(strong) LCUIImageView *preview;
 @implementation LKNotificationMiniCell
 
 LC_IMP_SIGNAL(PushPostDetail);
+LC_IMP_SIGNAL(PushUserCenter);
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -192,7 +193,7 @@ LC_IMP_SIGNAL(PushPostDetail);
  */
 - (void)handleHeadTap:(UITapGestureRecognizer *)tap
 {
-    self.SEND(@"PushUserCenter").object = self.notification.user;
+    self.SEND(self.PushUserCenter).object = self.notification.user;
 }
 
 + (NSString *)getTitle:(LKNotification *)notification

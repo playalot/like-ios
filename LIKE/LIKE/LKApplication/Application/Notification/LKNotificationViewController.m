@@ -119,6 +119,10 @@ LC_PROPERTY(strong) LRUCache *precomputedCellCache;
     }];
 }
 
+LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
+    [LKUserCenterViewController pushUserCenterWithUser:signal.object navigationController:self.navigationController];
+}
+
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.notificationModel.datasource.count;

@@ -881,9 +881,9 @@ LC_PROPERTY(assign) BOOL favorited;
             }
             
             // 刷新数据
-            [self.tableView beginUpdates];
+//            [self.tableView beginUpdates];
             [self.tableView reloadData];
-            [self.tableView endUpdates];
+//            [self.tableView endUpdates];
             
             break;
         }

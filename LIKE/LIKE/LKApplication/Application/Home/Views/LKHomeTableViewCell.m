@@ -157,6 +157,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.numLabel.backgroundColor = [UIColor greenColor];
     self.numLabel.textColor = [UIColor redColor];
     self.ADD(self.numLabel);
+    self.numLabel.alpha = 0;
     
     @weakly(self);
     
@@ -199,6 +200,7 @@ LC_IMP_SIGNAL(PushPostDetail);
 - (void)setPost:(LKPost *)post cellRow:(NSInteger)row {
     [self setPost:post];
     self.numLabel.text = [NSString stringWithFormat:@"%ld", (long)row];
+    self.numLabel.alpha = 1;
 }
 
 - (void)setPost:(LKPost *)post {

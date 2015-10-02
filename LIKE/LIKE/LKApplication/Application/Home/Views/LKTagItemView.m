@@ -175,6 +175,12 @@ LC_PROPERTY(assign) BOOL custom;
             
             if (self.tagValue.likes.integerValue <= 0) {
                 
+                UIResponder *responder = self;
+                while (responder) {
+                    responder = [responder nextResponder];
+                    NSLog(@"responder: %@", [responder class]);
+                }
+                
                 if (self.didRemoved) {
                     self.didRemoved(self);
                 }

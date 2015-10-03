@@ -142,7 +142,6 @@ LC_PROPERTY(strong) UIView *wastedView;
     self.showImgView.userInteractionEnabled = YES;
     self.showImgView.image = self.originalImage;
     
-    
     // scale to fit the screen
     CGFloat oriWidth = self.cropFrame.size.width;
     CGFloat oriHeight = self.originalImage.size.height * (oriWidth / self.originalImage.size.width);

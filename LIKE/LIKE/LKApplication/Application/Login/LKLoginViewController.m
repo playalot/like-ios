@@ -91,19 +91,8 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
 +(BOOL) needLoginOnViewController:(UIViewController *)viewController {
     if (LKLocalUser.singleton.isLogin) {
         return NO;
-    }
-    else{
-        
-        LKLoginViewController * login = LKLoginViewController.viewController;
-        [login performSelector:@selector(beginAnimation) withObject:0 afterDelay:0.01];
-        
-        // 弹出时的动画风格为交叉溶解风格
-        login.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-        // 背景虚化
-//        [login currentWindowBlur:viewController];
-        
-        [[LCUIApplication sharedInstance] presentViewController:login animation:YES];
-        
+    } else {
+        [[LKNavigator navigator] openLoginViewController];
         return YES;
     }
 }

@@ -276,9 +276,9 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
     
     self.currentType = LKUserCenterModelTypePhotos;
     
-    [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFocus uid:self.user.id];
-    [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFans uid:self.user.id];
-    [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFavor uid:self.user.id];
+//    [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFocus uid:self.user.id];
+//    [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFans uid:self.user.id];
+//    [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFavor uid:self.user.id];
     
     self.userInfoModel.requestFinished = ^(LKHttpRequestResult * result, NSString * error){
         @normally(self);
@@ -288,6 +288,7 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
             [self updateTableHeaderView];
             [self updateFriendButton];
             
+            self.cartoonImageView.hidden = YES;
             if (self.currentType == LKUserCenterModelTypePhotos) {
                 self.cartoonImageView.hidden = self.userCenterModel.photoArray.count ? YES : NO;
                 self.cartoonImageView.image = [UIImage imageNamed:@"segment_photo.png" useCache:YES];
@@ -445,6 +446,7 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
         
         NSArray * datasource = [self.userCenterModel dataWithType:type];
         if (!datasource || datasource.count == 0) {
+            self.cartoonImageView.hidden = YES;
             if (type == LKUserCenterModelTypePhotos) {
                 self.cartoonImageView.hidden = self.userCenterModel.photoArray.count ? YES : NO;
                 self.cartoonImageView.image = [UIImage imageNamed:@"segment_photo.png" useCache:YES];

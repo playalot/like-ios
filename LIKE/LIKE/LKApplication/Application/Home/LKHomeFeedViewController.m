@@ -478,11 +478,6 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
 #pragma mark *****数据源******
 - (void)homeTableViewCell:(LKHomeTableViewCell *)cell didClickReasonBtn:(LCUIButton *)reasonBtn {
     
-    if (self.isCellCached) {
-        [self.cellHeightCache show];
-        return;
-    }
-    
     if (reasonBtn.title != nil) {
         
         if ([reasonBtn.title hasSuffix:LC_LO(@"  Like推荐")]) {

@@ -38,7 +38,7 @@ LC_PROPERTY(strong) LKUser * user;
 }
 
 - (BOOL)isLogin {
-    NSString * uid = self[LK_CURRENT_USER];
+    NSString * uid = [self getCurrentUID];
     return uid ? YES : NO;
 }
 
@@ -92,7 +92,7 @@ LC_PROPERTY(strong) LKUser * user;
 
 - (instancetype)init {
     if (self = [super initWithPath:[[LCSanbox documentPath] stringByAppendingString:@"/LKUser.db"]]) {
-        NSString * uid = self[LK_CURRENT_USER];
+        NSString * uid = [self getCurrentUID];
         if (uid) {
             self.rawUserInfo = self[LK_USER_CACHE(uid)];
             self.user = [[LKUser alloc] initWithDictionary:self.rawUserInfo error:nil];
@@ -109,7 +109,7 @@ LC_PROPERTY(strong) LKUser * user;
 - (void)login:(NSDictionary *)rawUserInfo {
     self.rawUserInfo = rawUserInfo;
     NSNumber * uid = rawUserInfo[@"user_id"];
-    self[LK_CURRENT_USER] = uid;
+    [self setCurrentUID:[NSString stringWithFormat:@"%@", uid]];
     self[LK_USER_CACHE(uid)] = rawUserInfo;
     if (rawUserInfo) {
         // 更新keychain数据
@@ -120,10 +120,19 @@ LC_PROPERTY(strong) LKUser * user;
 - (void)logoutCurrentUser {
     self.rawUserInfo = nil;
     self.user = nil;
-    self[LK_CURRENT_USER] = nil;
+    [self setCurrentUID:nil];
     [self setSessionToken:nil];
     [self setRefreshToken:nil];
     [self setExpiresIn:nil];
+}
+
+- (void)setCurrentUID:(NSString *)uid {
+    [[NSUserDefaults standardUserDefaults] setValue:uid forKey:LK_CURRENT_USER];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (NSString *)getCurrentUID {
+    return [[NSUserDefaults standardUserDefaults] valueForKey:LK_CURRENT_USER];
 }
 
 - (void)setRawUserInfo:(NSDictionary *)rawUserInfo {

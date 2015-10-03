@@ -86,7 +86,7 @@ LC_PROPERTY(assign) BOOL custom;
         return;
     }
     
-    if([LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
+    if([LKLoginViewController needLoginOnViewController:nil]){
         return;
     };
     

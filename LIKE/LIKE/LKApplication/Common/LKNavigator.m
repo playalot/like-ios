@@ -86,16 +86,15 @@ LC_PROPERTY(strong) LKGuestFeedViewController *guestFeedNavViewController; // LK
 }
 
 - (void)launchGuestMode {
-    [self.mainViewController popToRootViewControllerAnimated:NO];
+    self.mainViewController.viewControllers = @[];
     self.guestFeedNavViewController = [LKGuestFeedViewController viewController];
     [self.mainViewController pushViewController:self.guestFeedNavViewController animated:NO];
     [self openLoginViewController];
 }
 
 - (void)launchMasterMode {
-    [self.mainViewController popToRootViewControllerAnimated:NO];
+    self.mainViewController.viewControllers = @[];
     [self setupViewControllers];
-//    self.tabBarViewController = [LKTabbarViewController viewController];
     [[LKNavigator navigator] pushViewController:self.tabBarController animated:NO];
 }
 
@@ -132,13 +131,11 @@ LC_PROPERTY(strong) LKGuestFeedViewController *guestFeedNavViewController; // LK
     NSString *cache =  LKUserDefaults.singleton[self.class.description];
     NSArray *imageNames = @[@"tabbar_homeLine",
                             @"tabbar_search",
-//                            @"tabbar_camera",
                             cache != nil ? @"tabbar_notification_badge" : @"tabbar_notification",
                             @"tabbar_userCenter"];
     
     NSArray *selectedImageNames = @[@"tabbar_homeLine_selected",
                                     @"tabbar_search_selected",
-//                                    @"tabbar_camera",
                                     @"tabbar_notification_selected",
                                     @"tabbar_userCenter_selected"];
     
@@ -173,12 +170,11 @@ LC_PROPERTY(strong) LKGuestFeedViewController *guestFeedNavViewController; // LK
 
 #pragma mark LKLoginViewControllerDelegate
 - (void)didLoginSucceeded:(NSDictionary *)userInfo {
-    NSLog(@"didLoginSucceeded");
     [self launchMasterMode];
 }
 
 - (void)didLoginFailed {
-    NSLog(@"didLoginFailed");
+    [self showTopMessageErrorHud:LC_LO(@"登录失败")];
 }
 
 @end

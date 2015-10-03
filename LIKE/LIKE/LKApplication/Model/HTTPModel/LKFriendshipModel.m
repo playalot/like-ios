@@ -32,8 +32,7 @@
     }
 }
 
-+(void) focusUser:(LKUser *)user requestFinished:(LKFriendshipModelRequestFinished)requestFinished
-{
++(void) focusUser:(LKUser *)user requestFinished:(LKFriendshipModelRequestFinished)requestFinished {
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"user/%@/follow", user.id]].AUTO_SESSION().POST_METHOD();
     
     [self request:interface complete:^(LKHttpRequestResult *result) {
@@ -42,6 +41,8 @@
             
             
             user.isFollowing = result.json[@"data"][@"is_following"];
+            
+            NSLog(@"user.isFollowing: %@", user.isFollowing);
 
             if (requestFinished) {
                 requestFinished(user.isFollowing, nil);

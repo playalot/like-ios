@@ -143,11 +143,12 @@ LC_PROPERTY(strong) LCUIImageView *noFollowingView;
     noFollowingView.viewFrameWidth = 196;
     noFollowingView.viewFrameHeight = 367;
     noFollowingView.viewCenterX = self.view.viewCenterX;
-    noFollowingView.viewCenterY = self.view.viewCenterY;
+//    noFollowingView.viewCenterY = self.view.viewCenterY;
+    noFollowingView.viewFrameY = 100;
     noFollowingView.image = [UIImage imageNamed:@"NoFollowing.png" useCache:YES];
     noFollowingView.hidden = YES;
     self.noFollowingView = noFollowingView;
-    self.view.ADD(noFollowingView);
+    self.tableView.ADD(noFollowingView);
 }
 
 - (BOOL)checkTag:(NSString *)tag onTags:(NSArray *)onTags {

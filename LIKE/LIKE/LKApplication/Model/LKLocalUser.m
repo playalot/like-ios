@@ -48,6 +48,7 @@ LC_PROPERTY(strong) LKUser * user;
     if (!tmpToken) {
         self[LK_SESSION_TOKEN] = [LCEncryptorAES encryptString:sessionToken keyString:LK_AES_KEY ivString:LK_VI_KEY];
     }
+    NSLog(@"tmpToken: %@", tmpToken);
 }
 
 - (NSString *)sessionToken {
@@ -55,6 +56,7 @@ LC_PROPERTY(strong) LKUser * user;
     if (!tmpToken) {
         tmpToken = [LCEncryptorAES decryptData:self[LK_SESSION_TOKEN] keyString:LK_AES_KEY ivString:LK_VI_KEY];
     }
+    NSLog(@"tmpToken: %@", tmpToken);
     return tmpToken;
 }
 

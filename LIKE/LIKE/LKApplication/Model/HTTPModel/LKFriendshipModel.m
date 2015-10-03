@@ -38,11 +38,7 @@
     [self request:interface complete:^(LKHttpRequestResult *result) {
        
         if (result.state == LKHttpRequestStateFinished) {
-            
-            
             user.isFollowing = result.json[@"data"][@"is_following"];
-            
-            NSLog(@"user.isFollowing: %@", user.isFollowing);
 
             if (requestFinished) {
                 requestFinished(user.isFollowing, nil);

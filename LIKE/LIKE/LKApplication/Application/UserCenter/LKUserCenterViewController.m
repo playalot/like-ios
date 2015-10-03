@@ -380,7 +380,7 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 
 - (void)friendShipAction {
     
-    if([LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
+    if([LKLoginViewController needLoginOnViewController:nil]){
         return;
     }
     

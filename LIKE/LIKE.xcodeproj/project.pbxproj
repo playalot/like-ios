@@ -869,6 +869,7 @@
 		BC484AC21BB048BD00F69D50 /* LKPostThumbnailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484AC11BB048BD00F69D50 /* LKPostThumbnailTableViewCell.m */; };
 		BC484AC51BB050C700F69D50 /* LKHotUserHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484AC41BB050C700F69D50 /* LKHotUserHeaderView.m */; };
 		BC484AC81BB0F6B400F69D50 /* LKHotTagsUsersView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484AC71BB0F6B400F69D50 /* LKHotTagsUsersView.m */; };
+		BC6960DE1BBFBEE5006245D7 /* LKAuthenticationAccessory.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6960DD1BBFBEE5006245D7 /* LKAuthenticationAccessory.m */; settings = {ASSET_TAGS = (); }; };
 		BC6ABE7D1BB263AC00B56E98 /* LKUserFavouritesInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6ABE7C1BB263AC00B56E98 /* LKUserFavouritesInterface.m */; };
 		BC6ABE801BB2787B00B56E98 /* LKUserPostsInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6ABE7F1BB2787B00B56E98 /* LKUserPostsInterface.m */; };
 		BC6ABE831BB27A1000B56E98 /* LKUserFollowsInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6ABE821BB27A1000B56E98 /* LKUserFollowsInterface.m */; };
@@ -2510,6 +2511,8 @@
 		BC484AC41BB050C700F69D50 /* LKHotUserHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKHotUserHeaderView.m; sourceTree = "<group>"; };
 		BC484AC61BB0F6B400F69D50 /* LKHotTagsUsersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKHotTagsUsersView.h; sourceTree = "<group>"; };
 		BC484AC71BB0F6B400F69D50 /* LKHotTagsUsersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKHotTagsUsersView.m; sourceTree = "<group>"; };
+		BC6960DC1BBFBEE5006245D7 /* LKAuthenticationAccessory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKAuthenticationAccessory.h; path = Interface/LKAuthenticationAccessory.h; sourceTree = "<group>"; };
+		BC6960DD1BBFBEE5006245D7 /* LKAuthenticationAccessory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKAuthenticationAccessory.m; path = Interface/LKAuthenticationAccessory.m; sourceTree = "<group>"; };
 		BC6ABE7B1BB263AC00B56E98 /* LKUserFavouritesInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKUserFavouritesInterface.h; path = Interface/LKUserFavouritesInterface.h; sourceTree = "<group>"; };
 		BC6ABE7C1BB263AC00B56E98 /* LKUserFavouritesInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKUserFavouritesInterface.m; path = Interface/LKUserFavouritesInterface.m; sourceTree = "<group>"; };
 		BC6ABE7E1BB2787B00B56E98 /* LKUserPostsInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKUserPostsInterface.h; path = Interface/LKUserPostsInterface.h; sourceTree = "<group>"; };
@@ -5429,6 +5432,8 @@
 				BC8F64F81BB93D890084B5CA /* LKSearchTagInterface.m */,
 				1351B2CD1BBA6BBC004DFEEC /* LKEditorPickInterface.h */,
 				1351B2CE1BBA6BBC004DFEEC /* LKEditorPickInterface.m */,
+				BC6960DC1BBFBEE5006245D7 /* LKAuthenticationAccessory.h */,
+				BC6960DD1BBFBEE5006245D7 /* LKAuthenticationAccessory.m */,
 			);
 			name = Interface;
 			sourceTree = "<group>";
@@ -6228,6 +6233,7 @@
 				13DEEBFE1AE755C0005E01A6 /* LKFriendshipModel.m in Sources */,
 				13BCD88F1ADBA92200A0CBF5 /* POPAnimationTracer.mm in Sources */,
 				130CF5971BAFE846002F4189 /* LKNotificationInterface.m in Sources */,
+				BC6960DE1BBFBEE5006245D7 /* LKAuthenticationAccessory.m in Sources */,
 				137106991B576212008BCD66 /* LKHotTagDetail.m in Sources */,
 				1377F04C1B5E35D8008E21BC /* WMLArrayDiff.m in Sources */,
 				BC484AC81BB0F6B400F69D50 /* LKHotTagsUsersView.m in Sources */,

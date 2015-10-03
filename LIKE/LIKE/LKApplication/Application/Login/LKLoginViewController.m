@@ -808,9 +808,9 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     [self request:interface complete:^(LKHttpRequestResult * result) {
         @normally(self);
         if (result.state == LKHttpRequestStateFinished) {
-//            self.sesstionToken = result.json[@"data"][@"session_token"];
-//            self.refreshToken = result.json[@"data"][@"refresh_token"];
-//            self.expiresIn = result.json[@"data"][@"expires_in"];
+            self.sesstionToken = result.json[@"data"][@"session_token"];
+            self.refreshToken = result.json[@"data"][@"refresh_token"];
+            self.expiresIn = result.json[@"data"][@"expires_in"];
             [self.userInfoModel getUserInfo:result.json[@"data"][@"user_id"]];
             
             LKLocalUser.singleton.sessionToken = result.json[@"data"][@"session_token"];

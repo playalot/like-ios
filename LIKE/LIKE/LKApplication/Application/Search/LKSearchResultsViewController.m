@@ -314,6 +314,7 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     self.browsingViewController.currentIndex = [self.datasource indexOfObject:signal.object];
     self.browsingViewController.title = self.searchString;
     [self.browsingViewController watchForChangeOfDatasource:self dataSourceKey:@"datasource"];
+    [self.browsingViewController refresh];
     [self.navigationController pushViewController:self.browsingViewController animated:YES];
 }
 

@@ -28,6 +28,15 @@ LC_PROPERTY(copy) NSString *observedDataSourceKeyPath;
 
 @implementation LKPostTableViewController
 
++ (instancetype)sharedInstance {
+    static LKPostTableViewController *_instance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _instance = [[LKPostTableViewController alloc] init];
+    });
+    return _instance;
+}
+
 - (void)dealloc {
     [self cancelAllRequests];
     [self unobserveAllNotifications];
@@ -84,12 +93,16 @@ LC_PROPERTY(copy) NSString *observedDataSourceKeyPath;
     };
 }
 
-- (void)buildUI {
-    self.view.backgroundColor = LKColor.backgroundColor;
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     
     if (self.datasource == nil)
         self.datasource = [NSMutableArray array];
     [self reloadData];
+}
+
+- (void)buildUI {
+    self.view.backgroundColor = LKColor.backgroundColor;
     
     [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[UIImage imageNamed:@"NavigationBarBack.png" useCache:YES] selectImage:nil];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];

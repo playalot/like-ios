@@ -34,8 +34,7 @@ LC_PROPERTY(assign) NSInteger index;
 
 @implementation LKUserCenterModel
 
--(void) dealloc
-{
+-(void) dealloc {
     [self cancelAllRequests];
 }
 
@@ -68,7 +67,6 @@ LC_PROPERTY(assign) NSInteger index;
     
     switch (type) {
         case LKUserCenterModelTypePhotos: {
-//            interface = [[LKUserPostsInterface alloc] initWithUid:uid page:page];
             interface = [[LKUserPostsInterface alloc] initWithTimeStamp:self.photoTimestamp uid:uid];
             break;
         }

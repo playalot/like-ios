@@ -128,7 +128,6 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
     self.cartoonImageView.viewFrameHeight = 245;
     self.cartoonImageView.viewCenterX = self.tableView.viewCenterX;
     self.cartoonImageView.viewFrameY = 52 + 48;
-//    self.cartoonImageView.image = [UIImage imageNamed:@"segment_photo.png" useCache:YES];
     self.cartoonImageView.hidden = YES;
     self.tableView.ADD(self.cartoonImageView);
     
@@ -247,28 +246,6 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
         @normally(self);
         self.currentType = index;
         self.cartoonImageView.image= nil;
-        
-//        switch (index) {
-//            case 0:
-//                self.cartoonImageView.hidden = self.userCenterModel.photoArray.count ? YES : NO;
-//                self.cartoonImageView.image = [UIImage imageNamed:@"segment_photo.png" useCache:YES];
-//                break;
-//            case 1:
-//                self.cartoonImageView.hidden = self.userCenterModel.focusArray.count ? YES : NO;
-//                self.cartoonImageView.image = [UIImage imageNamed:@"segment_follow.png" useCache:YES];
-//                break;
-//            case 2:
-//                self.cartoonImageView.hidden = self.userCenterModel.fansArray.count ? YES : NO;
-//                self.cartoonImageView.image = [UIImage imageNamed:@"segment_fans.png" useCache:YES];
-//                break;
-//            case 3:
-//                self.cartoonImageView.hidden = self.userCenterModel.favorArray.count ? YES : NO;
-//                self.cartoonImageView.image = [UIImage imageNamed:@"segment_favor.png" useCache:YES];
-//                break;
-//                
-//            default:
-//                break;
-//        }
     };
     
     
@@ -459,7 +436,6 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 }
 
 - (void)loadData:(LKUserCenterModelType)type diretion:(LCUIPullLoaderDiretion)diretion {
-    [self.userCenterModel getDataAtFirstPage:diretion == LCUIPullLoaderDiretionTop type:type uid:self.user.id];
     @weakly(self);
     self.userCenterModel.requestFinished = ^(LKUserCenterModelType type, NSString * error){
         @normally(self);
@@ -467,19 +443,23 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
         // Update header user informatio
         [self.userInfoModel getUserInfo:self.user.id];
         
-        if (type == LKUserCenterModelTypePhotos) {
-            self.cartoonImageView.hidden = self.userCenterModel.photoArray.count ? YES : NO;
-            self.cartoonImageView.image = [UIImage imageNamed:@"segment_photo.png" useCache:YES];
-        } else if (type == LKUserCenterModelTypeFocus) {
-            self.cartoonImageView.hidden = self.userCenterModel.focusArray.count ? YES : NO;
-            self.cartoonImageView.image = [UIImage imageNamed:@"segment_follow.png" useCache:YES];
-        } else if (type == LKUserCenterModelTypeFans) {
-            self.cartoonImageView.hidden = self.userCenterModel.fansArray.count ? YES : NO;
-            self.cartoonImageView.image = [UIImage imageNamed:@"segment_fans.png" useCache:YES];
-        } else if (type == LKUserCenterModelTypeFavor) {
-            self.cartoonImageView.hidden = self.userCenterModel.favorArray.count ? YES : NO;
-            self.cartoonImageView.image = [UIImage imageNamed:@"segment_favor.png" useCache:YES];
+        NSArray * datasource = [self.userCenterModel dataWithType:type];
+        if (!datasource || datasource.count == 0) {
+            if (type == LKUserCenterModelTypePhotos) {
+                self.cartoonImageView.hidden = self.userCenterModel.photoArray.count ? YES : NO;
+                self.cartoonImageView.image = [UIImage imageNamed:@"segment_photo.png" useCache:YES];
+            } else if (type == LKUserCenterModelTypeFocus) {
+                self.cartoonImageView.hidden = self.userCenterModel.focusArray.count ? YES : NO;
+                self.cartoonImageView.image = [UIImage imageNamed:@"segment_follow.png" useCache:YES];
+            } else if (type == LKUserCenterModelTypeFans) {
+                self.cartoonImageView.hidden = self.userCenterModel.fansArray.count ? YES : NO;
+                self.cartoonImageView.image = [UIImage imageNamed:@"segment_fans.png" useCache:YES];
+            } else if (type == LKUserCenterModelTypeFavor) {
+                self.cartoonImageView.hidden = self.userCenterModel.favorArray.count ? YES : NO;
+                self.cartoonImageView.image = [UIImage imageNamed:@"segment_favor.png" useCache:YES];
+            }
         }
+        
         
         // Reload data
         [self.tableView reloadData];
@@ -487,14 +467,16 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
             [self showTopMessageErrorHud:error];
         }
         self.pullLoader.canLoadMore = [self.userCenterModel canLoadMoreWithType:type];
+        self.datasource = [NSMutableArray arrayWithArray:[self.userCenterModel dataWithType:self.currentType]];
     };
+    
+    [self.userCenterModel getDataAtFirstPage:diretion == LCUIPullLoaderDiretionTop type:type uid:self.user.id];
 }
 
 #pragma mark -
 
 LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     self.datasource = [NSMutableArray arrayWithArray:[self.userCenterModel dataWithType:self.currentType]];
-    
     self.browsingViewController = [[LKPostTableViewController alloc] init];
     self.browsingViewController.delegate = self;
     self.browsingViewController.datasource = self.datasource;
@@ -506,6 +488,7 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     }
     self.browsingViewController.currentIndex = [self.datasource indexOfObject:signal.object];
     [self.browsingViewController watchForChangeOfDatasource:self dataSourceKey:@"datasource"];
+    [self.browsingViewController refresh];
     [self.navigationController pushViewController:self.browsingViewController animated:YES];
 }
 

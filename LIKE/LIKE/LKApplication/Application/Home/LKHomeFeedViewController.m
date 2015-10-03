@@ -410,8 +410,6 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
 - (UITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     LKHomeTableViewCell *cell = nil;
     
-    NSLog(@"indexPath: %ld", indexPath.row);
-    
     if (self.isCellCached) {
         NSString *key = [NSString stringWithFormat:@"%ld", (long)indexPath.row];
         cell = (LKHomeTableViewCell *)[self.cellCache objectForKey:key];

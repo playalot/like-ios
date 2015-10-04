@@ -70,7 +70,7 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 + (LKUserCenterViewController *)pushUserCenterWithUser:(LKUser *)user navigationController:(UINavigationController *)navigationController {
     LKUserCenterViewController * userCenter = [[LKUserCenterViewController alloc] initWithUser:user];
     userCenter.needBackButton = YES;
-    userCenter.settingButtonHidden = YES;
+    userCenter.settingButtonHidden = NO;
     [navigationController pushViewController:userCenter animated:YES];
     return userCenter;
 }

@@ -65,7 +65,6 @@ LC_PROPERTY(strong) LKGateViewController *gateViewController;
 }
 
 - (void)openLoginViewController {
-    [self dismissAllViewControllers];
     [self.mainViewController presentViewController:self.loginViewController animated:NO completion:^{}];
 }
 
@@ -147,7 +146,6 @@ LC_PROPERTY(strong) LKGateViewController *gateViewController;
     
     NSInteger i = 0;
     for (UIView *view in self.tabBarController.tabBar.items) {
-        
         if ([view isKindOfClass:[RDVTabBarItem class]]) {
             RDVTabBarItem *item = (RDVTabBarItem *)view;
             [item setFinishedSelectedImage:[[UIImage imageNamed:selectedImageNames[i]]
@@ -155,7 +153,6 @@ LC_PROPERTY(strong) LKGateViewController *gateViewController;
                withFinishedUnselectedImage:[[UIImage imageNamed:imageNames[i]]
                                             imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
             [item setBackgroundColor:[UIColor whiteColor]];
-
             i++;
         }
     }

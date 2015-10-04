@@ -128,8 +128,8 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
     self.cartoonImageView.viewFrameHeight = 245;
     self.cartoonImageView.viewCenterX = self.tableView.viewCenterX;
     self.cartoonImageView.viewFrameY = 52 + 48;
-    self.cartoonImageView.hidden = YES;
     self.tableView.ADD(self.cartoonImageView);
+    self.cartoonImageView.hidden = YES;
     
     // Navigation bar.
     self.header = [[LKHomepageHeader alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.frame), 100.0)];
@@ -444,7 +444,8 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
     self.userCenterModel.requestFinished = ^(LKUserCenterModelType type, NSString * error){
         @normally(self);
         [self.pullLoader endRefresh];
-        // Update header user informatio
+        
+        // Update header user information
         [self.userInfoModel getUserInfo:self.user.id];
         
         NSArray * datasource = [self.userCenterModel dataWithType:type];

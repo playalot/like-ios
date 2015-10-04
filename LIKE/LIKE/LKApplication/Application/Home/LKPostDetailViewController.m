@@ -95,10 +95,8 @@ LC_PROPERTY(assign) BOOL favorited;
     [self.header.icon removeFromSuperview];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
+- (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
     if (self.tableView.viewFrameY != 0) {
         self.tableView.pop_springBounciness = 10;
         self.tableView.pop_springSpeed = 10;
@@ -107,19 +105,17 @@ LC_PROPERTY(assign) BOOL favorited;
     }
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
     [self.inputView resignFirstResponder];
-    
     [self.shareTools hideTools];
     
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:animated];
+    [self setNavigationBarHidden:NO animated:animated];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
 }
 
 #pragma mark -
@@ -161,8 +157,7 @@ LC_PROPERTY(assign) BOOL favorited;
     self.navigationController.transitioningDelegate = self.animator;
 }
 
--(void) viewDidLoad
-{
+-(void) viewDidLoad {
     [super viewDidLoad];
     
     [self getUserInfoWithPost:self.post];
@@ -172,7 +167,6 @@ LC_PROPERTY(assign) BOOL favorited;
     @weakly(self);
     
     self.tagsListModel.associatedTags = self.post.tags;
-    
     self.tagsListModel.requestFinished = ^(LKHttpRequestResult * result , NSString * error){
         
         @normally(self);

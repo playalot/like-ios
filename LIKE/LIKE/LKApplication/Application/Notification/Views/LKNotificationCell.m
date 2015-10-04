@@ -43,7 +43,6 @@ LC_IMP_SIGNAL(PushPostDetail);
         self.contentView.backgroundColor = [UIColor clearColor];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        
         self.icon = LCUIImageView.view;
         self.icon.viewFrameX = 21;
         self.icon.viewCenterY = 14;
@@ -51,7 +50,6 @@ LC_IMP_SIGNAL(PushPostDetail);
         self.icon.viewFrameHeight = 29;
         self.ADD(self.icon);
 
-        
         self.headImageView = LCUIImageView.view;
         self.headImageView.viewFrameX = self.icon.viewRightX + 20;
         self.headImageView.viewFrameY = 10;

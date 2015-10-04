@@ -177,7 +177,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
             post.content = content;
             
             LKPostDetailViewController *detailViewController = [[LKPostDetailViewController alloc] initWithPost:post];
-            [self.navigationController presentViewController:detailViewController animated:YES completion:^{}];
+            [self.navigationController pushViewController:detailViewController animated:YES];
 
 //            LKOfficialDetailViewController *detailCtrl = [[LKOfficialDetailViewController alloc] init];
 //            [self.navigationController pushViewController:detailCtrl animated:YES];

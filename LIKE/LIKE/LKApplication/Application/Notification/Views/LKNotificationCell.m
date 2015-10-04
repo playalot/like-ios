@@ -10,6 +10,7 @@
 #import "LKTime.h"
 #import "UIImageView+WebCache.h"
 #import "GBTagListView.h"
+#import "LKLoginViewController.h"
 
 @interface LKNotificationCell ()
 
@@ -280,6 +281,9 @@ LC_IMP_SIGNAL(PushPostDetail);
  */
 - (void)handleHeadTap:(UITapGestureRecognizer *)tap
 {
+    if([LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
+        return;
+    };
     self.SEND(@"PushUserCenter").object = self.notification.user;
 }
 

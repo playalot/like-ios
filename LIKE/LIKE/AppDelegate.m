@@ -27,7 +27,7 @@
 #import "LCNetworkConfig.h"
 #import "LCUrlArgumentsFilter.h"
 #import "LKNavigator.h"
-
+#import "LKGateViewController.h"
 #import "LCEncryptorAES.h"
 #import "LKChooseInterestView.h"
 
@@ -47,6 +47,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
 
 - (void)load:(NSDictionary *)launchOptions {
     self.launchOptions = launchOptions;
+    
     self.window.rootViewController = [LKNavigator navigator].mainViewController;
     
     // Mob短信验证
@@ -63,6 +64,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     if (!LKLocalUser.singleton.isLogin) {
         // 游客模式
         [[LKNavigator navigator] launchGuestMode];
+        
     } else {
         
         // 登陆成功

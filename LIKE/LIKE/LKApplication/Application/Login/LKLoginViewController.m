@@ -632,7 +632,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
  *  dismiss modal出的登录控制器
  */
 -(void) dismissAction {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissOrPopViewController];
 }
 
 /**

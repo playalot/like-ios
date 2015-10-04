@@ -42,7 +42,10 @@
 
 + (instancetype) viewWithImage:(UIImage *)image
 {
-    return [[LCUIImageView alloc] initWithImage:image];
+    LCUIImageView *imageView = [[LCUIImageView alloc] initWithImage:image];
+    imageView.viewFrameWidth = image.size.width;
+    imageView.viewFrameHeight = image.size.height;
+    return imageView;
 }
 
 - (id)initWithImage:(UIImage *)image

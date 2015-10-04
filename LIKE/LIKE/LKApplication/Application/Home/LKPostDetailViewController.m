@@ -47,7 +47,6 @@ LC_PROPERTY(strong) LCUILabel *postTime;
 LC_PROPERTY(strong) LCUIButton *location;
 LC_PROPERTY(strong) LCUILabel *timeLabel;
 
-
 LC_PROPERTY_MODEL(LKPostTagsDetailModel, tagsListModel);
 
 LC_PROPERTY(copy) NSString *bigContentURL;

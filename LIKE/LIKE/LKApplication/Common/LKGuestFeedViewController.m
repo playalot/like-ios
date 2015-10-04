@@ -24,6 +24,13 @@ LC_PROPERTY(strong) LKHomeFeedViewController *homeFeedViewController;
     [self addChildViewController:self.homeFeedViewController];
     self.homeFeedViewController.view.viewFrameY = CGRectGetMaxY(self.navigationBar.frame);
     self.view.ADD(self.homeFeedViewController.view);
+    
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self setNavigationBarHidden:YES animated:NO];
 }
 
 - (void)buildNavigationBar {

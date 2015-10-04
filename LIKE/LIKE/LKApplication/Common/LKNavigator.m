@@ -14,11 +14,13 @@
 #import "RDVTabBarItem.h"
 #import "LKNotificationCount.h"
 #import "LKTabbarItem.h"
+#import "LKGateViewController.h"
 
 @interface LKNavigator () <LKLoginViewControllerDelegate, RDVTabBarControllerDelegate>
 
 LC_PROPERTY(strong) LKLoginViewController *loginViewController;
 LC_PROPERTY(strong) LKGuestFeedViewController *guestFeedNavViewController; // LKGuestFeedViewController
+LC_PROPERTY(strong) LKGateViewController *gateViewController;
 
 @end
 
@@ -64,32 +66,36 @@ LC_PROPERTY(strong) LKGuestFeedViewController *guestFeedNavViewController; // LK
 
 - (void)openLoginViewController {
     [self dismissAllViewControllers];
-    
-    LCUIImageView * imageView = LCUIImageView.view;
-    imageView.image = [LKWelcome image];
-    imageView.viewFrameWidth = LC_DEVICE_WIDTH;
-    imageView.viewFrameHeight = LC_DEVICE_HEIGHT + 20;
-    imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [LC_KEYWINDOW addSubview:imageView];
-    self.loginViewController = LKLoginViewController.viewController;
-    self.loginViewController.delegate = self;
-    
-    [self.mainViewController presentViewController:self.loginViewController animated:NO completion:^{
-        [UIView animateWithDuration:1.5 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
-            imageView.transform = CGAffineTransformMakeScale(1.5, 1.5);
-            imageView.alpha = 0;
-        } completion:^(BOOL finished) {
-            [imageView removeFromSuperview];
-            
-        }];
-    }];
+    [self.mainViewController presentViewController:self.loginViewController animated:NO completion:^{}];
+}
+
+- (LKLoginViewController *)loginViewController {
+    if (_loginViewController == nil) {
+        _loginViewController = LKLoginViewController.viewController;
+        _loginViewController.delegate = self;
+    }
+    return _loginViewController;
+}
+
+- (LKGateViewController *)gateViewController {
+    if (!_gateViewController) {
+        _gateViewController = [LKGateViewController viewController];
+    }
+    return _gateViewController;
 }
 
 - (void)launchGuestMode {
     self.mainViewController.viewControllers = @[];
     self.guestFeedNavViewController = [LKGuestFeedViewController viewController];
     [self.mainViewController pushViewController:self.guestFeedNavViewController animated:NO];
-    [self openLoginViewController];
+    
+    BOOL hasOnceLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"hasOnceLogin"];
+    if (!hasOnceLogin) {
+        [self.mainViewController pushViewController:self.loginViewController animated:NO];
+        [self.mainViewController presentViewController:self.gateViewController animated:NO completion:^{}];
+    } else {
+        [self openLoginViewController];
+    }
 }
 
 - (void)launchMasterMode {
@@ -169,6 +175,7 @@ LC_PROPERTY(strong) LKGuestFeedViewController *guestFeedNavViewController; // LK
 
 #pragma mark LKLoginViewControllerDelegate
 - (void)didLoginSucceeded:(NSDictionary *)userInfo {
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hasOnceLogin"];
     [self launchMasterMode];
 }
 

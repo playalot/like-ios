@@ -12,6 +12,7 @@
 #import "ADTickerLabel.h"
 #import "UIImageView+WebCache.h"
 #import "LKLikeTagItemView.h"
+#import "LKLoginViewController.h"
 
 @interface LKHomeTableViewCell()
 
@@ -187,6 +188,9 @@ LC_IMP_SIGNAL(PushPostDetail);
 }
 
 -(void) handleHeadTap:(UITapGestureRecognizer *)tap {
+    if ([LKLoginViewController needLoginOnViewController:nil]) {
+        return;
+    }
     self.SEND(self.PushUserCenter).object = self.post.user;
 }
 

@@ -16,14 +16,11 @@
 #import "LKMainFeedViewController.h"
 #import "LKGroupViewController.h"
 #import "LKCameraRollViewController.h"
-#import "LKTabbarViewController.h"
 #import "LKGuestFeedViewController.h"
-//#import "LKTabbarViewController.h"
 
 @interface LKNavigator : NSObject
 
 LC_PROPERTY(strong) LKTabBarController *tabBarController;
-//LC_PROPERTY(strong) LKTabbarViewController *tabBarViewController;
 LC_PROPERTY(strong) LKMainFeedViewController *mainFeedViewController;
 LC_PROPERTY(strong) LKSearchViewController *searchViewController;
 LC_PROPERTY(strong) LKCameraRollViewController *cameraRollViewController;

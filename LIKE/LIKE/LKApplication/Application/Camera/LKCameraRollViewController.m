@@ -111,9 +111,7 @@ LC_PROPERTY(strong) UICollectionView * collectionView;
     self.assetLibrary = [[ALAssetsLibrary alloc] init];
     self.datasource = [NSMutableArray array];
     
-    
     [self getCameraRolls];
-    
     
     self.title = LC_LO(@"相机相册");
     
@@ -379,8 +377,11 @@ static PHImageRequestOptions *requestOptions;
     }
 }
 
--(void) selectedImage:(UIImage *)image
-{
+-(void) selectedImage:(UIImage *)image {
+    if (!image) {
+        return;
+    }
+    
     LKImageCropperViewController * cropper = [[LKImageCropperViewController alloc] initWithImage:image];
     
     [cropper showBackButton];

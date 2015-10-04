@@ -19,22 +19,16 @@ LC_PROPERTY(weak) LCUIButton *cameraButton;
 @dynamic delegate;
 
 - (nonnull instancetype)initWithFrame:(CGRect)frame {
-    
     if (self = [super initWithFrame:frame]) {
-        
         self.barTintColor = [UIColor whiteColor];
-        
         // 初始化中间 plus 按钮
         LCUIButton *cameraButton = LCUIButton.view;
         self.cameraButton = cameraButton;
-        
         // 设置 cameraButton 的属性
         [cameraButton setImage:[UIImage imageNamed:@"tabbar_camera.png"]
                  forState:UIControlStateNormal];
-        
         // 添加单击事件
         [cameraButton addTarget:self action:@selector(cameraButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-        
         // 添加到视图中
         [self addSubview:cameraButton];
     }
@@ -60,9 +54,7 @@ LC_PROPERTY(weak) LCUIButton *cameraButton;
     
     // 重新设置tabBarItem的frame
     for (int i = 0; i < self.subviews.count; i++) {
-        
         UIView *childView = self.subviews[i];
-        //        EZLog(@"%@", childView);
         
         // 判断是否是UITabBarButton
         if ([childView isKindOfClass:NSClassFromString(@"UITabBarButton")]) {

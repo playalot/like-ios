@@ -20,6 +20,9 @@ LC_PROPERTY(strong) LCUITableView *tableView;
 LC_PROPERTY(assign) NSInteger currentIndex;
 LC_PROPERTY(assign) BOOL cellHeadLineHidden;
 
+LC_ST_SIGNAL(FavouritePost);
+LC_ST_SIGNAL(UnfavouritePost);
+
 + (instancetype)sharedInstance;
 
 - (void)watchForChangeOfDatasource:(id)observedDataSourceObject

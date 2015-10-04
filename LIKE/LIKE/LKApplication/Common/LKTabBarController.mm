@@ -70,7 +70,7 @@
 //    }
 //    
 //    // 隐藏tabBar
-//    [self setTabBarHidden:NO];
+    [self setTabBarHidden:NO];
 //
 //    // 设置状态栏为淡色样式
 //    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];

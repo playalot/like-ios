@@ -70,6 +70,7 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 + (LKUserCenterViewController *)pushUserCenterWithUser:(LKUser *)user navigationController:(UINavigationController *)navigationController {
     LKUserCenterViewController * userCenter = [[LKUserCenterViewController alloc] initWithUser:user];
     userCenter.needBackButton = YES;
+    userCenter.settingButtonHidden = YES;
     [navigationController pushViewController:userCenter animated:YES];
     return userCenter;
 }
@@ -77,7 +78,7 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 - (instancetype)initWithUser:(LKUser *)user {
     if (self = [super init]) {
         self.user = user;
-        self.isLocalUser = self.user.id.integerValue == LKLocalUser.singleton.user.id.integerValue;
+        self.isLocalUser = self.user.id.integerValue == [[LKLocalUser.singleton getCurrentUID] integerValue];
         LKUser * cache = LKUserInfoCache.singleton[self.user.id.description];
         if (!self.isLocalUser && cache) {
             self.user = cache;
@@ -104,7 +105,6 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 }
 
 - (void)buildUI {
-    
     if (!self.isLocalUser) {
         [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[UIImage imageNamed:@"NavigationBarBack.png" useCache:YES] selectImage:nil];
     }
@@ -146,7 +146,6 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
     
     self.delegateSplitter = [[BLKDelegateSplitter alloc] initWithFirstDelegate:behaviorDefiner secondDelegate:self];
     self.tableView.delegate = (id<UITableViewDelegate>)self.delegateSplitter;
-    
     [self.view addSubview:self.header];
     
     self.tableView.contentInset = UIEdgeInsetsMake(self.header.maximumBarHeight - 20, 0.0, 0.0, 0.0);
@@ -202,16 +201,20 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
     
     if (self.isLocalUser) {
         
-        LCUIButton * setButton = LCUIButton.view;
-        setButton.viewFrameWidth = 64 / 3 + 40;
-        setButton.viewFrameHeight = 64 / 3 + 40;
-        setButton.viewFrameX = LC_DEVICE_WIDTH - setButton.viewFrameWidth;
-        setButton.viewFrameY = 10;
-        setButton.buttonImage = [UIImage imageNamed:@"NavigationBarSet.png" useCache:YES];
-        setButton.showsTouchWhenHighlighted = YES;
-        [setButton addTarget:self action:@selector(setAction) forControlEvents:UIControlEventTouchUpInside];
-        [self.header addSubview:setButton];
+        if (!self.settingButtonHidden) {
+            LCUIButton * setButton = LCUIButton.view;
+            setButton.viewFrameWidth = 64 / 3 + 40;
+            setButton.viewFrameHeight = 64 / 3 + 40;
+            setButton.viewFrameX = LC_DEVICE_WIDTH - setButton.viewFrameWidth;
+            setButton.viewFrameY = 10;
+            setButton.buttonImage = [UIImage imageNamed:@"NavigationBarSet.png" useCache:YES];
+            setButton.showsTouchWhenHighlighted = YES;
+            [setButton addTarget:self action:@selector(setAction) forControlEvents:UIControlEventTouchUpInside];
+            [self.header addSubview:setButton];
+        }
+        
     } else {
+        
         self.friendshipButton = LCUIButton.view;
         self.friendshipButton.viewFrameWidth = 64 / 3 + 40;
         self.friendshipButton.viewFrameHeight = 64 / 3 + 40;
@@ -462,14 +465,15 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
             }
         }
         
-        
-        // Reload data
-        [self.tableView reloadData];
         if (error) {
             [self showTopMessageErrorHud:error];
+        } else {
+            
+            // Reload data
+            self.pullLoader.canLoadMore = [self.userCenterModel canLoadMoreWithType:type];
+            self.datasource = [NSMutableArray arrayWithArray:[self.userCenterModel dataWithType:self.currentType]];
+            [self.tableView reloadData];
         }
-        self.pullLoader.canLoadMore = [self.userCenterModel canLoadMoreWithType:type];
-        self.datasource = [NSMutableArray arrayWithArray:[self.userCenterModel dataWithType:self.currentType]];
     };
     
     [self.userCenterModel getDataAtFirstPage:diretion == LCUIPullLoaderDiretionTop type:type uid:self.user.id];
@@ -482,11 +486,12 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     self.browsingViewController = [[LKPostTableViewController alloc] init];
     self.browsingViewController.delegate = self;
     self.browsingViewController.datasource = self.datasource;
-    self.browsingViewController.cellHeadLineHidden = YES;
     if (self.currentType == LKUserCenterModelTypePhotos) {
         self.browsingViewController.title = @"我的照片";
+        self.browsingViewController.cellHeadLineHidden = YES;
     } else {
         self.browsingViewController.title = @"我的收藏";
+        self.browsingViewController.cellHeadLineHidden = NO;
     }
     self.browsingViewController.currentIndex = [self.datasource indexOfObject:signal.object];
     [self.browsingViewController watchForChangeOfDatasource:self dataSourceKey:@"datasource"];
@@ -522,7 +527,7 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
         
         NSInteger index = indexPath.row * 3;
         
-        NSArray * datasource = [self.userCenterModel dataWithType:LKUserCenterModelTypePhotos];
+        NSArray *datasource = self.datasource;
         
         LKPost * post = datasource[index];
         LKPost * post1 = index + 1 < datasource.count ? datasource[index + 1] : nil;
@@ -533,11 +538,9 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
         if (post) {
             [array addObject:post];
         }
-        
         if (post1) {
             [array addObject:post1];
         }
-        
         if (post2) {
             [array addObject:post2];
         }
@@ -563,7 +566,7 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
         
         LKPostThumbnailTableViewCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Favor" andClass:[LKPostThumbnailTableViewCell class]];
         NSInteger index = indexPath.row * 3;
-        NSArray * datasource = [self.userCenterModel dataWithType:LKUserCenterModelTypeFavor];
+        NSArray * datasource = self.datasource;
         
         LKPost * post = datasource[index];
         LKPost * post1 = index + 1 < datasource.count ? datasource[index + 1] : nil;
@@ -587,18 +590,10 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch (self.currentType) {
-        case LKUserCenterModelTypePhotos:
-        case LKUserCenterModelTypeFavor:
-            return [LKPostThumbnailTableViewCell height];
-        case LKUserCenterModelTypeFocus:
-        case LKUserCenterModelTypeFans:
-            return 58;
-        default:
-            return 0;
-            break;
+    if (self.currentType == LKUserCenterModelTypePhotos || self.currentType == LKUserCenterModelTypeFavor) {
+        return [LKPostThumbnailTableViewCell height];
     }
-    return 30;
+    return 58;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -620,6 +615,24 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [self.inputView resignFirstResponder];
     [self.header handleScrollDidScroll:scrollView];
+}
+
+LC_HANDLE_NAVIGATION_SIGNAL(UnfavouritePost, signal) {
+//    LKPost *signalPost = (LKPost *)signal.object;
+//    NSInteger updatedIndex = -1;
+//    for (LKPost *post in self.datasource) {
+//        if (post.id.integerValue == signalPost.id.integerValue) {
+//            updatedIndex = [self.datasource indexOfObject:post];
+//            break;
+//        }
+//    }
+//    
+//    if (updatedIndex < 0) {
+//        return;
+//    }
+//    
+//    [self.datasource removeObject:signalPost];
+    [self.tableView reloadData];
 }
 
 #pragma mark - ***** LKPostDetailViewControllerCancelFavorDelegate *****

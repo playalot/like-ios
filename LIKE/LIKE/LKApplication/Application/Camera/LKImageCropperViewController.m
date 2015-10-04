@@ -171,20 +171,12 @@ LC_PROPERTY(strong) UIView *wastedView;
     
     [self overlayClipping];
     
-    
-    
     if (self.fromPreviewFrameString) {
-        
         CGRect rect = CGRectFromString(self.fromPreviewFrameString);
-        
         CGRect oldRect = self.showImgView.frame;
-        
         self.showImgView.frame = rect;
-        
         LC_FAST_ANIMATIONS(0.25, ^{
-        
             self.showImgView.frame = oldRect;
-        
         });
     }
     

@@ -151,16 +151,9 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     LKNotification *notification = self.notificationModel.datasource[indexPath.row];
-    if (indexPath.row == 0) {
-        LKOfficialViewController *officialViewController = [LKOfficialViewController viewController];
-        [self.navigationController pushViewController:officialViewController animated:YES];
-        return;
-    }
     if (notification.type == LKNotificationTypeFocus) {
         [LKUserCenterViewController pushUserCenterWithUser:notification.user navigationController:self.navigationController];
-        
     } else {
-        
         if ((notification.type == LKNotificationTypeComment ||
             notification.type == LKNotificationTypeReply) && [notification.tagID isKindOfClass:[NSNumber class]]) {
             notification.post.tagString = [NSString stringWithFormat:@"Comment-%@",notification.tagID];

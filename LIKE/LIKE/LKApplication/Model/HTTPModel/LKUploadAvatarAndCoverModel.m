@@ -114,7 +114,13 @@
     
     picker.finalizationBlock = ^(id picker, NSDictionary * imageInfo){
         
-        LKImageCropperViewController * cropper = [[LKImageCropperViewController alloc] initWithImage:imageInfo[@"UIImagePickerControllerOriginalImage"]];
+        UIImage *image = imageInfo[@"UIImagePickerControllerOriginalImage"];
+        
+        if (!image) {
+            return;
+        }
+        
+        LKImageCropperViewController * cropper = [[LKImageCropperViewController alloc] initWithImage:image];
         cropper.squareImage = YES;
         cropper.dontSaveToAblum = YES;
         

@@ -39,7 +39,6 @@ LC_PROPERTY(strong) LKInputView *inputView;
 
 LC_PROPERTY(strong) LCUIPullLoader *pullLoader;
 
-
 LC_PROPERTY(strong) LCUIImageView *userHead;
 LC_PROPERTY(strong) LCUILabel *userName;
 LC_PROPERTY(strong) ADTickerLabel *userLikes;
@@ -146,14 +145,10 @@ LC_PROPERTY(assign) BOOL favorited;
     LKHttpRequestInterface *interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"post/%@", post.id]].GET_METHOD();
     
     [self request:interface complete:^(LKHttpRequestResult *result) {
-       
         if (result.state == LKHttpRequestStateFinished) {
-            
             NSDictionary *resultData = result.json[@"data"];
             self.post = [LKPost objectFromDictionary:resultData];
-
         } else if (result.state == LKHttpRequestStateFailed) {
-            
             [self showTopMessageErrorHud:result.error];
         }
     }];
@@ -202,8 +197,7 @@ LC_PROPERTY(assign) BOOL favorited;
     return YES;
 }
 
--(void) buildUI
-{
+-(void) buildUI {
     self.view.backgroundColor = LKColor.backgroundColor;
     
     self.tableView = [[LCUITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
@@ -378,12 +372,6 @@ LC_PROPERTY(assign) BOOL favorited;
             [self showTopMessageErrorHud:LC_LO(@"该标签已存在")];
         }
     };
-    
-//    self.inputView.didShow = ^(){
-//        
-//        @normally(self);
-//        [self.tableView setContentOffset:LC_POINT(0, self.tableView.contentSize.height - (LC_DEVICE_HEIGHT + 20 - 258 - 44)) animated:NO];
-//    };
 }
 
 #pragma mark - ***** 放大后的headerView dismiss的时候调用 *****
@@ -500,8 +488,7 @@ LC_PROPERTY(assign) BOOL favorited;
     [self dismissOrPopViewController];
 }
 
--(void) _moreAction
-{
+-(void) _moreAction {
     [self.inputView resignFirstResponder];
     
     NSString *favorStr = self.post.favorited ? @"取消收藏" : @"收藏图片";
@@ -510,7 +497,14 @@ LC_PROPERTY(assign) BOOL favorited;
 
     if (self.post.user.id.integerValue == LKLocalUser.singleton.user.id.integerValue) {
         
-        [LKActionSheet showWithTitle:nil/*LC_LO(@"更多")*/ buttonTitles:@[/*LC_LO(@"举报"),*/LC_LO(@"删除"),LC_LO(favorStr),LC_LO(@"保存图片")] didSelected:^(NSInteger index) {
+        NSMutableArray *titles = [NSMutableArray array];
+        [titles addObject:LC_LO(@"删除")];
+        if (self.post.user.id.integerValue != [[LKLocalUser.singleton getCurrentUID] integerValue]) {
+            [titles addObject:LC_LO(favorStr)];
+        }
+        [titles addObject:LC_LO(@"保存图片")];
+        
+        [LKActionSheet showWithTitle:nil/*LC_LO(@"更多")*/ buttonTitles:titles didSelected:^(NSInteger index) {
             
             @normally(self);
 
@@ -684,6 +678,19 @@ LC_PROPERTY(assign) BOOL favorited;
         if (result.state == LKHttpRequestStateFinished) {
                         
             self.post.favorited = !favorited;
+            
+            if (self.post.favorited) {
+                [self showSuccessHud:LC_LO(@"收藏成功")];
+                if (self.delegate) {
+                    [self.delegate postDetailViewController:self didFavouritePost:self.post];
+                }
+                
+            } else {
+                [self showSuccessHud:LC_LO(@"已取消收藏")];
+                if (self.delegate) {
+                    [self.delegate postDetailViewController:self didUnfavouritePost:self.post];
+                }
+            }
             
         } else if (result.state == LKHttpRequestStateFailed) {
             

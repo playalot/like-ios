@@ -123,7 +123,6 @@ LC_PROPERTY(strong) LKGuestFeedViewController *guestFeedNavViewController; // LK
                              initWithViewControllers:@[
                                                        LC_UINAVIGATION(self.mainFeedViewController),
                                                        LC_UINAVIGATION(self.searchViewController),
-//                                                       LC_UINAVIGATION(self.cameraRollViewController),
                                                        LC_UINAVIGATION(self.notificationViewController),
                                                        LC_UINAVIGATION(self.userCenterViewController)]];
     self.tabBarController.delegate = self;

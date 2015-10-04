@@ -118,7 +118,6 @@ LC_PROPERTY(weak) LCUIButton *cameraButton;
         item.viewFrameWidth = self.viewFrameWidth / 5;
         // 调整位置
         item.viewFrameX = index * self.viewFrameWidth / 5;
-//        item.viewFrameY += 5;
         
         index++;
     }
@@ -185,7 +184,6 @@ LC_PROPERTY(weak) LCUIButton *cameraButton;
         return;
     }
     [_selectedItem setSelected:NO];
-    
     _selectedItem = selectedItem;
     [_selectedItem setSelected:YES];
 }
@@ -204,7 +202,6 @@ LC_PROPERTY(weak) LCUIButton *cameraButton;
 
 #pragma mark - cameraButton的单击事件
 - (void)cameraButtonClick:(LCUIButton *)cameraButton {
-    
     if ([self.delegate respondsToSelector:@selector(tabBar:didClickCameraButton:)]) {
         [self.delegate tabBar:self didClickCameraButton:cameraButton];
     }

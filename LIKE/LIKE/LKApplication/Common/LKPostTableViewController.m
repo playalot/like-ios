@@ -28,6 +28,9 @@ LC_PROPERTY(copy) NSString *observedDataSourceKeyPath;
 
 @implementation LKPostTableViewController
 
+LC_IMP_SIGNAL(FavouritePost);
+LC_IMP_SIGNAL(UnfavouritePost);
+
 + (instancetype)sharedInstance {
     static LKPostTableViewController *_instance = nil;
     static dispatch_once_t onceToken;
@@ -296,6 +299,26 @@ LC_PROPERTY(copy) NSString *observedDataSourceKeyPath;
     [self.tableView reloadData];
 }
 
+LC_HANDLE_NAVIGATION_SIGNAL(UnfavouritePost, signal) {
+    LKPost *signalPost = (LKPost *)signal.object;
+    NSInteger updatedIndex = -1;
+    for (LKPost *post in self.datasource) {
+        if (post.id.integerValue == signalPost.id.integerValue) {
+            updatedIndex = [self.datasource indexOfObject:post];
+            break;
+        }
+    }
+    if (updatedIndex < 0) {
+        return;
+    }
+    [self.datasource removeObjectAtIndex:updatedIndex];
+    [self.tableView reloadData];
+}
+
+LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
+    [LKUserCenterViewController pushUserCenterWithUser:signal.object navigationController:self.navigationController];
+}
+
 LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     if (self.inputView.isFirstResponder) {
         [self.inputView resignFirstResponder];
@@ -341,6 +364,40 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
         }
     }
     [self.tableView reloadData];
+}
+
+- (void)postDetailViewController:(LKPostDetailViewController *)ctrl didFavouritePost:(LKPost *)post {
+    NSInteger updatedIndex = -1;
+    for (NSInteger i = 0; i < self.datasource.count; ++i) {
+        LKPost *selfPost = self.datasource[i];
+        if ([selfPost.id isEqualToNumber:post.id]) {
+            updatedIndex = i;
+            break;
+        }
+    }
+    
+    if (updatedIndex < 0) {
+        return;
+    }
+    
+    self.SEND(self.FavouritePost).object = [self.datasource objectAtIndex:updatedIndex];
+}
+
+- (void)postDetailViewController:(LKPostDetailViewController *)ctrl didUnfavouritePost:(LKPost *)post {
+    NSInteger updatedIndex = -1;
+    for (NSInteger i = 0; i < self.datasource.count; ++i) {
+        LKPost *selfPost = self.datasource[i];
+        if ([selfPost.id isEqualToNumber:post.id]) {
+            updatedIndex = i;
+            break;
+        }
+    }
+    
+    if (updatedIndex < 0) {
+        return;
+    }
+    
+    self.SEND(self.UnfavouritePost).object = [self.datasource objectAtIndex:updatedIndex];
 }
 
 @end

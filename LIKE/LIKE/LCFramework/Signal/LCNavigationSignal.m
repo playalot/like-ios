@@ -66,8 +66,7 @@
     return block;
 }
 
--(void) $send:(LCSignal *)signal
-{
+-(void) $send:(LCSignal *)signal {
     if(!signal){
         return;
     }

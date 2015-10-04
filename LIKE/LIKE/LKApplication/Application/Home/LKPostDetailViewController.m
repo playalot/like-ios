@@ -100,7 +100,6 @@ LC_PROPERTY(assign) BOOL favorited;
     [super viewDidAppear:animated];
     
     if (self.tableView.viewFrameY != 0) {
-    
         self.tableView.pop_springBounciness = 10;
         self.tableView.pop_springSpeed = 10;
         self.tableView.pop_spring.center = LC_POINT(self.tableView.viewCenterX, self.tableView.viewCenterY - 30);
@@ -680,13 +679,13 @@ LC_PROPERTY(assign) BOOL favorited;
             
             if (self.post.favorited) {
                 [self showSuccessHud:LC_LO(@"收藏成功")];
-                if (self.delegate) {
+                if (self.delegate && [self.delegate respondsToSelector:@selector(postDetailViewController:didFavouritePost:)]) {
                     [self.delegate postDetailViewController:self didFavouritePost:self.post];
                 }
                 
             } else {
                 [self showSuccessHud:LC_LO(@"已取消收藏")];
-                if (self.delegate) {
+                if (self.delegate && [self.delegate respondsToSelector:@selector(postDetailViewController:didUnfavouritePost:)]) {
                     [self.delegate postDetailViewController:self didUnfavouritePost:self.post];
                 }
             }

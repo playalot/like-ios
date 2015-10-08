@@ -64,11 +64,12 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
     self.view.ADD(self.tableView);
     
     self.cartoonImageView = LCUIImageView.view;
-    self.cartoonImageView.viewFrameWidth = 196;
-    self.cartoonImageView.viewFrameHeight = 367;
+    UIImage *cartoonImage = [UIImage imageNamed:@"NotificationEmpty.png" useCache:YES];
+    self.cartoonImageView.viewFrameWidth = cartoonImage.size.width;
+    self.cartoonImageView.viewFrameHeight = cartoonImage.size.height;
     self.cartoonImageView.viewCenterX = self.tableView.viewCenterX;
     self.cartoonImageView.viewCenterY = self.tableView.viewCenterY;
-    self.cartoonImageView.image = [UIImage imageNamed:@"NoFollowing.png" useCache:YES];
+    self.cartoonImageView.image = cartoonImage;
     self.cartoonImageView.hidden = YES;
     self.tableView.ADD(self.cartoonImageView);
     

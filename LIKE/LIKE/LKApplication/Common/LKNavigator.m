@@ -19,7 +19,7 @@
 @interface LKNavigator () <LKLoginViewControllerDelegate, RDVTabBarControllerDelegate>
 
 LC_PROPERTY(strong) LKLoginViewController *loginViewController;
-LC_PROPERTY(strong) LKGuestFeedViewController *guestFeedNavViewController; // LKGuestFeedViewController
+LC_PROPERTY(strong) LKGuestFeedViewController *guestFeedViewController;
 LC_PROPERTY(strong) LKGateViewController *gateViewController;
 
 @end
@@ -85,13 +85,13 @@ LC_PROPERTY(strong) LKGateViewController *gateViewController;
 
 - (void)launchGuestMode {
     self.mainViewController.viewControllers = @[];
-    self.guestFeedNavViewController = [LKGuestFeedViewController viewController];
-    [self.mainViewController pushViewController:self.guestFeedNavViewController animated:NO];
+    self.guestFeedViewController = [LKGuestFeedViewController viewController];
+    [self.mainViewController pushViewController:self.guestFeedViewController animated:NO];
     
     BOOL hasOnceLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"hasOnceLogin"];
     if (!hasOnceLogin) {
         [self.mainViewController pushViewController:self.loginViewController animated:NO];
-        [self.mainViewController presentViewController:self.gateViewController animated:NO completion:^{}];
+        [self.mainViewController pushViewController:self.gateViewController animated:NO];
     } else {
         [self openLoginViewController];
     }

@@ -290,6 +290,8 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
             [self.header updateWithUser:self.userInfoModel.user];
             [self updateTableHeaderView];
             [self updateFriendButton];
+<<<<<<< HEAD
+=======
             
             self.cartoonImageView.hidden = YES;
             if (self.currentType == LKUserCenterModelTypePhotos) {
@@ -307,6 +309,7 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
                     self.cartoonImageView.image = [UIImage imageNamed:@"segment_favor.png" useCache:YES];
                 }
             }
+>>>>>>> bf4b33af7ca24acdce0a6e3a9ba1c91cd48cc371
         }
     };
     
@@ -409,7 +412,6 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 
 -(void) updateFriendButton {
     switch (self.user.isFollowing.integerValue) {
-            
         case 0:
             self.friendshipButton.buttonImage = [UIImage imageNamed:@"FocusWirte.png" useCache:YES];
             break;
@@ -452,7 +454,6 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
         
         NSArray * datasource = [self.userCenterModel dataWithType:type];
         if (!datasource || datasource.count == 0) {
-            self.cartoonImageView.hidden = YES;
             if (type == LKUserCenterModelTypePhotos) {
                 self.cartoonImageView.hidden = self.userCenterModel.photoArray.count ? YES : NO;
                 self.cartoonImageView.image = [UIImage imageNamed:@"segment_photo.png" useCache:YES];
@@ -480,6 +481,7 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
     };
     
     [self.userCenterModel getDataAtFirstPage:diretion == LCUIPullLoaderDiretionTop type:type uid:self.user.id];
+    self.cartoonImageView.hidden = YES;
 }
 
 #pragma mark -

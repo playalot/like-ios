@@ -154,6 +154,7 @@ LC_PROPERTY(strong) LCUIImageView *noFollowingView;
 - (BOOL)checkTag:(NSString *)tag onTags:(NSArray *)onTags {
     for (LKTag * oTag in onTags) {
         if ([oTag.tag isEqualToString:tag]) {
+            self.inputView.textField.text = nil;
             return NO;
         }
     }

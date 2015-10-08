@@ -290,6 +290,26 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
             [self.header updateWithUser:self.userInfoModel.user];
             [self updateTableHeaderView];
             [self updateFriendButton];
+<<<<<<< HEAD
+=======
+            
+            self.cartoonImageView.hidden = YES;
+            if (self.currentType == LKUserCenterModelTypePhotos) {
+                self.cartoonImageView.hidden = self.userCenterModel.photoArray.count ? YES : NO;
+                self.cartoonImageView.image = [UIImage imageNamed:@"segment_photo.png" useCache:YES];
+            } else if (self.currentType == LKUserCenterModelTypeFocus) {
+                self.cartoonImageView.hidden = self.userCenterModel.focusArray.count ? YES : NO;
+                self.cartoonImageView.image = [UIImage imageNamed:@"segment_follow.png" useCache:YES];
+            } else if (self.currentType == LKUserCenterModelTypeFans) {
+                self.cartoonImageView.hidden = self.userCenterModel.fansArray.count ? YES : NO;
+                self.cartoonImageView.image = [UIImage imageNamed:@"segment_fans.png" useCache:YES];
+            } else if (self.currentType == LKUserCenterModelTypeFavor) {
+                if (self.isLocalUser) {
+                    self.cartoonImageView.hidden = self.userCenterModel.favorArray.count ? YES : NO;
+                    self.cartoonImageView.image = [UIImage imageNamed:@"segment_favor.png" useCache:YES];
+                }
+            }
+>>>>>>> bf4b33af7ca24acdce0a6e3a9ba1c91cd48cc371
         }
     };
     
@@ -472,10 +492,10 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     self.browsingViewController.delegate = self;
     self.browsingViewController.datasource = self.datasource;
     if (self.currentType == LKUserCenterModelTypePhotos) {
-        self.browsingViewController.title = @"我的照片";
+        self.browsingViewController.title = self.user.name ? self.user.name : LC_LO(@"我的照片");
         self.browsingViewController.cellHeadLineHidden = YES;
     } else {
-        self.browsingViewController.title = @"我的收藏";
+        self.browsingViewController.title = LC_LO(@"我的收藏");
         self.browsingViewController.cellHeadLineHidden = NO;
     }
     self.browsingViewController.currentIndex = [self.datasource indexOfObject:signal.object];

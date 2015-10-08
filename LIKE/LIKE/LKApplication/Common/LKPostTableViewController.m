@@ -189,6 +189,7 @@ LC_IMP_SIGNAL(UnfavouritePost);
 - (BOOL)checkTag:(NSString *)tag onTags:(NSArray *)onTags {
     for (LKTag * oTag in onTags) {
         if ([oTag.tag isEqualToString:tag]) {
+            self.inputView.textField.text = nil;
             return NO;
         }
     }
@@ -223,6 +224,7 @@ LC_IMP_SIGNAL(UnfavouritePost);
     
     // input view...
     [self.inputView resignFirstResponder];
+    self.inputView.textField.text = @"";
     
     [LKTagAddModel addTagString:tag onPost:post requestFinished:^(LKHttpRequestResult *result, NSString *error) {
         @normally(self);

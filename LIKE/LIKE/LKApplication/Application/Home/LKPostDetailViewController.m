@@ -406,6 +406,7 @@ LC_PROPERTY(assign) BOOL favorited;
         
         if ([oTag.tag isEqualToString:tag]) {
             
+            self.inputView.textField.text = nil;
             return NO;
         }
     }

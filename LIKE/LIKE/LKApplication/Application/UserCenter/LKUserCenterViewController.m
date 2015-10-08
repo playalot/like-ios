@@ -311,6 +311,8 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
             [self updateTableHeaderView];
             [self updateFriendButton];
             
+            self.cartoonImageView.hidden = YES;
+            
             if (self.currentType == LKUserCenterModelTypePhotos) {
                 self.cartoonImageView.hidden = self.userCenterModel.photoArray.count ? YES : NO;
                 self.cartoonImageView.image = [UIImage imageNamed:@"segment_photo.png" useCache:YES];
@@ -321,8 +323,10 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
                 self.cartoonImageView.hidden = self.userCenterModel.fansArray.count ? YES : NO;
                 self.cartoonImageView.image = [UIImage imageNamed:@"segment_fans.png" useCache:YES];
             } else if (self.currentType == LKUserCenterModelTypeFavor) {
-                self.cartoonImageView.hidden = self.userCenterModel.favorArray.count ? YES : NO;
-                self.cartoonImageView.image = [UIImage imageNamed:@"segment_favor.png" useCache:YES];
+                if (self.isLocalUser) {
+                    self.cartoonImageView.hidden = self.userCenterModel.favorArray.count ? YES : NO;
+                    self.cartoonImageView.image = [UIImage imageNamed:@"segment_favor.png" useCache:YES];
+                }
             }
         }
     };
@@ -467,6 +471,8 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
         // Update header user informatio
         [self.userInfoModel getUserInfo:self.user.id];
         
+        self.cartoonImageView.hidden = YES;
+        
         if (type == LKUserCenterModelTypePhotos) {
             self.cartoonImageView.hidden = self.userCenterModel.photoArray.count ? YES : NO;
             self.cartoonImageView.image = [UIImage imageNamed:@"segment_photo.png" useCache:YES];
@@ -477,8 +483,10 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
             self.cartoonImageView.hidden = self.userCenterModel.fansArray.count ? YES : NO;
             self.cartoonImageView.image = [UIImage imageNamed:@"segment_fans.png" useCache:YES];
         } else if (type == LKUserCenterModelTypeFavor) {
-            self.cartoonImageView.hidden = self.userCenterModel.favorArray.count ? YES : NO;
-            self.cartoonImageView.image = [UIImage imageNamed:@"segment_favor.png" useCache:YES];
+            if (self.isLocalUser) {
+                self.cartoonImageView.hidden = self.userCenterModel.favorArray.count ? YES : NO;
+                self.cartoonImageView.image = [UIImage imageNamed:@"segment_favor.png" useCache:YES];
+            }
         }
         
         // Reload data

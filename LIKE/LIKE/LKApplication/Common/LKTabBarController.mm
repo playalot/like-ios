@@ -75,7 +75,6 @@
 //    // 设置状态栏为淡色样式
 //    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     
-    [LKNotificationCount startCheck];
     [self setNeedsStatusBarAppearanceUpdate];
 }
 
@@ -86,6 +85,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [LKNotificationCount bindView:self.tabBar.items[2]];
 }
 
@@ -97,6 +97,8 @@
     if (self = [super init]) {
         self.viewControllers = viewControllers;
         self.delegate = self;
+        
+        [LKNotificationCount startCheck];
     }
     return self;
 }

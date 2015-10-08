@@ -28,6 +28,18 @@ LC_PROPERTY(copy) NSString *observedDataSourceKeyPath;
 
 @implementation LKPostTableViewController
 
+LC_IMP_SIGNAL(FavouritePost);
+LC_IMP_SIGNAL(UnfavouritePost);
+
++ (instancetype)sharedInstance {
+    static LKPostTableViewController *_instance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _instance = [[LKPostTableViewController alloc] init];
+    });
+    return _instance;
+}
+
 - (void)dealloc {
     [self cancelAllRequests];
     [self unobserveAllNotifications];
@@ -84,12 +96,16 @@ LC_PROPERTY(copy) NSString *observedDataSourceKeyPath;
     };
 }
 
-- (void)buildUI {
-    self.view.backgroundColor = LKColor.backgroundColor;
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     
     if (self.datasource == nil)
         self.datasource = [NSMutableArray array];
     [self reloadData];
+}
+
+- (void)buildUI {
+    self.view.backgroundColor = LKColor.backgroundColor;
     
     [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[UIImage imageNamed:@"NavigationBarBack.png" useCache:YES] selectImage:nil];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
@@ -173,6 +189,7 @@ LC_PROPERTY(copy) NSString *observedDataSourceKeyPath;
 - (BOOL)checkTag:(NSString *)tag onTags:(NSArray *)onTags {
     for (LKTag * oTag in onTags) {
         if ([oTag.tag isEqualToString:tag]) {
+            self.inputView.textField.text = nil;
             return NO;
         }
     }
@@ -207,6 +224,7 @@ LC_PROPERTY(copy) NSString *observedDataSourceKeyPath;
     
     // input view...
     [self.inputView resignFirstResponder];
+    self.inputView.textField.text = @"";
     
     [LKTagAddModel addTagString:tag onPost:post requestFinished:^(LKHttpRequestResult *result, NSString *error) {
         @normally(self);
@@ -283,6 +301,26 @@ LC_PROPERTY(copy) NSString *observedDataSourceKeyPath;
     [self.tableView reloadData];
 }
 
+LC_HANDLE_NAVIGATION_SIGNAL(UnfavouritePost, signal) {
+    LKPost *signalPost = (LKPost *)signal.object;
+    NSInteger updatedIndex = -1;
+    for (LKPost *post in self.datasource) {
+        if (post.id.integerValue == signalPost.id.integerValue) {
+            updatedIndex = [self.datasource indexOfObject:post];
+            break;
+        }
+    }
+    if (updatedIndex < 0) {
+        return;
+    }
+    [self.datasource removeObjectAtIndex:updatedIndex];
+    [self.tableView reloadData];
+}
+
+LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
+    [LKUserCenterViewController pushUserCenterWithUser:signal.object navigationController:self.navigationController];
+}
+
 LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     if (self.inputView.isFirstResponder) {
         [self.inputView resignFirstResponder];
@@ -328,6 +366,40 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
         }
     }
     [self.tableView reloadData];
+}
+
+- (void)postDetailViewController:(LKPostDetailViewController *)ctrl didFavouritePost:(LKPost *)post {
+    NSInteger updatedIndex = -1;
+    for (NSInteger i = 0; i < self.datasource.count; ++i) {
+        LKPost *selfPost = self.datasource[i];
+        if ([selfPost.id isEqualToNumber:post.id]) {
+            updatedIndex = i;
+            break;
+        }
+    }
+    
+    if (updatedIndex < 0) {
+        return;
+    }
+    
+    self.SEND(self.FavouritePost).object = [self.datasource objectAtIndex:updatedIndex];
+}
+
+- (void)postDetailViewController:(LKPostDetailViewController *)ctrl didUnfavouritePost:(LKPost *)post {
+    NSInteger updatedIndex = -1;
+    for (NSInteger i = 0; i < self.datasource.count; ++i) {
+        LKPost *selfPost = self.datasource[i];
+        if ([selfPost.id isEqualToNumber:post.id]) {
+            updatedIndex = i;
+            break;
+        }
+    }
+    
+    if (updatedIndex < 0) {
+        return;
+    }
+    
+    self.SEND(self.UnfavouritePost).object = [self.datasource objectAtIndex:updatedIndex];
 }
 
 @end

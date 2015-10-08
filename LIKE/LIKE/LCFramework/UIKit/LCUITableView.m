@@ -12,17 +12,14 @@
 
 @implementation LCUITableView
 
--(void) reloadData
-{
+- (void)reloadData {
     if (self.willReload) {
         self.willReload();
     }
-    
     [super reloadData];
 }
 
--(id) autoCreateDequeueReusableCellWithIdentifier:(NSString *)identifier andClass:(Class)cellClass
-{
+- (id)autoCreateDequeueReusableCellWithIdentifier:(NSString *)identifier andClass:(Class)cellClass {
     id cell =  [self dequeueReusableCellWithIdentifier:identifier];
     
     if (!cell) {
@@ -32,18 +29,14 @@
     return cell;
 }
 
--(id) autoCreateDequeueReusableCellWithIdentifier:(NSString *)identifier
+- (id)autoCreateDequeueReusableCellWithIdentifier:(NSString *)identifier
                                          andClass:(Class)cellClass
-                                configurationCell:(void (^)(id configurationCell))configurationCell
-{
+                                configurationCell:(void (^)(id configurationCell))configurationCell {
     id cell =  [self dequeueReusableCellWithIdentifier:identifier];
-    
     if (!cell) {
-        
         cell = [[cellClass alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
         configurationCell(cell);
     }
-    
     return cell;
 }
 

@@ -48,12 +48,6 @@ LC_PROPERTY(weak) LCUIViewController *currentViewController;
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
 }
 
-- (void)refresh {
-    [self.followingFeedViewController refresh];
-    [self.homeFeedViewController refresh];
-    
-}
-
 //LC_HANDLE_NAVIGATION_SIGNAL(UpdatePostTags, signal) {
 //    LKPost * post = signal.object;
 ////    [self.followingFeedViewController updatePostFeed:post];

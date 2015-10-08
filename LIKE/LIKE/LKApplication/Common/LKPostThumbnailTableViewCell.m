@@ -88,7 +88,7 @@ LC_IMP_SIGNAL(PushPostDetail);
         
         if (post) {
             item.hidden = NO;
-            [item.imageView sd_setImageWithURL:[NSURL URLWithString:post.thumbnail] placeholderImage:nil];
+            [item.imageView sd_setImageWithURL:[NSURL URLWithString:post.thumbnail] placeholderImage:nil options:SDWebImageRetryFailed];
         }
     }
 }

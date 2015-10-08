@@ -91,26 +91,8 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
 +(BOOL) needLoginOnViewController:(UIViewController *)viewController {
     if (LKLocalUser.singleton.isLogin) {
         return NO;
-    }
-    else{
-        
-        LKLoginViewController * login = LKLoginViewController.viewController;
-        
-//        for (UIView * view in login.view.subviews) {
-//            if (view != login.backgroundView) {
-//                view.alpha = 0;
-//            }
-//        }
-
-        [login performSelector:@selector(beginAnimation) withObject:0 afterDelay:0.01];
-        
-        // 弹出时的动画风格为交叉溶解风格
-        login.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-        // 背景虚化
-//        [login currentWindowBlur:viewController];
-        
-        [[LCUIApplication sharedInstance] presentViewController:login animation:YES];
-        
+    } else {
+        [[LKNavigator navigator] openLoginViewController];
         return YES;
     }
 }
@@ -126,12 +108,10 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
 }
 
 -(void) currentWindowBlur:(UIViewController *)viewController {
-    if (!viewController) {
+    if (!viewController)
         return;
-    }
     
     UIImage *image = [[self snapshotFromParentmostViewController:viewController] imageWithBlurValue:15];
-    
     [self.backgroundView removeFromSuperview];
     
     self.backgroundView = [LCUIImageView viewWithImage:image];
@@ -140,28 +120,17 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     self.backgroundView.center = self.view.center;
     [self.view insertSubview:self.backgroundView atIndex:0];
     
-    
     UIView *mask = UIView.view.COLOR([[UIColor blackColor] colorWithAlphaComponent:0.35]);
     mask.frame = self.backgroundView.bounds;
     self.backgroundView.ADD(mask);
-//    self.backgroundView.alpha = 0;
-//    
-//    LC_FAST_ANIMATIONS(1, ^{
-//        
-//        self.backgroundView.alpha = 1;
-//        
-//    });
 }
 
 
 - (void)beginAnimation {
     
     LC_FAST_ANIMATIONS(1, ^{
-        
         for (UIView * view in self.view.subviews) {
-            
             if (view != self.backgroundView) {
-                
                 view.alpha = 1;
             }
         }
@@ -170,17 +139,13 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
 }
 
 
-- (UIImage *)snapshotFromParentmostViewController:(UIViewController *)viewController
-{
+- (UIImage *)snapshotFromParentmostViewController:(UIViewController *)viewController {
     UIViewController *presentingViewController = viewController.view.window.rootViewController;
-    
     while (presentingViewController.presentedViewController) presentingViewController = presentingViewController.presentedViewController;
-    
     UIGraphicsBeginImageContextWithOptions(LC_KEYWINDOW.bounds.size, YES, [UIScreen mainScreen].scale);
     [LC_KEYWINDOW drawViewHierarchyInRect:LC_KEYWINDOW.bounds afterScreenUpdates:YES];
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
     return image;
 }
 
@@ -395,7 +360,6 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     self.loginButton.viewFrameHeight = 46;
     self.loginButton.viewFrameY = codeBack.viewBottomY + 6;
     self.loginButton.viewCenterX = self.view.viewMidWidth;
-//    self.loginButton.cornerRadius = 30 / 2;
     self.loginButton.backgroundColor = LKColor.color;
     self.loginButton.title = LC_LO(@"进入like");
     self.loginButton.titleFont = LK_FONT(14);
@@ -446,8 +410,6 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     visitor.titleFont = LK_FONT(14);
     visitor.titleColor = LC_RGB(153, 153, 153);
     [visitor addTarget:self action:@selector(dismissAction) forControlEvents:UIControlEventTouchUpInside];
-    //    visitor.buttonImage = [UIImage imageNamed:@"VisitorIcon.png" useCache:YES];
-    //    visitor.imageEdgeInsets = UIEdgeInsetsMake(0, 80, 0, 0);
     self.view.ADD(visitor);
     
     // third login.
@@ -518,6 +480,53 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     
     // 设置本地化地区代码
     [self setTheLocalAreaCode];
+    
+    self.tableView.scrollEnabled = NO;
+    self.userInfoModel = LKUserInfoModel.new.OBSERVER(self);
+    
+    self.userInfoModel.requestFinished = ^(LKHttpRequestResult *result, NSString *error){
+        
+        @normally(self);
+        
+        if (error) {
+            
+            [self showTopMessageErrorHud:error];
+            
+            if (self.delegate) {
+                [self.delegate didLoginFailed];
+            }
+            
+        } else {
+            
+            self.maskView.hidden = YES;
+            
+            NSMutableDictionary *dic =  [self.userInfoModel.rawUserInfo mutableCopy];
+            
+            [LKLocalUser login:dic];
+            LKLocalUser.singleton.sessionToken = self.sesstionToken;
+            LKLocalUser.singleton.refreshToken = self.refreshToken;
+            LKLocalUser.singleton.expiresIn = [NSString stringWithFormat:@"%@", self.expiresIn];
+            
+            // 如果是第一次登陆,选择兴趣标签
+            BOOL firstStart = [[NSUserDefaults standardUserDefaults] boolForKey:@"firstStart"];
+            
+            // 判断是否是初次启动
+            if (!firstStart) {
+                
+                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstStart"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                
+                LKChooseTagView *chooseView = [LKChooseTagView chooseTagView];
+                [UIApplication sharedApplication].keyWindow.ADD(chooseView);
+            }
+            
+            [self dismissViewControllerAnimated:YES completion:nil];
+            
+            if (self.delegate) {
+                [self.delegate didLoginSucceeded:self.userInfoModel.rawUserInfo];
+            }
+        }
+    };
 }
 
 /**
@@ -623,7 +632,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
  *  dismiss modal出的登录控制器
  */
 -(void) dismissAction {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissOrPopViewController];
 }
 
 /**
@@ -646,7 +655,6 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     }
     
     [self cancelAllRequests];
-    
     self.codeButton.userInteractionEnabled = NO;
     self.codeButton.title = LC_LO(@"获取中...");
     
@@ -671,40 +679,12 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
              self.codeButton.userInteractionEnabled = YES;
          }
      }];
-    
-//    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"sendSmsCode"].POST_METHOD();
-//    
-//    [interface addParameter:[LKTimestampEncryption encryption:[[NSDate date] timeIntervalSince1970]] key:@"token"];
-//    [interface addParameter:self.phoneField.text key:@"mobile"];
-//    [interface addParameter:[LKISOCountryCodes countryWithCode:self.countryCode.text] key:@"zone"];
-//    
-//    @weakly(self);
-//    
-//    [self request:interface complete:^(LKHttpRequestResult * result) {
-//        
-//        @normally(self);
-//        
-//        if (result.state == LKHttpRequestStateFinished) {
-//            
-//            [self $beginTimer];
-//            
-//            self.codeButton.userInteractionEnabled = YES;
-//        }
-//        else if (result.state == LKHttpRequestStateFailed){
-//            
-//            [self showTopMessageErrorHud:result.error];
-//            
-//            self.codeButton.title = LC_LO(@"获取验证码");
-//            self.codeButton.userInteractionEnabled = YES;
-//        }
-//    }];
 }
 
 /**
  *  登录主界面
  */
--(void) login
-{
+-(void) login {
     if (![self $check:NO]) {
         return;
     }
@@ -712,11 +692,8 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     self.maskView.hidden = NO;
     self.loginButton.title = LC_LO(@"登录中...");
     self.loginButton.userInteractionEnabled = NO;
-        
     
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"authenticate/mobile/mob"].POST_METHOD();
-    
-//    [interface addParameter:[LKISOCountryCodes countryWithCode:self.countryCode.text] key:@"zone"];
     NSString *countryCode = [self.countryCode.text stringByReplacingOccurrencesOfString:@"+" withString:@""];
     [interface addParameter:countryCode key:@"zone"];
     [interface addParameter:self.phoneField.text key:@"mobile"];
@@ -731,7 +708,6 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
         if (result.state == LKHttpRequestStateFinished) {
             
             self.loginButton.userInteractionEnabled = YES;
-            //self.loginButton.title = @"进入Like";
             self.sesstionToken = result.json[@"data"][@"session_token"];
             self.refreshToken = result.json[@"data"][@"refresh_token"];
             self.expiresIn = result.json[@"data"][@"expires_in"];
@@ -754,8 +730,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
 /**
  *  第三方登录
  */
--(void) otherLogin:(UIView *)view
-{
+-(void) otherLogin:(UIView *)view {
     @weakly(self);
     
     if ([view.tagString isEqualToString:@"WeChatLogin"]) {
@@ -833,9 +808,9 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     [self request:interface complete:^(LKHttpRequestResult * result) {
         @normally(self);
         if (result.state == LKHttpRequestStateFinished) {
-//            self.sesstionToken = result.json[@"data"][@"session_token"];
-//            self.refreshToken = result.json[@"data"][@"refresh_token"];
-//            self.expiresIn = result.json[@"data"][@"expires_in"];
+            self.sesstionToken = result.json[@"data"][@"session_token"];
+            self.refreshToken = result.json[@"data"][@"refresh_token"];
+            self.expiresIn = result.json[@"data"][@"expires_in"];
             [self.userInfoModel getUserInfo:result.json[@"data"][@"user_id"]];
             
             LKLocalUser.singleton.sessionToken = result.json[@"data"][@"session_token"];

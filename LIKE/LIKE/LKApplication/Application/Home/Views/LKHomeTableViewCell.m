@@ -12,6 +12,7 @@
 #import "ADTickerLabel.h"
 #import "UIImageView+WebCache.h"
 #import "LKLikeTagItemView.h"
+#import "LKLoginViewController.h"
 
 @interface LKHomeTableViewCell()
 
@@ -150,13 +151,14 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.tagsView.backgroundColor = LKColor.backgroundColor;
     self.ADD(self.tagsView);
     
-//    self.numLabel = UILabel.view;
-//    self.numLabel.viewFrameWidth = 100.0f;
-//    self.numLabel.viewFrameHeight = 30.0f;
-//    self.numLabel.viewFrameX = (self.viewFrameWidth - self.numLabel.viewFrameWidth) / 2;
-//    self.numLabel.backgroundColor = [UIColor greenColor];
-//    self.numLabel.textColor = [UIColor redColor];
-//    self.ADD(self.numLabel);
+    self.numLabel = UILabel.view;
+    self.numLabel.viewFrameWidth = 100.0f;
+    self.numLabel.viewFrameHeight = 30.0f;
+    self.numLabel.viewFrameX = (self.viewFrameWidth - self.numLabel.viewFrameWidth) / 2;
+    self.numLabel.backgroundColor = [UIColor greenColor];
+    self.numLabel.textColor = [UIColor redColor];
+    self.ADD(self.numLabel);
+    self.numLabel.alpha = 0;
     
     @weakly(self);
     
@@ -186,6 +188,9 @@ LC_IMP_SIGNAL(PushPostDetail);
 }
 
 -(void) handleHeadTap:(UITapGestureRecognizer *)tap {
+    if ([LKLoginViewController needLoginOnViewController:nil]) {
+        return;
+    }
     self.SEND(self.PushUserCenter).object = self.post.user;
 }
 
@@ -199,6 +204,7 @@ LC_IMP_SIGNAL(PushPostDetail);
 - (void)setPost:(LKPost *)post cellRow:(NSInteger)row {
     [self setPost:post];
     self.numLabel.text = [NSString stringWithFormat:@"%ld", (long)row];
+    self.numLabel.alpha = 1;
 }
 
 - (void)setPost:(LKPost *)post {

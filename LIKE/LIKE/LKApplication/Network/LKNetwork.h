@@ -9,10 +9,10 @@
 #ifndef LIKE_LKNetwork_h
 #define LIKE_LKNetwork_h
 
-#define LK_API @"http://api.likeorz.com/v1/"//@"http://api.likeorz.com/v2/"
+#define LK_API @"https://api.likeorz.com/v1/"//@"http://api.likeorz.com/v2/"
 //#define LK_API2 @"http://192.168.2.13:9000/v1/"
 
-#define LK_API_BASE_URL @"http://api.likeorz.com"
+#define LK_API_BASE_URL @"https://api.likeorz.com"
 
 #import "NSObject+LKNetworkInterface.h"
 

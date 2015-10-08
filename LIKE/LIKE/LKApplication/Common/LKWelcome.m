@@ -26,12 +26,9 @@
 
         // UIViewAnimationOptionCurveLinear 动画匀速执行，默认值
         [UIView animateWithDuration:1.5 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
-            
             imageView.transform = CGAffineTransformMakeScale(1.5, 1.5);
             imageView.alpha = 0;
-            
         } completion:^(BOOL finished) {
-           
             [imageView removeFromSuperview];
 
         }];

@@ -34,15 +34,12 @@ LC_PROPERTY(assign) NSInteger index;
 
 @implementation LKUserCenterModel
 
--(void) dealloc
-{
+-(void) dealloc {
     [self cancelAllRequests];
 }
 
--(instancetype) init
-{
+-(instancetype) init {
     if (self = [super init]) {
-        
         self.photoCanLoadMore = YES;
         self.focusCanLoadMore = YES;
         self.fansCanLoadMore = YES;
@@ -68,7 +65,6 @@ LC_PROPERTY(assign) NSInteger index;
     
     switch (type) {
         case LKUserCenterModelTypePhotos: {
-//            interface = [[LKUserPostsInterface alloc] initWithUid:uid page:page];
             interface = [[LKUserPostsInterface alloc] initWithTimeStamp:self.photoTimestamp uid:uid];
             break;
         }
@@ -103,7 +99,9 @@ LC_PROPERTY(assign) NSInteger index;
                 LKUserPostsInterface *userPostsInterface = (LKUserPostsInterface *)interface;
                 NSArray *datasource = userPostsInterface.posts;
                 NSNumber *photoTimestamp = userPostsInterface.next;
-                self.photoTimestamp = photoTimestamp;
+                if (photoTimestamp) {
+                    self.photoTimestamp = photoTimestamp;
+                }
                 
                 if (isFirstPage) {
                     self.photoArray = [NSMutableArray arrayWithArray:datasource];
@@ -127,7 +125,6 @@ LC_PROPERTY(assign) NSInteger index;
                 } else {
                     NSMutableArray *newUsers = [NSMutableArray arrayWithArray:self.focusArray];
                     [newUsers addObjectsFromArray:datasource];
-//                    [self.focusArray addObjectsFromArray:newUsers];
                     self.focusArray = newUsers;
                 }
 

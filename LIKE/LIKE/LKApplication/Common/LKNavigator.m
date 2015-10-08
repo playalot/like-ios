@@ -14,11 +14,13 @@
 #import "RDVTabBarItem.h"
 #import "LKNotificationCount.h"
 #import "LKTabbarItem.h"
+#import "LKGateViewController.h"
 
 @interface LKNavigator () <LKLoginViewControllerDelegate, RDVTabBarControllerDelegate>
 
 LC_PROPERTY(strong) LKLoginViewController *loginViewController;
 LC_PROPERTY(strong) LKGuestFeedViewController *guestFeedNavViewController; // LKGuestFeedViewController
+LC_PROPERTY(strong) LKGateViewController *gateViewController;
 
 @end
 
@@ -63,39 +65,41 @@ LC_PROPERTY(strong) LKGuestFeedViewController *guestFeedNavViewController; // LK
 }
 
 - (void)openLoginViewController {
-    [self dismissAllViewControllers];
-    
-    LCUIImageView * imageView = LCUIImageView.view;
-    imageView.image = [LKWelcome image];
-    imageView.viewFrameWidth = LC_DEVICE_WIDTH;
-    imageView.viewFrameHeight = LC_DEVICE_HEIGHT + 20;
-    imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [LC_KEYWINDOW addSubview:imageView];
-    self.loginViewController = LKLoginViewController.viewController;
-    self.loginViewController.delegate = self;
-    
-    [self.mainViewController presentViewController:self.loginViewController animated:NO completion:^{
-        [UIView animateWithDuration:1.5 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
-            imageView.transform = CGAffineTransformMakeScale(1.5, 1.5);
-            imageView.alpha = 0;
-        } completion:^(BOOL finished) {
-            [imageView removeFromSuperview];
-            
-        }];
-    }];
+    [self.mainViewController presentViewController:self.loginViewController animated:NO completion:^{}];
+}
+
+- (LKLoginViewController *)loginViewController {
+    if (_loginViewController == nil) {
+        _loginViewController = LKLoginViewController.viewController;
+        _loginViewController.delegate = self;
+    }
+    return _loginViewController;
+}
+
+- (LKGateViewController *)gateViewController {
+    if (!_gateViewController) {
+        _gateViewController = [LKGateViewController viewController];
+    }
+    return _gateViewController;
 }
 
 - (void)launchGuestMode {
-    [self.mainViewController popToRootViewControllerAnimated:NO];
+    self.mainViewController.viewControllers = @[];
     self.guestFeedNavViewController = [LKGuestFeedViewController viewController];
     [self.mainViewController pushViewController:self.guestFeedNavViewController animated:NO];
-    [self openLoginViewController];
+    
+    BOOL hasOnceLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"hasOnceLogin"];
+    if (!hasOnceLogin) {
+        [self.mainViewController pushViewController:self.loginViewController animated:NO];
+        [self.mainViewController presentViewController:self.gateViewController animated:NO completion:^{}];
+    } else {
+        [self openLoginViewController];
+    }
 }
 
 - (void)launchMasterMode {
-    [self.mainViewController popToRootViewControllerAnimated:NO];
+    self.mainViewController.viewControllers = @[];
     [self setupViewControllers];
-//    self.tabBarViewController = [LKTabbarViewController viewController];
     [[LKNavigator navigator] pushViewController:self.tabBarController animated:NO];
 }
 
@@ -124,7 +128,6 @@ LC_PROPERTY(strong) LKGuestFeedViewController *guestFeedNavViewController; // LK
                              initWithViewControllers:@[
                                                        LC_UINAVIGATION(self.mainFeedViewController),
                                                        LC_UINAVIGATION(self.searchViewController),
-//                                                       LC_UINAVIGATION(self.cameraRollViewController),
                                                        LC_UINAVIGATION(self.notificationViewController),
                                                        LC_UINAVIGATION(self.userCenterViewController)]];
     self.tabBarController.delegate = self;
@@ -132,20 +135,17 @@ LC_PROPERTY(strong) LKGuestFeedViewController *guestFeedNavViewController; // LK
     NSString *cache =  LKUserDefaults.singleton[self.class.description];
     NSArray *imageNames = @[@"tabbar_homeLine",
                             @"tabbar_search",
-//                            @"tabbar_camera",
                             cache != nil ? @"tabbar_notification_badge" : @"tabbar_notification",
                             @"tabbar_userCenter"];
     
     NSArray *selectedImageNames = @[@"tabbar_homeLine_selected",
                                     @"tabbar_search_selected",
-//                                    @"tabbar_camera",
                                     @"tabbar_notification_selected",
                                     @"tabbar_userCenter_selected"];
     
     
     NSInteger i = 0;
     for (UIView *view in self.tabBarController.tabBar.items) {
-        
         if ([view isKindOfClass:[RDVTabBarItem class]]) {
             RDVTabBarItem *item = (RDVTabBarItem *)view;
             [item setFinishedSelectedImage:[[UIImage imageNamed:selectedImageNames[i]]
@@ -153,7 +153,6 @@ LC_PROPERTY(strong) LKGuestFeedViewController *guestFeedNavViewController; // LK
                withFinishedUnselectedImage:[[UIImage imageNamed:imageNames[i]]
                                             imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
             [item setBackgroundColor:[UIColor whiteColor]];
-
             i++;
         }
     }
@@ -173,10 +172,12 @@ LC_PROPERTY(strong) LKGuestFeedViewController *guestFeedNavViewController; // LK
 
 #pragma mark LKLoginViewControllerDelegate
 - (void)didLoginSucceeded:(NSDictionary *)userInfo {
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hasOnceLogin"];
     [self launchMasterMode];
 }
 
 - (void)didLoginFailed {
+    [self showTopMessageErrorHud:LC_LO(@"登录失败")];
 }
 
 @end

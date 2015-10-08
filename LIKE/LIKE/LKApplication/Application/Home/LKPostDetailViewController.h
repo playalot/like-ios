@@ -33,6 +33,8 @@ LC_PROPERTY(strong) LKPost * post;
 @protocol LKPostDetailViewControllerDelegate <NSObject>
 
 - (void)postDetailViewController:(LKPostDetailViewController *)ctrl didUpdatedPost:(LKPost *)post;
+- (void)postDetailViewController:(LKPostDetailViewController *)ctrl didFavouritePost:(LKPost *)post;
+- (void)postDetailViewController:(LKPostDetailViewController *)ctrl didUnfavouritePost:(LKPost *)post;
 
 @end
 

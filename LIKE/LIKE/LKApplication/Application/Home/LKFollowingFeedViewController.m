@@ -21,7 +21,7 @@
 #import "LKLikeTagItemView.h"
 #import "LKPostTableViewCell.h"
 #import "LKPostView.h"
-#import "LRUCache.h"
+#import "LKLRUCache.h"
 #import "LCUIKeyBoard.h"
 #import "LKTagAddModel.h"
 
@@ -41,7 +41,7 @@ LC_PROPERTY(strong) NSMutableArray *heightList;
 
 LC_PROPERTY(assign) BOOL isCellPrecomuted;
 LC_PROPERTY(strong) NSMutableArray *precomputedCells;
-LC_PROPERTY(strong) LRUCache *precomputedCellCache;
+LC_PROPERTY(strong) LKLRUCache *precomputedCellCache;
 
 LC_PROPERTY(weak) id delegate;
 
@@ -50,10 +50,6 @@ LC_PROPERTY(strong) LCUIImageView *noFollowingView;
 @end
 
 @implementation LKFollowingFeedViewController
-
-- (void)refresh {
-    [self.tableView reloadData];
-}
 
 - (void)calculateHeightList {
 //    self.heightList = [NSMutableArray array];
@@ -147,16 +143,18 @@ LC_PROPERTY(strong) LCUIImageView *noFollowingView;
     noFollowingView.viewFrameWidth = 196;
     noFollowingView.viewFrameHeight = 367;
     noFollowingView.viewCenterX = self.view.viewCenterX;
-    noFollowingView.viewCenterY = self.view.viewCenterY;
+//    noFollowingView.viewCenterY = self.view.viewCenterY;
+    noFollowingView.viewFrameY = 100;
     noFollowingView.image = [UIImage imageNamed:@"NoFollowing.png" useCache:YES];
     noFollowingView.hidden = YES;
     self.noFollowingView = noFollowingView;
-    self.view.ADD(noFollowingView);
+    self.tableView.ADD(noFollowingView);
 }
 
 - (BOOL)checkTag:(NSString *)tag onTags:(NSArray *)onTags {
     for (LKTag * oTag in onTags) {
         if ([oTag.tag isEqualToString:tag]) {
+            self.inputView.textField.text = nil;
             return NO;
         }
     }
@@ -207,7 +205,7 @@ LC_PROPERTY(strong) LCUIImageView *noFollowingView;
 - (void)buildCellCache {
     self.isCellPrecomuted = NO;
     self.precomputedCells = [NSMutableArray array];
-    self.precomputedCellCache = [[LRUCache alloc] initWithCapacity:10];
+    self.precomputedCellCache = [[LKLRUCache alloc] initWithCapacity:10];
 }
 
 // 这个方法同时负责主页和关注的人列表的请求

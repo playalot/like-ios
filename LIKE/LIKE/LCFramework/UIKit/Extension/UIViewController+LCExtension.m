@@ -10,10 +10,8 @@
 
 @implementation UIViewController (LCExtension)
 
--(void) dismissOrPopViewController
-{
+-(void) dismissOrPopViewController {
     if (![self.navigationController popViewControllerAnimated:YES]) {
-        
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 }

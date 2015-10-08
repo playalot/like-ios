@@ -57,7 +57,7 @@
     LC_SUPER_INIT({
     
         _isShowing = NO;
-        _animationDuration = 0.25;
+        _animationDuration = 0.15;
         _height = DEFAULT_KEYBOARD_HEIGHT;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:UIKeyboardDidShowNotification object:nil];

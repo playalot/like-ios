@@ -10,8 +10,7 @@
 
 @implementation LKUserInfoCache
 
--(instancetype) init
-{
+-(instancetype) init {
     if (self = [super initWithPath:[[LCSanbox documentPath] stringByAppendingString:@"/LKUserInfoCache.db"]]) {
         
     }

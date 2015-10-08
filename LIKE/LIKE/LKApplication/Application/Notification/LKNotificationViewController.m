@@ -20,7 +20,6 @@
 #import "LKMessageViewController.h"
 #import "LKOfficialDetailViewController.h"
 #import "LKOfficialViewController.h"
-#import "LRUCache.h"
 #import "LKNotificationMiniCell.h"
 
 @interface LKNotificationViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerDelegate>
@@ -30,10 +29,6 @@ LC_PROPERTY(strong) LKNotificationHeader *notificationHeader;
 LC_PROPERTY(strong) LCUITableView *tableView;
 LC_PROPERTY(strong) LCUIPullLoader *pullLoader;
 LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
-
-LC_PROPERTY(assign) BOOL isCellPrecomuted;
-LC_PROPERTY(strong) NSMutableArray *precomputedCells;
-LC_PROPERTY(strong) LRUCache *precomputedCellCache;
 
 @end
 
@@ -49,12 +44,6 @@ LC_PROPERTY(strong) LRUCache *precomputedCellCache;
         self.notificationModel = [[LKNotificationModel alloc] init];
     }
     return self;
-}
-
-- (void)buildCellCache {
-    self.isCellPrecomuted = NO;
-    self.precomputedCells = [NSMutableArray array];
-    self.precomputedCellCache = [[LRUCache alloc] initWithCapacity:10];
 }
 
 - (void)buildUI {
@@ -162,16 +151,9 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     LKNotification *notification = self.notificationModel.datasource[indexPath.row];
-    if (indexPath.row == 0) {
-        LKOfficialViewController *officialViewController = [LKOfficialViewController viewController];
-        [self.navigationController pushViewController:officialViewController animated:YES];
-        return;
-    }
     if (notification.type == LKNotificationTypeFocus) {
         [LKUserCenterViewController pushUserCenterWithUser:notification.user navigationController:self.navigationController];
-        
     } else {
-        
         if ((notification.type == LKNotificationTypeComment ||
             notification.type == LKNotificationTypeReply) && [notification.tagID isKindOfClass:[NSNumber class]]) {
             notification.post.tagString = [NSString stringWithFormat:@"Comment-%@",notification.tagID];
@@ -195,7 +177,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
             post.content = content;
             
             LKPostDetailViewController *detailViewController = [[LKPostDetailViewController alloc] initWithPost:post];
-            [self.navigationController presentViewController:detailViewController animated:YES completion:^{}];
+            [self.navigationController pushViewController:detailViewController animated:YES];
 
 //            LKOfficialDetailViewController *detailCtrl = [[LKOfficialDetailViewController alloc] init];
 //            [self.navigationController pushViewController:detailCtrl animated:YES];

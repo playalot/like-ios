@@ -39,7 +39,6 @@ LC_PROPERTY(strong) LKInputView *inputView;
 
 LC_PROPERTY(strong) LCUIPullLoader *pullLoader;
 
-
 LC_PROPERTY(strong) LCUIImageView *userHead;
 LC_PROPERTY(strong) LCUILabel *userName;
 LC_PROPERTY(strong) ADTickerLabel *userLikes;
@@ -47,7 +46,6 @@ LC_PROPERTY(strong) LCUILabel *likesTip;
 LC_PROPERTY(strong) LCUILabel *postTime;
 LC_PROPERTY(strong) LCUIButton *location;
 LC_PROPERTY(strong) LCUILabel *timeLabel;
-
 
 LC_PROPERTY_MODEL(LKPostTagsDetailModel, tagsListModel);
 
@@ -97,12 +95,9 @@ LC_PROPERTY(assign) BOOL favorited;
     [self.header.icon removeFromSuperview];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
+- (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
     if (self.tableView.viewFrameY != 0) {
-    
         self.tableView.pop_springBounciness = 10;
         self.tableView.pop_springSpeed = 10;
         self.tableView.pop_spring.center = LC_POINT(self.tableView.viewCenterX, self.tableView.viewCenterY - 30);
@@ -110,19 +105,17 @@ LC_PROPERTY(assign) BOOL favorited;
     }
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
     [self.inputView resignFirstResponder];
-    
     [self.shareTools hideTools];
     
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:animated];
+    [self setNavigationBarHidden:NO animated:animated];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
 }
 
 #pragma mark -
@@ -146,14 +139,10 @@ LC_PROPERTY(assign) BOOL favorited;
     LKHttpRequestInterface *interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"post/%@", post.id]].GET_METHOD();
     
     [self request:interface complete:^(LKHttpRequestResult *result) {
-       
         if (result.state == LKHttpRequestStateFinished) {
-            
             NSDictionary *resultData = result.json[@"data"];
             self.post = [LKPost objectFromDictionary:resultData];
-
         } else if (result.state == LKHttpRequestStateFailed) {
-            
             [self showTopMessageErrorHud:result.error];
         }
     }];
@@ -168,8 +157,7 @@ LC_PROPERTY(assign) BOOL favorited;
     self.navigationController.transitioningDelegate = self.animator;
 }
 
--(void) viewDidLoad
-{
+-(void) viewDidLoad {
     [super viewDidLoad];
     
     [self getUserInfoWithPost:self.post];
@@ -179,7 +167,6 @@ LC_PROPERTY(assign) BOOL favorited;
     @weakly(self);
     
     self.tagsListModel.associatedTags = self.post.tags;
-    
     self.tagsListModel.requestFinished = ^(LKHttpRequestResult * result , NSString * error){
         
         @normally(self);
@@ -202,8 +189,7 @@ LC_PROPERTY(assign) BOOL favorited;
     return YES;
 }
 
--(void) buildUI
-{
+-(void) buildUI {
     self.view.backgroundColor = LKColor.backgroundColor;
     
     self.tableView = [[LCUITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
@@ -378,12 +364,6 @@ LC_PROPERTY(assign) BOOL favorited;
             [self showTopMessageErrorHud:LC_LO(@"该标签已存在")];
         }
     };
-    
-//    self.inputView.didShow = ^(){
-//        
-//        @normally(self);
-//        [self.tableView setContentOffset:LC_POINT(0, self.tableView.contentSize.height - (LC_DEVICE_HEIGHT + 20 - 258 - 44)) animated:NO];
-//    };
 }
 
 #pragma mark - ***** 放大后的headerView dismiss的时候调用 *****
@@ -426,6 +406,7 @@ LC_PROPERTY(assign) BOOL favorited;
         
         if ([oTag.tag isEqualToString:tag]) {
             
+            self.inputView.textField.text = nil;
             return NO;
         }
     }
@@ -500,8 +481,7 @@ LC_PROPERTY(assign) BOOL favorited;
     [self dismissOrPopViewController];
 }
 
--(void) _moreAction
-{
+-(void) _moreAction {
     [self.inputView resignFirstResponder];
     
     NSString *favorStr = self.post.favorited ? @"取消收藏" : @"收藏图片";
@@ -510,7 +490,14 @@ LC_PROPERTY(assign) BOOL favorited;
 
     if (self.post.user.id.integerValue == LKLocalUser.singleton.user.id.integerValue) {
         
-        [LKActionSheet showWithTitle:nil/*LC_LO(@"更多")*/ buttonTitles:@[/*LC_LO(@"举报"),*/LC_LO(@"删除"),LC_LO(favorStr),LC_LO(@"保存图片")] didSelected:^(NSInteger index) {
+        NSMutableArray *titles = [NSMutableArray array];
+        [titles addObject:LC_LO(@"删除")];
+        if (self.post.user.id.integerValue != [[LKLocalUser.singleton getCurrentUID] integerValue]) {
+            [titles addObject:LC_LO(favorStr)];
+        }
+        [titles addObject:LC_LO(@"保存图片")];
+        
+        [LKActionSheet showWithTitle:nil/*LC_LO(@"更多")*/ buttonTitles:titles didSelected:^(NSInteger index) {
             
             @normally(self);
 
@@ -684,6 +671,19 @@ LC_PROPERTY(assign) BOOL favorited;
         if (result.state == LKHttpRequestStateFinished) {
                         
             self.post.favorited = !favorited;
+            
+            if (self.post.favorited) {
+                [self showSuccessHud:LC_LO(@"收藏成功")];
+                if (self.delegate && [self.delegate respondsToSelector:@selector(postDetailViewController:didFavouritePost:)]) {
+                    [self.delegate postDetailViewController:self didFavouritePost:self.post];
+                }
+                
+            } else {
+                [self showSuccessHud:LC_LO(@"已取消收藏")];
+                if (self.delegate && [self.delegate respondsToSelector:@selector(postDetailViewController:didUnfavouritePost:)]) {
+                    [self.delegate postDetailViewController:self didUnfavouritePost:self.post];
+                }
+            }
             
         } else if (result.state == LKHttpRequestStateFailed) {
             

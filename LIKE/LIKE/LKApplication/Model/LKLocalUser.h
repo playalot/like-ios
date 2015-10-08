@@ -12,18 +12,20 @@
 @interface LKLocalUser : LCUserDefaults
 
 LC_PROPERTY(readonly) BOOL isLogin;
-LC_PROPERTY(readonly) LKUser * user;
+LC_PROPERTY(strong) LKUser * user;
 LC_PROPERTY(strong) NSString * sessionToken;
 LC_PROPERTY(strong) NSString * refreshToken;
 LC_PROPERTY(strong) NSString * expiresIn;
 LC_PROPERTY(strong) NSDictionary * rawUserInfo;
 
-+(void) login:(NSDictionary *)rowUserInfo;
++ (void)login:(NSDictionary *)rowUserInfo;
 
-+(void) logout;
++ (void)logout;
 
--(void) updateCurrentUserInfo:(NSDictionary *)rawUserInfo;
+- (void)updateCurrentUserInfo:(NSDictionary *)rawUserInfo;
 
-+(void) regetSessionTokenAndUseLoadingTip:(BOOL)useLoadingTip;
++ (void)regetSessionTokenAndUseLoadingTip:(BOOL)useLoadingTip;
+
+- (NSString *)getCurrentUID;
 
 @end

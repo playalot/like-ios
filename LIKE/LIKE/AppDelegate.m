@@ -27,7 +27,7 @@
 #import "LCNetworkConfig.h"
 #import "LCUrlArgumentsFilter.h"
 #import "LKNavigator.h"
-
+#import "LKGateViewController.h"
 #import "LCEncryptorAES.h"
 #import "LKChooseInterestView.h"
 
@@ -47,6 +47,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
 
 - (void)load:(NSDictionary *)launchOptions {
     self.launchOptions = launchOptions;
+    
     self.window.rootViewController = [LKNavigator navigator].mainViewController;
     
     // Mob短信验证
@@ -61,7 +62,6 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     [self setupCMD];
     
     if (!LKLocalUser.singleton.isLogin) {
-        
         // 游客模式
         [[LKNavigator navigator] launchGuestMode];
         
@@ -84,7 +84,6 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
         }
         
         [[LKNavigator navigator] launchMasterMode];
-        
         [self setupNotificationObserving];
         [self setupPushService:launchOptions];
     }
@@ -225,7 +224,6 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     // 会话错误通知
     [self observeNotification:LKSessionError];
     // 应用程序远程登录通知
-    //    [self observeNotification:LCUIApplicationDidRegisterRemoteNotification];
     [self observeNotification:kJPFNetworkDidRegisterNotification];
     
     // 应用程序远程登录失败通知
@@ -339,7 +337,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
 /**
  *  进入后台时间累加1s
  */
--(void) handleTimer:(NSTimer *)timer
+- (void)handleTimer:(NSTimer *)timer
 {
     self.enterBackgroundTimeInterval += 1.0;
 }

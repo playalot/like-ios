@@ -138,6 +138,9 @@
 }
 
 + (NSData*)encryptString:(NSString *)dataStr keyString:(NSString *)keyStr ivString:(NSString *)ivStr {
+    if ([dataStr isKindOfClass:[NSNumber class]]) {
+        dataStr = [(NSNumber *)dataStr stringValue];
+    }
     NSData* data = [dataStr dataUsingEncoding:NSUTF8StringEncoding];
     NSData* key = [keyStr dataUsingEncoding:NSUTF8StringEncoding];
     NSData* iv = [ivStr dataUsingEncoding:NSUTF8StringEncoding];

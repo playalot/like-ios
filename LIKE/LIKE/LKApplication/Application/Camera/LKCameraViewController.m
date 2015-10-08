@@ -32,12 +32,9 @@ LC_PROPERTY(strong) LCUIImageView *prohibitionView;
 LC_PROPERTY(strong) UIView * bottomView;
 
 LC_PROPERTY(strong) LKFilterScrollView * filterScrollView;
-
 LC_PROPERTY(assign) NSInteger currentFilter;
-
 LC_PROPERTY(assign) NSInteger filterIndex;
-
-LC_PROPERTY(assign)  UIDeviceOrientation deviceOrientation;
+LC_PROPERTY(assign) UIDeviceOrientation deviceOrientation;
 
 LC_PROPERTY(strong) UIView *gtaView1;
 LC_PROPERTY(strong) UIView *gtaView2;
@@ -48,8 +45,7 @@ LC_PROPERTY(strong) UIView *wastedView;
 
 @implementation LKCameraViewController
 
--(void) dealloc
-{
+-(void) dealloc {
     [self unobserveAllNotifications];
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:YES];
 }
@@ -459,8 +455,13 @@ LC_PROPERTY(strong) UIView *wastedView;
       
         @normally(self);
         
-        LKImageCropperViewController * cropper = [[LKImageCropperViewController alloc] initWithImage:imageInfo[@"UIImagePickerControllerOriginalImage"]];
+        UIImage *image = imageInfo[@"UIImagePickerControllerOriginalImage"];
         
+        if (!image) {
+            return;
+        }
+        
+        LKImageCropperViewController * cropper = [[LKImageCropperViewController alloc] initWithImage:image];
         cropper.squareImage = self.squareImage;
         cropper.didFinishedPickImage = self.didFinishedPickImage;
         
@@ -542,6 +543,9 @@ LC_PROPERTY(strong) UIView *wastedView;
 {
     UIImage * image = capturedImage.fullImage;
     
+    if (!image) {
+        return;
+    }
     
     if (self.deviceOrientation == UIDeviceOrientationLandscapeLeft || self.deviceOrientation == UIDeviceOrientationLandscapeRight) {
         

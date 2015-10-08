@@ -64,6 +64,10 @@
 "取消收藏" = "Cancel favorited";
 "订阅" = "Subscribe";
 "取消订阅" = "Cancel Subscribe";
+"收藏成功" = "Favorited successfully!";
+"已取消收藏" = "Cancel favorited successfully!";
+"我的收藏" = "My favorited";
+"我的照片" = "My photos";
 
 // Tip
 "上传失败啦！请检查您的网络稍后再试Orz～" = "Upload failed! Please check your internet connection";

@@ -166,6 +166,10 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
                 datasource = tmp;
             }
             
+            if (tmp[@"next"]) {
+                self.timestamp = tmp[@"next"];
+            }
+            
             for (NSDictionary * tmp in datasource) {
                 [resultData addObject:[LKPost objectFromDictionary:tmp]];
             }

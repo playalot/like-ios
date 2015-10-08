@@ -118,7 +118,6 @@ LC_PROPERTY(strong) UICollectionView * collectionView;
     [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft title:LC_LO(@"取消") titleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.8]];
     [self setNavigationBarButton:LCUINavigationBarButtonTypeRight title:LC_LO(@"相册") titleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.8]];
     
-    
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
 
     
@@ -166,7 +165,9 @@ LC_PROPERTY(strong) UICollectionView * collectionView;
                     
                     @normally(self);
                     
-                    [self.datasource insertObject:obj atIndex:0];
+                    PHAsset *asset = (PHAsset *)obj;
+                    [self.datasource insertObject:asset atIndex:0];
+                    
                 } else {
                     
                     [self.collectionView reloadData];
@@ -348,14 +349,31 @@ static PHImageRequestOptions *requestOptions;
         if (IOS8_OR_LATER) {
             
             PHAsset *asset = self.datasource[indexPath.row - 1];
-            [[PHImageManager defaultManager] requestImageDataForAsset:asset options:requestOptions resultHandler:^(NSData *imageData, NSString *dataUTI, UIImageOrientation orientation, NSDictionary *info) {
-                
-                UIImage *image = [UIImage imageWithData:imageData];
-                
-                if (image == nil || image.size.width == CGSizeZero.width || image.size.height == CGSizeZero.height) {
-                    return;
+            
+            PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+            options.resizeMode = PHImageRequestOptionsResizeModeFast;
+            options.synchronous = YES;
+            [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage *result, NSDictionary *info) {
+                if([[info objectForKey:PHImageResultIsInCloudKey] boolValue]) {
+                    
+                    // TO DO : download image from icloud
+                    
+                    
+                } else {
+                    
+                    // Not from icloud
+                    
+                    [[PHImageManager defaultManager] requestImageDataForAsset:asset options:requestOptions resultHandler:^(NSData *imageData, NSString *dataUTI, UIImageOrientation orientation, NSDictionary *info) {
+                        
+                        UIImage *image = [UIImage imageWithData:imageData];
+                        if (image == nil || image.size.width == CGSizeZero.width || image.size.height == CGSizeZero.height) {
+                            return;
+                        }
+                        
+                        [self selectedImage:image];
+                    }];
+                    
                 }
-                [self selectedImage:image];
             }];
             
         } else {
@@ -365,15 +383,6 @@ static PHImageRequestOptions *requestOptions;
     
             [self selectedImage:image];
         }
-        
-        
-//        [self.assetLibrary assetForURL:url resultBlock:^(ALAsset *asset){
-//            
-//            
-//            
-//        }failureBlock:^(NSError * error) {
-//            
-//        }];
     }
 }
 

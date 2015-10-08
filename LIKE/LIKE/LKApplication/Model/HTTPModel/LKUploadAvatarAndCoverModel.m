@@ -53,6 +53,10 @@
     camera.squareImage = YES;
     
     camera.didFinishedPickImage = ^(UIImage * image){
+        
+        if (!image) {
+            return;
+        }
       
         [LC_KEYWINDOW showTopLoadingMessageHud:LC_LO(@"上传中...")];
         
@@ -129,6 +133,10 @@
         
         cropper.didFinishedPickImage = ^(UIImage * image){
             
+            if (!image) {
+                return;
+            }
+            
             [LC_KEYWINDOW showTopLoadingMessageHud:LC_LO(@"上传中...")];
 
             if (imageType == 0) {
@@ -180,15 +188,13 @@
 
 #pragma mark -
 
-+(void) uploadAvator:(UIImage *)avator requestFinished:(LKUploadAvatarModelRequestFinished)requestFinished
-{
++(void) uploadAvator:(UIImage *)avator requestFinished:(LKUploadAvatarModelRequestFinished)requestFinished {
+    if (!avator) return;
+    
     [LKFileUploader uploadAvatarImage:avator suffix:@"jpg" completeBlock:^(BOOL completed, NSString *uploadedKey, NSString *error) {
-        
         if (error) {
             requestFinished(error, avator);
-        }
-        else{
-            
+        } else {
             [LKUploadAvatarAndCoverModel putRequestUserAvatar:uploadedKey image:avator requestFinished:requestFinished];
         }
     }];
@@ -196,6 +202,8 @@
 
 +(void) uploadCover:(UIImage *)cover requestFinished:(LKUploadAvatarModelRequestFinished)requestFinished
 {
+    if (!cover) return;
+    
     [LKFileUploader uploadCover:cover suffix:@"jpg" completeBlock:^(BOOL completed, NSString *uploadedKey, NSString *error) {
         
         if (error) {

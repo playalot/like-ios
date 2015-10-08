@@ -118,39 +118,28 @@
         //UIImageWriteToSavedPhotosAlbum([info objectForKey:@"UIImagePickerControllerEditedImage"] ? [info objectForKey:@"UIImagePickerControllerEditedImage"] : [info objectForKey:@"UIImagePickerControllerOriginalImage"], nil, nil,nil);
     }
     
-    INFO(@"[LCUIImagePickerViewController] Image info : %@",info);
-    
     if (self.autoDismiss) {
      
         [self dismissViewControllerAnimated:YES completion:^{
-            
             if (self.didFinishPicking){
-                
                 self.didFinishPicking(info);
             }
         }];
     }
-    else{
+    else {
         
         if (self.didFinishPicking){
-            
             self.didFinishPicking(info);
         }
     }
 }
 
 
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
-{
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     if (![self.navigationController popViewControllerAnimated:YES]) {
         
         [self dismissViewControllerAnimated:YES completion:nil];
     }
-    
-//    if (IOS7_OR_LATER) {
-//        
-//        [[UIApplication sharedApplication] setStatusBarStyle:_cache animated:YES];
-//    }
     
     [self setNeedsStatusBarAppearanceUpdate];
 }

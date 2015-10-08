@@ -192,7 +192,6 @@ LC_PROPERTY(strong) NSArray * history;
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self deselectRowAtIndexPath:indexPath animated:YES];
-    NSLog(@"indexPath section: %ld", indexPath.section);
     if (indexPath.section == 1) {
         LKTag *tag = nil ;
         if (self.tags == nil) {

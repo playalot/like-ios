@@ -358,6 +358,7 @@ static PHImageRequestOptions *requestOptions;
                     
                     // TO DO : download image from icloud
                     
+                    
                 } else {
                     
                     // Not from icloud

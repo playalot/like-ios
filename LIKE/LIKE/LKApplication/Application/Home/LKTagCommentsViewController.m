@@ -113,7 +113,7 @@ static NSString * __LKUserAddress = nil;
 -(void) buildUI
 {
     self.header = LCUILabel.view;
-    self.header.frame = CGRectMake(0, 0, self.viewFrameWidth, 44);
+    self.header.frame = CGRectMake(0, 20, self.viewFrameWidth, 44);
     self.header.textAlignment = UITextAlignmentCenter;
     self.header.font = LK_FONT_B(16);
     self.header.textColor = [UIColor whiteColor];
@@ -125,7 +125,7 @@ static NSString * __LKUserAddress = nil;
     LCUIButton *backButton = LCUIButton.view;
     backButton.viewFrameWidth = 54;
     backButton.viewFrameHeight = 55 / 3 + 28;
-    backButton.viewFrameY = 0;
+    backButton.viewFrameY = 20;
     backButton.buttonImage = [UIImage imageNamed:@"NavigationBarDismiss.png" useCache:YES];
     backButton.showsTouchWhenHighlighted = YES;
     [backButton addTarget:self action:@selector(hide) forControlEvents:UIControlEventTouchUpInside];
@@ -134,23 +134,24 @@ static NSString * __LKUserAddress = nil;
     
     // 除去导航栏的view
     self.blur = LCUIBlurView.view;
-    self.blur.viewFrameY = 44;
+    self.blur.viewFrameY = 44 + 20;
     self.blur.viewFrameWidth = self.viewFrameWidth;
-    self.blur.viewFrameHeight = self.viewFrameHeight - 44;
-    self.blur.tintColor = [UIColor whiteColor];
+    self.blur.viewFrameHeight = self.viewFrameHeight - 44 - 20;
+    self.blur.tintColor = LC_RGB(238, 238, 238);
     self.ADD(self.blur);
     
     // 在blur中添加tableView
     self.tableView = [[LCUITableView alloc] initWithFrame:CGRectZero];
     self.tableView.frame = self.blur.bounds;
-    self.tableView.viewFrameHeight -= 44;
+//    self.tableView.viewFrameY += 20;
+    self.tableView.viewFrameHeight -= 64;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.scrollsToTop = YES;
+    self.tableView.backgroundColor = LC_RGB(238, 238, 238);
     self.blur.ADD(self.tableView);
-    
-    
+
     
     @weakly(self);
     
@@ -397,7 +398,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         view.alpha = 1;
         
         self.header.alpha = 1;
-        self.blur.viewFrameY = 44;
+        self.blur.viewFrameY = 44 + 20;
         
     } completion:^(BOOL finished) {
         
@@ -410,7 +411,6 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
  */
 -(void) hide
 {
-    
     self.tableView.editing = NO;
     
     if (self.willHide) {

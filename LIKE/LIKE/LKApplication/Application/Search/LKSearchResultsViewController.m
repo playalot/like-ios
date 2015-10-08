@@ -44,6 +44,7 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 
 -(void) buildUI {
     self.title = self.searchString;
+    self.view.backgroundColor = LKColor.backgroundColor;
     
     [self buildNavigationBar];
     
@@ -51,8 +52,8 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
     LCUIButton *subscribeBtn = LCUIButton.view;
     self.subscribeBtn = subscribeBtn;
     subscribeBtn.hidden = YES;
-    subscribeBtn.viewFrameWidth = 56;
-    subscribeBtn.viewFrameHeight = 29;
+    subscribeBtn.viewFrameWidth = 66;
+    subscribeBtn.viewFrameHeight = 22;
     [subscribeBtn setImage:[UIImage imageNamed:@"Subscribe.png" useCache:YES] forState:UIControlStateNormal];
     [subscribeBtn setImage:[UIImage imageNamed:@"CancelSubscribe.png" useCache:YES] forState:UIControlStateSelected];
     // 添加弹簧

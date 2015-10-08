@@ -4074,11 +4074,11 @@
 		138EDECD1AD7B7C00020957C /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				138EDF031AD7DDFA0020957C /* Home */,
 				132E6F781BA931BA001DF4BF /* Group */,
 				134B0B561B5624A400A195BE /* Search */,
 				13FCC06E1ADE16C00008DB41 /* UserCenter */,
 				138EDF021AD7DDFA0020957C /* Camera */,
-				138EDF031AD7DDFA0020957C /* Home */,
 				138EDF041AD7DDFA0020957C /* Login */,
 				138EDF051AD7DDFA0020957C /* Notification */,
 			);
@@ -6632,7 +6632,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Zhenjun Wang (R5FT4W4L6G)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6663,7 +6663,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c0ca7db7-abc7-4eb7-b0a6-9f5f134fc5d1";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -6673,7 +6673,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Zhenjun Wang (R5FT4W4L6G)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6704,7 +6704,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c0ca7db7-abc7-4eb7-b0a6-9f5f134fc5d1";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

@@ -56,7 +56,12 @@ LC_PROPERTY(strong) UIView *wastedView;
     
     [self setNavigationBarHidden:YES animated:NO];
     
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:animated];
+//    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:animated];
+}
+
+- (BOOL)prefersStatusBarHidden {
+    
+    return YES;
 }
 
 -(void) viewDidLoad

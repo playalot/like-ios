@@ -124,14 +124,17 @@
         }
     }
     
-    [self.rdv_tabBarController setTabBarHidden:YES animated:YES];
+//    [self.rdv_tabBarController setTabBarHidden:YES animated:YES];
     [super pushViewController:viewController animated:animated];
     
 }
 
 - (UIViewController *)popViewControllerAnimated:(BOOL)animated {
     
-    [self.rdv_tabBarController setTabBarHidden:NO animated:YES];
+//    if (self.viewControllers.count <= 2) {
+//        
+//        [self.rdv_tabBarController setTabBarHidden:NO animated:YES];
+//    }
     return [super popViewControllerAnimated:animated];
 }
 

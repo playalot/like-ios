@@ -88,7 +88,7 @@ LC_PROPERTY(assign) BOOL favorited;
     [super viewWillAppear:animated];
     [self setNavigationBarHidden:YES animated:animated];
     
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:animated];
+//    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:animated];
 
     [self.header.headImageView removeFromSuperview];
     [self.header.nameLabel removeFromSuperview];
@@ -184,10 +184,10 @@ LC_PROPERTY(assign) BOOL favorited;
     [self.tagsListModel loadDataWithPostID:self.post.id getMore:NO];
 }
 
-- (BOOL)prefersStatusBarHidden {
-    
-    return YES;
-}
+//- (BOOL)prefersStatusBarHidden {
+//    
+//    return YES;
+//}
 
 -(void) buildUI {
     self.view.backgroundColor = LKColor.backgroundColor;
@@ -215,7 +215,7 @@ LC_PROPERTY(assign) BOOL favorited;
         }
 
         // 图片详情页header
-        self.header = [[LKHomepageHeader alloc] initWithFrame:CGRectMake(0.0, 0, CGRectGetWidth(self.view.frame), size.height) maxHeight:size.height minHeight:44];
+        self.header = [[LKHomepageHeader alloc] initWithFrame:CGRectMake(0.0, 0, CGRectGetWidth(self.view.frame), size.height) maxHeight:size.height minHeight:64];
         self.header.clipsToBounds = YES;
         self.header.backgroundView.autoMask = NO;
         self.header.scrollView = self.tableView;
@@ -238,7 +238,7 @@ LC_PROPERTY(assign) BOOL favorited;
         
         [self.view addSubview:self.header];
         
-        self.tableView.contentInset = UIEdgeInsetsMake(self.header.maximumBarHeight, 0.0, 0.0, 0.0);
+        self.tableView.contentInset = UIEdgeInsetsMake(self.header.maximumBarHeight - 20, 0.0, 0.0, 0.0);
         
         @weakly(self);
         
@@ -316,7 +316,7 @@ LC_PROPERTY(assign) BOOL favorited;
         LCUIButton * backButton = LCUIButton.view;
         backButton.viewFrameWidth = 80;
         backButton.viewFrameHeight = 80;
-        backButton.viewFrameY = -17;
+        backButton.viewFrameY = -17 + 20;
         backButton.viewFrameX = -15;
         backButton.buttonImage = [UIImage imageNamed:@"NavigationBarBack.png" useCache:YES];
         backButton.showsTouchWhenHighlighted = YES;
@@ -329,7 +329,7 @@ LC_PROPERTY(assign) BOOL favorited;
         moreButton.viewFrameWidth = 50 / 3 + 40;
         moreButton.viewFrameHeight = 11 / 3 + 20;
         moreButton.viewFrameX = LC_DEVICE_WIDTH - moreButton.viewFrameWidth;
-        moreButton.viewFrameY = 10;
+        moreButton.viewFrameY = 10 + 20;
         moreButton.buttonImage = [UIImage imageNamed:@"NavigationBarMore.png" useCache:YES];
         moreButton.showsTouchWhenHighlighted = YES;
         [moreButton addTarget:self action:@selector(_moreAction) forControlEvents:UIControlEventTouchUpInside];

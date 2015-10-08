@@ -179,11 +179,12 @@
 "默认" = "Original";
 
 // LKNotificationView
-"为你图片添加了标签" = "tagged ";
+"添加了标签" = "tagged ";
 "关注了你" = "started following you";
 "赞了标签" = "liked ";
-"在#%@#中回复了你" = "reply you at #%@#";
-"评论了" = "commented on ";
+"回复了你的评论" = "replied your comment ";
+"评论了标签" = "commented on tag";
+"给你发了一条消息" = "sended a message to you";
 "通知" = "Notifications";
 
 

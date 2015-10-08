@@ -242,7 +242,7 @@ LC_IMP_SIGNAL(PushPostDetail);
         
         self.preview.hidden = NO;
 //        self.preview.url = ((LKPost *)notification.posts[0]).content;
-        [self.preview sd_setImageWithURL:[NSURL URLWithString:((LKPost *)notification.post).thumbnail] placeholderImage:nil];
+        [self.preview sd_setImageWithURL:[NSURL URLWithString:((LKPost *)notification.post).thumbnail] placeholderImage:nil options:SDWebImageRetryFailed];
     }
     
         

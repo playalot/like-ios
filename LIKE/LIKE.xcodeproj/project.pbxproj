@@ -886,6 +886,7 @@
 		BC6BA0A61BC15C3C007377CD /* intro_logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC6BA0A41BC15C3C007377CD /* intro_logo@3x.png */; settings = {ASSET_TAGS = (); }; };
 		BC6BA0A71BC15C3C007377CD /* like_logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC6BA0A51BC15C3C007377CD /* like_logo@3x.png */; settings = {ASSET_TAGS = (); }; };
 		BC6BA0A91BC16064007377CD /* get_in_like@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC6BA0A81BC16064007377CD /* get_in_like@3x.png */; settings = {ASSET_TAGS = (); }; };
+		BC6BA0AB1BC1800C007377CD /* NotificationEmpty@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC6BA0AA1BC1800C007377CD /* NotificationEmpty@3x.png */; settings = {ASSET_TAGS = (); }; };
 		BC8F64E11BB7C9F00084B5CA /* LKNavigator.m in Sources */ = {isa = PBXBuildFile; fileRef = BC8F64E01BB7C9F00084B5CA /* LKNavigator.m */; settings = {ASSET_TAGS = (); }; };
 		BC8F64E41BB824E10084B5CA /* LKGuestFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC8F64E31BB824E10084B5CA /* LKGuestFeedViewController.m */; settings = {ASSET_TAGS = (); }; };
 		BC8F64F21BB913BF0084B5CA /* LCEncryptorAES.m in Sources */ = {isa = PBXBuildFile; fileRef = BC8F64EF1BB913BF0084B5CA /* LCEncryptorAES.m */; settings = {ASSET_TAGS = (); }; };
@@ -2544,6 +2545,7 @@
 		BC6BA0A41BC15C3C007377CD /* intro_logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "intro_logo@3x.png"; sourceTree = "<group>"; };
 		BC6BA0A51BC15C3C007377CD /* like_logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "like_logo@3x.png"; sourceTree = "<group>"; };
 		BC6BA0A81BC16064007377CD /* get_in_like@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "get_in_like@3x.png"; sourceTree = "<group>"; };
+		BC6BA0AA1BC1800C007377CD /* NotificationEmpty@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationEmpty@3x.png"; sourceTree = "<group>"; };
 		BC8F64DF1BB7C9F00084B5CA /* LKNavigator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKNavigator.h; path = Common/LKNavigator.h; sourceTree = "<group>"; };
 		BC8F64E01BB7C9F00084B5CA /* LKNavigator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKNavigator.m; path = Common/LKNavigator.m; sourceTree = "<group>"; };
 		BC8F64E21BB824E10084B5CA /* LKGuestFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKGuestFeedViewController.h; path = Common/LKGuestFeedViewController.h; sourceTree = "<group>"; };
@@ -2625,6 +2627,7 @@
 		1304ABD01BABC8BF00C9EA2D /* Notification */ = {
 			isa = PBXGroup;
 			children = (
+				BC6BA0AA1BC1800C007377CD /* NotificationEmpty@3x.png */,
 				1351B2E31BBA916B004DFEEC /* NotificationCommentIcon2@3x.png */,
 				1351B2E41BBA916B004DFEEC /* NotificationFocusIcon2@3x.png */,
 				1351B2E51BBA916B004DFEEC /* NotificationLikeIcon2@3x.png */,
@@ -5611,6 +5614,7 @@
 				13B5B4E81B15CB6800252A78 /* TalkTip@3x.png in Resources */,
 				1304ABD91BABC8C500C9EA2D /* NotificationOfficalIcon@3x.png in Resources */,
 				BC6BA09E1BC14CD8007377CD /* tabbar_search@2x.png in Resources */,
+				BC6BA0AB1BC1800C007377CD /* NotificationEmpty@3x.png in Resources */,
 				13877D181BBCE49600521D2D /* Interest_satellite_large@3x.png in Resources */,
 				135D5C041ADFD21E00811B06 /* CameraCut@3x.png in Resources */,
 				138EDF0C1AD7E19D0020957C /* LoginBackground@3x.jpg in Resources */,
@@ -6628,7 +6632,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zhenjun Wang (R5FT4W4L6G)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6644,7 +6648,7 @@
 					"$(SDK_ROOT)/usr/include/libxml2",
 				);
 				INFOPLIST_FILE = LIKE/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6659,7 +6663,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "c0ca7db7-abc7-4eb7-b0a6-9f5f134fc5d1";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -6669,7 +6673,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zhenjun Wang (R5FT4W4L6G)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6685,7 +6689,7 @@
 					"$(SDK_ROOT)/usr/include/libxml2",
 				);
 				INFOPLIST_FILE = LIKE/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6700,7 +6704,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "c0ca7db7-abc7-4eb7-b0a6-9f5f134fc5d1";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

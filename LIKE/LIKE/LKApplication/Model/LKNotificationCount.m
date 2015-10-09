@@ -9,6 +9,7 @@
 #import "LKNotificationCount.h"
 #import "M13BadgeView.h"
 #import "LKBadgeView.h"
+#import "LKNotificationCountInterface.h"
 
 @interface LKNotificationCount ()
 
@@ -78,29 +79,28 @@ LC_PROPERTY(strong) UIView *bindView;
 -(void) checkTimerStart
 {
     [self checkRequest];
-    [self fireTimer:@"Check" timeInterval:60 * 2 repeat:YES];
+    [self fireTimer:@"Check" timeInterval:10 repeat:YES];
 }
 
 -(void) checkRequest
 {
-    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"notification/count"].AUTO_SESSION();
+    LKNotificationCountInterface *notificationCountInterface = [[LKNotificationCountInterface alloc] init];
     
     @weakly(self);
+    @weakly(notificationCountInterface);
     
-    [self request:interface complete:^(LKHttpRequestResult *result) {
+    [notificationCountInterface startWithCompletionBlockWithSuccess:^(LCBaseRequest *request) {
         
+        @normally(notificationCountInterface);
         @normally(self);
         
-        if (result.state == LKHttpRequestStateFinished) {
+        if (notificationCountInterface.count) {
             
-            NSInteger count = [result.json[@"data"][@"count"] integerValue];
-
-            [self setBadgeCount:count];
+            [self setBadgeCount:notificationCountInterface.count];
         }
-        else if(result.state == LKHttpRequestStateFailed){
-            
-            
-        };
+        
+    } failure:^(LCBaseRequest *request) {
+        
     }];
 }
 
@@ -109,9 +109,12 @@ LC_PROPERTY(strong) UIView *bindView;
     if (self.bindView != nil) {
         M13BadgeView * badge = self.bindView.FIND(100100);
 //        LKBadgeView *badge = self.bindView.FIND(100100);
-        if (badge)
+        if (badge) {
             badge.text = LC_NSSTRING_FROM_INT(badgeCount);
+            badge.viewFrameX = LC_DEVICE_WIDTH / 10 - 2;
+        }
     }
+    
     
     //badge.viewFrameX = self.bindView.viewFrameWidth - badge.viewFrameWidth - self.bindView.viewMidWidth;
     LKUserDefaults.singleton[self.class.description] = LC_NSSTRING_FROM_INT(badgeCount);
@@ -125,6 +128,7 @@ LC_PROPERTY(strong) UIView *bindView;
 //    NSInteger count = LC_RANDOM(0, 999);
 //    
 //    badge.text = LC_NSSTRING_FROM_INT(count);
+    [self checkRequest];
 }
 
 -(void) setBindView:(UIView *)bindView
@@ -151,8 +155,8 @@ LC_PROPERTY(strong) UIView *bindView;
     badge.tag = 100100;
     badge.verticalAlignment = M13BadgeViewVerticalAlignmentNone;
     badge.horizontalAlignment = M13BadgeViewHorizontalAlignmentRight;
-    badge.viewFrameX = 42 * LC_DEVICE_WIDTH / 414;
-    badge.viewFrameY = 15;
+    badge.viewFrameX = LC_DEVICE_WIDTH / 10 - 2;// 42 * LC_DEVICE_WIDTH / 414;
+    badge.viewFrameY = 17;
 
     bindView.ADD(badge);
 }

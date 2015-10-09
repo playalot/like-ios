@@ -24,6 +24,7 @@
 
 #import "LKLRUCache.h"
 #import "LKEditorPickInterface.h"
+#import "RMPZoomTransitionAnimator.h"
 
 #define NORMAL_CELL_IDENTIFIER @"Content"
 #define PRECOMPUTED_CELL_IDENTIFIER @"Content2"
@@ -41,7 +42,7 @@ LC_PROPERTY(assign) CGFloat cellHeight;
 
 // Cache代码段逻辑规则
 
-@interface LKHomeFeedViewController () <UITableViewDataSource, UITableViewDelegate, LKHomeTableViewCellDelegate, LKPostDetailViewControllerDelegate>
+@interface LKHomeFeedViewController () <UITableViewDataSource, UITableViewDelegate, LKHomeTableViewCellDelegate, LKPostDetailViewControllerDelegate, RMPZoomTransitionAnimating, UIViewControllerTransitioningDelegate>
 
 LC_PROPERTY(strong) NSMutableArray *datasource;
 LC_PROPERTY(strong) LCUIPullLoader *pullLoader;
@@ -341,6 +342,7 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     LKPostDetailViewController * detail = [[LKPostDetailViewController alloc] initWithPost:signal.object];
     // 设置代理
     detail.delegate = self;
+    detail.transitioningDelegate = self;
     LCUINavigationController * nav = LC_UINAVIGATION(detail);
     [detail setPresendModelAnimationOpen];
     [self.navigationController presentViewController:nav animated:YES completion:nil];
@@ -521,6 +523,72 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     [self.inputView resignFirstResponder];
+}
+
+#pragma mark <RMPZoomTransitionAnimating>
+
+- (UIImageView *)transitionSourceImageView
+{
+    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+    LKHomeTableViewCell *cell = (LKHomeTableViewCell *)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:cell.contentImage.image];
+    imageView.contentMode = cell.contentImage.contentMode;
+    imageView.clipsToBounds = YES;
+    imageView.userInteractionEnabled = NO;
+    CGRect frameInSuperview = [cell.contentImage convertRect:cell.contentImage.frame toView:self.tableView.superview];
+    frameInSuperview.origin.x -= cell.layoutMargins.left;
+    frameInSuperview.origin.y -= cell.layoutMargins.top;
+    imageView.frame = frameInSuperview;
+    return imageView;
+}
+
+- (UIColor *)transitionSourceBackgroundColor
+{
+    return self.tableView.backgroundColor;
+}
+
+- (CGRect)transitionDestinationImageViewFrame
+{
+    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+    LKHomeTableViewCell *cell = (LKHomeTableViewCell *)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
+    CGRect frameInSuperview = [cell.contentImage convertRect:cell.contentImage.frame toView:self.tableView.superview];
+    frameInSuperview.origin.x -= cell.layoutMargins.left;
+    frameInSuperview.origin.y -= cell.layoutMargins.top;
+    return frameInSuperview;
+}
+
+#pragma mark - <UIViewControllerTransitioningDelegate>
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented
+                                                                  presentingController:(UIViewController *)presenting
+                                                                      sourceController:(UIViewController *)source
+{
+    id <RMPZoomTransitionAnimating, RMPZoomTransitionDelegate> sourceTransition = (id<RMPZoomTransitionAnimating, RMPZoomTransitionDelegate>)source;
+    id <RMPZoomTransitionAnimating, RMPZoomTransitionDelegate> destinationTransition = (id<RMPZoomTransitionAnimating, RMPZoomTransitionDelegate>)presented;
+    if ([sourceTransition conformsToProtocol:@protocol(RMPZoomTransitionAnimating)] &&
+        [destinationTransition conformsToProtocol:@protocol(RMPZoomTransitionAnimating)]) {
+        RMPZoomTransitionAnimator *animator = [[RMPZoomTransitionAnimator alloc] init];
+        animator.goingForward = YES;
+        animator.sourceTransition = sourceTransition;
+        animator.destinationTransition = destinationTransition;
+        return animator;
+    }
+    return nil;
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
+{
+    id <RMPZoomTransitionAnimating, RMPZoomTransitionDelegate> sourceTransition = (id<RMPZoomTransitionAnimating, RMPZoomTransitionDelegate>)dismissed;
+    id <RMPZoomTransitionAnimating, RMPZoomTransitionDelegate> destinationTransition = (id<RMPZoomTransitionAnimating, RMPZoomTransitionDelegate>)self;
+    if ([sourceTransition conformsToProtocol:@protocol(RMPZoomTransitionAnimating)] &&
+        [destinationTransition conformsToProtocol:@protocol(RMPZoomTransitionAnimating)]) {
+        RMPZoomTransitionAnimator *animator = [[RMPZoomTransitionAnimator alloc] init];
+        animator.goingForward = NO;
+        animator.sourceTransition = sourceTransition;
+        animator.destinationTransition = destinationTransition;
+        return animator;
+    }
+    return nil;
 }
 
 @end

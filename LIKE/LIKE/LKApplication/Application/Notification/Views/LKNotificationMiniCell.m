@@ -112,9 +112,21 @@ LC_IMP_SIGNAL(PushUserCenter);
     
     for (UIView *view in self.subviews) {
         
-        if ([view isKindOfClass:[GBTagListView class]]) {
+        if (IOS8_OR_LATER) {
             
-            [view removeFromSuperview];
+            if ([view isKindOfClass:[GBTagListView class]]) {
+                
+                [view removeFromSuperview];
+            }
+        } else {
+            
+            for (UIView *subView in view.subviews) {
+                
+                if ([subView isKindOfClass:[GBTagListView class]]) {
+                    
+                    [subView removeFromSuperview];
+                }
+            }
         }
     }
     

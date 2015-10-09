@@ -18,6 +18,8 @@
 		1304ABE51BAC208C00C9EA2D /* LKOfficialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1304ABE41BAC208C00C9EA2D /* LKOfficialViewController.m */; };
 		1304ABE81BAC2B1900C9EA2D /* LKOfficialDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1304ABE71BAC2B1900C9EA2D /* LKOfficialDetailViewController.m */; };
 		1304ABEA1BAC334200C9EA2D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1304ABE91BAC334200C9EA2D /* WebKit.framework */; };
+		1307EAB01BC75E0100BA0BA7 /* RMPZoomTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 1307EAAF1BC75E0100BA0BA7 /* RMPZoomTransitionAnimator.m */; settings = {ASSET_TAGS = (); }; };
+		1307EAB31BC77B6300BA0BA7 /* LKNotificationCountInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 1307EAB21BC77B6300BA0BA7 /* LKNotificationCountInterface.m */; settings = {ASSET_TAGS = (); }; };
 		130CF57D1BAFD628002F4189 /* TalkLine@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 130CF57C1BAFD628002F4189 /* TalkLine@3x.png */; };
 		130CF5971BAFE846002F4189 /* LKNotificationInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 130CF5961BAFE846002F4189 /* LKNotificationInterface.m */; };
 		130CF59C1BB00CD8002F4189 /* segment_fans@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 130CF5981BB00CD8002F4189 /* segment_fans@3x.png */; };
@@ -945,6 +947,10 @@
 		1304ABE61BAC2B1900C9EA2D /* LKOfficialDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKOfficialDetailViewController.h; sourceTree = "<group>"; };
 		1304ABE71BAC2B1900C9EA2D /* LKOfficialDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKOfficialDetailViewController.m; sourceTree = "<group>"; };
 		1304ABE91BAC334200C9EA2D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		1307EAAE1BC75E0100BA0BA7 /* RMPZoomTransitionAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMPZoomTransitionAnimator.h; sourceTree = "<group>"; };
+		1307EAAF1BC75E0100BA0BA7 /* RMPZoomTransitionAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMPZoomTransitionAnimator.m; sourceTree = "<group>"; };
+		1307EAB11BC77B6300BA0BA7 /* LKNotificationCountInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKNotificationCountInterface.h; sourceTree = "<group>"; };
+		1307EAB21BC77B6300BA0BA7 /* LKNotificationCountInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKNotificationCountInterface.m; sourceTree = "<group>"; };
 		130CF57C1BAFD628002F4189 /* TalkLine@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TalkLine@3x.png"; sourceTree = "<group>"; };
 		130CF5951BAFE846002F4189 /* LKNotificationInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKNotificationInterface.h; sourceTree = "<group>"; };
 		130CF5961BAFE846002F4189 /* LKNotificationInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKNotificationInterface.m; sourceTree = "<group>"; };
@@ -2646,6 +2652,15 @@
 			path = Notification;
 			sourceTree = "<group>";
 		};
+		1307EAAD1BC75DE700BA0BA7 /* RMPZoomTransitionAnimator */ = {
+			isa = PBXGroup;
+			children = (
+				1307EAAE1BC75E0100BA0BA7 /* RMPZoomTransitionAnimator.h */,
+				1307EAAF1BC75E0100BA0BA7 /* RMPZoomTransitionAnimator.m */,
+			);
+			path = RMPZoomTransitionAnimator;
+			sourceTree = "<group>";
+		};
 		1319155F1B8C267900EC0F42 /* SMS_SDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -4035,6 +4050,7 @@
 		138EDECC1AD7B70F0020957C /* LKExternal */ = {
 			isa = PBXGroup;
 			children = (
+				1307EAAD1BC75DE700BA0BA7 /* RMPZoomTransitionAnimator */,
 				1304ABCC1BABB62300C9EA2D /* GBTagListView2.0 */,
 				132E6F861BA970E5001DF4BF /* GCPlaceholderTextView */,
 				BC12A5CF1B9BD14E00B99CB5 /* LKNetwork */,
@@ -5468,6 +5484,8 @@
 				1351B2CE1BBA6BBC004DFEEC /* LKEditorPickInterface.m */,
 				BC6960DC1BBFBEE5006245D7 /* LKAuthenticationAccessory.h */,
 				BC6960DD1BBFBEE5006245D7 /* LKAuthenticationAccessory.m */,
+				1307EAB11BC77B6300BA0BA7 /* LKNotificationCountInterface.h */,
+				1307EAB21BC77B6300BA0BA7 /* LKNotificationCountInterface.m */,
 			);
 			name = Interface;
 			sourceTree = "<group>";
@@ -6158,6 +6176,7 @@
 				13E27F031AF9CB2700C17362 /* LKPushAnimation.m in Sources */,
 				13BCD8971ADBA92200A0CBF5 /* POPMath.mm in Sources */,
 				13E1A4ED1AE65FE300E24C3C /* FastttFilterCamera.m in Sources */,
+				1307EAB01BC75E0100BA0BA7 /* RMPZoomTransitionAnimator.m in Sources */,
 				139055101B994A6D00DBF34A /* GPUImageLineGenerator.m in Sources */,
 				BC12A5EA1B9BD16100B99CB5 /* LKRequest.m in Sources */,
 				138EDEBE1AD7B0A30020957C /* LCUIView.m in Sources */,
@@ -6355,6 +6374,7 @@
 				138EDE761AD7B0A30020957C /* LCAppVersion.m in Sources */,
 				138EDE981AD7B0A30020957C /* LCUISignal.m in Sources */,
 				13BCD8CC1ADBA93000A0CBF5 /* CALayer+MCShorthand.m in Sources */,
+				1307EAB31BC77B6300BA0BA7 /* LKNotificationCountInterface.m in Sources */,
 				1304ABCF1BABB62300C9EA2D /* GBTagListView.m in Sources */,
 				138EDE6C1AD7B0A30020957C /* UIScrollView+SVInfiniteScrolling.m in Sources */,
 				13E27F061AF9CBB700C17362 /* LKPopAnimation.m in Sources */,
@@ -6648,7 +6668,7 @@
 					"$(SDK_ROOT)/usr/include/libxml2",
 				);
 				INFOPLIST_FILE = LIKE/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6689,7 +6709,7 @@
 					"$(SDK_ROOT)/usr/include/libxml2",
 				);
 				INFOPLIST_FILE = LIKE/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

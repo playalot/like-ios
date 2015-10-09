@@ -250,7 +250,7 @@ LC_IMP_SIGNAL(PushPostDetail);
         }
     }
     
-    [self.contentImage setImageWithURL:[NSURL URLWithString:post.preview] placeholderImage:nil options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+    [self.contentImage setImageWithURL:[NSURL URLWithString:post.preview] placeholderImage:nil options:SDWebImageRetryFailed progress:^(NSInteger receivedSize, NSInteger expectedSize) {
         
         
     } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {

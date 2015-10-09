@@ -11,6 +11,7 @@
 #import "LKTagsView.h"
 #import "ADTickerLabel.h"
 #import "UIImageView+WebCache.h"
+#import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 
 @interface LKPostTableViewCell ()
 
@@ -211,12 +212,21 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.contentImageView.frame = self.contentBack.bounds;
     self.contentImageView.image = nil;
     
-    [self.contentImageView sd_setImageWithURL:[NSURL URLWithString:post.preview] placeholderImage:nil options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-        [self.contentImageView.indicator setProgress:receivedSize * 1.0 / expectedSize animated:YES];
-        self.contentImageView.indicator.alpha = 1;
+    for (UIView *view in self.contentImageView.subviews) {
+        
+        if ([view isKindOfClass:[M13ProgressViewRing class]]) {
+            
+            [view removeFromSuperview];
+        }
+    }
+    
+    [self.contentImageView setImageWithURL:[NSURL URLWithString:post.preview] placeholderImage:nil options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+        
+        
     } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        self.contentImageView.indicator.alpha = 0;
-    }];
+        
+        
+    } usingActivityIndicatorStyle:0];
     
     self.tagsView.tags = post.tags;
     self.tagsView.viewFrameY = self.contentBack.viewBottomY;

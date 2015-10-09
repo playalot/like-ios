@@ -242,19 +242,6 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.contentImage.frame = self.contentBack.bounds;
     self.contentImage.image = nil;
 
-//    [self.contentImage sd_setImageWithURL:[NSURL URLWithString:post.preview] placeholderImage:nil options:SDWebImageRetryFailed progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-//        
-//        if (self.contentImage.indicator.progress == 0) {
-//            [self.contentImage.indicator setProgress:receivedSize * 1.0 / expectedSize animated:YES];
-//            self.contentImage.indicator.alpha = 1;
-//        }
-//        
-//    } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-//
-//        self.contentImage.indicator.alpha = 0;
-//        [self.contentImage.indicator removeFromSuperview];
-//    }];
-
     for (UIView *view in self.contentImage.subviews) {
         
         if ([view isKindOfClass:[M13ProgressViewRing class]]) {

@@ -33,7 +33,8 @@ LC_PROPERTY(assign) BOOL hasShowUp;
 LC_IMP_SIGNAL(FavouritePost);
 LC_IMP_SIGNAL(UnfavouritePost);
 
-- (void)dealloc {
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
     [self cancelAllRequests];
     [self unobserveAllNotifications];
     [self.observedDataSourceObject removeObserver:self forKeyPath:self.observedDataSourceKeyPath];

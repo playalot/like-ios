@@ -465,6 +465,11 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 #pragma mark -
 
 LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
+    
+    if (self.currentType == LKUserCenterModelTypeFocus || self.currentType == LKUserCenterModelTypeFans) {
+        return;
+    }
+    
     self.datasource = [NSMutableArray arrayWithArray:[self.userCenterModel dataWithType:self.currentType]];
     self.browsingViewController = [[LKPostTableViewController alloc] init];
     self.browsingViewController.delegate = self;

@@ -341,11 +341,8 @@ static PHImageRequestOptions *requestOptions;
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == 0) {
-        
         [self.navigationController pushViewController:[LKCameraViewController viewController] animated:YES];
-    }
-    else{
-        
+    } else {
         if (IOS8_OR_LATER) {
             
             PHAsset *asset = self.datasource[indexPath.row - 1];

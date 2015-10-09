@@ -21,8 +21,10 @@ static NSString* const KVO_CONTEXT_DATASOURCE_CHANGED = @"KVO_CONTEXT_DATASOURCE
 LC_PROPERTY(strong) LKInputView *inputView;
 LC_PROPERTY(strong) LCUIPullLoader *pullLoader;
 
-LC_PROPERTY(assign) id observedDataSourceObject;
+LC_PROPERTY(weak) id observedDataSourceObject;
 LC_PROPERTY(copy) NSString *observedDataSourceKeyPath;
+
+LC_PROPERTY(assign) BOOL hasShowUp;
 
 @end
 
@@ -30,15 +32,6 @@ LC_PROPERTY(copy) NSString *observedDataSourceKeyPath;
 
 LC_IMP_SIGNAL(FavouritePost);
 LC_IMP_SIGNAL(UnfavouritePost);
-
-+ (instancetype)sharedInstance {
-    static LKPostTableViewController *_instance = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _instance = [[LKPostTableViewController alloc] init];
-    });
-    return _instance;
-}
 
 - (void)dealloc {
     [self cancelAllRequests];
@@ -56,56 +49,15 @@ LC_IMP_SIGNAL(UnfavouritePost);
     return self;
 }
 
-- (void)buildInputView {
-    @weakly(self);
-    
-    self.inputView = LKInputView.view;
-    self.inputView.viewFrameY = self.view.viewFrameHeight;
-    self.view.ADD(self.inputView);
-    
-    self.inputView.sendAction = ^(NSString * string){
-        
-        @normally(self);
-        
-        if (string.trim.length == 0) {
-            [self showTopMessageErrorHud:LC_LO(@"标签不能为空")];
-            return;
-        }
-        
-        if (string.length > 12) {
-            [self showTopMessageErrorHud:LC_LO(@"标签长度不能大于12位")];
-            return;
-        }
-        
-        LKPostTableViewCell *cell = (LKPostTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:0]];
-        
-        // 调加标签接口
-        if ([self checkTag:string onTags:((LKPost *)self.inputView.userInfo).tags]) {
-            [self addTag:string onPost:self.inputView.userInfo onCell:cell];
-        } else {
-            [self.view showTopMessageErrorHud:LC_LO(@"该标签已存在")];
-            [self.inputView resignFirstResponder];
-            self.inputView.textField.text = @"";
-        }
-    };
-    
-    self.inputView.didShow = ^(){
-        
-        @normally(self);
-        LKPostTableViewCell * cell = (LKPostTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:0]];
-        CGFloat height1 = LC_DEVICE_HEIGHT - cell.viewFrameHeight;
-        CGFloat height2 = LCUIKeyBoard.singleton.height + self.inputView.viewFrameHeight - height1;
-        [self.tableView setContentOffset:LC_POINT(0, cell.viewFrameY + height2 - 25 + 10 + 63) animated:YES];
-    };
-    
-    self.inputView.willDismiss = ^(id value){
-    };
-}
-
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [self commonInit];
+    if (!self.hasShowUp) {
+        self.view.ADD(self.tableView);
+        self.hasShowUp = YES;
+    }
+    
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:self.currentIndex inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
 }
 
 - (void)buildTableView {
@@ -132,12 +84,6 @@ LC_IMP_SIGNAL(UnfavouritePost);
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
     
     [self buildTableView];
-}
-
-- (void)commonInit {
-    self.view.ADD(self.tableView);
-    
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:self.currentIndex inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
 }
 
 - (void)setCurrentIndex:(NSInteger)currentIndex {
@@ -320,7 +266,7 @@ LC_HANDLE_NAVIGATION_SIGNAL(UnfavouritePost, signal) {
         return;
     }
     [self.datasource removeObjectAtIndex:updatedIndex];
-    [self.tableView reloadData];
+    [self reloadData];
 }
 
 LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
@@ -371,7 +317,7 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
             break;
         }
     }
-    [self.tableView reloadData];
+    [self reloadData];
 }
 
 - (void)postDetailViewController:(LKPostDetailViewController *)ctrl didFavouritePost:(LKPost *)post {

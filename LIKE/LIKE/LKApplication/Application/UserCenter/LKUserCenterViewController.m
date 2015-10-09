@@ -249,8 +249,9 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
         @normally(self);
         self.currentType = index;
         self.cartoonImageView.image= nil;
+        self.pullLoader.canLoadMore = [self.userCenterModel canLoadMoreWithType:self.currentType];
+        [self loadData:self.currentType diretion:LCUIPullLoaderDiretionTop];
     };
-    
     
     self.tableView.tableHeaderView = tableViewHeader;
     
@@ -278,6 +279,8 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
     };
     
     self.currentType = LKUserCenterModelTypePhotos;
+    self.pullLoader.canLoadMore = [self.userCenterModel canLoadMoreWithType:self.currentType];
+    [self loadData:self.currentType diretion:LCUIPullLoaderDiretionTop];
     
 //    [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFocus uid:self.user.id];
 //    [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFans uid:self.user.id];
@@ -417,12 +420,6 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 //    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:(index / 3) inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
 }
 
-- (void)setCurrentType:(LKUserCenterModelType)currentType {
-    _currentType = currentType;
-    self.pullLoader.canLoadMore = [self.userCenterModel canLoadMoreWithType:currentType];
-    [self loadData:currentType diretion:LCUIPullLoaderDiretionTop];
-}
-
 - (void)loadData:(LKUserCenterModelType)type diretion:(LCUIPullLoaderDiretion)diretion {
     @weakly(self);
     self.userCenterModel.requestFinished = ^(LKUserCenterModelType type, NSString * error){
@@ -460,6 +457,7 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
         }
     };
     
+    [self.userCenterModel cancelAllRequests];
     [self.userCenterModel getDataAtFirstPage:diretion == LCUIPullLoaderDiretionTop type:type uid:self.user.id];
     self.cartoonImageView.hidden = YES;
 }

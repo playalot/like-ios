@@ -156,6 +156,7 @@ LC_PROPERTY(strong) UICollectionView * collectionView;
     if (IOS8_OR_LATER) {
         
         PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
+        fetchOptions.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary;
         PHFetchResult *fetchResult = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions];
         if ([fetchResult countOfAssetsWithMediaType:PHAssetMediaTypeImage] > 0) {
             
@@ -164,7 +165,6 @@ LC_PROPERTY(strong) UICollectionView * collectionView;
                 if (obj) {
                     
                     @normally(self);
-                    
                     PHAsset *asset = (PHAsset *)obj;
                     [self.datasource insertObject:asset atIndex:0];
                     
@@ -246,9 +246,7 @@ LC_PROPERTY(strong) UICollectionView * collectionView;
         
         // 滤镜控制器
         LKImageCropperViewController * cropper = [[LKImageCropperViewController alloc] initWithImage:sourceImage];
-        
         [cropper showBackButton];
-        
         [_picker pushViewController:cropper animated:YES];
         
     };

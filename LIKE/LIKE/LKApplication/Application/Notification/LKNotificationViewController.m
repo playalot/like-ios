@@ -21,6 +21,7 @@
 #import "LKOfficialDetailViewController.h"
 #import "LKOfficialViewController.h"
 #import "LKNotificationMiniCell.h"
+#import "LKTagCommentsViewController.h"
 
 @interface LKNotificationViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerDelegate>
 
@@ -159,9 +160,17 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
         if ((notification.type == LKNotificationTypeComment ||
             notification.type == LKNotificationTypeReply) && [notification.tagID isKindOfClass:[NSNumber class]]) {
             notification.post.tagString = [NSString stringWithFormat:@"Comment-%@",notification.tagID];
+//            [self enterTagCommentViewControllerWithTag:notification.tags[0]];
+//            return;
         }
         [self getOriginPostWithPost:notification.post];
     }
+}
+
+- (void)enterTagCommentViewControllerWithTag:(LKTag *)tag {
+    
+    LKTagCommentsViewController *tagCommentsViewController = [[LKTagCommentsViewController alloc] initWithTag:tag];
+    [self.navigationController presentViewController:LC_UINAVIGATION(tagCommentsViewController) animated:YES completion:nil];
 }
 
 /**

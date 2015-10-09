@@ -122,6 +122,7 @@ LC_PROPERTY(assign) BOOL favorited;
 
 -(instancetype) initWithPost:(LKPost *)post {
     if (self = [super init]) {
+        self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         self.post = post;
         if (self.post.user.id.integerValue) {
             LKUser * user = LKUserInfoCache.singleton[self.post.user.id.description];

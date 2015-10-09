@@ -24,6 +24,8 @@ LC_PROPERTY(assign) BOOL loadFinished;
 LC_PROPERTY(assign) BOOL loading;
 LC_PROPERTY(assign) NSNumber *next;
 
+LC_PROPERTY(assign) BOOL browsingPushing;
+
 LC_PROPERTY(strong) LCUIPullLoader *pullLoader;
 LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 
@@ -187,6 +189,7 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 }
 
 LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
+    
     UIResponder *currentResponder = self;
     while (![currentResponder isKindOfClass:[LKSearchViewController class]]) {
         currentResponder = currentResponder.nextResponder;

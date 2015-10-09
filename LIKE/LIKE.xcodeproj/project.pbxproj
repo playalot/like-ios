@@ -897,6 +897,7 @@
 		BC8F64F61BB924720084B5CA /* UINavigationController+PopOnSwipeRight.m in Sources */ = {isa = PBXBuildFile; fileRef = BC8F64F51BB924720084B5CA /* UINavigationController+PopOnSwipeRight.m */; settings = {ASSET_TAGS = (); }; };
 		BC8F64F91BB93D890084B5CA /* LKSearchTagInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = BC8F64F81BB93D890084B5CA /* LKSearchTagInterface.m */; settings = {ASSET_TAGS = (); }; };
 		BC8F64FC1BBA2FAE0084B5CA /* LKLRUCache.m in Sources */ = {isa = PBXBuildFile; fileRef = BC8F64FB1BBA2FAE0084B5CA /* LKLRUCache.m */; settings = {ASSET_TAGS = (); }; };
+		BCB74E191BC7B77600976C0B /* LKUserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCB74E181BC7B77600976C0B /* LKUserProfileViewController.m */; settings = {ASSET_TAGS = (); }; };
 		BCD148101BB3A16A0062C463 /* LKLikeTagItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD1480F1BB3A16A0062C463 /* LKLikeTagItemView.m */; settings = {ASSET_TAGS = (); }; };
 		BCD148131BB3DCA60062C463 /* LKPostView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD148121BB3DCA60062C463 /* LKPostView.m */; settings = {ASSET_TAGS = (); }; };
 		BCD148161BB3F3AC0062C463 /* LKTagItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD148151BB3F3AC0062C463 /* LKTagItemView.m */; settings = {ASSET_TAGS = (); }; };
@@ -2569,6 +2570,8 @@
 		BC8F64F81BB93D890084B5CA /* LKSearchTagInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKSearchTagInterface.m; path = Interface/LKSearchTagInterface.m; sourceTree = "<group>"; };
 		BC8F64FA1BBA2FAE0084B5CA /* LKLRUCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKLRUCache.h; path = Utility/LKLRUCache.h; sourceTree = "<group>"; };
 		BC8F64FB1BBA2FAE0084B5CA /* LKLRUCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKLRUCache.m; path = Utility/LKLRUCache.m; sourceTree = "<group>"; };
+		BCB74E171BC7B77600976C0B /* LKUserProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKUserProfileViewController.h; sourceTree = "<group>"; };
+		BCB74E181BC7B77600976C0B /* LKUserProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKUserProfileViewController.m; sourceTree = "<group>"; };
 		BCD1480E1BB3A16A0062C463 /* LKLikeTagItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKLikeTagItemView.h; sourceTree = "<group>"; };
 		BCD1480F1BB3A16A0062C463 /* LKLikeTagItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKLikeTagItemView.m; sourceTree = "<group>"; };
 		BCD148111BB3DCA60062C463 /* LKPostView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKPostView.h; sourceTree = "<group>"; };
@@ -5293,6 +5296,8 @@
 				1387C3571B32B9CB00B065A7 /* LKRebindPhoneViewController.m */,
 				135E54E01BB8E818005FBB84 /* LKProfileSettingViewController.h */,
 				135E54E11BB8E818005FBB84 /* LKProfileSettingViewController.m */,
+				BCB74E171BC7B77600976C0B /* LKUserProfileViewController.h */,
+				BCB74E181BC7B77600976C0B /* LKUserProfileViewController.m */,
 			);
 			path = UserCenter;
 			sourceTree = "<group>";
@@ -5954,6 +5959,7 @@
 				139054FC1B994A6D00DBF34A /* GPUImageHarrisCornerDetectionFilter.m in Sources */,
 				13BCA6611B5CCC7600DC0549 /* LKHomeHeader.m in Sources */,
 				139054D21B994A6D00DBF34A /* GPUImageCannyEdgeDetectionFilter.m in Sources */,
+				BCB74E191BC7B77600976C0B /* LKUserProfileViewController.m in Sources */,
 				139055651B994A6D00DBF34A /* GPUImageWhiteBalanceFilter.m in Sources */,
 				133D3C901AE7C63C008F303D /* LKTime.m in Sources */,
 				139054C61B994A6D00DBF34A /* GPUImage3x3TextureSamplingFilter.m in Sources */,

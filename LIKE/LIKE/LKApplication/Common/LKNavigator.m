@@ -15,6 +15,7 @@
 #import "LKNotificationCount.h"
 #import "LKTabbarItem.h"
 #import "LKGateViewController.h"
+#import "LKUserProfileViewController.h"
 
 @interface LKNavigator () <LKLoginViewControllerDelegate, RDVTabBarControllerDelegate>
 
@@ -121,7 +122,7 @@ LC_PROPERTY(strong) LKGateViewController *gateViewController;
     self.searchViewController = [LKSearchViewController viewController];
     self.cameraRollViewController = [LKCameraRollViewController viewController];
     self.notificationViewController = [LKNotificationViewController viewController];
-    self.userCenterViewController = [[LKUserCenterViewController alloc] initWithUser:LKLocalUser.singleton.user];
+    self.userProfileViewController = [[LKUserProfileViewController alloc] initWithUser:LKLocalUser.singleton.user];
     
     // tabbarCtrl只放了一个主页控制器
     self.tabBarController = [[LKTabBarController alloc]
@@ -129,7 +130,7 @@ LC_PROPERTY(strong) LKGateViewController *gateViewController;
                                                        LC_UINAVIGATION(self.mainFeedViewController),
                                                        LC_UINAVIGATION(self.searchViewController),
                                                        LC_UINAVIGATION(self.notificationViewController),
-                                                       LC_UINAVIGATION(self.userCenterViewController)]];
+                                                       LC_UINAVIGATION(self.userProfileViewController)]];
     self.tabBarController.delegate = self;
     
     NSString *cache =  LKUserDefaults.singleton[self.class.description];

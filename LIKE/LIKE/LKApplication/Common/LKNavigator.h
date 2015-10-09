@@ -17,6 +17,7 @@
 #import "LKGroupViewController.h"
 #import "LKCameraRollViewController.h"
 #import "LKGuestFeedViewController.h"
+#import "LKUserProfileViewController.h"
 
 @interface LKNavigator : NSObject
 
@@ -25,7 +26,7 @@ LC_PROPERTY(strong) LKMainFeedViewController *mainFeedViewController;
 LC_PROPERTY(strong) LKSearchViewController *searchViewController;
 LC_PROPERTY(strong) LKCameraRollViewController *cameraRollViewController;
 LC_PROPERTY(strong) LKNotificationViewController *notificationViewController;
-LC_PROPERTY(strong) LKUserCenterViewController *userCenterViewController;
+LC_PROPERTY(strong) LKUserProfileViewController *userProfileViewController;
 LC_PROPERTY(strong) LKGroupViewController *groupViewController;
 
 + (instancetype)navigator;

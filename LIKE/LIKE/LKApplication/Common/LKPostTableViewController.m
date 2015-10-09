@@ -50,6 +50,12 @@ LC_IMP_SIGNAL(UnfavouritePost);
     return UIStatusBarStyleLightContent;
 }
 
+- (id)init {
+    if (self = [super init]) {
+    }
+    return self;
+}
+
 - (void)buildInputView {
     @weakly(self);
     
@@ -96,31 +102,18 @@ LC_IMP_SIGNAL(UnfavouritePost);
     };
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     
-    if (self.datasource == nil)
-        self.datasource = [NSMutableArray array];
-    [self reloadData];
+    [self commonInit];
 }
 
-- (void)buildUI {
-    self.view.backgroundColor = LKColor.backgroundColor;
-    
-    [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[UIImage imageNamed:@"NavigationBarBack.png" useCache:YES] selectImage:nil];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
-
+- (void)buildTableView {
     self.tableView = [[LCUITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.viewFrameWidth, self.view.viewFrameHeight - 64) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = [UIColor clearColor];
-    self.view.ADD(self.tableView);
-    
-    [self setNavigationBarHidden:NO animated:YES];
-    
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
-    [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[UIImage imageNamed:@"NavigationBarBack.png" useCache:YES] selectImage:nil];
     
     self.pullLoader = [LCUIPullLoader pullLoaderWithScrollView:self.tableView pullStyle:LCUIPullLoaderStyleHeaderAndFooter];
     @weakly(self);
@@ -128,10 +121,23 @@ LC_IMP_SIGNAL(UnfavouritePost);
         @normally(self);
         [self loadData:diretion];
     };
+}
+
+- (void)buildUI {
+    self.view.backgroundColor = LKColor.backgroundColor;
+    
+    [self setNavigationBarHidden:NO animated:YES];
+    
+    [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[UIImage imageNamed:@"NavigationBarBack.png" useCache:YES] selectImage:nil];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
+    
+    [self buildTableView];
+}
+
+- (void)commonInit {
+    self.view.ADD(self.tableView);
     
     [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:self.currentIndex inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
-    
-    [self buildInputView];
 }
 
 - (void)setCurrentIndex:(NSInteger)currentIndex {

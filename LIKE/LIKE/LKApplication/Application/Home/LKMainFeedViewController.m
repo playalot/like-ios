@@ -7,14 +7,9 @@
 //
 
 #import "LKMainFeedViewController.h"
-#import "LKHomeFeedViewController.h"
-#import "LKFollowingFeedViewController.h"
-
 
 @interface LKMainFeedViewController ()
 
-LC_PROPERTY(strong) LKHomeFeedViewController *homeFeedViewController;
-LC_PROPERTY(strong) LKFollowingFeedViewController *followingFeedViewController;
 LC_PROPERTY(weak) LCUIViewController *currentViewController;
 
 @end

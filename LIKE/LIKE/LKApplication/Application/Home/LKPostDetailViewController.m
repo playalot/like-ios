@@ -31,8 +31,9 @@
 #import "LKPresentAnimation.h"
 #import "ADTickerLabel.h"
 #import "UIImageView+WebCache.h"
+#import "RMPZoomTransitionAnimator.h"
 
-@interface LKPostDetailViewController () <UITableViewDataSource,UITableViewDelegate,JTSImageViewControllerDismissalDelegate,UINavigationControllerDelegate,UIViewControllerTransitioningDelegate, LKTagCommentsViewControllerDelegate>
+@interface LKPostDetailViewController () <UITableViewDataSource,UITableViewDelegate,JTSImageViewControllerDismissalDelegate,UINavigationControllerDelegate,UIViewControllerTransitioningDelegate, LKTagCommentsViewControllerDelegate, RMPZoomTransitionAnimating, RMPZoomTransitionDelegate>
 
 LC_PROPERTY(strong) BLKDelegateSplitter *delegateSplitter;
 LC_PROPERTY(strong) LKInputView *inputView;
@@ -86,7 +87,7 @@ LC_PROPERTY(assign) BOOL favorited;
     [self.tableView reloadData];
     
     [super viewWillAppear:animated];
-    [self setNavigationBarHidden:YES animated:animated];
+    [self setNavigationBarHidden:YES animated:NO];
     
 //    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:animated];
 
@@ -1720,6 +1721,37 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     [self.inputView resignFirstResponder];
     
     [self.header handleScrollDidScroll:scrollView];
+}
+
+#pragma mark - <RMPZoomTransitionAnimating>
+
+- (UIImageView *)transitionSourceImageView
+{
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:self.header.backgroundView.image];
+    imageView.contentMode = self.header.backgroundView.contentMode;
+    imageView.clipsToBounds = YES;
+    imageView.userInteractionEnabled = NO;
+    imageView.frame = self.header.backgroundView.frame;
+    return imageView;
+}
+
+- (UIColor *)transitionSourceBackgroundColor
+{
+    return self.view.backgroundColor;
+}
+
+- (CGRect)transitionDestinationImageViewFrame
+{
+    return self.header.backgroundView.frame;
+}
+
+#pragma mark - <RMPZoomTransitionDelegate>
+
+- (void)zoomTransitionAnimator:(RMPZoomTransitionAnimator *)animator
+         didCompleteTransition:(BOOL)didComplete
+      animatingSourceImageView:(UIImageView *)imageView
+{
+    self.header.backgroundView.image = imageView.image;
 }
 
 @end

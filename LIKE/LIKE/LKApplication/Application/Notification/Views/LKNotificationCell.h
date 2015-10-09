@@ -17,6 +17,7 @@ LC_PROPERTY(assign) CGFloat cellHeight;
 + (CGFloat)height:(LKNotification *)notification;
 
 LC_ST_SIGNAL(PushPostDetail);
+LC_PROPERTY(strong) LCUIImageView *preview;
 
 @end
 

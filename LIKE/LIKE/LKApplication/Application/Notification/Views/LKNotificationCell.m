@@ -24,7 +24,7 @@ LC_PROPERTY(strong) LCUIButton *moreButton;
 LC_PROPERTY(strong) GBTagListView *tagListView;
 LC_PROPERTY(strong) UIView *line;
 
-LC_PROPERTY(strong) LCUIImageView *preview;
+//LC_PROPERTY(strong) LCUIImageView *preview;
 //LC_PROPERTY(strong) UIScrollView *morePreview;
 
 @end
@@ -242,7 +242,7 @@ LC_IMP_SIGNAL(PushPostDetail);
         
         self.preview.hidden = NO;
 //        self.preview.url = ((LKPost *)notification.posts[0]).content;
-        [self.preview sd_setImageWithURL:[NSURL URLWithString:((LKPost *)notification.post).thumbnail] placeholderImage:nil options:SDWebImageRetryFailed];
+//        [self.preview sd_setImageWithURL:[NSURL URLWithString:((LKPost *)notification.post).thumbnail] placeholderImage:nil options:SDWebImageRetryFailed];
     }
     
         

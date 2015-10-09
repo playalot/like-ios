@@ -22,8 +22,9 @@
 #import "LKOfficialViewController.h"
 #import "LKNotificationMiniCell.h"
 #import "LKTagCommentsViewController.h"
+#import "RMPZoomTransitionAnimator.h"
 
-@interface LKNotificationViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerDelegate>
+@interface LKNotificationViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerDelegate, RMPZoomTransitionAnimating, RMPZoomTransitionDelegate>
 
 LC_PROPERTY(strong) LKNotificationModel *notificationModel;
 LC_PROPERTY(strong) LKNotificationHeader *notificationHeader;
@@ -205,6 +206,38 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
 #pragma mark LKPostDetailViewControllerDelegate
 - (void)postDetailViewController:(LKPostDetailViewController *)ctrl didDeletedTag:(LKTag *)deleteTag {
     
+}
+
+#pragma mark <RMPZoomTransitionAnimating>
+
+- (UIImageView *)transitionSourceImageView
+{
+    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+    LKNotificationCell *cell = (LKNotificationCell *)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:cell.preview.image];
+    imageView.contentMode = cell.preview.contentMode;
+    imageView.clipsToBounds = YES;
+    imageView.userInteractionEnabled = NO;
+    CGRect frameInSuperview = [cell.preview convertRect:cell.preview.frame toView:self.tableView.superview];
+    frameInSuperview.origin.x -= cell.layoutMargins.left;
+    frameInSuperview.origin.y -= cell.layoutMargins.top;
+    imageView.frame = frameInSuperview;
+    return imageView;
+}
+
+- (UIColor *)transitionSourceBackgroundColor
+{
+    return self.tableView.backgroundColor;
+}
+
+- (CGRect)transitionDestinationImageViewFrame
+{
+    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+    LKNotificationCell *cell = (LKNotificationCell *)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
+    CGRect frameInSuperview = [cell.preview convertRect:cell.preview.frame toView:self.tableView.superview];
+    frameInSuperview.origin.x -= cell.layoutMargins.left;
+    frameInSuperview.origin.y -= cell.layoutMargins.top;
+    return frameInSuperview;
 }
 
 @end

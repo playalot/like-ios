@@ -106,12 +106,12 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>如果您拒绝,，发布图片和发表评论时将不能选择地理位置。</string>
+	<key>NSMainNibFile</key>
+	<string>LaunchScreen</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
 	</array>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

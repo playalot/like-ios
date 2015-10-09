@@ -63,7 +63,6 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    //    [self setNavigationBarHidden:NO animated:NO];
     ((LCUINavigationController *)self.navigationController).animationHandler = nil;
 }
 

@@ -170,7 +170,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
 - (void)enterTagCommentViewControllerWithTag:(LKTag *)tag {
     
     LKTagCommentsViewController *tagCommentsViewController = [[LKTagCommentsViewController alloc] initWithTag:tag];
-    [self.navigationController presentViewController:LC_UINAVIGATION(tagCommentsViewController) animated:YES completion:nil];
+    [tagCommentsViewController showInViewController:self];
 }
 
 /**

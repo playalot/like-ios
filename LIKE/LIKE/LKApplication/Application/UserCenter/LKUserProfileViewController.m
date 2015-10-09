@@ -1,12 +1,12 @@
 //
-//  LKUserCenterViewController.m
+//  LKUserProfileViewController.m
 //  LIKE
 //
-//  Created by Licheng Guo ( http://nsobjet.me ) on 15/4/15.
-//  Copyright (c) 2015年 Beijing Like Technology Co.Ltd . ( http://www.likeorz.com ). All rights reserved.
+//  Created by huangweifeng on 10/9/15.
+//  Copyright © 2015 Beijing Like Technology Co.Ltd . ( http://www.likeorz.com ). All rights reserved.
 //
 
-#import "LKUserCenterViewController.h"
+#import "LKUserProfileViewController.h"
 #import "LKHomepageHeader.h"
 #import "SquareCashStyleBehaviorDefiner.h"
 #import "BLKDelegateSplitter.h"
@@ -26,7 +26,7 @@
 #import "UIScrollView+SVInfiniteScrolling.h"
 #import "LKPostTableViewController.h"
 
-@interface LKUserCenterViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerCancelFavorDelegate, LKPostTableViewControllerDelegate>
+@interface LKUserProfileViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerCancelFavorDelegate, LKPostTableViewControllerDelegate>
 
 LC_PROPERTY(strong) LCUIPullLoader *pullLoader;
 LC_PROPERTY(strong) LCUITableView *tableView;
@@ -48,7 +48,7 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 
 @end
 
-@implementation LKUserCenterViewController
+@implementation LKUserProfileViewController
 
 - (void)dealloc {
     self.tableView.delegate = nil;
@@ -63,16 +63,8 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [self setNavigationBarHidden:NO animated:NO];
+    //    [self setNavigationBarHidden:NO animated:NO];
     ((LCUINavigationController *)self.navigationController).animationHandler = nil;
-}
-
-+ (LKUserCenterViewController *)pushUserCenterWithUser:(LKUser *)user navigationController:(UINavigationController *)navigationController {
-    LKUserCenterViewController * userCenter = [[LKUserCenterViewController alloc] initWithUser:user];
-    userCenter.needBackButton = YES;
-    userCenter.settingButtonHidden = NO;
-    [navigationController pushViewController:userCenter animated:YES];
-    return userCenter;
 }
 
 - (instancetype)initWithUser:(LKUser *)user {
@@ -282,9 +274,9 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
     self.pullLoader.canLoadMore = [self.userCenterModel canLoadMoreWithType:self.currentType];
     [self loadData:self.currentType diretion:LCUIPullLoaderDiretionTop];
     
-//    [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFocus uid:self.user.id];
-//    [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFans uid:self.user.id];
-//    [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFavor uid:self.user.id];
+    //    [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFocus uid:self.user.id];
+    //    [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFans uid:self.user.id];
+    //    [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFavor uid:self.user.id];
     
     self.userInfoModel.requestFinished = ^(LKHttpRequestResult * result, NSString * error){
         @normally(self);
@@ -417,7 +409,7 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 #pragma mark -
 
 - (void)scrollToPostByIndex:(NSInteger)index {
-//    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:(index / 3) inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    //    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:(index / 3) inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
 }
 
 - (void)loadData:(LKUserCenterModelType)type diretion:(LCUIPullLoaderDiretion)diretion {
@@ -540,7 +532,7 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
         
         LKUserCenterUserCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Focus" andClass:[LKUserCenterUserCell class]];
         cell.user = self.userCenterModel.focusArray[indexPath.row];
-
+        
         return cell;
         
     } else if (self.currentType == LKUserCenterModelTypeFans){

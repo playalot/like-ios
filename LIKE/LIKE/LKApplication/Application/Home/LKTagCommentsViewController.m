@@ -167,7 +167,7 @@ static NSString * __LKUserAddress = nil;
     }];
     
     
-    [self loadData:LCUIPullLoaderDiretionTop];
+//    [self loadData:LCUIPullLoaderDiretionTop];
     
     
     // 添加输入框
@@ -229,6 +229,7 @@ static NSString * __LKUserAddress = nil;
     };
 
     [self getTagUsers];
+    [self loadData:LCUIPullLoaderDiretionTop];
 }
 
 - (void)update

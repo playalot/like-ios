@@ -10,10 +10,11 @@
 
 #import "LCUINavigationController.h"
 #import "UINavigationController+PopOnSwipeRight.h"
+#import "RMPZoomTransitionAnimator.h"
 
 #pragma mark -
 
-@interface LCUINavigationController () 
+@interface LCUINavigationController () <UINavigationControllerDelegate>
 
 @end
 
@@ -32,6 +33,7 @@
     
     self.distanceToDrag = 145;
     self.numberOfTouches = 1;
+    self.delegate = self;
 
     [self setBarTitleTextColor:LC_UINAVIGATIONBAR_DEFAULT_TITLE_COLOR
                    shadowColor:LC_UINAVIGATIONBAR_DEFAULT_TITLE_SHADOW_COLOR];
@@ -82,6 +84,17 @@
 
 -(id <UIViewControllerAnimatedTransitioning>) navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC
 {
+    id <RMPZoomTransitionAnimating, RMPZoomTransitionDelegate> sourceTransition = (id<RMPZoomTransitionAnimating, RMPZoomTransitionDelegate>)fromVC;
+    id <RMPZoomTransitionAnimating, RMPZoomTransitionDelegate> destinationTransition = (id<RMPZoomTransitionAnimating, RMPZoomTransitionDelegate>)toVC;
+    if ([sourceTransition conformsToProtocol:@protocol(RMPZoomTransitionAnimating)] &&
+        [destinationTransition conformsToProtocol:@protocol(RMPZoomTransitionAnimating)]) {
+        RMPZoomTransitionAnimator *animator = [[RMPZoomTransitionAnimator alloc] init];
+        animator.goingForward = (operation == UINavigationControllerOperationPush);
+        animator.sourceTransition = sourceTransition;
+        animator.destinationTransition = destinationTransition;
+        return animator;
+    }
+    
     if (self.animationHandler) {
         
         return self.animationHandler(operation, fromVC, toVC);

@@ -20,6 +20,7 @@
 		1304ABEA1BAC334200C9EA2D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1304ABE91BAC334200C9EA2D /* WebKit.framework */; };
 		1307EAB01BC75E0100BA0BA7 /* RMPZoomTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 1307EAAF1BC75E0100BA0BA7 /* RMPZoomTransitionAnimator.m */; settings = {ASSET_TAGS = (); }; };
 		1307EAB31BC77B6300BA0BA7 /* LKNotificationCountInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 1307EAB21BC77B6300BA0BA7 /* LKNotificationCountInterface.m */; settings = {ASSET_TAGS = (); }; };
+		1307EAB61BC796DA00BA0BA7 /* UIImageView+UIActivityIndicatorForSDWebImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 1307EAB51BC796DA00BA0BA7 /* UIImageView+UIActivityIndicatorForSDWebImage.m */; settings = {ASSET_TAGS = (); }; };
 		130CF57D1BAFD628002F4189 /* TalkLine@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 130CF57C1BAFD628002F4189 /* TalkLine@3x.png */; };
 		130CF5971BAFE846002F4189 /* LKNotificationInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 130CF5961BAFE846002F4189 /* LKNotificationInterface.m */; };
 		130CF59C1BB00CD8002F4189 /* segment_fans@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 130CF5981BB00CD8002F4189 /* segment_fans@3x.png */; };
@@ -951,6 +952,8 @@
 		1307EAAF1BC75E0100BA0BA7 /* RMPZoomTransitionAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMPZoomTransitionAnimator.m; sourceTree = "<group>"; };
 		1307EAB11BC77B6300BA0BA7 /* LKNotificationCountInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKNotificationCountInterface.h; sourceTree = "<group>"; };
 		1307EAB21BC77B6300BA0BA7 /* LKNotificationCountInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKNotificationCountInterface.m; sourceTree = "<group>"; };
+		1307EAB41BC796DA00BA0BA7 /* UIImageView+UIActivityIndicatorForSDWebImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+UIActivityIndicatorForSDWebImage.h"; sourceTree = "<group>"; };
+		1307EAB51BC796DA00BA0BA7 /* UIImageView+UIActivityIndicatorForSDWebImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+UIActivityIndicatorForSDWebImage.m"; sourceTree = "<group>"; };
 		130CF57C1BAFD628002F4189 /* TalkLine@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TalkLine@3x.png"; sourceTree = "<group>"; };
 		130CF5951BAFE846002F4189 /* LKNotificationInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKNotificationInterface.h; sourceTree = "<group>"; };
 		130CF5961BAFE846002F4189 /* LKNotificationInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKNotificationInterface.m; sourceTree = "<group>"; };
@@ -3747,6 +3750,8 @@
 		138EDD381AD7B0A30020957C /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				1307EAB41BC796DA00BA0BA7 /* UIImageView+UIActivityIndicatorForSDWebImage.h */,
+				1307EAB51BC796DA00BA0BA7 /* UIImageView+UIActivityIndicatorForSDWebImage.m */,
 				BC8F64F41BB924720084B5CA /* UINavigationController+PopOnSwipeRight.h */,
 				BC8F64F51BB924720084B5CA /* UINavigationController+PopOnSwipeRight.m */,
 				138EDD391AD7B0A30020957C /* NSArray+LCExtension.h */,
@@ -6415,6 +6420,7 @@
 				139054E71B994A6D00DBF34A /* GPUImageDissolveBlendFilter.m in Sources */,
 				139055421B994A6D00DBF34A /* GPUImageShiTomasiFeatureDetectionFilter.m in Sources */,
 				13FCC0741ADE17F70008DB41 /* LKSegmentHeader.m in Sources */,
+				1307EAB61BC796DA00BA0BA7 /* UIImageView+UIActivityIndicatorForSDWebImage.m in Sources */,
 				BC0C424B1BA8201600055BB1 /* LKFollowingFeedViewController.m in Sources */,
 				13FCC07C1ADE37790008DB41 /* LKUserCenterModel.m in Sources */,
 				138EDEAC1AD7B0A30020957C /* LCUIHud.m in Sources */,

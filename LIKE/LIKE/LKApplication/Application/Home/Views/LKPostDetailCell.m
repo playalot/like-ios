@@ -103,7 +103,7 @@ LC_IMP_SIGNAL(PushUserCenter);
 //    commentButton.FIT();
 //    commentButton.viewFrameWidth += 10;
 //    commentButton.viewFrameX = self.cellBackgroundView.viewFrameWidth - commentButton.viewFrameWidth - 3;
-    commentButton.viewFrameX = self.cellBackgroundView.viewFrameWidth - commentButton.viewFrameWidth - 15;
+    commentButton.viewFrameX = self.cellBackgroundView.viewFrameWidth - commentButton.viewFrameWidth - 5;
     commentButton.viewFrameY = 46 / 2 - commentButton.viewMidHeight;
     [commentButton addTarget:self action:@selector(commentTapAction) forControlEvents:UIControlEventTouchUpInside];
     self.cellBackgroundView.ADD(commentButton);

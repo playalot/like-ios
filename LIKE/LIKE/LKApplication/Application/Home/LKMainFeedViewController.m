@@ -34,7 +34,7 @@ LC_PROPERTY(weak) LCUIViewController *currentViewController;
 
 - (void)buildNavigationBar {
     // Bar item.
-    [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[[UIImage imageNamed:@"Favor_normal.png" useCache:YES] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]] selectImage:nil];
+    [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[[UIImage imageNamed:@"Favor_normal.png" useCache:YES] imageWithTintColor:[UIColor whiteColor]] selectImage:nil];
     
     LCUIButton *titleBtn = [[LCUIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];
     [titleBtn setImage:[UIImage imageNamed:@"HomeLikeIcon" useCache:YES] forState:UIControlStateNormal];
@@ -71,7 +71,7 @@ LC_PROPERTY(weak) LCUIViewController *currentViewController;
             [self.currentViewController.view removeFromSuperview];
             if (self.currentViewController == self.homeFeedViewController) {
                 self.currentViewController = self.followingFeedViewController;
-                [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[[UIImage imageNamed:@"Favor_selected.png" useCache:YES] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]] selectImage:nil];
+                [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[[UIImage imageNamed:@"Favor_selected.png" useCache:YES] imageWithTintColor:[UIColor whiteColor]] selectImage:nil];
 
                 if (self.titleView) {
                     
@@ -84,7 +84,7 @@ LC_PROPERTY(weak) LCUIViewController *currentViewController;
                 }
             } else {
                 self.currentViewController = self.homeFeedViewController;
-                [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[[UIImage imageNamed:@"Favor_normal.png" useCache:YES] imageWithTintColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]] selectImage:nil];
+                [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[[UIImage imageNamed:@"Favor_normal.png" useCache:YES] imageWithTintColor:[UIColor whiteColor]] selectImage:nil];
                 
                 if (self.titleView) {
                     

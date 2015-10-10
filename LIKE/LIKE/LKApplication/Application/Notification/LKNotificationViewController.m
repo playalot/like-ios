@@ -23,6 +23,7 @@
 #import "LKNotificationMiniCell.h"
 #import "LKTagCommentsViewController.h"
 #import "RMPZoomTransitionAnimator.h"
+#import "LKPostInterface.h"
 
 @interface LKNotificationViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerDelegate, RMPZoomTransitionAnimating, RMPZoomTransitionDelegate>
 
@@ -179,27 +180,28 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
  */
 - (void)getOriginPostWithPost:(LKPost *)post {
     
-    LKHttpRequestInterface *interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"post/%@", post.id]].GET_METHOD();
+    LKPostInterface *interface = [[LKPostInterface alloc] initWithPostId:post.id];
     
-    [self request:interface complete:^(LKHttpRequestResult *result) {
-       
-        if (result.state == LKHttpRequestStateFinished) {
-         
-            NSString *content = result.json[@"data"][@"content"];
-            post.content = content;
-            
-            LKPostDetailViewController *detailViewController = [[LKPostDetailViewController alloc] initWithPost:post];
+    @weakly(self);
+    @weakly(interface);
+    
+    [interface startWithCompletionBlockWithSuccess:^(LCBaseRequest *request) {
+    
+        @normally(self);
+        @normally(interface);
+        
+        post.preview = interface.preview;
+        
+        LKPostDetailViewController *detailViewController = [[LKPostDetailViewController alloc] initWithPost:post];
 //            [detailViewController setPresendModelAnimationOpen];
-            [self.navigationController pushViewController:detailViewController animated:YES];
+        [self.navigationController pushViewController:detailViewController animated:YES];
 //            [self.navigationController presentViewController:LC_UINAVIGATION(detailViewController) animated:YES completion:nil];
 
 //            LKOfficialDetailViewController *detailCtrl = [[LKOfficialDetailViewController alloc] init];
 //            [self.navigationController pushViewController:detailCtrl animated:YES];
-
-        } else if (result.state == LKHttpRequestStateFailed) {
-            
-            [self showTopMessageErrorHud:result.error];
-        }
+        
+    } failure:^(LCBaseRequest *request) {
+        
     }];
 }
 

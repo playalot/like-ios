@@ -21,13 +21,14 @@
 		1307EAB01BC75E0100BA0BA7 /* RMPZoomTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 1307EAAF1BC75E0100BA0BA7 /* RMPZoomTransitionAnimator.m */; settings = {ASSET_TAGS = (); }; };
 		1307EAB31BC77B6300BA0BA7 /* LKNotificationCountInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 1307EAB21BC77B6300BA0BA7 /* LKNotificationCountInterface.m */; settings = {ASSET_TAGS = (); }; };
 		1307EAB61BC796DA00BA0BA7 /* UIImageView+UIActivityIndicatorForSDWebImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 1307EAB51BC796DA00BA0BA7 /* UIImageView+UIActivityIndicatorForSDWebImage.m */; settings = {ASSET_TAGS = (); }; };
+		1307EABC1BC8E35E00BA0BA7 /* LKPostInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 1307EABB1BC8E35E00BA0BA7 /* LKPostInterface.m */; settings = {ASSET_TAGS = (); }; };
 		130CF57D1BAFD628002F4189 /* TalkLine@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 130CF57C1BAFD628002F4189 /* TalkLine@3x.png */; };
 		130CF5971BAFE846002F4189 /* LKNotificationInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 130CF5961BAFE846002F4189 /* LKNotificationInterface.m */; };
 		130CF59C1BB00CD8002F4189 /* segment_fans@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 130CF5981BB00CD8002F4189 /* segment_fans@3x.png */; };
 		130CF59D1BB00CD8002F4189 /* segment_favor@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 130CF5991BB00CD8002F4189 /* segment_favor@3x.png */; };
 		130CF59E1BB00CD8002F4189 /* segment_follow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 130CF59A1BB00CD8002F4189 /* segment_follow@3x.png */; };
 		130CF59F1BB00CD8002F4189 /* segment_photo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 130CF59B1BB00CD8002F4189 /* segment_photo@3x.png */; };
-		130F45C91BB4F1AF00C32A86 /* RightArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 130F45C81BB4F1AF00C32A86 /* RightArrow.png */; settings = {ASSET_TAGS = (); }; };
+		130F45C91BB4F1AF00C32A86 /* RightArrow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 130F45C81BB4F1AF00C32A86 /* RightArrow@3x.png */; settings = {ASSET_TAGS = (); }; };
 		130F45CF1BB5058700C32A86 /* Location@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 130F45CE1BB5058700C32A86 /* Location@3x.png */; settings = {ASSET_TAGS = (); }; };
 		13101D2D1B12DE5F00FBE516 /* LKShareMaskImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 13101D2C1B12DE5F00FBE516 /* LKShareMaskImage.m */; };
 		13101D301B13074700FBE516 /* LKShareTagsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13101D2F1B13074700FBE516 /* LKShareTagsView.m */; };
@@ -955,6 +956,8 @@
 		1307EAB21BC77B6300BA0BA7 /* LKNotificationCountInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKNotificationCountInterface.m; sourceTree = "<group>"; };
 		1307EAB41BC796DA00BA0BA7 /* UIImageView+UIActivityIndicatorForSDWebImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+UIActivityIndicatorForSDWebImage.h"; sourceTree = "<group>"; };
 		1307EAB51BC796DA00BA0BA7 /* UIImageView+UIActivityIndicatorForSDWebImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+UIActivityIndicatorForSDWebImage.m"; sourceTree = "<group>"; };
+		1307EABA1BC8E35E00BA0BA7 /* LKPostInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKPostInterface.h; sourceTree = "<group>"; };
+		1307EABB1BC8E35E00BA0BA7 /* LKPostInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKPostInterface.m; sourceTree = "<group>"; };
 		130CF57C1BAFD628002F4189 /* TalkLine@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TalkLine@3x.png"; sourceTree = "<group>"; };
 		130CF5951BAFE846002F4189 /* LKNotificationInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKNotificationInterface.h; sourceTree = "<group>"; };
 		130CF5961BAFE846002F4189 /* LKNotificationInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKNotificationInterface.m; sourceTree = "<group>"; };
@@ -962,7 +965,7 @@
 		130CF5991BB00CD8002F4189 /* segment_favor@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "segment_favor@3x.png"; sourceTree = "<group>"; };
 		130CF59A1BB00CD8002F4189 /* segment_follow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "segment_follow@3x.png"; sourceTree = "<group>"; };
 		130CF59B1BB00CD8002F4189 /* segment_photo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "segment_photo@3x.png"; sourceTree = "<group>"; };
-		130F45C81BB4F1AF00C32A86 /* RightArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RightArrow.png; sourceTree = "<group>"; };
+		130F45C81BB4F1AF00C32A86 /* RightArrow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RightArrow@3x.png"; sourceTree = "<group>"; };
 		130F45CE1BB5058700C32A86 /* Location@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Location@3x.png"; sourceTree = "<group>"; };
 		13101D2B1B12DE5F00FBE516 /* LKShareMaskImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKShareMaskImage.h; sourceTree = "<group>"; };
 		13101D2C1B12DE5F00FBE516 /* LKShareMaskImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKShareMaskImage.m; sourceTree = "<group>"; };
@@ -5358,7 +5361,7 @@
 				135DBAF61AE60577004AD150 /* NavigationBarMore@3x.png */,
 				13FCC09A1ADF86050008DB41 /* KeyboardDismiss@3x.png */,
 				13FCC0921ADF5E9C0008DB41 /* TagAdd@3x.png */,
-				130F45C81BB4F1AF00C32A86 /* RightArrow.png */,
+				130F45C81BB4F1AF00C32A86 /* RightArrow@3x.png */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -5496,6 +5499,8 @@
 				BC6960DD1BBFBEE5006245D7 /* LKAuthenticationAccessory.m */,
 				1307EAB11BC77B6300BA0BA7 /* LKNotificationCountInterface.h */,
 				1307EAB21BC77B6300BA0BA7 /* LKNotificationCountInterface.m */,
+				1307EABA1BC8E35E00BA0BA7 /* LKPostInterface.h */,
+				1307EABB1BC8E35E00BA0BA7 /* LKPostInterface.m */,
 			);
 			name = Interface;
 			sourceTree = "<group>";
@@ -5637,7 +5642,7 @@
 				135DBAF91AE60590004AD150 /* NavigationBarBack@3x.png in Resources */,
 				1351B2D31BBA8AFE004DFEEC /* Subscribe@3x.png in Resources */,
 				13FC2C091BB4087D0036E514 /* CameraClose@3x.png in Resources */,
-				130F45C91BB4F1AF00C32A86 /* RightArrow.png in Resources */,
+				130F45C91BB4F1AF00C32A86 /* RightArrow@3x.png in Resources */,
 				1351B2EC1BBA916B004DFEEC /* NotificationOfficalIcon2@3x.png in Resources */,
 				13B5B4E81B15CB6800252A78 /* TalkTip@3x.png in Resources */,
 				1304ABD91BABC8C500C9EA2D /* NotificationOfficalIcon@3x.png in Resources */,
@@ -6122,6 +6127,7 @@
 				138EDE311AD7B0A30020957C /* LCHandleViewTreeRequest.m in Sources */,
 				138EDE5C1AD7B0A30020957C /* FMDatabaseAdditions.m in Sources */,
 				139055581B994A6D00DBF34A /* GPUImageToonFilter.m in Sources */,
+				1307EABC1BC8E35E00BA0BA7 /* LKPostInterface.m in Sources */,
 				135DBAEC1AE4AC24004AD150 /* LKRecommendTagsView.m in Sources */,
 				BD51DE4B1BB6D11700DA2095 /* LKTabbarItem.m in Sources */,
 				132E6F7B1BA93264001DF4BF /* LKGroupViewController.m in Sources */,

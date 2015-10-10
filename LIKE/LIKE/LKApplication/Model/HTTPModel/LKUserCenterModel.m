@@ -155,8 +155,10 @@ LC_PROPERTY(assign) NSInteger index;
                 
                 LKUserFavouritesInterface *favorInterface = (LKUserFavouritesInterface *)interface;
                 NSArray *datasource = favorInterface.posts;
-                NSNumber *favorTimestamp = favorInterface.next;
-                self.favorTimestamp = favorTimestamp;
+                
+                if (favorInterface.next) {
+                    self.favorTimestamp = favorInterface.next;
+                }
                 
                 if (isFirstPage) {
                     self.favorArray = [NSMutableArray arrayWithArray:datasource];

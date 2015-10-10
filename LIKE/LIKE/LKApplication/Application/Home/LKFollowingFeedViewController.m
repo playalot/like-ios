@@ -58,6 +58,12 @@ LC_PROPERTY(strong) LCUIImageView *noFollowingView;
 //    }
 }
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    self.view.backgroundColor = LKColor.backgroundColor;
+}
+
 - (void)buildUI {
     
     [self buildTableView];

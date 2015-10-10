@@ -53,8 +53,8 @@ LC_PROPERTY(strong) UIView * tipLine;
     }
     
     self.viewFrameHeight = 0;
-    CGFloat leftMargin = 14;
-    CGFloat topMargin = 14;
+    CGFloat leftMargin = 13;
+    CGFloat topMargin = 15;
     CGFloat topPadding = 10;
     CGFloat leftPadding = 10;
     CGFloat maxHeight = 0;

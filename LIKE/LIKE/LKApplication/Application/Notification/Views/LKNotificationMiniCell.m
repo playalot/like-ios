@@ -252,32 +252,32 @@ LC_IMP_SIGNAL(PushUserCenter);
     switch (notification.type) {
         case LKNotificationTypeNewTag:
             
-            return [UIImage imageNamed:@"NotificationTagIcon2.png" useCache:YES];
+            return [UIImage imageNamed:@"NotificationTagIcon.png" useCache:YES];
             
             break;
         case LKNotificationTypeFocus:
             
-            return [UIImage imageNamed:@"NotificationFocusIcon2.png" useCache:YES];
+            return [UIImage imageNamed:@"NotificationFocusIcon.png" useCache:YES];
             
             break;
         case LKNotificationTypeLikeTag:
             
-            return [UIImage imageNamed:@"NotificationLikeIcon2.png" useCache:YES];
+            return [UIImage imageNamed:@"NotificationLikeIcon.png" useCache:YES];
             
             break;
         case LKNotificationTypeReply:
             
-            return [UIImage imageNamed:@"NotificationReplyIcon2.png" useCache:YES];
+            return [UIImage imageNamed:@"NotificationReplyIcon.png" useCache:YES];
             
             break;
         case LKNotificationTypeComment:
             
-            return [UIImage imageNamed:@"NotificationCommentIcon2.png" useCache:YES];
+            return [UIImage imageNamed:@"NotificationCommentIcon.png" useCache:YES];
             
             break;
         case LKNotificationTypeOfficial:
             
-            return [UIImage imageNamed:@"NotificationOfficalIcon2.png" useCache:YES];
+            return [UIImage imageNamed:@"NotificationOfficalIcon.png" useCache:YES];
             
             break;
         default:

@@ -156,7 +156,7 @@ LC_PROPERTY(strong) UIView *bindView;
     badge.verticalAlignment = M13BadgeViewVerticalAlignmentNone;
     badge.horizontalAlignment = M13BadgeViewHorizontalAlignmentRight;
     badge.viewFrameX = LC_DEVICE_WIDTH / 10 - 2;// 42 * LC_DEVICE_WIDTH / 414;
-    badge.viewFrameY = 17;
+    badge.viewFrameY = 15;
 
     bindView.ADD(badge);
 }

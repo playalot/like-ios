@@ -25,8 +25,10 @@ LC_PROPERTY(strong) LCUIButton *friendshipButton;
 LC_PROPERTY(strong) LCUIActivityIndicatorView *loadingActivity;
 LC_PROPERTY(strong) LCUIButton *recommendedReason;
 LC_PROPERTY(strong) LCUIButton *recommendedReasonWithTag;
+LC_PROPERTY(strong) LCUIImageView *commonInterest;
 LC_PROPERTY(strong) UIView *blackMask;
 LC_PROPERTY(strong) UILabel *numLabel;
+LC_PROPERTY(strong) UIView *headerBack;
 
 @end
 
@@ -51,8 +53,8 @@ LC_IMP_SIGNAL(PushPostDetail);
 }
 
 - (void)buildUI {
-    self.backgroundColor = [UIColor clearColor];
-    self.contentView.backgroundColor = [UIColor clearColor];
+    self.backgroundColor = LKColor.backgroundColor;
+    self.contentView.backgroundColor = LKColor.backgroundColor;
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
     self.contentBack = UIView.view;
@@ -70,10 +72,17 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.contentBack.ADD(self.contentImage);
 //    self.ADD(self.contentImage);
     
+    self.headerBack = UIView.view;
+    self.headerBack.viewFrameY = 3;
+    self.headerBack.viewFrameWidth = LC_DEVICE_WIDTH;
+    self.headerBack.viewFrameHeight = 51;
+    self.headerBack.backgroundColor = [UIColor whiteColor];
+    self.ADD(self.headerBack);
+    
     // 头像
     self.head = LCUIImageView.view;
-    self.head.viewFrameX = 14;
-    self.head.viewFrameY = 10;
+    self.head.viewFrameX = 13;
+    self.head.viewFrameY = 8;
     self.head.viewFrameWidth = 34;
     self.head.viewFrameHeight = 34;
     self.head.cornerRadius = 34 * 0.5;
@@ -81,18 +90,18 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.head.backgroundColor = LKColor.backgroundColor;
     self.head.userInteractionEnabled = YES;
     [self.head addTapGestureRecognizer:self selector:@selector(handleHeadTap:)];
-    self.ADD(self.head);
+    self.headerBack.ADD(self.head);
     
     // 昵称
     self.title = LCUILabel.view;
-    self.title.viewFrameX = self.head.viewRightX + 12;
+    self.title.viewFrameX = self.head.viewRightX + 14;
     self.title.viewFrameY = self.head.viewFrameY;
     self.title.viewFrameWidth = LC_DEVICE_WIDTH - 150;
     self.title.viewFrameHeight = LK_FONT(13).lineHeight;
     self.title.font = LK_FONT(14);
     self.title.textColor = LC_RGB(51, 51, 51);
     [self.title addTapGestureRecognizer:self selector:@selector(handleHeadTap:)];
-    self.ADD(self.title);
+    self.headerBack.ADD(self.title);
     
     // like数量
     self.likes = ADTickerLabel.view;
@@ -105,7 +114,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.likes.textColor = LC_RGB(51, 51, 51);
     self.likes.changeTextAnimationDuration = 0.25;
     [self.likes addTapGestureRecognizer:self selector:@selector(handleHeadTap:)];
-    self.ADD(self.likes);
+    self.headerBack.ADD(self.likes);
     
     // like数量后缀
     self.likesTip = LCUILabel.view;
@@ -117,39 +126,47 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.likesTip.FIT();
     self.likesTip.viewFrameHeight = LK_FONT(10).lineHeight;
     [self.likesTip addTapGestureRecognizer:self selector:@selector(handleHeadTap:)];
-    self.ADD(self.likesTip);
+    self.headerBack.ADD(self.likesTip);
     
     // 推荐理由
     self.recommendedReason = LCUIButton.view;
     self.recommendedReason.title = LC_LO(@"共同兴趣");
     self.recommendedReason.titleFont = LK_FONT(13);
-    self.recommendedReason.titleColor = LC_RGB(217, 217, 217);
+    self.recommendedReason.titleColor = LC_RGB(151, 151, 151);
     self.recommendedReason.buttonImage = [UIImage imageNamed:@"LittleTag" useCache:YES];
     self.recommendedReason.viewFrameHeight = LK_FONT(13).lineHeight;
     self.recommendedReason.viewFrameY = (54 - self.recommendedReason.viewFrameHeight) * 0.5;
     self.recommendedReason.viewFrameX = LC_DEVICE_WIDTH - self.recommendedReasonWithTag.viewFrameWidth - 15;
     self.recommendedReason.titleEdgeInsets = UIEdgeInsetsMake(1, 0, 0, 0);
     [self.recommendedReason addTarget:self action:@selector(recommendedReasonBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    self.ADD(self.recommendedReason);
+    self.headerBack.ADD(self.recommendedReason);
     
     // 推荐理由标签
     self.recommendedReasonWithTag = LCUIButton.view;
     self.recommendedReasonWithTag.viewFrameWidth = LC_DEVICE_WIDTH / 2;
     self.recommendedReasonWithTag.viewFrameHeight = LK_FONT(10).lineHeight;
-    self.recommendedReasonWithTag.viewFrameX = LC_DEVICE_WIDTH / 2 - 15;
+    self.recommendedReasonWithTag.viewFrameX = LC_DEVICE_WIDTH / 2 - 15 - 14;
     self.recommendedReasonWithTag.viewFrameY = self.likesTip.viewFrameY + 2;
     self.recommendedReasonWithTag.title = LC_LO(@"有故事的人");
-    self.recommendedReasonWithTag.titleColor = LC_RGB(217, 217, 217);
+    self.recommendedReasonWithTag.titleColor = LC_RGB(151, 151, 151);
     self.recommendedReasonWithTag.titleFont = LK_FONT(10);
     self.recommendedReasonWithTag.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     self.recommendedReasonWithTag.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 1);
     [self.recommendedReasonWithTag addTarget:self action:@selector(recommendedReasonBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    self.ADD(self.recommendedReasonWithTag);
+    self.headerBack.ADD(self.recommendedReasonWithTag);
+    
+    self.commonInterest = LCUIImageView.view;
+    self.commonInterest.viewFrameWidth = 12;
+    self.commonInterest.viewFrameHeight = 11;
+    self.commonInterest.viewCenterY = self.recommendedReasonWithTag.viewCenterY;
+    self.commonInterest.viewFrameX = self.recommendedReasonWithTag.viewRightX + 2;
+    self.commonInterest.image = [UIImage imageNamed:@"CommonInterest.png" useCache:YES];
+    self.headerBack.ADD(self.commonInterest);
     
     self.tagsView = LKTagsView.view;
     self.tagsView.viewFrameX = 0;
     self.tagsView.viewFrameWidth = LC_DEVICE_WIDTH;
-    self.tagsView.backgroundColor = LKColor.backgroundColor;
+    self.tagsView.backgroundColor = [UIColor whiteColor];
     self.ADD(self.tagsView);
     
     self.numLabel = UILabel.view;
@@ -306,11 +323,13 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.recommendedReason.hidden = post.reason <= 0;
     self.recommendedReasonWithTag.title = post.reasonTag;
     self.recommendedReasonWithTag.hidden = LC_NSSTRING_IS_INVALID(post.reasonTag);
+    self.commonInterest.hidden = LC_NSSTRING_IS_INVALID(post.reasonTag);
     
     if (self.recommendedReasonWithTag.hidden == YES) {
         self.recommendedReason.viewFrameY = (54 - self.recommendedReason.viewFrameHeight) * 0.5;
         self.recommendedReasonWithTag.viewFrameY = CGRectGetMaxY(self.recommendedReason.frame) - 5;
-        self.recommendedReasonWithTag.viewFrameX = CGRectGetMaxX(self.recommendedReason.frame) - self.recommendedReasonWithTag.viewFrameWidth;
+        self.recommendedReasonWithTag.viewFrameX = CGRectGetMaxX(self.recommendedReason.frame) - self.recommendedReasonWithTag.viewFrameWidth - 14;
+        self.commonInterest.viewFrameX = self.recommendedReasonWithTag.viewRightX + 2;
     }
 }
 

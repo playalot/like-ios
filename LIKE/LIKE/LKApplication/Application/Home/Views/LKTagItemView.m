@@ -25,7 +25,7 @@ LC_PROPERTY(assign) BOOL custom;
         self.showNumber = YES;
         
         self.tagLabel = LCUILabel.view;
-        self.tagLabel.font = LK_FONT(14);
+        self.tagLabel.font = LK_FONT(12);
         self.tagLabel.textColor = [UIColor whiteColor];//LC_RGB(74, 74, 74);
         self.ADD(self.tagLabel);
         
@@ -33,7 +33,7 @@ LC_PROPERTY(assign) BOOL custom;
         self.ADD(self.lineView);
         
         self.likesLabel = LCUILabel.view;
-        self.likesLabel.font = LK_FONT_B(14);
+        self.likesLabel.font = LK_FONT_B(12);
         self.likesLabel.textColor = [UIColor whiteColor];
         self.likesLabel.textAlignment = UITextAlignmentCenter;
         self.likesLabel.layer.shouldRasterize = YES;
@@ -229,7 +229,7 @@ LC_PROPERTY(assign) BOOL custom;
     self.tagLabel.FIT();
     
     CGFloat tagHeight = self.tagLabel.font.lineHeight;
-    CGFloat topPadding = (26 - tagHeight) * 0.5;
+    CGFloat topPadding = (25 - tagHeight) * 0.5;
     CGFloat leftPadding = 8;
     
     self.tagLabel.viewFrameX = leftPadding;
@@ -238,10 +238,10 @@ LC_PROPERTY(assign) BOOL custom;
     
     if (self.showNumber) {
         
-        self.lineView.viewFrameHeight = 16;
+        self.lineView.viewFrameHeight = 17;
         self.lineView.viewFrameWidth = 1;
         self.lineView.viewFrameX = self.tagLabel.viewRightX + 6;
-        self.lineView.viewFrameY = 5;
+        self.lineView.viewFrameY = 4;
         self.lineView.image = [UIImage imageNamed:@"SeparateLine.png" useCache:YES];
         self.likesLabel.text = LC_NSSTRING_FORMAT(@"%@", customCount ? customCount : tagValue.likes);
         self.likesLabel.FIT();
@@ -261,7 +261,7 @@ LC_PROPERTY(assign) BOOL custom;
         //        self.viewFrameWidth = self.likesLabel.viewRightX + topPadding;
         self.viewFrameWidth = self.likesLabel.viewRightX + 8;
         //        self.viewFrameHeight = self.likesLabel.viewBottomY + topPadding;
-        self.viewFrameHeight = 26;
+        self.viewFrameHeight = 25;
     }
     else{
         
@@ -331,10 +331,10 @@ LC_PROPERTY(assign) BOOL custom;
     
     if (self.showNumber) {
         
-        self.lineView.viewFrameHeight = 20;
+        self.lineView.viewFrameHeight = 17;
         self.lineView.viewFrameWidth = 1;
         self.lineView.viewFrameX = self.tagLabel.viewRightX + 8;
-        self.lineView.viewFrameY = 6;
+        self.lineView.viewFrameY = 4;
         self.lineView.image = [UIImage imageNamed:@"SeparateLine.png" useCache:YES];
         self.likesLabel.text = LC_NSSTRING_FORMAT(@"%@", chooseTag.likes);
         self.likesLabel.FIT();

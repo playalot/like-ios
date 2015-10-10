@@ -34,6 +34,21 @@ LC_PROPERTY(weak) LCUIButton *cameraButton;
 
 @implementation RDVTabBar
 
+- (void)drawRect:(CGRect)rect {
+    
+    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:self.bounds];
+    
+    self.layer.masksToBounds = NO;
+    
+    self.layer.shadowColor = [UIColor blackColor].CGColor;
+    
+    self.layer.shadowOffset = CGSizeMake(0.0f, -0.05f);
+    
+    self.layer.shadowOpacity = 0.1f;
+    
+    self.layer.shadowPath = shadowPath.CGPath;
+}
+
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {

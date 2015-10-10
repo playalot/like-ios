@@ -71,6 +71,8 @@ LC_PROPERTY(weak) id delegate;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.view.backgroundColor = LKColor.backgroundColor;
+    
     @weakly(self);
     
     LKNewPostUploadCenter.singleton.addedNewValue = ^(LKPosting * posting, NSNumber * index){

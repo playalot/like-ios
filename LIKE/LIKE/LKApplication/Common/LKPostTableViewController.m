@@ -37,7 +37,7 @@ LC_IMP_SIGNAL(UnfavouritePost);
     [super viewDidDisappear:animated];
     [self cancelAllRequests];
     [self unobserveAllNotifications];
-    [self.observedDataSourceObject removeObserver:self forKeyPath:self.observedDataSourceKeyPath];
+    [self unwatchDatasource];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -56,9 +56,8 @@ LC_IMP_SIGNAL(UnfavouritePost);
     if (!self.hasShowUp) {
         self.view.ADD(self.tableView);
         self.hasShowUp = YES;
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:self.currentIndex inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
     }
-    
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:self.currentIndex inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
 }
 
 - (void)buildTableView {
@@ -107,6 +106,14 @@ LC_IMP_SIGNAL(UnfavouritePost);
             [self.delegate willNavigationBack:visibleIndexPath.row];
         }
         
+    }
+}
+
+- (void)unwatchDatasource {
+    if (self.observedDataSourceObject && self.observedDataSourceKeyPath) {
+        [self.observedDataSourceObject removeObserver:self forKeyPath:self.observedDataSourceKeyPath];
+        self.observedDataSourceObject = nil;
+        self.observedDataSourceKeyPath = nil;
     }
 }
 

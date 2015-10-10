@@ -156,7 +156,7 @@ LC_PROPERTY(strong) UICollectionView * collectionView;
     if (IOS8_OR_LATER) {
         
         PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
-        fetchOptions.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary;
+        fetchOptions.includeAssetSourceTypes = PHAssetSourceTypeNone;
         PHFetchResult *fetchResult = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions];
         if ([fetchResult countOfAssetsWithMediaType:PHAssetMediaTypeImage] > 0) {
             

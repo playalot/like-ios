@@ -42,7 +42,7 @@ LC_PROPERTY(assign) CGFloat cellHeight;
 
 // Cache代码段逻辑规则
 
-@interface LKHomeFeedViewController () <UITableViewDataSource, UITableViewDelegate, LKHomeTableViewCellDelegate, LKPostDetailViewControllerDelegate, RMPZoomTransitionAnimating, RMPZoomTransitionDelegate, UIViewControllerTransitioningDelegate>
+@interface LKHomeFeedViewController () <UITableViewDataSource, UITableViewDelegate, LKHomeTableViewCellDelegate, LKPostDetailViewControllerDelegate>
 
 LC_PROPERTY(strong) NSMutableArray *datasource;
 LC_PROPERTY(strong) LCUIPullLoader *pullLoader;
@@ -66,6 +66,52 @@ LC_PROPERTY(weak) id delegate;
 
 - (void)notificationAction {
     
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    @weakly(self);
+    
+    LKNewPostUploadCenter.singleton.addedNewValue = ^(LKPosting * posting, NSNumber * index){
+        
+        @normally(self);
+        
+        [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index.integerValue inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+        
+        [self performSelector:@selector(scrollViewScrollToTop) withObject:nil afterDelay:0.5];
+    };
+    
+    LKNewPostUploadCenter.singleton.uploadFinished = ^(LKPost * value, NSNumber * index){
+        
+        @normally(self);
+        
+        [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index.integerValue inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+        
+        
+        if (value) {
+            
+            [self.datasource insertObject:value atIndex:0];
+            
+            [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
+        }
+    };
+    
+    LKNewPostUploadCenter.singleton.uploadFailed = ^(id value){
+        
+        @normally(self);
+        
+        [self reloadData];
+        
+        [self showTopMessageErrorHud:LC_LO(@"上传失败啦！请检查您的网络稍后再试Orz～")];
+    };
+    
+    LKNewPostUploadCenter.singleton.stateChanged = ^(id value){
+        
+        @normally(self);
+        
+        [self reloadData];
+    };
 }
 
 - (void)buildUI {
@@ -172,7 +218,7 @@ LC_PROPERTY(weak) id delegate;
             return;
         }
         
-        LKHomeTableViewCell *cell = (LKHomeTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:0]];
+        LKHomeTableViewCell *cell = (LKHomeTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:1]];
         
         // 调加标签接口
         if ([self checkTag:string onTags:((LKPost *)self.inputView.userInfo).tags]) {
@@ -187,7 +233,7 @@ LC_PROPERTY(weak) id delegate;
     self.inputView.didShow = ^(){
         
         @normally(self);
-        LKHomeTableViewCell * cell = (LKHomeTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:0]];
+        LKHomeTableViewCell * cell = (LKHomeTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:1]];
         CGFloat height1 = LC_DEVICE_HEIGHT - cell.viewFrameHeight;
         CGFloat height2 = LCUIKeyBoard.singleton.height + self.inputView.viewFrameHeight - height1;
         [self.tableView setContentOffset:LC_POINT(0, cell.viewFrameY + height2 - 25 + 10 + 63) animated:YES];
@@ -356,6 +402,16 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     }
 }
 
+LC_HANDLE_UI_SIGNAL(LKUploadingCellCancel, signal)
+{
+    [LKNewPostUploadCenter.singleton cancelPosting:signal.object];
+}
+
+LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
+{
+    [LKNewPostUploadCenter.singleton reuploadPosting:signal.object];
+}
+
 #pragma mark - ***** LKPostDetailViewControllerDelegate *****
 - (void)postDetailViewController:(LKPostDetailViewController *)ctrl didUpdatedPost:(LKPost *)post {
     NSInteger updatedIndex = -1;
@@ -377,10 +433,16 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
 
 #pragma mark - ***** 数据源方法 *****
 -(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+    if (section == 0) {
+        
+        return LKNewPostUploadCenter.singleton.uploadingImages.count;
+    }
+    
     return self.datasource.count;
 }
 
@@ -412,6 +474,14 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
 }
 
 - (UITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (indexPath.section == 0) {
+        LKUploadingCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Upload" andClass:[LKUploadingCell class]];
+        cell.posting = LKNewPostUploadCenter.singleton.uploadingImages[indexPath.row];
+        return cell;
+    }
+    
+    
     LKHomeTableViewCell *cell = nil;
     
     if (self.isCellCached) {
@@ -452,6 +522,13 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (indexPath.section == 0) {
+        
+        return 38;
+    }
+    
+    
     if (self.isCellCached) {
         NSString *key = [NSString stringWithFormat:@"%ld", (long)indexPath.row];
         NSNumber *height = [self.cellHeightCache objectForKey:key];
@@ -522,8 +599,17 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     }];
 }
 
+#pragma mark - ***** scrollView delegate *****
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     [self.inputView resignFirstResponder];
+}
+
+-(void) scrollViewScrollToTop
+{
+    LC_FAST_ANIMATIONS(0.25, ^{
+        
+        [self.tableView setContentOffset:LC_POINT(0, 0) animated:YES];
+    });
 }
 
 @end

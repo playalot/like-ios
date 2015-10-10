@@ -430,6 +430,7 @@ LC_PROPERTY(strong) NSString * locationName;
     [LKNewPostUploadCenter uploadImage:self.image tags:self.selectedTags.tags location:location place:self.locationName];
     
     [self dismissAction];
+//    [self.navigationController popToViewController:[LKHomeFeedViewController viewController] animated:YES];
 }
 
 /**

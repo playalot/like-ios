@@ -16,5 +16,6 @@ LC_PROPERTY(copy)NSNumber *timestamp;
 - (instancetype)initWithSearchString:(NSString *)searchString;
 
 - (NSArray *)posts;
+- (NSNumber *)next;
 
 @end

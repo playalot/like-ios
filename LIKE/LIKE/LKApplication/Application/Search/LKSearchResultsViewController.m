@@ -137,61 +137,42 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 }
 
 - (void)loadData:(LCUIPullLoaderDiretion)diretion {
-    NSInteger page = 0;
-    if (diretion == LCUIPullLoaderDiretionBottom) {
-        page = self.page + 1;
-    }
-    
-    if (diretion == LCUIPullLoaderDiretionTop) {
-        self.timestamp = nil;
-    }
 
-    LKHttpRequestInterface *interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"search/tag/%@", self.searchString.URLCODE()]].GET_METHOD();
+    LKSearchTagInterface *interface = [[LKSearchTagInterface alloc] initWithSearchString:self.searchString.URLCODE()];
     
-    if (self.timestamp) {
-        interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"search/tag/%@?ts=%@", self.searchString.URLCODE(), self.timestamp]].GET_METHOD();
+    if (self.timestamp && diretion == LCUIPullLoaderDiretionBottom) {
+        interface.timestamp = self.timestamp;
     }
     
     @weakly(self);
-    [self request:interface complete:^(LKHttpRequestResult * result) {
+    @weakly(interface);
+    
+    [interface startWithCompletionBlockWithSuccess:^(LCBaseRequest *request) {
+       
         @normally(self);
-        if (result.state == LKHttpRequestStateFinished) {
-            id tmp = result.json[@"data"];
-            NSArray * datasource = nil;
-            NSMutableArray * resultData = [NSMutableArray array];
-            if ([tmp isKindOfClass:[NSDictionary class]]) {
-                datasource = tmp[@"posts"];
-                self.info = tmp[@"info"];
-            } else {
-                datasource = tmp;
-            }
-            
-            if (tmp[@"next"]) {
-                self.timestamp = tmp[@"next"];
-            }
-            
-            for (NSDictionary * tmp in datasource) {
-                [resultData addObject:[LKPost objectFromDictionary:tmp]];
-            }
-            
-            if (diretion == LCUIPullLoaderDiretionTop) {
-                self.datasource = resultData;
-            } else {
-                NSMutableArray *newDataSource = [NSMutableArray arrayWithArray:self.datasource];
-                [newDataSource addObjectsFromArray:resultData];
-                self.datasource = newDataSource;
-            }
-            
-            self.page = page;
-            [self.pullLoader endRefresh];
-            [self reloadData];
-            
-        } else if (result.state == LKHttpRequestStateFailed){
-            [self showTopMessageErrorHud:result.error];
-            [self.pullLoader endRefresh];
+        @normally(interface);
+        
+        if (interface.next) {
+            self.timestamp = interface.next;
         }
-    }];
+        
+        NSArray *resultData = interface.posts;
+        
+        if (diretion == LCUIPullLoaderDiretionTop) {
+            self.datasource = [NSMutableArray arrayWithArray:resultData];
+        } else {
+            NSMutableArray *newDataSource = [NSMutableArray arrayWithArray:self.datasource];
+            [newDataSource addObjectsFromArray:resultData];
+            self.datasource = newDataSource;
+        }
 
+        [self.pullLoader endRefresh];
+        [self reloadData];
+
+    } failure:^(LCBaseRequest *request) {
+        
+        
+    }];
 }
 
 #pragma mark -

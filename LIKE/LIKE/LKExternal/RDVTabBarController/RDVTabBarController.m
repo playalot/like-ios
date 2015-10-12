@@ -261,7 +261,6 @@
 
 - (void)tabBar:(RDVTabBar *)tabBar didSelectItemAtIndex:(NSInteger)index {
     
-    NSLog(@"%zd", index);
     if (index < 0 || index >= [[self viewControllers] count]) {
         return;
     }

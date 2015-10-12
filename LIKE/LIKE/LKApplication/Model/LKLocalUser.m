@@ -41,12 +41,24 @@
 }
 
 - (void)setSessionToken:(NSString *)sessionToken {
-    [LCKeychain setObject:sessionToken forKey:LK_SESSION_TOKEN];
+    @try {
+        [LCKeychain setObject:sessionToken forKey:LK_SESSION_TOKEN];
+    }
+    @catch (NSException *exception) {
+    }
+    
     self[LK_SESSION_TOKEN] = [LCEncryptorAES encryptString:sessionToken keyString:LK_AES_KEY ivString:LK_VI_KEY];
 }
 
 - (NSString *)sessionToken {
-    NSString *tmpToken = [LCKeychain objectForKey:LK_SESSION_TOKEN];
+    NSString *tmpToken = nil;
+    
+    @try {
+        tmpToken = [LCKeychain objectForKey:LK_SESSION_TOKEN];
+    }
+    @catch (NSException *exception) {
+    }
+    
     if (!tmpToken) {
         tmpToken = [LCEncryptorAES decryptData:self[LK_SESSION_TOKEN] keyString:LK_AES_KEY ivString:LK_VI_KEY];
     }

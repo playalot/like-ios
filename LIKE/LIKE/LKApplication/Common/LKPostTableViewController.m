@@ -33,8 +33,7 @@ LC_PROPERTY(assign) BOOL hasShowUp;
 LC_IMP_SIGNAL(FavouritePost);
 LC_IMP_SIGNAL(UnfavouritePost);
 
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
+- (void)dealloc {
     [self cancelAllRequests];
     [self unobserveAllNotifications];
     [self unwatchDatasource];
@@ -186,12 +185,9 @@ LC_IMP_SIGNAL(UnfavouritePost);
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if(context == (__bridge_retained void *)KVO_CONTEXT_DATASOURCE_CHANGED){
         NSArray *datasource = [object valueForKey:self.observedDataSourceKeyPath];
-        
-        
         if (datasource.count == 0 || ![datasource[0] isKindOfClass:[LKPost class]]) {
             return;
         }
-        
         self.datasource = [NSMutableArray arrayWithArray:datasource];
         [self.pullLoader endRefresh];
         [self reloadData];

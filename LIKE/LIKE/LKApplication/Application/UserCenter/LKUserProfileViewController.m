@@ -465,21 +465,22 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     if (self.currentType == LKUserCenterModelTypeFocus || self.currentType == LKUserCenterModelTypeFans) {
         return;
     }
-    self.datasource = [NSMutableArray arrayWithArray:[self.userCenterModel dataWithType:self.currentType]];
-    self.browsingViewController = [[LKPostTableViewController alloc] init];
-    self.browsingViewController.delegate = self;
-    self.browsingViewController.datasource = self.datasource;
+//    self.datasource = [NSMutableArray arrayWithArray:[self.userCenterModel dataWithType:self.currentType]];
+    
+    LKPostTableViewController *browsingViewController = [[LKPostTableViewController alloc] init];
+    browsingViewController.delegate = self;
+    browsingViewController.datasource = self.datasource;
     if (self.currentType == LKUserCenterModelTypePhotos) {
-        self.browsingViewController.title = self.user.name ? self.user.name : LC_LO(@"我的照片");
-        self.browsingViewController.cellHeadLineHidden = YES;
+        browsingViewController.title = self.user.name ? self.user.name : LC_LO(@"我的照片");
+        browsingViewController.cellHeadLineHidden = YES;
     } else {
-        self.browsingViewController.title = LC_LO(@"我的收藏");
-        self.browsingViewController.cellHeadLineHidden = NO;
+        browsingViewController.title = LC_LO(@"我的收藏");
+        browsingViewController.cellHeadLineHidden = NO;
     }
-    self.browsingViewController.currentIndex = [self.datasource indexOfObject:signal.object];
-    [self.browsingViewController watchForChangeOfDatasource:self dataSourceKey:@"datasource"];
-    [self.browsingViewController refresh];
-    [self.navigationController pushViewController:self.browsingViewController animated:YES];
+    browsingViewController.currentIndex = [self.datasource indexOfObject:signal.object];
+    [browsingViewController watchForChangeOfDatasource:self dataSourceKey:@"datasource"];
+    [browsingViewController refresh];
+    [self.navigationController pushViewController:browsingViewController animated:YES];
 }
 
 #pragma mark - LKPostTableViewControllerDelegate
@@ -601,6 +602,24 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
 }
 
 LC_HANDLE_NAVIGATION_SIGNAL(UnfavouritePost, signal) {
+    
+    if (self.currentType != LKUserCenterModelTypeFavor)
+        return;
+    
+    LKPost *signalPost = (LKPost *)signal.object;
+    NSInteger updatedIndex = -1;
+    for (LKPost *post in self.datasource) {
+        if (post.id.integerValue == signalPost.id.integerValue) {
+            updatedIndex = [self.datasource indexOfObject:post];
+            break;
+        }
+    }
+    if (updatedIndex < 0) {
+        return;
+    }
+    [self.datasource removeObjectAtIndex:updatedIndex];
+    [[self.userCenterModel dataWithType:self.currentType] removeObjectAtIndex:updatedIndex];
+    
     [self.tableView reloadData];
 }
 

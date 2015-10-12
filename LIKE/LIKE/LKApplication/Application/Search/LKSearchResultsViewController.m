@@ -170,7 +170,7 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
         [self reloadData];
 
     } failure:^(LCBaseRequest *request) {
-        
+        [self.pullLoader endRefresh];
         
     }];
 }

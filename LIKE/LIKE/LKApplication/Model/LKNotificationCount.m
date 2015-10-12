@@ -100,7 +100,7 @@ LC_PROPERTY(strong) UIView *bindView;
         }
         
     } failure:^(LCBaseRequest *request) {
-        
+        [self.pullLoader endRefresh];
     }];
 }
 

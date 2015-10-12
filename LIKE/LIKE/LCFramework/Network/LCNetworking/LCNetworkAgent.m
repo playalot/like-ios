@@ -25,6 +25,7 @@
 #import "LCNetworkConfig.h"
 #import "LCNetworkPrivate.h"
 #import "AFDownloadRequestOperation.h"
+#import "LKBaseInterface.h"
 
 @implementation LCNetworkAgent {
     AFHTTPRequestOperationManager *_manager;
@@ -251,6 +252,10 @@
                 [request.delegate requestFailed:request];
             }
             if (request.failureCompletionBlock) {
+                if ([request isKindOfClass:[LKBaseInterface class]]) {
+                    LKBaseInterface *interface = (LKBaseInterface *)request;
+                    [self showTopMessageErrorHud:[interface errorMessage]];
+                }
                 request.failureCompletionBlock(request);
             }
             [request toggleAccessoriesDidStopCallBack];

@@ -246,7 +246,6 @@ LC_PROPERTY(strong) LKSearchView *searchView;
         self.suggestionView.tags = searchInterface.tags;
         
     } failure:^(LCBaseRequest *request) {
-        
     }];
 }
 

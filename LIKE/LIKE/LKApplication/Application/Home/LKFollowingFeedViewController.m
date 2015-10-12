@@ -285,6 +285,8 @@ LC_PROPERTY(strong) LCUIImageView *noFollowingView;
      
     } failure:^(LCBaseRequest *request) {
         
+        [self.pullLoader endRefresh];
+        [self showTopMessageErrorHud:[followingInterface errorMessage]];
     }];
 }
 

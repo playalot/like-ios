@@ -42,10 +42,7 @@
 
 - (void)setSessionToken:(NSString *)sessionToken {
     [LCKeychain setObject:sessionToken forKey:LK_SESSION_TOKEN];
-    NSString *tmpToken = [LCKeychain objectForKey:LK_SESSION_TOKEN];
-    if (!tmpToken) {
-        self[LK_SESSION_TOKEN] = [LCEncryptorAES encryptString:sessionToken keyString:LK_AES_KEY ivString:LK_VI_KEY];
-    }
+    self[LK_SESSION_TOKEN] = [LCEncryptorAES encryptString:sessionToken keyString:LK_AES_KEY ivString:LK_VI_KEY];
 }
 
 - (NSString *)sessionToken {

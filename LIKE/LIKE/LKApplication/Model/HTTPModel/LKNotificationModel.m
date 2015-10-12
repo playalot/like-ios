@@ -74,10 +74,6 @@
         }
 
     } failure:^(LCBaseRequest *request) {
-        
-//        if (requestFinished) {
-//            requestFinished(result.error);
-//        }
     }];
     
 //    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"notification"].AUTO_SESSION();

@@ -201,7 +201,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
 //            [self.navigationController pushViewController:detailCtrl animated:YES];
         
     } failure:^(LCBaseRequest *request) {
-        
+        [self.pullLoader endRefresh];
     }];
 }
 

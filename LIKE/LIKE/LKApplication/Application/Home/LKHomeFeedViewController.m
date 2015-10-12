@@ -390,11 +390,9 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     LKPostDetailViewController * detail = [[LKPostDetailViewController alloc] initWithPost:signal.object];
     // 设置代理
     detail.delegate = self;
-//    detail.transitioningDelegate = self;
     LCUINavigationController * nav = LC_UINAVIGATION(detail);
     [detail setPresendModelAnimationOpen];
     [self.navigationController presentViewController:nav animated:YES completion:nil];
-//    [self.navigationController pushViewController:detail animated:YES];
     
     LKPost * post = signal.object;
     if ([post.tagString rangeOfString:@"Comment-"].length) {
@@ -453,9 +451,7 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
     
     // 设置cell的代理
     cell.delegate = self;
-    
     cell.post = post;
-//    [cell setPost:post cellRow:tagValue];
     
     @weakly(self);
     cell.addTag = ^(LKPost * value){

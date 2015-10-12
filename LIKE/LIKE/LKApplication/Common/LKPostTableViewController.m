@@ -40,6 +40,13 @@ LC_IMP_SIGNAL(UnfavouritePost);
     [self unwatchDatasource];
 }
 
+// the post passed here should be the exact object in self.datasource
+- (void)updatePost:(LKPost *)post {
+    if (self.datasource == nil || post == nil)
+        return;
+    [self reloadData];
+}
+
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }
@@ -55,6 +62,7 @@ LC_IMP_SIGNAL(UnfavouritePost);
     
     if (!self.hasShowUp) {
         self.view.ADD(self.tableView);
+        self.view.ADD(self.inputView);
         self.hasShowUp = YES;
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:self.currentIndex inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
     }
@@ -84,6 +92,52 @@ LC_IMP_SIGNAL(UnfavouritePost);
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
     
     [self buildTableView];
+    [self buildInputView];
+}
+
+- (void)buildInputView {
+    @weakly(self);
+    
+    self.inputView = LKInputView.view;
+    self.inputView.viewFrameY = self.view.viewFrameHeight;
+    
+    self.inputView.sendAction = ^(NSString * string){
+        
+        @normally(self);
+        
+        if (string.trim.length == 0) {
+            [self showTopMessageErrorHud:LC_LO(@"标签不能为空")];
+            return;
+        }
+        
+        if (string.length > 12) {
+            [self showTopMessageErrorHud:LC_LO(@"标签长度不能大于12位")];
+            return;
+        }
+        
+        LKPostTableViewCell *cell = (LKPostTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:0]];
+        
+        // 调加标签接口
+        if ([self checkTag:string onTags:((LKPost *)self.inputView.userInfo).tags]) {
+            [self addTag:string onPost:self.inputView.userInfo onCell:cell];
+        } else {
+            [self.view showTopMessageErrorHud:LC_LO(@"该标签已存在")];
+            [self.inputView resignFirstResponder];
+            self.inputView.textField.text = @"";
+        }
+    };
+    
+    self.inputView.didShow = ^(){
+        
+        @normally(self);
+        LKPostTableViewCell * cell = (LKPostTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.inputView.tag inSection:0]];
+        CGFloat height1 = LC_DEVICE_HEIGHT - cell.viewFrameHeight;
+        CGFloat height2 = LCUIKeyBoard.singleton.height + self.inputView.viewFrameHeight - height1;
+        [self.tableView setContentOffset:LC_POINT(0, cell.viewFrameY + height2 - 25 + 10 + 63) animated:YES];
+    };
+    
+    self.inputView.willDismiss = ^(id value){
+    };
 }
 
 - (void)setCurrentIndex:(NSInteger)currentIndex {
@@ -192,6 +246,8 @@ LC_IMP_SIGNAL(UnfavouritePost);
     [self.inputView resignFirstResponder];
     self.inputView.textField.text = @"";
     
+    [self updatePost:post];
+    
     [LKTagAddModel addTagString:tag onPost:post requestFinished:^(LKHttpRequestResult *result, NSString *error) {
         @normally(self);
         
@@ -239,12 +295,8 @@ LC_IMP_SIGNAL(UnfavouritePost);
     };
     
     cell.removedTag = ^(LKPost * value){
-        
         @normally(self);
-        
-        [self.tableView beginUpdates];
-        [self reloadData];
-        [self.tableView endUpdates];
+        [self updatePost:post];
     };
     
     [cell cellOnTableView:self.tableView didScrollOnView:self.view];
@@ -298,10 +350,8 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     }
     
     LKPostDetailViewController * detail = [[LKPostDetailViewController alloc] initWithPost:signal.object];
-    
     // 设置代理
     detail.delegate = self;
-    
     LCUINavigationController *nav = LC_UINAVIGATION(detail);
     [detail setPresendModelAnimationOpen];
     [self.navigationController presentViewController:nav animated:YES completion:nil];
@@ -325,13 +375,16 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
         LKPost *selfPost = self.datasource[i];
         if ([selfPost.id isEqualToNumber:post.id]) {
             updatedIndex = i;
-            [self.datasource removeObjectAtIndex:updatedIndex];
-            selfPost.tags = post.tags;
-            [self.datasource insertObject:selfPost atIndex:updatedIndex];
             break;
         }
     }
-    [self reloadData];
+    
+    if (updatedIndex < 0)
+        return;
+    
+    [self.datasource removeObjectAtIndex:updatedIndex];
+    [self.datasource insertObject:post atIndex:updatedIndex];
+    [self updatePost:post];
 }
 
 - (void)postDetailViewController:(LKPostDetailViewController *)ctrl didFavouritePost:(LKPost *)post {

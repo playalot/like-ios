@@ -132,16 +132,28 @@
 		134D92F41B8DA8A0004CFAC8 /* 喷漆.png in Resources */ = {isa = PBXBuildFile; fileRef = 134D92ED1B8DA8A0004CFAC8 /* 喷漆.png */; };
 		134D92F51B8DA8A0004CFAC8 /* 摄影.png in Resources */ = {isa = PBXBuildFile; fileRef = 134D92EE1B8DA8A0004CFAC8 /* 摄影.png */; };
 		134D92F61B8DA8A0004CFAC8 /* 游戏.png in Resources */ = {isa = PBXBuildFile; fileRef = 134D92EF1B8DA8A0004CFAC8 /* 游戏.png */; };
+		134F62111BCB53DD007D5187 /* CameraCapture@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F620A1BCB53DD007D5187 /* CameraCapture@3x.png */; settings = {ASSET_TAGS = (); }; };
+		134F62121BCB53DD007D5187 /* CameraChange_selected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F620B1BCB53DD007D5187 /* CameraChange_selected@3x.png */; settings = {ASSET_TAGS = (); }; };
+		134F62131BCB53DD007D5187 /* CameraChange@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F620C1BCB53DD007D5187 /* CameraChange@3x.png */; settings = {ASSET_TAGS = (); }; };
+		134F62141BCB53DD007D5187 /* CameraClose@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F620D1BCB53DD007D5187 /* CameraClose@3x.png */; settings = {ASSET_TAGS = (); }; };
+		134F62151BCB53DD007D5187 /* CameraFlash_selected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F620E1BCB53DD007D5187 /* CameraFlash_selected@3x.png */; settings = {ASSET_TAGS = (); }; };
+		134F62161BCB53DD007D5187 /* CameraFlash@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F620F1BCB53DD007D5187 /* CameraFlash@3x.png */; settings = {ASSET_TAGS = (); }; };
+		134F62171BCB53DD007D5187 /* CameraPhotos@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F62101BCB53DD007D5187 /* CameraPhotos@3x.png */; settings = {ASSET_TAGS = (); }; };
+		134F621F1BCB56E7007D5187 /* CodeIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F62181BCB56E7007D5187 /* CodeIcon@3x.png */; settings = {ASSET_TAGS = (); }; };
+		134F62201BCB56E7007D5187 /* FacebookLogin@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F62191BCB56E7007D5187 /* FacebookLogin@3x.png */; settings = {ASSET_TAGS = (); }; };
+		134F62211BCB56E7007D5187 /* PhoneIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F621A1BCB56E7007D5187 /* PhoneIcon@3x.png */; settings = {ASSET_TAGS = (); }; };
+		134F62221BCB56E7007D5187 /* SmallRedArrow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F621B1BCB56E7007D5187 /* SmallRedArrow@3x.png */; settings = {ASSET_TAGS = (); }; };
+		134F62231BCB56E7007D5187 /* VisitorIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F621C1BCB56E7007D5187 /* VisitorIcon@3x.png */; settings = {ASSET_TAGS = (); }; };
+		134F62241BCB56E7007D5187 /* WeChatLogin@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F621D1BCB56E7007D5187 /* WeChatLogin@3x.png */; settings = {ASSET_TAGS = (); }; };
+		134F62251BCB56E7007D5187 /* WeiboLogin@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F621E1BCB56E7007D5187 /* WeiboLogin@3x.png */; settings = {ASSET_TAGS = (); }; };
+		134F622B1BCB57F3007D5187 /* Appstore@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F62261BCB57F3007D5187 /* Appstore@3x.png */; settings = {ASSET_TAGS = (); }; };
+		134F622C1BCB57F3007D5187 /* DeleteCache@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F62271BCB57F3007D5187 /* DeleteCache@3x.png */; settings = {ASSET_TAGS = (); }; };
+		134F622D1BCB57F3007D5187 /* Feedback@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F62281BCB57F3007D5187 /* Feedback@3x.png */; settings = {ASSET_TAGS = (); }; };
+		134F622E1BCB57F3007D5187 /* SettingBinding@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F62291BCB57F3007D5187 /* SettingBinding@3x.png */; settings = {ASSET_TAGS = (); }; };
+		134F622F1BCB57F3007D5187 /* SettingHead@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F622A1BCB57F3007D5187 /* SettingHead@3x.png */; settings = {ASSET_TAGS = (); }; };
 		134F929F1AFCB77400784185 /* LikesPage@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F929E1AFCB77400784185 /* LikesPage@3x.png */; };
 		134F92A21AFCB84B00784185 /* LKLikesPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 134F92A11AFCB84B00784185 /* LKLikesPage.m */; };
 		1351B2C41BBA5BC3004DFEEC /* LikeIconRed@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1351B2BD1BBA5BC3004DFEEC /* LikeIconRed@3x.png */; settings = {ASSET_TAGS = (); }; };
-		1351B2C51BBA5BC3004DFEEC /* CodeIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1351B2BE1BBA5BC3004DFEEC /* CodeIcon@3x.png */; settings = {ASSET_TAGS = (); }; };
-		1351B2C61BBA5BC3004DFEEC /* FacebookLogin.png in Resources */ = {isa = PBXBuildFile; fileRef = 1351B2BF1BBA5BC3004DFEEC /* FacebookLogin.png */; settings = {ASSET_TAGS = (); }; };
-		1351B2C71BBA5BC3004DFEEC /* PhoneIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1351B2C01BBA5BC3004DFEEC /* PhoneIcon@3x.png */; settings = {ASSET_TAGS = (); }; };
-		1351B2C81BBA5BC3004DFEEC /* VisitorIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1351B2C11BBA5BC3004DFEEC /* VisitorIcon@3x.png */; settings = {ASSET_TAGS = (); }; };
-		1351B2C91BBA5BC3004DFEEC /* WeChatLogin@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1351B2C21BBA5BC3004DFEEC /* WeChatLogin@3x.png */; settings = {ASSET_TAGS = (); }; };
-		1351B2CA1BBA5BC3004DFEEC /* WeiboLogin@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1351B2C31BBA5BC3004DFEEC /* WeiboLogin@3x.png */; settings = {ASSET_TAGS = (); }; };
-		1351B2CC1BBA5CCD004DFEEC /* SmallRedArrow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1351B2CB1BBA5CCD004DFEEC /* SmallRedArrow@3x.png */; settings = {ASSET_TAGS = (); }; };
 		1351B2CF1BBA6BBC004DFEEC /* LKEditorPickInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 1351B2CE1BBA6BBC004DFEEC /* LKEditorPickInterface.m */; settings = {ASSET_TAGS = (); }; };
 		1351B2D21BBA8AFE004DFEEC /* CancelSubscribe@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1351B2D01BBA8AFE004DFEEC /* CancelSubscribe@3x.png */; settings = {ASSET_TAGS = (); }; };
 		1351B2D31BBA8AFE004DFEEC /* Subscribe@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1351B2D11BBA8AFE004DFEEC /* Subscribe@3x.png */; settings = {ASSET_TAGS = (); }; };
@@ -187,11 +199,6 @@
 		135DBAF71AE60577004AD150 /* NavigationBarMore@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 135DBAF61AE60577004AD150 /* NavigationBarMore@3x.png */; };
 		135DBAF91AE60590004AD150 /* NavigationBarBack@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 135DBAF81AE60590004AD150 /* NavigationBarBack@3x.png */; };
 		135E54D51BB8E646005FBB84 /* NavigationBarSet@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 135E54D41BB8E646005FBB84 /* NavigationBarSet@3x.png */; settings = {ASSET_TAGS = (); }; };
-		135E54D81BB8E672005FBB84 /* Appstore@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 135E54D61BB8E672005FBB84 /* Appstore@3x.png */; settings = {ASSET_TAGS = (); }; };
-		135E54D91BB8E672005FBB84 /* DeleteCache@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 135E54D71BB8E672005FBB84 /* DeleteCache@3x.png */; settings = {ASSET_TAGS = (); }; };
-		135E54DD1BB8E68A005FBB84 /* Feedback@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 135E54DA1BB8E68A005FBB84 /* Feedback@3x.png */; settings = {ASSET_TAGS = (); }; };
-		135E54DE1BB8E68A005FBB84 /* SettingBinding@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 135E54DB1BB8E68A005FBB84 /* SettingBinding@3x.png */; settings = {ASSET_TAGS = (); }; };
-		135E54DF1BB8E68A005FBB84 /* SettingHead@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 135E54DC1BB8E68A005FBB84 /* SettingHead@3x.png */; settings = {ASSET_TAGS = (); }; };
 		135E54E21BB8E818005FBB84 /* LKProfileSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 135E54E11BB8E818005FBB84 /* LKProfileSettingViewController.m */; settings = {ASSET_TAGS = (); }; };
 		135E54E51BB8E92E005FBB84 /* LKProfileSettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 135E54E41BB8E92E005FBB84 /* LKProfileSettingCell.m */; settings = {ASSET_TAGS = (); }; };
 		135E8A921B43FA1A00C2270C /* LKLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 135E8A911B43FA1A00C2270C /* LKLocationManager.m */; };
@@ -816,13 +823,6 @@
 		13F505081B0C5DFD00D8D484 /* LKShareTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 13F505071B0C5DFD00D8D484 /* LKShareTools.m */; };
 		13F5051C1B0CA05600D8D484 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13F5051A1B0CA05600D8D484 /* TencentOpenAPI.framework */; };
 		13F5051D1B0CA05600D8D484 /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 13F5051B1B0CA05600D8D484 /* TencentOpenApi_IOS_Bundle.bundle */; };
-		13FC2C061BB4087D0036E514 /* CameraCapture@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13FC2BFE1BB4087D0036E514 /* CameraCapture@3x.png */; };
-		13FC2C071BB4087D0036E514 /* CameraChange_selected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13FC2BFF1BB4087D0036E514 /* CameraChange_selected@3x.png */; };
-		13FC2C081BB4087D0036E514 /* CameraChange@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13FC2C001BB4087D0036E514 /* CameraChange@3x.png */; };
-		13FC2C091BB4087D0036E514 /* CameraClose@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13FC2C011BB4087D0036E514 /* CameraClose@3x.png */; };
-		13FC2C0A1BB4087D0036E514 /* CameraFlash_selected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13FC2C021BB4087D0036E514 /* CameraFlash_selected@3x.png */; };
-		13FC2C0B1BB4087D0036E514 /* CameraFlash@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13FC2C031BB4087D0036E514 /* CameraFlash@3x.png */; };
-		13FC2C0C1BB4087D0036E514 /* CameraPhotos@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13FC2C041BB4087D0036E514 /* CameraPhotos@3x.png */; };
 		13FCC0711ADE16DD0008DB41 /* LKUserCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FCC0701ADE16DD0008DB41 /* LKUserCenterViewController.m */; };
 		13FCC0741ADE17F70008DB41 /* LKSegmentHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FCC0731ADE17F70008DB41 /* LKSegmentHeader.m */; };
 		13FCC0781ADE2E5F0008DB41 /* LKHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FCC0761ADE2E5F0008DB41 /* LKHomeTableViewCell.m */; };
@@ -1115,17 +1115,29 @@
 		134D92ED1B8DA8A0004CFAC8 /* 喷漆.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "喷漆.png"; sourceTree = "<group>"; };
 		134D92EE1B8DA8A0004CFAC8 /* 摄影.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "摄影.png"; sourceTree = "<group>"; };
 		134D92EF1B8DA8A0004CFAC8 /* 游戏.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "游戏.png"; sourceTree = "<group>"; };
+		134F620A1BCB53DD007D5187 /* CameraCapture@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraCapture@3x.png"; sourceTree = "<group>"; };
+		134F620B1BCB53DD007D5187 /* CameraChange_selected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraChange_selected@3x.png"; sourceTree = "<group>"; };
+		134F620C1BCB53DD007D5187 /* CameraChange@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraChange@3x.png"; sourceTree = "<group>"; };
+		134F620D1BCB53DD007D5187 /* CameraClose@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraClose@3x.png"; sourceTree = "<group>"; };
+		134F620E1BCB53DD007D5187 /* CameraFlash_selected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraFlash_selected@3x.png"; sourceTree = "<group>"; };
+		134F620F1BCB53DD007D5187 /* CameraFlash@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraFlash@3x.png"; sourceTree = "<group>"; };
+		134F62101BCB53DD007D5187 /* CameraPhotos@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraPhotos@3x.png"; sourceTree = "<group>"; };
+		134F62181BCB56E7007D5187 /* CodeIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CodeIcon@3x.png"; sourceTree = "<group>"; };
+		134F62191BCB56E7007D5187 /* FacebookLogin@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FacebookLogin@3x.png"; sourceTree = "<group>"; };
+		134F621A1BCB56E7007D5187 /* PhoneIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PhoneIcon@3x.png"; sourceTree = "<group>"; };
+		134F621B1BCB56E7007D5187 /* SmallRedArrow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SmallRedArrow@3x.png"; sourceTree = "<group>"; };
+		134F621C1BCB56E7007D5187 /* VisitorIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "VisitorIcon@3x.png"; sourceTree = "<group>"; };
+		134F621D1BCB56E7007D5187 /* WeChatLogin@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WeChatLogin@3x.png"; sourceTree = "<group>"; };
+		134F621E1BCB56E7007D5187 /* WeiboLogin@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WeiboLogin@3x.png"; sourceTree = "<group>"; };
+		134F62261BCB57F3007D5187 /* Appstore@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Appstore@3x.png"; sourceTree = "<group>"; };
+		134F62271BCB57F3007D5187 /* DeleteCache@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DeleteCache@3x.png"; sourceTree = "<group>"; };
+		134F62281BCB57F3007D5187 /* Feedback@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Feedback@3x.png"; sourceTree = "<group>"; };
+		134F62291BCB57F3007D5187 /* SettingBinding@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SettingBinding@3x.png"; sourceTree = "<group>"; };
+		134F622A1BCB57F3007D5187 /* SettingHead@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SettingHead@3x.png"; sourceTree = "<group>"; };
 		134F929E1AFCB77400784185 /* LikesPage@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LikesPage@3x.png"; sourceTree = "<group>"; };
 		134F92A01AFCB84B00784185 /* LKLikesPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKLikesPage.h; sourceTree = "<group>"; };
 		134F92A11AFCB84B00784185 /* LKLikesPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKLikesPage.m; sourceTree = "<group>"; };
 		1351B2BD1BBA5BC3004DFEEC /* LikeIconRed@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LikeIconRed@3x.png"; sourceTree = "<group>"; };
-		1351B2BE1BBA5BC3004DFEEC /* CodeIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CodeIcon@3x.png"; sourceTree = "<group>"; };
-		1351B2BF1BBA5BC3004DFEEC /* FacebookLogin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FacebookLogin.png; sourceTree = "<group>"; };
-		1351B2C01BBA5BC3004DFEEC /* PhoneIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PhoneIcon@3x.png"; sourceTree = "<group>"; };
-		1351B2C11BBA5BC3004DFEEC /* VisitorIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "VisitorIcon@3x.png"; sourceTree = "<group>"; };
-		1351B2C21BBA5BC3004DFEEC /* WeChatLogin@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WeChatLogin@3x.png"; sourceTree = "<group>"; };
-		1351B2C31BBA5BC3004DFEEC /* WeiboLogin@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WeiboLogin@3x.png"; sourceTree = "<group>"; };
-		1351B2CB1BBA5CCD004DFEEC /* SmallRedArrow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SmallRedArrow@3x.png"; sourceTree = "<group>"; };
 		1351B2CD1BBA6BBC004DFEEC /* LKEditorPickInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKEditorPickInterface.h; sourceTree = "<group>"; };
 		1351B2CE1BBA6BBC004DFEEC /* LKEditorPickInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKEditorPickInterface.m; sourceTree = "<group>"; };
 		1351B2D01BBA8AFE004DFEEC /* CancelSubscribe@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CancelSubscribe@3x.png"; sourceTree = "<group>"; };
@@ -1187,11 +1199,6 @@
 		135DBAF61AE60577004AD150 /* NavigationBarMore@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NavigationBarMore@3x.png"; sourceTree = "<group>"; };
 		135DBAF81AE60590004AD150 /* NavigationBarBack@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NavigationBarBack@3x.png"; sourceTree = "<group>"; };
 		135E54D41BB8E646005FBB84 /* NavigationBarSet@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NavigationBarSet@3x.png"; sourceTree = "<group>"; };
-		135E54D61BB8E672005FBB84 /* Appstore@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Appstore@3x.png"; sourceTree = "<group>"; };
-		135E54D71BB8E672005FBB84 /* DeleteCache@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DeleteCache@3x.png"; sourceTree = "<group>"; };
-		135E54DA1BB8E68A005FBB84 /* Feedback@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Feedback@3x.png"; sourceTree = "<group>"; };
-		135E54DB1BB8E68A005FBB84 /* SettingBinding@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SettingBinding@3x.png"; sourceTree = "<group>"; };
-		135E54DC1BB8E68A005FBB84 /* SettingHead@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SettingHead@3x.png"; sourceTree = "<group>"; };
 		135E54E01BB8E818005FBB84 /* LKProfileSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKProfileSettingViewController.h; sourceTree = "<group>"; };
 		135E54E11BB8E818005FBB84 /* LKProfileSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKProfileSettingViewController.m; sourceTree = "<group>"; };
 		135E54E31BB8E92E005FBB84 /* LKProfileSettingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKProfileSettingCell.h; sourceTree = "<group>"; };
@@ -2424,13 +2431,6 @@
 		13F505071B0C5DFD00D8D484 /* LKShareTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKShareTools.m; sourceTree = "<group>"; };
 		13F5051A1B0CA05600D8D484 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		13F5051B1B0CA05600D8D484 /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
-		13FC2BFE1BB4087D0036E514 /* CameraCapture@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraCapture@3x.png"; sourceTree = "<group>"; };
-		13FC2BFF1BB4087D0036E514 /* CameraChange_selected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraChange_selected@3x.png"; sourceTree = "<group>"; };
-		13FC2C001BB4087D0036E514 /* CameraChange@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraChange@3x.png"; sourceTree = "<group>"; };
-		13FC2C011BB4087D0036E514 /* CameraClose@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraClose@3x.png"; sourceTree = "<group>"; };
-		13FC2C021BB4087D0036E514 /* CameraFlash_selected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraFlash_selected@3x.png"; sourceTree = "<group>"; };
-		13FC2C031BB4087D0036E514 /* CameraFlash@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraFlash@3x.png"; sourceTree = "<group>"; };
-		13FC2C041BB4087D0036E514 /* CameraPhotos@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraPhotos@3x.png"; sourceTree = "<group>"; };
 		13FCC06F1ADE16DD0008DB41 /* LKUserCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKUserCenterViewController.h; sourceTree = "<group>"; };
 		13FCC0701ADE16DD0008DB41 /* LKUserCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKUserCenterViewController.m; sourceTree = "<group>"; };
 		13FCC0721ADE17F70008DB41 /* LKSegmentHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKSegmentHeader.h; sourceTree = "<group>"; };
@@ -2862,14 +2862,14 @@
 		135D5BF91ADFD21400811B06 /* Camera */ = {
 			isa = PBXGroup;
 			children = (
+				134F620A1BCB53DD007D5187 /* CameraCapture@3x.png */,
+				134F620B1BCB53DD007D5187 /* CameraChange_selected@3x.png */,
+				134F620C1BCB53DD007D5187 /* CameraChange@3x.png */,
+				134F620D1BCB53DD007D5187 /* CameraClose@3x.png */,
+				134F620E1BCB53DD007D5187 /* CameraFlash_selected@3x.png */,
+				134F620F1BCB53DD007D5187 /* CameraFlash@3x.png */,
+				134F62101BCB53DD007D5187 /* CameraPhotos@3x.png */,
 				13E491041BB57188009840B9 /* ProhibitionOfSelf@3x.png */,
-				13FC2BFE1BB4087D0036E514 /* CameraCapture@3x.png */,
-				13FC2BFF1BB4087D0036E514 /* CameraChange_selected@3x.png */,
-				13FC2C001BB4087D0036E514 /* CameraChange@3x.png */,
-				13FC2C011BB4087D0036E514 /* CameraClose@3x.png */,
-				13FC2C021BB4087D0036E514 /* CameraFlash_selected@3x.png */,
-				13FC2C031BB4087D0036E514 /* CameraFlash@3x.png */,
-				13FC2C041BB4087D0036E514 /* CameraPhotos@3x.png */,
 				13DA0FC51AEB8AFE005B9476 /* CameraFocus@3x.png */,
 				134765311AE2564D0055D099 /* PostDidFinish@3x.png */,
 				134765321AE2564D0055D099 /* PostDismiss@3x.png */,
@@ -4206,14 +4206,14 @@
 		138EDED41AD7C5D40020957C /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				1351B2CB1BBA5CCD004DFEEC /* SmallRedArrow@3x.png */,
+				134F62181BCB56E7007D5187 /* CodeIcon@3x.png */,
+				134F62191BCB56E7007D5187 /* FacebookLogin@3x.png */,
+				134F621A1BCB56E7007D5187 /* PhoneIcon@3x.png */,
+				134F621B1BCB56E7007D5187 /* SmallRedArrow@3x.png */,
+				134F621C1BCB56E7007D5187 /* VisitorIcon@3x.png */,
+				134F621D1BCB56E7007D5187 /* WeChatLogin@3x.png */,
+				134F621E1BCB56E7007D5187 /* WeiboLogin@3x.png */,
 				1351B2BD1BBA5BC3004DFEEC /* LikeIconRed@3x.png */,
-				1351B2BE1BBA5BC3004DFEEC /* CodeIcon@3x.png */,
-				1351B2BF1BBA5BC3004DFEEC /* FacebookLogin.png */,
-				1351B2C01BBA5BC3004DFEEC /* PhoneIcon@3x.png */,
-				1351B2C11BBA5BC3004DFEEC /* VisitorIcon@3x.png */,
-				1351B2C21BBA5BC3004DFEEC /* WeChatLogin@3x.png */,
-				1351B2C31BBA5BC3004DFEEC /* WeiboLogin@3x.png */,
 				139055761B9D9F1C00DBF34A /* avatar.png */,
 				139055771B9D9F1C00DBF34A /* edit.png */,
 				135735281B2EF44E0032515C /* QQLogin@3x.png */,
@@ -5068,11 +5068,11 @@
 		13E1A2CC1AE644B400E24C3C /* UserCenter */ = {
 			isa = PBXGroup;
 			children = (
-				135E54DA1BB8E68A005FBB84 /* Feedback@3x.png */,
-				135E54DB1BB8E68A005FBB84 /* SettingBinding@3x.png */,
-				135E54DC1BB8E68A005FBB84 /* SettingHead@3x.png */,
-				135E54D61BB8E672005FBB84 /* Appstore@3x.png */,
-				135E54D71BB8E672005FBB84 /* DeleteCache@3x.png */,
+				134F62261BCB57F3007D5187 /* Appstore@3x.png */,
+				134F62271BCB57F3007D5187 /* DeleteCache@3x.png */,
+				134F62281BCB57F3007D5187 /* Feedback@3x.png */,
+				134F62291BCB57F3007D5187 /* SettingBinding@3x.png */,
+				134F622A1BCB57F3007D5187 /* SettingHead@3x.png */,
 				130CF5981BB00CD8002F4189 /* segment_fans@3x.png */,
 				130CF5991BB00CD8002F4189 /* segment_favor@3x.png */,
 				130CF59A1BB00CD8002F4189 /* segment_follow@3x.png */,
@@ -5609,7 +5609,6 @@
 				138EDEE61AD7D1020020957C /* TabBarLike@3x.png in Resources */,
 				134765351AE2564D0055D099 /* PostDismiss@3x.png in Resources */,
 				133972EC1BC91BCB00D5977F /* tabbar_userCenter_selected@2x.png in Resources */,
-				13FC2C0B1BB4087D0036E514 /* CameraFlash@3x.png in Resources */,
 				BC6BA0A91BC16064007377CD /* get_in_like@3x.png in Resources */,
 				1390557B1B9DA47D00DBF34A /* LKChooseTagView.xib in Resources */,
 				13D9BF2B1AEB997E0020C94F /* Midway.png in Resources */,
@@ -5617,26 +5616,27 @@
 				13925A941B1477D2004D0656 /* NavBarIconSearchBar2_blue@2x.png in Resources */,
 				1388B4FC1B01EFFB006F36AB /* AlreadyFocusLG@3x.png in Resources */,
 				133972E81BC91BCB00D5977F /* tabbar_notification_selected@2x.png in Resources */,
+				134F62211BCB56E7007D5187 /* PhoneIcon@3x.png in Resources */,
+				134F622E1BCB57F3007D5187 /* SettingBinding@3x.png in Resources */,
 				13DEEBFB1AE75585005E01A6 /* FocusWirte@3x.png in Resources */,
+				134F62231BCB56E7007D5187 /* VisitorIcon@3x.png in Resources */,
 				1351B2C41BBA5BC3004DFEEC /* LikeIconRed@3x.png in Resources */,
 				133972ED1BC91BCB00D5977F /* tabbar_userCenter@2x.png in Resources */,
 				13B5B4F01B16F1F100252A78 /* TalkMore@3x.png in Resources */,
+				134F62111BCB53DD007D5187 /* CameraCapture@3x.png in Resources */,
 				13E491091BB57547009840B9 /* ShareIconSelect@3x.png in Resources */,
+				134F621F1BCB56E7007D5187 /* CodeIcon@3x.png in Resources */,
 				138EDBFC1AD7B08A0020957C /* Main.storyboard in Resources */,
 				133973161BC9491000D5977F /* NotificationLikeIcon@3x.png in Resources */,
-				135E54DE1BB8E68A005FBB84 /* SettingBinding@3x.png in Resources */,
-				1351B2CA1BBA5BC3004DFEEC /* WeiboLogin@3x.png in Resources */,
 				13877D151BBCE49600521D2D /* Interest_Jupiter@3x.png in Resources */,
 				138EDC011AD7B08A0020957C /* LaunchScreen.xib in Resources */,
 				133972E71BC91BCB00D5977F /* tabbar_homeLine@2x.png in Resources */,
 				13478CB81B6636770012EDA2 /* LittleYouLike@3x.png in Resources */,
-				13FC2C081BB4087D0036E514 /* CameraChange@3x.png in Resources */,
 				135748151BA1887C00855603 /* Vxgaga.png in Resources */,
 				13B9A20C1BB917CC007D2893 /* SearchIconClose@3x.png in Resources */,
-				1351B2C61BBA5BC3004DFEEC /* FacebookLogin.png in Resources */,
+				134F62161BCB53DD007D5187 /* CameraFlash@3x.png in Resources */,
 				135DBAF91AE60590004AD150 /* NavigationBarBack@3x.png in Resources */,
 				1351B2D31BBA8AFE004DFEEC /* Subscribe@3x.png in Resources */,
-				13FC2C091BB4087D0036E514 /* CameraClose@3x.png in Resources */,
 				1351B2EC1BBA916B004DFEEC /* NotificationOfficalIcon2@3x.png in Resources */,
 				13B5B4E81B15CB6800252A78 /* TalkTip@3x.png in Resources */,
 				BC6BA0AB1BC1800C007377CD /* NotificationEmpty@3x.png in Resources */,
@@ -5655,9 +5655,9 @@
 				13E3EE021B60955400A48E76 /* zh2TW.txt in Resources */,
 				139055781B9D9F1C00DBF34A /* avatar.png in Resources */,
 				13892C3B1B1C31E40053303E /* HomepageIcon@3x.png in Resources */,
-				135E54DF1BB8E68A005FBB84 /* SettingHead@3x.png in Resources */,
 				13877D171BBCE49600521D2D /* Interest_mushroom@3x.png in Resources */,
 				13DA0FC61AEB8AFE005B9476 /* CameraFocus@3x.png in Resources */,
+				134F62201BCB56E7007D5187 /* FacebookLogin@3x.png in Resources */,
 				130CF59C1BB00CD8002F4189 /* segment_fans@3x.png in Resources */,
 				138EDE8C1AD7B0A30020957C /* LCInternationalization.bundle in Resources */,
 				13B5B4E61B15CB6800252A78 /* TalkIcon@3x.png in Resources */,
@@ -5670,23 +5670,21 @@
 				13DEEC1A1AE789E6005E01A6 /* LC_WebReload@2x.png in Resources */,
 				1388B4F81B00C0DD006F36AB /* SettingNick@3x.png in Resources */,
 				138EDBFE1AD7B08A0020957C /* Images.xcassets in Resources */,
-				1351B2CC1BBA5CCD004DFEEC /* SmallRedArrow@3x.png in Resources */,
 				13E1A2D01AE644C200E24C3C /* AlreadyFocusGray@3x.png in Resources */,
 				133972FD1BC9459C00D5977F /* AddNewTag@3x.png in Resources */,
 				13E27F0C1AFA03FE00C17362 /* LKTimestampView.xib in Resources */,
-				135E54D91BB8E672005FBB84 /* DeleteCache@3x.png in Resources */,
 				1351B2EE1BBA916B004DFEEC /* NotificationTagIcon2@3x.png in Resources */,
 				13E1A2D21AE644C200E24C3C /* FocusGray@3x.png in Resources */,
-				1351B2C91BBA5BC3004DFEEC /* WeChatLogin@3x.png in Resources */,
+				134F62171BCB53DD007D5187 /* CameraPhotos@3x.png in Resources */,
 				13101D351B1332DE00FBE516 /* LikeIconSmall@3x.png in Resources */,
 				130CF57D1BAFD628002F4189 /* TalkLine@3x.png in Resources */,
-				1351B2C51BBA5BC3004DFEEC /* CodeIcon@3x.png in Resources */,
 				138EDE0F1AD7B0A30020957C /* LCGLBubbleEffect.fsh in Resources */,
 				13925A921B1477D2004D0656 /* NavBarIconSearch_white@2x.png in Resources */,
 				1359F4A31B6A24B800A0ABE9 /* Gta-driving@3x.png in Resources */,
 				1326228D1B8EE1150074C589 /* 变形金刚.png in Resources */,
 				138EDEFB1AD7DBA00020957C /* TabBarNotification@3x.png in Resources */,
 				135D5C281AE0E37800811B06 /* CameraFilter@3x.png in Resources */,
+				134F62131BCB53DD007D5187 /* CameraChange@3x.png in Resources */,
 				13E3EE041B60996000A48E76 /* zh2HK.txt in Resources */,
 				135748081BA05A7B00855603 /* 960.jpg in Resources */,
 				134D92F01B8DA8A0004CFAC8 /* 高达.png in Resources */,
@@ -5700,6 +5698,8 @@
 				13DEEC171AE789E6005E01A6 /* LC_WebForward.png in Resources */,
 				13DEEC1B1AE789E6005E01A6 /* LC_WebStop.png in Resources */,
 				133972E51BC91BCB00D5977F /* tabbar_camera@2x.png in Resources */,
+				134F62121BCB53DD007D5187 /* CameraChange_selected@3x.png in Resources */,
+				134F622F1BCB57F3007D5187 /* SettingHead@3x.png in Resources */,
 				13D9BF2D1AEB997E0020C94F /* Vivid.png in Resources */,
 				133972EB1BC91BCB00D5977F /* tabbar_search@2x.png in Resources */,
 				1388B6B31B34272A006ACA44 /* CameraRollIcon@3x.png in Resources */,
@@ -5708,8 +5708,8 @@
 				138EDE431AD7B0A30020957C /* web.bundle in Resources */,
 				131915691B8C625A00EC0F42 /* 二维码.png in Resources */,
 				13DEEBF91AE75585005E01A6 /* AlreadyFocusWrite@3x.png in Resources */,
+				134F622C1BCB57F3007D5187 /* DeleteCache@3x.png in Resources */,
 				133972DB1BC8FE2B00D5977F /* CommonInterest@2x.png in Resources */,
-				13FC2C071BB4087D0036E514 /* CameraChange_selected@3x.png in Resources */,
 				134D92F11B8DA8A0004CFAC8 /* 狗.png in Resources */,
 				1388B4FE1B01EFFB006F36AB /* FocusLG@3x.png in Resources */,
 				133972F71BC944FD00D5977F /* CommonInterest@3x.png in Resources */,
@@ -5737,11 +5737,9 @@
 				134D92F31B8DA8A0004CFAC8 /* 美食.png in Resources */,
 				1351B2E91BBA916B004DFEEC /* NotificationCommentIcon2@3x.png in Resources */,
 				13D9BF271AEB997E0020C94F /* Diana.png in Resources */,
-				135E54DD1BB8E68A005FBB84 /* Feedback@3x.png in Resources */,
 				BC6BA0A61BC15C3C007377CD /* intro_logo@3x.png in Resources */,
 				1326228E1B8EE1150074C589 /* 钢铁侠.png in Resources */,
 				135DBAF71AE60577004AD150 /* NavigationBarMore@3x.png in Resources */,
-				13FC2C0C1BB4087D0036E514 /* CameraPhotos@3x.png in Resources */,
 				133973051BC946F600D5977F /* RightArrow@3x.png in Resources */,
 				13877D161BBCE49600521D2D /* Interest_meteor@3x.png in Resources */,
 				133972EA1BC91BCB00D5977F /* tabbar_search_selected@2x.png in Resources */,
@@ -5749,9 +5747,7 @@
 				133A31851B5D0D3400AB74A4 /* SearchPlaceholderIcon@3x.png in Resources */,
 				13D9BF251AEB997E0020C94F /* Ansel.png in Resources */,
 				1387C3521B31703300B065A7 /* MobileIcon@3x.png in Resources */,
-				13FC2C061BB4087D0036E514 /* CameraCapture@3x.png in Resources */,
 				133972E91BC91BCB00D5977F /* tabbar_notification@2x.png in Resources */,
-				135E54D81BB8E672005FBB84 /* Appstore@3x.png in Resources */,
 				1351B2D21BBA8AFE004DFEEC /* CancelSubscribe@3x.png in Resources */,
 				13DEEC191AE789E6005E01A6 /* LC_WebReload.png in Resources */,
 				1357480E1BA05CAD00855603 /* 1024.jpg in Resources */,
@@ -5764,10 +5760,12 @@
 				13D9BF261AEB997E0020C94F /* Dawn.png in Resources */,
 				138EDE111AD7B0A30020957C /* LCGLBubbleEffect.vsh in Resources */,
 				13878E921BB39B0B00F4E27F /* tabbar_notification_badge@3x.png in Resources */,
+				134F62141BCB53DD007D5187 /* CameraClose@3x.png in Resources */,
 				13DEEC131AE789E6005E01A6 /* LC_ios7_navbar_bg@2x.png in Resources */,
 				13FCC0931ADF5E9C0008DB41 /* TagAdd@3x.png in Resources */,
 				1351B2ED1BBA916B004DFEEC /* NotificationReplyIcon2@3x.png in Resources */,
 				133972F11BC93BE400D5977F /* Favor_selected@2x.png in Resources */,
+				134F622B1BCB57F3007D5187 /* Appstore@3x.png in Resources */,
 				13CF22A01BB258C20087DD89 /* LittleTag@3x.png in Resources */,
 				13D9BF281AEB997E0020C94F /* Holga.png in Resources */,
 				1359F4A01B6A237400A0ABE9 /* GtaFranklin.png in Resources */,
@@ -5779,8 +5777,11 @@
 				1357352B1B2EF44E0032515C /* QQLogin@3x.png in Resources */,
 				13E27F0E1AFA1A4900C17362 /* HomeLikeIcon@3x.png in Resources */,
 				13877D081BBBFCE400521D2D /* Instant.png in Resources */,
+				134F62221BCB56E7007D5187 /* SmallRedArrow@3x.png in Resources */,
+				134F62151BCB53DD007D5187 /* CameraFlash_selected@3x.png in Resources */,
 				13FCC08D1ADE74DE0008DB41 /* Refresh@3x.png in Resources */,
 				13925A6D1B145BCE004D0656 /* SearchIcon@3x.png in Resources */,
+				134F622D1BCB57F3007D5187 /* Feedback@3x.png in Resources */,
 				138EDED61AD7C5DB0020957C /* LikeIcon@3x.png in Resources */,
 				131915641B8C267900EC0F42 /* SMS_SDKLocalizable.strings in Resources */,
 				134D92F61B8DA8A0004CFAC8 /* 游戏.png in Resources */,
@@ -5792,24 +5793,23 @@
 				13DEEBFA1AE75585005E01A6 /* EachOtherFocusWrite@3x.png in Resources */,
 				13925A931B1477D2004D0656 /* NavBarIconSearchBar_blue@2x.png in Resources */,
 				138EDE041AD7B0A30020957C /* LOGO.txt in Resources */,
+				134F62241BCB56E7007D5187 /* WeChatLogin@3x.png in Resources */,
 				133972FF1BC945F200D5977F /* LittleSP@3x.png in Resources */,
 				1357480A1BA05A7B00855603 /* 1334.jpg in Resources */,
 				1387C3501B316CC400B065A7 /* FacebookIcon@3x.png in Resources */,
 				1357480F1BA05CAD00855603 /* 2048.jpg in Resources */,
 				13CF22A91BB281770087DD89 /* SeparateLine_selected@3x.png in Resources */,
-				13FC2C0A1BB4087D0036E514 /* CameraFlash_selected@3x.png in Resources */,
 				13E491081BB57547009840B9 /* ShareIcon@3x.png in Resources */,
 				130CF59D1BB00CD8002F4189 /* segment_favor@3x.png in Resources */,
 				130CF59F1BB00CD8002F4189 /* segment_photo@3x.png in Resources */,
-				1351B2C81BBA5BC3004DFEEC /* VisitorIcon@3x.png in Resources */,
 				134765341AE2564D0055D099 /* PostDidFinish@3x.png in Resources */,
 				13877D141BBCE49600521D2D /* Interest_bottom@3x.png in Resources */,
 				134D92F41B8DA8A0004CFAC8 /* 喷漆.png in Resources */,
 				13892C3D1B1C44780053303E /* NavigationBarDismiss@3x.png in Resources */,
-				1351B2C71BBA5BC3004DFEEC /* PhoneIcon@3x.png in Resources */,
 				13E491051BB57188009840B9 /* ProhibitionOfSelf@3x.png in Resources */,
 				1339730A1BC9474300D5977F /* QQIcon@3x.png in Resources */,
 				139055791B9D9F1C00DBF34A /* edit.png in Resources */,
+				134F62251BCB56E7007D5187 /* WeiboLogin@3x.png in Resources */,
 				133973141BC9491000D5977F /* NotificationCommentIcon@3x.png in Resources */,
 				13DEEC151AE789E6005E01A6 /* LC_WebBack.png in Resources */,
 				13E27EF41AF8B7D000C17362 /* bgImage_HL@2x.png in Resources */,

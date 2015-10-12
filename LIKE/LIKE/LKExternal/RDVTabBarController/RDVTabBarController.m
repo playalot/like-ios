@@ -247,6 +247,10 @@
             if ([selectedController topViewController] != [selectedController viewControllers][0]) {
                 [selectedController popToRootViewControllerAnimated:YES];
             }
+            
+            if (self.delegate && [self.delegate respondsToSelector:@selector(tabBarController:didSelectCurrentViewController:)]) {
+                [self.delegate tabBarController:self didSelectCurrentViewController:[self selectedViewController]];
+            }
         }
         
         return NO;

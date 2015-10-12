@@ -77,6 +77,8 @@
  */
 - (void)tabBarController:(RDVTabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController;
 
+- (void)tabBarController:(RDVTabBarController *)tabBarController didSelectCurrentViewController:(UIViewController *)viewController;
+
 @end
 
 @interface UIViewController (RDVTabBarControllerItem)

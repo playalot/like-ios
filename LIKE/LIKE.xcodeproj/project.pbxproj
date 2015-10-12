@@ -161,6 +161,8 @@
 		134F62411BCB9EEB007D5187 /* CameraMagic@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F623F1BCB9EEB007D5187 /* CameraMagic@3x.png */; settings = {ASSET_TAGS = (); }; };
 		134F62431BCB9F46007D5187 /* CameraFilter@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F62421BCB9F46007D5187 /* CameraFilter@3x.png */; settings = {ASSET_TAGS = (); }; };
 		134F62451BCBB3CB007D5187 /* LocationButtonImage@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F62441BCBB3CB007D5187 /* LocationButtonImage@3x.png */; settings = {ASSET_TAGS = (); }; };
+		134F62471BCBDDC0007D5187 /* NavigationBarSet@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F62461BCBDDC0007D5187 /* NavigationBarSet@3x.png */; settings = {ASSET_TAGS = (); }; };
+		134F62491BCBDE00007D5187 /* NavigationBarBack@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F62481BCBDE00007D5187 /* NavigationBarBack@3x.png */; settings = {ASSET_TAGS = (); }; };
 		134F929F1AFCB77400784185 /* LikesPage@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F929E1AFCB77400784185 /* LikesPage@3x.png */; };
 		134F92A21AFCB84B00784185 /* LKLikesPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 134F92A11AFCB84B00784185 /* LKLikesPage.m */; };
 		1351B2C41BBA5BC3004DFEEC /* LikeIconRed@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1351B2BD1BBA5BC3004DFEEC /* LikeIconRed@3x.png */; settings = {ASSET_TAGS = (); }; };
@@ -204,8 +206,6 @@
 		135DBAF21AE50A78004AD150 /* LKPostTagsDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 135DBAF11AE50A78004AD150 /* LKPostTagsDetailModel.m */; };
 		135DBAF51AE5193E004AD150 /* LKPostDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 135DBAF41AE5193E004AD150 /* LKPostDetailCell.m */; };
 		135DBAF71AE60577004AD150 /* NavigationBarMore@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 135DBAF61AE60577004AD150 /* NavigationBarMore@3x.png */; };
-		135DBAF91AE60590004AD150 /* NavigationBarBack@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 135DBAF81AE60590004AD150 /* NavigationBarBack@3x.png */; };
-		135E54D51BB8E646005FBB84 /* NavigationBarSet@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 135E54D41BB8E646005FBB84 /* NavigationBarSet@3x.png */; settings = {ASSET_TAGS = (); }; };
 		135E54E21BB8E818005FBB84 /* LKProfileSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 135E54E11BB8E818005FBB84 /* LKProfileSettingViewController.m */; settings = {ASSET_TAGS = (); }; };
 		135E54E51BB8E92E005FBB84 /* LKProfileSettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 135E54E41BB8E92E005FBB84 /* LKProfileSettingCell.m */; settings = {ASSET_TAGS = (); }; };
 		135E8A921B43FA1A00C2270C /* LKLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 135E8A911B43FA1A00C2270C /* LKLocationManager.m */; };
@@ -1153,6 +1153,8 @@
 		134F623F1BCB9EEB007D5187 /* CameraMagic@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraMagic@3x.png"; sourceTree = "<group>"; };
 		134F62421BCB9F46007D5187 /* CameraFilter@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraFilter@3x.png"; sourceTree = "<group>"; };
 		134F62441BCBB3CB007D5187 /* LocationButtonImage@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LocationButtonImage@3x.png"; sourceTree = "<group>"; };
+		134F62461BCBDDC0007D5187 /* NavigationBarSet@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NavigationBarSet@3x.png"; sourceTree = "<group>"; };
+		134F62481BCBDE00007D5187 /* NavigationBarBack@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NavigationBarBack@3x.png"; sourceTree = "<group>"; };
 		134F929E1AFCB77400784185 /* LikesPage@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LikesPage@3x.png"; sourceTree = "<group>"; };
 		134F92A01AFCB84B00784185 /* LKLikesPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKLikesPage.h; sourceTree = "<group>"; };
 		134F92A11AFCB84B00784185 /* LKLikesPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKLikesPage.m; sourceTree = "<group>"; };
@@ -1213,8 +1215,6 @@
 		135DBAF31AE5193E004AD150 /* LKPostDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKPostDetailCell.h; sourceTree = "<group>"; };
 		135DBAF41AE5193E004AD150 /* LKPostDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKPostDetailCell.m; sourceTree = "<group>"; };
 		135DBAF61AE60577004AD150 /* NavigationBarMore@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NavigationBarMore@3x.png"; sourceTree = "<group>"; };
-		135DBAF81AE60590004AD150 /* NavigationBarBack@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NavigationBarBack@3x.png"; sourceTree = "<group>"; };
-		135E54D41BB8E646005FBB84 /* NavigationBarSet@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NavigationBarSet@3x.png"; sourceTree = "<group>"; };
 		135E54E01BB8E818005FBB84 /* LKProfileSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKProfileSettingViewController.h; sourceTree = "<group>"; };
 		135E54E11BB8E818005FBB84 /* LKProfileSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKProfileSettingViewController.m; sourceTree = "<group>"; };
 		135E54E31BB8E92E005FBB84 /* LKProfileSettingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKProfileSettingCell.h; sourceTree = "<group>"; };
@@ -5372,8 +5372,8 @@
 				134F929E1AFCB77400784185 /* LikesPage@3x.png */,
 				13E27F0D1AFA1A4900C17362 /* HomeLikeIcon@3x.png */,
 				13B6C1951AE8E8EA008912C0 /* NotificationIcon@3x.png */,
-				135E54D41BB8E646005FBB84 /* NavigationBarSet@3x.png */,
-				135DBAF81AE60590004AD150 /* NavigationBarBack@3x.png */,
+				134F62461BCBDDC0007D5187 /* NavigationBarSet@3x.png */,
+				134F62481BCBDE00007D5187 /* NavigationBarBack@3x.png */,
 				133973001BC9465600D5977F /* NavigationBarBackShadow@3x.png */,
 				13892C3C1B1C44780053303E /* NavigationBarDismiss@3x.png */,
 				135DBAF61AE60577004AD150 /* NavigationBarMore@3x.png */,
@@ -5662,7 +5662,6 @@
 				13B9A20C1BB917CC007D2893 /* SearchIconClose@3x.png in Resources */,
 				134F62161BCB53DD007D5187 /* CameraFlash@3x.png in Resources */,
 				134F62381BCB8513007D5187 /* PhoneLink@3x.png in Resources */,
-				135DBAF91AE60590004AD150 /* NavigationBarBack@3x.png in Resources */,
 				1351B2D31BBA8AFE004DFEEC /* Subscribe@3x.png in Resources */,
 				1351B2EC1BBA916B004DFEEC /* NotificationOfficalIcon2@3x.png in Resources */,
 				13B5B4E81B15CB6800252A78 /* TalkTip@3x.png in Resources */,
@@ -5714,7 +5713,6 @@
 				135748081BA05A7B00855603 /* 960.jpg in Resources */,
 				134D92F01B8DA8A0004CFAC8 /* 高达.png in Resources */,
 				1388B4FD1B01EFFB006F36AB /* EachOtherFocusLG@3x.png in Resources */,
-				135E54D51BB8E646005FBB84 /* NavigationBarSet@3x.png in Resources */,
 				134F62371BCB8513007D5187 /* FacebookLink@3x.png in Resources */,
 				13DEEC141AE789E6005E01A6 /* LC_navbar_bg@2x.png in Resources */,
 				13C363CE1BB112F7004CE0FA /* NotificationOfficalMessage@3x.png in Resources */,
@@ -5786,6 +5784,7 @@
 				1326229C1B8EF5850074C589 /* Wasted2.png in Resources */,
 				138EDEF91AD7DAD20020957C /* TabBarCamera@3x.png in Resources */,
 				13D9BF261AEB997E0020C94F /* Dawn.png in Resources */,
+				134F62491BCBDE00007D5187 /* NavigationBarBack@3x.png in Resources */,
 				138EDE111AD7B0A30020957C /* LCGLBubbleEffect.vsh in Resources */,
 				13878E921BB39B0B00F4E27F /* tabbar_notification_badge@3x.png in Resources */,
 				134F62141BCB53DD007D5187 /* CameraClose@3x.png in Resources */,
@@ -5813,6 +5812,7 @@
 				134F622D1BCB57F3007D5187 /* Feedback@3x.png in Resources */,
 				138EDED61AD7C5DB0020957C /* LikeIcon@3x.png in Resources */,
 				131915641B8C267900EC0F42 /* SMS_SDKLocalizable.strings in Resources */,
+				134F62471BCBDDC0007D5187 /* NavigationBarSet@3x.png in Resources */,
 				134D92F61B8DA8A0004CFAC8 /* 游戏.png in Resources */,
 				135D5C261AE0DA9700811B06 /* FilterPreview@3x.jpg in Resources */,
 				1351B2EB1BBA916B004DFEEC /* NotificationLikeIcon2@3x.png in Resources */,

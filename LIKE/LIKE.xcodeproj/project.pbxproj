@@ -163,6 +163,7 @@
 		134F62451BCBB3CB007D5187 /* LocationButtonImage@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F62441BCBB3CB007D5187 /* LocationButtonImage@3x.png */; settings = {ASSET_TAGS = (); }; };
 		134F62471BCBDDC0007D5187 /* NavigationBarSet@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F62461BCBDDC0007D5187 /* NavigationBarSet@3x.png */; settings = {ASSET_TAGS = (); }; };
 		134F62491BCBDE00007D5187 /* NavigationBarBack@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F62481BCBDE00007D5187 /* NavigationBarBack@3x.png */; settings = {ASSET_TAGS = (); }; };
+		134F624B1BCBE526007D5187 /* NavigationBarDismiss@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F624A1BCBE526007D5187 /* NavigationBarDismiss@3x.png */; settings = {ASSET_TAGS = (); }; };
 		134F929F1AFCB77400784185 /* LikesPage@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F929E1AFCB77400784185 /* LikesPage@3x.png */; };
 		134F92A21AFCB84B00784185 /* LKLikesPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 134F92A11AFCB84B00784185 /* LKLikesPage.m */; };
 		1351B2C41BBA5BC3004DFEEC /* LikeIconRed@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1351B2BD1BBA5BC3004DFEEC /* LikeIconRed@3x.png */; settings = {ASSET_TAGS = (); }; };
@@ -281,7 +282,6 @@
 		1388B6B11B340C52006ACA44 /* LKPhotoRollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1388B6B01B340C52006ACA44 /* LKPhotoRollCell.m */; };
 		1388B6B31B34272A006ACA44 /* CameraRollIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1388B6B21B34272A006ACA44 /* CameraRollIcon@3x.png */; };
 		13892C3B1B1C31E40053303E /* HomepageIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13892C3A1B1C31E30053303E /* HomepageIcon@3x.png */; };
-		13892C3D1B1C44780053303E /* NavigationBarDismiss@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13892C3C1B1C44780053303E /* NavigationBarDismiss@3x.png */; };
 		13892C671B1DD2B50053303E /* MMMaterialDesignSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = 13892C661B1DD2B50053303E /* MMMaterialDesignSpinner.m */; };
 		138C84771B6B650C00C2AC62 /* LittleFollowing@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 138C84761B6B650C00C2AC62 /* LittleFollowing@3x.png */; };
 		138EDBF31AD7B08A0020957C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 138EDBF21AD7B08A0020957C /* main.m */; };
@@ -1155,6 +1155,7 @@
 		134F62441BCBB3CB007D5187 /* LocationButtonImage@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LocationButtonImage@3x.png"; sourceTree = "<group>"; };
 		134F62461BCBDDC0007D5187 /* NavigationBarSet@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NavigationBarSet@3x.png"; sourceTree = "<group>"; };
 		134F62481BCBDE00007D5187 /* NavigationBarBack@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NavigationBarBack@3x.png"; sourceTree = "<group>"; };
+		134F624A1BCBE526007D5187 /* NavigationBarDismiss@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NavigationBarDismiss@3x.png"; sourceTree = "<group>"; };
 		134F929E1AFCB77400784185 /* LikesPage@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LikesPage@3x.png"; sourceTree = "<group>"; };
 		134F92A01AFCB84B00784185 /* LKLikesPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKLikesPage.h; sourceTree = "<group>"; };
 		134F92A11AFCB84B00784185 /* LKLikesPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKLikesPage.m; sourceTree = "<group>"; };
@@ -1345,7 +1346,6 @@
 		1388B6B01B340C52006ACA44 /* LKPhotoRollCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKPhotoRollCell.m; sourceTree = "<group>"; };
 		1388B6B21B34272A006ACA44 /* CameraRollIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraRollIcon@3x.png"; sourceTree = "<group>"; };
 		13892C3A1B1C31E30053303E /* HomepageIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HomepageIcon@3x.png"; sourceTree = "<group>"; };
-		13892C3C1B1C44780053303E /* NavigationBarDismiss@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NavigationBarDismiss@3x.png"; sourceTree = "<group>"; };
 		13892C581B1DC4D40053303E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		13892C591B1DC4D40053303E /* ShareViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareViewController.h; sourceTree = "<group>"; };
 		13892C5A1B1DC4D40053303E /* ShareViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareViewController.m; sourceTree = "<group>"; };
@@ -5375,8 +5375,8 @@
 				134F62461BCBDDC0007D5187 /* NavigationBarSet@3x.png */,
 				134F62481BCBDE00007D5187 /* NavigationBarBack@3x.png */,
 				133973001BC9465600D5977F /* NavigationBarBackShadow@3x.png */,
-				13892C3C1B1C44780053303E /* NavigationBarDismiss@3x.png */,
 				135DBAF61AE60577004AD150 /* NavigationBarMore@3x.png */,
+				134F624A1BCBE526007D5187 /* NavigationBarDismiss@3x.png */,
 				133973021BC9467500D5977F /* NavigationBarMoreShadow@3x.png */,
 				13FCC09A1ADF86050008DB41 /* KeyboardDismiss@3x.png */,
 				13FCC0921ADF5E9C0008DB41 /* TagAdd@3x.png */,
@@ -5676,6 +5676,7 @@
 				133972EF1BC91C6100D5977F /* AddNewTag@2x.png in Resources */,
 				13B9A20E1BB91C56007D2893 /* RecommendUser@3x.png in Resources */,
 				13925A911B1477D2004D0656 /* NavBarIconSearch_blue@2x.png in Resources */,
+				134F624B1BCBE526007D5187 /* NavigationBarDismiss@3x.png in Resources */,
 				13B9A21B1BB9343A007D2893 /* HotTagButton_Red@3x.png in Resources */,
 				13E3EE021B60955400A48E76 /* zh2TW.txt in Resources */,
 				139055781B9D9F1C00DBF34A /* avatar.png in Resources */,
@@ -5834,7 +5835,6 @@
 				134765341AE2564D0055D099 /* PostDidFinish@3x.png in Resources */,
 				13877D141BBCE49600521D2D /* Interest_bottom@3x.png in Resources */,
 				134D92F41B8DA8A0004CFAC8 /* 喷漆.png in Resources */,
-				13892C3D1B1C44780053303E /* NavigationBarDismiss@3x.png in Resources */,
 				13E491051BB57188009840B9 /* ProhibitionOfSelf@3x.png in Resources */,
 				1339730A1BC9474300D5977F /* QQIcon@3x.png in Resources */,
 				139055791B9D9F1C00DBF34A /* edit.png in Resources */,
@@ -6622,8 +6622,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Zhenjun Wang (BT5C5YCZ44)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zhenjun Wang (BT5C5YCZ44)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -6694,8 +6694,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Zhenjun Wang (BT5C5YCZ44)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zhenjun Wang (BT5C5YCZ44)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/LIKE/LKExternal/Tencent",
@@ -6735,7 +6735,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Yushanzhi Information Technology Company Limited";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Zhenjun Wang (BT5C5YCZ44)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zhenjun Wang (BT5C5YCZ44)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

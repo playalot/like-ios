@@ -63,7 +63,7 @@ LC_PROPERTY(strong) LCUIButton *enterButton;
     self.ADD(self.mushroomView);
     
     CAKeyframeAnimation *anima = [CAKeyframeAnimation animationWithKeyPath:@"position"];
-    UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(30, 40, 50, 50)];
+    UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(30, 40, 25, 25)];
     anima.path = path.CGPath;
     anima.duration = 100.0f;
     anima.repeatCount = 5;
@@ -81,7 +81,7 @@ LC_PROPERTY(strong) LCUIButton *enterButton;
     self.ADD(self.largeSatelliteView);
     
     CAKeyframeAnimation *anima = [CAKeyframeAnimation animationWithKeyPath:@"position"];
-    UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(self.largeSatelliteView.viewFrameX, 40, 50, 50)];
+    UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(self.largeSatelliteView.viewFrameX, 40, 25, 25)];
     anima.path = path.CGPath;
     anima.duration = 100.0f;
     anima.repeatCount = 5;
@@ -99,7 +99,7 @@ LC_PROPERTY(strong) LCUIButton *enterButton;
     self.ADD(self.smallSatelliteView);
     
     CAKeyframeAnimation *anima = [CAKeyframeAnimation animationWithKeyPath:@"position"];
-    UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(20, self.smallSatelliteView.viewFrameY, 50, 50)];
+    UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(20, self.smallSatelliteView.viewFrameY, 25, 25)];
     anima.path = path.CGPath;
     anima.duration = 100.0f;
     anima.repeatCount = 5;
@@ -117,7 +117,7 @@ LC_PROPERTY(strong) LCUIButton *enterButton;
     self.ADD(self.aeroliteView);
     
     CAKeyframeAnimation *anima = [CAKeyframeAnimation animationWithKeyPath:@"position"];
-    UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(self.aeroliteView.viewFrameX, self.aeroliteView.viewFrameY, 50, 50)];
+    UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(self.aeroliteView.viewFrameX, self.aeroliteView.viewFrameY, 25, 25)];
     anima.path = path.CGPath;
     anima.duration = 100.0f;
     anima.repeatCount = 5;
@@ -134,12 +134,12 @@ LC_PROPERTY(strong) LCUIButton *enterButton;
     self.jupiterView.image = [UIImage imageNamed:@"Interest_Jupiter.png" useCache:YES];
     self.ADD(self.jupiterView);
     
-    CAKeyframeAnimation *anima = [CAKeyframeAnimation animationWithKeyPath:@"position"];
-    UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(30, self.jupiterView.viewFrameY, 50, 50)];
-    anima.path = path.CGPath;
-    anima.duration = 100.0f;
-    anima.repeatCount = 5;
-    [self.jupiterView.layer addAnimation:anima forKey:@"pathAnimation"];
+//    CAKeyframeAnimation *anima = [CAKeyframeAnimation animationWithKeyPath:@"position"];
+//    UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(30, self.jupiterView.viewFrameY, 50, 50)];
+//    anima.path = path.CGPath;
+//    anima.duration = 100.0f;
+//    anima.repeatCount = 5;
+//    [self.jupiterView.layer addAnimation:anima forKey:@"pathAnimation"];
 }
 
 - (void)buildMeteorView {
@@ -153,7 +153,7 @@ LC_PROPERTY(strong) LCUIButton *enterButton;
     self.ADD(self.meteorView);
     
     CAKeyframeAnimation *anima = [CAKeyframeAnimation animationWithKeyPath:@"position"];
-    UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(self.meteorView.viewFrameX, self.meteorView.viewFrameY, 50, 50)];
+    UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(self.meteorView.viewFrameX, self.meteorView.viewFrameY, 25, 25)];
     anima.path = path.CGPath;
     anima.duration = 100.0f;
     anima.repeatCount = 5;
@@ -206,7 +206,7 @@ LC_PROPERTY(strong) LCUIButton *enterButton;
     self.enterButton.viewFrameWidth = 85;
     self.enterButton.viewFrameHeight = 30;
     self.enterButton.viewCenterX = self.viewCenterX;
-    self.enterButton.viewFrameY = self.tagsView.viewBottomY + 41;
+    self.enterButton.viewFrameY = self.tagsView.viewBottomY + 21;
     self.enterButton.backgroundColor = LKColor.color;
     self.enterButton.cornerRadius = 4;
     self.enterButton.title = LC_LO(@"进入like");

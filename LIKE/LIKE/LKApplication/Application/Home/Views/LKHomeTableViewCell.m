@@ -146,7 +146,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.recommendedReasonWithTag.viewFrameWidth = LC_DEVICE_WIDTH / 2;
     self.recommendedReasonWithTag.viewFrameHeight = LK_FONT(10).lineHeight;
     self.recommendedReasonWithTag.viewFrameX = LC_DEVICE_WIDTH / 2 - 15 - 14;
-    self.recommendedReasonWithTag.viewFrameY = self.likesTip.viewFrameY + 2;
+    self.recommendedReasonWithTag.viewFrameY = self.likesTip.viewFrameY;
     self.recommendedReasonWithTag.title = LC_LO(@"有故事的人");
     self.recommendedReasonWithTag.titleColor = LC_RGB(151, 151, 151);
     self.recommendedReasonWithTag.titleFont = LK_FONT(10);
@@ -316,7 +316,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     
     self.recommendedReason.buttonImage = [self getIconImage:post.reason];
     self.recommendedReason.viewFrameWidth = 2000;
-    self.recommendedReason.viewFrameY = self.title.viewFrameY + 2;
+    self.recommendedReason.viewFrameY = self.title.viewFrameY;
     self.recommendedReason.title = [NSString stringWithFormat:@"  %@", LC_LO(reason)];
     self.recommendedReason.FIT();
     self.recommendedReason.viewFrameX = LC_DEVICE_WIDTH - self.recommendedReason.viewFrameWidth - 15;

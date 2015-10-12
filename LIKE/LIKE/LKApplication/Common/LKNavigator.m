@@ -161,6 +161,11 @@ LC_PROPERTY(strong) LKGateViewController *gateViewController;
 
 #pragma mark - ***** RDVTabBarControllerDelegate *****
 - (BOOL)tabBarController:(RDVTabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
+    
+    if (viewController.childViewControllers[0] == self.notificationViewController) {
+        
+        [LKNotificationCount cleanBadge];
+    }
     return YES;
 }
 

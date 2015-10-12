@@ -606,7 +606,7 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
     [self.inputView resignFirstResponder];
 }
 
--(void) scrollViewScrollToTop
+- (void)scrollViewScrollToTop
 {
     LC_FAST_ANIMATIONS(0.25, ^{
         

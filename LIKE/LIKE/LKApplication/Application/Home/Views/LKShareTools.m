@@ -78,14 +78,12 @@ LC_PROPERTY(assign) BOOL isShow;
     
     
     NSArray * imageNames = @[@"WeChatFriendIcon.png",@"WeChatFeedIcon.png",@"QQIcon.png",@"SinaIcon.png"];
-    
-    CGFloat padding = 26.6;
 
     for (NSInteger i = 0; i < 4; i++) {
         
-        LCUIButton * button = LCUIButton.view;
-        button.viewFrameWidth = padding + 5;
-        button.viewFrameHeight = padding + 5;
+        LCUIButton *button = LCUIButton.view;
+        button.viewFrameWidth = 32;
+        button.viewFrameHeight = 32;
         button.buttonImage = [UIImage imageNamed:imageNames[i] useCache:YES];
         button.viewFrameX = self.viewFrameWidth + 20;
         button.viewFrameY = self.viewMidHeight - button.viewMidHeight;
@@ -139,14 +137,14 @@ LC_PROPERTY(assign) BOOL isShow;
     
     
     
-    CGFloat padding = 26.6;
+    CGFloat padding = 13;
     
     for (NSInteger i = 0; i < self.shareIcons.count; i++) {
         
-        LCUIButton * button = self.shareIcons[i];
+        LCUIButton *button = self.shareIcons[i];
         button.pop_springBounciness = 5;
         button.pop_springSpeed = 5;
-        button.pop_spring.frame = LC_RECT(40 / 3 + ((padding - 10) * i) + button.viewFrameWidth * i, button.viewFrameY, button.viewFrameWidth, button.viewFrameHeight);
+        button.pop_spring.frame = LC_RECT(19 + padding * i + button.viewFrameWidth * i, button.viewFrameY, button.viewFrameWidth, button.viewFrameHeight);
         button.pop_spring.alpha = 1;
     }
     

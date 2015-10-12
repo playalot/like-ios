@@ -58,9 +58,9 @@ LC_PROPERTY(strong) NSMutableArray * datasource;
         
         self.datasource = [NSMutableArray array];
         
-        NSArray * icon = @[@"FacebookIcon.png", @"WeChatFriendIcon.png", @"SinaIcon.png", @"MobileIcon.png"];
-        NSArray * titles = @[LC_LO(@"Facebook"), LC_LO(@"微信"), LC_LO(@"微博"), LC_LO(@"手机号")];
-        NSArray * identifier = @[@"facebook", @"wechat", @"weibo", @"mobile"];
+        NSArray *icon = @[@"FacebookLink.png", @"WechatLink.png", @"WeiboLink.png", @"PhoneLink.png"];
+        NSArray *titles = @[LC_LO(@"Facebook"), LC_LO(@"微信"), LC_LO(@"微博"), LC_LO(@"手机号")];
+        NSArray *identifier = @[@"facebook", @"wechat", @"weibo", @"mobile"];
 
         
         for (NSInteger i = 0; i < icon.count; i++) {
@@ -88,14 +88,14 @@ LC_PROPERTY(strong) NSMutableArray * datasource;
 
 -(void) buildUI
 {
-    self.title = LC_LO(@"账号绑定");
+    self.title = LC_LO(@"绑定账号");
     
     [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[UIImage imageNamed:@"NavigationBarBack.png" useCache:YES] selectImage:nil];
     
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
     
     
-    LCUILabel * label = LCUILabel.view;
+    LCUILabel *label = LCUILabel.view;
     label.viewFrameY = 300;
     label.viewFrameWidth = LC_DEVICE_WIDTH - 40;
     label.numberOfLines = 0;
@@ -161,37 +161,37 @@ LC_PROPERTY(strong) NSMutableArray * datasource;
 
 - (UITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    LCUITableViewCell * cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Cell" andClass:[LCUITableViewCell class] configurationCell:^(LCUITableViewCell * configurationCell) {
+    LCUITableViewCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Cell" andClass:[LCUITableViewCell class] configurationCell:^(LCUITableViewCell * configurationCell) {
         
         configurationCell.selectionStyle = UITableViewCellSelectionStyleNone;
         configurationCell.backgroundColor = [UIColor clearColor];
         configurationCell.contentView.backgroundColor = [UIColor clearColor];
         
         
-        LCUIButton * icon = LCUIButton.view;
-        icon.viewFrameX = 40;
-        icon.viewFrameWidth = 20;
-        icon.viewFrameHeight = 20;
-        icon.viewFrameY = 200 / 3 / 2 - 20 / 2;
+        LCUIButton *icon = LCUIButton.view;
+        icon.viewFrameX = 18;
+        icon.viewFrameY = 13;
+        icon.viewFrameWidth = 29;
+        icon.viewFrameHeight = 29;
         icon.tag = 1001;
         configurationCell.ADD(icon);
         
         
-        LCUILabel * label = LCUILabel.view;
-        label.viewFrameX = icon.viewRightX + 20;
-        label.viewFrameWidth = LC_DEVICE_WIDTH;
-        label.viewFrameHeight = 200 / 3;
+        LCUILabel *label = LCUILabel.view;
+        label.viewFrameX = icon.viewRightX + 18;
+        label.viewFrameWidth = 150;
+        label.viewFrameHeight = 55;
         label.font = LK_FONT(13);
         label.textColor = LC_RGB(51, 51, 51);
         label.tag = 1002;
         configurationCell.ADD(label);
         
         
-        LCUILabel * subLabel = LCUILabel.view;
-        subLabel.viewFrameX = label.viewFrameX;
-        subLabel.viewFrameY = 40;
+        LCUILabel *subLabel = LCUILabel.view;
         subLabel.viewFrameWidth = 200;
         subLabel.viewFrameHeight = 12;
+        subLabel.viewFrameX = label.viewFrameX;
+        subLabel.viewFrameY = 34;
         subLabel.font = LK_FONT(10);
         subLabel.textColor = LC_RGB(180, 180, 180);
         subLabel.tag = 1003;
@@ -199,30 +199,30 @@ LC_PROPERTY(strong) NSMutableArray * datasource;
         configurationCell.ADD(subLabel);
         
         
-        LCUIButton * actionButton = LCUIButton.view;
-        actionButton.viewFrameWidth = 55;
-        actionButton.viewFrameHeight = 23;
-        actionButton.viewFrameX = LC_DEVICE_WIDTH - 55 - 40;
-        actionButton.viewFrameY = 200 / 3 / 2 - actionButton.viewMidHeight;
-        actionButton.cornerRadius = actionButton.viewMidHeight;
-        actionButton.titleFont = LK_FONT(11);
-        actionButton.tag = 1004;
-        actionButton.userInteractionEnabled = NO;
-        configurationCell.ADD(actionButton);
+        LCUIButton *linkButton = LCUIButton.view;
+        linkButton.title = LC_LO(@"绑定");
+        linkButton.titleFont = LK_FONT(13);
+        linkButton.titleColor = LC_RGB(153, 153, 153);
+        linkButton.viewFrameHeight = linkButton.titleFont.lineHeight;
+        linkButton.viewFrameWidth = 55;
+        linkButton.viewFrameX = LC_DEVICE_WIDTH - 55 - 16;
+        linkButton.viewFrameY = (55 - linkButton.viewFrameHeight) * 0.5;
+        linkButton.tag = 1004;
+        linkButton.userInteractionEnabled = NO;
+        configurationCell.ADD(linkButton);
         
         
-        UIView * line = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
-        line.viewFrameWidth = LC_DEVICE_WIDTH - 40;
-        line.viewFrameX = 20;
-        line.viewFrameY = 200 / 3 - line.viewFrameHeight;
+        UIView *line = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
+        line.viewFrameWidth = LC_DEVICE_WIDTH;
+        line.viewFrameY = 55 - line.viewFrameHeight;
         configurationCell.ADD(line);
         
     }];
     
-    LCUIButton * icon = cell.FIND(1001);
-    LCUILabel * title = cell.FIND(1002);
-    LCUILabel * subTitle = cell.FIND(1003);
-    LCUIButton * action = cell.FIND(1004);
+    LCUIButton *icon = cell.FIND(1001);
+    LCUILabel *title = cell.FIND(1002);
+    LCUILabel *subTitle = cell.FIND(1003);
+    LCUIButton *action = cell.FIND(1004);
     
     __LKLinkAccount * account = self.datasource[indexPath.row];
     
@@ -231,6 +231,7 @@ LC_PROPERTY(strong) NSMutableArray * datasource;
     
     if (indexPath.row == 3) {
         
+        title.viewFrameY = -3;
         subTitle.text = account.key ? [NSString stringWithFormat:@"%@%@", LC_LO(@"已绑定"), account.key] : @"";
     }
     else{
@@ -255,8 +256,8 @@ LC_PROPERTY(strong) NSMutableArray * datasource;
                 action.alpha = 1;
             });
             
-            action.backgroundColor = LC_RGB(245, 240, 236);
-            action.titleColor = LC_RGB(84, 79, 73);
+//            action.backgroundColor = LC_RGB(245, 240, 236);
+//            action.titleColor = LC_RGB(84, 79, 73);
 
             if (indexPath.row == 3) {
                 
@@ -276,9 +277,9 @@ LC_PROPERTY(strong) NSMutableArray * datasource;
                 action.alpha = 1;
             });
             
-            action.backgroundColor = LKColor.color;
+//            action.backgroundColor = LKColor.color;
             action.title = LC_LO(@"绑定");
-            action.titleColor = [UIColor whiteColor];
+//            action.titleColor = [UIColor whiteColor];
         }
             break;
     }
@@ -288,14 +289,14 @@ LC_PROPERTY(strong) NSMutableArray * datasource;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 200 / 3;
+    return 55;
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     
-    LCUIButton * button = cell.FIND(1004);
+    LCUIButton *button = cell.FIND(1004);
     
     if (button.title.length == 0) {
         

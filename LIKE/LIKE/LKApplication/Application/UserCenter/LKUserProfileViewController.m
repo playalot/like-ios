@@ -25,6 +25,7 @@
 #import "JTSImageViewController.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
 #import "LKPostTableViewController.h"
+#import "LKProfileSettingViewController.h"
 
 @interface LKUserProfileViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerCancelFavorDelegate, LKPostTableViewControllerDelegate>
 
@@ -58,6 +59,7 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.header updateWithUser:self.user];
+    [self.userInfoModel getUserInfo:self.user.id];
     [self setNavigationBarHidden:YES animated:NO];
 }
 
@@ -334,30 +336,33 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 }
 
 - (void)setAction {
-    LC_FAST_ANIMATIONS(0.25, ^{
-        ((UIView *)self.header.FIND(1002)).alpha = 0;
-        self.header.headImageView.alpha = 0;
-    });
+//    LC_FAST_ANIMATIONS(0.25, ^{
+//        ((UIView *)self.header.FIND(1002)).alpha = 0;
+//        self.header.headImageView.alpha = 0;
+//    });
+//    
+//    LKSettingsViewController * settings = LKSettingsViewController.view;
+//    [settings showInViewController:self];
+//    
+//    @weakly(self);
+//    
+//    settings.willHide = ^(){
+//        
+//        @normally(self);
+//        LC_FAST_ANIMATIONS(0.25, ^{
+//            
+//            self.header.headImageView.alpha = 1;
+//            ((UIView *)self.header.FIND(1002)).alpha = 1;
+//            [self scrollViewDidScroll:self.tableView];
+//            
+//        });
+//        
+//    };
+//    
+//    settings.fromViewController = self;
     
-    LKSettingsViewController * settings = LKSettingsViewController.view;
-    [settings showInViewController:self];
-    
-    @weakly(self);
-    
-    settings.willHide = ^(){
-        
-        @normally(self);
-        LC_FAST_ANIMATIONS(0.25, ^{
-            
-            self.header.headImageView.alpha = 1;
-            ((UIView *)self.header.FIND(1002)).alpha = 1;
-            [self scrollViewDidScroll:self.tableView];
-            
-        });
-        
-    };
-    
-    settings.fromViewController = self;
+    LKProfileSettingViewController *settingViewController = [LKProfileSettingViewController viewController];
+    [self.navigationController pushViewController:settingViewController animated:YES];
 }
 
 - (void)friendShipAction {

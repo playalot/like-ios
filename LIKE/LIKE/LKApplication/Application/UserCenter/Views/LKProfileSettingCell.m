@@ -12,6 +12,7 @@
 
 LC_PROPERTY(strong) LCUIImageView *iconView;
 LC_PROPERTY(strong) LCUILabel *contentLabel;
+LC_PROPERTY(strong) LCUIImageView *indicatorView;
 
 @end
 
@@ -20,9 +21,24 @@ LC_PROPERTY(strong) LCUILabel *contentLabel;
 - (void)buildUI {
     
     self.iconView = LCUIImageView.view;
-    self.iconView.viewFrameX = 27;
-    self.iconView.viewFrameY = 15;
+    self.iconView.viewFrameX = 18;
+    self.iconView.viewFrameY = 13;
     self.iconView.viewFrameWidth = 29;
+    self.iconView.viewFrameHeight = 29;
+    self.ADD(self.iconView);
+    
+    self.contentLabel = LCUILabel.view;
+    self.contentLabel.viewFrameX = self.iconView.viewRightX + 18;
+    self.contentLabel.viewFrameWidth = 150;
+    self.contentLabel.viewFrameHeight = 55;
+    self.ADD(self.iconView);
+    
+    self.indicatorView = LCUIImageView.view;
+    self.indicatorView.viewFrameWidth = 11;
+    self.indicatorView.viewFrameHeight = 20;
+    self.indicatorView.viewFrameX = LC_DEVICE_WIDTH - 16;
+    self.indicatorView.viewFrameY = 17.5;
+    self.ADD(self.indicatorView);
 }
 
 @end

@@ -111,4 +111,13 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
     [LKUserCenterViewController pushUserCenterWithUser:signal.object navigationController:self.navigationController];
 }
 
+- (void)refresh {
+    
+    if (self.currentViewController == self.homeFeedViewController) {
+        [self.homeFeedViewController performSelector:@selector(scrollViewScrollToTop)];
+    } else {
+        [self.followingFeedViewController performSelector:@selector(scrollViewScrollToTop)];
+    }
+}
+
 @end

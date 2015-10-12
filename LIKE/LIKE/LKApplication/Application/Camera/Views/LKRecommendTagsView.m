@@ -52,7 +52,7 @@
     
     self.viewFrameWidth = self.tagLabel.viewRightX + leftPadding;
     self.viewFrameHeight = self.tagLabel.viewBottomY + topPadding;
-    self.cornerRadius = self.viewMidHeight;
+    self.cornerRadius = 4;
     self.layer.masksToBounds = NO;
 }
 
@@ -62,11 +62,10 @@
         
         self.backgroundColor = LKColor.color;
         self.tagLabel.textColor = [UIColor whiteColor];
-    }
-    else{
+    } else {
         
-        self.backgroundColor = LC_RGB(245, 240, 236);
-        self.tagLabel.textColor = [LC_RGB(74, 74, 74) colorWithAlphaComponent:0.9];
+        self.backgroundColor = LC_RGB(229, 229, 229);
+        self.tagLabel.textColor = LC_RGB(75, 75, 75);
     }
 }
 
@@ -170,11 +169,13 @@
 {
     
     CGFloat padding = 10;
+    CGFloat leftPadding = 18;
+    CGFloat topPadding = 18;
     
     
-    NSArray * subViews = self.subviews;
+    NSArray *subViews = self.subviews;
     
-    for (UIView * view in subViews) {
+    for (UIView *view in subViews) {
         
         if ([view isKindOfClass:[LKRecommendTagItem class]]) {
             
@@ -190,13 +191,13 @@
 
     
     // preItem为添加的上一个标签
-    LKRecommendTagItem * preItem = nil;
+    LKRecommendTagItem *preItem = nil;
     
     for (NSInteger i = 0; i< self.tags.count; i++) {
         
-        __LKTagS * tag = self.tags[i];
+        __LKTagS *tag = self.tags[i];
                 
-        LKRecommendTagItem * item = LKRecommendTagItem.view;
+        LKRecommendTagItem *item = LKRecommendTagItem.view;
         
         item.tag = i;
         item.tagValue = tag;
@@ -204,11 +205,11 @@
         
         @weakly(self);
         
-        item.didTap = ^(LKRecommendTagItem * cache){
+        item.didTap = ^(LKRecommendTagItem *cache){
             
             @normally(self);
             
-            LKRecommendTagItem * tmp = cache;
+            LKRecommendTagItem *tmp = cache;
 
             if (self.tapRemove) {
                 
@@ -228,14 +229,14 @@
         
         if (!preItem) {
             
-            item.viewFrameX = padding;
-            item.viewFrameY = padding;
+            item.viewFrameX = leftPadding;
+            item.viewFrameY = topPadding;
         }
         else{
             
-            if (preItem.viewRightX + padding + item.viewFrameWidth > self.viewFrameWidth) {
+            if (preItem.viewRightX + leftPadding + item.viewFrameWidth > self.viewFrameWidth) {
                 
-                item.viewFrameX = padding;
+                item.viewFrameX = leftPadding;
                 item.viewFrameY = preItem.viewBottomY + padding;
             }
             else{
@@ -268,7 +269,7 @@
         self.viewFrameHeight = 0;
     }
     else{
-        self.viewFrameHeight = preItem.viewBottomY + padding;
+        self.viewFrameHeight = preItem.viewBottomY + topPadding;
     }
 }
 

@@ -409,9 +409,9 @@ LC_PROPERTY(strong) UIView *wastedView;
         
         CAKeyframeAnimation *anim = [CAKeyframeAnimation animationWithKeyPath:@"transform.rotation"];
         
-        anim.values = @[@(M_PI_4 * 0.1), @(-M_PI_4 * 0.1), @(M_PI_4 * 0.1)];
+        anim.values = @[@(M_PI_4 * 0.03), @(-M_PI_4 * 0.03), @(M_PI_4 * 0.03)];
         
-        anim.duration = 0.25;
+        anim.duration = 0.15;
         anim.repeatCount = 3;
         
         [self.prohibitionView.layer addAnimation:anim forKey:nil];

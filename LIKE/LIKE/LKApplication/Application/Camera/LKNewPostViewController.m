@@ -22,23 +22,18 @@
 
 @interface LKNewPostViewController ()
 
-LC_PROPERTY(strong) LCUIImageView * preview;
-LC_PROPERTY(strong) UIImage * image;
-
-LC_PROPERTY(strong) LKRecommendTagsView * selectedTags;
-LC_PROPERTY(strong) LCUILabel * recommendLabel;
-LC_PROPERTY(strong) LKRecommendTagsView * recommendTags;
-
-LC_PROPERTY(strong) LKInputView * inputView;
-
-LC_PROPERTY(strong) LCObserver * frameObserver;
-LC_PROPERTY(strong) LCUIButton * locationButton;
-
-LC_PROPERTY(strong) CLLocation * location;
-LC_PROPERTY(strong) NSString * locationName;
-
-@property (nonatomic, strong) NSMutableArray *suggests;
-
+LC_PROPERTY(strong) LCUIImageView *preview;
+LC_PROPERTY(strong) UIImage *image;
+LC_PROPERTY(strong) LKRecommendTagsView *selectedTags;
+LC_PROPERTY(strong) LCUILabel *recommendLabel;
+LC_PROPERTY(strong) LKRecommendTagsView *recommendTags;
+LC_PROPERTY(strong) LKInputView *inputView;
+LC_PROPERTY(strong) LCObserver *frameObserver;
+LC_PROPERTY(strong) LCUIButton *locationButton;
+LC_PROPERTY(strong) CLLocation *location;
+LC_PROPERTY(strong) NSString *locationName;
+LC_PROPERTY(strong) NSMutableArray *suggests;
+LC_PROPERTY(strong) UIView *backView;
 
 @end
 
@@ -76,15 +71,16 @@ LC_PROPERTY(strong) NSString * locationName;
     return self;
 }
 
--(void) viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.view.backgroundColor = LKColor.backgroundColor;
 }
 
--(void) buildUI
-{
+- (void)buildUI {
+
     // 格式化当前日期
-    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateStyle = kCFDateFormatterMediumStyle;
     
     self.title = [formatter stringFromDate:[NSDate date]];
@@ -101,18 +97,25 @@ LC_PROPERTY(strong) NSString * locationName;
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
     
     
+    self.backView = UIView.view;
+    self.backView.viewFrameWidth = LC_DEVICE_WIDTH;
+    self.backView.viewFrameHeight = 124;
+    self.backView.backgroundColor = [UIColor whiteColor];
+    self.view.ADD(self.backView);
+    
+    
     // 图片预览
     self.preview = LCUIImageView.view;
     self.preview.contentMode = UIViewContentModeScaleAspectFill;
     self.preview.viewFrameWidth = 100;
     self.preview.viewFrameHeight = 100;
-    self.preview.viewFrameX = LC_DEVICE_WIDTH - self.preview.viewFrameWidth - 10;
-    self.preview.viewFrameY = 10;
+    self.preview.viewFrameX = LC_DEVICE_WIDTH - self.preview.viewFrameWidth - 12;
+    self.preview.viewFrameY = 12;
     self.preview.clipsToBounds = YES;
     self.preview.image = self.image;
     self.preview.userInteractionEnabled = YES;
     [self.preview addTapGestureRecognizer:self selector:@selector(previewTapAction)];
-    self.view.ADD(self.preview);
+    self.backView.ADD(self.preview);
     
     
     [self setNavigationBarButton:LCUINavigationBarButtonTypeRight title:LC_LO(@"发布") titleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.8]];
@@ -125,22 +128,22 @@ LC_PROPERTY(strong) NSString * locationName;
     self.recommendLabel.viewFrameWidth = LC_DEVICE_WIDTH - self.recommendLabel.viewFrameX * 2 - 120;
     self.recommendLabel.viewFrameHeight = 15;
     self.recommendLabel.text = LC_LO(@"添加相应标签，只晒给懂你的人");
-    self.recommendLabel.font = LK_FONT(13);
-    self.recommendLabel.textColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
+    self.recommendLabel.font = LK_FONT(12);
+    self.recommendLabel.textColor = LC_RGB(215, 215, 215);
     self.recommendLabel.contentMode = UIViewContentModeBottom;
     self.recommendLabel.adjustsFontSizeToFitWidth = YES;
     [self.recommendLabel addTapGestureRecognizer:self selector:@selector(becomeFirstResponserAction)];
-    self.view.ADD(self.recommendLabel);
+    self.backView.ADD(self.recommendLabel);
     
     
     // 标签所在的view
-    UIView * becomeFirstResponser = UIView.view;
+    UIView *becomeFirstResponser = UIView.view;
     becomeFirstResponser.viewFrameX = 10;
     becomeFirstResponser.viewFrameY = self.recommendLabel.viewBottomY;
     becomeFirstResponser.viewFrameWidth = self.recommendLabel.viewFrameWidth;
     becomeFirstResponser.viewFrameHeight = 120;
     [becomeFirstResponser addTapGestureRecognizer:self selector:@selector(becomeFirstResponserAction)];
-    self.view.ADD(becomeFirstResponser);
+    self.backView.ADD(becomeFirstResponser);
     
     
     // 选择列表
@@ -149,7 +152,7 @@ LC_PROPERTY(strong) NSString * locationName;
     self.selectedTags.viewFrameWidth = LC_DEVICE_WIDTH - 20 - self.preview.viewFrameWidth;
     self.selectedTags.highlight = YES;
     self.selectedTags.tapRemove = YES;
-    self.view.ADD(self.selectedTags);
+    self.backView.ADD(self.selectedTags);
     
     // 推荐列表
     self.recommendTags = LKRecommendTagsView.view;
@@ -172,10 +175,10 @@ LC_PROPERTY(strong) NSString * locationName;
         [self updateSubviewsLayout];
     };
     
-    UIView * line = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
-    line.viewFrameWidth = LC_DEVICE_WIDTH;
-    line.tag = 100;
-    self.recommendTags.ADD(line);
+//    UIView *line = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
+//    line.viewFrameWidth = LC_DEVICE_WIDTH;
+//    line.tag = 100;
+//    self.recommendTags.ADD(line);
     
     
     // 加载推荐数据
@@ -278,28 +281,22 @@ LC_PROPERTY(strong) NSString * locationName;
     };
     
     
-    UIView * locationBackground = UIView.view;
-    locationBackground.backgroundColor = [UIColor whiteColor];
-    locationBackground.viewFrameY = self.inputView.viewFrameY - 53;
-    locationBackground.viewFrameWidth = LC_DEVICE_WIDTH;
-    locationBackground.viewFrameHeight = 53;
-    self.view.ADD(locationBackground);
+//    UIView * locationBackground = UIView.view;
+//    locationBackground.backgroundColor = [UIColor whiteColor];
+//    locationBackground.viewFrameY = self.inputView.viewFrameY - 53;
+//    locationBackground.viewFrameWidth = LC_DEVICE_WIDTH;
+//    locationBackground.viewFrameHeight = 53;
+//    self.view.ADD(locationBackground);
     
     
     self.locationButton = LCUIButton.view;
-    self.locationButton.viewFrameX = 10;
-    self.locationButton.viewFrameY = 10;
-    self.locationButton.viewFrameWidth = LC_DEVICE_WIDTH / 2 - 10;
-    self.locationButton.viewFrameHeight = 33;
-    self.locationButton.backgroundColor = LKColor.backgroundColor;
-    self.locationButton.cornerRadius = 4;
-    self.locationButton.titleFont = LK_FONT(13);
-    self.locationButton.titleColor = LC_RGB(153, 153, 153);
-    self.locationButton.title = LC_LO(@"我的位置...");
-    self.locationButton.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 5);
-    self.locationButton.titleLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
+    self.locationButton.viewFrameX = 18;
+    self.locationButton.viewFrameY = self.inputView.viewFrameY - 18 - 25;
+    self.locationButton.viewFrameWidth = 84;
+    self.locationButton.viewFrameHeight = 25;
+    self.locationButton.buttonImage = [UIImage imageNamed:@"LocationButtonImage.png" useCache:YES];
     [self.locationButton addTarget:self action:@selector(choosePlaces) forControlEvents:UIControlEventTouchUpInside];
-    locationBackground.ADD(self.locationButton);
+    self.view.ADD(self.locationButton);
     
     
     self.frameObserver = [LCObserver observerForObject:self.inputView keyPath:@"frame" block:^{
@@ -308,7 +305,7 @@ LC_PROPERTY(strong) NSString * locationName;
         
         LC_FAST_ANIMATIONS(0.15, ^{
             
-            locationBackground.viewFrameY = self.inputView.viewFrameY - 53;
+            self.locationButton.viewFrameY = self.inputView.viewFrameY - 18 - 25;
         });
     }];
 }
@@ -362,6 +359,7 @@ LC_PROPERTY(strong) NSString * locationName;
         CGFloat y = self.selectedTags.viewBottomY + 15;
         
         self.recommendTags.viewFrameY = y < self.preview.viewBottomY + 15 ? self.preview.viewBottomY + 15 : y;
+        self.backView.viewFrameHeight = self.recommendTags.viewFrameY;
     });
 }
 

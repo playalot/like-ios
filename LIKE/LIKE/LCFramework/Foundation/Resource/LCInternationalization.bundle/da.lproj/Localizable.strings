@@ -155,7 +155,10 @@
 "M图片" = "MB";
 "无所不能的王果果" = "王果果";
 "退出登录" = "Log out";
-"账号绑定" = "Link accounts";
+"绑定账号" = "Link accounts";
+"个人设置" = "Profile setting";
+"设置" = "Settings";
+"意见与建议" = "Opinion and suggestion";
 
 // LKShareTools
 "分享" = "Share";

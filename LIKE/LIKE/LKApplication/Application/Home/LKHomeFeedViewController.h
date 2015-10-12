@@ -14,4 +14,6 @@
 
 - (void)updatePostFeed:(LKPost *)post;
 
+- (void)scrollViewScrollToTop;
+
 @end

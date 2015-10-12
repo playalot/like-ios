@@ -161,14 +161,17 @@ LC_PROPERTY(strong) LKGateViewController *gateViewController;
 
 #pragma mark - ***** RDVTabBarControllerDelegate *****
 - (BOOL)tabBarController:(RDVTabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
-    if (viewController.childViewControllers[0] == self.mainFeedViewController) {
-        [self.mainFeedViewController refresh];
-    }
     return YES;
 }
 
 - (void)tabBarController:(RDVTabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
     
+}
+
+- (void)tabBarController:(RDVTabBarController *)tabBarController didSelectCurrentViewController:(UIViewController *)viewController {
+    if (viewController == self.mainFeedViewController.navigationController) {
+        [self.mainFeedViewController refresh];
+    }
 }
 
 #pragma mark LKLoginViewControllerDelegate

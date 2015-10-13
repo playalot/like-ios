@@ -33,11 +33,9 @@ LC_PROPERTY(strong) LCUIPullLoader *pullLoader;
 LC_PROPERTY(strong) LCUITableView *tableView;
 LC_PROPERTY(strong) LKHomepageHeader *header;
 LC_PROPERTY(strong) BLKDelegateSplitter *delegateSplitter;
-
 LC_PROPERTY(strong) LCUIButton *friendshipButton;
 LC_PROPERTY(strong) LKInputView *inputView;
 LC_PROPERTY(strong) LCUIActivityIndicatorView *loadingActivity;
-
 LC_PROPERTY(strong) LKUserCenterModel *userCenterModel;
 LC_PROPERTY(assign) LKUserCenterModelType currentType;
 LC_PROPERTY(assign) BOOL isLocalUser;
@@ -182,7 +180,7 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
     self.header.labelAction = ^(id value){};
     
     if (self.needBackButton) {
-        LCUIButton * backButton = LCUIButton.view;
+        LCUIButton *backButton = LCUIButton.view;
         backButton.viewFrameWidth = 50;
         backButton.viewFrameHeight = 54 / 3 + 40;
         backButton.viewFrameY = 10;
@@ -196,7 +194,8 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
     if (self.isLocalUser) {
         
         if (!self.settingButtonHidden) {
-            LCUIButton * setButton = LCUIButton.view;
+            
+            LCUIButton *setButton = LCUIButton.view;
             setButton.viewFrameWidth = 64 / 3 + 40;
             setButton.viewFrameHeight = 64 / 3 + 40;
             setButton.viewFrameX = LC_DEVICE_WIDTH - setButton.viewFrameWidth;

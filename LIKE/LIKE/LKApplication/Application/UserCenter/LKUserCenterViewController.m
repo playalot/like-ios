@@ -93,7 +93,7 @@ LC_PROPERTY(strong) NSMutableArray *datasource;
 }
 
 - (void)updateTableHeaderView {
-    LKSegmentHeader * tableViewHeader = (LKSegmentHeader *)self.tableView.tableHeaderView;
+    LKSegmentHeader *tableViewHeader = (LKSegmentHeader *)self.tableView.tableHeaderView;
     [tableViewHeader setTitle:LC_NSSTRING_FORMAT(@"%@",self.userInfoModel.user.postCount) subTitle:LC_LO(@"照片") atIndex:0];
     [tableViewHeader setTitle:LC_NSSTRING_FORMAT(@"%@",self.userInfoModel.user.followCount) subTitle:LC_LO(@"关注") atIndex:1];
     [tableViewHeader setTitle:LC_NSSTRING_FORMAT(@"%@",self.userInfoModel.user.fansCount) subTitle:LC_LO(@"粉丝") atIndex:2];
@@ -190,7 +190,7 @@ LC_PROPERTY(strong) NSMutableArray *datasource;
         backButton.viewFrameWidth = 50;
         backButton.viewFrameHeight = 54 / 3 + 40;
         backButton.viewFrameY = 10;
-        backButton.buttonImage = [UIImage imageNamed:@"NavigationBarBack.png" useCache:YES];
+        backButton.buttonImage = [UIImage imageNamed:@"NavigationBarBackShadow.png" useCache:YES];
         backButton.showsTouchWhenHighlighted = YES;
         [backButton addTarget:self action:@selector(dismissAction) forControlEvents:UIControlEventTouchUpInside];
         backButton.tag = 1002;
@@ -205,7 +205,7 @@ LC_PROPERTY(strong) NSMutableArray *datasource;
             setButton.viewFrameHeight = 64 / 3 + 40;
             setButton.viewFrameX = LC_DEVICE_WIDTH - setButton.viewFrameWidth;
             setButton.viewFrameY = 10;
-            setButton.buttonImage = [UIImage imageNamed:@"NavigationBarSet.png" useCache:YES];
+            setButton.buttonImage = [UIImage imageNamed:@"NavigationBarSetShadow.png" useCache:YES];
             setButton.showsTouchWhenHighlighted = YES;
             [setButton addTarget:self action:@selector(setAction) forControlEvents:UIControlEventTouchUpInside];
             [self.header addSubview:setButton];
@@ -213,11 +213,22 @@ LC_PROPERTY(strong) NSMutableArray *datasource;
         
     } else {
         
+        LCUIButton *moreButton = LCUIButton.view;
+        moreButton.viewFrameWidth = 64 / 3 + 40;
+        moreButton.viewFrameHeight = 64 / 3 + 40;
+        moreButton.viewFrameX = LC_DEVICE_WIDTH - moreButton.viewFrameWidth;
+        moreButton.viewFrameY = 10;
+        moreButton.buttonImage = [UIImage imageNamed:@"NavigationBarMoreShadow.png" useCache:YES];
+        moreButton.showsTouchWhenHighlighted = YES;
+        [moreButton addTarget:self action:@selector(moreAction) forControlEvents:UIControlEventTouchUpInside];
+        [self.header addSubview:moreButton];
+        
+        
         self.friendshipButton = LCUIButton.view;
-        self.friendshipButton.viewFrameWidth = 64 / 3 + 40;
-        self.friendshipButton.viewFrameHeight = 64 / 3 + 40;
+        self.friendshipButton.viewFrameWidth = 70 + 20;
+        self.friendshipButton.viewFrameHeight = 27 + 20;
         self.friendshipButton.viewFrameX = LC_DEVICE_WIDTH - self.friendshipButton.viewFrameWidth;
-        self.friendshipButton.viewFrameY = 10;
+        self.friendshipButton.viewFrameY = 155;
         self.friendshipButton.showsTouchWhenHighlighted = YES;
         [self.friendshipButton addTarget:self action:@selector(friendShipAction) forControlEvents:UIControlEventTouchUpInside];
         [self.header addSubview:self.friendshipButton];
@@ -365,6 +376,109 @@ LC_PROPERTY(strong) NSMutableArray *datasource;
     };
     
     settings.fromViewController = self;
+}
+
+- (void)moreAction {
+    
+    @weakly(self);
+    
+    [LKActionSheet showWithTitle:nil buttonTitles:@[LC_LO(@"屏蔽此用户"),LC_LO(@"举报")] didSelected:^(NSInteger index) {
+        
+        @normally(self);
+        
+        if (index == 0) {
+            
+            // TODO
+            
+        } else if (index == 1) {
+            
+            // 举报
+            [self reportReason];
+        }
+    }];
+}
+
+/**
+ *  举报原因
+ */
+- (void)reportReason {
+    
+    @weakly(self);
+    
+    [LKActionSheet showWithTitle:nil buttonTitles:@[LC_LO(@"自拍"),LC_LO(@"广告"),LC_LO(@"色情"),LC_LO(@"谣言"),LC_LO(@"恶意营销"),LC_LO(@"侮辱诋毁"),LC_LO(@"侵权举报(诽谤、抄袭、冒用...)")] didSelected:^(NSInteger index) {
+        
+        @normally(self);
+        
+        if (index != 7) {
+            
+            [self reportWithIndex:index];
+        }
+    }];
+}
+
+/**
+ *  举报
+ */
+- (void)reportWithIndex:(NSInteger)index {
+    
+    if ([LKLoginViewController needLoginOnViewController:self.navigationController]) {
+        return;
+    }
+    
+    [self cancelAllRequests];
+    
+    LKHttpRequestInterface *interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"post/%@/report", self.user.id]].AUTO_SESSION().POST_METHOD();
+    
+    switch (index) {
+        case 0:
+            [interface addParameter:LC_LO(@"自拍") key:@"reason"];
+            break;
+            
+        case 1:
+            [interface addParameter:LC_LO(@"广告") key:@"reason"];
+            break;
+            
+        case 2:
+            [interface addParameter:LC_LO(@"色情") key:@"reason"];
+            break;
+            
+        case 3:
+            [interface addParameter:LC_LO(@"谣言") key:@"reason"];
+            break;
+            
+        case 4:
+            [interface addParameter:LC_LO(@"恶意营销") key:@"reason"];
+            break;
+            
+        case 5:
+            [interface addParameter:LC_LO(@"侮辱诋毁") key:@"reason"];
+            break;
+            
+        case 6:
+            [interface addParameter:LC_LO(@"侵权举报(诽谤、抄袭、冒用...)") key:@"reason"];
+            break;
+            
+        default:
+            break;
+    }
+    
+    @weakly(self);
+    
+    [self request:interface complete:^(LKHttpRequestResult *result) {
+        
+        @normally(self);
+        
+        if (result.state == LKHttpRequestStateFinished) {
+            
+            [LCUIAlertView showWithTitle:nil message:LC_LO(@"感谢您的举报！") cancelTitle:LC_LO(@"好的") otherTitle:nil didTouchedBlock:^(NSInteger integerValue) {
+                
+            }];
+        }
+        else if (result.state == LKHttpRequestStateFailed){
+            
+            [self showTopMessageErrorHud:result.error];
+        }
+    }];
 }
 
 - (void)friendShipAction {
@@ -599,6 +713,23 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [self.inputView resignFirstResponder];
     [self.header handleScrollDidScroll:scrollView];
+    
+    CGFloat offsetY = scrollView.contentOffset.y;
+    self.friendshipButton.transform = CGAffineTransformMakeTranslation(0, -(offsetY + 200));
+    
+    if (self.friendshipButton.viewFrameY < 64) {
+        
+        LC_FAST_ANIMATIONS(0.25, ^ {
+            
+            self.friendshipButton.alpha = 0;
+        });
+    } else {
+       
+        LC_FAST_ANIMATIONS(0.25, ^ {
+            
+            self.friendshipButton.alpha = 1;
+        });
+    }
 }
 
 LC_HANDLE_NAVIGATION_SIGNAL(UnfavouritePost, signal) {

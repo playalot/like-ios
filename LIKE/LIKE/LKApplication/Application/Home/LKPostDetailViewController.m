@@ -1341,9 +1341,9 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
 
 
 // 估计以后还得改
--(UIImage *) buildShareImage:(NSInteger)shareIndex
-{
-    UIImage * image = [LCUIImageCache.singleton imageWithKey:self.bigContentURL];
+- (UIImage *)buildShareImage:(NSInteger)shareIndex {
+    
+    UIImage *image = [LCUIImageCache.singleton imageWithKey:self.bigContentURL];
     
     if (!image) {
         
@@ -1361,15 +1361,15 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         image = [image scaleToBeWidth:1242];
     }
     
-    UIView * bottomView = UIView.view;
+    UIView *bottomView = UIView.view;
     
     CGFloat proportion = (image.size.width / 640);
     CGFloat layoutScale = (image.size.width / 414);
-    CGFloat headWidth = 90 * proportion;
+    CGFloat headWidth = 94 * proportion;
     
     // 头像下面的view
-    UIView * cornerRadiusView = UIView.view;
-    cornerRadiusView.viewFrameX = (20 + 18) * proportion;
+    UIView *cornerRadiusView = UIView.view;
+    cornerRadiusView.viewFrameX = 21 * proportion;
     cornerRadiusView.viewFrameY = 0;
     cornerRadiusView.viewFrameWidth = headWidth;
     cornerRadiusView.viewFrameHeight = headWidth;
@@ -1378,11 +1378,11 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     bottomView.ADD(cornerRadiusView);
     
     // 用户头像
-    LCUIImageView * imageView = LCUIImageView.view;
-    imageView.viewFrameWidth = headWidth - 10 * proportion;
-    imageView.viewFrameHeight = headWidth - 10 * proportion;
-    imageView.viewFrameX = (20 + 18) * proportion + 5 * proportion;
-    imageView.viewFrameY = 5 * proportion;
+    LCUIImageView *imageView = LCUIImageView.view;
+    imageView.viewFrameWidth = headWidth - 4 * proportion;
+    imageView.viewFrameHeight = headWidth - 4 * proportion;
+    imageView.viewFrameX = 21 * proportion + 2 * proportion;
+    imageView.viewFrameY = 2 * proportion;
     imageView.url = self.post.user.avatar;
 //    [imageView sd_setImageWithURL:[NSURL URLWithString:self.post.user.avatar] placeholderImage:nil];
     imageView.cornerRadius = imageView.viewMidHeight;
@@ -1391,23 +1391,24 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     
     
     // 昵称
-    LCUILabel * nameLabel = LCUILabel.view;
+    LCUILabel *nameLabel = LCUILabel.view;
     nameLabel.viewFrameX = imageView.viewRightX + 10 * proportion;
-    nameLabel.viewFrameY = 10 * proportion + headWidth / 2;
+    nameLabel.viewFrameY = 9 * proportion + headWidth / 2;
     nameLabel.viewFrameWidth = 10000;
     nameLabel.viewFrameHeight = 22 * proportion + 2;
-    nameLabel.font = LK_FONT(22 * proportion);
+    nameLabel.font = LK_FONT_B(22 * proportion);
     nameLabel.textColor = LC_RGB(51, 51, 51);
-    nameLabel.text = [NSString stringWithFormat:@"%@ · %@ likes" ,self.post.user.name ,self.post.user.likes];
+    nameLabel.text = [NSString stringWithFormat:@"%@   %@ likes" ,self.post.user.name ,self.post.user.likes];
     bottomView.ADD(nameLabel);
     
     
     // 分享图片的标签
-    LKShareTagsView * tagsView = LKShareTagsView.view;
+    LKShareTagsView *tagsView = LKShareTagsView.view;
     tagsView.proportion = proportion;
-    tagsView.viewFrameY = imageView.viewBottomY + 10 * proportion;
-    tagsView.viewFrameX = 20 * proportion;
-    tagsView.viewFrameWidth = image.size.width * 640 / 414 - 40 * proportion;
+    tagsView.viewFrameY = imageView.viewBottomY + 2 * proportion;
+//    tagsView.viewFrameX = 21 * proportion;
+    tagsView.viewFrameX = -8 * proportion;
+    tagsView.viewFrameWidth = image.size.width * 640 / 414 - 42 * proportion;
     tagsView.tags = self.tagsListModel.tags;
     bottomView.ADD(tagsView);
     
@@ -1416,31 +1417,50 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         
         item.backgroundColor = [LKColor.color colorWithAlphaComponent:1];
         item.tagLabel.textColor = [UIColor whiteColor];
-//        item.tagLabel.font = LK_FONT_B(20);
         item.likesLabel.textColor = [UIColor whiteColor];
-//        item.likesLabel.font = LK_FONT_B(20);
-        item.likesLabel.borderColor = [[UIColor whiteColor] colorWithAlphaComponent:1];
-        item.likesLabel.borderWidth = 1.5;
-
     }
+    
+    
+    // 底部view
+    UIView *belowView = UIView.view;
+    belowView.viewFrameY = tagsView.viewBottomY;
+    belowView.viewFrameWidth = image.size.width;
+    belowView.viewFrameHeight = 74 * layoutScale;
+    belowView.backgroundColor = LKColor.backgroundColor;
+    bottomView.ADD(belowView);
+    
     
     // 二维码
     LCUIImageView *qrCodeView = LCUIImageView.view;
-    qrCodeView.viewFrameWidth = 83 * layoutScale;
-    qrCodeView.viewFrameHeight = 83 * layoutScale;
-    qrCodeView.viewFrameX = image.size.width - qrCodeView.viewFrameWidth - 22 * layoutScale;
-    qrCodeView.viewFrameY = CGRectGetMaxY(tagsView.frame) + 30;
-    qrCodeView.image = [UIImage imageNamed:@"二维码"];
-    bottomView.ADD(qrCodeView);
+//    qrCodeView.viewFrameWidth = 83 * layoutScale;
+//    qrCodeView.viewFrameHeight = 83 * layoutScale;
+    //    qrCodeView.viewFrameX = image.size.width - qrCodeView.viewFrameWidth - 22 * layoutScale;
+    //    qrCodeView.viewFrameY = CGRectGetMaxY(tagsView.frame) + 30;
+    qrCodeView.viewFrameWidth = 46 * layoutScale;
+    qrCodeView.viewFrameHeight = 46 * layoutScale;
+    qrCodeView.viewFrameX = belowView.viewFrameWidth - (21 + 9 + 46 * 2) * layoutScale;
+    qrCodeView.viewFrameY = 14 * layoutScale;
+    qrCodeView.image = [UIImage imageNamed:@"QRCode.png" useCache:YES];
+    belowView.ADD(qrCodeView);
+    
+    
+    // logo
+    LCUIImageView *logoView = LCUIImageView.view;
+    logoView.viewFrameWidth = 46 * layoutScale;
+    logoView.viewFrameHeight = 46 * layoutScale;
+    logoView.viewFrameX = belowView.viewFrameWidth - (21 + 46) * layoutScale;
+    logoView.viewFrameY = 14 * layoutScale;
+    logoView.image = [UIImage imageNamed:@"like_icon.png" useCache:YES];
+    belowView.ADD(logoView);
     
     
     // 添加特色图片
     LCUIImageView *interestView = LCUIImageView.view;
-    interestView.viewFrameWidth = 160 * layoutScale;
-    interestView.viewFrameHeight = 42 * layoutScale;
-    interestView.viewFrameX = tagsView.viewFrameX + 18;
+    interestView.viewFrameWidth = 159 * layoutScale;
+    interestView.viewFrameHeight = 47 * layoutScale;
+    interestView.viewFrameX = cornerRadiusView.viewFrameX;
     interestView.viewFrameY = CGRectGetMaxY(qrCodeView.frame) - interestView.viewFrameHeight;
-    bottomView.ADD(interestView);
+    belowView.ADD(interestView);
     
     NSArray *interestArray = @[@"高达", @"狗", @"旅行", @"猫", @"美食", @"喷漆", @"摄影", @"游戏", @"手办", @"变形金刚", @"钢铁侠", @"星球大战"];
     
@@ -1465,17 +1485,18 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     
     if (interestImage == nil) {
         
-        interestImage = [UIImage imageNamed:@"摄影"];
+        interestImage = [UIImage imageNamed:@"photography.png"];
     }
     
     interestView.image = interestImage;
     
     
-    bottomView.viewFrameHeight = qrCodeView.viewBottomY + 22 * layoutScale;
+//    bottomView.viewFrameHeight = qrCodeView.viewBottomY + 22 * layoutScale;
+    bottomView.viewFrameHeight = belowView.viewBottomY;
     bottomView.viewFrameWidth = image.size.width;
     
     
-    UIView * background = UIView.view;
+    UIView *background = UIView.view;
     background.backgroundColor = [UIColor whiteColor];
     background.viewFrameWidth = bottomView.viewFrameWidth;
     background.viewFrameHeight = bottomView.viewFrameHeight;
@@ -1487,7 +1508,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     
     [bottomView.layer renderInContext:UIGraphicsGetCurrentContext()];
     
-    UIImage * tagImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIImage *tagImage = UIGraphicsGetImageFromCurrentImageContext();
     
     UIGraphicsEndImageContext();
     
@@ -1497,11 +1518,11 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
                          inRect:LC_RECT(0, image.size.height - headWidth / 2, bottomView.viewFrameWidth, bottomView.viewFrameHeight)];
     
     
-    UIImage * icon = [[UIImage imageNamed:@"LikeIconSmall.png" useCache:NO] scaleToBeWidth:33 * proportion];
-    
-    image = [image addMaskImage:icon
-                      imageSize:image.size
-                         inRect:LC_RECT(image.size.width - icon.size.width - 20, 20, icon.size.width, icon.size.height)];
+//    UIImage *icon = [[UIImage imageNamed:@"LikeIconSmall.png" useCache:NO] scaleToBeWidth:33 * proportion];
+//    
+//    image = [image addMaskImage:icon
+//                      imageSize:image.size
+//                         inRect:LC_RECT(image.size.width - icon.size.width - 20, 20, icon.size.width, icon.size.height)];
     
     return image;
 }
@@ -1542,7 +1563,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             
             if ([tag.tag rangeOfString:str].length) {
                 
-                return [UIImage imageNamed:@"高达"];
+                return [UIImage imageNamed:@"gundam.png"];
             }
         }
     }
@@ -1553,7 +1574,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             
             if ([tag.tag rangeOfString:str].length) {
                 
-                return [UIImage imageNamed:@"狗"];
+                return [UIImage imageNamed:@"dog.png"];
             }
         }
     }
@@ -1564,7 +1585,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             
             if ([tag.tag rangeOfString:str].length) {
                 
-                return [UIImage imageNamed:@"旅行"];
+                return [UIImage imageNamed:@"travel.png"];
             }
         }
     }
@@ -1575,7 +1596,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             
             if ([tag.tag rangeOfString:str].length) {
                 
-                return [UIImage imageNamed:@"猫"];
+                return [UIImage imageNamed:@"cat.png"];
             }
         }
     }
@@ -1586,7 +1607,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             
             if ([tag.tag rangeOfString:str].length) {
                 
-                return [UIImage imageNamed:@"美食"];
+                return [UIImage imageNamed:@"delicious.png"];
             }
         }
     }
@@ -1597,7 +1618,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             
             if ([tag.tag rangeOfString:str].length) {
                 
-                return [UIImage imageNamed:@"喷漆"];
+                return [UIImage imageNamed:@"lacquer.png"];
             }
         }
     }
@@ -1608,7 +1629,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             
             if ([tag.tag rangeOfString:str].length) {
                 
-                return [UIImage imageNamed:@"摄影"];
+                return [UIImage imageNamed:@"photography.png"];
             }
         }
     }
@@ -1619,7 +1640,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             
             if ([tag.tag rangeOfString:str].length) {
                 
-                return [UIImage imageNamed:@"游戏"];
+                return [UIImage imageNamed:@"game.png"];
             }
         }
     }
@@ -1630,7 +1651,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             
             if ([tag.tag rangeOfString:str].length) {
                 
-                return [UIImage imageNamed:@"手办"];
+                return [UIImage imageNamed:@"gk.png"];
             }
         }
     }
@@ -1641,23 +1662,29 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             
             if ([tag.tag rangeOfString:str].length) {
                 
-                return [UIImage imageNamed:@"变形金刚"];
+                return [UIImage imageNamed:@"transformer.png"];
             }
         }
     }
     
     if ([tag.tag rangeOfString:tagArray[10]].length) {
+        
         for (NSString *str in ironMan) {
+            
             if ([tag.tag rangeOfString:str].length) {
-                return [UIImage imageNamed:@"钢铁侠"];
+                
+                return [UIImage imageNamed:@"ironMan.png"];
             }
         }
     }
     
     if ([tag.tag rangeOfString:tagArray[11]].length) {
+        
         for (NSString *str in starWar) {
+            
             if ([tag.tag rangeOfString:str].length) {
-                return [UIImage imageNamed:@"星球大战"];
+                
+                return [UIImage imageNamed:@"starWar.png"];
             }
         }
     }

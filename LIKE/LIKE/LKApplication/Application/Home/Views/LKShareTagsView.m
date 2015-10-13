@@ -11,28 +11,31 @@
 
 @interface __LKTagItemView : UIView
 
-LC_PROPERTY(strong) LCUILabel * tagLabel;
-LC_PROPERTY(strong) LCUILabel * likesLabel;
+LC_PROPERTY(strong) LCUILabel *tagLabel;
+LC_PROPERTY(strong) LCUILabel *likesLabel;
+LC_PROPERTY(strong) LCUIImageView *lineView;
 
 @end
 
 @implementation __LKTagItemView
 
--(instancetype) init {
+- (instancetype)init {
+    
     if (self = [super init]) {
-        self.cornerRadius = 4;
+        self.cornerRadius = 6;
         self.layer.masksToBounds = NO;
         
         self.tagLabel = LCUILabel.view;
-        self.tagLabel.font = LK_FONT_B(11 * 2);
+        self.tagLabel.font = LK_FONT_B(22);
         self.tagLabel.textColor = [UIColor whiteColor];//LC_RGB(74, 74, 74);
         self.ADD(self.tagLabel);
         
+        self.lineView = LCUIImageView.view;
+        self.ADD(self.lineView);
+        
         self.likesLabel = LCUILabel.view;
-        self.likesLabel.font = LK_FONT_B(11 * 2);
+        self.likesLabel.font = LK_FONT_B(22);
         self.likesLabel.textColor = [UIColor whiteColor];
-        self.likesLabel.borderWidth = 1;
-        self.likesLabel.borderColor = [[UIColor whiteColor] colorWithAlphaComponent:0.4];
         self.likesLabel.textAlignment = UITextAlignmentCenter;
         self.likesLabel.layer.shouldRasterize = YES;
         self.ADD(self.likesLabel);
@@ -40,39 +43,41 @@ LC_PROPERTY(strong) LCUILabel * likesLabel;
     return self;
 }
 
--(void) setTagString:(NSString *)tagString likes:(NSNumber *)likes
-{
+- (void)setTagString:(NSString *)tagString likes:(NSNumber *)likes {
+
     self.tagLabel.text = tagString;
     self.tagLabel.FIT();
 
-    
-    CGFloat topPadding = 2. * 2;
-    CGFloat leftPadding = 9. * 2;
-    
+    CGFloat topPadding = 10;
+    CGFloat leftPadding = 18;
     
     self.tagLabel.viewFrameX = leftPadding;
-    self.tagLabel.viewFrameY = topPadding + 1.5;
+    self.tagLabel.viewFrameY = topPadding;
     
+    self.lineView.viewFrameHeight = 30;
+    self.lineView.viewFrameWidth = 2;
+    self.lineView.viewFrameX = self.tagLabel.viewRightX + 16;
+    self.lineView.viewFrameY = 10;
+    self.lineView.image = [[UIImage imageNamed:@"SeparateLine.png" useCache:YES] imageWithTintColor:[UIColor whiteColor]];
     self.likesLabel.text = LC_NSSTRING_FORMAT(@"%@", likes);
     self.likesLabel.FIT();
     
-    self.likesLabel.viewFrameX = self.tagLabel.viewRightX + leftPadding - 2;
-    self.likesLabel.viewFrameY = topPadding / 2. + 1;
-    self.likesLabel.viewFrameHeight = (self.tagLabel.viewFrameHeight + topPadding * 2.) - topPadding;
-    self.likesLabel.viewFrameWidth = self.likesLabel.viewFrameWidth < self.likesLabel.viewFrameHeight ? self.likesLabel.viewFrameHeight : self.likesLabel.viewFrameWidth;
-    self.likesLabel.cornerRadius = self.likesLabel.viewMidHeight;
+    self.likesLabel.viewFrameX = self.lineView.viewRightX + 16;
+    self.likesLabel.viewFrameY = self.tagLabel.viewFrameY;
+    self.likesLabel.viewFrameHeight = self.likesLabel.font.lineHeight;
+    CGSize likesLabelSize = [[likes stringValue] sizeWithFont:self.likesLabel.font byHeight:self.likesLabel.viewFrameHeight];
+    self.likesLabel.viewFrameWidth = likesLabelSize.width;
     
-    self.viewFrameWidth = self.likesLabel.viewRightX + topPadding;
-    self.viewFrameHeight = self.likesLabel.viewBottomY + topPadding;
+    self.viewFrameWidth = self.likesLabel.viewRightX + 18;
+    self.viewFrameHeight = 50;
     
-    self.cornerRadius = self.viewMidHeight;
+    self.cornerRadius = 6;
     self.layer.masksToBounds = NO;
     
     
     self.backgroundColor = LC_RGB(245, 240, 236);
     self.likesLabel.textColor = [LC_RGB(74, 74, 74) colorWithAlphaComponent:0.9];
     self.tagLabel.textColor = [LC_RGB(74, 74, 74) colorWithAlphaComponent:0.9];
-    self.likesLabel.borderColor = LC_RGB(220, 215, 209);
 }
 
 @end
@@ -82,16 +87,19 @@ LC_PROPERTY(strong) LCUILabel * likesLabel;
 
 @implementation LKShareTagsView
 
--(void) setTags:(NSMutableArray *)tags
-{
+- (void)setTags:(NSMutableArray *)tags {
+    
     _tags = tags;
     
     [self reloadData];
 }
 
--(void) reloadData
-{
+- (void)reloadData {
+
     CGFloat padding = 20 * self.proportion;
+    CGFloat leftPadding = 31 * self.proportion;
+    CGFloat topPadding = 26 * self.proportion;
+    CGFloat bottomPadding = 29 * self.proportion;
     
     [self removeAllSubviews];
     
@@ -101,17 +109,17 @@ LC_PROPERTY(strong) LCUILabel * likesLabel;
     });
     
     
-    __LKTagItemView * preItem = nil;
+    __LKTagItemView *preItem = nil;
     
-    for (NSInteger i = 0; i< self.tags.count; i++) {
+    for (NSInteger i = 0; i < self.tags.count; i++) {
         
-        LKTag * tag = self.tags[i];
+        LKTag *tag = self.tags[i];
         
-        __LKTagItemView * item = __LKTagItemView.view;
+        __LKTagItemView *item = __LKTagItemView.view;
         
         if (self.proportion) {
-            item.tagLabel.font = LK_FONT_B(20 * self.proportion);
-            item.likesLabel.font = LK_FONT_B(20 * self.proportion);
+            item.tagLabel.font = LK_FONT_B(22 * self.proportion);
+            item.likesLabel.font = LK_FONT_B(22 * self.proportion);
         }
 
         
@@ -121,14 +129,14 @@ LC_PROPERTY(strong) LCUILabel * likesLabel;
         
         if (!preItem) {
             
-            item.viewFrameX = padding;
-            item.viewFrameY = padding;
+            item.viewFrameX = leftPadding;
+            item.viewFrameY = topPadding;
         }
         else{
             
-            if ((preItem.viewRightX + padding + item.viewFrameWidth) * 640 / 414 > self.viewFrameWidth) {
+            if ((preItem.viewRightX + padding + item.viewFrameWidth + leftPadding) * 640 / 414 > self.viewFrameWidth) {
                 
-                item.viewFrameX = padding;
+                item.viewFrameX = leftPadding;
                 item.viewFrameY = preItem.viewBottomY + padding;
             }
             else{
@@ -146,9 +154,8 @@ LC_PROPERTY(strong) LCUILabel * likesLabel;
         self.viewFrameHeight = 0;
     }
     else{
-        self.viewFrameHeight = preItem.viewBottomY + padding;
+        self.viewFrameHeight = preItem.viewBottomY + bottomPadding;
     }
 }
-
 
 @end

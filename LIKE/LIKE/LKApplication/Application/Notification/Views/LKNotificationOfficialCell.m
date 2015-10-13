@@ -55,7 +55,7 @@
         
         
         self.contentImage = LCUIImageView.view;
-        self.contentImage.image = [UIImage imageNamed:@"二维码" useCache:YES];
+        self.contentImage.image = [UIImage imageNamed:@"QRCode.png" useCache:YES];
         self.contentImage.viewFrameX = self.titleLbl.viewFrameX;
         self.contentImage.viewFrameY = self.titleLbl.viewBottomY + 15;
         self.contentImage.viewFrameWidth = self.cellBackgroundView.viewFrameWidth - 15 * 2;

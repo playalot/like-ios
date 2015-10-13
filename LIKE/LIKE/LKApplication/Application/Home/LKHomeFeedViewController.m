@@ -560,7 +560,7 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
     
     if (reasonBtn.title != nil) {
         
-        if ([reasonBtn.title hasSuffix:LC_LO(@"  Like推荐")]) {
+        if ([reasonBtn.title hasSuffix:LC_LO(@"  like推荐")]) {
             [self editorPickRequest];
         } else {
             LKSearchResultsViewController *searchResultCtrl = [[LKSearchResultsViewController alloc] initWithSearchString:reasonBtn.title];

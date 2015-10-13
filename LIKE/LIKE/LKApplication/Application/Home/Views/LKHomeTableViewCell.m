@@ -25,7 +25,7 @@ LC_PROPERTY(strong) LCUIButton *friendshipButton;
 LC_PROPERTY(strong) LCUIActivityIndicatorView *loadingActivity;
 LC_PROPERTY(strong) LCUIButton *recommendedReason;
 LC_PROPERTY(strong) LCUIButton *recommendedReasonWithTag;
-LC_PROPERTY(strong) LCUIImageView *commonInterest;
+LC_PROPERTY(strong) LCUIButton *commonInterest;
 LC_PROPERTY(strong) UIView *blackMask;
 LC_PROPERTY(strong) UILabel *numLabel;
 LC_PROPERTY(strong) UIView *headerBack;
@@ -133,7 +133,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.recommendedReason.title = LC_LO(@"共同兴趣");
     self.recommendedReason.titleFont = LK_FONT(10);
     self.recommendedReason.titleColor = LC_RGB(151, 151, 151);
-    self.recommendedReason.buttonImage = [UIImage imageNamed:@"LittleTag" useCache:YES];
+    self.recommendedReason.buttonImage = [UIImage imageNamed:@"LittleTag.png" useCache:YES];
     self.recommendedReason.viewFrameHeight = LK_FONT(10).lineHeight;
     self.recommendedReason.viewFrameY = (54 - self.recommendedReason.viewFrameHeight) * 0.5;
     self.recommendedReason.viewFrameX = LC_DEVICE_WIDTH - self.recommendedReasonWithTag.viewFrameWidth - 15;
@@ -155,12 +155,13 @@ LC_IMP_SIGNAL(PushPostDetail);
     [self.recommendedReasonWithTag addTarget:self action:@selector(recommendedReasonBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     self.headerBack.ADD(self.recommendedReasonWithTag);
     
-    self.commonInterest = LCUIImageView.view;
+    self.commonInterest = LCUIButton.view;
     self.commonInterest.viewFrameWidth = 12;
     self.commonInterest.viewFrameHeight = 11;
-    self.commonInterest.viewCenterY = self.recommendedReasonWithTag.viewCenterY;
+    self.commonInterest.viewFrameY = self.recommendedReasonWithTag.viewFrameY + 1;
     self.commonInterest.viewFrameX = self.recommendedReasonWithTag.viewRightX + 2;
-    self.commonInterest.image = [UIImage imageNamed:@"CommonInterest.png" useCache:YES];
+    self.commonInterest.buttonImage = [UIImage imageNamed:@"CommonInterest.png" useCache:YES];
+    [self.commonInterest addTarget:self action:@selector(recommendedReasonBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     self.headerBack.ADD(self.commonInterest);
     
     self.tagsView = LKTagsView.view;
@@ -312,7 +313,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     };
     
     // 设置'推荐理由'相关属性
-    NSString * reason = [NSString stringWithFormat:@"RecommentReason%@", @(post.reason)];
+    NSString *reason = [NSString stringWithFormat:@"RecommentReason%@", @(post.reason)];
     
     self.recommendedReason.buttonImage = [self getIconImage:post.reason];
     self.recommendedReason.viewFrameWidth = 2000;
@@ -327,7 +328,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     
     if (self.recommendedReasonWithTag.hidden == YES) {
         self.recommendedReason.viewFrameY = (54 - self.recommendedReason.viewFrameHeight) * 0.5;
-        self.recommendedReasonWithTag.viewFrameY = CGRectGetMaxY(self.recommendedReason.frame) - 5;
+    } else {
         self.recommendedReasonWithTag.viewFrameX = CGRectGetMaxX(self.recommendedReason.frame) - self.recommendedReasonWithTag.viewFrameWidth - 14;
         self.commonInterest.viewFrameX = self.recommendedReasonWithTag.viewRightX + 2;
     }

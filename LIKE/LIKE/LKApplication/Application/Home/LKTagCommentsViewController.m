@@ -164,7 +164,7 @@ static NSString * __LKUserAddress = nil;
             self.tableView.viewFrameHeight = LC_DEVICE_HEIGHT + 20 - self.inputView.viewFrameHeight - [LCUIKeyBoard.singleton height] - 44;
         }];
         
-                [self.tableView scrollToBottomAnimated:YES];
+        [self.tableView scrollToBottomAnimated:NO];
         
         [self performSelector:@selector(setCanFirstResponder:) withObject:@(YES) afterDelay:0.5];
     };

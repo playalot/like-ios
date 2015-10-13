@@ -72,7 +72,7 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
     self.cartoonImageView.viewFrameWidth = cartoonImage.size.width;
     self.cartoonImageView.viewFrameHeight = cartoonImage.size.height;
     self.cartoonImageView.viewCenterX = self.tableView.viewCenterX;
-    self.cartoonImageView.viewCenterY = self.tableView.viewCenterY;
+    self.cartoonImageView.viewCenterY = self.tableView.viewCenterY - 20;
     self.cartoonImageView.image = cartoonImage;
     self.cartoonImageView.hidden = YES;
     self.tableView.ADD(self.cartoonImageView);
@@ -196,7 +196,6 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
 //            [detailViewController setPresendModelAnimationOpen];
         [self.navigationController pushViewController:detailViewController animated:YES];
 //            [self.navigationController presentViewController:LC_UINAVIGATION(detailViewController) animated:YES completion:nil];
-
 //            LKOfficialDetailViewController *detailCtrl = [[LKOfficialDetailViewController alloc] init];
 //            [self.navigationController pushViewController:detailCtrl animated:YES];
         

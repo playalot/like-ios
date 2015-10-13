@@ -13,11 +13,12 @@
 
 LC_PROPERTY(strong) LKNotification * notification;
 LC_PROPERTY(assign) CGFloat cellHeight;
+LC_PROPERTY(strong) LCUIImageView *preview;
 
 + (CGFloat)height:(LKNotification *)notification;
 
 LC_ST_SIGNAL(PushPostDetail);
-LC_PROPERTY(strong) LCUIImageView *preview;
+LC_ST_SIGNAL(PushUserCenter);
 
 @end
 

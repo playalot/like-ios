@@ -19,21 +19,17 @@ LC_PROPERTY(strong) LCUIImageView *icon;
 LC_PROPERTY(strong) LCUILabel *nameLabel;
 LC_PROPERTY(strong) LCUILabel *titleLabel;
 LC_PROPERTY(strong) LCUILabel *timeLabel;
-//LC_PROPERTY(strong) LCUIButton *tagButton;
 LC_PROPERTY(strong) LCUIButton *moreButton;
 LC_PROPERTY(strong) GBTagListView *tagListView;
 LC_PROPERTY(strong) UIView *line;
-
 //LC_PROPERTY(strong) LCUIImageView *preview;
-//LC_PROPERTY(strong) UIScrollView *morePreview;
 
 @end
 
 @implementation LKNotificationCell
 
-
 LC_IMP_SIGNAL(PushPostDetail);
-
+LC_IMP_SIGNAL(PushUserCenter);
 
 -(instancetype) initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -242,7 +238,7 @@ LC_IMP_SIGNAL(PushPostDetail);
         
         self.preview.hidden = NO;
 //        self.preview.url = ((LKPost *)notification.posts[0]).content;
-//        [self.preview sd_setImageWithURL:[NSURL URLWithString:((LKPost *)notification.post).thumbnail] placeholderImage:nil options:SDWebImageRetryFailed];
+        [self.preview sd_setImageWithURL:[NSURL URLWithString:((LKPost *)notification.post).thumbnail] placeholderImage:nil options:SDWebImageRetryFailed];
     }
     
         
@@ -282,7 +278,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     if([LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
         return;
     };
-    self.SEND(@"PushUserCenter").object = self.notification.user;
+    self.SEND(self.PushUserCenter).object = self.notification.user;
 }
 
 + (NSString *)getTitle:(LKNotification *)notification

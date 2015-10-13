@@ -187,7 +187,7 @@ LC_IMP_SIGNAL(PushUserCenter);
     } else {
         
         self.preview.hidden = NO;
-        [self.preview sd_setImageWithURL:[NSURL URLWithString:((LKPost *)notification.post).thumbnail] placeholderImage:nil];
+        [self.preview sd_setImageWithURL:[NSURL URLWithString:((LKPost *)notification.post).thumbnail] placeholderImage:nil options:SDWebImageRetryFailed];
     }
     
     if (notification.tags.count) {

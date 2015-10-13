@@ -19,10 +19,6 @@
 {
     if (self = [super init]) {
         
-//        UIView * view = UIView.view.WIDTH(LC_DEVICE_WIDTH).HEIGHT(1).COLOR([LKColor.color colorWithAlphaComponent:0.5]);
-//        self.ADD(view);
-        
-        
         self.backgroundColor = [UIColor whiteColor];
         self.viewFrameWidth = LC_DEVICE_WIDTH;
         self.viewFrameHeight = 44;

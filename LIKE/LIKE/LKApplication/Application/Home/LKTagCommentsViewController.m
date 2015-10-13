@@ -78,105 +78,48 @@ static NSString * __LKUserAddress = nil;
 
 -(instancetype) initWithTag:(LKTag *)tag
 {
-    if (self = [super initWithFrame:CGRectMake(0, 0, LC_DEVICE_WIDTH, LC_DEVICE_HEIGHT + 20)]) {
-        
+    self = [super init];
+    if (self) {
         self.tagValue = tag;
         self.datasource = [self.tagValue.comments mutableCopy];
-        
         self.locationManager = [LKLocationManager new];
-        
         [self.locationManager requestCurrentLocationWithBlock:^(CLLocation *location, AMapReGeocode *regeocode, NSError *error) {
-            
+    
             if (!error) {
-                
                 __LKUserAddress = regeocode.addressComponent.city.length ? regeocode.addressComponent.city : regeocode.addressComponent.province;
             }
             
         }];
         
         if (!self.tagValue.user) {
-            
             [self update];
         }
-        
-        [self buildUI];
-        
-        
-        // 获取评论列表
-        [self getCommentList];
-        
     }
     
     return self;
 }
 
--(void) buildUI
-{
-    self.header = LCUILabel.view;
-    self.header.frame = CGRectMake(0, 20, self.viewFrameWidth, 44);
-    self.header.textAlignment = UITextAlignmentCenter;
-    self.header.font = LK_FONT_B(16);
-    self.header.textColor = [UIColor whiteColor];
-    self.header.text = LC_LO(@"评论详情");
-    [self.header addTapGestureRecognizer:self selector:@selector(hide)];
-    self.ADD(self.header);
-    
-    
-    LCUIButton *backButton = LCUIButton.view;
-    backButton.viewFrameWidth = 54;
-    backButton.viewFrameHeight = 55 / 3 + 28;
-    backButton.viewFrameY = 20;
-    backButton.buttonImage = [UIImage imageNamed:@"NavigationBarDismiss.png" useCache:YES];
-    backButton.showsTouchWhenHighlighted = YES;
-    [backButton addTarget:self action:@selector(hide) forControlEvents:UIControlEventTouchUpInside];
-    backButton.tag = 1002;
-    [self addSubview:backButton];
-    
-    // 除去导航栏的view
-    self.blur = LCUIBlurView.view;
-    self.blur.viewFrameY = 44 + 20;
-    self.blur.viewFrameWidth = self.viewFrameWidth;
-    self.blur.viewFrameHeight = self.viewFrameHeight - 44 - 20;
-    self.blur.tintColor = LC_RGB(238, 238, 238);
-    self.ADD(self.blur);
-    
-    // 在blur中添加tableView
-    self.tableView = [[LCUITableView alloc] initWithFrame:CGRectZero];
-    self.tableView.frame = self.blur.bounds;
-//    self.tableView.viewFrameY += 20;
-    self.tableView.viewFrameHeight -= 64;
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.tableView.scrollsToTop = YES;
-    self.tableView.backgroundColor = LC_RGB(238, 238, 238);
-    self.blur.ADD(self.tableView);
+- (void)buildNavigationBar {
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
+    [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[UIImage imageNamed:@"NavigationBarBack.png" useCache:YES] selectImage:nil];
+    self.title = LC_LO(@"评论详情");
+}
 
-    
-    @weakly(self);
-    
-    // 下拉刷新
-    self.pullLoader = [[LCUIPullLoader alloc] initWithScrollView:self.tableView pullStyle:LCUIPullLoaderStyleHeader];
-    
-    [self.pullLoader setBeginRefresh:^(LCUIPullLoaderDiretion diretion) {
-        
-        @normally(self);
-        
-        [self loadData:diretion];
-        
-    }];
-    
-    
-//    [self loadData:LCUIPullLoaderDiretionTop];
-    
-    
+- (void)handleNavigationBarButton:(LCUINavigationBarButtonType)type {
+    if (type == LCUINavigationBarButtonTypeLeft) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
+- (void)buildInputView {
     // 添加输入框
     self.inputView = LKInputView.view;
-    self.inputView.viewFrameY = self.viewFrameHeight - self.inputView.viewFrameHeight;
+    self.inputView.viewFrameY = self.view.viewFrameHeight - self.inputView.viewFrameHeight - 64;
     self.inputView.dismissButton.title = LC_LO(@"发布");
     self.inputView.textField.placeholder = LC_LO(@"发表评论（最多300个字）");
-    self.ADD(self.inputView);
+    self.view.ADD(self.inputView);
     
+    @weakly(self);
     self.inputView.sendAction = ^(NSString * string){
         
         @normally(self);
@@ -195,17 +138,17 @@ static NSString * __LKUserAddress = nil;
         
         [self sendNewComment:string];
     };
-
+    
     
     self.inputView.willDismiss = ^(id value){
-      
+        
         @normally(self);
         
         self.replyUser = nil;
         self.inputView.textField.placeholder = LC_LO(@"发表评论（最多300个字）");
         
         [UIView animateWithDuration:0.25 animations:^{
-
+            
             self.tableView.viewFrameHeight = self.blur.viewFrameHeight - 44;
             
         }];
@@ -218,22 +161,59 @@ static NSString * __LKUserAddress = nil;
         self.canFirstResponder = @(NO);
         
         [UIView animateWithDuration:0.25 animations:^{
-           
             self.tableView.viewFrameHeight = LC_DEVICE_HEIGHT + 20 - self.inputView.viewFrameHeight - [LCUIKeyBoard.singleton height] - 44;
-            
         }];
         
-        [self.tableView scrollToBottomAnimated:YES];
+        [self.tableView scrollToBottomAnimated:NO];
         
         [self performSelector:@selector(setCanFirstResponder:) withObject:@(YES) afterDelay:0.5];
     };
+}
+
+- (void)buildUI {
+    [self buildNavigationBar];
+    
+    self.view.backgroundColor = LC_RGB(245, 245, 245);
+    
+    // 除去导航栏的view
+    self.blur = LCUIBlurView.view;
+    self.blur.viewFrameY = 0;
+    self.blur.viewFrameWidth = self.view.viewFrameWidth;
+    self.blur.viewFrameHeight = self.view.viewFrameHeight - 20 - 44;
+    self.blur.tintColor = LC_RGB(238, 238, 238);
+    self.view.ADD(self.blur);
+    
+    // 在blur中添加tableView
+    self.tableView = [[LCUITableView alloc] initWithFrame:CGRectZero];
+    self.tableView.frame = self.blur.bounds;
+    self.tableView.viewFrameHeight -= 64;
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.scrollsToTop = YES;
+    self.tableView.backgroundColor = LC_RGB(238, 238, 238);
+    self.blur.ADD(self.tableView);
+    
+    @weakly(self);
+    
+    // 下拉刷新
+    self.pullLoader = [[LCUIPullLoader alloc] initWithScrollView:self.tableView pullStyle:LCUIPullLoaderStyleHeader];
+    
+    [self.pullLoader setBeginRefresh:^(LCUIPullLoaderDiretion diretion) {
+        @normally(self);
+        [self loadData:diretion];
+    }];
+    
+    [self buildInputView];
 
     [self getTagUsers];
     [self loadData:LCUIPullLoaderDiretionTop];
+    
+    // 获取评论列表
+    [self getCommentList];
 }
 
-- (void)update
-{
+- (void)update {
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"mark/%@", self.tagValue.id]].AUTO_SESSION().GET_METHOD();
     
     //[interface addParameter:@"asc" key:@"order"];
@@ -264,8 +244,7 @@ static NSString * __LKUserAddress = nil;
  *
  *  @param comment 评论内容
  */
--(void) sendNewComment:(NSString *)comment
-{
+-(void) sendNewComment:(NSString *)comment {
     LKComment * commentObject = [[LKComment alloc] init];
     commentObject.user = LKLocalUser.singleton.user;
     commentObject.replyUser = self.replyUser;
@@ -278,9 +257,7 @@ static NSString * __LKUserAddress = nil;
     [self.datasource addObject:commentObject];
     
     [self.tableView reloadData];
-    [self.tableView scrollToBottomAnimated:YES];
-    
-    
+    [self.tableView scrollToBottomAnimated:NO];
     
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"mark/%@/comment", self.tagValue.id]].AUTO_SESSION().POST_METHOD();
     
@@ -383,81 +360,30 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     [self.inputView resignFirstResponder];
 }
 
--(void) showInViewController:(UIViewController *)viewController
-{
-    UIView * view = self.FIND(1002);
-    view.alpha = 0;
-    
-    self.header.alpha = 0;
-    
-    self.blur.viewFrameY = self.viewFrameHeight;
-    
-    [viewController.view addSubview:self];
-    
-    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:3 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        
-        view.alpha = 1;
-        
-        self.header.alpha = 1;
-        self.blur.viewFrameY = 44 + 20;
-        
-    } completion:^(BOOL finished) {
-        
-    }];
-    
+-(void) showInViewController:(UIViewController *)viewController {
 }
 
 /**
  *  点击header或后退按钮后执行,移除当前控制器
  */
--(void) hide
-{
-    self.tableView.editing = NO;
-    
-    if (self.willHide) {
-        self.willHide();
-    }
-    
-    [self.inputView resignFirstResponder];
-    
-    UIView * view = self.FIND(1002);
-    self.userInteractionEnabled = NO;
-    
-    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:3 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        
-        view.alpha = 0;
-        
-        self.header.alpha = 0;
-        self.blur.viewFrameY = self.viewFrameHeight;
-        self.inputView.viewFrameY = self.viewFrameHeight;
-        
-    } completion:^(BOOL finished) {
-        
-        [self removeFromSuperview];
-    }];
+-(void) hide {
 }
 
 #pragma mark -
 
--(NSInteger) numberOfSectionsInTableView:(LCUITableView *)tableView
-{
+-(NSInteger) numberOfSectionsInTableView:(LCUITableView *)tableView {
     return 2;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        
         return 1;
-    }
-    else{
-        
+    } else {
         return self.datasource.count;
     }
 }
 
-- (UITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         
         CGFloat leftPadding = 24;
@@ -559,7 +485,6 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         time.text = [LKTime dateNearByTimestamp:self.tagValue.createTime];
         name.text = [NSString stringWithFormat:@"%@  %@ likes", tagUser.name, tagUser.likes];
         
-        
         // 添加一个scrollView用来显示标签用户
         UIScrollView *tagUserView = UIScrollView.view;
         tagUserView.viewFrameX = item.viewFrameX;
@@ -581,46 +506,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             line2.viewFrameWidth = LC_DEVICE_WIDTH;
             cell.ADD(line2);
         }
-
         
-//        LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"mark/%@/likes",self.tagValue.id]].AUTO_SESSION();
-//        
-//        @weakly(self);
-//        
-//        [self request:interface complete:^(LKHttpRequestResult *result) {
-//            
-//            @normally(self);
-//            
-//            if (result.state == LKHttpRequestStateFinished) {
-//                
-//                NSArray *usersDic = result.json[@"data"][@"likes"];
-//                
-//                NSMutableArray *users = [NSMutableArray array];
-//                
-//                for (NSDictionary *dict in usersDic) {
-//                    
-//                    [users addObject:[LKUser objectFromDictionary:dict[@"user"]]];
-//                }
-//                
-//                
-//                // 添加子控件
-//                self.tagUsers = users;
-//
-//                // 添加子控件
-//                [self addChildViews:tagUserView];
-//            
-//                // 判断是否是用户或者标签所有者
-//                BOOL canDelete = [self userOrTagOwner];
-//                
-//                self.deleteBtn.hidden = !canDelete;
-//
-//            }
-//            else if (result.state == LKHttpRequestStateFailed){
-//                
-//            }
-//            
-//        }];
-
         return cell;
         
     } else {
@@ -851,7 +737,6 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             [self replyUserAction:comment.user];
         }
         else{
-            
             [self inputBecomeFirstResponder];
         }
     }
@@ -861,24 +746,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
  *  设置可编辑的行
  */
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     return indexPath.section == 1 ? YES : NO;
-    
-//    if (indexPath.section == 1) {
-//        
-//        NSInteger index = indexPath.row;
-//        
-//        if ([self publisherOrCommentatorWithIndex:index]) {
-//            
-//            return YES;
-//        } else {
-//            
-//            return NO;
-//        }
-//    } else {
-//        
-//        return NO;
-//    }
 }
 
 /**
@@ -900,8 +768,6 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             // 删除评论
             // 发送请求,删除数据
             [self deletCommentWithIndex:index];
-            
-//            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
             
         } else {
             
@@ -992,8 +858,6 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             // 刷新
             [self.pullLoader startRefresh];
             
-//            [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:1]] withRowAnimation:UITableViewRowAnimationTop];
-            
         } else if (result.state == LKHttpRequestStateFailed){
             
             [self showTopMessageErrorHud:result.error];
@@ -1005,7 +869,6 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if (self.canFirstResponder.boolValue) {
-        
         [self.inputView resignFirstResponder];
     }
 }

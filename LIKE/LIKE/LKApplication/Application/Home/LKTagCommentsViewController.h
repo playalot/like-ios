@@ -15,7 +15,7 @@ LC_BLOCK(void, LKTagCommentsViewControllerWillHide, ());
 
 @protocol LKTagCommentsViewControllerDelegate;
 
-@interface LKTagCommentsViewController : UIView
+@interface LKTagCommentsViewController : LCUIViewController
 
 LC_PROPERTY(copy) LKTagCommentsViewControllerWillHide willHide;
 

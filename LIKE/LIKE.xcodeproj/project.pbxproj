@@ -167,6 +167,9 @@
 		134F62671BCCE8ED007D5187 /* photography@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F625B1BCCE8ED007D5187 /* photography@3x.png */; settings = {ASSET_TAGS = (); }; };
 		134F626A1BCCEAFC007D5187 /* ShareIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F62681BCCEAFC007D5187 /* ShareIcon@3x.png */; settings = {ASSET_TAGS = (); }; };
 		134F626B1BCCEAFC007D5187 /* ShareIconSelect@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F62691BCCEAFC007D5187 /* ShareIconSelect@3x.png */; settings = {ASSET_TAGS = (); }; };
+		134F626F1BCCFC46007D5187 /* AlreadyFocusWrite@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F626C1BCCFC46007D5187 /* AlreadyFocusWrite@3x.png */; settings = {ASSET_TAGS = (); }; };
+		134F62701BCCFC46007D5187 /* EachOtherFocusWrite@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F626D1BCCFC46007D5187 /* EachOtherFocusWrite@3x.png */; settings = {ASSET_TAGS = (); }; };
+		134F62711BCCFC46007D5187 /* FocusWirte@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F626E1BCCFC46007D5187 /* FocusWirte@3x.png */; settings = {ASSET_TAGS = (); }; };
 		134F929F1AFCB77400784185 /* LikesPage@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134F929E1AFCB77400784185 /* LikesPage@3x.png */; };
 		134F92A21AFCB84B00784185 /* LKLikesPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 134F92A11AFCB84B00784185 /* LKLikesPage.m */; };
 		1351B2C41BBA5BC3004DFEEC /* LikeIconRed@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1351B2BD1BBA5BC3004DFEEC /* LikeIconRed@3x.png */; settings = {ASSET_TAGS = (); }; };
@@ -770,9 +773,6 @@
 		13D9BF2C1AEB997E0020C94F /* Pro.png in Resources */ = {isa = PBXBuildFile; fileRef = 13D9BF231AEB997E0020C94F /* Pro.png */; };
 		13D9BF2D1AEB997E0020C94F /* Vivid.png in Resources */ = {isa = PBXBuildFile; fileRef = 13D9BF241AEB997E0020C94F /* Vivid.png */; };
 		13DA0FC61AEB8AFE005B9476 /* CameraFocus@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13DA0FC51AEB8AFE005B9476 /* CameraFocus@3x.png */; };
-		13DEEBF91AE75585005E01A6 /* AlreadyFocusWrite@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13DEEBF61AE75585005E01A6 /* AlreadyFocusWrite@3x.png */; };
-		13DEEBFA1AE75585005E01A6 /* EachOtherFocusWrite@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13DEEBF71AE75585005E01A6 /* EachOtherFocusWrite@3x.png */; };
-		13DEEBFB1AE75585005E01A6 /* FocusWirte@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13DEEBF81AE75585005E01A6 /* FocusWirte@3x.png */; };
 		13DEEBFE1AE755C0005E01A6 /* LKFriendshipModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13DEEBFD1AE755C0005E01A6 /* LKFriendshipModel.m */; };
 		13DEEC011AE7723F005E01A6 /* LKSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13DEEC001AE7723F005E01A6 /* LKSettingsViewController.m */; };
 		13DEEC131AE789E6005E01A6 /* LC_ios7_navbar_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13DEEC091AE789E6005E01A6 /* LC_ios7_navbar_bg@2x.png */; };
@@ -1160,6 +1160,9 @@
 		134F625B1BCCE8ED007D5187 /* photography@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photography@3x.png"; sourceTree = "<group>"; };
 		134F62681BCCEAFC007D5187 /* ShareIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ShareIcon@3x.png"; sourceTree = "<group>"; };
 		134F62691BCCEAFC007D5187 /* ShareIconSelect@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ShareIconSelect@3x.png"; sourceTree = "<group>"; };
+		134F626C1BCCFC46007D5187 /* AlreadyFocusWrite@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AlreadyFocusWrite@3x.png"; sourceTree = "<group>"; };
+		134F626D1BCCFC46007D5187 /* EachOtherFocusWrite@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "EachOtherFocusWrite@3x.png"; sourceTree = "<group>"; };
+		134F626E1BCCFC46007D5187 /* FocusWirte@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FocusWirte@3x.png"; sourceTree = "<group>"; };
 		134F929E1AFCB77400784185 /* LikesPage@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LikesPage@3x.png"; sourceTree = "<group>"; };
 		134F92A01AFCB84B00784185 /* LKLikesPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKLikesPage.h; sourceTree = "<group>"; };
 		134F92A11AFCB84B00784185 /* LKLikesPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKLikesPage.m; sourceTree = "<group>"; };
@@ -2337,9 +2340,6 @@
 		13D9BF231AEB997E0020C94F /* Pro.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pro.png; sourceTree = "<group>"; };
 		13D9BF241AEB997E0020C94F /* Vivid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Vivid.png; sourceTree = "<group>"; };
 		13DA0FC51AEB8AFE005B9476 /* CameraFocus@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraFocus@3x.png"; sourceTree = "<group>"; };
-		13DEEBF61AE75585005E01A6 /* AlreadyFocusWrite@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AlreadyFocusWrite@3x.png"; sourceTree = "<group>"; };
-		13DEEBF71AE75585005E01A6 /* EachOtherFocusWrite@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "EachOtherFocusWrite@3x.png"; sourceTree = "<group>"; };
-		13DEEBF81AE75585005E01A6 /* FocusWirte@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FocusWirte@3x.png"; sourceTree = "<group>"; };
 		13DEEBFC1AE755C0005E01A6 /* LKFriendshipModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKFriendshipModel.h; sourceTree = "<group>"; };
 		13DEEBFD1AE755C0005E01A6 /* LKFriendshipModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKFriendshipModel.m; sourceTree = "<group>"; };
 		13DEEBFF1AE7723F005E01A6 /* LKSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKSettingsViewController.h; sourceTree = "<group>"; };
@@ -5101,9 +5101,9 @@
 				130CF59A1BB00CD8002F4189 /* segment_follow@3x.png */,
 				130CF59B1BB00CD8002F4189 /* segment_photo@3x.png */,
 				1388B4F61B00C0DD006F36AB /* SettingNick@3x.png */,
-				13DEEBF61AE75585005E01A6 /* AlreadyFocusWrite@3x.png */,
-				13DEEBF71AE75585005E01A6 /* EachOtherFocusWrite@3x.png */,
-				13DEEBF81AE75585005E01A6 /* FocusWirte@3x.png */,
+				134F626C1BCCFC46007D5187 /* AlreadyFocusWrite@3x.png */,
+				134F626D1BCCFC46007D5187 /* EachOtherFocusWrite@3x.png */,
+				134F626E1BCCFC46007D5187 /* FocusWirte@3x.png */,
 				13E1A2CD1AE644C200E24C3C /* AlreadyFocusGray@3x.png */,
 				13E1A2CE1AE644C200E24C3C /* EachOtherFocusGray@3x.png */,
 				13E1A2CF1AE644C200E24C3C /* FocusGray@3x.png */,
@@ -5649,7 +5649,6 @@
 				133972E81BC91BCB00D5977F /* tabbar_notification_selected@2x.png in Resources */,
 				134F62211BCB56E7007D5187 /* PhoneIcon@3x.png in Resources */,
 				134F622E1BCB57F3007D5187 /* SettingBinding@3x.png in Resources */,
-				13DEEBFB1AE75585005E01A6 /* FocusWirte@3x.png in Resources */,
 				134F62231BCB56E7007D5187 /* VisitorIcon@3x.png in Resources */,
 				1351B2C41BBA5BC3004DFEEC /* LikeIconRed@3x.png in Resources */,
 				133972ED1BC91BCB00D5977F /* tabbar_userCenter@2x.png in Resources */,
@@ -5737,7 +5736,6 @@
 				1388B6B31B34272A006ACA44 /* CameraRollIcon@3x.png in Resources */,
 				1339730D1BC9474300D5977F /* WeChatFriendIcon@3x.png in Resources */,
 				138EDE431AD7B0A30020957C /* web.bundle in Resources */,
-				13DEEBF91AE75585005E01A6 /* AlreadyFocusWrite@3x.png in Resources */,
 				134F622C1BCB57F3007D5187 /* DeleteCache@3x.png in Resources */,
 				133972DB1BC8FE2B00D5977F /* CommonInterest@2x.png in Resources */,
 				1388B4FE1B01EFFB006F36AB /* FocusLG@3x.png in Resources */,
@@ -5778,6 +5776,7 @@
 				133A31851B5D0D3400AB74A4 /* SearchPlaceholderIcon@3x.png in Resources */,
 				13D9BF251AEB997E0020C94F /* Ansel.png in Resources */,
 				1387C3521B31703300B065A7 /* MobileIcon@3x.png in Resources */,
+				134F626F1BCCFC46007D5187 /* AlreadyFocusWrite@3x.png in Resources */,
 				133972E91BC91BCB00D5977F /* tabbar_notification@2x.png in Resources */,
 				1351B2D21BBA8AFE004DFEEC /* CancelSubscribe@3x.png in Resources */,
 				13DEEC191AE789E6005E01A6 /* LC_WebReload.png in Resources */,
@@ -5824,10 +5823,11 @@
 				133A31831B5D09C500AB74A4 /* CollectionIcon@3x.png in Resources */,
 				134F624D1BCCBACE007D5187 /* QRCode@3x.png in Resources */,
 				130F45CF1BB5058700C32A86 /* Location@3x.png in Resources */,
-				13DEEBFA1AE75585005E01A6 /* EachOtherFocusWrite@3x.png in Resources */,
 				13925A931B1477D2004D0656 /* NavBarIconSearchBar_blue@2x.png in Resources */,
 				138EDE041AD7B0A30020957C /* LOGO.txt in Resources */,
+				134F62701BCCFC46007D5187 /* EachOtherFocusWrite@3x.png in Resources */,
 				134F62241BCB56E7007D5187 /* WeChatLogin@3x.png in Resources */,
+				134F62711BCCFC46007D5187 /* FocusWirte@3x.png in Resources */,
 				133972FF1BC945F200D5977F /* LittleSP@3x.png in Resources */,
 				1357480A1BA05A7B00855603 /* 1334.jpg in Resources */,
 				1387C3501B316CC400B065A7 /* FacebookIcon@3x.png in Resources */,

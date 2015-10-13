@@ -131,10 +131,10 @@ LC_IMP_SIGNAL(PushPostDetail);
     // 推荐理由
     self.recommendedReason = LCUIButton.view;
     self.recommendedReason.title = LC_LO(@"共同兴趣");
-    self.recommendedReason.titleFont = LK_FONT(13);
+    self.recommendedReason.titleFont = LK_FONT(10);
     self.recommendedReason.titleColor = LC_RGB(151, 151, 151);
     self.recommendedReason.buttonImage = [UIImage imageNamed:@"LittleTag" useCache:YES];
-    self.recommendedReason.viewFrameHeight = LK_FONT(13).lineHeight;
+    self.recommendedReason.viewFrameHeight = LK_FONT(10).lineHeight;
     self.recommendedReason.viewFrameY = (54 - self.recommendedReason.viewFrameHeight) * 0.5;
     self.recommendedReason.viewFrameX = LC_DEVICE_WIDTH - self.recommendedReasonWithTag.viewFrameWidth - 15;
     self.recommendedReason.titleEdgeInsets = UIEdgeInsetsMake(1, 0, 0, 0);

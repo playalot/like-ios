@@ -69,7 +69,8 @@ LC_PROPERTY(strong) UIView *wastedView;
     [super viewDidLoad];
     
     self.deviceOrientation = UIDeviceOrientationPortrait;
-    
+    // 交叉溶解样式
+    self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self observeNotification:LKCameraViewControllerDismiss];
     [self observeNotification:UIDeviceOrientationDidChangeNotification];
     
@@ -486,8 +487,8 @@ LC_PROPERTY(strong) UIView *wastedView;
 
 -(void) finished
 {
-//    [self dismissViewControllerAnimated:YES completion:nil];
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
+//    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)switchFilterAtIndex:(NSInteger)index

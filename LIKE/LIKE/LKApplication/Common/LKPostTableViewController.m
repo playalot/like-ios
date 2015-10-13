@@ -84,9 +84,7 @@ LC_IMP_SIGNAL(UnfavouritePost);
 
 - (void)buildUI {
     self.view.backgroundColor = LKColor.backgroundColor;
-    
     [self setNavigationBarHidden:NO animated:YES];
-    
     [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[UIImage imageNamed:@"NavigationBarBack.png" useCache:YES] selectImage:nil];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
     
@@ -296,7 +294,6 @@ LC_IMP_SIGNAL(UnfavouritePost);
     };
     
     [cell cellOnTableView:self.tableView didScrollOnView:self.view];
-    
     return cell;
 }
 

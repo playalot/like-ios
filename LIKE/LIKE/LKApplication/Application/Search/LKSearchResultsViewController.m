@@ -24,8 +24,6 @@ LC_PROPERTY(getter=isSubscribed) BOOL subscribed;
 
 LC_PROPERTY(strong) NSNumber *timestamp;
 
-LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
-
 @end
 
 @implementation LKSearchResultsViewController
@@ -294,14 +292,14 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 }
 
 LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
-    self.browsingViewController = [[LKPostTableViewController alloc] init];
-    self.browsingViewController.delegate = self;
-    self.browsingViewController.datasource = self.datasource;
-    self.browsingViewController.currentIndex = [self.datasource indexOfObject:signal.object];
-    self.browsingViewController.title = self.searchString;
-    [self.browsingViewController watchForChangeOfDatasource:self dataSourceKey:@"datasource"];
-    [self.browsingViewController refresh];
-    [self.navigationController pushViewController:self.browsingViewController animated:YES];
+    LKPostTableViewController *browsingViewController = [[LKPostTableViewController alloc] init];
+    browsingViewController.delegate = self;
+    browsingViewController.datasource = self.datasource;
+    browsingViewController.currentIndex = [self.datasource indexOfObject:signal.object];
+    browsingViewController.title = self.searchString;
+    [browsingViewController watchForChangeOfDatasource:self dataSourceKey:@"datasource"];
+    [browsingViewController refresh];
+    [self.navigationController pushViewController:browsingViewController animated:YES];
 }
 
 @end

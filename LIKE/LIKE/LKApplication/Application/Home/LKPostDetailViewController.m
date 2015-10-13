@@ -843,23 +843,20 @@ LC_PROPERTY(assign) BOOL favorited;
     if(![LKLoginViewController needLoginOnViewController:self]){
         
         [self.inputView resignFirstResponder];
-        
         LKTagCommentsViewController * comments = [[LKTagCommentsViewController alloc] initWithTag:tag];
-        
         // 传递发布者模型数据
         comments.publisher = self.post;
         // 设置代理
         comments.delegate = self;
         self.tag = tag;
         
-        [comments showInViewController:self];
+        [self.navigationController pushViewController:comments animated:YES];
         
         [comments performSelector:@selector(inputBecomeFirstResponder) withObject:nil afterDelay:0.5];
         
         [self hideMoreButton:YES];
         
         comments.willHide = ^(){
-            
             [self hideMoreButton:NO];
             [self.tableView reloadData];
         };

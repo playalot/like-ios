@@ -342,6 +342,7 @@ LC_PROPERTY(strong) UIView *wastedView;
     
     
     
+    NSArray *filterImages = LKFilterManager.singleton.allFilterImage;
     NSArray * filterNames = LKFilterManager.singleton.allFilterNames;
     
     // filters...
@@ -350,7 +351,7 @@ LC_PROPERTY(strong) UIView *wastedView;
     
     [filterScrollView addFilterName:LC_LO(@"默认") filterImage:[UIImage imageNamed:@"FilterPreview.jpg" useCache:YES]];
 
-    for (NSInteger i = 1; i< filterNames.count ; i++) {
+    for (NSInteger i = 1; i<= filterImages.count ; i++) {
         
         FastttFilter * fastFilter = [FastttFilter filterWithLookupImage:LKFilterManager.singleton.allFilterImage[i - 1]];
         
@@ -416,6 +417,18 @@ LC_PROPERTY(strong) UIView *wastedView;
         anim.repeatCount = 3;
         
         [self.prohibitionView.layer addAnimation:anim forKey:nil];
+        
+        self.flashButton.userInteractionEnabled = NO;
+        self.filterScrollView.userInteractionEnabled = NO;
+        self.photosButton.userInteractionEnabled = NO;
+        self.takePhotoButton.userInteractionEnabled = NO;
+        self.finishedButton.userInteractionEnabled = NO;
+    } else {
+        self.flashButton.userInteractionEnabled = YES;
+        self.filterScrollView.userInteractionEnabled = YES;
+        self.photosButton.userInteractionEnabled = YES;
+        self.takePhotoButton.userInteractionEnabled = YES;
+        self.finishedButton.userInteractionEnabled = YES;
     }
 //    FastttCameraDevice cameraDevice;
 //    
@@ -516,15 +529,18 @@ LC_PROPERTY(strong) UIView *wastedView;
         return;
     }
     
-    if (self.filterIndex == index - 2) {
+    NSArray *filterNames = LKFilterManager.singleton.allFilterNames;
+    
+    if (self.filterIndex == filterNames.count - 2) {
         
         self.wastedView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Wasted2" useCache:YES]];
         self.wastedView.viewFrameX = 0;
+        self.wastedView.viewFrameWidth = self.fastCamera.view.viewFrameWidth;
         self.wastedView.viewFrameY = (self.fastCamera.view.viewFrameHeight - self.wastedView.viewFrameHeight) * 0.5;
         self.fastCamera.view.ADD(self.wastedView);
     }
     
-    if (self.filterIndex == index - 1) {
+    if (self.filterIndex == filterNames.count - 1) {
         
         self.gtaView1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Gta-driving.png" useCache:YES]];
         self.gtaView1.viewFrameX = 10;
@@ -532,7 +548,7 @@ LC_PROPERTY(strong) UIView *wastedView;
         self.fastCamera.view.ADD(self.gtaView1);
     }
     
-    if (self.filterIndex == index) {
+    if (self.filterIndex == filterNames.count) {
         
         self.gtaView2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Gta-walking.png" useCache:YES]];
         self.gtaView2.viewFrameX = 10;

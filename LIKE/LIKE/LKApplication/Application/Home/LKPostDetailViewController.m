@@ -855,24 +855,17 @@ LC_PROPERTY(assign) BOOL favorited;
 
 #pragma mark - ***** LKTagCommentsViewControllerDelegate *****
 - (void)tagCommentsViewController:(LKTagCommentsViewController *)ctrl didClickedDeleteBtn:(LCUIButton *)deleteBtn {
-    
     for (LKTag *tag in self.tagsListModel.tags) {
         
         if ([self.tag.tag isEqualToString:tag.tag]) {
-            
             [self.tagsListModel.tags removeObject:tag];
-            
             // 调用代理
             self.post.tags = self.tagsListModel.tags;
             if (self.delegate && [self.delegate respondsToSelector:@selector(postDetailViewController:didUpdatedPost:)]) {
                 [self.delegate postDetailViewController:self didUpdatedPost:self.post];
             }
-            
             // 刷新数据
-//            [self.tableView beginUpdates];
             [self.tableView reloadData];
-//            [self.tableView endUpdates];
-            
             break;
         }
     }

@@ -125,7 +125,7 @@ LC_PROPERTY(strong) NSMutableArray *datasource;
     self.cartoonImageView.viewFrameWidth = 169;
     self.cartoonImageView.viewFrameHeight = 245;
     self.cartoonImageView.viewCenterX = self.tableView.viewCenterX;
-    self.cartoonImageView.viewFrameY = 52 + 48;
+    self.cartoonImageView.viewFrameY = 52;
     self.tableView.ADD(self.cartoonImageView);
     self.cartoonImageView.hidden = YES;
     
@@ -290,10 +290,6 @@ LC_PROPERTY(strong) NSMutableArray *datasource;
     self.currentType = LKUserCenterModelTypePhotos;
     self.pullLoader.canLoadMore = [self.userCenterModel canLoadMoreWithType:self.currentType];
     [self loadData:self.currentType diretion:LCUIPullLoaderDiretionTop];
-    
-//    [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFocus uid:self.user.id];
-//    [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFans uid:self.user.id];
-//    [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFavor uid:self.user.id];
     
     self.userInfoModel.requestFinished = ^(LKHttpRequestResult * result, NSString * error){
         @normally(self);

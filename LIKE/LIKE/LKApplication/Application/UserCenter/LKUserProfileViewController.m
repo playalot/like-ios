@@ -119,7 +119,7 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
     self.cartoonImageView.viewFrameHeight = 245;
     self.cartoonImageView.viewCenterX = self.tableView.viewCenterX;
 //    self.cartoonImageView.viewCenterY = self.tableView.viewCenterY;
-    self.cartoonImageView.viewFrameY = 52 + 20;
+    self.cartoonImageView.viewFrameY = 52;
     self.tableView.ADD(self.cartoonImageView);
     self.cartoonImageView.hidden = YES;
     

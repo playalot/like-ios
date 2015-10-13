@@ -152,18 +152,18 @@ LC_PROPERTY(strong) UIView * tipLine;
             } else {
                 line += 1;
             }
-            newItem.frame = CGRectMake(leftMargin + (page * self.viewFrameWidth), line * topPadding + topMargin + line * lastItem.viewFrameHeight + 2, newItem.viewFrameWidth, newItem.viewFrameHeight);
+            newItem.frame = CGRectMake(leftMargin + (page * self.viewFrameWidth) + 16, line * topPadding + topMargin + line * lastItem.viewFrameHeight + 2 - 16, newItem.viewFrameWidth, newItem.viewFrameHeight);
         } else {
-            newItem.frame = CGRectMake(lastItem.viewFrameX + lastItem.viewFrameWidth + leftPadding, line * topPadding + topMargin + line * lastItem.viewFrameHeight + 2, newItem.viewFrameWidth, newItem.viewFrameHeight);
+            newItem.frame = CGRectMake(lastItem.viewFrameX + lastItem.viewFrameWidth + leftPadding + 16, line * topPadding + topMargin + line * lastItem.viewFrameHeight + 2 - 16, newItem.viewFrameWidth, newItem.viewFrameHeight);
         }
         
     }
     
-    newItem.viewFrameX = self.viewFrameWidth - newItem.viewFrameWidth - 10;
+    newItem.viewFrameX = self.viewFrameWidth - newItem.viewFrameWidth - 10 + 16;
     [newItem addTapGestureRecognizer:self selector:@selector(newTagAction)];
     lastItem = (LKTagItemView *)newItem;
 
-    CGFloat height = lastItem.viewBottomY + topMargin;
+    CGFloat height = lastItem.viewBottomY + topMargin - 16;
     maxHeight = height > maxHeight ? height : maxHeight;
     
     self.ADD(newItem);
@@ -211,11 +211,13 @@ LC_PROPERTY(strong) UIView * tipLine;
     UIView *newTagView = UIView.view;
     UIImage *icon = [[UIImage imageNamed:@"AddNewTag.png" useCache:YES] imageWithTintColor:LKColor.color];
     LCUIImageView *imageView = [LCUIImageView viewWithImage:icon];
+    imageView.viewFrameX = 16;
+    imageView.viewFrameY = 16;
     imageView.viewFrameHeight = 24;
     imageView.viewFrameWidth = 24;
     newTagView.ADD(imageView);
-    newTagView.viewFrameWidth = imageView.viewFrameWidth;
-    newTagView.viewFrameHeight = imageView.viewFrameHeight;
+    newTagView.viewFrameWidth = imageView.viewFrameWidth + 32;
+    newTagView.viewFrameHeight = imageView.viewFrameHeight + 32;
     return newTagView;
 }
 

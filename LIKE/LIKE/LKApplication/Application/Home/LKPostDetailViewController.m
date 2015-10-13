@@ -822,7 +822,7 @@ LC_PROPERTY(assign) BOOL favorited;
                 if (result.state == LKHttpRequestStateFinished) {
                     
                     [self dismissOrPopViewController];
-                    //
+                    
                     [self postNotification:LKHomeViewControllerReloadingData];
                     [self postNotification:LKUserCenterViewControllerReloadingData];
                 }

@@ -463,13 +463,11 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         LCUILabel *name = cell.FIND(1004);
         
         if (item) {
-            
             [item removeFromSuperview];
             item = nil;
         }
         
         if (self.tagValue.tag.length) {
-        
             item = LKTagItemView.view;
             item.tag = 1002;
             cell.ADD(item);

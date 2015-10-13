@@ -841,7 +841,6 @@ LC_PROPERTY(assign) BOOL favorited;
 -(void) _beginComment:(LKTag *)tag {
     // check
     if(![LKLoginViewController needLoginOnViewController:self]){
-        
         [self.inputView resignFirstResponder];
         LKTagCommentsViewController * comments = [[LKTagCommentsViewController alloc] initWithTag:tag];
         // 传递发布者模型数据
@@ -849,41 +848,24 @@ LC_PROPERTY(assign) BOOL favorited;
         // 设置代理
         comments.delegate = self;
         self.tag = tag;
-        
         [self.navigationController pushViewController:comments animated:YES];
-        
         [comments performSelector:@selector(inputBecomeFirstResponder) withObject:nil afterDelay:0.5];
-        
-        [self hideMoreButton:YES];
-        
-        comments.willHide = ^(){
-            [self hideMoreButton:NO];
-            [self.tableView reloadData];
-        };
     }
-
 }
 
 #pragma mark - ***** LKTagCommentsViewControllerDelegate *****
 - (void)tagCommentsViewController:(LKTagCommentsViewController *)ctrl didClickedDeleteBtn:(LCUIButton *)deleteBtn {
-    
     for (LKTag *tag in self.tagsListModel.tags) {
         
         if ([self.tag.tag isEqualToString:tag.tag]) {
-            
             [self.tagsListModel.tags removeObject:tag];
-            
             // 调用代理
             self.post.tags = self.tagsListModel.tags;
             if (self.delegate && [self.delegate respondsToSelector:@selector(postDetailViewController:didUpdatedPost:)]) {
                 [self.delegate postDetailViewController:self didUpdatedPost:self.post];
             }
-            
             // 刷新数据
-//            [self.tableView beginUpdates];
             [self.tableView reloadData];
-//            [self.tableView endUpdates];
-            
             break;
         }
     }
@@ -1429,10 +1411,6 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     
     // 二维码
     LCUIImageView *qrCodeView = LCUIImageView.view;
-//    qrCodeView.viewFrameWidth = 83 * layoutScale;
-//    qrCodeView.viewFrameHeight = 83 * layoutScale;
-    //    qrCodeView.viewFrameX = image.size.width - qrCodeView.viewFrameWidth - 22 * layoutScale;
-    //    qrCodeView.viewFrameY = CGRectGetMaxY(tagsView.frame) + 30;
     qrCodeView.viewFrameWidth = 46 * layoutScale;
     qrCodeView.viewFrameHeight = 46 * layoutScale;
     qrCodeView.viewFrameX = belowView.viewFrameWidth - (21 + 9 + 46 * 2) * layoutScale;
@@ -1487,11 +1465,8 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     
     interestView.image = interestImage;
     
-    
-//    bottomView.viewFrameHeight = qrCodeView.viewBottomY + 22 * layoutScale;
     bottomView.viewFrameHeight = belowView.viewBottomY;
     bottomView.viewFrameWidth = image.size.width;
-    
     
     UIView *background = UIView.view;
     background.backgroundColor = [UIColor whiteColor];
@@ -1509,17 +1484,9 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     
     UIGraphicsEndImageContext();
     
-                                
     image = [image addMaskImage:tagImage
                       imageSize:LC_SIZE(image.size.width, image.size.height + tagImage.size.height - headWidth / 2)
                          inRect:LC_RECT(0, image.size.height - headWidth / 2, bottomView.viewFrameWidth, bottomView.viewFrameHeight)];
-    
-    
-//    UIImage *icon = [[UIImage imageNamed:@"LikeIconSmall.png" useCache:NO] scaleToBeWidth:33 * proportion];
-//    
-//    image = [image addMaskImage:icon
-//                      imageSize:image.size
-//                         inRect:LC_RECT(image.size.width - icon.size.width - 20, 20, icon.size.width, icon.size.height)];
     
     return image;
 }

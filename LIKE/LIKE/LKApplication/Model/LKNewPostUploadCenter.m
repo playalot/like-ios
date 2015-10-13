@@ -108,9 +108,9 @@
 
 -(void) post:(NSString *)imageKey jsonTags:(NSArray *)jsonTags posting:(LKPosting *)posting
 {
-    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"post"].AUTO_SESSION().POST_METHOD();
+    LKHttpRequestInterface *interface = [LKHttpRequestInterface interfaceType:@"post"].AUTO_SESSION().POST_METHOD();
     
-    [interface addParameter:imageKey key:@"content"];
+    [interface addParameter:imageKey key:@"preview"];
     [interface addParameter:@"PHOTO"  key:@"type"];
     [interface addParameter:jsonTags key:@"tags"];
     

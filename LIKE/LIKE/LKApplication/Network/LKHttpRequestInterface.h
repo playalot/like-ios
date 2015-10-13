@@ -42,9 +42,9 @@ LC_BLOCK(LKHttpRequestInterface *, LKHttpRequestInterfaceType, ());
 @interface LKHttpRequestInterface : NSObject
 
 LC_PROPERTY(assign) LCHTTPRequestMethod methodType;
-LC_PROPERTY(copy) NSString * type;
-LC_PROPERTY(readonly) NSDictionary * interfaceParameters;
-LC_PROPERTY(copy) NSString * sessionToken;
+LC_PROPERTY(copy) NSString *type;
+LC_PROPERTY(readonly) NSDictionary *interfaceParameters;
+LC_PROPERTY(copy) NSString *sessionToken;
 
 
 LC_PROPERTY(readonly) LKHttpRequestInterfaceAutoSession AUTO_SESSION;

@@ -17,5 +17,6 @@ LC_PROPERTY(copy)NSNumber *timestamp;
 
 - (NSArray *)posts;
 - (NSNumber *)next;
+- (NSDictionary *)info;
 
 @end

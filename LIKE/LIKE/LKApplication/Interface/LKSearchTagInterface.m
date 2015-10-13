@@ -47,4 +47,8 @@
     return datasource;
 }
 
+- (NSDictionary *)info {
+    return self.responseJSONObject[@"data"][@"info"];
+}
+
 @end

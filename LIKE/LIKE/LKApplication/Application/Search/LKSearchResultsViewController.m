@@ -154,6 +154,10 @@ LC_PROPERTY(strong) NSNumber *timestamp;
             self.timestamp = interface.next;
         }
         
+        if (interface.info) {
+            self.info = interface.info;
+        }
+        
         NSArray *resultData = interface.posts;
         
         if (diretion == LCUIPullLoaderDiretionTop) {

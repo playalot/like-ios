@@ -150,14 +150,12 @@
 
 }
 
--(void) finised:(LKPosting *)posting post:(LKPost *)post
-{
+-(void) finised:(LKPosting *)posting post:(LKPost *)post {
     NSInteger index = [self.uploadingImages indexOfObject:posting];
-    
     [self.uploadingImages removeObject:posting];
-
     if (self.uploadFinished) {
         self.uploadFinished(post, @(index));
+        [self postNotification:LKPostUploadSuccess];
     }
 }
 

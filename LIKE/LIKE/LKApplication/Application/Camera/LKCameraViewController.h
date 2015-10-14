@@ -9,6 +9,7 @@
 #import "LCUIViewController.h"
 
 LC_NOTIFICATION_SET(LKCameraViewControllerDismiss);
+LC_NOTIFICATION_SET(LKPostUploadSuccess);
 
 typedef NS_ENUM(NSInteger, LKCameraPosition)
 {
@@ -26,7 +27,6 @@ typedef enum : NSUInteger {
 } LKCameraFlash;
 
 typedef enum : NSUInteger {
-    
     LKCameraQualityLow,
     LKCameraQualityMedium,
     LKCameraQualityHigh,

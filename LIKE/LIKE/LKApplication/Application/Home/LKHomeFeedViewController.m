@@ -70,10 +70,16 @@ LC_PROPERTY(weak) id delegate;
     
 }
 
+- (void)handleNotification:(NSNotification *)notification {
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.view.backgroundColor = LKColor.backgroundColor;
+    
+    [self observeNotification:LKPostUploadSuccess];
     
     @weakly(self);
     
@@ -96,7 +102,6 @@ LC_PROPERTY(weak) id delegate;
         if (value) {
             
             [self.datasource insertObject:value atIndex:0];
-            
             [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
         }
     };

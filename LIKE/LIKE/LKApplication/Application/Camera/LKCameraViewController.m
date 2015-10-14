@@ -91,7 +91,6 @@ LC_PROPERTY(strong) UIView *wastedView;
 -(void) handleNotification:(NSNotification *)notification
 {
     if ([notification is:LKCameraViewControllerDismiss]) {
-        
         [self.navigationController popToRootViewControllerAnimated:NO];
         [self dismissViewControllerAnimated:NO completion:nil];
     }

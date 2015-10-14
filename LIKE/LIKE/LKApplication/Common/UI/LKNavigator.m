@@ -13,7 +13,6 @@
 #import "RDVTabBarController.h"
 #import "RDVTabBarItem.h"
 #import "LKNotificationCount.h"
-#import "LKTabbarItem.h"
 #import "LKGateViewController.h"
 #import "LKUserProfileViewController.h"
 
@@ -163,7 +162,6 @@ LC_PROPERTY(strong) LKGateViewController *gateViewController;
 - (BOOL)tabBarController:(RDVTabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
     
     if (viewController.childViewControllers[0] == self.notificationViewController) {
-        
         [LKNotificationCount cleanBadge];
         [LKNotificationCount stopCheck];
     } else {

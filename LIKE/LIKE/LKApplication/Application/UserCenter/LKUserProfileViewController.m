@@ -322,6 +322,9 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 -(void) handleNotification:(NSNotification *)notification {
     if ([notification is:LKUserCenterViewControllerReloadingData]) {
         [self loadData:self.currentType diretion:LCUIPullLoaderDiretionTop];
+    } else if ([notification is:LKPostUploadSuccess]) {
+        LKPost *post = (LKPost *)notification.object;
+        
     }
 }
 

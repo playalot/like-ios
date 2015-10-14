@@ -10,6 +10,7 @@
 #define LIKE_LIKE_pch
 
 #import "LC.h"
+#import "LKNotificationDefine.h"
 #import "LKPrecompile.h"
 #import "LKNavigator.h"
 #import "AppDelegate.h"

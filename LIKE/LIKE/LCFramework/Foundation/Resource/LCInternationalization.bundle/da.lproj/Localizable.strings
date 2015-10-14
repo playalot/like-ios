@@ -68,6 +68,10 @@
 "已取消收藏" = "Cancel favor successfully!";
 "我的收藏" = "My favor";
 "我的照片" = "My photos";
+"屏蔽用户" = "Block user";
+"取消屏蔽" = "Cancel block";
+"已屏蔽该用户" = "Aleady block user!";
+"取消屏蔽成功" = "Cancel block successfully!";
 
 // Tip
 "上传失败啦！请检查您的网络稍后再试Orz～" = "Upload failed! Please check your internet connection";

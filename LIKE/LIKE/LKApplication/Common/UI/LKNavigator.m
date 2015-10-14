@@ -156,6 +156,21 @@ LC_PROPERTY(strong) LKGateViewController *gateViewController;
             i++;
         }
     }
+    
+    [LKNotificationCount startCheck];
+    LKNotificationCount.singleton.requestFinished = ^(NSUInteger count) {
+        
+        RDVTabBarItem *item = self.tabBarController.tabBar.items[2];
+        
+        if (count) {
+            NSLog(@"%@", item);
+            [item setFinishedSelectedImage:[[UIImage imageNamed:@"tabbar_notification_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"tabbar_notification_badge"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+            [item setNeedsDisplay];
+        } else {
+            [item setFinishedSelectedImage:[[UIImage imageNamed:@"tabbar_notification_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"tabbar_notification"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+            [item setNeedsDisplay];
+        }
+    };
 }
 
 #pragma mark - ***** RDVTabBarControllerDelegate *****

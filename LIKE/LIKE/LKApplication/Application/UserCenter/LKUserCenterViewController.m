@@ -379,20 +379,63 @@ LC_PROPERTY(strong) NSMutableArray *datasource;
 
 - (void)moreAction {
     
+    NSString *blockStr = self.user.isBlocked ? @"屏蔽用户" : @"取消屏蔽";
+    
     @weakly(self);
     
-    [LKActionSheet showWithTitle:nil buttonTitles:@[LC_LO(@"屏蔽此用户"),LC_LO(@"举报")] didSelected:^(NSInteger index) {
+    [LKActionSheet showWithTitle:nil buttonTitles:@[LC_LO(blockStr),LC_LO(@"举报")] didSelected:^(NSInteger index) {
         
         @normally(self);
         
         if (index == 0) {
             
             // TODO
+            [self blockedUserWithStatus:self.user.isBlocked];
             
         } else if (index == 1) {
             
             // 举报
             [self reportReason];
+        }
+    }];
+}
+
+/**
+ *  屏蔽用户
+ */
+- (void)blockedUserWithStatus:(BOOL)isBlocked {
+    
+    LKHttpRequestInterface *interface;
+    
+    if (isBlocked) {
+        
+        // 屏蔽用户
+        interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"user/%@/block",self.user.id]].DELETE_METHOD();
+    } else {
+        
+        // 取消屏蔽
+        interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"user/%@/block",self.user.id]].POST_METHOD();
+    }
+    
+    @weakly(self);
+    
+    [self request:interface complete:^(LKHttpRequestResult *result) {
+        
+        @normally(self);
+        
+        if (result.state == LKHttpRequestStateFinished) {
+            
+            self.user.isBlocked = !isBlocked;
+            
+            if (!self.user.isBlocked) {
+                [self showSuccessHud:LC_LO(@"已屏蔽该用户")];
+            } else {
+                [self showSuccessHud:LC_LO(@"取消屏蔽成功")];
+            }
+            
+        } else if (result.state == LKHttpRequestStateFailed) {
+            
+            [self showTopMessageErrorHud:result.error];
         }
     }];
 }

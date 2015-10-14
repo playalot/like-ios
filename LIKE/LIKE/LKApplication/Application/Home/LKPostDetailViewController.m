@@ -1416,27 +1416,27 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     UIView *belowView = UIView.view;
     belowView.viewFrameY = tagsView.viewBottomY;
     belowView.viewFrameWidth = image.size.width;
-    belowView.viewFrameHeight = 74 * layoutScale;
+    belowView.viewFrameHeight = 79 * layoutScale;
     belowView.backgroundColor = [UIColor whiteColor];
     bottomView.ADD(belowView);
     
     
     // 二维码
     LCUIImageView *qrCodeView = LCUIImageView.view;
-    qrCodeView.viewFrameWidth = 52 * layoutScale;
-    qrCodeView.viewFrameHeight = 52 * layoutScale;
-    qrCodeView.viewFrameX = belowView.viewFrameWidth - (21 + 9 + 52 * 2) * layoutScale;
-    qrCodeView.viewFrameY = 11 * layoutScale;
+    qrCodeView.viewFrameWidth = 59 * layoutScale;
+    qrCodeView.viewFrameHeight = 59 * layoutScale;
+    qrCodeView.viewFrameX = belowView.viewFrameWidth - (21 + 9 + 59 + 53) * layoutScale;
+    qrCodeView.viewFrameY = 10 * layoutScale;
     qrCodeView.image = [UIImage imageNamed:@"QRCode.png" useCache:YES];
     belowView.ADD(qrCodeView);
     
     
     // logo
     LCUIImageView *logoView = LCUIImageView.view;
-    logoView.viewFrameWidth = 52 * layoutScale;
-    logoView.viewFrameHeight = 52 * layoutScale;
-    logoView.viewFrameX = belowView.viewFrameWidth - (21 + 52) * layoutScale;
-    logoView.viewFrameY = 11 * layoutScale;
+    logoView.viewFrameWidth = 53 * layoutScale;
+    logoView.viewFrameHeight = 53 * layoutScale;
+    logoView.viewFrameX = belowView.viewFrameWidth - (21 + 53) * layoutScale;
+    logoView.viewFrameY = 13 * layoutScale;
     logoView.image = [UIImage imageNamed:@"like_icon.png" useCache:YES];
     belowView.ADD(logoView);
     
@@ -1446,7 +1446,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     interestView.viewFrameWidth = 159 * layoutScale;
     interestView.viewFrameHeight = 47 * layoutScale;
     interestView.viewFrameX = cornerRadiusView.viewFrameX;
-    interestView.viewFrameY = CGRectGetMaxY(qrCodeView.frame) - interestView.viewFrameHeight;
+    interestView.viewFrameY = 16 * layoutScale;
     belowView.ADD(interestView);
     
     NSArray *interestArray = @[@"高达", @"狗", @"旅行", @"猫", @"美食", @"喷漆", @"摄影", @"游戏", @"手办", @"变形金刚", @"钢铁侠", @"星球大战"];

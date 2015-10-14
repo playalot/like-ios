@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+LC_BLOCK(void, LKNotificationCountRequestFinished, (NSUInteger count));
+
 @interface LKNotificationCount : NSObject
 
 +(void) bindView:(UIView *)bindView;
@@ -16,5 +18,7 @@
 
 +(void) startCheck;
 +(void) stopCheck;
+
+LC_PROPERTY(copy) LKNotificationCountRequestFinished requestFinished;
 
 @end

@@ -97,8 +97,6 @@
     if (self = [super init]) {
         self.viewControllers = viewControllers;
         self.delegate = self;
-        
-        [LKNotificationCount startCheck];
     }
     return self;
 }

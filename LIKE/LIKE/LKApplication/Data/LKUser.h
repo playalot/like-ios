@@ -53,5 +53,9 @@ LC_PROPERTY(strong) NSNumber *fansCount;
  *  收藏数量
  */
 LC_PROPERTY(strong) NSNumber *favorCount;
+/**
+ *  屏蔽用户
+ */
+LC_PROPERTY(assign) BOOL isBlocked;
 
 @end

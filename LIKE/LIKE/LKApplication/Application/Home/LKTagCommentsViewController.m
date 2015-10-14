@@ -16,6 +16,7 @@
 #import "LKLikesPage.h"
 #import "LKUserCenterViewController.h"
 #import "UIImageView+WebCache.h"
+#import "LKNavigator.h"
 
 #define iconWH 30
 
@@ -73,6 +74,7 @@ LC_PROPERTY(strong) NSNumber * canFirstResponder;
 {
     [self cancelAllRequests];
     [self.inputView resignFirstResponder];
+    [[LKNavigator navigator].tabBarController setTabBarHidden:NO animated:YES];
 }
 
 static NSString * __LKUserAddress = nil;
@@ -104,6 +106,7 @@ static NSString * __LKUserAddress = nil;
     [super viewWillAppear:animated];
     
     [self.inputView resignFirstResponder];
+    [[LKNavigator navigator].tabBarController setTabBarHidden:YES animated:YES];
 }
 
 - (void)buildNavigationBar {

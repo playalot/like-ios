@@ -27,7 +27,7 @@
             self.fansCount = dict[@"count"][@"followers"];
             self.originAvatar = dict[@"origin_avatar"];
             self.favorCount = dict[@"count"][@"favorites"];
-
+            self.isBlocked = dict[@"is_blocked"];
         }
         else{
             

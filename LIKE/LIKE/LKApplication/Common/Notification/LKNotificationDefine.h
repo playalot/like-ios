@@ -17,7 +17,6 @@ LC_NOTIFICATION_SET(LCUIApplicationDidReceiveLocalNotification);
 LC_NOTIFICATION_SET(LKCameraRollViewControllerDismiss);
 LC_NOTIFICATION_SET(LKCameraViewControllerDismiss);
 LC_NOTIFICATION_SET(LKUserCenterViewControllerReloadingData);
-
 LC_NOTIFICATION_SET(LKPostUploadSuccess);
 
 #endif /* LKNotificationDefine_h */

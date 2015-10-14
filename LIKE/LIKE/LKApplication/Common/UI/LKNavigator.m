@@ -13,7 +13,6 @@
 #import "RDVTabBarController.h"
 #import "RDVTabBarItem.h"
 #import "LKNotificationCount.h"
-#import "LKTabbarItem.h"
 #import "LKGateViewController.h"
 #import "LKUserProfileViewController.h"
 

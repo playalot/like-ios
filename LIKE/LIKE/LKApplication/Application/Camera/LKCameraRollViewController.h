@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-LC_NOTIFICATION_SET(LKCameraRollViewControllerDismiss);
-
 @interface LKCameraRollViewController : LCUIViewController
 
 @end

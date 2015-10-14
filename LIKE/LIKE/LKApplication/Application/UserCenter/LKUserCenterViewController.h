@@ -10,8 +10,6 @@
 #import "LKUserCenterModel.h"
 #import "LKUserInfoModel.h"
 
-LC_NOTIFICATION_SET(LKUserCenterViewControllerReloadingData);
-
 @interface LKUserCenterViewController : LCUIViewController
 
 LC_PROPERTY(assign) BOOL needBackButton;

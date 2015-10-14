@@ -618,7 +618,6 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
         [self.tableView setContentOffset:LC_POINT(0, 0) animated:YES];
         [self loadData:LCUIPullLoaderDiretionTop];
     });
-    
 }
 
 @end

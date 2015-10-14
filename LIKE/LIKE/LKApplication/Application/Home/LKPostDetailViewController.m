@@ -1347,7 +1347,15 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     
     CGFloat proportion = (image.size.width / 640);
     CGFloat layoutScale = (image.size.width / 414);
-    CGFloat headWidth = 94 * layoutScale;
+    CGFloat headWidth = 94 * proportion;
+    
+    // 只是为了补色
+    UIView *backView = UIView.view;
+    backView.viewFrameY = headWidth / 2;
+    backView.viewFrameWidth = image.size.width;
+    backView.viewFrameHeight = headWidth / 2;
+    backView.backgroundColor = LKColor.backgroundColor;
+    bottomView.ADD(backView);
     
     // 头像下面的view
     UIView *cornerRadiusView = UIView.view;
@@ -1356,7 +1364,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     cornerRadiusView.viewFrameWidth = headWidth;
     cornerRadiusView.viewFrameHeight = headWidth;
     cornerRadiusView.cornerRadius = headWidth / 2;
-    cornerRadiusView.backgroundColor = [UIColor whiteColor];
+    cornerRadiusView.backgroundColor = LKColor.backgroundColor;
     bottomView.ADD(cornerRadiusView);
     
     // 用户头像
@@ -1364,7 +1372,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     imageView.viewFrameWidth = headWidth - 4 * layoutScale;
     imageView.viewFrameHeight = headWidth - 4 * layoutScale;
     imageView.viewFrameX = 21 * layoutScale + 2 * layoutScale;
-    imageView.viewFrameY = 2 * layoutScale;
+    imageView.viewFrameY = 2 * proportion;
     imageView.url = self.post.user.avatar;
 //    [imageView sd_setImageWithURL:[NSURL URLWithString:self.post.user.avatar] placeholderImage:nil];
     imageView.cornerRadius = imageView.viewMidHeight;
@@ -1378,7 +1386,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     nameLabel.viewFrameY = 9 * layoutScale + headWidth / 2;
     nameLabel.viewFrameWidth = 10000;
     nameLabel.viewFrameHeight = 22 * layoutScale + 2;
-    nameLabel.font = LK_FONT_B(22 * layoutScale);
+    nameLabel.font = LK_FONT_B(14 * layoutScale);
     nameLabel.textColor = LC_RGB(51, 51, 51);
     nameLabel.text = [NSString stringWithFormat:@"%@   %@ likes" ,self.post.user.name ,self.post.user.likes];
     bottomView.ADD(nameLabel);
@@ -1386,10 +1394,11 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     
     // 分享图片的标签
     LKShareTagsView *tagsView = LKShareTagsView.view;
-    tagsView.proportion = layoutScale;
-    tagsView.viewFrameY = imageView.viewBottomY + 2 * layoutScale;
+    tagsView.backgroundColor = LKColor.backgroundColor;
+    tagsView.proportion = proportion;
+    tagsView.viewFrameY = imageView.viewBottomY;
 //    tagsView.viewFrameX = 21 * proportion;
-    tagsView.viewFrameX = -8 * layoutScale;
+    tagsView.viewFrameX = 1 * layoutScale;
     tagsView.viewFrameWidth = image.size.width * 640 / 414 - 42 * layoutScale;
     tagsView.tags = self.tagsListModel.tags;
     bottomView.ADD(tagsView);
@@ -1408,26 +1417,26 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     belowView.viewFrameY = tagsView.viewBottomY;
     belowView.viewFrameWidth = image.size.width;
     belowView.viewFrameHeight = 74 * layoutScale;
-    belowView.backgroundColor = LKColor.backgroundColor;
+    belowView.backgroundColor = [UIColor whiteColor];
     bottomView.ADD(belowView);
     
     
     // 二维码
     LCUIImageView *qrCodeView = LCUIImageView.view;
-    qrCodeView.viewFrameWidth = 46 * layoutScale;
-    qrCodeView.viewFrameHeight = 46 * layoutScale;
-    qrCodeView.viewFrameX = belowView.viewFrameWidth - (21 + 9 + 46 * 2) * layoutScale;
-    qrCodeView.viewFrameY = 14 * layoutScale;
+    qrCodeView.viewFrameWidth = 52 * layoutScale;
+    qrCodeView.viewFrameHeight = 52 * layoutScale;
+    qrCodeView.viewFrameX = belowView.viewFrameWidth - (21 + 9 + 52 * 2) * layoutScale;
+    qrCodeView.viewFrameY = 11 * layoutScale;
     qrCodeView.image = [UIImage imageNamed:@"QRCode.png" useCache:YES];
     belowView.ADD(qrCodeView);
     
     
     // logo
     LCUIImageView *logoView = LCUIImageView.view;
-    logoView.viewFrameWidth = 46 * layoutScale;
-    logoView.viewFrameHeight = 46 * layoutScale;
-    logoView.viewFrameX = belowView.viewFrameWidth - (21 + 46) * layoutScale;
-    logoView.viewFrameY = 14 * layoutScale;
+    logoView.viewFrameWidth = 52 * layoutScale;
+    logoView.viewFrameHeight = 52 * layoutScale;
+    logoView.viewFrameX = belowView.viewFrameWidth - (21 + 52) * layoutScale;
+    logoView.viewFrameY = 11 * layoutScale;
     logoView.image = [UIImage imageNamed:@"like_icon.png" useCache:YES];
     belowView.ADD(logoView);
     

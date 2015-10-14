@@ -55,6 +55,7 @@ LC_PROPERTY(strong) NSMutableArray *datasource;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
     [self.header updateWithUser:self.user];
     [self setNavigationBarHidden:YES animated:NO];
 }
@@ -66,10 +67,11 @@ LC_PROPERTY(strong) NSMutableArray *datasource;
 }
 
 + (LKUserCenterViewController *)pushUserCenterWithUser:(LKUser *)user navigationController:(UINavigationController *)navigationController {
-    LKUserCenterViewController * userCenter = [[LKUserCenterViewController alloc] initWithUser:user];
+    LKUserCenterViewController *userCenter = [[LKUserCenterViewController alloc] initWithUser:user];
     userCenter.needBackButton = YES;
     userCenter.settingButtonHidden = NO;
-    [navigationController pushViewController:userCenter animated:YES];
+//    [navigationController pushViewController:userCenter animated:YES];
+    [navigationController presentViewController:LC_UINAVIGATION(userCenter) animated:YES completion:nil];
     return userCenter;
 }
 
@@ -88,6 +90,7 @@ LC_PROPERTY(strong) NSMutableArray *datasource;
         
         self.userCenterModel = [[LKUserCenterModel alloc] init];
         self.userInfoModel = [[LKUserInfoModel alloc] init];
+        self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     }
     return self;
 }

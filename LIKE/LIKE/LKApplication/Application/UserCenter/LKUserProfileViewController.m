@@ -81,6 +81,7 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
         
         self.userCenterModel = [[LKUserCenterModel alloc] init];
         self.userInfoModel = [[LKUserInfoModel alloc] init];
+        self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     }
     return self;
 }

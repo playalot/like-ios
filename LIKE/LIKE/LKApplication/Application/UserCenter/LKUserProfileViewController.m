@@ -443,7 +443,6 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     if (self.currentType == LKUserCenterModelTypeFocus || self.currentType == LKUserCenterModelTypeFans) {
         return;
     }
-//    self.datasource = [NSMutableArray arrayWithArray:[self.userCenterModel dataWithType:self.currentType]];
     
     LKPostTableViewController *browsingViewController = [[LKPostTableViewController alloc] init];
     browsingViewController.delegate = self;

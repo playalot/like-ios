@@ -150,7 +150,7 @@ LC_PROPERTY(strong) LCUIImageView *noFollowingView;
     noFollowingView.viewFrameHeight = 367;
     noFollowingView.viewCenterX = self.view.viewCenterX;
 //    noFollowingView.viewCenterY = self.view.viewCenterY;
-    noFollowingView.viewFrameY = 100;
+    noFollowingView.viewFrameY = 80;
     noFollowingView.image = [UIImage imageNamed:@"NoFollowing.png" useCache:YES];
     noFollowingView.hidden = YES;
     self.noFollowingView = noFollowingView;

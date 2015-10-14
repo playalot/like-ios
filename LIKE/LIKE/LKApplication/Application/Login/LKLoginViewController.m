@@ -323,7 +323,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     
     self.codeField = LCUITextField.view;
     self.codeField.viewFrameX = codeIcon.viewRightX + 15;
-    self.codeField.viewFrameWidth = 320 - self.codeField.viewFrameX - 100;
+    self.codeField.viewFrameWidth = 320 - self.codeField.viewFrameX - 120;
     self.codeField.viewFrameHeight = 46;
     self.codeField.font = LK_FONT(16);
     self.codeField.textColor = LC_RGB(153, 153, 153);
@@ -344,7 +344,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     };
     
     self.codeButton = LCUIButton.view;
-    self.codeButton.viewFrameWidth = 100;
+    self.codeButton.viewFrameWidth = 120;
     self.codeButton.viewFrameHeight = 46;
     self.codeButton.viewFrameX = 320 - self.codeButton.viewFrameWidth - 10;
     self.codeButton.title = LC_LO(@"获取验证码");
@@ -713,6 +713,11 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
             self.expiresIn = result.json[@"data"][@"expires_in"];
             [self.userInfoModel getUserInfo:result.json[@"data"][@"user_id"]];
             
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                
+                self.loginButton.title = LC_LO(@"进入like");
+            });
+
         } else if (result.state == LKHttpRequestStateFailed) {
             
             self.loginButton.userInteractionEnabled = YES;

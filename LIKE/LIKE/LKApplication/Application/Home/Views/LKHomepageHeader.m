@@ -69,7 +69,7 @@ LC_PROPERTY(assign) CGPoint point;
             [self.backgroundView.layer addAnimation:animation forKey:@"transition"];
             
 //            self.backgroundView.url = user.cover;
-            [self.backgroundView sd_setImageWithURL:[NSURL URLWithString:user.cover] placeholderImage:nil];
+            [self.backgroundView sd_setImageWithURL:[NSURL URLWithString:user.cover] placeholderImage:nil options:SDWebImageRetryFailed];
         }
         else{
             

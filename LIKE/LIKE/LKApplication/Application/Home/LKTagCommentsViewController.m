@@ -74,7 +74,11 @@ LC_PROPERTY(strong) NSNumber * canFirstResponder;
 {
     [self cancelAllRequests];
     [self.inputView resignFirstResponder];
-    [[LKNavigator navigator].tabBarController setTabBarHidden:NO animated:YES];
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+        [[LKNavigator navigator].tabBarController setTabBarHidden:NO animated:YES];
 }
 
 static NSString * __LKUserAddress = nil;

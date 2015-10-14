@@ -192,6 +192,12 @@ LC_PROPERTY(strong) LKGateViewController *gateViewController;
 - (void)tabBarController:(RDVTabBarController *)tabBarController didSelectCurrentViewController:(UIViewController *)viewController {
     if (viewController == self.mainFeedViewController.navigationController) {
         [self.mainFeedViewController refresh];
+    } else if (viewController == self.searchViewController.navigationController) {
+        [self.searchViewController refresh];
+    } else if (viewController == self.notificationViewController.navigationController) {
+        [self.notificationViewController refresh];
+    } else if (viewController == self.userProfileViewController.navigationController) {
+        [self.userProfileViewController refresh];
     }
 }
 

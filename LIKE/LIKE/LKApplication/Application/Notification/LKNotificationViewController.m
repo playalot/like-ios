@@ -258,4 +258,11 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
     return frameInSuperview;
 }
 
+- (void)refresh {
+    LC_FAST_ANIMATIONS(0.25, ^{
+        [self.tableView setContentOffset:LC_POINT(0, 0) animated:YES];
+        [self loadData:LCUIPullLoaderDiretionTop];
+    });
+}
+
 @end

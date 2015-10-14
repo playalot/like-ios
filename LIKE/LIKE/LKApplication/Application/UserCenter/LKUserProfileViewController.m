@@ -101,6 +101,8 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
         [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[UIImage imageNamed:@"NavigationBarBack.png" useCache:YES] selectImage:nil];
     }
     
+    [self observeNotification:LKPostUploadSuccess];
+    
     LCUIButton *titleBtn = [[LCUIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];
     [titleBtn setImage:[UIImage imageNamed:@"HomeLikeIcon" useCache:YES] forState:UIControlStateNormal];
     self.titleView = (UIView *)titleBtn;
@@ -119,7 +121,6 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
     self.cartoonImageView.viewFrameWidth = 169;
     self.cartoonImageView.viewFrameHeight = 245;
     self.cartoonImageView.viewCenterX = self.tableView.viewCenterX;
-//    self.cartoonImageView.viewCenterY = self.tableView.viewCenterY;
     self.cartoonImageView.viewFrameY = 52;
     self.tableView.ADD(self.cartoonImageView);
     self.cartoonImageView.hidden = YES;
@@ -276,10 +277,6 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
     self.pullLoader.canLoadMore = [self.userCenterModel canLoadMoreWithType:self.currentType];
     [self loadData:self.currentType diretion:LCUIPullLoaderDiretionTop];
     
-    //    [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFocus uid:self.user.id];
-    //    [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFans uid:self.user.id];
-    //    [self.userCenterModel getDataAtFirstPage:YES type:LKUserCenterModelTypeFavor uid:self.user.id];
-    
     self.userInfoModel.requestFinished = ^(LKHttpRequestResult * result, NSString * error){
         @normally(self);
         if (!error){
@@ -324,8 +321,11 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
     if ([notification is:LKUserCenterViewControllerReloadingData]) {
         [self loadData:self.currentType diretion:LCUIPullLoaderDiretionTop];
     } else if ([notification is:LKPostUploadSuccess]) {
-        LKPost *post = (LKPost *)notification.object;
-        
+        if (self.currentType == LKUserCenterModelTypePhotos) {
+            LKPost *post = (LKPost *)notification.object;
+            [self.datasource insertObject:post atIndex:0];
+            [[self.userCenterModel dataWithType:self.currentType] insertObject:post atIndex:0];
+        }
     }
 }
 
@@ -340,31 +340,6 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 }
 
 - (void)setAction {
-//    LC_FAST_ANIMATIONS(0.25, ^{
-//        ((UIView *)self.header.FIND(1002)).alpha = 0;
-//        self.header.headImageView.alpha = 0;
-//    });
-//    
-//    LKSettingsViewController * settings = LKSettingsViewController.view;
-//    [settings showInViewController:self];
-//    
-//    @weakly(self);
-//    
-//    settings.willHide = ^(){
-//        
-//        @normally(self);
-//        LC_FAST_ANIMATIONS(0.25, ^{
-//            
-//            self.header.headImageView.alpha = 1;
-//            ((UIView *)self.header.FIND(1002)).alpha = 1;
-//            [self scrollViewDidScroll:self.tableView];
-//            
-//        });
-//        
-//    };
-//    
-//    settings.fromViewController = self;
-    
     LKProfileSettingViewController *settingViewController = [LKProfileSettingViewController viewController];
     [self.navigationController pushViewController:settingViewController animated:YES];
 }
@@ -417,7 +392,6 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 #pragma mark -
 
 - (void)scrollToPostByIndex:(NSInteger)index {
-    //    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:(index / 3) inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
 }
 
 - (void)loadData:(LKUserCenterModelType)type diretion:(LCUIPullLoaderDiretion)diretion {
@@ -469,7 +443,6 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     if (self.currentType == LKUserCenterModelTypeFocus || self.currentType == LKUserCenterModelTypeFans) {
         return;
     }
-//    self.datasource = [NSMutableArray arrayWithArray:[self.userCenterModel dataWithType:self.currentType]];
     
     LKPostTableViewController *browsingViewController = [[LKPostTableViewController alloc] init];
     browsingViewController.delegate = self;
@@ -639,6 +612,12 @@ LC_HANDLE_NAVIGATION_SIGNAL(UnfavouritePost, signal) {
             break;
         }
     }
+}
+
+- (void)refresh {
+    LC_FAST_ANIMATIONS(0.25, ^{
+        [self.tableView setContentOffset:LC_POINT(0, 0) animated:YES];
+    });
 }
 
 @end

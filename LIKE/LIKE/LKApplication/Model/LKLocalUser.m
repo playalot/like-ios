@@ -41,6 +41,7 @@
 }
 
 - (void)setSessionToken:(NSString *)sessionToken {
+
     @try {
         [LCKeychain setObject:sessionToken forKey:LK_SESSION_TOKEN];
     }
@@ -55,8 +56,7 @@
     
     @try {
         tmpToken = [LCKeychain objectForKey:LK_SESSION_TOKEN];
-    }
-    @catch (NSException *exception) {
+    } @catch (NSException *exception) {
     }
     
     if (!tmpToken) {

@@ -11,4 +11,6 @@
 
 @interface LKSearchViewController : LCUIViewController
 
+- (void)refresh;
+
 @end

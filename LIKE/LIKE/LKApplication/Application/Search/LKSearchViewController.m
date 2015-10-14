@@ -249,4 +249,8 @@ LC_PROPERTY(strong) LKSearchView *searchView;
     }];
 }
 
+- (void)refresh {
+    
+}
+
 @end

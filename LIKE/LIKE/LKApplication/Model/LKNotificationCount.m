@@ -79,7 +79,7 @@ LC_PROPERTY(strong) UIView *bindView;
 -(void) checkTimerStart
 {
     [self checkRequest];
-    [self fireTimer:@"Check" timeInterval:10 repeat:YES];
+    [self fireTimer:@"Check" timeInterval:60 * 2 repeat:YES];
 }
 
 -(void) checkRequest
@@ -97,6 +97,10 @@ LC_PROPERTY(strong) UIView *bindView;
         if (notificationCountInterface.count) {
             
             [self setBadgeCount:notificationCountInterface.count];
+            
+            if (self.requestFinished) {
+                self.requestFinished(notificationCountInterface.count);
+            }
         }
         
     } failure:^(LCBaseRequest *request) {

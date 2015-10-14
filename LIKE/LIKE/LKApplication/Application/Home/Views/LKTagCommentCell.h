@@ -15,4 +15,6 @@ LC_PROPERTY(strong) LKComment * comment;
 
 +(CGFloat) height:(LKComment *)comment;
 
+LC_ST_SIGNAL(PushUserCenter);
+
 @end

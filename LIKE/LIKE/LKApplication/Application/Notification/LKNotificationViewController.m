@@ -162,17 +162,34 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
         if ((notification.type == LKNotificationTypeComment ||
             notification.type == LKNotificationTypeReply) && [notification.tagID isKindOfClass:[NSNumber class]]) {
             notification.post.tagString = [NSString stringWithFormat:@"Comment-%@",notification.tagID];
-//            [self enterTagCommentViewControllerWithTag:notification.tags[0]];
-//            return;
+            [self getTagDetailWithTagId:notification.tagID];
+            return;
         }
         [self getOriginPostWithPost:notification.post];
     }
 }
 
-- (void)enterTagCommentViewControllerWithTag:(LKTag *)tag {
+- (void)getTagDetailWithTagId:(NSNumber *)tagId {
     
-    LKTagCommentsViewController *tagCommentsViewController = [[LKTagCommentsViewController alloc] initWithTag:tag];
-    [tagCommentsViewController showInViewController:self];
+    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"mark/%@", tagId]].AUTO_SESSION().GET_METHOD();
+    
+    @weakly(self);
+    
+    [self request:interface complete:^(LKHttpRequestResult *result) {
+        
+        @normally(self);
+        
+        if (result.state == LKHttpRequestStateFinished) {
+            
+            LKTag *tag = [LKTag objectFromDictionary:result.json[@"data"]];
+            LKTagCommentsViewController *tagCommentsViewController = [[LKTagCommentsViewController alloc] initWithTag:tag];
+            [self.navigationController pushViewController:tagCommentsViewController animated:YES];
+        }
+        else if (result.state == LKHttpRequestStateFailed){
+            
+            [self showTopMessageErrorHud:result.error];
+        }
+    }];
 }
 
 /**

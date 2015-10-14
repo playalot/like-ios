@@ -59,15 +59,19 @@
 "侮辱诋毁" = "Insult or slander";
 "侵权举报(诽谤、抄袭、冒用...)" = "Infringement";
 "删除该标签后，你的like数也会相应减少，确认删除吗？" = "After you delete the tag, your like number will be reduced, are you ready for the confirmation?";
-"收藏" = "Favorited";
-"收藏图片" = "Favorited";
-"取消收藏" = "Cancel favorited";
+"收藏" = "Favor";
+"收藏图片" = "Favor";
+"取消收藏" = "Cancel favor";
 "订阅" = "Subscribe";
 "取消订阅" = "Cancel Subscribe";
-"收藏成功" = "Favorited successfully!";
-"已取消收藏" = "Cancel favorited successfully!";
-"我的收藏" = "My favorited";
+"收藏成功" = "Favor successfully!";
+"已取消收藏" = "Cancel favor successfully!";
+"我的收藏" = "My favor";
 "我的照片" = "My photos";
+"屏蔽用户" = "Block user";
+"取消屏蔽" = "Cancel block";
+"已屏蔽该用户" = "Aleady block user!";
+"取消屏蔽成功" = "Cancel block successfully!";
 
 // Tip
 "上传失败啦！请检查您的网络稍后再试Orz～" = "Upload failed! Please check your internet connection";

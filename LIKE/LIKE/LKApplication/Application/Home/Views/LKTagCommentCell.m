@@ -21,6 +21,8 @@ LC_PROPERTY(strong) UIImageView * line;
 
 @implementation LKTagCommentCell
 
+LC_IMP_SIGNAL(PushUserCenter);
+
 -(void) buildUI
 {
     self.backgroundColor = [UIColor whiteColor];
@@ -65,7 +67,7 @@ LC_PROPERTY(strong) UIImageView * line;
 
 -(void) handleHeadTap:(UITapGestureRecognizer *)tap
 {
-    self.SEND(@"PushUserCenter").object = self.comment.user;
+    self.SEND(self.PushUserCenter).object = self.comment.user;
 }
 
 -(void) setComment:(LKComment *)comment

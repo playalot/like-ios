@@ -48,28 +48,27 @@ LC_PROPERTY(strong) LCUIImageView *lineView;
     self.tagLabel.text = tagString;
     self.tagLabel.FIT();
 
-    CGFloat topPadding = 10;
-    CGFloat leftPadding = 18;
+    CGFloat topPadding = 3;
+    CGFloat leftPadding = 12;
     
     self.tagLabel.viewFrameX = leftPadding;
-    self.tagLabel.viewFrameY = topPadding;
+    self.tagLabel.viewFrameY = topPadding + 1.5;
     
-    self.lineView.viewFrameHeight = 30;
+    self.lineView.viewFrameHeight = 29;
     self.lineView.viewFrameWidth = 2;
-    self.lineView.viewFrameX = self.tagLabel.viewRightX + 16;
-    self.lineView.viewFrameY = 10;
+    self.lineView.viewFrameX = self.tagLabel.viewRightX + 8;
+    self.lineView.viewFrameY = 5;
     self.lineView.image = [[UIImage imageNamed:@"SeparateLine.png" useCache:YES] imageWithTintColor:[UIColor whiteColor]];
     self.likesLabel.text = LC_NSSTRING_FORMAT(@"%@", likes);
     self.likesLabel.FIT();
     
-    self.likesLabel.viewFrameX = self.lineView.viewRightX + 16;
-    self.likesLabel.viewFrameY = self.tagLabel.viewFrameY;
-    self.likesLabel.viewFrameHeight = self.likesLabel.font.lineHeight;
-    CGSize likesLabelSize = [[likes stringValue] sizeWithFont:self.likesLabel.font byHeight:self.likesLabel.viewFrameHeight];
-    self.likesLabel.viewFrameWidth = likesLabelSize.width;
+    self.likesLabel.viewFrameX = self.lineView.viewRightX + 5;
+    self.likesLabel.viewFrameY = topPadding / 2. + 1;
+    self.likesLabel.viewFrameHeight = (self.tagLabel.viewFrameHeight + topPadding * 2.) - topPadding;
+    self.likesLabel.viewFrameWidth = self.likesLabel.viewFrameWidth < self.likesLabel.viewFrameHeight ? self.likesLabel.viewFrameHeight : self.likesLabel.viewFrameWidth;
     
-    self.viewFrameWidth = self.likesLabel.viewRightX + 18;
-    self.viewFrameHeight = 50;
+    self.viewFrameWidth = self.likesLabel.viewRightX + leftPadding - 3;
+    self.viewFrameHeight = self.likesLabel.viewBottomY + topPadding;
     
     self.cornerRadius = 6;
     self.layer.masksToBounds = NO;
@@ -96,7 +95,7 @@ LC_PROPERTY(strong) LCUIImageView *lineView;
 
 - (void)reloadData {
 
-    CGFloat padding = 20 * self.proportion;
+    CGFloat padding = 15 * self.proportion;
     CGFloat leftPadding = 31 * self.proportion;
     CGFloat topPadding = 26 * self.proportion;
     CGFloat bottomPadding = 29 * self.proportion;

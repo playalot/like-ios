@@ -10,6 +10,7 @@
 #import "LKTag.h"
 #import "LKPost.h"
 #import "LKTagsView.h"
+#import "LKInputView.h"
 
 LC_BLOCK(void, LKTagCommentsViewControllerWillHide, ());
 
@@ -18,6 +19,7 @@ LC_BLOCK(void, LKTagCommentsViewControllerWillHide, ());
 @interface LKTagCommentsViewController : LCUIViewController
 
 LC_PROPERTY(copy) LKTagCommentsViewControllerWillHide willHide;
+LC_PROPERTY(strong) LKInputView * inputView;
 
 -(void) showInViewController:(UIViewController *)viewController;
 -(void) hide;

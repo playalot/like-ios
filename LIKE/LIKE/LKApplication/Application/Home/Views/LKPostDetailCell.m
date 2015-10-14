@@ -28,7 +28,6 @@ LC_PROPERTY(strong) LKLikesScrollView * likesView;
 
 LC_IMP_SIGNAL(PushUserCenter);
 
-
 -(void) buildUI
 {
     self.selectionStyle = UITableViewCellSelectionStyleNone;

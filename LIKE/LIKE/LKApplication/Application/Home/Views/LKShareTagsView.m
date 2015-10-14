@@ -48,13 +48,13 @@ LC_PROPERTY(strong) LCUIImageView *lineView;
     self.tagLabel.text = tagString;
     self.tagLabel.FIT();
 
-    CGFloat topPadding = 10;
+    CGFloat topPadding = 4;
     CGFloat leftPadding = 18;
     
     self.tagLabel.viewFrameX = leftPadding;
-    self.tagLabel.viewFrameY = topPadding;
+    self.tagLabel.viewFrameY = topPadding + 1.5;
     
-    self.lineView.viewFrameHeight = 30;
+    self.lineView.viewFrameHeight = 50;
     self.lineView.viewFrameWidth = 2;
     self.lineView.viewFrameX = self.tagLabel.viewRightX + 16;
     self.lineView.viewFrameY = 10;
@@ -63,13 +63,12 @@ LC_PROPERTY(strong) LCUIImageView *lineView;
     self.likesLabel.FIT();
     
     self.likesLabel.viewFrameX = self.lineView.viewRightX + 16;
-    self.likesLabel.viewFrameY = self.tagLabel.viewFrameY;
-    self.likesLabel.viewFrameHeight = self.likesLabel.font.lineHeight;
-    CGSize likesLabelSize = [[likes stringValue] sizeWithFont:self.likesLabel.font byHeight:self.likesLabel.viewFrameHeight];
-    self.likesLabel.viewFrameWidth = likesLabelSize.width;
+    self.likesLabel.viewFrameY = topPadding / 2. + 1;
+    self.likesLabel.viewFrameHeight = (self.tagLabel.viewFrameHeight + topPadding * 2.) - topPadding;
+    self.likesLabel.viewFrameWidth = self.likesLabel.viewFrameWidth < self.likesLabel.viewFrameHeight ? self.likesLabel.viewFrameHeight : self.likesLabel.viewFrameWidth;
     
-    self.viewFrameWidth = self.likesLabel.viewRightX + 18;
-    self.viewFrameHeight = 50;
+    self.viewFrameWidth = self.likesLabel.viewRightX + leftPadding;
+    self.viewFrameHeight = self.likesLabel.viewBottomY + topPadding;
     
     self.cornerRadius = 6;
     self.layer.masksToBounds = NO;

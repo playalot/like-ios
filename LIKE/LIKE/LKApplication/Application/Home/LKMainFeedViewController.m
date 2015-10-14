@@ -36,7 +36,7 @@ LC_PROPERTY(weak) LCUIViewController *currentViewController;
     // Bar item.
     [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[[UIImage imageNamed:@"Favor_normal.png" useCache:YES] imageWithTintColor:[UIColor whiteColor]] selectImage:nil];
     
-    LCUIButton *titleBtn = [[LCUIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];
+    LCUIButton *titleBtn = [[LCUIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
     [titleBtn setImage:[UIImage imageNamed:@"HomeLikeIcon" useCache:YES] forState:UIControlStateNormal];
     self.titleView = (UIView *)titleBtn;
     

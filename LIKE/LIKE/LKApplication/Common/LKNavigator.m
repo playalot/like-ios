@@ -165,6 +165,9 @@ LC_PROPERTY(strong) LKGateViewController *gateViewController;
     if (viewController.childViewControllers[0] == self.notificationViewController) {
         
         [LKNotificationCount cleanBadge];
+        [LKNotificationCount stopCheck];
+    } else {
+        [LKNotificationCount startCheck];
     }
     return YES;
 }

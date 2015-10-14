@@ -234,7 +234,7 @@ LC_IMP_SIGNAL(PushPostDetail);
 
     // 设置cell内容
     self.head.image = nil;
-    [self.head sd_setImageWithURL:[NSURL URLWithString:post.user.avatar] placeholderImage:nil];
+    [self.head sd_setImageWithURL:[NSURL URLWithString:post.user.avatar] placeholderImage:nil options:SDWebImageRetryFailed];
     
     self.title.text = LC_NSSTRING_FORMAT(@"%@", post.user.name);
     [self.likes setText:LC_NSSTRING_FORMAT(@"%@", post.user.likes) animated:NO];

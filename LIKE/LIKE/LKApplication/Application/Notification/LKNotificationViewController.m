@@ -162,8 +162,8 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
         if ((notification.type == LKNotificationTypeComment ||
             notification.type == LKNotificationTypeReply) && [notification.tagID isKindOfClass:[NSNumber class]]) {
             notification.post.tagString = [NSString stringWithFormat:@"Comment-%@",notification.tagID];
-//            [self enterTagCommentViewControllerWithTag:notification.tags[0]];
-//            return;
+            [self enterTagCommentViewControllerWithTag:notification.tags[0]];
+            return;
         }
         [self getOriginPostWithPost:notification.post];
     }
@@ -171,8 +171,10 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
 
 - (void)enterTagCommentViewControllerWithTag:(LKTag *)tag {
     
-    LKTagCommentsViewController *tagCommentsViewController = [[LKTagCommentsViewController alloc] initWithTag:tag];
-    [tagCommentsViewController showInViewController:self];
+//    LKTagCommentsViewController *tagCommentsViewController = [[LKTagCommentsViewController alloc] initWithTag:tag];
+//    [tagCommentsViewController showInViewController:self];
+    LKTagCommentsViewController *tagCommentsViewController = [LKTagCommentsViewController viewController];
+    [self.navigationController pushViewController:tagCommentsViewController animated:YES];
 }
 
 /**

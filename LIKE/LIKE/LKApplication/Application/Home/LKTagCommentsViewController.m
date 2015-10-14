@@ -27,7 +27,7 @@ LC_PROPERTY(strong) LCUILabel * header;
 LC_PROPERTY(strong) LCUIBlurView * blur;
 LC_PROPERTY(strong) LCUITableView * tableView;
 LC_PROPERTY(strong) LCUIPullLoader * pullLoader;
-LC_PROPERTY(strong) LKInputView * inputView;
+//LC_PROPERTY(strong) LKInputView * inputView;
 
 LC_PROPERTY(strong) LKUser * replyUser;
 
@@ -72,6 +72,7 @@ LC_PROPERTY(strong) NSNumber * canFirstResponder;
 -(void) dealloc
 {
     [self cancelAllRequests];
+    [self.inputView resignFirstResponder];
 }
 
 static NSString * __LKUserAddress = nil;
@@ -99,6 +100,12 @@ static NSString * __LKUserAddress = nil;
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self.inputView resignFirstResponder];
+}
+
 - (void)buildNavigationBar {
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
     [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[UIImage imageNamed:@"NavigationBarBack.png" useCache:YES] selectImage:nil];
@@ -107,6 +114,7 @@ static NSString * __LKUserAddress = nil;
 
 - (void)handleNavigationBarButton:(LCUINavigationBarButtonType)type {
     if (type == LCUINavigationBarButtonTypeLeft) {
+        [self.inputView resignFirstResponder];
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
@@ -161,7 +169,7 @@ static NSString * __LKUserAddress = nil;
         self.canFirstResponder = @(NO);
         
         [UIView animateWithDuration:0.25 animations:^{
-            self.tableView.viewFrameHeight = LC_DEVICE_HEIGHT + 20 - self.inputView.viewFrameHeight - [LCUIKeyBoard.singleton height] - 44;
+            self.tableView.viewFrameHeight = LC_DEVICE_HEIGHT - self.inputView.viewFrameHeight - [LCUIKeyBoard.singleton height] - 44;
         }];
         
         [self.tableView scrollToBottomAnimated:NO];
@@ -186,7 +194,7 @@ static NSString * __LKUserAddress = nil;
     // 在blur中添加tableView
     self.tableView = [[LCUITableView alloc] initWithFrame:CGRectZero];
     self.tableView.frame = self.blur.bounds;
-    self.tableView.viewFrameHeight -= 64;
+    self.tableView.viewFrameHeight -= 44;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -353,11 +361,13 @@ static NSString * __LKUserAddress = nil;
     }];
 }
 
-#pragma mark - 
+#pragma mark -
 
-LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
-{
+LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
+
     [self.inputView resignFirstResponder];
+
+    [LKUserCenterViewController pushUserCenterWithUser:signal.object navigationController:self.navigationController];
 }
 
 -(void) showInViewController:(UIViewController *)viewController {
@@ -403,6 +413,9 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             headImageView.cornerRadius = headImageView.viewMidWidth;
             headImageView.backgroundColor = LKColor.backgroundColor;
             headImageView.tag = 1001;
+            // 启用和用户的交互
+            headImageView.userInteractionEnabled = YES;
+            [headImageView addTapGestureRecognizer:self selector:@selector(tagUserIconViewClick:)];
             configurationCell.ADD(headImageView);
             
             
@@ -444,11 +457,14 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             deleteBtn.hidden = YES;
             self.deleteBtn = deleteBtn;
             configurationCell.ADD(deleteBtn);
-    
             
-            UIImageView *line = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
-            line.viewFrameWidth = LC_DEVICE_WIDTH;
-            configurationCell.ADD(line);
+            
+            UIView *backView = UIView.view;
+            backView.viewFrameWidth = LC_DEVICE_WIDTH;
+            backView.viewFrameY = 74 + 8;
+            backView.tag = 1005;
+            backView.backgroundColor = LC_RGB(245, 245, 245);
+            configurationCell.ADD(backView);
             
             
             UIImageView *line1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
@@ -461,6 +477,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         LKTagItemView *item = cell.FIND(1002);
         LCUILabel *time = cell.FIND(1003);
         LCUILabel *name = cell.FIND(1004);
+        UIView *backView = cell.FIND(1005);
         
         if (item) {
             [item removeFromSuperview];
@@ -475,7 +492,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         
         LKUser *tagUser = self.tagValue.user;
 //        head.url = self.tagValue.user.avatar;
-        [head sd_setImageWithURL:[NSURL URLWithString:tagUser.avatar] placeholderImage:nil];
+        [head sd_setImageWithURL:[NSURL URLWithString:tagUser.avatar] placeholderImage:nil options:SDWebImageRetryFailed];
         item.tagValue = self.tagValue;
         item.viewFrameX = head.viewRightX + 19;
 //        item.viewFrameY = 53 / 2 - item.viewMidHeight;
@@ -502,6 +519,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             UIImageView *line2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TalkLine.png" useCache:YES]];
             line2.viewFrameY = 74 + 16 + self.tagUserView.viewFrameHeight + 8 - 1;
             line2.viewFrameWidth = LC_DEVICE_WIDTH;
+            backView.viewFrameHeight = line2.viewFrameY - backView.viewFrameY + 1;
             cell.ADD(line2);
         }
         
@@ -609,7 +627,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         // 记录下iconX
         self.iconX = iconView.viewFrameX;
         
-        [iconView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", user.avatar]]];
+        [iconView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", user.avatar]] placeholderImage:nil options:SDWebImageRetryFailed];
         
         // 裁剪
         iconView.layer.cornerRadius = iconWH * 0.5;
@@ -637,7 +655,17 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
 - (void)iconViewClick:(UITapGestureRecognizer *)tapGes {
     
     LKUser *user = self.tagUsers[tapGes.view.tag];
-    self.SEND(@"PushUserCenter").object = user;
+    [self.inputView resignFirstResponder];
+    
+    [LKUserCenterViewController pushUserCenterWithUser:user navigationController:self.navigationController];
+}
+
+- (void)tagUserIconViewClick:(UITapGestureRecognizer *)tapGes {
+    
+    LKUser *user = self.tagValue.user;
+    [self.inputView resignFirstResponder];
+    
+    [LKUserCenterViewController pushUserCenterWithUser:user navigationController:self.navigationController];
 }
 
 -(void) reloadDataAndUpdate
@@ -703,7 +731,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
 #pragma mark - ***** tableView的代理方法 *****
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return 200;
+    return 180;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

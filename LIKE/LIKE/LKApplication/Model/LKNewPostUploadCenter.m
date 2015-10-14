@@ -110,7 +110,7 @@
 {
     LKHttpRequestInterface *interface = [LKHttpRequestInterface interfaceType:@"post"].AUTO_SESSION().POST_METHOD();
     
-    [interface addParameter:imageKey key:@"preview"];
+    [interface addParameter:imageKey key:@"content"];
     [interface addParameter:@"PHOTO"  key:@"type"];
     [interface addParameter:jsonTags key:@"tags"];
     

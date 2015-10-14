@@ -842,14 +842,14 @@ LC_PROPERTY(assign) BOOL favorited;
     // check
     if(![LKLoginViewController needLoginOnViewController:self]){
         [self.inputView resignFirstResponder];
-        LKTagCommentsViewController * comments = [[LKTagCommentsViewController alloc] initWithTag:tag];
+        LKTagCommentsViewController *comments = [[LKTagCommentsViewController alloc] initWithTag:tag];
         // 传递发布者模型数据
         comments.publisher = self.post;
         // 设置代理
         comments.delegate = self;
         self.tag = tag;
         [self.navigationController pushViewController:comments animated:YES];
-        [comments performSelector:@selector(inputBecomeFirstResponder) withObject:nil afterDelay:0.5];
+//        [comments performSelector:@selector(inputBecomeFirstResponder) withObject:nil afterDelay:0.25];
     }
 }
 
@@ -1204,25 +1204,27 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
                 
                 [self.inputView resignFirstResponder];
                 
-                LKTagCommentsViewController * comments = [[LKTagCommentsViewController alloc] initWithTag:tag];
+                LKTagCommentsViewController *comments = [[LKTagCommentsViewController alloc] initWithTag:tag];
                 
                 // 传递发布者模型数据
                 comments.publisher = self.post;
                 // 设置代理
                 comments.delegate = self;
                 
-                [comments showInViewController:self];
+//                [comments showInViewController:self];
+                [self.navigationController pushViewController:comments animated:YES];
                 
                 if (LKLocalUser.singleton.user.id.integerValue != comment.user.id.integerValue) {
                     
-                    [comments replyUserAction:comment.user];
+//                    [comments replyUserAction:comment.user];
+                    [comments performSelector:@selector(replyUserAction:) withObject:comment.user afterDelay:1];
                 }
 
-                [self hideMoreButton:YES];
+//                [self hideMoreButton:YES];
                 
                 comments.willHide = ^(){
                     
-                    [self hideMoreButton:NO];
+//                    [self hideMoreButton:NO];
                     [self.tableView reloadData];
                     
                 };
@@ -1240,9 +1242,10 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
 
                 [self.inputView resignFirstResponder];
 
-                LKTagCommentsViewController * comments = [[LKTagCommentsViewController alloc] initWithTag:tag];
+                LKTagCommentsViewController *comments = [[LKTagCommentsViewController alloc] initWithTag:tag];
                 
-                [comments showInViewController:self];
+//                [comments showInViewController:self];
+                [self.navigationController pushViewController:comments animated:YES];
                 
                 [self hideMoreButton:YES];
                 
@@ -1344,11 +1347,11 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     
     CGFloat proportion = (image.size.width / 640);
     CGFloat layoutScale = (image.size.width / 414);
-    CGFloat headWidth = 94 * proportion;
+    CGFloat headWidth = 94 * layoutScale;
     
     // 头像下面的view
     UIView *cornerRadiusView = UIView.view;
-    cornerRadiusView.viewFrameX = 21 * proportion;
+    cornerRadiusView.viewFrameX = 21 * layoutScale;
     cornerRadiusView.viewFrameY = 0;
     cornerRadiusView.viewFrameWidth = headWidth;
     cornerRadiusView.viewFrameHeight = headWidth;
@@ -1358,10 +1361,10 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     
     // 用户头像
     LCUIImageView *imageView = LCUIImageView.view;
-    imageView.viewFrameWidth = headWidth - 4 * proportion;
-    imageView.viewFrameHeight = headWidth - 4 * proportion;
-    imageView.viewFrameX = 21 * proportion + 2 * proportion;
-    imageView.viewFrameY = 2 * proportion;
+    imageView.viewFrameWidth = headWidth - 4 * layoutScale;
+    imageView.viewFrameHeight = headWidth - 4 * layoutScale;
+    imageView.viewFrameX = 21 * layoutScale + 2 * layoutScale;
+    imageView.viewFrameY = 2 * layoutScale;
     imageView.url = self.post.user.avatar;
 //    [imageView sd_setImageWithURL:[NSURL URLWithString:self.post.user.avatar] placeholderImage:nil];
     imageView.cornerRadius = imageView.viewMidHeight;
@@ -1371,11 +1374,11 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     
     // 昵称
     LCUILabel *nameLabel = LCUILabel.view;
-    nameLabel.viewFrameX = imageView.viewRightX + 10 * proportion;
-    nameLabel.viewFrameY = 9 * proportion + headWidth / 2;
+    nameLabel.viewFrameX = imageView.viewRightX + 10 * layoutScale;
+    nameLabel.viewFrameY = 9 * layoutScale + headWidth / 2;
     nameLabel.viewFrameWidth = 10000;
-    nameLabel.viewFrameHeight = 22 * proportion + 2;
-    nameLabel.font = LK_FONT_B(22 * proportion);
+    nameLabel.viewFrameHeight = 22 * layoutScale + 2;
+    nameLabel.font = LK_FONT_B(22 * layoutScale);
     nameLabel.textColor = LC_RGB(51, 51, 51);
     nameLabel.text = [NSString stringWithFormat:@"%@   %@ likes" ,self.post.user.name ,self.post.user.likes];
     bottomView.ADD(nameLabel);
@@ -1383,11 +1386,11 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     
     // 分享图片的标签
     LKShareTagsView *tagsView = LKShareTagsView.view;
-    tagsView.proportion = proportion;
-    tagsView.viewFrameY = imageView.viewBottomY + 2 * proportion;
+    tagsView.proportion = layoutScale;
+    tagsView.viewFrameY = imageView.viewBottomY + 2 * layoutScale;
 //    tagsView.viewFrameX = 21 * proportion;
-    tagsView.viewFrameX = -8 * proportion;
-    tagsView.viewFrameWidth = image.size.width * 640 / 414 - 42 * proportion;
+    tagsView.viewFrameX = -8 * layoutScale;
+    tagsView.viewFrameWidth = image.size.width * 640 / 414 - 42 * layoutScale;
     tagsView.tags = self.tagsListModel.tags;
     bottomView.ADD(tagsView);
     

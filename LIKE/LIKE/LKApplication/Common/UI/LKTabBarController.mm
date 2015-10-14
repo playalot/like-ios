@@ -22,59 +22,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-//    if (!self.assistiveTouchButton) {
-//        CGFloat width = 100;
-//        self.assistiveTouchButton = [[LKAssistiveTouchButton alloc] initWithFrame:CGRectMake(LC_DEVICE_WIDTH / 2 - width / 2, LC_DEVICE_HEIGHT + 20 - width, width, width) inView:self.view];
-//        self.view.ADD(self.assistiveTouchButton);
-//        
-//        if (LKUserDefaults.singleton[@"LKAssistiveTouchButton"]) {
-//            CGRect frame = CGRectFromString(LKUserDefaults.singleton[@"LKAssistiveTouchButton"]);
-//            self.assistiveTouchButton.frame = frame;
-//        }
-//        
-//        // 相机按钮周围线圈动画
-//        MMMaterialDesignSpinner * tip = [[MMMaterialDesignSpinner alloc] initWithFrame:CGRectZero];
-//        tip.bounds = CGRectMake(0, 0, 212. / 3. - 4., 212. / 3. - 4.); //LC_RGB(255, 59, 54)
-//        tip.tintColor = LKColor.color;
-//        tip.center = LC_POINT(self.assistiveTouchButton.viewMidWidth, self.assistiveTouchButton.viewMidHeight);
-//        tip.tag = 100;
-//        tip.translatesAutoresizingMaskIntoConstraints = NO;
-//        tip.alpha = 0;
-//        tip.userInteractionEnabled = NO;
-//        [tip startAnimating];
-//
-//        self.assistiveTouchButton.ADD(tip);
-//        
-//        @weakly(self);
-//        
-//        // 按下状态按钮放大1.2倍显示
-//        self.assistiveTouchButton.touchDown = ^(){
-//            @normally(self);
-//            [self touchDown:tip];
-//            [self touchDown:self.assistiveTouchButton.view];
-//        };
-//        
-//        // 点击结束还原状态
-//        self.assistiveTouchButton.touchEnd = ^(){
-//            @normally(self);
-//            [self touchEnd:tip];
-//            [self touchEnd:self.assistiveTouchButton.view];
-//        };
-//        
-//        // 选中的状态modal出相机相册控制器
-//        self.assistiveTouchButton.didSelected = ^(){
-//            @normally(self);
-//            [self didTap];
-//        };
-//    }
-//    
-//    // 隐藏tabBar
+    // 隐藏tabBar
     [self setTabBarHidden:NO];
-//
-//    // 设置状态栏为淡色样式
-//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
-    
     [self setNeedsStatusBarAppearanceUpdate];
 }
 
@@ -85,7 +34,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [LKNotificationCount bindView:self.tabBar.items[2]];
 }
 
@@ -125,11 +73,6 @@
     }
 }
 
-//-(BOOL) loading
-//{
-//    return _loading;
-//}
-
 /**
  *  选中了相机按钮就会执行
  */
@@ -141,10 +84,9 @@
     }
 }
 
-- (void)touchDown:(UIView *)button
-{
+- (void)touchDown:(UIView *)button {
     [@[button] pop_sequenceWithInterval:0 animations:^(UIView *circle, NSInteger index){
-        
+
         button.pop_springBounciness = 10;
         button.pop_springSpeed = 12;
         button.pop_spring.pop_scaleXY = CGPointMake(1.2, 1.2);

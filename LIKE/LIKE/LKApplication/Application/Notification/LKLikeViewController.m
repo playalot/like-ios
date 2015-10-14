@@ -25,9 +25,7 @@ LC_PROPERTY(strong) LKNotificationModel *notificationModel;
 }
 
 - (instancetype)init {
-    
     if (self = [super init]) {
-        
         self.notificationModel = [[LKNotificationModel alloc] init];
     }
     return self;
@@ -39,7 +37,6 @@ LC_PROPERTY(strong) LKNotificationModel *notificationModel;
 
     self.title = LC_LO(@"赞");
     [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[UIImage imageNamed:@"NavigationBarBack.png" useCache:YES] selectImage:nil];
-    
     
     @weakly(self);
     

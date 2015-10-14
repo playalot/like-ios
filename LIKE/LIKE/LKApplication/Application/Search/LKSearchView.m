@@ -36,10 +36,8 @@ LC_PROPERTY(assign) NSInteger page;
 
 - (instancetype)init {
     if (self = [super initWithFrame:CGRectMake(0, 0, LC_DEVICE_WIDTH, LC_DEVICE_HEIGHT + 20 - 60 + 5)]) {
-        
         [self buildUI];
     }
-    
     return self;
 }
 

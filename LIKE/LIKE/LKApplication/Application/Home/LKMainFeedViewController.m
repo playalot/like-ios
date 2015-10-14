@@ -113,9 +113,9 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
 
 - (void)refresh {
     if (self.currentViewController == self.homeFeedViewController) {
-        [self.homeFeedViewController performSelector:@selector(scrollViewScrollToTop)];
+        [self.homeFeedViewController refresh];
     } else {
-        [self.followingFeedViewController performSelector:@selector(scrollViewScrollToTop)];
+        [self.followingFeedViewController refresh];
     }
 }
 

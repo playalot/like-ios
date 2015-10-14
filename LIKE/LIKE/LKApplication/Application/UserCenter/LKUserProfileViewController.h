@@ -23,4 +23,6 @@ LC_PROPERTY(strong) LKUser *user;
 - (void)updateUserMetaInfo;
 - (instancetype)initWithUser:(LKUser *)user;
 
+- (void)refresh;
+
 @end

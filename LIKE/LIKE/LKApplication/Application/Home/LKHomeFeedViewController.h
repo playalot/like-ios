@@ -16,4 +16,6 @@
 
 - (void)scrollViewScrollToTop;
 
+- (void)refresh;
+
 @end

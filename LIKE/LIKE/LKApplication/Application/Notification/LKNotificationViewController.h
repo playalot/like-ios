@@ -10,4 +10,6 @@
 
 @interface LKNotificationViewController : LCUIViewController
 
+- (void)refresh;
+
 @end

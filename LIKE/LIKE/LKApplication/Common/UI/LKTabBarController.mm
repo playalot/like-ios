@@ -74,10 +74,8 @@
 /**
  *  选中了相机按钮就会执行
  */
-- (void)didTap
-{
+- (void)didTap {
     if(![LKLoginViewController needLoginOnViewController:self]){
-
         [LCUIApplication presentViewController:LC_UINAVIGATION([LKCameraRollViewController viewController]) animation:YES];
     }
 }
@@ -133,9 +131,7 @@
 
 #pragma mark -
 
-+(UIViewController *) hiddenBottomBarWhenPushed:(UIViewController *)viewController {
-//    [LC_APPDELEGATE.tabBarController hideBar];
-    
++(UIViewController *) hiddenBottomBarWhenPushed:(UIViewController *)viewController {    
     return viewController;
 }
 

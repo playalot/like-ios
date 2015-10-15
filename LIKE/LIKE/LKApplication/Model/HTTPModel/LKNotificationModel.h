@@ -29,6 +29,7 @@ LC_PROPERTY(strong) NSMutableArray *likesArray;
 LC_PROPERTY(strong) NSMutableArray *followsArray;
 
 //-(void) getNotificationsAtFirstPage:(BOOL)firstPage requestFinished:(LKNotificationModelRequestFinished)requestFinished type:(LKNotificationModelType)type;
-- (void)getNotificationsAtFirstPage:(BOOL)firstPage requestFinished:(LKNotificationModelRequestFinished)requestFinished;
+- (void)getNotificationsAtFirstPage:(BOOL)firstPage
+                    requestFinished:(LKNotificationModelRequestFinished)requestFinished;
 
 @end

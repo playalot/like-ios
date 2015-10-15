@@ -19,7 +19,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <MAMapKit/MAMapKit.h>
 #import "AFNetworkActivityIndicatorManager.h"
-#import <SMS_SDK/SMS_SDK.h>
+#import <SMS_SDK/SMSSDK.h>
 #import "SDImageCache.h"
 #import "APService.h"
 #import "LKChooseTagView.h"
@@ -177,7 +177,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
 
 - (void)setupSMS {
     // Mob短信验证
-    [SMS_SDK registerApp:@"81edd3d46294" withSecret:@"91a6694191e296937995cd3f66f5e9ca"];
+    [SMSSDK registerApp:@"81edd3d46294" withSecret:@"91a6694191e296937995cd3f66f5e9ca"];
 }
 
 - (void)setupPushService:(NSDictionary *)launchOptions {

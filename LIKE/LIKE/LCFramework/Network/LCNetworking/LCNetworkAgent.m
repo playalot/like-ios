@@ -254,7 +254,11 @@
             if (request.failureCompletionBlock) {
                 if ([request isKindOfClass:[LKBaseInterface class]]) {
                     LKBaseInterface *interface = (LKBaseInterface *)request;
-                    [self showTopMessageErrorHud:[interface errorMessage]];
+                    NSString *errorMessage = [interface errorMessage];
+                    if (interface.errorCode == 0) {
+                        errorMessage = LC_LO(@"请检查网络");
+                    }
+                    [self showTopMessageErrorHud:errorMessage];
                 }
                 request.failureCompletionBlock(request);
             }

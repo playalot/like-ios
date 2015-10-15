@@ -17,8 +17,8 @@
 #import "LKISOCountryCodes.h"
 #import "WXApi.h"
 #import "WeiboSDK.h"
-#import <SMS_SDK/SMS_SDK.h>
-#import <SMS_SDK/CountryAndAreaCode.h>
+#import <SMS_SDK/SMSSDK.h>
+#import <SMS_SDK/SMSSDKCountryAndAreaCode.h>
 #import "LKChooseTagView.h"
 #import "LKChooseInterestView.h"
 
@@ -152,7 +152,6 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    self.view.backgroundColor = [UIColor clearColor];
     self.tableView.scrollEnabled = NO;
     self.userInfoModel = LKUserInfoModel.new.OBSERVER(self);
     
@@ -189,9 +188,6 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
             
                 [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstStart"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
-
-//                LKChooseTagView *chooseView = [LKChooseTagView chooseTagView];
-//                [UIApplication sharedApplication].keyWindow.ADD(chooseView);
 
                 LKChooseInterestView *chooseView = [[LKChooseInterestView alloc] initWithFrame:CGRectMake(0, 20, LC_DEVICE_WIDTH, LC_DEVICE_HEIGHT)];
                 [UIApplication sharedApplication].keyWindow.ADD(chooseView);
@@ -660,25 +656,30 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     
     // 使用mob来进行短信验证
     NSString *countryCode = [self.countryCode.text substringFromIndex:1];
-    [SMS_SDK getVerificationCodeBySMSWithPhone:self.phoneField.text
-                                          zone:countryCode
-                                        result:^(SMS_SDKError *error) {
-         if (error) {
-             UIAlertView *alert = [[UIAlertView alloc]
-                                initWithTitle:NSLocalizedString(@"codesenderrtitle", nil)
-                                      message:[NSString
-                             stringWithFormat:@"状态码：%zi", error.errorCode]
-                                     delegate:self
-                            cancelButtonTitle:NSLocalizedString(@"sure", nil)
-                            otherButtonTitles:nil, nil];
-             [alert show];
-             
-         } else {
-             
-             [self $beginTimer];
-             self.codeButton.userInteractionEnabled = YES;
-         }
-     }];
+    
+    NSLog(@"self.phoneField.text: %@", self.phoneField.text);
+    
+    [SMSSDK getVerificationCodeByMethod:SMSGetCodeMethodSMS
+                            phoneNumber:self.phoneField.text
+                                   zone:countryCode
+                       customIdentifier:nil
+                                 result:^(NSError *error) {
+                                     if (error) {
+                                         UIAlertView *alert = [[UIAlertView alloc]
+                                                               initWithTitle:NSLocalizedString(@"codesenderrtitle", nil)
+                                                               message:[NSString
+                                                                        stringWithFormat:@"状态码：%zi", error.code]
+                                                               delegate:self
+                                                               cancelButtonTitle:NSLocalizedString(@"sure", nil)
+                                                               otherButtonTitles:nil, nil];
+                                         [alert show];
+                                         
+                                     } else {
+                                         
+                                         [self $beginTimer];
+                                         self.codeButton.userInteractionEnabled = YES;
+                                     }
+    }];
 }
 
 /**
@@ -714,7 +715,6 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
             [self.userInfoModel getUserInfo:result.json[@"data"][@"user_id"]];
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                
                 self.loginButton.title = LC_LO(@"进入like");
             });
 
@@ -724,6 +724,8 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
             self.loginButton.title = LC_LO(@"进入like");
             self.maskView.hidden = YES;
             [self showTopMessageErrorHud:result.error];
+            
+            NSLog(@"result: %@", result.errorCode);
             
             if (self.delegate) {
                 [self.delegate didLoginFailed];

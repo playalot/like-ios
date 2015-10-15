@@ -250,7 +250,7 @@ LC_PROPERTY(strong) LKSearchView *searchView;
 }
 
 - (void)refresh {
-    
+    [self.searchView refresh];
 }
 
 @end

@@ -156,6 +156,7 @@
     if (self.uploadFinished) {
         self.uploadFinished(post, @(index));
         [self postNotification:LKPostUploadSuccess withObject:post];
+        NSLog(@"post dictionary: %@", post);
     }
 }
 

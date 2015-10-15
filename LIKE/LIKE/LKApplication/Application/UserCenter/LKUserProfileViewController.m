@@ -616,7 +616,7 @@ LC_HANDLE_NAVIGATION_SIGNAL(UnfavouritePost, signal) {
 }
 
 - (void)refresh {
-    [self.tableView setContentOffset:LC_POINT(0, -300) animated:YES];
+    [self.tableView setContentOffset:LC_POINT(0, -self.header.maximumBarHeight) animated:YES];
 }
 
 @end

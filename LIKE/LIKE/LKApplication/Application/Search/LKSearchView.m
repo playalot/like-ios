@@ -41,6 +41,13 @@ LC_PROPERTY(assign) NSInteger page;
     return self;
 }
 
+- (void)refresh {
+    LKHotTagsTableView * pageView = self.scrollView.FIND(100 + self.page);
+    if (pageView) {
+        [pageView setContentOffset:LC_POINT(0, 0) animated:YES];
+    }
+}
+
 - (void)buildUI {
     
     UIView * view = UIView.view;

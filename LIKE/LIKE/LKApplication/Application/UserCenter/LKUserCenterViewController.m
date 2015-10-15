@@ -70,8 +70,8 @@ LC_PROPERTY(strong) NSMutableArray *datasource;
     LKUserCenterViewController *userCenter = [[LKUserCenterViewController alloc] initWithUser:user];
     userCenter.needBackButton = YES;
     userCenter.settingButtonHidden = NO;
-//    [navigationController pushViewController:userCenter animated:YES];
-    [navigationController presentViewController:LC_UINAVIGATION(userCenter) animated:YES completion:nil];
+    [navigationController pushViewController:userCenter animated:YES];
+//    [navigationController presentViewController:LC_UINAVIGATION(userCenter) animated:YES completion:nil];
     return userCenter;
 }
 
@@ -190,9 +190,10 @@ LC_PROPERTY(strong) NSMutableArray *datasource;
     
     if (self.needBackButton) {
         LCUIButton * backButton = LCUIButton.view;
-        backButton.viewFrameWidth = 50;
-        backButton.viewFrameHeight = 54 / 3 + 40;
-        backButton.viewFrameY = 10;
+        backButton.viewFrameWidth = 80;
+        backButton.viewFrameHeight = 80;
+        backButton.viewFrameY = -17 + 20;
+        backButton.viewFrameX = -15;
         backButton.buttonImage = [UIImage imageNamed:@"NavigationBarBackShadow.png" useCache:YES];
         backButton.showsTouchWhenHighlighted = YES;
         [backButton addTarget:self action:@selector(dismissAction) forControlEvents:UIControlEventTouchUpInside];
@@ -204,11 +205,11 @@ LC_PROPERTY(strong) NSMutableArray *datasource;
         
         if (!self.settingButtonHidden) {
             LCUIButton * setButton = LCUIButton.view;
-            setButton.viewFrameWidth = 64 / 3 + 40;
-            setButton.viewFrameHeight = 64 / 3 + 40;
-            setButton.viewFrameX = LC_DEVICE_WIDTH - setButton.viewFrameWidth;
-            setButton.viewFrameY = 10;
-            setButton.buttonImage = [UIImage imageNamed:@"NavigationBarSetShadow.png" useCache:YES];
+            setButton.viewFrameWidth = 80;
+            setButton.viewFrameHeight = 80;
+            setButton.viewFrameX = LC_DEVICE_WIDTH - setButton.viewFrameWidth + 15;
+            setButton.viewFrameY = -17 + 20;
+            setButton.buttonImage = [UIImage imageNamed:@"NavigationBarSet.png" useCache:YES];
             setButton.showsTouchWhenHighlighted = YES;
             [setButton addTarget:self action:@selector(setAction) forControlEvents:UIControlEventTouchUpInside];
             [self.header addSubview:setButton];
@@ -217,10 +218,10 @@ LC_PROPERTY(strong) NSMutableArray *datasource;
     } else {
         
         LCUIButton *moreButton = LCUIButton.view;
-        moreButton.viewFrameWidth = 64 / 3 + 40;
-        moreButton.viewFrameHeight = 64 / 3 + 40;
-        moreButton.viewFrameX = LC_DEVICE_WIDTH - moreButton.viewFrameWidth;
-        moreButton.viewFrameY = 10;
+        moreButton.viewFrameWidth = 80;
+        moreButton.viewFrameHeight = 80;
+        moreButton.viewFrameX = LC_DEVICE_WIDTH - moreButton.viewFrameWidth + 15;
+        moreButton.viewFrameY = -17 + 20;
         moreButton.buttonImage = [UIImage imageNamed:@"NavigationBarMoreShadow.png" useCache:YES];
         moreButton.showsTouchWhenHighlighted = YES;
         [moreButton addTarget:self action:@selector(moreAction) forControlEvents:UIControlEventTouchUpInside];

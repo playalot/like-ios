@@ -195,9 +195,6 @@ LC_IMP_SIGNAL(PushPostDetail);
             self.likesTip.viewFrameX = self.likes.viewFrameX + likeSize.width + 3;
         }];
     };
-    
-    LKLikeTagItemView *tagsView = [[LKLikeTagItemView alloc] initWithFrame:CGRectMake(100, 100, 200, 50)];
-    self.ADD(tagsView);
 }
 
 - (void)addTagAction {

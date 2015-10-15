@@ -153,7 +153,7 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
         
         @normally(self);
         JTSImageInfo * info = [[JTSImageInfo alloc] init];
-        NSString *imageURLString = LC_NSSTRING_IS_INVALID(self.user.originAvatar) ? self.user.originAvatar : self.user.avatar;
+        NSString *imageURLString = LC_NSSTRING_IS_INVALID(self.user.originAvatar) ? self.user.avatar : self.user.originAvatar;
         info.imageURL = [NSURL URLWithString:imageURLString];
         info.referenceRect = imageView.frame;
         info.referenceView = imageView.superview;
@@ -183,10 +183,11 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
     
     if (self.needBackButton) {
         LCUIButton *backButton = LCUIButton.view;
-        backButton.viewFrameWidth = 50;
-        backButton.viewFrameHeight = 54 / 3 + 40;
-        backButton.viewFrameY = 10;
-        backButton.buttonImage = [UIImage imageNamed:@"NavigationBarBack.png" useCache:YES];
+        backButton.viewFrameWidth = 80;
+        backButton.viewFrameHeight = 80;
+        backButton.viewFrameY = -17 + 20;
+        backButton.viewFrameX = -15;
+        backButton.buttonImage = [UIImage imageNamed:@"NavigationBarBackShadow.png" useCache:YES];
         backButton.showsTouchWhenHighlighted = YES;
         [backButton addTarget:self action:@selector(dismissAction) forControlEvents:UIControlEventTouchUpInside];
         backButton.tag = 1002;
@@ -198,10 +199,10 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
         if (!self.settingButtonHidden) {
             
             LCUIButton *setButton = LCUIButton.view;
-            setButton.viewFrameWidth = 64 / 3 + 40;
-            setButton.viewFrameHeight = 64 / 3 + 40;
-            setButton.viewFrameX = LC_DEVICE_WIDTH - setButton.viewFrameWidth;
-            setButton.viewFrameY = 10;
+            setButton.viewFrameWidth = 80;
+            setButton.viewFrameHeight = 80;
+            setButton.viewFrameX = LC_DEVICE_WIDTH - setButton.viewFrameWidth + 15;
+            setButton.viewFrameY = -17 + 20;
             setButton.buttonImage = [UIImage imageNamed:@"NavigationBarSet.png" useCache:YES];
             setButton.showsTouchWhenHighlighted = YES;
             [setButton addTarget:self action:@selector(setAction) forControlEvents:UIControlEventTouchUpInside];

@@ -25,7 +25,7 @@
 #import "RMPZoomTransitionAnimator.h"
 #import "LKPostInterface.h"
 
-@interface LKNotificationViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerDelegate, RMPZoomTransitionAnimating, RMPZoomTransitionDelegate>
+@interface LKNotificationViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerDelegate>
 
 LC_PROPERTY(strong) LKNotificationModel *notificationModel;
 LC_PROPERTY(strong) LKNotificationHeader *notificationHeader;
@@ -55,10 +55,26 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self buildNavigationBar];
+    [self buildTableView];
+    [self buildCartoonImageView];
+    [self buildPullLoader];
+}
+
+- (void)buildNavigationBar {
+    LCUIButton *titleBtn = [[LCUIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];
+    titleBtn.title = LC_LO(@"消息提醒");
+    titleBtn.titleFont = LK_FONT_B(16);
+    self.titleView = (UIView *)titleBtn;
     
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
+}
+
+- (void)buildTableView {
     self.tableView = [[LCUITableView alloc] initWithFrame:CGRectZero];
-    self.tableView.frame = self.view.bounds;
-    self.tableView.viewFrameHeight -= 49;
+    //    self.tableView.frame = self.view.bounds;
+    //    self.tableView.viewFrameHeight -= 49;
+    self.tableView.viewFrameWidth = self.view.viewFrameWidth;
+    self.tableView.viewFrameHeight = self.view.viewFrameHeight - 64 - 49;
     self.tableView.backgroundView = nil;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -66,7 +82,9 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
     self.tableView.scrollsToTop = YES;
     self.tableView.backgroundColor = [UIColor clearColor];
     self.view.ADD(self.tableView);
-    
+}
+
+- (void)buildCartoonImageView {
     self.cartoonImageView = LCUIImageView.view;
     UIImage *cartoonImage = [UIImage imageNamed:@"NotificationEmpty.png" useCache:YES];
     self.cartoonImageView.viewFrameWidth = cartoonImage.size.width;
@@ -76,6 +94,9 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
     self.cartoonImageView.image = cartoonImage;
     self.cartoonImageView.hidden = YES;
     self.tableView.ADD(self.cartoonImageView);
+}
+
+- (void)buildPullLoader {
     
     @weakly(self);
     
@@ -86,15 +107,6 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
     }];
     
     [self loadData:LCUIPullLoaderDiretionTop];
-}
-
-- (void)buildNavigationBar {
-    LCUIButton *titleBtn = [[LCUIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];
-    titleBtn.title = LC_LO(@"消息提醒");
-    titleBtn.titleFont = LK_FONT_B(16);
-    self.titleView = (UIView *)titleBtn;
-    
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:LKColor.color andSize:CGSizeMake(LC_DEVICE_WIDTH, 64)] forBarMetrics:UIBarMetricsDefault];
 }
 
 -(void)loadData:(LCUIPullLoaderDiretion)diretion {
@@ -259,7 +271,9 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
 }
 
 - (void)refresh {
-    [self.tableView setContentOffset:LC_POINT(0, 0) animated:YES];
+//    [self.tableView setContentOffset:LC_POINT(0, 0) animated:YES];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 
 @end

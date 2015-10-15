@@ -88,7 +88,7 @@ LC_PROPERTY(assign) BOOL favorited;
     
     [super viewWillAppear:animated];
     [self setNavigationBarHidden:YES animated:NO];
-    [[LKNavigator navigator].tabBarController setTabBarHidden:YES animated:YES];
+    [[LKNavigator navigator].tabBarController setTabBarHidden:YES animated:NO];
     
 //    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:animated];
 
@@ -330,10 +330,10 @@ LC_PROPERTY(assign) BOOL favorited;
         
         // 导航栏更多按钮
         LCUIButton * moreButton = LCUIButton.view;
-        moreButton.viewFrameWidth = 50 / 3 + 40;
-        moreButton.viewFrameHeight = 11 / 3 + 20;
-        moreButton.viewFrameX = LC_DEVICE_WIDTH - moreButton.viewFrameWidth;
-        moreButton.viewFrameY = 10 + 20;
+        moreButton.viewFrameWidth = 80;
+        moreButton.viewFrameHeight = 80;
+        moreButton.viewFrameX = LC_DEVICE_WIDTH - moreButton.viewFrameWidth + 15;
+        moreButton.viewFrameY = - 17 + 20;
         moreButton.buttonImage = [UIImage imageNamed:@"NavigationBarMoreShadow.png" useCache:YES];
         moreButton.showsTouchWhenHighlighted = YES;
         [moreButton addTarget:self action:@selector(_moreAction) forControlEvents:UIControlEventTouchUpInside];

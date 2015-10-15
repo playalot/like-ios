@@ -117,7 +117,7 @@ static char TAG_ACTIVITY_INDICATOR;
                   options:options
                  progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                  
-                     if (progressBlock) {
+                     if (progressBlock && receivedSize!= expectedSize) {
                          
                          [ring setProgress:receivedSize * 1.0 / expectedSize animated:YES];
                          if (ring) {

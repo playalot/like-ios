@@ -326,6 +326,7 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
             LKPost *post = (LKPost *)notification.object;
             [self.datasource insertObject:post atIndex:0];
             [[self.userCenterModel dataWithType:self.currentType] insertObject:post atIndex:0];
+            [self.tableView reloadData];
         }
     }
 }
@@ -616,9 +617,7 @@ LC_HANDLE_NAVIGATION_SIGNAL(UnfavouritePost, signal) {
 }
 
 - (void)refresh {
-    LC_FAST_ANIMATIONS(0.25, ^{
-        [self.tableView setContentOffset:LC_POINT(0, 0) animated:YES];
-    });
+    [self.tableView setContentOffset:LC_POINT(0, -self.header.maximumBarHeight) animated:YES];
 }
 
 @end

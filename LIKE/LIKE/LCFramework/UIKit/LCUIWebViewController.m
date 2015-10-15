@@ -204,11 +204,9 @@ LC_HANDLE_NAVIGATION_BUTTON(type)
 	}
 }
 
-- (void)setResource:(NSString *)path
-{
+- (void)setResource:(NSString *)path {
 	NSString * extension = [path pathExtension];
 	NSString * fullName = [path substringToIndex:(path.length - extension.length - 1)];
-    
 	NSString * path2 = [[NSBundle mainBundle] pathForResource:fullName ofType:extension];
 	NSData * data = [NSData dataWithContentsOfFile:path2];
     

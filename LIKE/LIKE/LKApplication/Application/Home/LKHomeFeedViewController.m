@@ -608,14 +608,13 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
 }
 
 - (void)scrollViewScrollToTop {
-    LC_FAST_ANIMATIONS(0.25, ^{
-        [self.tableView setContentOffset:LC_POINT(0, 0) animated:YES];
-    });
+    [self.tableView setContentOffset:LC_POINT(0, 0) animated:YES];
 }
 
 - (void)refresh {
-    LC_FAST_ANIMATIONS(0.25, ^{
-        [self.tableView setContentOffset:LC_POINT(0, 0) animated:YES];
+    LC_FAST_ANIMATIONS_F(0.25, ^{
+        [self.tableView setContentOffset:LC_POINT(0, 0) animated:NO];
+    }, ^(BOOL finished){
         [self loadData:LCUIPullLoaderDiretionTop];
     });
 }

@@ -16,4 +16,6 @@ LC_PROPERTY(copy) LKValueChanged willHide;
 LC_PROPERTY(strong) LKSearchPlaceholderView *placeholderView;
 LC_PROPERTY(weak) LCUIViewController *parentViewController;
 
+- (void)refresh;
+
 @end

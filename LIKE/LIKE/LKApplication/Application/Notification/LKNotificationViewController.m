@@ -129,6 +129,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
         LKNotificationCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Cell" andClass:[LKNotificationCell class]];
         cell.notification = self.notificationModel.datasource[indexPath.row];
         return cell;
+        
     } else {
         
         LKNotificationMiniCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Cell" andClass:[LKNotificationMiniCell class]];
@@ -180,13 +181,11 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
         @normally(self);
         
         if (result.state == LKHttpRequestStateFinished) {
-            
             LKTag *tag = [LKTag objectFromDictionary:result.json[@"data"]];
             LKTagCommentsViewController *tagCommentsViewController = [[LKTagCommentsViewController alloc] initWithTag:tag];
             [self.navigationController pushViewController:tagCommentsViewController animated:YES];
         }
         else if (result.state == LKHttpRequestStateFailed){
-            
             [self showTopMessageErrorHud:result.error];
         }
     }];
@@ -208,13 +207,8 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
         @normally(interface);
         
         post.preview = interface.preview;
-        
         LKPostDetailViewController *detailViewController = [[LKPostDetailViewController alloc] initWithPost:post];
-//            [detailViewController setPresendModelAnimationOpen];
         [self.navigationController pushViewController:detailViewController animated:YES];
-//            [self.navigationController presentViewController:LC_UINAVIGATION(detailViewController) animated:YES completion:nil];
-//            LKOfficialDetailViewController *detailCtrl = [[LKOfficialDetailViewController alloc] init];
-//            [self.navigationController pushViewController:detailCtrl animated:YES];
         
     } failure:^(LCBaseRequest *request) {
         [self.pullLoader endRefresh];
@@ -243,8 +237,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
     return imageView;
 }
 
-- (UIColor *)transitionSourceBackgroundColor
-{
+- (UIColor *)transitionSourceBackgroundColor {
     return self.tableView.backgroundColor;
 }
 
@@ -259,10 +252,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
 }
 
 - (void)refresh {
-    LC_FAST_ANIMATIONS(0.25, ^{
-        [self.tableView setContentOffset:LC_POINT(0, 0) animated:YES];
-        [self loadData:LCUIPullLoaderDiretionTop];
-    });
+    [self.tableView setContentOffset:LC_POINT(0, 0) animated:YES];
 }
 
 @end

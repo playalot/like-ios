@@ -155,7 +155,7 @@
     [self.uploadingImages removeObject:posting];
     if (self.uploadFinished) {
         self.uploadFinished(post, @(index));
-        [self postNotification:LKPostUploadSuccess];
+        [self postNotification:LKPostUploadSuccess withObject:post];
     }
 }
 

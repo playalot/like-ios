@@ -55,8 +55,8 @@ LC_PROPERTY(strong) UISlider * slider2;
 LC_PROPERTY(assign) NSInteger filterIndex;
 LC_PROPERTY(assign) BOOL magic;
 
-LC_PROPERTY(strong) UIView *gtaView1;
-LC_PROPERTY(strong) UIView *gtaView2;
+//LC_PROPERTY(strong) UIView *gtaView1;
+//LC_PROPERTY(strong) UIView *gtaView2;
 
 LC_PROPERTY(strong) UIView *wastedView;
 
@@ -307,7 +307,7 @@ LC_PROPERTY(strong) UIView *wastedView;
         UIImage * image = [self lookkupImageFilterWithImage:LKFilterManager.singleton.allFilterImage[i - 1] originImage:preview];
         
         // Wasted滤镜
-        if (i == filterNames.count - 2) {
+        if (i == filterNames.count - 1) {
             
             CGFloat width = image.size.width;
             CGFloat height = width / 414 * 72;
@@ -315,24 +315,24 @@ LC_PROPERTY(strong) UIView *wastedView;
             image = [image addMaskImage:[UIImage imageNamed:@"Wasted2" useCache:YES] imageSize:image.size inRect:CGRectMake(0, (image.size.height - height) * 0.5, width, height)];
         }
         
-        // GTA滤镜
-        if (i == filterNames.count - 1) {
-            
-            CGFloat width = (245. / 1020.) * image.size.width * 1.5;
-            CGFloat height = width / 245 * 172.;
-            CGFloat padding = (30. / 1020.) * image.size.width;
-            
-            image = [image addMaskImage:[UIImage imageNamed:@"Gta-driving.png" useCache:YES] imageSize:image.size inRect:CGRectMake(padding, image.size.height - height - padding, width, height)];
-        }
-
-        if (i == filterNames.count) {
-            
-            CGFloat width = (245. / 1020.) * image.size.width * 1.5;
-            CGFloat height = width / 245 * 172.;
-            CGFloat padding = (30. / 1020.) * image.size.width;
-            
-            image = [image addMaskImage:[UIImage imageNamed:@"Gta-walking.png" useCache:YES] imageSize:image.size inRect:CGRectMake(padding, image.size.height - height - padding, width, height)];
-        }
+//        // GTA滤镜
+//        if (i == filterNames.count - 1) {
+//            
+//            CGFloat width = (245. / 1020.) * image.size.width * 1.5;
+//            CGFloat height = width / 245 * 172.;
+//            CGFloat padding = (30. / 1020.) * image.size.width;
+//            
+//            image = [image addMaskImage:[UIImage imageNamed:@"Gta-driving.png" useCache:YES] imageSize:image.size inRect:CGRectMake(padding, image.size.height - height - padding, width, height)];
+//        }
+//
+//        if (i == filterNames.count) {
+//            
+//            CGFloat width = (245. / 1020.) * image.size.width * 1.5;
+//            CGFloat height = width / 245 * 172.;
+//            CGFloat padding = (30. / 1020.) * image.size.width;
+//            
+//            image = [image addMaskImage:[UIImage imageNamed:@"Gta-walking.png" useCache:YES] imageSize:image.size inRect:CGRectMake(padding, image.size.height - height - padding, width, height)];
+//        }
         
         
         [filterScrollView addFilterName:filterNames[i - 1] filterImage:image];
@@ -487,20 +487,20 @@ LC_PROPERTY(strong) UIView *wastedView;
                 self.wastedView = nil;
             }
             
-            if (self.gtaView1) {
-                [self.gtaView1 removeFromSuperview];
-                self.gtaView1 = nil;
-            }
-            
-            if (self.gtaView2) {
-                [self.gtaView2 removeFromSuperview];
-                self.gtaView2 = nil;
-            }
+//            if (self.gtaView1) {
+//                [self.gtaView1 removeFromSuperview];
+//                self.gtaView1 = nil;
+//            }
+//            
+//            if (self.gtaView2) {
+//                [self.gtaView2 removeFromSuperview];
+//                self.gtaView2 = nil;
+//            }
             
             NSInteger filterImageCount = LKFilterManager.singleton.allFilterImage.count;
             
             // Wasted滤镜
-            if (self.filterIndex == filterImageCount - 2) {
+            if (self.filterIndex == filterImageCount - 1) {
                 
 //                CGFloat width = image.size.width;
 //                CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
@@ -512,24 +512,24 @@ LC_PROPERTY(strong) UIView *wastedView;
                 image = [image addMaskImage:[UIImage imageNamed:@"Wasted2" useCache:YES] imageSize:image.size inRect:CGRectMake(0, (image.size.height - height) * 0.5, width, height)];
             }
             
-            // GTA滤镜
-            if (self.filterIndex == filterImageCount - 1) {
-                
-                CGFloat width = (245. / 1020.) * image.size.width;
-                CGFloat height = width / 245 * 172.;
-                CGFloat padding = (30. / 1020.) * image.size.width;
-                
-                image = [image addMaskImage:[UIImage imageNamed:@"Gta-driving.png" useCache:YES] imageSize:image.size inRect:CGRectMake(padding, image.size.height - height - padding, width, height)];
-            }
-            
-            if (self.filterIndex == filterImageCount) {
-                
-                CGFloat width = (245. / 1020.) * image.size.width;
-                CGFloat height = width / 245 * 172.;
-                CGFloat padding = (30. / 1020.) * image.size.width;
-                
-                image = [image addMaskImage:[UIImage imageNamed:@"Gta-walking.png" useCache:YES] imageSize:image.size inRect:CGRectMake(padding, image.size.height - height - padding, width, height)];
-            }
+//            // GTA滤镜
+//            if (self.filterIndex == filterImageCount - 1) {
+//                
+//                CGFloat width = (245. / 1020.) * image.size.width;
+//                CGFloat height = width / 245 * 172.;
+//                CGFloat padding = (30. / 1020.) * image.size.width;
+//                
+//                image = [image addMaskImage:[UIImage imageNamed:@"Gta-driving.png" useCache:YES] imageSize:image.size inRect:CGRectMake(padding, image.size.height - height - padding, width, height)];
+//            }
+//            
+//            if (self.filterIndex == filterImageCount) {
+//                
+//                CGFloat width = (245. / 1020.) * image.size.width;
+//                CGFloat height = width / 245 * 172.;
+//                CGFloat padding = (30. / 1020.) * image.size.width;
+//                
+//                image = [image addMaskImage:[UIImage imageNamed:@"Gta-walking.png" useCache:YES] imageSize:image.size inRect:CGRectMake(padding, image.size.height - height - padding, width, height)];
+//            }
 
         }
         

@@ -36,8 +36,8 @@ LC_PROPERTY(assign) NSInteger currentFilter;
 LC_PROPERTY(assign) NSInteger filterIndex;
 LC_PROPERTY(assign) UIDeviceOrientation deviceOrientation;
 
-LC_PROPERTY(strong) UIView *gtaView1;
-LC_PROPERTY(strong) UIView *gtaView2;
+//LC_PROPERTY(strong) UIView *gtaView1;
+//LC_PROPERTY(strong) UIView *gtaView2;
 
 LC_PROPERTY(strong) UIView *wastedView;
 
@@ -121,27 +121,27 @@ LC_PROPERTY(strong) UIView *wastedView;
                         });
                     }
                     
-                    if (self.gtaView1) {
-                        [array addObject:self.gtaView1];
-                        
-                        LC_FAST_ANIMATIONS(0.25, ^{
-                            
-                            self.gtaView1.viewFrameX = 20;
-                            self.gtaView1.viewFrameY = self.fastCamera.view.viewFrameHeight - self.gtaView1.viewFrameHeight;
-                            
-                        });
-                    }
+//                    if (self.gtaView1) {
+//                        [array addObject:self.gtaView1];
+//                        
+//                        LC_FAST_ANIMATIONS(0.25, ^{
+//                            
+//                            self.gtaView1.viewFrameX = 20;
+//                            self.gtaView1.viewFrameY = self.fastCamera.view.viewFrameHeight - self.gtaView1.viewFrameHeight;
+//                            
+//                        });
+//                    }
                     
-                    if (self.gtaView2) {
-                        [array addObject:self.gtaView2];
-                        
-                        LC_FAST_ANIMATIONS(0.25, ^{
-                            
-                            self.gtaView2.viewFrameX = 20;
-                            self.gtaView2.viewFrameY = self.fastCamera.view.viewFrameHeight - self.gtaView2.viewFrameHeight;
-                            
-                        });
-                    }
+//                    if (self.gtaView2) {
+//                        [array addObject:self.gtaView2];
+//                        
+//                        LC_FAST_ANIMATIONS(0.25, ^{
+//                            
+//                            self.gtaView2.viewFrameX = 20;
+//                            self.gtaView2.viewFrameY = self.fastCamera.view.viewFrameHeight - self.gtaView2.viewFrameHeight;
+//                            
+//                        });
+//                    }
                     
                     [self viewTransformMakeRotation:array rotation:0];
                     break;
@@ -168,45 +168,45 @@ LC_PROPERTY(strong) UIView *wastedView;
                         });
                     }
                     
-                    if (self.gtaView1) {
-                        
-                        [array addObject:self.gtaView1];
-                        
-                        LC_FAST_ANIMATIONS(0.25, ^{
-                            
-                            if (self.deviceOrientation == UIDeviceOrientationLandscapeLeft) {
-
-                                self.gtaView1.viewFrameX = 0;
-                                self.gtaView1.viewFrameY = 20;
-                            
-                            }
-                            else{
-                                
-                                self.gtaView1.viewFrameX = self.fastCamera.view.viewFrameWidth - self.gtaView1.viewFrameWidth;
-                                self.gtaView1.viewFrameY = self.fastCamera.view.viewFrameHeight - self.gtaView1.viewFrameHeight- 20;
-                            }
-                        });
-                    }
-                    
-                    if (self.gtaView2) {
-                        
-                        [array addObject:self.gtaView2];
-                        
-                        LC_FAST_ANIMATIONS(0.25, ^{
-                            
-                            if (self.deviceOrientation == UIDeviceOrientationLandscapeLeft) {
-                                
-                                self.gtaView2.viewFrameX = 0;
-                                self.gtaView2.viewFrameY = 20;
-                                
-                            }
-                            else{
-                                
-                                self.gtaView2.viewFrameX = self.fastCamera.view.viewFrameWidth - self.gtaView2.viewFrameWidth;
-                                self.gtaView2.viewFrameY = self.fastCamera.view.viewFrameHeight - self.gtaView2.viewFrameHeight- 20;
-                            }
-                        });
-                    }
+//                    if (self.gtaView1) {
+//                        
+//                        [array addObject:self.gtaView1];
+//                        
+//                        LC_FAST_ANIMATIONS(0.25, ^{
+//                            
+//                            if (self.deviceOrientation == UIDeviceOrientationLandscapeLeft) {
+//
+//                                self.gtaView1.viewFrameX = 0;
+//                                self.gtaView1.viewFrameY = 20;
+//                            
+//                            }
+//                            else{
+//                                
+//                                self.gtaView1.viewFrameX = self.fastCamera.view.viewFrameWidth - self.gtaView1.viewFrameWidth;
+//                                self.gtaView1.viewFrameY = self.fastCamera.view.viewFrameHeight - self.gtaView1.viewFrameHeight- 20;
+//                            }
+//                        });
+//                    }
+//                    
+//                    if (self.gtaView2) {
+//                        
+//                        [array addObject:self.gtaView2];
+//                        
+//                        LC_FAST_ANIMATIONS(0.25, ^{
+//                            
+//                            if (self.deviceOrientation == UIDeviceOrientationLandscapeLeft) {
+//                                
+//                                self.gtaView2.viewFrameX = 0;
+//                                self.gtaView2.viewFrameY = 20;
+//                                
+//                            }
+//                            else{
+//                                
+//                                self.gtaView2.viewFrameX = self.fastCamera.view.viewFrameWidth - self.gtaView2.viewFrameWidth;
+//                                self.gtaView2.viewFrameY = self.fastCamera.view.viewFrameHeight - self.gtaView2.viewFrameHeight- 20;
+//                            }
+//                        });
+//                    }
 
                     
                     [self viewTransformMakeRotation:array rotation:(rotation * M_PI) / 180.0f];
@@ -499,8 +499,8 @@ LC_PROPERTY(strong) UIView *wastedView;
 
 -(void) finished
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
-//    [self.navigationController popViewControllerAnimated:YES];
+//    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)switchFilterAtIndex:(NSInteger)index
@@ -512,15 +512,15 @@ LC_PROPERTY(strong) UIView *wastedView;
         self.wastedView = nil;
     }
     
-    if (self.gtaView1) {
-        [self.gtaView1 removeFromSuperview];
-        self.gtaView1 = nil;
-    }
-    
-    if (self.gtaView2) {
-        [self.gtaView2 removeFromSuperview];
-        self.gtaView2 = nil;
-    }
+//    if (self.gtaView1) {
+//        [self.gtaView1 removeFromSuperview];
+//        self.gtaView1 = nil;
+//    }
+//    
+//    if (self.gtaView2) {
+//        [self.gtaView2 removeFromSuperview];
+//        self.gtaView2 = nil;
+//    }
 
     
     if (index == 0) {
@@ -530,7 +530,7 @@ LC_PROPERTY(strong) UIView *wastedView;
     
     NSArray *filterNames = LKFilterManager.singleton.allFilterNames;
     
-    if (self.filterIndex == filterNames.count - 2) {
+    if (self.filterIndex == filterNames.count - 1) {
         
         self.wastedView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Wasted2" useCache:YES]];
         self.wastedView.viewFrameX = 0;
@@ -539,21 +539,21 @@ LC_PROPERTY(strong) UIView *wastedView;
         self.fastCamera.view.ADD(self.wastedView);
     }
     
-    if (self.filterIndex == filterNames.count - 1) {
-        
-        self.gtaView1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Gta-driving.png" useCache:YES]];
-        self.gtaView1.viewFrameX = 10;
-        self.gtaView1.viewFrameY = self.fastCamera.view.viewFrameHeight - self.gtaView1.viewFrameHeight - 10;
-        self.fastCamera.view.ADD(self.gtaView1);
-    }
-    
-    if (self.filterIndex == filterNames.count) {
-        
-        self.gtaView2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Gta-walking.png" useCache:YES]];
-        self.gtaView2.viewFrameX = 10;
-        self.gtaView2.viewFrameY = self.fastCamera.view.viewFrameHeight - self.gtaView2.viewFrameHeight - 10;
-        self.fastCamera.view.ADD(self.gtaView2);
-    }
+//    if (self.filterIndex == filterNames.count - 1) {
+//        
+//        self.gtaView1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Gta-driving.png" useCache:YES]];
+//        self.gtaView1.viewFrameX = 10;
+//        self.gtaView1.viewFrameY = self.fastCamera.view.viewFrameHeight - self.gtaView1.viewFrameHeight - 10;
+//        self.fastCamera.view.ADD(self.gtaView1);
+//    }
+//    
+//    if (self.filterIndex == filterNames.count) {
+//        
+//        self.gtaView2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Gta-walking.png" useCache:YES]];
+//        self.gtaView2.viewFrameX = 10;
+//        self.gtaView2.viewFrameY = self.fastCamera.view.viewFrameHeight - self.gtaView2.viewFrameHeight - 10;
+//        self.fastCamera.view.ADD(self.gtaView2);
+//    }
     
     self.fastCamera.filterImage = LKFilterManager.singleton.allFilterImage[index - 1];
 }

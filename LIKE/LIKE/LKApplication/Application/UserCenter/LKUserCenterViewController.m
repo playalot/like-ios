@@ -70,8 +70,8 @@ LC_PROPERTY(strong) NSMutableArray *datasource;
     LKUserCenterViewController *userCenter = [[LKUserCenterViewController alloc] initWithUser:user];
     userCenter.needBackButton = YES;
     userCenter.settingButtonHidden = NO;
-//    [navigationController pushViewController:userCenter animated:YES];
-    [navigationController presentViewController:LC_UINAVIGATION(userCenter) animated:YES completion:nil];
+    [navigationController pushViewController:userCenter animated:YES];
+//    [navigationController presentViewController:LC_UINAVIGATION(userCenter) animated:YES completion:nil];
     return userCenter;
 }
 

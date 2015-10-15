@@ -249,7 +249,6 @@
 		1377F04B1B5E35D8008E21BC /* UIKit+Doppelganger.m in Sources */ = {isa = PBXBuildFile; fileRef = 1377F0451B5E35D8008E21BC /* UIKit+Doppelganger.m */; };
 		1377F04C1B5E35D8008E21BC /* WMLArrayDiff.m in Sources */ = {isa = PBXBuildFile; fileRef = 1377F0481B5E35D8008E21BC /* WMLArrayDiff.m */; };
 		1377F04D1B5E35D8008E21BC /* WMLArrayDiffUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 1377F04A1B5E35D8008E21BC /* WMLArrayDiffUtility.m */; };
-		13877D081BBBFCE400521D2D /* Instant.png in Resources */ = {isa = PBXBuildFile; fileRef = 13877D071BBBFCE400521D2D /* Instant.png */; settings = {ASSET_TAGS = (); }; };
 		13877D0A1BBC197E00521D2D /* NoFollowing@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13877D091BBC197E00521D2D /* NoFollowing@3x.png */; settings = {ASSET_TAGS = (); }; };
 		13877D131BBCE49600521D2D /* Interest_aerolite@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13877D0C1BBCE49600521D2D /* Interest_aerolite@3x.png */; settings = {ASSET_TAGS = (); }; };
 		13877D141BBCE49600521D2D /* Interest_bottom@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13877D0D1BBCE49600521D2D /* Interest_bottom@3x.png */; settings = {ASSET_TAGS = (); }; };
@@ -758,8 +757,6 @@
 		13D9BF261AEB997E0020C94F /* Dawn.png in Resources */ = {isa = PBXBuildFile; fileRef = 13D9BF1D1AEB997E0020C94F /* Dawn.png */; };
 		13D9BF271AEB997E0020C94F /* Diana.png in Resources */ = {isa = PBXBuildFile; fileRef = 13D9BF1E1AEB997E0020C94F /* Diana.png */; };
 		13D9BF281AEB997E0020C94F /* Holga.png in Resources */ = {isa = PBXBuildFile; fileRef = 13D9BF1F1AEB997E0020C94F /* Holga.png */; };
-		13D9BF2A1AEB997E0020C94F /* Luna.png in Resources */ = {isa = PBXBuildFile; fileRef = 13D9BF211AEB997E0020C94F /* Luna.png */; };
-		13D9BF2B1AEB997E0020C94F /* Midway.png in Resources */ = {isa = PBXBuildFile; fileRef = 13D9BF221AEB997E0020C94F /* Midway.png */; };
 		13D9BF2C1AEB997E0020C94F /* Pro.png in Resources */ = {isa = PBXBuildFile; fileRef = 13D9BF231AEB997E0020C94F /* Pro.png */; };
 		13D9BF2D1AEB997E0020C94F /* Vivid.png in Resources */ = {isa = PBXBuildFile; fileRef = 13D9BF241AEB997E0020C94F /* Vivid.png */; };
 		13DA0FC61AEB8AFE005B9476 /* CameraFocus@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13DA0FC51AEB8AFE005B9476 /* CameraFocus@3x.png */; };
@@ -823,6 +820,9 @@
 		13F584C21BCE3F630004F144 /* RecommendUser@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13F584C11BCE3F630004F144 /* RecommendUser@3x.png */; settings = {ASSET_TAGS = (); }; };
 		13F584C41BCE401A0004F144 /* QRCode@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13F584C31BCE401A0004F144 /* QRCode@3x.png */; settings = {ASSET_TAGS = (); }; };
 		13F584C81BCE42F10004F144 /* like_icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13F584C71BCE42F10004F144 /* like_icon@3x.png */; settings = {ASSET_TAGS = (); }; };
+		13F584CC1BCF6B840004F144 /* Instant.png in Resources */ = {isa = PBXBuildFile; fileRef = 13F584C91BCF6B840004F144 /* Instant.png */; settings = {ASSET_TAGS = (); }; };
+		13F584CD1BCF6B840004F144 /* Luna.png in Resources */ = {isa = PBXBuildFile; fileRef = 13F584CA1BCF6B840004F144 /* Luna.png */; settings = {ASSET_TAGS = (); }; };
+		13F584D01BCF84BE0004F144 /* Midway.png in Resources */ = {isa = PBXBuildFile; fileRef = 13F584CF1BCF84BE0004F144 /* Midway.png */; settings = {ASSET_TAGS = (); }; };
 		13FCC0711ADE16DD0008DB41 /* LKUserCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FCC0701ADE16DD0008DB41 /* LKUserCenterViewController.m */; };
 		13FCC0741ADE17F70008DB41 /* LKSegmentHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FCC0731ADE17F70008DB41 /* LKSegmentHeader.m */; };
 		13FCC0781ADE2E5F0008DB41 /* LKHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FCC0761ADE2E5F0008DB41 /* LKHomeTableViewCell.m */; };
@@ -1294,7 +1294,6 @@
 		1377F0481B5E35D8008E21BC /* WMLArrayDiff.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMLArrayDiff.m; sourceTree = "<group>"; };
 		1377F0491B5E35D8008E21BC /* WMLArrayDiffUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMLArrayDiffUtility.h; sourceTree = "<group>"; };
 		1377F04A1B5E35D8008E21BC /* WMLArrayDiffUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMLArrayDiffUtility.m; sourceTree = "<group>"; };
-		13877D071BBBFCE400521D2D /* Instant.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Instant.png; sourceTree = "<group>"; };
 		13877D091BBC197E00521D2D /* NoFollowing@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NoFollowing@3x.png"; sourceTree = "<group>"; };
 		13877D0C1BBCE49600521D2D /* Interest_aerolite@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Interest_aerolite@3x.png"; sourceTree = "<group>"; };
 		13877D0D1BBCE49600521D2D /* Interest_bottom@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Interest_bottom@3x.png"; sourceTree = "<group>"; };
@@ -2315,8 +2314,6 @@
 		13D9BF1D1AEB997E0020C94F /* Dawn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Dawn.png; sourceTree = "<group>"; };
 		13D9BF1E1AEB997E0020C94F /* Diana.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Diana.png; sourceTree = "<group>"; };
 		13D9BF1F1AEB997E0020C94F /* Holga.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Holga.png; sourceTree = "<group>"; };
-		13D9BF211AEB997E0020C94F /* Luna.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Luna.png; sourceTree = "<group>"; };
-		13D9BF221AEB997E0020C94F /* Midway.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Midway.png; sourceTree = "<group>"; };
 		13D9BF231AEB997E0020C94F /* Pro.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pro.png; sourceTree = "<group>"; };
 		13D9BF241AEB997E0020C94F /* Vivid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Vivid.png; sourceTree = "<group>"; };
 		13DA0FC51AEB8AFE005B9476 /* CameraFocus@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraFocus@3x.png"; sourceTree = "<group>"; };
@@ -2431,6 +2428,9 @@
 		13F584C11BCE3F630004F144 /* RecommendUser@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RecommendUser@3x.png"; sourceTree = "<group>"; };
 		13F584C31BCE401A0004F144 /* QRCode@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "QRCode@3x.png"; sourceTree = "<group>"; };
 		13F584C71BCE42F10004F144 /* like_icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "like_icon@3x.png"; sourceTree = "<group>"; };
+		13F584C91BCF6B840004F144 /* Instant.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Instant.png; sourceTree = "<group>"; };
+		13F584CA1BCF6B840004F144 /* Luna.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Luna.png; sourceTree = "<group>"; };
+		13F584CF1BCF84BE0004F144 /* Midway.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Midway.png; sourceTree = "<group>"; };
 		13FCC06F1ADE16DD0008DB41 /* LKUserCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKUserCenterViewController.h; sourceTree = "<group>"; };
 		13FCC0701ADE16DD0008DB41 /* LKUserCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKUserCenterViewController.m; sourceTree = "<group>"; };
 		13FCC0721ADE17F70008DB41 /* LKSegmentHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKSegmentHeader.h; sourceTree = "<group>"; };
@@ -2899,9 +2899,9 @@
 				13D9BF1D1AEB997E0020C94F /* Dawn.png */,
 				13D9BF1E1AEB997E0020C94F /* Diana.png */,
 				13D9BF1F1AEB997E0020C94F /* Holga.png */,
-				13877D071BBBFCE400521D2D /* Instant.png */,
-				13D9BF211AEB997E0020C94F /* Luna.png */,
-				13D9BF221AEB997E0020C94F /* Midway.png */,
+				13F584C91BCF6B840004F144 /* Instant.png */,
+				13F584CA1BCF6B840004F144 /* Luna.png */,
+				13F584CF1BCF84BE0004F144 /* Midway.png */,
 				13D9BF231AEB997E0020C94F /* Pro.png */,
 				13D9BF241AEB997E0020C94F /* Vivid.png */,
 				1359F49D1B6A237400A0ABE9 /* GtaTrevor.png */,
@@ -5637,8 +5637,8 @@
 				BC6BA0A91BC16064007377CD /* get_in_like@3x.png in Resources */,
 				1390557B1B9DA47D00DBF34A /* LKChooseTagView.xib in Resources */,
 				134F62641BCCE8ED007D5187 /* starWar@3x.png in Resources */,
-				13D9BF2B1AEB997E0020C94F /* Midway.png in Resources */,
 				133973171BC9491000D5977F /* NotificationOfficalIcon@3x.png in Resources */,
+				13F584CC1BCF6B840004F144 /* Instant.png in Resources */,
 				13925A941B1477D2004D0656 /* NavBarIconSearchBar2_blue@2x.png in Resources */,
 				134F62611BCCE8ED007D5187 /* gundam@3x.png in Resources */,
 				1388B4FC1B01EFFB006F36AB /* AlreadyFocusLG@3x.png in Resources */,
@@ -5733,6 +5733,7 @@
 				134F622C1BCB57F3007D5187 /* DeleteCache@3x.png in Resources */,
 				1388B4FE1B01EFFB006F36AB /* FocusLG@3x.png in Resources */,
 				133972F71BC944FD00D5977F /* CommonInterest@3x.png in Resources */,
+				13F584D01BCF84BE0004F144 /* Midway.png in Resources */,
 				13F584C21BCE3F630004F144 /* RecommendUser@3x.png in Resources */,
 				133973191BC9491000D5977F /* NotificationTagIcon@3x.png in Resources */,
 				1359F4A41B6A24B800A0ABE9 /* Gta-walking@3x.png in Resources */,
@@ -5792,12 +5793,10 @@
 				13D9BF281AEB997E0020C94F /* Holga.png in Resources */,
 				1359F4A01B6A237400A0ABE9 /* GtaFranklin.png in Resources */,
 				13877D0A1BBC197E00521D2D /* NoFollowing@3x.png in Resources */,
-				13D9BF2A1AEB997E0020C94F /* Luna.png in Resources */,
 				13877D191BBCE49600521D2D /* Interest_satellite_small@3x.png in Resources */,
 				134F62651BCCE8ED007D5187 /* transformer@3x.png in Resources */,
 				1357352B1B2EF44E0032515C /* QQLogin@3x.png in Resources */,
 				134F62401BCB9EEB007D5187 /* CameraCut@3x.png in Resources */,
-				13877D081BBBFCE400521D2D /* Instant.png in Resources */,
 				134F62221BCB56E7007D5187 /* SmallRedArrow@3x.png in Resources */,
 				134F62151BCB53DD007D5187 /* CameraFlash_selected@3x.png in Resources */,
 				13FCC08D1ADE74DE0008DB41 /* Refresh@3x.png in Resources */,
@@ -5828,6 +5827,7 @@
 				134765341AE2564D0055D099 /* PostDidFinish@3x.png in Resources */,
 				13877D141BBCE49600521D2D /* Interest_bottom@3x.png in Resources */,
 				13E491051BB57188009840B9 /* ProhibitionOfSelf@3x.png in Resources */,
+				13F584CD1BCF6B840004F144 /* Luna.png in Resources */,
 				1339730A1BC9474300D5977F /* QQIcon@3x.png in Resources */,
 				139055791B9D9F1C00DBF34A /* edit.png in Resources */,
 				134F62251BCB56E7007D5187 /* WeiboLogin@3x.png in Resources */,

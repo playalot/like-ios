@@ -88,7 +88,7 @@ LC_PROPERTY(assign) BOOL favorited;
     
     [super viewWillAppear:animated];
     [self setNavigationBarHidden:YES animated:NO];
-    [[LKNavigator navigator].tabBarController setTabBarHidden:YES animated:YES];
+    [[LKNavigator navigator].tabBarController setTabBarHidden:YES animated:NO];
     
 //    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:animated];
 

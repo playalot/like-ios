@@ -142,9 +142,9 @@ LC_PROPERTY(strong) UIView * tipLine;
     newItem.tag = -3;
     
     if (!lastItem){
-        newItem.frame = CGRectMake(leftMargin, topMargin, newItem.viewFrameWidth, newItem.viewFrameHeight);
+        newItem.frame = CGRectMake(0, 0, newItem.viewFrameWidth, newItem.viewFrameHeight);
     } else {
-        CGFloat test = lastItem.viewRightX + newItem.viewFrameWidth + 16 + 20;
+        CGFloat test = lastItem.viewRightX + newItem.viewFrameWidth /*+ 16*/ + 20;
         if (test > self.viewFrameWidth) {
             if (line == 999) {
                 page += 1;

@@ -39,19 +39,19 @@
 
 -(void) defaultSettings
 {
-    [self addImageFilter:@"Vxgaga"];
     [self addImageFilter:@"Vivid"];
     [self addImageFilter:@"Ansel"];
     [self addImageFilter:@"Instant"];
-    [self addImageFilter:@"Pro"];
-    [self addImageFilter:@"Diana"];
     [self addImageFilter:@"Midway"];
     [self addImageFilter:@"Luna"];
+    [self addImageFilter:@"Vxgaga"];
+//    [self addImageFilter:@"Pro"];
+//    [self addImageFilter:@"Diana"];
     [self addImageFilter:@"Dawn"];
-    [self addImageFilter:@"Holga"];
+//    [self addImageFilter:@"Holga"];
     [self addImageFilter:@"Wasted"];
     [self addImageFilter:@"GtaTrevor"];
-    [self addImageFilter:@"GtaFranklin"];
+//    [self addImageFilter:@"GtaFranklin"];
 }
 
 -(void) addImageFilter:(NSString *)filterName

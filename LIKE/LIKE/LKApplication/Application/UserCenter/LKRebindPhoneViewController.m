@@ -11,8 +11,8 @@
 #import "LKISOCountryCodes.h"
 #import "LKCountryCodeViewController.h"
 
-#import <SMS_SDK/SMS_SDK.h>
-#import <SMS_SDK/CountryAndAreaCode.h>
+#import <SMS_SDK/SMSSDK.h>
+#import <SMS_SDK/SMSSDKCountryAndAreaCode.h>
 
 @interface LKRebindPhoneViewController ()
 
@@ -281,30 +281,29 @@ LC_PROPERTY(assign) NSInteger timeInterval;
     
     // 使用mob来进行短信验证
     NSString *countryCode = [self.countryCode.text substringFromIndex:1];
-    [SMS_SDK getVerificationCodeBySMSWithPhone:self.phoneField.text
-                                          zone:countryCode
-                                        result:^(SMS_SDKError *error)
-     {
-         if (error)
-         {
-             UIAlertView *alert = [[UIAlertView alloc]
-                                   initWithTitle:NSLocalizedString(@"codesenderrtitle", nil)
-                                   message:[NSString
-                                            stringWithFormat:@"状态码：%zi",error.errorCode]
-                                   delegate:self
-                                   cancelButtonTitle:NSLocalizedString(@"sure", nil)
-                                   otherButtonTitles:nil, nil];
-             [alert show];
-             
-         } else {
-             
-             [self $beginTimer];
-             self.codeButton.userInteractionEnabled = YES;
-         }
-     }];
-
     
-    
+    [SMSSDK getVerificationCodeByMethod:SMSGetCodeMethodSMS
+                            phoneNumber:self.phoneField.text
+                                   zone:countryCode
+                       customIdentifier:nil
+                                 result:^(NSError *error) {
+                                     if (error)
+                                     {
+                                         UIAlertView *alert = [[UIAlertView alloc]
+                                                               initWithTitle:NSLocalizedString(@"codesenderrtitle", nil)
+                                                               message:[NSString
+                                                                        stringWithFormat:@"状态码：%zi",error.code]
+                                                               delegate:self
+                                                               cancelButtonTitle:NSLocalizedString(@"sure", nil)
+                                                               otherButtonTitles:nil, nil];
+                                         [alert show];
+                                         
+                                     } else {
+                                         
+                                         [self $beginTimer];
+                                         self.codeButton.userInteractionEnabled = YES;
+                                     }
+                                 }];
     
 //    if (![self $check:YES]) {
 //        return;

@@ -254,6 +254,8 @@
             if (request.failureCompletionBlock) {
                 if ([request isKindOfClass:[LKBaseInterface class]]) {
                     LKBaseInterface *interface = (LKBaseInterface *)request;
+                    
+                    NSLog(@"request: request error code: %ld", (long)interface.errorCode);
                     [self showTopMessageErrorHud:[interface errorMessage]];
                 }
                 request.failureCompletionBlock(request);

@@ -282,7 +282,6 @@
 - (void)tabBar:(RDVTabBar *)tabBar didClickCameraButton:(LCUIButton *)cameraButton {
     LKCameraRollViewController *composeCtrl = [LKCameraRollViewController viewController];
     [self presentViewController:LC_UINAVIGATION(composeCtrl) animated:YES completion:nil];
-//    [LCUIApplication presentViewController:LC_UINAVIGATION(composeCtrl) animation:YES];
 }
 
 @end

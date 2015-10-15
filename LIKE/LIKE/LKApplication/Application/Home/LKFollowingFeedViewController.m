@@ -247,13 +247,7 @@ LC_PROPERTY(strong) LCUIImageView *noFollowingView;
             }
             
             self.datasource = [NSMutableArray arrayWithArray:posts];
-//            LKUserDefaults.singleton[FOCUS_FEED_CACHE_KEY] = resultData;
             self.lastFocusLoadTime = time;
-            
-//            self.heightList = [NSMutableArray array];
-//            for (LKPost *post in self.datasource) {
-//                [self.heightList addObject:[NSNumber numberWithFloat:[LKHomeTableViewCell height:post]]];
-//            }
             
         } else {
             
@@ -262,11 +256,6 @@ LC_PROPERTY(strong) LCUIImageView *noFollowingView;
             }
             
             [self.datasource addObjectsFromArray:posts];
-            
-            // Calculate Height List
-//            for (LKPost *post in posts) {
-//                [self.heightList addObject:[NSNumber numberWithFloat:[LKHomeTableViewCell height:post]]];
-//            }
         }
         
         NSMutableArray *prefetchs = nil;
@@ -275,8 +264,6 @@ LC_PROPERTY(strong) LCUIImageView *noFollowingView;
                 [prefetchs addObject:post.content];
             }
         }
-        
-//        [self calculateHeightList];
         
         [[SDWebImagePrefetcher sharedImagePrefetcher] prefetchURLs:prefetchs.copy];
         

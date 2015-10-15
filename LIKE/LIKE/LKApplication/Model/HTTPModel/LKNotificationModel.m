@@ -51,7 +51,6 @@
         NSMutableArray *datasource = [NSMutableArray array];
         
         for (NSDictionary *dic in tmp) {
-            
             [datasource addObject:[[LKNotification alloc] initWithDictionary:dic error:nil]];
         }
         
@@ -74,6 +73,11 @@
         }
 
     } failure:^(LCBaseRequest *request) {
+        
+        if (requestFinished) {
+            requestFinished([NSError allocWithZone:nil]);
+        }
+        
     }];
 }
 

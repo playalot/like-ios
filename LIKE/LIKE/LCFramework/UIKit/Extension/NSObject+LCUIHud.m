@@ -19,7 +19,6 @@
 
 - (LCUIHud *)showSuccessHud:(NSString *)message
 {
-    
 	return [LCUIHudCenter.singleton showSuccessHud:message inView:[self $getView]];
 }
 

@@ -133,13 +133,11 @@ LC_PROPERTY(strong) UICollectionView * collectionView;
     
     [self.collectionView registerClass:[LKCameraRollCell class] forCellWithReuseIdentifier:@"Camera"];
     [self.collectionView registerClass:[LKPhotoRollCell class]  forCellWithReuseIdentifier:@"Photo"];
-
 }
 
 -(void) handleNavigationBarButton:(LCUINavigationBarButtonType)type
 {
     if (type == LCUINavigationBarButtonTypeLeft) {
-        
         [self dismissViewControllerAnimated:YES completion:nil];
     }
     else{
@@ -190,7 +188,6 @@ LC_PROPERTY(strong) UICollectionView * collectionView;
             if (result != NULL) {
                 
                 if ([[result valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypePhoto]) {
-                    
                     [self.datasource insertObject:result atIndex:0];
                 }
             }
@@ -208,7 +205,7 @@ LC_PROPERTY(strong) UICollectionView * collectionView;
             }
         };
         
-        [self.assetLibrary enumerateGroupsWithTypes:ALAssetsGroupAll
+        [self.assetLibrary enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos
                                usingBlock:libraryGroupsEnumeration
                              failureBlock:failureblock];
 

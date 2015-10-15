@@ -53,8 +53,7 @@ LC_PROPERTY(strong) UIImage * failureIcon;
     LCUIHudCenter.singleton.bubble = image;
 }
 
-- (LCUIHud *)showMessageHud:(NSString *)message inView:(UIView *)view
-{
+- (LCUIHud *)showMessageHud:(NSString *)message inView:(UIView *)view {
     LCUIHud * hud = [LCUIHud showHUDAddedTo:view animated:YES];
     hud.removeFromSuperViewOnHide = YES;
     hud.detailsLabelText = message;
@@ -64,7 +63,6 @@ LC_PROPERTY(strong) UIImage * failureIcon;
     [hud hide:YES afterDelay:DEFAULT_TIMEOUT_SECONDS];
     
     if (self.messageIcon) {
-        
         hud.mode = MBProgressHUDModeCustomView;
         hud.customView = [LCUIImageView viewWithImage:self.messageIcon];
     }

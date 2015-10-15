@@ -37,7 +37,7 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
 
 @implementation LKNotificationViewController
 
--(void) dealloc {
+- (void)dealloc {
     
     [self cancelAllRequests];
 }
@@ -45,7 +45,7 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
 - (instancetype)init {
     if (self = [super init]) {
         self.notificationModel = [[LKNotificationModel alloc] init];
-        [LKNotificationCount stopCheck];
+//        [LKNotificationCount stopCheck];
     }
     return self;
 }

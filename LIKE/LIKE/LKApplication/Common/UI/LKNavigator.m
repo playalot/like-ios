@@ -117,6 +117,9 @@ LC_PROPERTY(strong) LKGateViewController *gateViewController;
 }
 
 - (void)setupViewControllers {
+    
+    [LKNotificationCount startCheck];
+    
     self.mainFeedViewController = [LKMainFeedViewController viewController];
     self.searchViewController = [LKSearchViewController viewController];
     self.cameraRollViewController = [LKCameraRollViewController viewController];
@@ -157,7 +160,6 @@ LC_PROPERTY(strong) LKGateViewController *gateViewController;
         }
     }
     
-    [LKNotificationCount startCheck];
     LKNotificationCount.singleton.requestFinished = ^(NSUInteger count) {
         
         RDVTabBarItem *item = self.tabBarController.tabBar.items[2];

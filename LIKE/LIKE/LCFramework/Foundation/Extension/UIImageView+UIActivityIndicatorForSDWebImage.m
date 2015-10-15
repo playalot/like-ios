@@ -117,13 +117,15 @@ static char TAG_ACTIVITY_INDICATOR;
                   options:options
                  progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                  
-                     if (progressBlock && receivedSize!= expectedSize) {
+                     if (progressBlock && receivedSize != expectedSize) {
                          
                          [ring setProgress:receivedSize * 1.0 / expectedSize animated:YES];
                          if (ring) {
                              [ring removeFromSuperview];
                          }
                          [weakSelf addSubview:ring];
+                     } else {
+                         [ring removeFromSuperview];
                      }
                  }
                 completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageUrl) {

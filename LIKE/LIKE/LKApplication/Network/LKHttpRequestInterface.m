@@ -41,7 +41,6 @@ LC_PROPERTY(strong) NSMutableDictionary * parameters;
 {
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interface];
     interface.type = type;
-    
     return interface;
 }
 

@@ -694,7 +694,7 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
     self.loginButton.title = LC_LO(@"登录中...");
     self.loginButton.userInteractionEnabled = NO;
     
-    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"authenticate/mobile/mob"].POST_METHOD();
+    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:@"authenticate/mobile/ios"].POST_METHOD();
     NSString *countryCode = [self.countryCode.text stringByReplacingOccurrencesOfString:@"+" withString:@""];
     [interface addParameter:countryCode key:@"zone"];
     [interface addParameter:self.phoneField.text key:@"mobile"];
@@ -713,6 +713,9 @@ LC_PROPERTY(strong) LCUIImageView * backgroundView;
             self.refreshToken = result.json[@"data"][@"refresh_token"];
             self.expiresIn = result.json[@"data"][@"expires_in"];
             [self.userInfoModel getUserInfo:result.json[@"data"][@"user_id"]];
+            
+            self.phoneField.text = @"";
+            self.codeField.text = @"";
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 self.loginButton.title = LC_LO(@"进入like");

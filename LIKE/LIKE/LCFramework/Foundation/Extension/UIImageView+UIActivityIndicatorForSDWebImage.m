@@ -12,15 +12,45 @@
 
 static char TAG_ACTIVITY_INDICATOR;
 
+#define TAG_RING 1001
+
 @interface UIImageView (Private)
 
 -(void)addActivityIndicatorWithStyle:(UIActivityIndicatorViewStyle) activityStyle;
+
+-(void)addActivityProcessRing;
 
 @end
 
 @implementation UIImageView (UIActivityIndicatorForSDWebImage)
 
 @dynamic activityIndicator;
+
+- (void)addActivityProcessingRing {
+    M13ProgressViewRing *activityProcessingRing = (M13ProgressViewRing *)[self viewWithTag:TAG_RING];
+    if (!activityProcessingRing) {
+        activityProcessingRing = [[M13ProgressViewRing alloc] init];
+        activityProcessingRing.showPercentage = NO;
+        activityProcessingRing.primaryColor = LKColor.color;
+        activityProcessingRing.secondaryColor = LKColor.color;
+        activityProcessingRing.viewFrameWidth = 50;
+        activityProcessingRing.viewFrameHeight = 50;
+        activityProcessingRing.viewFrameX = (self.viewFrameWidth - activityProcessingRing.viewFrameWidth) * 0.5;
+        activityProcessingRing.viewFrameY = (self.viewFrameHeight - activityProcessingRing.viewFrameHeight) * 0.5;
+        activityProcessingRing.tag = TAG_RING;
+        
+        dispatch_async(dispatch_get_main_queue(), ^(void) {
+            [self addSubview:activityProcessingRing];
+        });
+    }
+}
+
+- (void)removeActivityProcessingRing {
+    M13ProgressViewRing *activityProcessingRing = (M13ProgressViewRing *)[self viewWithTag:TAG_RING];
+    if (activityProcessingRing) {
+        [activityProcessingRing removeFromSuperview];
+    }
+}
 
 - (UIActivityIndicatorView *)activityIndicator {
     return (UIActivityIndicatorView *)objc_getAssociatedObject(self, &TAG_ACTIVITY_INDICATOR);
@@ -31,12 +61,10 @@ static char TAG_ACTIVITY_INDICATOR;
 }
 
 - (void)addActivityIndicatorWithStyle:(UIActivityIndicatorViewStyle)activityStyle {
-    
     if (!self.activityIndicator) {
         self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:activityStyle];
         
         self.activityIndicator.autoresizingMask = UIViewAutoresizingNone;
-        
         [self updateActivityIndicatorFrame];
         
         dispatch_async(dispatch_get_main_queue(), ^(void) {
@@ -47,7 +75,6 @@ static char TAG_ACTIVITY_INDICATOR;
     dispatch_async(dispatch_get_main_queue(), ^(void) {
         [self.activityIndicator startAnimating];
     });
-    
 }
 
 -(void)updateActivityIndicatorFrame {
@@ -100,38 +127,25 @@ static char TAG_ACTIVITY_INDICATOR;
 
 - (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletionBlock)completedBlock usingActivityIndicatorStyle:(UIActivityIndicatorViewStyle)activityStyle {
     
-//    [self addActivityIndicatorWithStyle:activityStyle];
-    M13ProgressViewRing *ring = [[M13ProgressViewRing alloc] init];
-    ring.showPercentage = NO;
-    ring.primaryColor = LKColor.color;
-    ring.secondaryColor = LKColor.color;
-
-    ring.viewFrameWidth = 50;
-    ring.viewFrameHeight = 50;
-    ring.viewFrameX = (self.viewFrameWidth - ring.viewFrameWidth) * 0.5;
-    ring.viewFrameY = (self.viewFrameHeight - ring.viewFrameHeight) * 0.5;
-    
+    [self addActivityProcessingRing];
     __weak typeof(self) weakSelf = self;
     [self sd_setImageWithURL:url
          placeholderImage:placeholder
                   options:options
                  progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                  
-                     if (progressBlock && receivedSize!= expectedSize) {
-                         
-                         [ring setProgress:receivedSize * 1.0 / expectedSize animated:YES];
-                         if (ring) {
-                             [ring removeFromSuperview];
+                     M13ProgressViewRing *activityProcessingRing = (M13ProgressViewRing *)[self viewWithTag:TAG_RING];
+                     if (activityProcessingRing) {
+                         if (progressBlock && receivedSize!= expectedSize) {
+                             [activityProcessingRing setProgress:receivedSize * 1.0 / expectedSize animated:YES];
                          }
-                         [weakSelf addSubview:ring];
                      }
                  }
                 completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageUrl) {
                     if (completedBlock) {
                         completedBlock(image, error, cacheType, imageUrl);
                     }
-                    [weakSelf removeActivityIndicator];
-                    [ring removeFromSuperview];
+                    [weakSelf removeActivityProcessingRing];
                 }
      ];
 }

@@ -201,7 +201,6 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     browsingViewController.currentIndex = [self.posts indexOfObject:signal.object];
     browsingViewController.title = self.tagValue.tag;
     [browsingViewController watchForChangeOfDatasource:self dataSourceKey:@"posts"];
-//    [browsingViewController refresh];
     [searchViewController.navigationController pushViewController:browsingViewController animated:YES];
 }
 

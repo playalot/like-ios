@@ -8,6 +8,7 @@
 
 #import "LKLikeTagItemView.h"
 #import "LKLoginViewController.h"
+#import "LKLoginViewIp4Controller.h"
 
 @interface LKLikeTagItemView ()
 
@@ -82,9 +83,15 @@ LC_PROPERTY(assign) BOOL custom;
         return;
     }
     
-    if([LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
-        return;
-    };
+    if (UI_IS_IPHONE4) {
+        if([LKLoginViewIp4Controller needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
+            return;
+        };
+    } else {        
+        if([LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
+            return;
+        };
+    }
     
     if (self.tagValue.isLiked && self.tagValue.likes.integerValue == 1) {
         

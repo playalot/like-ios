@@ -11,6 +11,7 @@
 #import "UIImageView+WebCache.h"
 #import "GBTagListView.h"
 #import "LKLoginViewController.h"
+#import "LKLoginViewIp4Controller.h"
 
 @interface LKNotificationCell ()
 
@@ -275,9 +276,15 @@ LC_IMP_SIGNAL(PushUserCenter);
  */
 - (void)handleHeadTap:(UITapGestureRecognizer *)tap
 {
-    if([LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
-        return;
-    };
+    if (UI_IS_IPHONE4) {
+        if([LKLoginViewIp4Controller needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
+            return;
+        };
+    } else {
+        if([LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
+            return;
+        };
+    }
     self.SEND(self.PushUserCenter).object = self.notification.user;
 }
 

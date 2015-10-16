@@ -73,14 +73,17 @@ LC_PROPERTY(assign) CGPoint point;
         }
         else{
             
-            self.backgroundView.url = @"http://cdn.likeorz.com/default_cover.jpg?imageView2/1/w/750/h/750/q/85";
+//            self.backgroundView.url = @"http://cdn.likeorz.com/default_cover.jpg?imageView2/1/w/750/h/750/q/85";
+            [self.backgroundView sd_setImageWithURL:[NSURL URLWithString:@"http://cdn.likeorz.com/default_cover.jpg?imageView2/1/w/750/h/750/q/85"] placeholderImage:nil options:SDWebImageRetryFailed];
         }
     }
     else{
         
         self.nameLabel.text = LC_LO(@"游客");
-        self.headImageView.url = @"http://cdn.likeorz.com/default_avatar.jpg?imageView2/1/w/120/h/120/q/100";
-        self.backgroundView.url = @"http://cdn.likeorz.com/default_cover.jpg?imageView2/1/w/750/h/750/q/85";
+//        self.headImageView.url = @"http://cdn.likeorz.com/default_avatar.jpg?imageView2/1/w/120/h/120/q/100";
+//        self.backgroundView.url = @"http://cdn.likeorz.com/default_cover.jpg?imageView2/1/w/750/h/750/q/85";
+        [self.headImageView sd_setImageWithURL:[NSURL URLWithString:@"http://cdn.likeorz.com/default_avatar.jpg?imageView2/1/w/120/h/120/q/100"] placeholderImage:nil options:SDWebImageRetryFailed];
+        [self.backgroundView sd_setImageWithURL:[NSURL URLWithString: @"http://cdn.likeorz.com/default_cover.jpg?imageView2/1/w/750/h/750/q/85"] placeholderImage:nil options:SDWebImageRetryFailed];
     }
 }
 

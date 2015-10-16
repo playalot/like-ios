@@ -25,6 +25,7 @@
 #import "JTSImageViewController.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
 #import "LKPostTableViewController.h"
+#import "LKLoginViewIp4Controller.h"
 
 @interface LKUserCenterViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerCancelFavorDelegate, LKPostTableViewControllerDelegate>
 
@@ -464,8 +465,14 @@ LC_PROPERTY(strong) NSMutableArray *datasource;
  */
 - (void)reportWithIndex:(NSInteger)index {
     
-    if ([LKLoginViewController needLoginOnViewController:self.navigationController]) {
-        return;
+    if (UI_IS_IPHONE4) {
+        if ([LKLoginViewIp4Controller needLoginOnViewController:self.navigationController]) {
+            return;
+        }
+    } else {
+        if ([LKLoginViewController needLoginOnViewController:self.navigationController]) {
+            return;
+        }
     }
     
     [self cancelAllRequests];
@@ -526,8 +533,14 @@ LC_PROPERTY(strong) NSMutableArray *datasource;
 
 - (void)friendShipAction {
     
-    if([LKLoginViewController needLoginOnViewController:nil]){
-        return;
+    if (UI_IS_IPHONE4) {
+        if([LKLoginViewIp4Controller needLoginOnViewController:nil]){
+            return;
+        }
+    } else {
+        if([LKLoginViewController needLoginOnViewController:nil]){
+            return;
+        }
     }
     
     LC_FAST_ANIMATIONS(0.15, ^{

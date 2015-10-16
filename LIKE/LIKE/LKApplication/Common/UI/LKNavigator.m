@@ -15,10 +15,12 @@
 #import "LKNotificationCount.h"
 #import "LKGateViewController.h"
 #import "LKUserProfileViewController.h"
+#import "LKLoginViewIp4Controller.h"
 
-@interface LKNavigator () <LKLoginViewControllerDelegate, RDVTabBarControllerDelegate>
+@interface LKNavigator () <LKLoginViewControllerDelegate, LKLoginViewIp4ControllerDelegate, RDVTabBarControllerDelegate>
 
 LC_PROPERTY(strong) LKLoginViewController *loginViewController;
+LC_PROPERTY(strong) LKLoginViewIp4Controller *loginViewIp4Controller;
 LC_PROPERTY(strong) LKGuestFeedViewController *guestFeedViewController;
 LC_PROPERTY(strong) LKGateViewController *gateViewController;
 
@@ -65,7 +67,11 @@ LC_PROPERTY(strong) LKGateViewController *gateViewController;
 }
 
 - (void)openLoginViewController {
-    [self.mainViewController presentViewController:self.loginViewController animated:NO completion:^{}];
+    if (UI_IS_IPHONE4) {
+        [self.mainViewController presentViewController:self.loginViewIp4Controller animated:NO completion:^{}];
+    } else {
+        [self.mainViewController presentViewController:self.loginViewController animated:NO completion:^{}];
+    }
 }
 
 - (LKLoginViewController *)loginViewController {
@@ -74,6 +80,14 @@ LC_PROPERTY(strong) LKGateViewController *gateViewController;
         _loginViewController.delegate = self;
     }
     return _loginViewController;
+}
+
+- (LKLoginViewIp4Controller *)loginViewIp4Controller {
+    if (_loginViewIp4Controller == nil) {
+        _loginViewIp4Controller = LKLoginViewIp4Controller.viewController;
+        _loginViewIp4Controller.delegate = self;
+    }
+    return _loginViewIp4Controller;
 }
 
 - (LKGateViewController *)gateViewController {
@@ -210,6 +224,16 @@ LC_PROPERTY(strong) LKGateViewController *gateViewController;
 }
 
 - (void)didLoginFailed {
+    [self showTopMessageErrorHud:LC_LO(@"登录失败")];
+}
+
+#pragma mark LKLoginViewIp4ControllerDelegate
+- (void)didLoginIp4Succeeded:(NSDictionary *)userInfo {
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hasOnceLogin"];
+    [self launchMasterMode];
+}
+
+- (void)didLoginIp4Failed {
     [self showTopMessageErrorHud:LC_LO(@"登录失败")];
 }
 

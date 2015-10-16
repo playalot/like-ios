@@ -8,6 +8,7 @@
 
 #import "LKWelcome.h"
 #import "LKLoginViewController.h"
+#import "LKLoginViewIp4Controller.h"
 
 @implementation LKWelcome
 
@@ -22,7 +23,11 @@
         imageView.contentMode = UIViewContentModeScaleAspectFit;
         [LC_KEYWINDOW addSubview:imageView];
         
-        [LCUIApplication presentViewController:LKLoginViewController.viewController];
+        if (UI_IS_IPHONE4) {
+            [LCUIApplication presentViewController:LKLoginViewIp4Controller.viewController];
+        } else {
+            [LCUIApplication presentViewController:LKLoginViewController.viewController];
+        }
 
         // UIViewAnimationOptionCurveLinear 动画匀速执行，默认值
         [UIView animateWithDuration:1.5 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{

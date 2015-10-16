@@ -22,7 +22,6 @@
 #import <SMS_SDK/SMSSDK.h>
 #import "SDImageCache.h"
 #import "APService.h"
-#import "LKChooseTagView.h"
 #import "RDVTabBarItem.h"
 #import "LCNetworkConfig.h"
 #import "LCUrlArgumentsFilter.h"
@@ -30,6 +29,7 @@
 #import "LKGateViewController.h"
 #import "LCEncryptorAES.h"
 #import "LKChooseInterestView.h"
+#import "LKLoginViewIp4Controller.h"
 
 @interface AppDelegate () <LC_CMD_IMP, RDVTabBarControllerDelegate>
 
@@ -365,7 +365,11 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
             [LKLocalUser regetSessionTokenAndUseLoadingTip:YES];
         } else if (errorCode == 4013){
             [LKLocalUser logout];
-            [LKLoginViewController needLoginOnViewController:nil];
+            if (UI_IS_IPHONE4) {
+                [LKLoginViewIp4Controller needLoginOnViewController:nil];
+            } else {
+                [LKLoginViewController needLoginOnViewController:nil];
+            }
         }
     }
 }

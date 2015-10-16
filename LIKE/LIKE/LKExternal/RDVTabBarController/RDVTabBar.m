@@ -208,11 +208,12 @@ LC_PROPERTY(weak) LCUIButton *cameraButton;
 - (void)setTranslucent:(BOOL)translucent {
     _translucent = translucent;
     
-    CGFloat alpha = (translucent ? 0.9 : 1.0);
-    [_backgroundView setBackgroundColor:[UIColor colorWithRed:245/255.0
-                                                        green:245/255.0
-                                                         blue:245/255.0
-                                                        alpha:alpha]];
+//    CGFloat alpha = (translucent ? 0.9 : 1.0);
+//    [_backgroundView setBackgroundColor:[UIColor colorWithRed:245/255.0
+//                                                        green:245/255.0
+//                                                         blue:245/255.0
+//                                                        alpha:alpha]];
+    [_backgroundView setBackgroundColor:[UIColor whiteColor]];
 }
 
 #pragma mark - cameraButton的单击事件

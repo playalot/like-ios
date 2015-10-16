@@ -13,6 +13,7 @@
 #import "LKLoginViewController.h"
 #import "LKInputView.h"
 #import "LCUIKeyBoard.h"
+#import "LKLoginViewIp4Controller.h"
 
 static NSString* const KVO_CONTEXT_DATASOURCE_CHANGED = @"KVO_CONTEXT_DATASOURCE_CHANGED";
 
@@ -281,10 +282,18 @@ LC_IMP_SIGNAL(UnfavouritePost);
     
     cell.addTag = ^(LKPost * value){
         @normally(self);
-        if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
-            self.inputView.userInfo = value;
-            self.inputView.tag = indexPath.row;
-            [self.inputView becomeFirstResponder];
+        if (UI_IS_IPHONE4) {
+            if(![LKLoginViewIp4Controller needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
+                self.inputView.userInfo = value;
+                self.inputView.tag = indexPath.row;
+                [self.inputView becomeFirstResponder];
+            }
+        } else {
+            if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
+                self.inputView.userInfo = value;
+                self.inputView.tag = indexPath.row;
+                [self.inputView becomeFirstResponder];
+            }
         }
     };
     
@@ -338,8 +347,14 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
         return;
     }
     
-    if ([LKLoginViewController needLoginOnViewController:self.navigationController]) {
-        return;
+    if (UI_IS_IPHONE4) {
+        if ([LKLoginViewIp4Controller needLoginOnViewController:self.navigationController]) {
+            return;
+        }
+    } else {        
+        if ([LKLoginViewController needLoginOnViewController:self.navigationController]) {
+            return;
+        }
     }
     
     LKPostDetailViewController * detail = [[LKPostDetailViewController alloc] initWithPost:signal.object];

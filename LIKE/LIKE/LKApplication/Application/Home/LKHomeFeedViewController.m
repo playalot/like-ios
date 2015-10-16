@@ -25,6 +25,7 @@
 #import "LKLRUCache.h"
 #import "LKEditorPickInterface.h"
 #import "RMPZoomTransitionAnimator.h"
+#import "LKLikeRecommendViewController.h"
 
 #define NORMAL_CELL_IDENTIFIER @"Content"
 #define PRECOMPUTED_CELL_IDENTIFIER @"Content2"
@@ -563,14 +564,17 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
 
 #pragma mark *****数据源******
 - (void)homeTableViewCell:(LKHomeTableViewCell *)cell didClickReasonBtn:(LCUIButton *)reasonBtn {
-    
     if (reasonBtn.title != nil) {
-        
         if ([reasonBtn.title hasSuffix:LC_LO(@"  like推荐")]) {
-            [self editorPickRequest];
+            
+            LKLikeRecommendViewController *likeRecommendCtrl = [[LKLikeRecommendViewController alloc] init];
+            [self.navigationController pushViewController:likeRecommendCtrl animated:YES];
+            
         } else {
+            
             LKSearchResultsViewController *searchResultCtrl = [[LKSearchResultsViewController alloc] initWithSearchString:reasonBtn.title];
             [self.navigationController pushViewController:searchResultCtrl animated:YES];
+            
         }
     }
 }

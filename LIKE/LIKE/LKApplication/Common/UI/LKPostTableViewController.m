@@ -56,6 +56,10 @@ LC_IMP_SIGNAL(UnfavouritePost);
     return self;
 }
 
+- (void)loadView {
+    [super loadView];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
@@ -63,6 +67,7 @@ LC_IMP_SIGNAL(UnfavouritePost);
         self.view.ADD(self.tableView);
         self.view.ADD(self.inputView);
         self.hasShowUp = YES;
+        [self refresh];
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:self.currentIndex inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
     }
 }

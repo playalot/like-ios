@@ -411,11 +411,11 @@ LC_PROPERTY(strong) NSMutableArray *datasource;
     if (isBlocked) {
         
         // 屏蔽用户
-        interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"user/%@/block",self.user.id]].DELETE_METHOD();
+        interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"user/%@/block",self.user.id]].POST_METHOD();
     } else {
         
         // 取消屏蔽
-        interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"user/%@/block",self.user.id]].POST_METHOD();
+        interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"user/%@/block",self.user.id]].DELETE_METHOD();
     }
     
     @weakly(self);

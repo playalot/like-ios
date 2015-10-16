@@ -678,6 +678,11 @@
 		13A951A71B4CE528002B73ED /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A9519D1B4CE528002B73ED /* AFURLResponseSerialization.m */; };
 		13A951A81B4CE528002B73ED /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A9519F1B4CE528002B73ED /* AFURLSessionManager.m */; };
 		13A951AB1B4CE57C002B73ED /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A951AA1B4CE57C002B73ED /* AFNetworkActivityIndicatorManager.m */; };
+		13AC84AB1BCFDEB6002134E7 /* ChooseInterest_ip4.png in Resources */ = {isa = PBXBuildFile; fileRef = 13AC84A61BCFDEB6002134E7 /* ChooseInterest_ip4.png */; settings = {ASSET_TAGS = (); }; };
+		13AC84AC1BCFDEB6002134E7 /* ChooseInterest_ip4s.png in Resources */ = {isa = PBXBuildFile; fileRef = 13AC84A71BCFDEB6002134E7 /* ChooseInterest_ip4s.png */; settings = {ASSET_TAGS = (); }; };
+		13AC84AD1BCFDEB6002134E7 /* ChooseInterest_ip5.png in Resources */ = {isa = PBXBuildFile; fileRef = 13AC84A81BCFDEB6002134E7 /* ChooseInterest_ip5.png */; settings = {ASSET_TAGS = (); }; };
+		13AC84AE1BCFDEB6002134E7 /* ChooseInterest_iPhone 6 Plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 13AC84A91BCFDEB6002134E7 /* ChooseInterest_iPhone 6 Plus.png */; settings = {ASSET_TAGS = (); }; };
+		13AC84AF1BCFDEB6002134E7 /* ChooseInterest_iPhone 6.png in Resources */ = {isa = PBXBuildFile; fileRef = 13AC84AA1BCFDEB6002134E7 /* ChooseInterest_iPhone 6.png */; settings = {ASSET_TAGS = (); }; };
 		13B5B4E61B15CB6800252A78 /* TalkIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13B5B4E31B15CB6800252A78 /* TalkIcon@3x.png */; };
 		13B5B4E81B15CB6800252A78 /* TalkTip@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13B5B4E51B15CB6800252A78 /* TalkTip@3x.png */; };
 		13B5B4EB1B15EE1300252A78 /* LKComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B5B4EA1B15EE1300252A78 /* LKComment.m */; };
@@ -2146,6 +2151,11 @@
 		13A9519F1B4CE528002B73ED /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
 		13A951A91B4CE57C002B73ED /* AFNetworkActivityIndicatorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkActivityIndicatorManager.h; sourceTree = "<group>"; };
 		13A951AA1B4CE57C002B73ED /* AFNetworkActivityIndicatorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkActivityIndicatorManager.m; sourceTree = "<group>"; };
+		13AC84A61BCFDEB6002134E7 /* ChooseInterest_ip4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ChooseInterest_ip4.png; sourceTree = "<group>"; };
+		13AC84A71BCFDEB6002134E7 /* ChooseInterest_ip4s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ChooseInterest_ip4s.png; sourceTree = "<group>"; };
+		13AC84A81BCFDEB6002134E7 /* ChooseInterest_ip5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ChooseInterest_ip5.png; sourceTree = "<group>"; };
+		13AC84A91BCFDEB6002134E7 /* ChooseInterest_iPhone 6 Plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ChooseInterest_iPhone 6 Plus.png"; sourceTree = "<group>"; };
+		13AC84AA1BCFDEB6002134E7 /* ChooseInterest_iPhone 6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ChooseInterest_iPhone 6.png"; sourceTree = "<group>"; };
 		13B5B4E31B15CB6800252A78 /* TalkIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TalkIcon@3x.png"; sourceTree = "<group>"; };
 		13B5B4E51B15CB6800252A78 /* TalkTip@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TalkTip@3x.png"; sourceTree = "<group>"; };
 		13B5B4E91B15EE1300252A78 /* LKComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKComment.h; sourceTree = "<group>"; };
@@ -3049,6 +3059,11 @@
 		13877D0B1BBCE47B00521D2D /* Interest */ = {
 			isa = PBXGroup;
 			children = (
+				13AC84A61BCFDEB6002134E7 /* ChooseInterest_ip4.png */,
+				13AC84A71BCFDEB6002134E7 /* ChooseInterest_ip4s.png */,
+				13AC84A81BCFDEB6002134E7 /* ChooseInterest_ip5.png */,
+				13AC84A91BCFDEB6002134E7 /* ChooseInterest_iPhone 6 Plus.png */,
+				13AC84AA1BCFDEB6002134E7 /* ChooseInterest_iPhone 6.png */,
 				13877D0C1BBCE49600521D2D /* Interest_aerolite@3x.png */,
 				13877D0D1BBCE49600521D2D /* Interest_bottom@3x.png */,
 				13877D0E1BBCE49600521D2D /* Interest_Jupiter@3x.png */,
@@ -5646,9 +5661,12 @@
 				BC6BA0A91BC16064007377CD /* get_in_like@3x.png in Resources */,
 				1390557B1B9DA47D00DBF34A /* LKChooseTagView.xib in Resources */,
 				134F62641BCCE8ED007D5187 /* starWar@3x.png in Resources */,
+				13AC84AC1BCFDEB6002134E7 /* ChooseInterest_ip4s.png in Resources */,
+				13AC84AF1BCFDEB6002134E7 /* ChooseInterest_iPhone 6.png in Resources */,
 				133973171BC9491000D5977F /* NotificationOfficalIcon@3x.png in Resources */,
 				13F584CC1BCF6B840004F144 /* Instant.png in Resources */,
 				13925A941B1477D2004D0656 /* NavBarIconSearchBar2_blue@2x.png in Resources */,
+				13AC84AD1BCFDEB6002134E7 /* ChooseInterest_ip5.png in Resources */,
 				134F62611BCCE8ED007D5187 /* gundam@3x.png in Resources */,
 				1388B4FC1B01EFFB006F36AB /* AlreadyFocusLG@3x.png in Resources */,
 				133972E81BC91BCB00D5977F /* tabbar_notification_selected@2x.png in Resources */,
@@ -5728,6 +5746,7 @@
 				134F62631BCCE8ED007D5187 /* lacquer@3x.png in Resources */,
 				134F625D1BCCE8ED007D5187 /* delicious@3x.png in Resources */,
 				139C737F1B553EC20051B2C3 /* __LKFilterConsole.xib in Resources */,
+				13AC84AE1BCFDEB6002134E7 /* ChooseInterest_iPhone 6 Plus.png in Resources */,
 				13925A951B1477D2004D0656 /* NavBarIconSearchCircle_blue@2x.png in Resources */,
 				13DEEC171AE789E6005E01A6 /* LC_WebForward.png in Resources */,
 				13DEEC1B1AE789E6005E01A6 /* LC_WebStop.png in Resources */,
@@ -5799,6 +5818,7 @@
 				1351B2ED1BBA916B004DFEEC /* NotificationReplyIcon2@3x.png in Resources */,
 				134F622B1BCB57F3007D5187 /* Appstore@3x.png in Resources */,
 				13CF22A01BB258C20087DD89 /* LittleTag@3x.png in Resources */,
+				13AC84AB1BCFDEB6002134E7 /* ChooseInterest_ip4.png in Resources */,
 				13D9BF281AEB997E0020C94F /* Holga.png in Resources */,
 				1359F4A01B6A237400A0ABE9 /* GtaFranklin.png in Resources */,
 				13877D0A1BBC197E00521D2D /* NoFollowing@3x.png in Resources */,

@@ -64,14 +64,9 @@ LC_PROPERTY(strong) LCUIButton *getInButton;
 }
 
 - (void)getIn {
-    
-    LC_FAST_ANIMATIONS_F(0.2, ^{
-        self.view.alpha = 0;
-    }, ^(BOOL finished){
-        if (![self.navigationController popViewControllerAnimated:NO]) {
-            [self dismissViewControllerAnimated:NO completion:nil];
-        }
-    });
+    if (![self.navigationController popViewControllerAnimated:NO]) {
+        [self dismissViewControllerAnimated:NO completion:nil];
+    }
 }
 
 @end

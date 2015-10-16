@@ -1,19 +1,19 @@
 //
-//  LKSearchResultsViewController.m
+//  LKLikeRecommendViewController.m
 //  LIKE
 //
-//  Created by Licheng Guo ( http://nsobjet.me ) on 15/5/26.
-//  Copyright (c) 2015年 Beijing Like Technology Co.Ltd . ( http://www.likeorz.com ). All rights reserved.
+//  Created by huangweifeng on 10/16/15.
+//  Copyright © 2015 Beijing Like Technology Co.Ltd . ( http://www.likeorz.com ). All rights reserved.
 //
 
-#import "LKSearchResultsViewController.h"
+#import "LKLikeRecommendViewController.h"
 #import "LKPostThumbnailTableViewCell.h"
 #import "LKPostDetailViewController.h"
 #import "UIImageView+WebCache.h"
 #import "LKPostTableViewController.h"
-#import "LKSearchTagInterface.h"
+#import "LKLikeRecommendInterface.h"
 
-@interface LKSearchResultsViewController () <LKPostTableViewControllerDelegate>
+@interface LKLikeRecommendViewController () <LKPostTableViewControllerDelegate>
 
 LC_PROPERTY(copy) NSString * searchString;
 LC_PROPERTY(assign) NSInteger page;
@@ -26,22 +26,21 @@ LC_PROPERTY(strong) NSNumber *timestamp;
 
 @end
 
-@implementation LKSearchResultsViewController
+@implementation LKLikeRecommendViewController
 
 - (void)dealloc {
     [self cancelAllRequests];
 }
 
-- (instancetype)initWithSearchString:(NSString *)searchString {
+- (instancetype)init {
     if (self = [super init]) {
         self.initTableViewStyle = UITableViewStyleGrouped;
-        self.searchString = searchString;
     }
     return self;
 }
 
 -(void) buildUI {
-    self.title = self.searchString;
+    self.title = LC_LO(@"Like推荐");
     self.view.backgroundColor = LKColor.backgroundColor;
     
     [self buildNavigationBar];
@@ -61,7 +60,7 @@ LC_PROPERTY(strong) NSNumber *timestamp;
     self.navigationItem.rightBarButtonItems = @[fixedSpace, rightItem];
     [subscribeBtn addTarget:self action:@selector(subscribeTag:) forControlEvents:UIControlEventTouchUpInside];
     // 判别是否显示订阅标签
-    [self judgeSubscribeTag];
+//    [self judgeSubscribeTag];
     
     @weakly(self);
     
@@ -135,9 +134,8 @@ LC_PROPERTY(strong) NSNumber *timestamp;
 }
 
 - (void)loadData:(LCUIPullLoaderDiretion)diretion {
-
-    LKSearchTagInterface *interface = [[LKSearchTagInterface alloc] initWithSearchString:self.searchString.URLCODE()];
     
+    LKLikeRecommendInterface *interface = [[LKLikeRecommendInterface alloc] init];
     if (self.timestamp && diretion == LCUIPullLoaderDiretionBottom) {
         interface.timestamp = self.timestamp;
     }
@@ -146,7 +144,7 @@ LC_PROPERTY(strong) NSNumber *timestamp;
     @weakly(interface);
     
     [interface startWithCompletionBlockWithSuccess:^(LCBaseRequest *request) {
-       
+        
         @normally(self);
         @normally(interface);
         
@@ -167,10 +165,10 @@ LC_PROPERTY(strong) NSNumber *timestamp;
             [newDataSource addObjectsFromArray:resultData];
             self.datasource = newDataSource;
         }
-
+        
         [self.pullLoader endRefresh];
         [self reloadData];
-
+        
     } failure:^(LCBaseRequest *request) {
         [self.pullLoader endRefresh];
         
@@ -300,7 +298,7 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     browsingViewController.delegate = self;
     browsingViewController.datasource = self.datasource;
     browsingViewController.currentIndex = [self.datasource indexOfObject:signal.object];
-    browsingViewController.title = self.searchString;
+    browsingViewController.title = self.title;
     [browsingViewController watchForChangeOfDatasource:self dataSourceKey:@"datasource"];
     [self.navigationController pushViewController:browsingViewController animated:YES];
 }

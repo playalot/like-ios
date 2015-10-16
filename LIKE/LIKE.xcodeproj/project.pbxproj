@@ -884,6 +884,8 @@
 		BC12A65B1BA5A36D00B99CB5 /* LKSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A65A1BA5A36D00B99CB5 /* LKSearchViewController.m */; };
 		BC12A65E1BA67AA400B99CB5 /* LKNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A65D1BA67AA400B99CB5 /* LKNotificationViewController.m */; };
 		BC12A6611BA696F700B99CB5 /* LKNotificationHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12A6601BA696F700B99CB5 /* LKNotificationHeader.m */; };
+		BC3F24981BD0C5C40023F20A /* LKLikeRecommendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3F24971BD0C5C40023F20A /* LKLikeRecommendViewController.m */; settings = {ASSET_TAGS = (); }; };
+		BC3F249C1BD0C7D70023F20A /* LKLikeRecommendInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3F249B1BD0C7D70023F20A /* LKLikeRecommendInterface.m */; settings = {ASSET_TAGS = (); }; };
 		BC484AAA1BAFC32800F69D50 /* LKFollowingFeedInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484AA91BAFC32800F69D50 /* LKFollowingFeedInterface.m */; };
 		BC484AAF1BAFC34200F69D50 /* LKBaseInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484AAC1BAFC34200F69D50 /* LKBaseInterface.m */; };
 		BC484AB01BAFC34200F69D50 /* LKHomeFeedInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484AAE1BAFC34200F69D50 /* LKHomeFeedInterface.m */; };
@@ -2548,6 +2550,10 @@
 		BC12A65F1BA696F700B99CB5 /* LKNotificationHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKNotificationHeader.h; sourceTree = "<group>"; };
 		BC12A6601BA696F700B99CB5 /* LKNotificationHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKNotificationHeader.m; sourceTree = "<group>"; };
 		BC12A6621BA7BE6000B99CB5 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		BC3F24961BD0C5C30023F20A /* LKLikeRecommendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKLikeRecommendViewController.h; sourceTree = "<group>"; };
+		BC3F24971BD0C5C40023F20A /* LKLikeRecommendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKLikeRecommendViewController.m; sourceTree = "<group>"; };
+		BC3F249A1BD0C7D70023F20A /* LKLikeRecommendInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKLikeRecommendInterface.h; path = Interface/LKLikeRecommendInterface.h; sourceTree = "<group>"; };
+		BC3F249B1BD0C7D70023F20A /* LKLikeRecommendInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKLikeRecommendInterface.m; path = Interface/LKLikeRecommendInterface.m; sourceTree = "<group>"; };
 		BC484AA81BAFC32800F69D50 /* LKFollowingFeedInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKFollowingFeedInterface.h; path = Interface/LKFollowingFeedInterface.h; sourceTree = "<group>"; };
 		BC484AA91BAFC32800F69D50 /* LKFollowingFeedInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKFollowingFeedInterface.m; path = Interface/LKFollowingFeedInterface.m; sourceTree = "<group>"; };
 		BC484AAB1BAFC34200F69D50 /* LKBaseInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKBaseInterface.h; path = Interface/LKBaseInterface.h; sourceTree = "<group>"; };
@@ -4357,6 +4363,8 @@
 				BC0C42501BA85B5F00055BB1 /* LKMainFeedViewController.m */,
 				BC07B2801BAC3FA600A0ED71 /* LKFocusRequest.h */,
 				BC07B2811BAC3FA600A0ED71 /* LKFocusRequest.m */,
+				BC3F24961BD0C5C30023F20A /* LKLikeRecommendViewController.h */,
+				BC3F24971BD0C5C40023F20A /* LKLikeRecommendViewController.m */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -5542,6 +5550,8 @@
 				BC6960DD1BBFBEE5006245D7 /* LKAuthenticationAccessory.m */,
 				BC7CF3A61BCFC1E2001B6E9D /* LKSMSLoginInterface.h */,
 				BC7CF3A71BCFC1E2001B6E9D /* LKSMSLoginInterface.m */,
+				BC3F249A1BD0C7D70023F20A /* LKLikeRecommendInterface.h */,
+				BC3F249B1BD0C7D70023F20A /* LKLikeRecommendInterface.m */,
 			);
 			name = Interface;
 			sourceTree = "<group>";
@@ -6290,6 +6300,7 @@
 				13D63AE21AEA2DB3001587C0 /* JTSSimpleImageDownloader.m in Sources */,
 				139055451B994A6D00DBF34A /* GPUImageSmoothToonFilter.m in Sources */,
 				138EDE341AD7B0A30020957C /* DDRange.m in Sources */,
+				BC3F24981BD0C5C40023F20A /* LKLikeRecommendViewController.m in Sources */,
 				138EDE5B1AD7B0A30020957C /* FMDatabase.m in Sources */,
 				1390550C1B994A6D00DBF34A /* GPUImageLaplacianFilter.m in Sources */,
 				13E3EE011B60955400A48E76 /* NSString+NCAddition.m in Sources */,
@@ -6380,6 +6391,7 @@
 				1390553E1B994A6D00DBF34A /* GPUImageSaturationFilter.m in Sources */,
 				BCD148131BB3DCA60062C463 /* LKPostView.m in Sources */,
 				138EDE6B1AD7B0A30020957C /* Reachability.m in Sources */,
+				BC3F249C1BD0C7D70023F20A /* LKLikeRecommendInterface.m in Sources */,
 				13E1A4EC1AE65FE300E24C3C /* FastttFilter.m in Sources */,
 				139054D01B994A6D00DBF34A /* GPUImageBuffer.m in Sources */,
 				138EDEA61AD7B0A30020957C /* LCUIActionSheet.m in Sources */,

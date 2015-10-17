@@ -80,10 +80,10 @@ static char TAG_ACTIVITY_SHOW;
         
         // check if activityView is enabled or not
         if ([self showActivityIndicatorView]) {
-            [self addActivityIndicator];
+//            [self addActivityIndicator];
         }
         
-        if (![SDWebImageManager.sharedManager cachedImageExistsForURL:url] && ![SDWebImageManager.sharedManager diskImageExistsForURL:url]) {
+        if (![SDWebImageManager.sharedManager cachedImageExistsForURL:url] && ![SDWebImageManager.sharedManager diskImageExistsForURL:url] && [self showActivityIndicatorView]) {
             [self addActivityProcessingRing];
         }
 
@@ -229,7 +229,6 @@ static char TAG_ACTIVITY_SHOW;
 
         dispatch_main_async_safe(^{
             [self addSubview:self.activityIndicator];
-
             [self addConstraint:[NSLayoutConstraint constraintWithItem:self.activityIndicator
                                                              attribute:NSLayoutAttributeCenterX
                                                              relatedBy:NSLayoutRelationEqual

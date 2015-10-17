@@ -461,9 +461,7 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
     if (section == 0) {
-        
         return LKNewPostUploadCenter.singleton.uploadingImages.count;
     }
     
@@ -509,7 +507,6 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
         cell.posting = LKNewPostUploadCenter.singleton.uploadingImages[indexPath.row];
         return cell;
     }
-    
     
     LKHomeTableViewCell *cell = nil;
     

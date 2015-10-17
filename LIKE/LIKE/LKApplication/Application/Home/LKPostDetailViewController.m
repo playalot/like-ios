@@ -32,8 +32,9 @@
 #import "ADTickerLabel.h"
 #import "UIImageView+WebCache.h"
 #import "RMPZoomTransitionAnimator.h"
+#import "LKLoginViewIp4Controller.h"
 
-@interface LKPostDetailViewController () <UITableViewDataSource,UITableViewDelegate,JTSImageViewControllerDismissalDelegate,UINavigationControllerDelegate,UIViewControllerTransitioningDelegate, LKTagCommentsViewControllerDelegate, RMPZoomTransitionAnimating, RMPZoomTransitionDelegate>
+@interface LKPostDetailViewController () <UITableViewDataSource,UITableViewDelegate,JTSImageViewControllerDismissalDelegate,UINavigationControllerDelegate,UIViewControllerTransitioningDelegate, LKTagCommentsViewControllerDelegate>
 
 LC_PROPERTY(strong) BLKDelegateSplitter *delegateSplitter;
 LC_PROPERTY(strong) LKInputView *inputView;
@@ -175,7 +176,7 @@ LC_PROPERTY(assign) BOOL favorited;
         
         @normally(self);
         
-        [self.pullLoader endRefresh];
+//        [self.pullLoader endRefresh];
 
         if (error) {
             [self showTopMessageErrorHud:error];
@@ -223,12 +224,14 @@ LC_PROPERTY(assign) BOOL favorited;
         self.header.clipsToBounds = YES;
         self.header.backgroundView.autoMask = NO;
         self.header.scrollView = self.tableView;
+//        self.header.maskView.backgroundColor = [UIColor clearColor];
+        [self.header.maskView removeFromSuperview];
+        self.header.maskView = nil;
         self.header.backgroundView.showIndicator = YES;
 //        self.header.backgroundView.url = self.post.content;
         [self.header.backgroundView sd_setImageWithURL:[NSURL URLWithString:self.post.preview] placeholderImage:nil];
         
         self.header.backgroundView.frame = CGRectMake(0, 0, size.width, size.height);
-        self.header.maskView.backgroundColor = [UIColor clearColor];
         
         SquareCashStyleBehaviorDefiner * behaviorDefiner = [[SquareCashStyleBehaviorDefiner alloc] init];
         [behaviorDefiner addSnappingPositionProgress:0.0 forProgressRangeStart:0.0 end:0.5];
@@ -423,9 +426,14 @@ LC_PROPERTY(assign) BOOL favorited;
  */
 -(void) _addTag:(NSString *)tag onPost:(LKPost *)post
 {
-    if([LKLoginViewController needLoginOnViewController:self.navigationController]){
-        
-        return;
+    if (UI_IS_IPHONE4) {
+        if ([LKLoginViewIp4Controller needLoginOnViewController:self.navigationController]) {
+            return;
+        }
+    } else {
+        if ([LKLoginViewController needLoginOnViewController:self.navigationController]) {
+            return;
+        }
     }
     
     [self.inputView resignFirstResponder];
@@ -580,8 +588,14 @@ LC_PROPERTY(assign) BOOL favorited;
  */
 - (void)reportWithIndex:(NSInteger)index {
     
-    if ([LKLoginViewController needLoginOnViewController:self.navigationController]) {
-        return;
+    if (UI_IS_IPHONE4) {
+        if ([LKLoginViewIp4Controller needLoginOnViewController:self.navigationController]) {
+            return;
+        }
+    } else {
+        if ([LKLoginViewController needLoginOnViewController:self.navigationController]) {
+            return;
+        }
     }
     
     [self cancelAllRequests];
@@ -772,8 +786,14 @@ LC_PROPERTY(assign) BOOL favorited;
  */
 -(void) _report
 {
-    if ([LKLoginViewController needLoginOnViewController:self.navigationController]) {
-        return;
+    if (UI_IS_IPHONE4) {
+        if ([LKLoginViewIp4Controller needLoginOnViewController:self.navigationController]) {
+            return;
+        }
+    } else {
+        if ([LKLoginViewController needLoginOnViewController:self.navigationController]) {
+            return;
+        }
     }
     
     
@@ -842,16 +862,30 @@ LC_PROPERTY(assign) BOOL favorited;
  */
 -(void) _beginComment:(LKTag *)tag {
     // check
-    if(![LKLoginViewController needLoginOnViewController:self]){
-        [self.inputView resignFirstResponder];
-        LKTagCommentsViewController *comments = [[LKTagCommentsViewController alloc] initWithTag:tag];
-        // 传递发布者模型数据
-        comments.publisher = self.post;
-        // 设置代理
-        comments.delegate = self;
-        self.tag = tag;
-        [self.navigationController pushViewController:comments animated:YES];
-//        [comments performSelector:@selector(inputBecomeFirstResponder) withObject:nil afterDelay:0.25];
+    if (UI_IS_IPHONE4) {
+        if(![LKLoginViewIp4Controller needLoginOnViewController:self]){
+            [self.inputView resignFirstResponder];
+            LKTagCommentsViewController *comments = [[LKTagCommentsViewController alloc] initWithTag:tag];
+            // 传递发布者模型数据
+            comments.publisher = self.post;
+            // 设置代理
+            comments.delegate = self;
+            self.tag = tag;
+            [self.navigationController pushViewController:comments animated:YES];
+            //        [comments performSelector:@selector(inputBecomeFirstResponder) withObject:nil afterDelay:0.25];
+        }
+    } else {
+        if(![LKLoginViewController needLoginOnViewController:self]){
+            [self.inputView resignFirstResponder];
+            LKTagCommentsViewController *comments = [[LKTagCommentsViewController alloc] initWithTag:tag];
+            // 传递发布者模型数据
+            comments.publisher = self.post;
+            // 设置代理
+            comments.delegate = self;
+            self.tag = tag;
+            [self.navigationController pushViewController:comments animated:YES];
+            //        [comments performSelector:@selector(inputBecomeFirstResponder) withObject:nil afterDelay:0.25];
+        }
     }
 }
 
@@ -1202,34 +1236,66 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
 
             [self.shareTools hideTools];
 
-            if(![LKLoginViewController needLoginOnViewController:self]){
-                
-                [self.inputView resignFirstResponder];
-                
-                LKTagCommentsViewController *comments = [[LKTagCommentsViewController alloc] initWithTag:tag];
-                
-                // 传递发布者模型数据
-                comments.publisher = self.post;
-                // 设置代理
-                comments.delegate = self;
-                
-//                [comments showInViewController:self];
-                [self.navigationController pushViewController:comments animated:YES];
-                
-                if (LKLocalUser.singleton.user.id.integerValue != comment.user.id.integerValue) {
+            if (UI_IS_IPHONE4) {
+                if(![LKLoginViewIp4Controller needLoginOnViewController:self]){
                     
-//                    [comments replyUserAction:comment.user];
-                    [comments performSelector:@selector(replyUserAction:) withObject:comment.user afterDelay:1];
+                    [self.inputView resignFirstResponder];
+                    
+                    LKTagCommentsViewController *comments = [[LKTagCommentsViewController alloc] initWithTag:tag];
+                    
+                    // 传递发布者模型数据
+                    comments.publisher = self.post;
+                    // 设置代理
+                    comments.delegate = self;
+                    
+                    //                [comments showInViewController:self];
+                    [self.navigationController pushViewController:comments animated:YES];
+                    
+                    if (LKLocalUser.singleton.user.id.integerValue != comment.user.id.integerValue) {
+                        
+                        //                    [comments replyUserAction:comment.user];
+                        [comments performSelector:@selector(replyUserAction:) withObject:comment.user afterDelay:1];
+                    }
+                    
+                    //                [self hideMoreButton:YES];
+                    
+                    comments.willHide = ^(){
+                        
+                        //                    [self hideMoreButton:NO];
+                        [self.tableView reloadData];
+                        
+                    };
                 }
-
-//                [self hideMoreButton:YES];
-                
-                comments.willHide = ^(){
+            } else {
+                if(![LKLoginViewController needLoginOnViewController:self]){
                     
-//                    [self hideMoreButton:NO];
-                    [self.tableView reloadData];
+                    [self.inputView resignFirstResponder];
                     
-                };
+                    LKTagCommentsViewController *comments = [[LKTagCommentsViewController alloc] initWithTag:tag];
+                    
+                    // 传递发布者模型数据
+                    comments.publisher = self.post;
+                    // 设置代理
+                    comments.delegate = self;
+                    
+                    //                [comments showInViewController:self];
+                    [self.navigationController pushViewController:comments animated:YES];
+                    
+                    if (LKLocalUser.singleton.user.id.integerValue != comment.user.id.integerValue) {
+                        
+                        //                    [comments replyUserAction:comment.user];
+                        [comments performSelector:@selector(replyUserAction:) withObject:comment.user afterDelay:1];
+                    }
+                    
+                    //                [self hideMoreButton:YES];
+                    
+                    comments.willHide = ^(){
+                        
+                        //                    [self hideMoreButton:NO];
+                        [self.tableView reloadData];
+                        
+                    };
+                }
             }
         };
         
@@ -1240,23 +1306,44 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
 
             [self.shareTools hideTools];
 
-            if(![LKLoginViewController needLoginOnViewController:self]){
-
-                [self.inputView resignFirstResponder];
-
-                LKTagCommentsViewController *comments = [[LKTagCommentsViewController alloc] initWithTag:tag];
-                
-//                [comments showInViewController:self];
-                [self.navigationController pushViewController:comments animated:YES];
-                
-                [self hideMoreButton:YES];
-                
-                comments.willHide = ^(){
+            if (UI_IS_IPHONE4) {
+                if(![LKLoginViewController needLoginOnViewController:self]){
                     
-                    [self hideMoreButton:NO];
-                    [self.tableView reloadData];
+                    [self.inputView resignFirstResponder];
                     
-                };
+                    LKTagCommentsViewController *comments = [[LKTagCommentsViewController alloc] initWithTag:tag];
+                    
+                    //                [comments showInViewController:self];
+                    [self.navigationController pushViewController:comments animated:YES];
+                    
+                    [self hideMoreButton:YES];
+                    
+                    comments.willHide = ^(){
+                        
+                        [self hideMoreButton:NO];
+                        [self.tableView reloadData];
+                        
+                    };
+                }
+            } else {
+                if(![LKLoginViewController needLoginOnViewController:self]){
+                    
+                    [self.inputView resignFirstResponder];
+                    
+                    LKTagCommentsViewController *comments = [[LKTagCommentsViewController alloc] initWithTag:tag];
+                    
+                    //                [comments showInViewController:self];
+                    [self.navigationController pushViewController:comments animated:YES];
+                    
+                    [self hideMoreButton:YES];
+                    
+                    comments.willHide = ^(){
+                        
+                        [self hideMoreButton:NO];
+                        [self.tableView reloadData];
+                        
+                    };
+                }
             }
         };
         

@@ -37,7 +37,7 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
 
 @implementation LKNotificationViewController
 
--(void) dealloc {
+- (void)dealloc {
     
     [self cancelAllRequests];
 }
@@ -45,7 +45,7 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
 - (instancetype)init {
     if (self = [super init]) {
         self.notificationModel = [[LKNotificationModel alloc] init];
-        [LKNotificationCount stopCheck];
+//        [LKNotificationCount stopCheck];
     }
     return self;
 }
@@ -143,7 +143,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
 
 - (UITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (UI_IS_IPHONE6PLUS) {
+    if (UI_IS_IPHONE6PLUS || UI_IS_IPAD) {
         
         LKNotificationCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Cell" andClass:[LKNotificationCell class]];
         cell.notification = self.notificationModel.datasource[indexPath.row];
@@ -151,7 +151,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
         
     } else {
         
-        LKNotificationMiniCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Cell" andClass:[LKNotificationMiniCell class]];
+        LKNotificationMiniCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"MiniCell" andClass:[LKNotificationMiniCell class]];
         cell.notification = self.notificationModel.datasource[indexPath.row];
         return cell;
     }

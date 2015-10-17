@@ -10,6 +10,7 @@
 #import "UIImageView+WebCache.h"
 #import "LKPostDetailViewController.h"
 #import "LKLoginViewController.h"
+#import "LKLoginViewIp4Controller.h"
 
 @interface __LKHotTagsPhotoItem : UIView
 
@@ -96,8 +97,14 @@ LC_IMP_SIGNAL(PushPostDetail);
 - (void)handleItemTap:(UITapGestureRecognizer *)tap {
     if (tap.view.tag < self.posts.count) {
         // 游客不能访问图片详情页
-        if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
-            self.SEND(self.PushPostDetail).object = self.posts[tap.view.tag];
+        if (UI_IS_IPHONE4) {
+            if(![LKLoginViewIp4Controller needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
+                self.SEND(self.PushPostDetail).object = self.posts[tap.view.tag];
+            }
+        } else {            
+            if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
+                self.SEND(self.PushPostDetail).object = self.posts[tap.view.tag];
+            }
         }
     }
 }

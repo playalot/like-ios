@@ -92,6 +92,8 @@ LC_PROPERTY(strong) LCUIButton *buttonView;
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
         [button setBackgroundImage:[[UIImage imageNamed:@"HotTagButton_Gray.png" useCache:YES] stretchableImageWithLeftCapWidth:itemSize.width * 0.5 topCapHeight:13] forState:UIControlStateNormal];
         [button setBackgroundImage:[[UIImage imageNamed:@"HotTagButton_Red.png" useCache:YES] stretchableImageWithLeftCapWidth:itemSize.width * 0.5 topCapHeight:13] forState:UIControlStateSelected];
+        button.layer.cornerRadius = 6;
+        button.layer.masksToBounds = YES;
         button.titleFont = LK_FONT(14);
         button.tag = i + 100;
         [button addTarget:self action:@selector(menuItemAction:) forControlEvents:UIControlEventTouchUpInside];

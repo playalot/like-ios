@@ -13,6 +13,7 @@
 #import "MMMaterialDesignSpinner.h"
 #import "LKCameraRollViewController.h"
 #import "LKNotificationCount.h"
+#import "LKLoginViewIp4Controller.h"
 
 @interface LKTabBarController () <RDVTabBarControllerDelegate>
 
@@ -75,8 +76,14 @@
  *  选中了相机按钮就会执行
  */
 - (void)didTap {
-    if(![LKLoginViewController needLoginOnViewController:self]){
-        [LCUIApplication presentViewController:LC_UINAVIGATION([LKCameraRollViewController viewController]) animation:YES];
+    if (UI_IS_IPHONE4) {
+        if(![LKLoginViewIp4Controller needLoginOnViewController:self]){
+            [LCUIApplication presentViewController:LC_UINAVIGATION([LKCameraRollViewController viewController]) animation:YES];
+        }
+    } else {        
+        if(![LKLoginViewController needLoginOnViewController:self]){
+            [LCUIApplication presentViewController:LC_UINAVIGATION([LKCameraRollViewController viewController]) animation:YES];
+        }
     }
 }
 

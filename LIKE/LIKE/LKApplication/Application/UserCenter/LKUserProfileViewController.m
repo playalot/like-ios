@@ -26,6 +26,7 @@
 #import "UIScrollView+SVInfiniteScrolling.h"
 #import "LKPostTableViewController.h"
 #import "LKProfileSettingViewController.h"
+#import "LKLoginViewIp4Controller.h"
 
 @interface LKUserProfileViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerCancelFavorDelegate, LKPostTableViewControllerDelegate>
 
@@ -348,8 +349,14 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 
 - (void)friendShipAction {
     
-    if([LKLoginViewController needLoginOnViewController:nil]){
-        return;
+    if (UI_IS_IPHONE4) {
+        if([LKLoginViewIp4Controller needLoginOnViewController:nil]){
+            return;
+        }
+    } else {
+        if([LKLoginViewController needLoginOnViewController:nil]){
+            return;
+        }
     }
     
     LC_FAST_ANIMATIONS(0.15, ^{

@@ -14,6 +14,7 @@
 #import "LKLikeTagItemView.h"
 #import "LKLoginViewController.h"
 #import "UIImageView+UIActivityIndicatorForSDWebImage.h"
+#import "LKLoginViewIp4Controller.h"
 
 @interface LKHomeTableViewCell()
 
@@ -204,8 +205,14 @@ LC_IMP_SIGNAL(PushPostDetail);
 }
 
 -(void) handleHeadTap:(UITapGestureRecognizer *)tap {
-    if ([LKLoginViewController needLoginOnViewController:nil]) {
-        return;
+    if (UI_IS_IPHONE4) {
+        if ([LKLoginViewIp4Controller needLoginOnViewController:nil]) {
+            return;
+        }
+    } else {
+        if ([LKLoginViewController needLoginOnViewController:nil]) {
+            return;
+        }
     }
     self.SEND(self.PushUserCenter).object = self.post.user;
 }

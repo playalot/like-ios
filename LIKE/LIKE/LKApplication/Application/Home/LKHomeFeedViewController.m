@@ -24,7 +24,7 @@
 
 #import "LKLRUCache.h"
 #import "LKEditorPickInterface.h"
-#import "RMPZoomTransitionAnimator.h"
+#import "LKLoginViewIp4Controller.h"
 #import "LKLikeRecommendViewController.h"
 
 #define NORMAL_CELL_IDENTIFIER @"Content"
@@ -161,13 +161,24 @@ LC_PROPERTY(weak) id delegate;
     containerView.ADD(lineView);
     containerView.ADD(registButton);
     
-    if (![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]) {
-        self.tabBarController.tabBar.hidden = NO;
-        containerView.hidden = YES;
+    if (UI_IS_IPHONE4) {
+        if (![LKLoginViewIp4Controller needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]) {
+            self.tabBarController.tabBar.hidden = NO;
+            containerView.hidden = YES;
+        } else {
+            
+            self.tabBarController.tabBar.hidden = YES;
+            containerView.hidden = NO;
+        }
     } else {
-        
-        self.tabBarController.tabBar.hidden = YES;
-        containerView.hidden = NO;
+        if (![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]) {
+            self.tabBarController.tabBar.hidden = NO;
+            containerView.hidden = YES;
+        } else {
+            
+            self.tabBarController.tabBar.hidden = YES;
+            containerView.hidden = NO;
+        }
     }
 }
 
@@ -469,11 +480,18 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
     @weakly(self);
     cell.addTag = ^(LKPost * value){
         @normally(self);
-        
-        if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
-            self.inputView.userInfo = value;
-            self.inputView.tag = tagValue;
-            [self.inputView becomeFirstResponder];
+        if (UI_IS_IPHONE4) {
+            if(![LKLoginViewIp4Controller needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
+                self.inputView.userInfo = value;
+                self.inputView.tag = tagValue;
+                [self.inputView becomeFirstResponder];
+            }
+        } else {
+            if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
+                self.inputView.userInfo = value;
+                self.inputView.tag = tagValue;
+                [self.inputView becomeFirstResponder];
+            }
         }
     };
     cell.removedTag = ^(LKPost *post) {
@@ -516,10 +534,18 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
     cell.addTag = ^(LKPost * value){
         
         @normally(self);
-        if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
-            self.inputView.userInfo = value;
-            self.inputView.tag = indexPath.row;
-            [self.inputView becomeFirstResponder];
+        if (UI_IS_IPHONE4) {
+            if(![LKLoginViewIp4Controller needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
+                self.inputView.userInfo = value;
+                self.inputView.tag = indexPath.row;
+                [self.inputView becomeFirstResponder];
+            }
+        } else {            
+            if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
+                self.inputView.userInfo = value;
+                self.inputView.tag = indexPath.row;
+                [self.inputView becomeFirstResponder];
+            }
         }
     };
     

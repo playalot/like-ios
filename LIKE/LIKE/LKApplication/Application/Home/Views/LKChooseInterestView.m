@@ -40,16 +40,30 @@ LC_PROPERTY(strong) LCUIButton *enterButton;
 
 - (void)buildUI {
     
-    [self buildMushroomView];
-    [self buildLargeSatelliteView];
-    [self buildSmallSatelliteView];
-    [self buildAeroliteView];
-    [self buildJupiterView];
-    [self buildMeteorView];
-    [self buildBottomView];
+//    [self buildMushroomView];
+//    [self buildLargeSatelliteView];
+//    [self buildSmallSatelliteView];
+//    [self buildAeroliteView];
+//    [self buildJupiterView];
+//    [self buildMeteorView];
+//    [self buildBottomView];
     [self buildSloganLabel];
+    [self buildBackgroundView];
     [self buildChooseInterestView];
     [self buildEnterButton];
+}
+
+- (void)buildBackgroundView {
+    
+    if (UI_IS_IPHONE4) {
+        self.backgroundImageView.image = [UIImage imageNamed:@"ChooseInterest_ip4s"];
+    } else if (UI_IS_IPHONE5) {
+        self.backgroundImageView.image = [UIImage imageNamed:@"ChooseInterest_ip5"];
+    } else if (UI_IS_IPHONE6) {
+        self.backgroundImageView.image = [UIImage imageNamed:@"ChooseInterest_iPhone 6"];
+    } else if (UI_IS_IPHONE6PLUS) {
+        self.backgroundImageView.image = [UIImage imageNamed:@"ChooseInterest_iPhone 6 Plus"];
+    }
 }
 
 - (void)buildMushroomView {
@@ -203,14 +217,14 @@ LC_PROPERTY(strong) LCUIButton *enterButton;
 - (void)buildEnterButton {
     
     self.enterButton = LCUIButton.view;
-    self.enterButton.viewFrameWidth = 85;
-    self.enterButton.viewFrameHeight = 30;
+    self.enterButton.viewFrameWidth = 110;
+    self.enterButton.viewFrameHeight = 32;
     self.enterButton.viewCenterX = self.viewCenterX;
     self.enterButton.viewFrameY = self.tagsView.viewBottomY + 21;
     self.enterButton.backgroundColor = LKColor.color;
     self.enterButton.cornerRadius = 4;
     self.enterButton.title = LC_LO(@"进入like");
-    self.enterButton.titleFont = LK_FONT(14);
+    self.enterButton.titleFont = LK_FONT(18);
     [self.enterButton addTarget:self action:@selector(enter) forControlEvents:UIControlEventTouchUpInside];
     self.ADD(self.enterButton);
 }

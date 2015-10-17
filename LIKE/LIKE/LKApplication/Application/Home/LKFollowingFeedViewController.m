@@ -24,6 +24,7 @@
 #import "LKLRUCache.h"
 #import "LCUIKeyBoard.h"
 #import "LKTagAddModel.h"
+#import "LKLoginViewIp4Controller.h"
 
 #define FOCUS_FEED_CACHE_KEY [NSString stringWithFormat:@"LKFocusFeedKey-%@", LKLocalUser.singleton.user.id]
 
@@ -304,10 +305,18 @@ LC_PROPERTY(strong) LCUIImageView *noFollowingView;
     @weakly(self);
     cell.addTag = ^(LKPost * value){
         @normally(self);
-        if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
-            self.inputView.userInfo = value;
-            self.inputView.tag = tagValue;
-            [self.inputView becomeFirstResponder];
+        if (UI_IS_IPHONE4) {
+            if(![LKLoginViewIp4Controller needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
+                self.inputView.userInfo = value;
+                self.inputView.tag = tagValue;
+                [self.inputView becomeFirstResponder];
+            }
+        } else {
+            if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
+                self.inputView.userInfo = value;
+                self.inputView.tag = tagValue;
+                [self.inputView becomeFirstResponder];
+            }
         }
     };
     cell.removedTag = ^(LKPost * value){
@@ -367,11 +376,18 @@ LC_PROPERTY(strong) LCUIImageView *noFollowingView;
     
     cell.addTag = ^(LKPost * value){
         @normally(self);
-        
-        if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
-            self.inputView.userInfo = value;
-            self.inputView.tag = indexPath.row;
-            [self.inputView becomeFirstResponder];
+        if (UI_IS_IPHONE4) {
+            if(![LKLoginViewIp4Controller needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
+                self.inputView.userInfo = value;
+                self.inputView.tag = indexPath.row;
+                [self.inputView becomeFirstResponder];
+            }
+        } else {
+            if(![LKLoginViewController needLoginOnViewController:[LCUIApplication sharedInstance].window.rootViewController]){
+                self.inputView.userInfo = value;
+                self.inputView.tag = indexPath.row;
+                [self.inputView becomeFirstResponder];
+            }
         }
     };
     

@@ -15,7 +15,32 @@ static char TAG_ACTIVITY_INDICATOR;
 static char TAG_ACTIVITY_STYLE;
 static char TAG_ACTIVITY_SHOW;
 
+#define TAG_RING 1001
+
 @implementation UIImageView (WebCache)
+
+- (void)addActivityProcessingRing {
+    M13ProgressViewRing *activityProcessingRing = (M13ProgressViewRing *)[self viewWithTag:TAG_RING];
+    if (!activityProcessingRing) {
+        activityProcessingRing = [[M13ProgressViewRing alloc] init];
+        activityProcessingRing.showPercentage = NO;
+        activityProcessingRing.primaryColor = LKColor.color;
+        activityProcessingRing.secondaryColor = LKColor.color;
+        activityProcessingRing.viewFrameWidth = 50;
+        activityProcessingRing.viewFrameHeight = 50;
+        activityProcessingRing.viewFrameX = (self.viewFrameWidth - activityProcessingRing.viewFrameWidth) * 0.5;
+        activityProcessingRing.viewFrameY = (self.viewFrameHeight - activityProcessingRing.viewFrameHeight) * 0.5;
+        activityProcessingRing.tag = TAG_RING;
+        [self addSubview:activityProcessingRing];
+    }
+}
+
+- (void)removeActivityProcessingRing {
+    M13ProgressViewRing *activityProcessingRing = (M13ProgressViewRing *)[self viewWithTag:TAG_RING];
+    if (activityProcessingRing) {
+        [activityProcessingRing removeFromSuperview];
+    }
+}
 
 - (void)sd_setImageWithURL:(NSURL *)url {
     [self sd_setImageWithURL:url placeholderImage:nil options:0 progress:nil completed:nil];
@@ -52,17 +77,39 @@ static char TAG_ACTIVITY_SHOW;
     }
     
     if (url) {
-
+        
         // check if activityView is enabled or not
         if ([self showActivityIndicatorView]) {
             [self addActivityIndicator];
         }
+        
+        if (![SDWebImageManager.sharedManager cachedImageExistsForURL:url] && ![SDWebImageManager.sharedManager diskImageExistsForURL:url]) {
+            [self addActivityProcessingRing];
+        }
 
         __weak __typeof(self)wself = self;
-        id <SDWebImageOperation> operation = [SDWebImageManager.sharedManager downloadImageWithURL:url options:options progress:progressBlock completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-            [wself removeActivityIndicator];
+        
+        id <SDWebImageOperation> operation = [SDWebImageManager.sharedManager
+                                              downloadImageWithURL:url
+                                              options:options
+                                              progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+            
+            M13ProgressViewRing *activityProcessingRing = (M13ProgressViewRing *)[self viewWithTag:TAG_RING];
+            if (activityProcessingRing) {
+                if (progressBlock && receivedSize!= expectedSize) {
+                    [activityProcessingRing setProgress:receivedSize * 1.0 / expectedSize animated:YES];
+                }
+            }
+            
+        } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+            
             if (!wself) return;
             dispatch_main_sync_safe(^{
+                
+                [wself removeActivityIndicator];
+                
+                [self removeActivityProcessingRing];
+                
                 if (!wself) return;
                 if (image && (options & SDWebImageAvoidAutoSetImage) && completedBlock)
                 {
@@ -84,9 +131,13 @@ static char TAG_ACTIVITY_SHOW;
             });
         }];
         [self sd_setImageLoadOperation:operation forKey:@"UIImageViewImageLoad"];
+        
     } else {
         dispatch_main_async_safe(^{
             [self removeActivityIndicator];
+            
+            [self removeActivityProcessingRing];
+            
             NSError *error = [NSError errorWithDomain:SDWebImageErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey : @"Trying to load a nil url"}];
             if (completedBlock) {
                 completedBlock(nil, error, SDImageCacheTypeNone, url);

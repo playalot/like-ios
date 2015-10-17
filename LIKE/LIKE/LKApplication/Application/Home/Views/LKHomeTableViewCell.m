@@ -260,7 +260,6 @@ LC_IMP_SIGNAL(PushPostDetail);
     for (UIView *view in self.contentImage.subviews) {
         
         if ([view isKindOfClass:[M13ProgressViewRing class]]) {
-            
             [view removeFromSuperview];
         }
     }

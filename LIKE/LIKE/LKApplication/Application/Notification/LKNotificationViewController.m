@@ -128,7 +128,6 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
             
             [self.tableView reloadData];
         }
-        
     }];
 }
 
@@ -273,7 +272,12 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
 - (void)refresh {
 //    [self.tableView setContentOffset:LC_POINT(0, 0) animated:YES];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    
+    LC_FAST_ANIMATIONS_F(0.25, ^{
+        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    }, ^(BOOL finished){
+        [self loadData:LCUIPullLoaderDiretionTop];
+    });
 }
 
 @end

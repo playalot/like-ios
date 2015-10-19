@@ -69,6 +69,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.contentImage.contentMode = UIViewContentModeScaleAspectFill;
     self.contentImage.userInteractionEnabled = YES;
     self.contentImage.showIndicator = YES;
+    self.contentImage.showActivityIndicatorView = YES;
     [self.contentImage addTapGestureRecognizer:self selector:@selector(contentImageTapAction)];
     self.contentBack.ADD(self.contentImage);
 //    self.ADD(self.contentImage);
@@ -267,7 +268,6 @@ LC_IMP_SIGNAL(PushPostDetail);
     for (UIView *view in self.contentImage.subviews) {
         
         if ([view isKindOfClass:[M13ProgressViewRing class]]) {
-            
             [view removeFromSuperview];
         }
     }
@@ -276,7 +276,6 @@ LC_IMP_SIGNAL(PushPostDetail);
         
         
     } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        
         
     } usingActivityIndicatorStyle:0];
 

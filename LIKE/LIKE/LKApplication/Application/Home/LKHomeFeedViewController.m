@@ -404,6 +404,11 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
 }
 
 LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
+    
+    if ([LKLoginViewController needLoginOnViewController:nil]) {
+        return;
+    }
+    
     // Detail
     LKPostDetailViewController * detail = [[LKPostDetailViewController alloc] initWithPost:signal.object];
     // 设置代理
@@ -456,9 +461,7 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
     if (section == 0) {
-        
         return LKNewPostUploadCenter.singleton.uploadingImages.count;
     }
     
@@ -505,7 +508,6 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
         return cell;
     }
     
-    
     LKHomeTableViewCell *cell = nil;
     
     if (self.isCellCached) {
@@ -523,7 +525,6 @@ LC_HANDLE_UI_SIGNAL(LKUploadingCellReupload, signal)
     LKPost * post = self.datasource[indexPath.row];
     
     cell.post = post;
-//    [cell setPost:post cellRow:indexPath.row];
     
     @weakly(self);
     

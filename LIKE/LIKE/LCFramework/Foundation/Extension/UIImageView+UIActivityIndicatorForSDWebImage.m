@@ -99,18 +99,11 @@ static char TAG_ACTIVITY_INDICATOR;
 
 - (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletionBlock)completedBlock usingActivityIndicatorStyle:(UIActivityIndicatorViewStyle)activityStyle {
     
-//    __weak typeof(self) weakSelf = self;
     [self sd_setImageWithURL:url
          placeholderImage:placeholder
                   options:options
                  progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-                 
-//                     M13ProgressViewRing *activityProcessingRing = (M13ProgressViewRing *)[self viewWithTag:1001];
-//                     if (activityProcessingRing) {
-//                         if (progressBlock && receivedSize!= expectedSize) {
-//                             [activityProcessingRing setProgress:receivedSize * 1.0 / expectedSize animated:YES];
-//                         }
-//                     }
+                     // TO DO
                  }
                 completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageUrl) {
                     if (completedBlock) {

@@ -78,11 +78,6 @@ static char TAG_ACTIVITY_SHOW;
     
     if (url) {
         
-        // check if activityView is enabled or not
-        if ([self showActivityIndicatorView]) {
-//            [self addActivityIndicator];
-        }
-        
         if (![SDWebImageManager.sharedManager cachedImageExistsForURL:url] && ![SDWebImageManager.sharedManager diskImageExistsForURL:url] && [self showActivityIndicatorView]) {
             [self addActivityProcessingRing];
         }
@@ -100,6 +95,10 @@ static char TAG_ACTIVITY_SHOW;
                     [activityProcessingRing setProgress:receivedSize * 1.0 / expectedSize animated:YES];
                 }
             }
+                                                  
+                                                  if (progressBlock) {
+                                                      progressBlock(receivedSize, expectedSize);
+                                                  }
             
         } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
             
@@ -146,10 +145,14 @@ static char TAG_ACTIVITY_SHOW;
     }
 }
 
+- (NSInteger)sd_getImageCountWithURL:(NSURL *)url {
+    NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:url];
+    return [[SDImageCache sharedImageCache] imageCountForKey:key];
+}
+
 - (void)sd_setImageWithPreviousCachedImageWithURL:(NSURL *)url andPlaceholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletionBlock)completedBlock {
     NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:url];
     UIImage *lastPreviousCachedImage = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:key];
-    
     [self sd_setImageWithURL:url placeholderImage:lastPreviousCachedImage ?: placeholder options:options progress:progressBlock completed:completedBlock];    
 }
 

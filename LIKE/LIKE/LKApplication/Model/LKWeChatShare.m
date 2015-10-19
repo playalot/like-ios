@@ -20,11 +20,8 @@ LC_PROPERTY(copy) LKWeChatLoginComplete complete;
 +(BOOL) shareImage:(UIImage *)image timeLine:(BOOL)timeLine
 {
     if (![WXApi isWXAppInstalled]) {
-        
         [LCUIAlertView showWithTitle:LC_LO(@"提醒") message:LC_LO(@"您未安装微信客户端，无法分享") cancelTitle:LC_LO(@"好的") otherTitle:nil didTouchedBlock:^(NSInteger integerValue) {
-            
             ;
-            
         }];
         return NO;
     }
@@ -33,13 +30,12 @@ LC_PROPERTY(copy) LKWeChatLoginComplete complete;
         return NO;
     }
     
-    WXMediaMessage * message = [WXMediaMessage message];
+    WXMediaMessage *message = [WXMediaMessage message];
     
     CGFloat compressionQuality = 0.5;
     NSData * thumbData = UIImageJPEGRepresentation([image scaleToWidth:300], compressionQuality);
     
     while (thumbData.length > 32 * 1024) {
-        
         compressionQuality -= 0.1;
         thumbData = UIImageJPEGRepresentation([image scaleToWidth:300], compressionQuality);
     }

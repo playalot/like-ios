@@ -12,4 +12,6 @@
 
 + (UIImage *)sd_imageWithData:(NSData *)data;
 
++ (NSInteger)sd_imageCountWithData:(NSData *)data;
+
 @end

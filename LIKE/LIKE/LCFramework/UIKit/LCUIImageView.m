@@ -22,6 +22,10 @@
 
 @implementation LCUIImageView
 
+- (void)setImage:(UIImage *)image {
+    [super setImage:image];
+}
+
 -(void) dealloc
 {
     [self unobserveAllNotifications];

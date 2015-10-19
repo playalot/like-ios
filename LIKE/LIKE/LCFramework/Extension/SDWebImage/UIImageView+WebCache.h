@@ -61,6 +61,8 @@
  */
 - (void)sd_setImageWithURL:(NSURL *)url;
 
+- (NSInteger)sd_getImageCountWithURL:(NSURL *)url;
+
 /**
  * Set the imageView `image` with an `url` and a placeholder.
  *

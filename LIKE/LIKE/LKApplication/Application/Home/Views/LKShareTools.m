@@ -8,6 +8,8 @@
 
 #import "LKShareTools.h"
 #import "LKShare.h"
+#import "UIImage+MultiFormat.h"
+#import "UIImage+GIF.h"
 
 @interface LKShareTools ()
 
@@ -15,34 +17,38 @@ LC_PROPERTY(strong) LCUIImageView * icon;
 LC_PROPERTY(strong) LCUILabel * title;
 LC_PROPERTY(strong) NSMutableArray * shareIcons;
 LC_PROPERTY(assign) BOOL isShow;
+LC_PROPERTY(assign) BOOL wechatHidden;
 
 @end
 
 @implementation LKShareTools
 
--(instancetype) init
-{
+- (instancetype)initWithWeChatHidden:(BOOL)wechatHidden {
     if (self = [super initWithFrame:CGRectMake(0, 0, LC_DEVICE_WIDTH, 33 + 20)]) {
-        
+        self.wechatHidden = wechatHidden;
+        [self buildUI];
+    }
+    return self;
+}
+
+-(instancetype) init {
+    if (self = [super initWithFrame:CGRectMake(0, 0, LC_DEVICE_WIDTH, 33 + 20)]) {
         [self buildUI];
     }
     
     return self;
 }
 
--(void) buildUI
-{
+-(void) buildUI {
     [self addTapGestureRecognizer:self selector:@selector(hideTools)];
     
     self.tapGestureRecognizer.enabled = NO;
-
     
     self.icon = [LCUIImageView viewWithImage:[UIImage imageNamed:@"ShareIcon.png" useCache:YES]];
     self.icon.userInteractionEnabled = YES;
     self.icon.alpha = 0.4;
     [self.icon addTapGestureRecognizer:self selector:@selector(iconTapAction)];
     self.ADD(self.icon);
-    
     
     self.title = LCUILabel.view;
     self.title.textColor = LC_RGB(171, 164, 157);
@@ -54,15 +60,11 @@ LC_PROPERTY(assign) BOOL isShow;
     [self.title addTapGestureRecognizer:self selector:@selector(iconTapAction)];
     self.ADD(self.title);
     
-    
     self.title.viewFrameX = self.viewFrameWidth - self.title.viewFrameWidth - 40 / 3;
     self.title.viewFrameY = 0;
     
-    
     self.icon.viewFrameX = self.title.viewFrameX - self.icon.viewFrameWidth - 5;
     self.icon.viewFrameY = self.viewMidHeight - self.icon.viewMidHeight;
-    
-    
     
     LCUIButton * actionButton = LCUIButton.view;
     actionButton.viewFrameX = self.icon.viewFrameX - 30;
@@ -71,15 +73,16 @@ LC_PROPERTY(assign) BOOL isShow;
     [actionButton addTarget:self action:@selector(iconTapAction) forControlEvents:UIControlEventTouchUpInside];
     self.ADD(actionButton);
     
-    
-    
-    
     self.shareIcons = [NSMutableArray array];
     
+    NSMutableArray *imageNames = [NSMutableArray array];
     
-    NSArray * imageNames = @[@"WeChatFriendIcon.png",@"WeChatFeedIcon.png",@"QQIcon.png",@"SinaIcon.png"];
+    if (!self.wechatHidden) {
+        [imageNames addObjectsFromArray:@[@"WeChatFriendIcon.png",@"WeChatFeedIcon.png"]];
+    }
+    [imageNames addObjectsFromArray:@[@"QQIcon.png",@"SinaIcon.png"]];
 
-    for (NSInteger i = 0; i < 4; i++) {
+    for (NSInteger i = 0; i < imageNames.count; i++) {
         
         LCUIButton *button = LCUIButton.view;
         button.viewFrameWidth = 32;
@@ -96,8 +99,8 @@ LC_PROPERTY(assign) BOOL isShow;
     }
 }
 
--(void) shareIconTapAction:(UIButton *)button
-{
+-(void) shareIconTapAction:(UIButton *)button {
+    
     UIImage * image = self.willShareImage(button.tag);
     
     if (!image) {
@@ -105,7 +108,6 @@ LC_PROPERTY(assign) BOOL isShow;
     }
     
     [LKShare shareImageWithType:button.tag image:image];
-    
     [self performSelector:@selector(hideTools) withObject:nil afterDelay:1];
 }
 
@@ -126,16 +128,11 @@ LC_PROPERTY(assign) BOOL isShow;
         return;
     }
     
-    
     LC_FAST_ANIMATIONS(0.25, ^{
-        
         self.title.alpha = 0;
-        
         self.icon.image = [UIImage imageNamed:@"ShareIconSelect.png" useCache:YES];
         self.icon.viewFrameX = self.viewFrameWidth - self.icon.viewFrameWidth - 5 - 40 / 3;
     });
-    
-    
     
     CGFloat padding = 13;
     
@@ -170,7 +167,7 @@ LC_PROPERTY(assign) BOOL isShow;
         self.title.alpha = 1;
         
         self.icon.image = [UIImage imageNamed:@"ShareIcon.png" useCache:YES];
-
+        
         self.icon.viewFrameX = self.title.viewFrameX - self.icon.viewFrameWidth - 5;
         self.icon.viewFrameY = self.viewMidHeight - self.icon.viewMidHeight;
         

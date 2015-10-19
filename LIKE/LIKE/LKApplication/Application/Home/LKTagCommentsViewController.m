@@ -419,7 +419,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
             headImageView.viewFrameHeight = 35;
             headImageView.cornerRadius = headImageView.viewMidWidth;
             headImageView.backgroundColor = LKColor.backgroundColor;
-            headImageView.tag = 1001;
+            headImageView.tag = 1006;
             // 启用和用户的交互
             headImageView.userInteractionEnabled = YES;
             [headImageView addTapGestureRecognizer:self selector:@selector(tagUserIconViewClick:)];
@@ -433,7 +433,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
             nameLable.viewFrameY = headImageView.viewBottomY + topPadding;
             nameLable.viewFrameHeight = nameLable.font.lineHeight;
             nameLable.viewFrameWidth = 200;
-            nameLable.tag = 1004;
+            nameLable.tag = 1009;
             configurationCell.ADD(nameLable);
             
             
@@ -445,7 +445,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
             timeLabel.viewFrameY = nameLable.viewFrameY;
             timeLabel.textAlignment = UITextAlignmentRight;
             timeLabel.textColor = LC_RGB(171, 164, 157);
-            timeLabel.tag = 1003;
+            timeLabel.tag = 1008;
 //            timeLabel.hidden = YES;
             configurationCell.ADD(timeLabel);
             
@@ -469,7 +469,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
             UIView *backView = UIView.view;
             backView.viewFrameWidth = LC_DEVICE_WIDTH;
             backView.viewFrameY = 74 + 8;
-            backView.tag = 1005;
+            backView.tag = 1010;
             backView.backgroundColor = LC_RGB(245, 245, 245);
             configurationCell.ADD(backView);
             
@@ -480,11 +480,11 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
             configurationCell.ADD(line1);
         }];
         
-        LCUIImageView *head = cell.FIND(1001);
-        LKTagItemView *item = cell.FIND(1002);
-        LCUILabel *time = cell.FIND(1003);
-        LCUILabel *name = cell.FIND(1004);
-        UIView *backView = cell.FIND(1005);
+        LCUIImageView *head = cell.FIND(1006);
+        LKTagItemView *item = cell.FIND(1007);
+        LCUILabel *time = cell.FIND(1008);
+        LCUILabel *name = cell.FIND(1009);
+        UIView *backView = cell.FIND(1010);
         
         if (item) {
             [item removeFromSuperview];
@@ -493,7 +493,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
         
         if (self.tagValue.tag.length) {
             item = LKTagItemView.view;
-            item.tag = 1002;
+            item.tag = 1007;
             cell.ADD(item);
         }
         

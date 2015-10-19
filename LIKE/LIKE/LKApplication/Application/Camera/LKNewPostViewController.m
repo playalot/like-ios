@@ -290,11 +290,19 @@ LC_PROPERTY(strong) UIView *backView;
     
     
     self.locationButton = LCUIButton.view;
-    self.locationButton.viewFrameX = 18;
+    self.locationButton.viewFrameX = 10;
     self.locationButton.viewFrameY = self.inputView.viewFrameY - 18 - 25;
-    self.locationButton.viewFrameWidth = 84;
-    self.locationButton.viewFrameHeight = 25;
-    self.locationButton.buttonImage = [UIImage imageNamed:@"LocationButtonImage.png" useCache:YES];
+    self.locationButton.viewFrameWidth = LC_DEVICE_WIDTH / 2 - 10;
+    self.locationButton.viewFrameHeight = 33;
+    self.locationButton.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
+    self.locationButton.cornerRadius = 4;
+    self.locationButton.titleFont = LK_FONT(13);
+    self.locationButton.titleColor = LC_RGB(153, 153, 153);
+    self.locationButton.title = LC_LO(@"我的位置...");
+    self.locationButton.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 5);
+    self.locationButton.titleLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
+    self.locationButton.buttonImage = [UIImage imageNamed:@"LocationButtonImage.png"];
+    self.locationButton.imageEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 10);
     [self.locationButton addTarget:self action:@selector(choosePlaces) forControlEvents:UIControlEventTouchUpInside];
     self.view.ADD(self.locationButton);
     

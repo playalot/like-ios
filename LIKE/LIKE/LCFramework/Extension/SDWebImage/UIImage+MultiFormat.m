@@ -17,6 +17,14 @@
 
 @implementation UIImage (MultiFormat)
 
++ (NSInteger)sd_imageCountWithData:(NSData *)data {
+    if (!data) {
+        return 0;
+    }
+    CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)data, NULL);
+    return CGImageSourceGetCount(source);
+}
+
 + (UIImage *)sd_imageWithData:(NSData *)data {
     if (!data) {
         return nil;

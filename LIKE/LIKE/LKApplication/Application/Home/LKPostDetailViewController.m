@@ -33,6 +33,7 @@
 #import "UIImageView+WebCache.h"
 #import "RMPZoomTransitionAnimator.h"
 #import "LKLoginViewIp4Controller.h"
+#import "UIImage+GIF.h"
 
 @interface LKPostDetailViewController () <UITableViewDataSource,UITableViewDelegate,JTSImageViewControllerDismissalDelegate,UINavigationControllerDelegate,UIViewControllerTransitioningDelegate, LKTagCommentsViewControllerDelegate>
 
@@ -60,6 +61,8 @@ LC_PROPERTY(strong) UIView *blackMask;
 LC_PROPERTY(strong) LKShareTools *shareTools;
 
 LC_PROPERTY(assign) BOOL favorited;
+
+LC_PROPERTY(assign) BOOL isBackgroundImageGIF;
 
 /**
  *  记录下当前的标签
@@ -91,8 +94,6 @@ LC_PROPERTY(assign) BOOL favorited;
     [self setNavigationBarHidden:YES animated:NO];
     [[LKNavigator navigator].tabBarController setTabBarHidden:YES animated:NO];
     
-//    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:animated];
-
     [self.header.headImageView removeFromSuperview];
     [self.header.nameLabel removeFromSuperview];
     [self.header.icon removeFromSuperview];
@@ -175,8 +176,6 @@ LC_PROPERTY(assign) BOOL favorited;
     self.tagsListModel.requestFinished = ^(LKHttpRequestResult * result , NSString * error){
         
         @normally(self);
-        
-//        [self.pullLoader endRefresh];
 
         if (error) {
             [self showTopMessageErrorHud:error];
@@ -188,11 +187,6 @@ LC_PROPERTY(assign) BOOL favorited;
     // Load...
     [self.tagsListModel loadDataWithPostID:self.post.id getMore:NO];
 }
-
-//- (BOOL)prefersStatusBarHidden {
-//    
-//    return YES;
-//}
 
 -(void) buildUI {
     self.view.backgroundColor = LKColor.backgroundColor;
@@ -228,8 +222,12 @@ LC_PROPERTY(assign) BOOL favorited;
         [self.header.maskView removeFromSuperview];
         self.header.maskView = nil;
         self.header.backgroundView.showIndicator = YES;
-//        self.header.backgroundView.url = self.post.content;
+//        self.header.backgroundView.url = self.post.content
         [self.header.backgroundView sd_setImageWithURL:[NSURL URLWithString:self.post.preview] placeholderImage:nil];
+        
+        if ([self.post.preview containsString:@".gif"]) {
+            self.isBackgroundImageGIF = YES;
+        }
         
         self.header.backgroundView.frame = CGRectMake(0, 0, size.width, size.height);
         
@@ -307,7 +305,6 @@ LC_PROPERTY(assign) BOOL favorited;
         navView.backgroundColor = LKColor.color;
         navView.viewFrameWidth = LC_DEVICE_WIDTH;
         navView.viewFrameHeight = 44;
-//        self.header.ADD(navView);
         
         LCUILabel *timeLabel = LCUILabel.view;
         timeLabel.font = LK_FONT(18);
@@ -473,10 +470,7 @@ LC_PROPERTY(assign) BOOL favorited;
             // input view...
             [self.inputView resignFirstResponder];
             
-            //
             self.inputView.textField.text = @"";
-            
-//            [self newTagAnimation];
             
             self.post.tags = self.tagsListModel.tags;
             if (self.delegate && [self.delegate respondsToSelector:@selector(postDetailViewController:didUpdatedPost:)]) {
@@ -553,13 +547,6 @@ LC_PROPERTY(assign) BOOL favorited;
 //                [self _report];
                 [self reportReason];
             }
-//            else if (index == 1){
-//                
-//                if (self.header.backgroundView.image) {
-//                    
-//                    [LKPhotoAlbum saveImage:self.header.backgroundView.image showTip:YES];
-//                }
-//            }
             
         }];
     }
@@ -730,7 +717,6 @@ LC_PROPERTY(assign) BOOL favorited;
             
             self.post.place = [result.json[@"data"][@"place"] isKindOfClass:[NSString class]] ? result.json[@"data"][@"place"] : nil;
             self.post.timestamp = result.json[@"data"][@"created"];
-            //self.post.content = result.json[@"data"][@"content"];
             self.bigContentURL = result.json[@"data"][@"raw_image"];
             
             UIImage * image = [LCUIImageCache.singleton imageWithKey:self.bigContentURL];
@@ -1026,8 +1012,10 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
             
             
             // 分享工具
-            self.shareTools = LKShareTools.view;
-            configurationCell.ADD(self.shareTools);
+            if (!self.isBackgroundImageGIF) {
+                self.shareTools = [[LKShareTools alloc] init];
+                configurationCell.ADD(self.shareTools);
+            }
             
         }];
         
@@ -1060,14 +1048,11 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
                 self.postTime.alpha = 1;
                 self.likesTip.alpha = 1;
                 self.userLikes.alpha = 1;
-//                self.location.alpha = 1;
             });
         };
         
         self.shareTools.willShareImage = ^UIImage *(NSInteger index){
-            
             @normally(self);
-            
             return [self buildShareImage:index];
         };
         
@@ -1075,7 +1060,6 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         self.timeLabel.text = [NSString stringWithFormat:@"%@",
                              [LKTime dateNearByTimestamp:self.post.timestamp]];
         self.userHead.url = self.post.user.avatar;
-//        [self.userHead sd_setImageWithURL:[NSURL URLWithString:self.post.user.avatar] placeholderImage:nil];
         self.userName.text = self.post.user.name;
         [self.userLikes setText:self.post.user.likes.description animated:NO];
 
@@ -1099,7 +1083,6 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
         self.postTime.text = [NSString stringWithFormat:@"%@ %@ %@", [LKTime dateNearByTimestamp:self.post.timestamp], self.post.place.length ? LC_LO(@"来自") : @"", self.post.place.length ? self.post.place : @""];
         
 //        if (self.post.place != nil) {
-//            
 //            self.location.hidden = NO;
 //            self.location.viewFrameX = self.likesTip.viewRightX + 10;
 //            [self.location setImage:[UIImage imageNamed:@"Location.png" useCache:YES] forState:UIControlStateNormal];
@@ -1414,21 +1397,20 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
 // 估计以后还得改
 - (UIImage *)buildShareImage:(NSInteger)shareIndex {
     
-    UIImage *image = [LCUIImageCache.singleton imageWithKey:self.bigContentURL];
+    if (self.isBackgroundImageGIF) {
+        return nil;
+    }
     
+    UIImage *image = [LCUIImageCache.singleton imageWithKey:self.bigContentURL];
     if (!image) {
-        
-//        image = [LCUIImageCache.singleton imageWithKey:self.post.content];
         image = self.header.backgroundView.image;
     }
     
     if (image.size.width < 640) {
-        
         image = [image scaleToBeWidth:640];
     }
     
     if (image.size.width > 1242) {
-        
         image = [image scaleToBeWidth:1242];
     }
     
@@ -1468,7 +1450,6 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     imageView.backgroundColor = [UIColor whiteColor];
     bottomView.ADD(imageView);
     
-    
     // 昵称
     LCUILabel *nameLabel = LCUILabel.view;
     nameLabel.viewFrameX = imageView.viewRightX + 10 * layoutScale;
@@ -1486,7 +1467,6 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     tagsView.backgroundColor = LKColor.backgroundColor;
     tagsView.proportion = proportion;
     tagsView.viewFrameY = imageView.viewBottomY;
-//    tagsView.viewFrameX = 21 * proportion;
     tagsView.viewFrameX = 1 * layoutScale;
     tagsView.viewFrameWidth = image.size.width * 640 / 414 - 42 * layoutScale;
     tagsView.tags = self.tagsListModel.tags;
@@ -1519,7 +1499,6 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     qrCodeView.image = [UIImage imageNamed:@"QRCode.png" useCache:YES];
     belowView.ADD(qrCodeView);
     
-    
     // logo
     LCUIImageView *logoView = LCUIImageView.view;
     logoView.viewFrameWidth = 53 * layoutScale;
@@ -1528,7 +1507,6 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     logoView.viewFrameY = 13 * layoutScale;
     logoView.image = [UIImage imageNamed:@"like_icon.png" useCache:YES];
     belowView.ADD(logoView);
-    
     
     // 添加特色图片
     LCUIImageView *interestView = LCUIImageView.view;
@@ -1770,29 +1748,13 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal)
     }
     
     LKTag * tag = self.tagsListModel.tags[indexPath.row];
-    
     CGFloat height = [LKPostDetailCell height:tag];
-    
     if (indexPath.row == self.tagsListModel.tags.count - 1) {
-        
         height += 5;
     }
     
     return height;
 }
-
-//- (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    if (indexPath.section != 0) {
-//     
-//        cell.alpha = 0;
-//        
-//        LC_FAST_ANIMATIONS(0.25, ^{
-//            
-//            cell.alpha = 1;
-//        });
-//    }
-//}
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

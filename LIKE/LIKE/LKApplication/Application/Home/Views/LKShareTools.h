@@ -18,4 +18,6 @@ LC_PROPERTY(copy) LKShareToolsShareImage willShareImage;
 
 -(void) hideTools;
 
+- (instancetype)initWithWeChatHidden:(BOOL)wechatHidden;
+
 @end

@@ -250,6 +250,8 @@ typedef void(^SDWebImageCalculateSizeBlock)(NSUInteger fileCount, NSUInteger tot
  */
 - (BOOL)diskImageExistsWithKey:(NSString *)key;
 
+- (NSInteger)imageCountForKey:(NSString *)key;
+
 /**
  *  Get the cache path for a certain key (needs the cache path root folder)
  *

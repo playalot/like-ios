@@ -21,7 +21,6 @@ LC_PROPERTY(assign) CGPoint point;
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if(self = [super initWithFrame:frame]){
-        
         [self configureBar];
     }
     
@@ -57,7 +56,6 @@ LC_PROPERTY(assign) CGPoint point;
     if (user) {
         
         self.nameLabel.text = [NSString stringWithFormat:@"%@\n %@ likes", user.name, @(user.likes.integerValue)];
-//        self.headImageView.url = user.avatar;
         [self.headImageView sd_setImageWithURL:[NSURL URLWithString:user.avatar] placeholderImage:nil];
         self.nameLabelOnShowing.text = user.name;
         
@@ -80,8 +78,6 @@ LC_PROPERTY(assign) CGPoint point;
     else{
         
         self.nameLabel.text = LC_LO(@"游客");
-//        self.headImageView.url = @"http://cdn.likeorz.com/default_avatar.jpg?imageView2/1/w/120/h/120/q/100";
-//        self.backgroundView.url = @"http://cdn.likeorz.com/default_cover.jpg?imageView2/1/w/750/h/750/q/85";
         [self.headImageView sd_setImageWithURL:[NSURL URLWithString:@"http://cdn.likeorz.com/default_avatar.jpg?imageView2/1/w/120/h/120/q/100"] placeholderImage:nil options:SDWebImageRetryFailed];
         [self.backgroundView sd_setImageWithURL:[NSURL URLWithString: @"http://cdn.likeorz.com/default_cover.jpg?imageView2/1/w/750/h/750/q/85"] placeholderImage:nil options:SDWebImageRetryFailed];
     }
@@ -107,7 +103,6 @@ LC_PROPERTY(assign) CGPoint point;
         self.minimumBarHeight = 64.0;
     }
     
-    
     self.backgroundView = [[LCUIImageView alloc] initWithFrame:self.bounds];
     self.backgroundView.viewFrameWidth = self.viewFrameWidth;
     self.backgroundView.viewFrameHeight = self.maximumBarHeight;
@@ -118,12 +113,6 @@ LC_PROPERTY(assign) CGPoint point;
     self.backgroundView.autoMask = YES;
     [self addSubview:self.backgroundView];
     [self sendSubviewToBack:self.backgroundView];
-    
-//    UIView * view = UIView.view;
-//    view.frame = CGRectMake(0, 0, self.viewFrameWidth, 1500);
-//    view.viewCenterY = self.backgroundView.viewCenterY;
-//    view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.05];
-//    self.ADD(view);
     
     self.maskView = UIView.view;
     self.maskView.frame = self.backgroundView.bounds;
@@ -176,9 +165,6 @@ LC_PROPERTY(assign) CGPoint point;
     [self.nameLabel addLayoutAttributes:finalNameLabelLayoutAttributes forProgress:1.0];
     
     [self addSubview:self.nameLabel];
-    
-    
-    
     
     self.icon = LCUIImageView.view;
     self.icon.image = [UIImage imageNamed:@"HomeLikeIcon.png" useCache:YES];
@@ -305,13 +291,6 @@ LC_PROPERTY(assign) CGPoint point;
 -(void) backgroundTapAction:(UITapGestureRecognizer *)tap
 {
     CGPoint point = [tap locationInView:self];
-    
-    /*
-     moreButton.viewFrameWidth = 50 / 3 + 40;
-     moreButton.viewFrameHeight = 11 / 3 + 40;
-     moreButton.viewFrameX = LC_DEVICE_WIDTH - moreButton.viewFrameWidth;
-     moreButton.viewFrameY = 10;
-     */
     
     if (CGRectContainsPoint(CGRectMake(LC_DEVICE_WIDTH - (50 / 3 + 40), 10, 50 / 3 + 40, 11 / 3 + 40), point)) {
         return;

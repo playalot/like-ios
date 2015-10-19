@@ -39,7 +39,12 @@
 //    return [QQApi sendMessage:apiMessage];
     
     //
-    QQApiImageObject *imgObj = [QQApiImageObject objectWithData:UIImageJPEGRepresentation(image, 1)
+    if (image.size.width > 1280) {
+        image = [image scaleToWidth:1280];
+    }
+    
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.8);
+    QQApiImageObject *imgObj = [QQApiImageObject objectWithData:imageData
                                                previewImageData:UIImageJPEGRepresentation([image scaleToWidth:300], 0.5)
                                                           title:@"like"
                                                     description:@""];

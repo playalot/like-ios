@@ -49,7 +49,12 @@ LC_PROPERTY(copy) LKWeChatLoginComplete complete;
 
     WXImageObject * ext = [WXImageObject object];
     
-    ext.imageData = UIImageJPEGRepresentation(image, 1);
+    if (image.size.width > 1280) {
+        image = [image scaleToWidth:1280];
+    }
+    
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.8);
+    ext.imageData = imageData;
     
     message.mediaObject = ext;
     

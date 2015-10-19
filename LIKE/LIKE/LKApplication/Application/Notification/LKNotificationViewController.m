@@ -274,7 +274,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     
     LC_FAST_ANIMATIONS_F(0.25, ^{
-        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
     }, ^(BOOL finished){
         [self loadData:LCUIPullLoaderDiretionTop];
     });

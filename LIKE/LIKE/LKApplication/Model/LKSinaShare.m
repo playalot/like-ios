@@ -35,7 +35,13 @@ LC_PROPERTY(copy) LKSinaLoginComplete complete;
     
     
     WBImageObject * imageObject = [WBImageObject object];
-    imageObject.imageData = UIImageJPEGRepresentation(image, 1);
+    
+    if (image.size.width > 1280) {
+        image = [image scaleToWidth:1280];
+    }
+    
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.8);
+    imageObject.imageData = imageData;
     
     WBMessageObject * object = [[WBMessageObject alloc] init];
     object.imageObject = imageObject;

@@ -102,6 +102,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     self.contentImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.contentImageView.userInteractionEnabled = YES;
     self.contentImageView.showIndicator = YES;
+    self.contentImageView.showActivityIndicatorView = YES;
     [self.contentImageView addTapGestureRecognizer:self selector:@selector(contentImageTapAction)];
     self.contentBack.ADD(self.contentImageView);
 }

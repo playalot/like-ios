@@ -17,15 +17,13 @@
 LC_PROPERTY(strong) LKTag *tagValue;
 LC_PROPERTY(strong) LKHotTagsUsersView *hotUsersView;
 LC_PROPERTY(strong) LCUIImageView *recommendImageView;
+LC_PROPERTY(strong) LCUIImageView *bannerImageView;
 LC_PROPERTY(strong) LCUIImageView *lineView;
 LC_PROPERTY(strong) LCUIView *headerView;
-
 LC_PROPERTY(assign) BOOL loadFinished;
 LC_PROPERTY(assign) BOOL loading;
 LC_PROPERTY(assign) NSNumber *next;
-
 LC_PROPERTY(assign) BOOL browsingPushing;
-
 LC_PROPERTY(strong) LCUIPullLoader *pullLoader;
 
 @end
@@ -110,6 +108,11 @@ LC_PROPERTY(strong) LCUIPullLoader *pullLoader;
         
         self.posts = [NSMutableArray array];
         self.headerView = [[LCUIView alloc] initWithFrame:CGRectMake(5, 5, LC_DEVICE_WIDTH - 10, 67)];
+        
+        self.bannerImageView = LCUIImageView.view;
+        self.bannerImageView.viewFrameWidth = LC_DEVICE_WIDTH;
+        self.bannerImageView.viewFrameHeight = 100;
+//        self.headerView.ADD(self.bannerImageView);
         
         self.recommendImageView = [[LCUIImageView alloc] initWithFrame:CGRectMake(20, 12, 32, 43)];
         self.recommendImageView.image = [UIImage imageNamed:@"RecommendUser.png" useCache:YES];

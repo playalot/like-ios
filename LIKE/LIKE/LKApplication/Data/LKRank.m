@@ -20,6 +20,7 @@
             self.rank = dict[@"rank"];
             self.up = dict[@"up"];
             self.userId = dict[@"user_id"];
+            self.user = [LKUser objectFromDictionary:dict[@"user"]];
         } else {
             
             ERROR(@"...");

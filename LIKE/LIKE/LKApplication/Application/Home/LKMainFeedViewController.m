@@ -36,7 +36,7 @@ LC_PROPERTY(weak) LCUIViewController *currentViewController;
 - (void)buildNavigationBar {
     // Bar item.
     [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[[UIImage imageNamed:@"Favor_normal.png" useCache:YES] imageWithTintColor:[UIColor whiteColor]] selectImage:nil];
-//    [self setNavigationBarButton:LCUINavigationBarButtonTypeRight image:[[UIImage imageNamed:@"RankIcon.png" useCache:YES] imageWithTintColor:[UIColor whiteColor]] selectImage:nil];
+    [self setNavigationBarButton:LCUINavigationBarButtonTypeRight image:[[UIImage imageNamed:@"RankIcon.png" useCache:YES] imageWithTintColor:[UIColor whiteColor]] selectImage:nil];
     
     LCUIButton *titleBtn = [[LCUIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
     [titleBtn setImage:[UIImage imageNamed:@"HomeLikeIcon" useCache:YES] forState:UIControlStateNormal];

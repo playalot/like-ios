@@ -10,6 +10,7 @@
 
 @interface LKRank : LCDataModel
 
+LC_PROPERTY(strong) LKUser *user;
 LC_PROPERTY(strong) NSNumber *likes;
 LC_PROPERTY(strong) NSNumber *rank;
 LC_PROPERTY(strong) NSNumber *up;

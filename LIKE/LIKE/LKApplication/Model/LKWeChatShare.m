@@ -44,9 +44,6 @@ LC_PROPERTY(copy) LKWeChatLoginComplete complete;
     message.title = @"like";
 
     WXImageObject * ext = [WXImageObject object];
-<<<<<<< HEAD
-    ext.imageData = UIImageJPEGRepresentation(image, 1);
-=======
     
     if (image.size.width > 1280) {
         image = [image scaleToWidth:1280];
@@ -55,7 +52,6 @@ LC_PROPERTY(copy) LKWeChatLoginComplete complete;
     NSData *imageData = UIImageJPEGRepresentation(image, 0.8);
     ext.imageData = imageData;
     
->>>>>>> ae9b7cda3f75a9fcea09f64533996d24acf88e47
     message.mediaObject = ext;
     
     SendMessageToWXReq * req = [[SendMessageToWXReq alloc] init];

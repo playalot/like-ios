@@ -184,7 +184,7 @@ LC_PROPERTY(weak) id delegate;
 
 - (void)buildCellCache {
     NSInteger cacheCapacity = 10;
-    self.isCellCached = NO;
+    self.isCellCached = YES;
     self.cellCache = [[LKLRUCache alloc] initWithCapacity:cacheCapacity];
     self.cellHeightCache = [[LKLRUCache alloc] initWithCapacity:cacheCapacity];
 }

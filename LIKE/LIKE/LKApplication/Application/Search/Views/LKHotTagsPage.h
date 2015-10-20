@@ -16,4 +16,6 @@
 
 -(void) show;
 
+LC_ST_SIGNAL(PushPostDetail);
+
 @end

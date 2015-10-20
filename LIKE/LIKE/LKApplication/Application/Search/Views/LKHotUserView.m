@@ -53,7 +53,6 @@ LC_PROPERTY(strong) UIScrollView * scrollView;
     hot.font = LK_FONT(12);
     hot.text = LC_LO(@"热门用户");
     self.scrollView.ADD(hot);
-    
 
     CGFloat padding = 5;
     

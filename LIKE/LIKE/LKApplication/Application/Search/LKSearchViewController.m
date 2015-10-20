@@ -16,8 +16,9 @@
 #import "LKPostTableViewController.h"
 #import "LKTopSearchInterface.h"
 #import "LKUserCenterViewController.h"
+#import "LKPostDetailViewController.h"
 
-@interface LKSearchViewController () <LKSearchBarDelegate>
+@interface LKSearchViewController () <LKSearchBarDelegate, LKPostDetailViewControllerDelegate>
 
 LC_PROPERTY(strong) UIView *topBarSearchView;
 LC_PROPERTY(strong) LKSearchSuggestionView *suggestionView;
@@ -251,6 +252,24 @@ LC_PROPERTY(strong) LKSearchView *searchView;
 
 - (void)refresh {
     [self.searchView refresh];
+}
+
+LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
+    LKPostDetailViewController * detail = [[LKPostDetailViewController alloc] initWithPost:signal.object];
+    detail.delegate = self;
+    [self.navigationController pushViewController:detail animated:YES];
+}
+
+- (void)postDetailViewController:(LKPostDetailViewController *)ctrl didUpdatedPost:(LKPost *)post {
+    
+}
+
+- (void)postDetailViewController:(LKPostDetailViewController *)ctrl didFavouritePost:(LKPost *)post {
+    
+}
+
+- (void)postDetailViewController:(LKPostDetailViewController *)ctrl didUnfavouritePost:(LKPost *)post {
+    
 }
 
 @end

@@ -20,7 +20,6 @@
 #define HEADER_IDENTIFIER @"WaterfallHeader"
 #define FOOTER_IDENTIFIER @"WaterfallFooter"
 
-
 @interface LKHotTagsPage () <UICollectionViewDataSource, UICollectionViewDelegate, CHTCollectionViewDelegateWaterfallLayout>
 
 LC_PROPERTY(strong) LKTag * tagValue;
@@ -37,6 +36,8 @@ LC_PROPERTY(strong) LKHotUserView * hotUsersView;
 @end
 
 @implementation LKHotTagsPage
+
+LC_IMP_SIGNAL(PushPostDetail);
 
 -(void) dealloc
 {
@@ -64,7 +65,6 @@ LC_PROPERTY(strong) LKHotUserView * hotUsersView;
         self.delegate = self;
         self.backgroundColor = [UIColor clearColor];
         
-        
         [self registerClass:[LKSearchResultCollectionViewCell class]
             forCellWithReuseIdentifier:CELL_IDENTIFIER];
         
@@ -86,7 +86,7 @@ LC_PROPERTY(strong) LKHotUserView * hotUsersView;
     }
     
     // request
-    //
+    
     LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"explore/tag/%@",self.tagValue.tag.URLCODE()]].AUTO_SESSION();
     
     @weakly(self);
@@ -185,9 +185,10 @@ LC_PROPERTY(strong) LKHotUserView * hotUsersView;
     return [LKSearchResultCollectionViewCell sizeWithPost:self.posts[indexPath.row]];
 }
 
+
 -(void) collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    self.SEND(self.PushPostDetail).object = self.dataSource[indexPath.row];
 }
 
 @end

@@ -15,7 +15,6 @@
 #import "LKSearchHistory.h"
 #import "LKHotTagsPage.h"
 #import "LKTopSearchInterface.h"
-#import "LKHotTagsPage.h"
 
 @interface LKSearchView ()<UIScrollViewDelegate>
 
@@ -136,15 +135,28 @@ LC_PROPERTY(assign) NSInteger page;
 
 - (void)buildPages:(NSArray *)tags {
     self.scrollView.contentSize = CGSizeMake(self.scrollView.viewFrameWidth * tags.count, self.scrollView.viewFrameHeight);
+    
+    BOOL exist = arc4random() % 2 == 0 ? YES : NO;
+    
     for (NSInteger i = 0; i<tags.count; i++) {
+        
+        CGFloat offset = 0;
+        if (exist) {
+            LCUIImageView *banner = LCUIImageView.view;
+            banner.viewFrameY = CGRectGetMaxY(self.blur.frame);
+            banner.viewFrameWidth = self.viewFrameWidth;
+            banner.viewFrameHeight = 146;
+            offset = banner.viewFrameHeight + 3;
+            self.ADD(banner);
+        }
         
         LKTag * tag = tags[i];
         LKHotTagsPage * page = [[LKHotTagsPage alloc] initWithTag:tag];
         page.frame = CGRectMake(0, 0, self.scrollView.viewFrameWidth, self.scrollView.viewFrameHeight);
+        page.viewFrameY = offset;
         page.viewFrameX = self.viewFrameWidth * i;
         page.tag = 100 + i;
         self.scrollView.ADD(page);
-
         if (i == 0) {
             [page performSelector:@selector(show) withObject:nil afterDelay:0];
         }
@@ -183,8 +195,10 @@ LC_PROPERTY(assign) NSInteger page;
     [topSearchInterface startWithCompletionBlockWithSuccess:^(LCBaseRequest *request) {
         @normally(self);
         @normally(topSearchInterface);
+        
         self.placeholderView.users = topSearchInterface.users;
         self.placeholderView.tags = topSearchInterface.tags;
+        
     } failure:^(LCBaseRequest *request) {
     }];
 }

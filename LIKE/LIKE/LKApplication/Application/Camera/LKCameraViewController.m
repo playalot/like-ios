@@ -293,7 +293,9 @@ LC_PROPERTY(strong) UIView *wastedView;
     self.prohibitionView.viewCenterX = self.fastCamera.view.viewCenterX;
     self.prohibitionView.viewCenterY = self.fastCamera.view.viewMidHeight;
     self.prohibitionView.image = [UIImage imageNamed:@"ProhibitionOfSelf.png" useCache:YES];
-    self.fastCamera.view.ADD(self.prohibitionView);
+    if (self.fastCamera.view) {
+        self.fastCamera.view.ADD(self.prohibitionView);
+    }
 
 
     self.bottomView = UIView.view.COLOR([UIColor whiteColor]);

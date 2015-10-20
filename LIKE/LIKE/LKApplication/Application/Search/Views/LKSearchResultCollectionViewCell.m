@@ -20,9 +20,12 @@ LC_PROPERTY(strong) LCUILabel * likes;
 
 @implementation LKSearchResultCollectionViewCell
 
+LC_IMP_SIGNAL(PushUserCenter);
+LC_IMP_SIGNAL(PushPostDetail);
+
 + (CGSize)sizeWithPost:(LKPost *)post {
     CGFloat width = (LC_DEVICE_WIDTH - 15) / 2;
-    CGSize size = [LKUIKit parsingImageSizeWithURL:post.content constSize:CGSizeMake(width, width)];
+    CGSize size = [LKUIKit parsingImageSizeWithURL:post.thumbnail constSize:CGSizeMake(width, width)];
     if (size.width > width) {
         size.height = width / size.width * size.height;
         size.width = width;
@@ -116,7 +119,7 @@ LC_PROPERTY(strong) LCUILabel * likes;
     CGFloat width = (LC_DEVICE_WIDTH - 15) / 2;
 
     
-    CGSize size = [LKUIKit parsingImageSizeWithURL:post.content constSize:CGSizeMake(width, width)];
+    CGSize size = [LKUIKit parsingImageSizeWithURL:post.thumbnail constSize:CGSizeMake(width, width)];
     
     if (size.width > width) {
         
@@ -127,8 +130,7 @@ LC_PROPERTY(strong) LCUILabel * likes;
     self.contentImage.viewFrameWidth = size.width;
     self.contentImage.viewFrameHeight = size.height;
     self.contentImage.image = nil;
-//    self.contentImage.url = post.content;
-    [self.contentImage sd_setImageWithURL:[NSURL URLWithString:post.content] placeholderImage:nil];
+    [self.contentImage sd_setImageWithURL:[NSURL URLWithString:post.thumbnail] placeholderImage:nil];
     
     
     //[LKSearchResultCollectionViewCell roundCorners:UIRectCornerBottomLeft | UIRectCornerBottomRight forView:self.contentImage];
@@ -136,12 +138,12 @@ LC_PROPERTY(strong) LCUILabel * likes;
 
 -(void) handleHeadTap:(UITapGestureRecognizer *)tap
 {
-    self.SEND(@"PushUserCenter").object = self.post.user;
+    self.SEND(self.PushUserCenter).object = self.post.user;
 }
 
 -(void) handleImageTapAction:(UITapGestureRecognizer *)tap
 {
-    self.SEND(@"PushPostDetail").object = self.post;
+    self.SEND(self.PushPostDetail).object = self.post;
 }
 
 @end

@@ -15,4 +15,7 @@ LC_PROPERTY(strong) LKPost * post;
 
 +(CGSize) sizeWithPost:(LKPost *)post;
 
+LC_ST_SIGNAL(PushUserCenter);
+LC_ST_SIGNAL(PushPostDetail);
+
 @end

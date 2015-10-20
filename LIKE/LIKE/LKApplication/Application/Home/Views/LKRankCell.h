@@ -13,4 +13,6 @@
 
 LC_PROPERTY(strong) LKRank *rank;
 
+LC_ST_SIGNAL(PushUserCenter);
+
 @end

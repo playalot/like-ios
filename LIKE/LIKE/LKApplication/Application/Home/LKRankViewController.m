@@ -36,6 +36,11 @@ LC_PROPERTY(strong) NSArray *dataSource;
     [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[UIImage imageNamed:@"NavigationBarBack.png" useCache:YES] selectImage:nil];
 }
 
+#pragma mark Handle Signal
+LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
+    [LKUserCenterViewController pushUserCenterWithUser:signal.object navigationController:self.navigationController];
+}
+
 - (void)handleNavigationBarButton:(LCUINavigationBarButtonType)type {
     
     if (type == LCUINavigationBarButtonTypeLeft) {
@@ -43,6 +48,7 @@ LC_PROPERTY(strong) NSArray *dataSource;
     }
 }
 
+#pragma mark - ***** tableView delegate & dataSource *****
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
     UIView *sectionHeader = UIView.view;
@@ -66,7 +72,7 @@ LC_PROPERTY(strong) NSArray *dataSource;
     increaseLabel.textColor = LC_RGB(157, 157, 157);
     increaseLabel.viewFrameHeight = increaseLabel.font.lineHeight;
     increaseLabel.viewFrameWidth = [increaseLabel.text sizeWithFont:LK_FONT(12) byHeight:increaseLabel.viewFrameHeight].width;
-    increaseLabel.viewFrameX = LC_DEVICE_WIDTH - increaseLabel.viewFrameWidth - 50;
+    increaseLabel.viewFrameX = LC_DEVICE_WIDTH - increaseLabel.viewFrameWidth - 30;
     increaseLabel.viewFrameY = (sectionHeader.viewFrameHeight - increaseLabel.viewFrameHeight) * 0.5;
     sectionHeader.ADD(increaseLabel);
     

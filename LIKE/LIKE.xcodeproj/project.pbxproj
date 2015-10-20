@@ -703,6 +703,8 @@
 		13AC85411BD4E72B002134E7 /* LKRank.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AC85401BD4E72B002134E7 /* LKRank.m */; settings = {ASSET_TAGS = (); }; };
 		13AC85441BD4EB97002134E7 /* Hot3@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13AC85421BD4EB97002134E7 /* Hot3@3x.png */; settings = {ASSET_TAGS = (); }; };
 		13AC85451BD4EB97002134E7 /* RankFirst@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13AC85431BD4EB97002134E7 /* RankFirst@3x.png */; settings = {ASSET_TAGS = (); }; };
+		13AC85481BD5EB24002134E7 /* LKHotTagsPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AC85471BD5EB24002134E7 /* LKHotTagsPage.m */; settings = {ASSET_TAGS = (); }; };
+		13AC854B1BD5ECBD002134E7 /* LKHotUserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AC854A1BD5ECBD002134E7 /* LKHotUserView.m */; settings = {ASSET_TAGS = (); }; };
 		13B5B4E61B15CB6800252A78 /* TalkIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13B5B4E31B15CB6800252A78 /* TalkIcon@3x.png */; };
 		13B5B4E81B15CB6800252A78 /* TalkTip@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13B5B4E51B15CB6800252A78 /* TalkTip@3x.png */; };
 		13B5B4EB1B15EE1300252A78 /* LKComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B5B4EA1B15EE1300252A78 /* LKComment.m */; };
@@ -2199,6 +2201,10 @@
 		13AC85401BD4E72B002134E7 /* LKRank.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKRank.m; sourceTree = "<group>"; };
 		13AC85421BD4EB97002134E7 /* Hot3@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hot3@3x.png"; sourceTree = "<group>"; };
 		13AC85431BD4EB97002134E7 /* RankFirst@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RankFirst@3x.png"; sourceTree = "<group>"; };
+		13AC85461BD5EB24002134E7 /* LKHotTagsPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKHotTagsPage.h; sourceTree = "<group>"; };
+		13AC85471BD5EB24002134E7 /* LKHotTagsPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKHotTagsPage.m; sourceTree = "<group>"; };
+		13AC85491BD5ECBD002134E7 /* LKHotUserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKHotUserView.h; sourceTree = "<group>"; };
+		13AC854A1BD5ECBD002134E7 /* LKHotUserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKHotUserView.m; sourceTree = "<group>"; };
 		13B5B4E31B15CB6800252A78 /* TalkIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TalkIcon@3x.png"; sourceTree = "<group>"; };
 		13B5B4E51B15CB6800252A78 /* TalkTip@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TalkTip@3x.png"; sourceTree = "<group>"; };
 		13B5B4E91B15EE1300252A78 /* LKComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKComment.h; sourceTree = "<group>"; };
@@ -2903,6 +2909,10 @@
 				134B0B791B5634E700A195BE /* LKHotTagsScrollView.m */,
 				134B0B5E1B5624A400A195BE /* LKSearchPlaceholderView.h */,
 				134B0B5F1B5624A400A195BE /* LKSearchPlaceholderView.m */,
+				13AC85461BD5EB24002134E7 /* LKHotTagsPage.h */,
+				13AC85471BD5EB24002134E7 /* LKHotTagsPage.m */,
+				13AC85491BD5ECBD002134E7 /* LKHotUserView.h */,
+				13AC854A1BD5ECBD002134E7 /* LKHotUserView.m */,
 				1371069E1B58E201008BCD66 /* LKSearchResultCollectionViewCell.h */,
 				1371069F1B58E201008BCD66 /* LKSearchResultCollectionViewCell.m */,
 				137106A11B58FBE7008BCD66 /* LKMoreContentButton.h */,
@@ -6011,6 +6021,7 @@
 				BC6CF7291BCE0BB400C11D06 /* LKPostThumbnailTableViewCell.m in Sources */,
 				138EDE5F1AD7B0A30020957C /* FMResultSet.m in Sources */,
 				BC6CF7251BCE0BB400C11D06 /* LKGuestFeedViewController.m in Sources */,
+				13AC854B1BD5ECBD002134E7 /* LKHotUserView.m in Sources */,
 				139055171B994A6D00DBF34A /* GPUImageLuminosityBlendFilter.m in Sources */,
 				13892C671B1DD2B50053303E /* MMMaterialDesignSpinner.m in Sources */,
 				1373C4341B846FDA00A6C55A /* MJExtensionConst.m in Sources */,
@@ -6457,6 +6468,7 @@
 				139054F01B994A6D00DBF34A /* GPUImageFilterGroup.m in Sources */,
 				138EDE3E1AD7B0A30020957C /* HTTPServer.m in Sources */,
 				138EDDFD1AD7B0A30020957C /* LCCMDInput.m in Sources */,
+				13AC85481BD5EB24002134E7 /* LKHotTagsPage.m in Sources */,
 				138EDBF61AD7B08A0020957C /* AppDelegate.m in Sources */,
 				13E1A4EF1AE65FE300E24C3C /* UIImage+FastttFilters.m in Sources */,
 				139055291B994A6D00DBF34A /* GPUImageOverlayBlendFilter.m in Sources */,

@@ -13,8 +13,9 @@
 #import "AppDelegate.h"
 #import "LKHotTagsSegmentView.h"
 #import "LKSearchHistory.h"
-#import "LKHotTagsTableView.h"
+#import "LKHotTagsPage.h"
 #import "LKTopSearchInterface.h"
+#import "LKHotTagsPage.h"
 
 @interface LKSearchView ()<UIScrollViewDelegate>
 
@@ -42,7 +43,7 @@ LC_PROPERTY(assign) NSInteger page;
 }
 
 - (void)refresh {
-    LKHotTagsTableView * pageView = self.scrollView.FIND(100 + self.page);
+    LKHotTagsPage * pageView = self.scrollView.FIND(100 + self.page);
     if (pageView) {
         [pageView setContentOffset:LC_POINT(0, 0) animated:YES];
     }
@@ -138,7 +139,7 @@ LC_PROPERTY(assign) NSInteger page;
     for (NSInteger i = 0; i<tags.count; i++) {
         
         LKTag * tag = tags[i];
-        LKHotTagsTableView * page = [[LKHotTagsTableView alloc] initWithFrame:CGRectZero tag:tag];
+        LKHotTagsPage * page = [[LKHotTagsPage alloc] initWithTag:tag];
         page.frame = CGRectMake(0, 0, self.scrollView.viewFrameWidth, self.scrollView.viewFrameHeight);
         page.viewFrameX = self.viewFrameWidth * i;
         page.tag = 100 + i;
@@ -156,7 +157,7 @@ LC_PROPERTY(assign) NSInteger page;
         return;
     }
     
-    LKHotTagsTableView * pageView = self.scrollView.FIND(100 + page);
+    LKHotTagsPage * pageView = self.scrollView.FIND(100 + page);
     if (pageView) {
         [pageView show];
     }

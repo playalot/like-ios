@@ -7,7 +7,6 @@
 //
 
 #import "LKHotUserView.h"
-#import "UIImageView+WebCache.h"
 
 @interface LKHotUserView ()
 
@@ -17,8 +16,10 @@ LC_PROPERTY(strong) UIScrollView * scrollView;
 
 @implementation LKHotUserView
 
-- (instancetype)initWithFrame:(CGRect)frame {
+-(instancetype) initWithFrame:(CGRect)frame
+{
     if (self = [super initWithFrame:frame]) {
+        
         self.scrollView = UIScrollView.view;
         self.scrollView.showsHorizontalScrollIndicator = NO;
         self.scrollView.showsVerticalScrollIndicator = NO;
@@ -33,6 +34,7 @@ LC_PROPERTY(strong) UIScrollView * scrollView;
         self.ADD(self.scrollView);
         
     }
+    
     return self;
 }
 
@@ -65,7 +67,7 @@ LC_PROPERTY(strong) UIScrollView * scrollView;
         item.viewFrameWidth = 35;
         item.viewFrameHeight = 35;
         item.cornerRadius = 17.5;
-        [item sd_setImageWithURL:[NSURL URLWithString:user.avatar] placeholderImage:nil];
+        item.url = user.avatar;
         item.backgroundColor = LKColor.backgroundColor;
         item.userInteractionEnabled = YES;
         item.tag = i;
@@ -81,7 +83,8 @@ LC_PROPERTY(strong) UIScrollView * scrollView;
     self.scrollView.contentSize = CGSizeMake(preview.viewRightX + padding, self.scrollView.viewFrameHeight);
 }
 
--(void) itemTapAction:(UITapGestureRecognizer *)tap {
+-(void) itemTapAction:(UITapGestureRecognizer *)tap
+{
     self.SEND(@"PushUserCenter").object = self.hotUsers[tap.view.tag];
 }
 

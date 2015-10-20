@@ -107,7 +107,9 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
 }
 
 - (void)tableView:(LCUITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    LKRank *rank = self.dataSource[indexPath.row];
+    [LKUserCenterViewController pushUserCenterWithUser:rank.user navigationController:self.navigationController];
 }
 
 - (void)loadData {

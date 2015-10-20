@@ -28,6 +28,8 @@ LC_IMP_SIGNAL(PushUserCenter);
 
 - (void)buildUI {
  
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+
     self.rankIcon = LCUIImageView.view;
     self.rankIcon.viewFrameX = 12;
     self.rankIcon.viewFrameY = 7;

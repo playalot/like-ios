@@ -36,6 +36,10 @@
             
             self.type = LKNotificationTypeComment;
             
+        } else if ([type isEqualToString:@"UPDATE"]) {
+            
+            self.type = LKNotificationTypeUpdate;
+            
         } else if ([type isEqualToString:@"OFFICIAL"]) {
             
             self.type = LKNotificationTypeOfficial;

@@ -179,7 +179,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
         [LKUserCenterViewController pushUserCenterWithUser:notification.user navigationController:self.navigationController];
     } else {
         if ((notification.type == LKNotificationTypeComment ||
-            notification.type == LKNotificationTypeReply) && [notification.tagID isKindOfClass:[NSNumber class]]) {
+            notification.type == LKNotificationTypeReply || notification.type == LKNotificationTypeUpdate) && [notification.tagID isKindOfClass:[NSNumber class]]) {
             notification.post.tagString = [NSString stringWithFormat:@"Comment-%@",notification.tagID];
             [self getTagDetailWithTagId:notification.tagID];
             return;

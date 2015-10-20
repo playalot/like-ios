@@ -151,7 +151,7 @@ LC_IMP_SIGNAL(PushUserCenter);
     self.moreButton.image = [UIImage imageNamed:@"more" useCache:YES];
     
     
-    if (notification.type == LKNotificationTypeNewTag || notification.type == LKNotificationTypeLikeTag || notification.type == LKNotificationTypeReply || notification.type == LKNotificationTypeComment) {
+    if (notification.type == LKNotificationTypeNewTag || notification.type == LKNotificationTypeLikeTag || notification.type == LKNotificationTypeReply || notification.type == LKNotificationTypeComment || notification.type == LKNotificationTypeUpdate) {
         
         self.tagListView = GBTagListView.view;
         self.tagListView.viewFrameX = self.headImageView.viewFrameX - 10;
@@ -237,6 +237,11 @@ LC_IMP_SIGNAL(PushUserCenter);
             return [NSString stringWithFormat:@" %@ ", LC_LO(@"评论了标签")];
             
             break;
+        case LKNotificationTypeUpdate:
+            
+            return [NSString stringWithFormat:@" %@ ", LC_LO(@"更新了一张新Like")];
+            
+            break;
         case LKNotificationTypeOfficial:
             
             return [NSString stringWithFormat:@" %@ ", LC_LO(@"给你发了一条消息")];
@@ -271,6 +276,11 @@ LC_IMP_SIGNAL(PushUserCenter);
             
             break;
         case LKNotificationTypeComment:
+            
+            return [UIImage imageNamed:@"NotificationCommentIcon.png" useCache:YES];
+            
+            break;
+        case LKNotificationTypeUpdate:
             
             return [UIImage imageNamed:@"NotificationCommentIcon.png" useCache:YES];
             

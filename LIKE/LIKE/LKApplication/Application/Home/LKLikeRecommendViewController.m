@@ -13,6 +13,7 @@
 #import "LKPostTableViewController.h"
 #import "LKLikeRecommendInterface.h"
 
+
 @interface LKLikeRecommendViewController () <LKPostTableViewControllerDelegate>
 
 LC_PROPERTY(copy) NSString * searchString;
@@ -21,7 +22,7 @@ LC_PROPERTY(strong) NSDictionary * info;
 LC_PROPERTY(strong) NSDictionary *tagInfo;
 LC_PROPERTY(strong) LCUIButton *subscribeBtn;
 LC_PROPERTY(getter=isSubscribed) BOOL subscribed;
-
+LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 LC_PROPERTY(strong) NSNumber *timestamp;
 
 @end
@@ -166,6 +167,11 @@ LC_PROPERTY(strong) NSNumber *timestamp;
             self.datasource = newDataSource;
         }
         
+        if (self.browsingViewController) {
+            self.browsingViewController.datasource = self.datasource;
+            [self.browsingViewController refresh];
+        }
+        
         [self.pullLoader endRefresh];
         [self reloadData];
         
@@ -294,13 +300,13 @@ LC_PROPERTY(strong) NSNumber *timestamp;
 }
 
 LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
-    LKPostTableViewController *browsingViewController = [[LKPostTableViewController alloc] init];
-    browsingViewController.delegate = self;
-    browsingViewController.datasource = self.datasource;
-    browsingViewController.currentIndex = [self.datasource indexOfObject:signal.object];
-    browsingViewController.title = self.title;
-    [browsingViewController watchForChangeOfDatasource:self dataSourceKey:@"datasource"];
-    [self.navigationController pushViewController:browsingViewController animated:YES];
+    self.browsingViewController = [[LKPostTableViewController alloc] init];
+    self.browsingViewController.delegate = self;
+    self.browsingViewController.datasource = self.datasource;
+    self.browsingViewController.currentIndex = [self.datasource indexOfObject:signal.object];
+    self.browsingViewController.title = self.title;
+//    [self.browsingViewController watchForChangeOfDatasource:self dataSourceKey:@"datasource"];
+    [self.navigationController pushViewController:self.browsingViewController animated:YES];
 }
 
 @end

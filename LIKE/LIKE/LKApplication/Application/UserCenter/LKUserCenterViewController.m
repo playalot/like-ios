@@ -44,6 +44,7 @@ LC_PROPERTY(assign) BOOL isLocalUser;
 LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
 
 LC_PROPERTY(strong) NSMutableArray *datasource;
+LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 
 @end
 
@@ -621,6 +622,10 @@ LC_PROPERTY(strong) NSMutableArray *datasource;
             // Reload data
             self.pullLoader.canLoadMore = [self.userCenterModel canLoadMoreWithType:type];
             self.datasource = [NSMutableArray arrayWithArray:[self.userCenterModel dataWithType:self.currentType]];
+            if (self.browsingViewController) {
+                self.browsingViewController.datasource = self.datasource;
+                [self.browsingViewController refresh];
+            }
             [self.tableView reloadData];
         }
     };
@@ -637,19 +642,20 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
         return;
     }
     self.datasource = [NSMutableArray arrayWithArray:[self.userCenterModel dataWithType:self.currentType]];
-    LKPostTableViewController *browsingViewController = [[LKPostTableViewController alloc] init];
-    browsingViewController.delegate = self;
-    browsingViewController.datasource = self.datasource;
+    
+    self.browsingViewController = [[LKPostTableViewController alloc] init];
+    self.browsingViewController.delegate = self;
+    self.browsingViewController.datasource = self.datasource;
     if (self.currentType == LKUserCenterModelTypePhotos) {
-        browsingViewController.title = self.user.name ? self.user.name : LC_LO(@"我的照片");
-        browsingViewController.cellHeadLineHidden = YES;
+        self.browsingViewController.title = self.user.name ? self.user.name : LC_LO(@"我的照片");
+        self.browsingViewController.cellHeadLineHidden = YES;
     } else {
-        browsingViewController.title = LC_LO(@"我的收藏");
-        browsingViewController.cellHeadLineHidden = NO;
+        self.browsingViewController.title = LC_LO(@"我的收藏");
+        self.browsingViewController.cellHeadLineHidden = NO;
     }
-    browsingViewController.currentIndex = [self.datasource indexOfObject:signal.object];
-    [browsingViewController watchForChangeOfDatasource:self dataSourceKey:@"datasource"];
-    [self.navigationController pushViewController:browsingViewController animated:YES];
+    self.browsingViewController.currentIndex = [self.datasource indexOfObject:signal.object];
+//    [self.browsingViewController watchForChangeOfDatasource:self dataSourceKey:@"datasource"];
+    [self.navigationController pushViewController:self.browsingViewController animated:YES];
 }
 
 #pragma mark - LKPostTableViewControllerDelegate

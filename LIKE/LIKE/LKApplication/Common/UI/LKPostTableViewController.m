@@ -37,10 +37,9 @@ LC_IMP_SIGNAL(UnfavouritePost);
 - (void)dealloc {
     [self cancelAllRequests];
     [self unobserveAllNotifications];
-    [self unwatchDatasource];
+//    [self unwatchDatasource];
 }
 
-// the post passed here should be the exact object in self.datasource
 - (void)updatePost:(LKPost *)post {
     if (self.datasource == nil || post == nil)
         return;
@@ -166,25 +165,23 @@ LC_IMP_SIGNAL(UnfavouritePost);
     }
 }
 
-- (void)unwatchDatasource {
-    if (self.observedDataSourceObject && self.observedDataSourceKeyPath) {
-        [self.observedDataSourceObject removeObserver:self forKeyPath:self.observedDataSourceKeyPath];
-        self.observedDataSourceObject = nil;
-        self.observedDataSourceKeyPath = nil;
-    }
-}
-
-- (void)watchForChangeOfDatasource:(id)observedDataSourceObject
-                     dataSourceKey:(NSString *)observedDataSourceKeyPath {
-    
-    self.observedDataSourceObject = observedDataSourceObject;
-    self.observedDataSourceKeyPath = observedDataSourceKeyPath;
-    
-    [observedDataSourceObject addObserver:self
-                               forKeyPath:observedDataSourceKeyPath
-                                  options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
-                                  context:(__bridge_retained void *)KVO_CONTEXT_DATASOURCE_CHANGED];
-}
+//- (void)unwatchDatasource {
+//    if (self.observedDataSourceObject && self.observedDataSourceKeyPath) {
+//        [self.observedDataSourceObject removeObserver:self forKeyPath:self.observedDataSourceKeyPath];
+//        self.observedDataSourceObject = nil;
+//        self.observedDataSourceKeyPath = nil;
+//    }
+//}
+//
+//- (void)watchForChangeOfDatasource:(id)observedDataSourceObject
+//                     dataSourceKey:(NSString *)observedDataSourceKeyPath {
+//    self.observedDataSourceObject = observedDataSourceObject;
+//    self.observedDataSourceKeyPath = observedDataSourceKeyPath;
+//    [observedDataSourceObject addObserver:self
+//                               forKeyPath:observedDataSourceKeyPath
+//                                  options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
+//                                  context:(__bridge_retained void *)KVO_CONTEXT_DATASOURCE_CHANGED];
+//}
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if(context == (__bridge_retained void *)KVO_CONTEXT_DATASOURCE_CHANGED){
@@ -200,6 +197,7 @@ LC_IMP_SIGNAL(UnfavouritePost);
 
 - (void)refresh {
     if (self.tableView) {
+        [self.pullLoader endRefresh];
         [self.tableView reloadData];
     }
 }
@@ -263,6 +261,10 @@ LC_IMP_SIGNAL(UnfavouritePost);
         }
         
     }];
+}
+
+- (void)setDatasource:(NSMutableArray *)datasource {
+    _datasource = datasource;
 }
 
 #pragma mark - ***** 数据源方法 *****
@@ -411,7 +413,7 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     if (updatedIndex < 0) {
         return;
     }
-    
+
     self.SEND(self.FavouritePost).object = [self.datasource objectAtIndex:updatedIndex];
 }
 
@@ -424,11 +426,9 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
             break;
         }
     }
-    
     if (updatedIndex < 0) {
         return;
     }
-    
     self.SEND(self.UnfavouritePost).object = [self.datasource objectAtIndex:updatedIndex];
 }
 

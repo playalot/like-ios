@@ -45,7 +45,6 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
 - (instancetype)init {
     if (self = [super init]) {
         self.notificationModel = [[LKNotificationModel alloc] init];
-//        [LKNotificationCount stopCheck];
     }
     return self;
 }
@@ -259,8 +258,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
     return self.tableView.backgroundColor;
 }
 
-- (CGRect)transitionDestinationImageViewFrame
-{
+- (CGRect)transitionDestinationImageViewFrame {
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
     LKNotificationCell *cell = (LKNotificationCell *)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
     CGRect frameInSuperview = [cell.preview convertRect:cell.preview.frame toView:self.tableView.superview];
@@ -270,9 +268,7 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
 }
 
 - (void)refresh {
-//    [self.tableView setContentOffset:LC_POINT(0, 0) animated:YES];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    
     LC_FAST_ANIMATIONS_F(0.25, ^{
         [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
     }, ^(BOOL finished){

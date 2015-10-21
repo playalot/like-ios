@@ -903,7 +903,6 @@
 		BC484ABC1BB0428F00F69D50 /* LKHotTagsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484ABB1BB0428F00F69D50 /* LKHotTagsTableView.m */; };
 		BC484AC51BB050C700F69D50 /* LKHotUserHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484AC41BB050C700F69D50 /* LKHotUserHeaderView.m */; };
 		BC484AC81BB0F6B400F69D50 /* LKHotTagsUsersView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC484AC71BB0F6B400F69D50 /* LKHotTagsUsersView.m */; };
-		BC5DBA2B1BD61B400054B671 /* LKBannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5DBA2A1BD61B400054B671 /* LKBannerViewController.m */; settings = {ASSET_TAGS = (); }; };
 		BC6960DE1BBFBEE5006245D7 /* LKAuthenticationAccessory.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6960DD1BBFBEE5006245D7 /* LKAuthenticationAccessory.m */; settings = {ASSET_TAGS = (); }; };
 		BC6ABE7D1BB263AC00B56E98 /* LKUserFavouritesInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6ABE7C1BB263AC00B56E98 /* LKUserFavouritesInterface.m */; };
 		BC6ABE801BB2787B00B56E98 /* LKUserPostsInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6ABE7F1BB2787B00B56E98 /* LKUserPostsInterface.m */; };
@@ -2595,8 +2594,6 @@
 		BC484AC41BB050C700F69D50 /* LKHotUserHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKHotUserHeaderView.m; sourceTree = "<group>"; };
 		BC484AC61BB0F6B400F69D50 /* LKHotTagsUsersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKHotTagsUsersView.h; sourceTree = "<group>"; };
 		BC484AC71BB0F6B400F69D50 /* LKHotTagsUsersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKHotTagsUsersView.m; sourceTree = "<group>"; };
-		BC5DBA291BD61B400054B671 /* LKBannerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKBannerViewController.h; sourceTree = "<group>"; };
-		BC5DBA2A1BD61B400054B671 /* LKBannerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKBannerViewController.m; sourceTree = "<group>"; };
 		BC6960DC1BBFBEE5006245D7 /* LKAuthenticationAccessory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKAuthenticationAccessory.h; path = Interface/LKAuthenticationAccessory.h; sourceTree = "<group>"; };
 		BC6960DD1BBFBEE5006245D7 /* LKAuthenticationAccessory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKAuthenticationAccessory.m; path = Interface/LKAuthenticationAccessory.m; sourceTree = "<group>"; };
 		BC6ABE7B1BB263AC00B56E98 /* LKUserFavouritesInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKUserFavouritesInterface.h; path = Interface/LKUserFavouritesInterface.h; sourceTree = "<group>"; };
@@ -2899,8 +2896,6 @@
 				BC12A65A1BA5A36D00B99CB5 /* LKSearchViewController.m */,
 				BC0C42521BA94A6100055BB1 /* LKSearchSuggestionView.h */,
 				BC0C42531BA94A6100055BB1 /* LKSearchSuggestionView.m */,
-				BC5DBA291BD61B400054B671 /* LKBannerViewController.h */,
-				BC5DBA2A1BD61B400054B671 /* LKBannerViewController.m */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -6531,7 +6526,6 @@
 				1373C4721B847A6000A6C55A /* UIView+WebCacheOperation.m in Sources */,
 				139055541B994A6D00DBF34A /* GPUImageThresholdedNonMaximumSuppressionFilter.m in Sources */,
 				BC12A5E71B9BD16100B99CB5 /* LKNetworkAgent.m in Sources */,
-				BC5DBA2B1BD61B400054B671 /* LKBannerViewController.m in Sources */,
 				139055011B994A6D00DBF34A /* GPUImageHistogramFilter.m in Sources */,
 				139055001B994A6D00DBF34A /* GPUImageHistogramEqualizationFilter.m in Sources */,
 				BC12A5E21B9BD16100B99CB5 /* LKBaseRequest.m in Sources */,

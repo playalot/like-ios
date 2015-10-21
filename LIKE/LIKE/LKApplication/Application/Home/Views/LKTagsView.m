@@ -109,7 +109,9 @@ LC_PROPERTY(strong) UIView * tipLine;
             }
         };
         
-        self.ADD(item);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.ADD(item);
+        });
         
         if (!lastItem) {
             item.frame = CGRectMake(leftMargin, topMargin, item.viewFrameWidth, item.viewFrameHeight);

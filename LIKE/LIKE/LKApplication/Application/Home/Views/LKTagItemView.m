@@ -189,7 +189,6 @@ LC_PROPERTY(assign) BOOL custom;
                 UIResponder *responder = self;
                 while (responder) {
                     responder = [responder nextResponder];
-                    NSLog(@"responder: %@", [responder class]);
                 }
                 
                 if (self.didRemoved) {
@@ -200,7 +199,6 @@ LC_PROPERTY(assign) BOOL custom;
     });
     
     if (self.maskView) {
-        
         return;
     }
     
@@ -360,8 +358,6 @@ LC_PROPERTY(assign) BOOL custom;
         self.viewFrameHeight = self.tagLabel.viewBottomY + topPadding;
     }
     
-    
-    //    self.cornerRadius = self.viewMidHeight;
     self.cornerRadius = 4;
     self.layer.masksToBounds = NO;
     self.custom = NO;

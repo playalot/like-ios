@@ -136,7 +136,7 @@ LC_PROPERTY(assign) NSInteger page;
 - (void)buildPages:(NSArray *)tags {
     self.scrollView.contentSize = CGSizeMake(self.scrollView.viewFrameWidth * tags.count, self.scrollView.viewFrameHeight);
     
-    BOOL exist = arc4random() % 2 == 0 ? YES : NO;
+    BOOL exist = NO;// arc4random() % 2 == 0 ? YES : NO;
     
     for (NSInteger i = 0; i<tags.count; i++) {
         

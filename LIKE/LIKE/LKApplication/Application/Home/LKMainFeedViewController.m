@@ -17,6 +17,12 @@ LC_PROPERTY(weak) LCUIViewController *currentViewController;
 
 @implementation LKMainFeedViewController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self setNavigationBarHidden:NO animated:NO];
+}
+
 - (void)buildUI {    
     [self buildNavigationBar];
     [self buildViewControllers];

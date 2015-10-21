@@ -16,6 +16,7 @@
 #import "LKPostTableViewController.h"
 #import "LKTopSearchInterface.h"
 #import "LKUserCenterViewController.h"
+#import "LKLoginViewController.h"
 #import "LKPostDetailViewController.h"
 
 @interface LKSearchViewController () <LKSearchBarDelegate, LKPostDetailViewControllerDelegate>
@@ -252,6 +253,10 @@ LC_PROPERTY(strong) LKSearchView *searchView;
 
 - (void)refresh {
     [self.searchView refresh];
+}
+
+LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
+    [LKUserCenterViewController pushUserCenterWithUser:signal.object navigationController:self.navigationController];
 }
 
 LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {

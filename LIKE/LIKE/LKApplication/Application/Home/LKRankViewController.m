@@ -9,6 +9,7 @@
 #import "LKRankViewController.h"
 #import "LKRankInterface.h"
 #import "LKRankCell.h"
+#import "LKRankMiniCell.h"
 
 @interface LKRankViewController ()
 
@@ -59,20 +60,27 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
     LCUILabel *infoLabel = LCUILabel.view;
     infoLabel.font = LK_FONT(12);
     infoLabel.text = LC_LO(@"今日最没事干的liker");
-    infoLabel.textColor = LC_RGB(157, 157, 157);
+    infoLabel.textColor = LC_RGB(127, 127, 127);
     infoLabel.viewFrameHeight = infoLabel.font.lineHeight;
     infoLabel.viewFrameWidth = [infoLabel.text sizeWithFont:LK_FONT(12) byHeight:infoLabel.viewFrameHeight].width;
-    infoLabel.viewFrameX = 20;
+    infoLabel.viewFrameX = 10;
     infoLabel.viewFrameY = (sectionHeader.viewFrameHeight - infoLabel.viewFrameHeight) * 0.5;
     sectionHeader.ADD(infoLabel);
+    
+    LCUIImageView *lineView = [[LCUIImageView alloc] initWithImage:[UIImage imageNamed:@"SeparateLine.png"]];
+    lineView.viewFrameX = LC_DEVICE_WIDTH * 0.5 + 1;
+    lineView.viewFrameY = 8;
+    lineView.viewFrameWidth = 1;
+    lineView.viewFrameHeight = 22;
+    sectionHeader.ADD(lineView);
     
     LCUILabel *increaseLabel = LCUILabel.view;
     increaseLabel.font = LK_FONT(12);
     increaseLabel.text = LC_LO(@"今日新增like");
-    increaseLabel.textColor = LC_RGB(157, 157, 157);
+    increaseLabel.textColor = LC_RGB(127, 127, 127);
     increaseLabel.viewFrameHeight = increaseLabel.font.lineHeight;
     increaseLabel.viewFrameWidth = [increaseLabel.text sizeWithFont:LK_FONT(12) byHeight:increaseLabel.viewFrameHeight].width;
-    increaseLabel.viewFrameX = LC_DEVICE_WIDTH - increaseLabel.viewFrameWidth - 30;
+    increaseLabel.viewFrameX = LC_DEVICE_WIDTH - increaseLabel.viewFrameWidth - 15;
     increaseLabel.viewFrameY = (sectionHeader.viewFrameHeight - increaseLabel.viewFrameHeight) * 0.5;
     sectionHeader.ADD(increaseLabel);
     
@@ -91,9 +99,15 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
 
 - (LCUITableViewCell *)tableView:(LCUITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    LKRankCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Rank" andClass:[LKRankCell class]];
-    cell.rank = self.dataSource[indexPath.row];
-    return cell;
+    if (UI_IS_IPHONE6PLUS) {
+        LKRankCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"Rank" andClass:[LKRankCell class]];
+        cell.rank = self.dataSource[indexPath.row];
+        return cell;
+    } else {
+        LKRankMiniCell *cell = [tableView autoCreateDequeueReusableCellWithIdentifier:@"RankMini" andClass:[LKRankMiniCell class]];
+        cell.rank = self.dataSource[indexPath.row];
+        return cell;
+    }
 }
 
 - (CGFloat)tableView:(LCUITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -107,7 +121,9 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
 }
 
 - (void)tableView:(LCUITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    LKRank *rank = self.dataSource[indexPath.row];
+    [LKUserCenterViewController pushUserCenterWithUser:rank.user navigationController:self.navigationController];
 }
 
 - (void)loadData {

@@ -53,10 +53,6 @@ LC_PROPERTY(strong) LCUIImageView *noFollowingView;
 @implementation LKFollowingFeedViewController
 
 - (void)calculateHeightList {
-//    self.heightList = [NSMutableArray array];
-//    for (LKPost *post in self.datasource) {
-//        [self.heightList addObject:[NSNumber numberWithFloat:[LKHomeTableViewCell height:post]]];
-//    }
 }
 
 - (void)viewDidLoad {
@@ -155,7 +151,8 @@ LC_PROPERTY(strong) LCUIImageView *noFollowingView;
     noFollowingView.image = [UIImage imageNamed:@"NoFollowing.png" useCache:YES];
     noFollowingView.hidden = YES;
     self.noFollowingView = noFollowingView;
-    self.tableView.ADD(noFollowingView);
+    self.tableView.ADD(self.noFollowingView);
+    self.noFollowingView.hidden = YES;
 }
 
 - (BOOL)checkTag:(NSString *)tag onTags:(NSArray *)onTags {
@@ -239,8 +236,6 @@ LC_PROPERTY(strong) LCUIImageView *noFollowingView;
         
         NSArray *posts = followingInterface.posts;
         
-        self.noFollowingView.hidden = posts.count;
-        
         if (diretion == LCUIPullLoaderDiretionTop) {
             
             if (self.isCellPrecomuted) {
@@ -258,6 +253,13 @@ LC_PROPERTY(strong) LCUIImageView *noFollowingView;
             
             [self.datasource addObjectsFromArray:posts];
         }
+        
+        if (self.datasource.count > 0) {
+            self.noFollowingView.hidden = YES;
+        } else {
+            self.noFollowingView.hidden = NO;
+        }
+        
         
         NSMutableArray *prefetchs = nil;
         for (LKPost *post in self.datasource) {

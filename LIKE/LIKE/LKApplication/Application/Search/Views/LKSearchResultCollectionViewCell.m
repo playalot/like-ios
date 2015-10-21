@@ -111,7 +111,7 @@ LC_IMP_SIGNAL(PushPostDetail);
     
     self.head.image = nil;
 //    self.head.url = post.user.avatar;
-    [self.head sd_setImageWithURL:[NSURL URLWithString:post.user.avatar] placeholderImage:nil];
+    [self.head sd_setImageWithURL:[NSURL URLWithString:post.user.avatar] placeholderImage:nil options:SDWebImageRetryFailed];
     self.title.text = LC_NSSTRING_FORMAT(@"%@", post.user.name);
     self.likes.text = LC_NSSTRING_FORMAT(@"%@ likes", post.user.likes);
     

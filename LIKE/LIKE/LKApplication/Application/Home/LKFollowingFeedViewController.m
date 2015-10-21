@@ -52,6 +52,12 @@ LC_PROPERTY(strong) LCUIImageView *noFollowingView;
 
 @implementation LKFollowingFeedViewController
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [self.inputView resignFirstResponder];
+}
+
 - (void)calculateHeightList {
 //    self.heightList = [NSMutableArray array];
 //    for (LKPost *post in self.datasource) {

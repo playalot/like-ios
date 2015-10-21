@@ -67,6 +67,12 @@ LC_PROPERTY(weak) id delegate;
 
 @implementation LKHomeFeedViewController
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [self.inputView resignFirstResponder];
+}
+
 - (void)notificationAction {
     
 }

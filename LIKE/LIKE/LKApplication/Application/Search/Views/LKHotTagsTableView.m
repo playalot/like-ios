@@ -25,6 +25,7 @@ LC_PROPERTY(assign) BOOL loading;
 LC_PROPERTY(assign) NSNumber *next;
 LC_PROPERTY(assign) BOOL browsingPushing;
 LC_PROPERTY(strong) LCUIPullLoader *pullLoader;
+LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 
 @end
 
@@ -85,6 +86,11 @@ LC_PROPERTY(strong) LCUIPullLoader *pullLoader;
         self.loading = NO;
         self.loadFinished = YES;
         [self.pullLoader endRefresh];
+        
+        if (self.browsingViewController) {
+            self.browsingViewController.datasource = self.posts;
+            [self.browsingViewController refresh];
+        }
         
     } failure:^(LCBaseRequest *request) {
         
@@ -198,13 +204,13 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     }
     LKSearchViewController *searchViewController = (LKSearchViewController *)currentResponder;
     
-    LKPostTableViewController *browsingViewController = [[LKPostTableViewController alloc] init];
-    browsingViewController.delegate = self;
-    browsingViewController.datasource = self.posts;
-    browsingViewController.currentIndex = [self.posts indexOfObject:signal.object];
-    browsingViewController.title = self.tagValue.tag;
-    [browsingViewController watchForChangeOfDatasource:self dataSourceKey:@"posts"];
-    [searchViewController.navigationController pushViewController:browsingViewController animated:YES];
+    self.browsingViewController = [[LKPostTableViewController alloc] init];
+    self.browsingViewController.delegate = self;
+    self.browsingViewController.datasource = self.posts;
+    self.browsingViewController.currentIndex = [self.posts indexOfObject:signal.object];
+    self.browsingViewController.title = self.tagValue.tag;
+//    [self.browsingViewController watchForChangeOfDatasource:self dataSourceKey:@"posts"];
+    [searchViewController.navigationController pushViewController:self.browsingViewController animated:YES];
 }
 
 LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {

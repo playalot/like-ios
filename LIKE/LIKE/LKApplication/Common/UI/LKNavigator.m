@@ -199,6 +199,7 @@ LC_PROPERTY(strong) LKGateViewController *gateViewController;
     } else {
         [LKNotificationCount startCheck];
     }
+    
     return YES;
 }
 

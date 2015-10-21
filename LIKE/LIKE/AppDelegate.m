@@ -207,7 +207,6 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     [APService setupWithOption:launchOptions];
     
     if (LKLocalUser.singleton.isLogin) {
-        
         [APService setTags:nil alias:[NSString stringWithFormat:@"%@", LKLocalUser.singleton.user.id] callbackSelector:@selector(tagsAliasCallback:tags:alias:) target:self];
     }
     
@@ -401,13 +400,12 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
  */
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     [super application:application didReceiveRemoteNotification:userInfo];
+    
     // 判断是否是活动状态
     if ( application.applicationState == UIApplicationStateActive ){
-        // app was already in the foreground
     }else{
         // 判断本地用户是否是登录状态
         if (LKLocalUser.singleton.isLogin) {
-//            [self.home performSelector:@selector(notificationAction) withObject:nil afterDelay:0.5];
         }
     }
 }
@@ -420,6 +418,11 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     // Bind badge.
     NSInteger badgeCount = [userInfo[@"aps"][@"badge"] integerValue];
     [[LKNavigator navigator] bindBadgeForItemIndex:2 badgeCount:badgeCount];
+    
+    NSDictionary *alertInfo = userInfo[@"aps"][@"alert"];
+    if (alertInfo) {
+        
+    }
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {

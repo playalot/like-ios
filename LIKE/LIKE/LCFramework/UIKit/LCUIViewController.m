@@ -44,12 +44,9 @@
     [self unobserveAllNotifications];
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-
     self.view.backgroundColor = [UIColor whiteColor];
-    
     [self buildUI];
 }
 
@@ -57,8 +54,11 @@
  *  iOS6以后不再使用
  */
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation{
-    
     return NO;
+}
+
+- (BOOL)shouldAutorotate {
+    return YES;
 }
 
 -(void) buildUI

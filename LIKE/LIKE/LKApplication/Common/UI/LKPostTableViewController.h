@@ -23,8 +23,8 @@ LC_PROPERTY(assign) BOOL cellHeadLineHidden;
 LC_ST_SIGNAL(FavouritePost);
 LC_ST_SIGNAL(UnfavouritePost);
 
-- (void)watchForChangeOfDatasource:(id)observedDataSourceObject
-                     dataSourceKey:(NSString *)observedDataSourceKeyPath;
+//- (void)watchForChangeOfDatasource:(id)observedDataSourceObject
+//                     dataSourceKey:(NSString *)observedDataSourceKeyPath;
 
 - (void)refresh;
 

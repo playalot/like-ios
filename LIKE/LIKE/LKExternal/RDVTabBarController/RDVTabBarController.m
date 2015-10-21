@@ -242,8 +242,8 @@
     
     if ([self selectedViewController] == [self viewControllers][index]) {
         if ([[self selectedViewController] isKindOfClass:[UINavigationController class]]) {
-            UINavigationController *selectedController = (UINavigationController *)[self selectedViewController];
             
+            UINavigationController *selectedController = (UINavigationController *)[self selectedViewController];
             if ([selectedController topViewController] != [selectedController viewControllers][0]) {
                 [selectedController popToRootViewControllerAnimated:YES];
             }

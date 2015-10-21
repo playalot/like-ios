@@ -16,6 +16,8 @@
 #import "LKPostTableViewController.h"
 #import "LKTopSearchInterface.h"
 #import "LKUserCenterViewController.h"
+#import "LKLoginViewController.h"
+#import "LKPostDetailViewController.h"
 
 @interface LKSearchViewController () <LKSearchBarDelegate>
 
@@ -251,6 +253,31 @@ LC_PROPERTY(strong) LKSearchView *searchView;
 
 - (void)refresh {
     [self.searchView refresh];
+}
+
+#pragma mark Handle Signal
+
+LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
+    
+    [LKUserCenterViewController pushUserCenterWithUser:signal.object navigationController:self.navigationController];
+}
+
+LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
+    
+    if ([LKLoginViewController needLoginOnViewController:nil]) {
+        return;
+    }
+    
+    // Detail
+    LKPostDetailViewController *detail = [[LKPostDetailViewController alloc] initWithPost:signal.object];
+    [self.navigationController pushViewController:detail animated:YES];
+    
+    LKPost * post = signal.object;
+    if ([post.tagString rangeOfString:@"Comment-"].length) {
+        LKTag * tag = [[LKTag alloc] init];
+        tag.id = @([post.tagString stringByReplacingOccurrencesOfString:@"Comment-" withString:@""].integerValue);
+        [detail performSelector:@selector(openCommentsView:) withObject:tag afterDelay:0.35];
+    }
 }
 
 @end

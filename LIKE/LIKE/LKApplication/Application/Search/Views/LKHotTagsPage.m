@@ -23,15 +23,12 @@
 @interface LKHotTagsPage () <UICollectionViewDataSource, UICollectionViewDelegate, CHTCollectionViewDelegateWaterfallLayout>
 
 LC_PROPERTY(strong) LKTag * tagValue;
-
 LC_PROPERTY(assign) BOOL loadFinished;
 LC_PROPERTY(assign) BOOL loading;
-
-LC_PROPERTY(strong) NSArray * posts;
-
+LC_PROPERTY(strong) NSMutableArray * posts;
 LC_PROPERTY(strong) CHTCollectionViewWaterfallLayout * layout;
-
-LC_PROPERTY(strong) LKHotUserView * hotUsersView;
+//LC_PROPERTY(strong) LKHotUserView * hotUsersView;
+LC_PROPERTY(strong) LKMoreContentButton *moreContentBtn;
 
 @end
 
@@ -49,8 +46,8 @@ LC_IMP_SIGNAL(PushPostDetail);
     CHTCollectionViewWaterfallLayout * layout = [[CHTCollectionViewWaterfallLayout alloc] init];
     
     layout.sectionInset = UIEdgeInsetsMake(0, 5, 5, 5);
-    layout.headerHeight = 92;
-    layout.footerHeight = 70;
+//    layout.headerHeight = 92;
+    layout.footerHeight = 49;
     layout.minimumColumnSpacing = 5;
     layout.minimumInteritemSpacing = 5;
     layout.columnCount = 2;
@@ -85,28 +82,30 @@ LC_IMP_SIGNAL(PushPostDetail);
         return;
     }
     
-    // request
+    [self sendNetWorkRequestWithTimestamp:nil];
+}
+
+- (void)sendNetWorkRequestWithTimestamp:(NSNumber *)timestamp {
     
-    LKHttpRequestInterface * interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"explore/tag/%@",self.tagValue.tag.URLCODE()]].AUTO_SESSION();
+    // request
+    //
+    LKHttpRequestInterface *interface;
+    
+    if (timestamp) {
+        
+        interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"explore/tag/%@?ts=%@",self.tagValue.tag.URLCODE(), timestamp]].AUTO_SESSION();
+    } else {
+        
+        interface = [LKHttpRequestInterface interfaceType:[NSString stringWithFormat:@"explore/tag/%@",self.tagValue.tag.URLCODE()]].AUTO_SESSION();
+    }
     
     @weakly(self);
     
     [self request:interface complete:^(LKHttpRequestResult *result) {
-       
+        
         @normally(self);
         
         if (result.state == LKHttpRequestStateFinished) {
-            
-            NSArray * usersDic = result.json[@"data"][@"hot_users"];
-            
-            NSMutableArray * users = [NSMutableArray array];
-            
-            for (NSDictionary * user in usersDic) {
-                
-                [users addObject:[LKUser objectFromDictionary:user]];
-            }
-            
-            self.hotUsersView.hotUsers = users;
             
             NSArray * postsDic = result.json[@"data"][@"posts"];
             
@@ -115,9 +114,8 @@ LC_IMP_SIGNAL(PushPostDetail);
             for (NSDictionary * post in postsDic) {
                 
                 [posts addObject:[LKPost objectFromDictionary:post]];
+                [self.posts addObject:[LKPost objectFromDictionary:post]];
             }
-            
-            self.posts = posts;
             
             [self reloadData];
             
@@ -134,10 +132,8 @@ LC_IMP_SIGNAL(PushPostDetail);
             self.loading = NO;
             self.loadFinished = NO;
         }
-        
     }];
 }
-
 
 #pragma mark -
 
@@ -168,11 +164,13 @@ LC_IMP_SIGNAL(PushPostDetail);
         
         reusableView = [collectionView dequeueReusableSupplementaryViewOfKind:kind  withReuseIdentifier:HEADER_IDENTIFIER forIndexPath:indexPath];
         
-        self.hotUsersView = (LKHotUserView *)reusableView;
+//        self.hotUsersView = (LKHotUserView *)reusableView;
     }
     else if ([kind isEqualToString:CHTCollectionElementKindSectionFooter]){
         
         reusableView = [collectionView dequeueReusableSupplementaryViewOfKind:kind  withReuseIdentifier:FOOTER_IDENTIFIER forIndexPath:indexPath];
+        
+        self.moreContentBtn = (LKMoreContentButton *)reusableView;
         
         [((LKMoreContentButton *)reusableView) setTagValue:self.tagValue];
     }
@@ -189,6 +187,37 @@ LC_IMP_SIGNAL(PushPostDetail);
 -(void) collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     self.SEND(self.PushPostDetail).object = self.dataSource[indexPath.row];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    if (self.moreContentBtn == nil || self.loading) {
+        return;
+    }
+    
+    if ((scrollView.contentOffset.y + scrollView.bounds.size.height) > self.contentSize.height) {
+        
+        // 如果正在刷新数据，不需要再次刷新
+        self.loading = YES;
+        
+        // 释放掉 footerView
+        self.moreContentBtn = nil;
+        
+        LKPost *post = [self.posts lastObject];
+        // 发送网络请求
+        [self sendNetWorkRequestWithTimestamp:post.timestamp];
+        
+        self.loading = NO;
+    }
+}
+
+#pragma mark - ***** 懒加载 *****
+- (NSMutableArray *)posts {
+    
+    if (_posts == nil) {
+        _posts = [NSMutableArray array];
+    }
+    return _posts;
 }
 
 @end

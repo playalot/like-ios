@@ -701,10 +701,16 @@
 		13AC853A1BD4E0C7002134E7 /* LKRankInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AC85391BD4E0C7002134E7 /* LKRankInterface.m */; settings = {ASSET_TAGS = (); }; };
 		13AC853E1BD4E399002134E7 /* RankIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13AC853D1BD4E399002134E7 /* RankIcon@3x.png */; settings = {ASSET_TAGS = (); }; };
 		13AC85411BD4E72B002134E7 /* LKRank.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AC85401BD4E72B002134E7 /* LKRank.m */; settings = {ASSET_TAGS = (); }; };
-		13AC85441BD4EB97002134E7 /* Hot3@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13AC85421BD4EB97002134E7 /* Hot3@3x.png */; settings = {ASSET_TAGS = (); }; };
-		13AC85451BD4EB97002134E7 /* RankFirst@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13AC85431BD4EB97002134E7 /* RankFirst@3x.png */; settings = {ASSET_TAGS = (); }; };
 		13AC85481BD5EB24002134E7 /* LKHotTagsPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AC85471BD5EB24002134E7 /* LKHotTagsPage.m */; settings = {ASSET_TAGS = (); }; };
 		13AC854B1BD5ECBD002134E7 /* LKHotUserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AC854A1BD5ECBD002134E7 /* LKHotUserView.m */; settings = {ASSET_TAGS = (); }; };
+		13AC85501BD636E9002134E7 /* RankFirst@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13AC854D1BD636E9002134E7 /* RankFirst@3x.png */; settings = {ASSET_TAGS = (); }; };
+		13AC85511BD636E9002134E7 /* RankSecond@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13AC854E1BD636E9002134E7 /* RankSecond@3x.png */; settings = {ASSET_TAGS = (); }; };
+		13AC85521BD636E9002134E7 /* RankThird@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13AC854F1BD636E9002134E7 /* RankThird@3x.png */; settings = {ASSET_TAGS = (); }; };
+		13AC85561BD636F6002134E7 /* RankFirst_mini@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13AC85531BD636F6002134E7 /* RankFirst_mini@3x.png */; settings = {ASSET_TAGS = (); }; };
+		13AC85571BD636F6002134E7 /* RankSecond_mini@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13AC85541BD636F6002134E7 /* RankSecond_mini@3x.png */; settings = {ASSET_TAGS = (); }; };
+		13AC85581BD636F6002134E7 /* RankThird_mini@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13AC85551BD636F6002134E7 /* RankThird_mini@3x.png */; settings = {ASSET_TAGS = (); }; };
+		13AC855B1BD6420E002134E7 /* LKRankMiniCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AC855A1BD6420E002134E7 /* LKRankMiniCell.m */; settings = {ASSET_TAGS = (); }; };
+		13AC855D1BD65C7D002134E7 /* Hot3@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13AC855C1BD65C7D002134E7 /* Hot3@3x.png */; settings = {ASSET_TAGS = (); }; };
 		13B5B4E61B15CB6800252A78 /* TalkIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13B5B4E31B15CB6800252A78 /* TalkIcon@3x.png */; };
 		13B5B4E81B15CB6800252A78 /* TalkTip@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13B5B4E51B15CB6800252A78 /* TalkTip@3x.png */; };
 		13B5B4EB1B15EE1300252A78 /* LKComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B5B4EA1B15EE1300252A78 /* LKComment.m */; };
@@ -2196,15 +2202,22 @@
 		13AC85361BD4DD33002134E7 /* LKRankCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKRankCell.m; sourceTree = "<group>"; };
 		13AC85381BD4E0C7002134E7 /* LKRankInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKRankInterface.h; sourceTree = "<group>"; };
 		13AC85391BD4E0C7002134E7 /* LKRankInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKRankInterface.m; sourceTree = "<group>"; };
-		13AC853D1BD4E399002134E7 /* RankIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RankIcon@3x.png"; sourceTree = "<group>"; };
+		13AC853D1BD4E399002134E7 /* RankIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "RankIcon@3x.png"; path = "../Home/RankIcon@3x.png"; sourceTree = "<group>"; };
 		13AC853F1BD4E72B002134E7 /* LKRank.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKRank.h; sourceTree = "<group>"; };
 		13AC85401BD4E72B002134E7 /* LKRank.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKRank.m; sourceTree = "<group>"; };
-		13AC85421BD4EB97002134E7 /* Hot3@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hot3@3x.png"; sourceTree = "<group>"; };
-		13AC85431BD4EB97002134E7 /* RankFirst@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RankFirst@3x.png"; sourceTree = "<group>"; };
 		13AC85461BD5EB24002134E7 /* LKHotTagsPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKHotTagsPage.h; sourceTree = "<group>"; };
 		13AC85471BD5EB24002134E7 /* LKHotTagsPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKHotTagsPage.m; sourceTree = "<group>"; };
 		13AC85491BD5ECBD002134E7 /* LKHotUserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKHotUserView.h; sourceTree = "<group>"; };
 		13AC854A1BD5ECBD002134E7 /* LKHotUserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKHotUserView.m; sourceTree = "<group>"; };
+		13AC854D1BD636E9002134E7 /* RankFirst@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RankFirst@3x.png"; sourceTree = "<group>"; };
+		13AC854E1BD636E9002134E7 /* RankSecond@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RankSecond@3x.png"; sourceTree = "<group>"; };
+		13AC854F1BD636E9002134E7 /* RankThird@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RankThird@3x.png"; sourceTree = "<group>"; };
+		13AC85531BD636F6002134E7 /* RankFirst_mini@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RankFirst_mini@3x.png"; sourceTree = "<group>"; };
+		13AC85541BD636F6002134E7 /* RankSecond_mini@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RankSecond_mini@3x.png"; sourceTree = "<group>"; };
+		13AC85551BD636F6002134E7 /* RankThird_mini@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RankThird_mini@3x.png"; sourceTree = "<group>"; };
+		13AC85591BD6420E002134E7 /* LKRankMiniCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKRankMiniCell.h; sourceTree = "<group>"; };
+		13AC855A1BD6420E002134E7 /* LKRankMiniCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKRankMiniCell.m; sourceTree = "<group>"; };
+		13AC855C1BD65C7D002134E7 /* Hot3@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hot3@3x.png"; sourceTree = "<group>"; };
 		13B5B4E31B15CB6800252A78 /* TalkIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TalkIcon@3x.png"; sourceTree = "<group>"; };
 		13B5B4E51B15CB6800252A78 /* TalkTip@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TalkTip@3x.png"; sourceTree = "<group>"; };
 		13B5B4E91B15EE1300252A78 /* LKComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKComment.h; sourceTree = "<group>"; };
@@ -4075,6 +4088,7 @@
 		138EDECA1AD7B65B0020957C /* LKResource */ = {
 			isa = PBXGroup;
 			children = (
+				13AC854C1BD636C2002134E7 /* Rank */,
 				13877D0B1BBCE47B00521D2D /* Interest */,
 				13B9A20F1BB92531007D2893 /* Search */,
 				1304ABD01BABC8BF00C9EA2D /* Notification */,
@@ -4851,6 +4865,8 @@
 				13877D1C1BBCE5EC00521D2D /* LKChooseInterestView.m */,
 				13AC85351BD4DD33002134E7 /* LKRankCell.h */,
 				13AC85361BD4DD33002134E7 /* LKRankCell.m */,
+				13AC85591BD6420E002134E7 /* LKRankMiniCell.h */,
+				13AC855A1BD6420E002134E7 /* LKRankMiniCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -4888,6 +4904,21 @@
 			children = (
 			);
 			name = "Views(Link)";
+			sourceTree = "<group>";
+		};
+		13AC854C1BD636C2002134E7 /* Rank */ = {
+			isa = PBXGroup;
+			children = (
+				13AC853D1BD4E399002134E7 /* RankIcon@3x.png */,
+				13AC855C1BD65C7D002134E7 /* Hot3@3x.png */,
+				13AC854D1BD636E9002134E7 /* RankFirst@3x.png */,
+				13AC854E1BD636E9002134E7 /* RankSecond@3x.png */,
+				13AC854F1BD636E9002134E7 /* RankThird@3x.png */,
+				13AC85531BD636F6002134E7 /* RankFirst_mini@3x.png */,
+				13AC85541BD636F6002134E7 /* RankSecond_mini@3x.png */,
+				13AC85551BD636F6002134E7 /* RankThird_mini@3x.png */,
+			);
+			path = Rank;
 			sourceTree = "<group>";
 		};
 		13B6C19A1AE8FFBE008912C0 /* Welcome */ = {
@@ -5424,9 +5455,6 @@
 		13FCC0911ADF5E930008DB41 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				13AC85421BD4EB97002134E7 /* Hot3@3x.png */,
-				13AC85431BD4EB97002134E7 /* RankFirst@3x.png */,
-				13AC853D1BD4E399002134E7 /* RankIcon@3x.png */,
 				134F62761BCDF441007D5187 /* HomeLikeIcon@3x.png */,
 				133972FC1BC9459C00D5977F /* AddNewTag@3x.png */,
 				133972F61BC944FD00D5977F /* CommonInterest@3x.png */,
@@ -5732,6 +5760,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13AC85561BD636F6002134E7 /* RankFirst_mini@3x.png in Resources */,
 				13FCC0851ADE3DAB0008DB41 /* PullLoaderSmallArrow@2x.png in Resources */,
 				134F62621BCCE8ED007D5187 /* ironMan@3x.png in Resources */,
 				138EDEE61AD7D1020020957C /* TabBarLike@3x.png in Resources */,
@@ -5812,6 +5841,7 @@
 				13E1A2D21AE644C200E24C3C /* FocusGray@3x.png in Resources */,
 				134F62171BCB53DD007D5187 /* CameraPhotos@3x.png in Resources */,
 				13101D351B1332DE00FBE516 /* LikeIconSmall@3x.png in Resources */,
+				13AC85511BD636E9002134E7 /* RankSecond@3x.png in Resources */,
 				130CF57D1BAFD628002F4189 /* TalkLine@3x.png in Resources */,
 				138EDE0F1AD7B0A30020957C /* LCGLBubbleEffect.fsh in Resources */,
 				13925A921B1477D2004D0656 /* NavBarIconSearch_white@2x.png in Resources */,
@@ -5825,6 +5855,7 @@
 				134F62371BCB8513007D5187 /* FacebookLink@3x.png in Resources */,
 				13DEEC141AE789E6005E01A6 /* LC_navbar_bg@2x.png in Resources */,
 				13C363CE1BB112F7004CE0FA /* NotificationOfficalMessage@3x.png in Resources */,
+				13AC855D1BD65C7D002134E7 /* Hot3@3x.png in Resources */,
 				138C84771B6B650C00C2AC62 /* LittleFollowing@3x.png in Resources */,
 				134F62631BCCE8ED007D5187 /* lacquer@3x.png in Resources */,
 				134F625D1BCCE8ED007D5187 /* delicious@3x.png in Resources */,
@@ -5840,6 +5871,7 @@
 				13AC84F51BD10EC8002134E7 /* get_in_like@3x.png in Resources */,
 				13D9BF2D1AEB997E0020C94F /* Vivid.png in Resources */,
 				1388B6B31B34272A006ACA44 /* CameraRollIcon@3x.png in Resources */,
+				13AC85571BD636F6002134E7 /* RankSecond_mini@3x.png in Resources */,
 				1339730D1BC9474300D5977F /* WeChatFriendIcon@3x.png in Resources */,
 				138EDE431AD7B0A30020957C /* web.bundle in Resources */,
 				134F622C1BCB57F3007D5187 /* DeleteCache@3x.png in Resources */,
@@ -5848,9 +5880,11 @@
 				13F584D01BCF84BE0004F144 /* Midway.png in Resources */,
 				13F584C21BCE3F630004F144 /* RecommendUser@3x.png in Resources */,
 				133973191BC9491000D5977F /* NotificationTagIcon@3x.png in Resources */,
+				13AC85521BD636E9002134E7 /* RankThird@3x.png in Resources */,
 				1359F4A41B6A24B800A0ABE9 /* Gta-walking@3x.png in Resources */,
 				13E27EF51AF8B7D000C17362 /* cellLine@2x.png in Resources */,
 				133973011BC9465600D5977F /* NavigationBarBackShadow@3x.png in Resources */,
+				13AC85581BD636F6002134E7 /* RankThird_mini@3x.png in Resources */,
 				130CF59E1BB00CD8002F4189 /* segment_follow@3x.png in Resources */,
 				134765361AE2564D0055D099 /* PostNavigationBar@3x.png in Resources */,
 				1387C3491B315FA200B065A7 /* NSDateTimeAgo.bundle in Resources */,
@@ -5894,8 +5928,7 @@
 				1326229C1B8EF5850074C589 /* Wasted2.png in Resources */,
 				138EDEF91AD7DAD20020957C /* TabBarCamera@3x.png in Resources */,
 				13D9BF261AEB997E0020C94F /* Dawn.png in Resources */,
-				13AC85451BD4EB97002134E7 /* RankFirst@3x.png in Resources */,
-				13AC85441BD4EB97002134E7 /* Hot3@3x.png in Resources */,
+				13AC85501BD636E9002134E7 /* RankFirst@3x.png in Resources */,
 				134F62491BCBDE00007D5187 /* NavigationBarBack@3x.png in Resources */,
 				13AC85021BD118C9002134E7 /* tabbar_userCenter_selected@2x.png in Resources */,
 				138EDE111AD7B0A30020957C /* LCGLBubbleEffect.vsh in Resources */,
@@ -6542,6 +6575,7 @@
 				1304ABCF1BABB62300C9EA2D /* GBTagListView.m in Sources */,
 				138EDE6C1AD7B0A30020957C /* UIScrollView+SVInfiniteScrolling.m in Sources */,
 				13E27F061AF9CBB700C17362 /* LKPopAnimation.m in Sources */,
+				13AC855B1BD6420E002134E7 /* LKRankMiniCell.m in Sources */,
 				BCD148161BB3F3AC0062C463 /* LKTagItemView.m in Sources */,
 				BC12A5E31B9BD16100B99CB5 /* LKBatchRequest.m in Sources */,
 				139054CE1B994A6D00DBF34A /* GPUImageBoxBlurFilter.m in Sources */,

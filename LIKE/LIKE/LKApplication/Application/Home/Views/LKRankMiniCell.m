@@ -1,15 +1,15 @@
 //
-//  LKRankCell.m
+//  LKRankMiniCell.m
 //  LIKE
 //
-//  Created by Elkins.Zhao on 15/10/19.
+//  Created by Elkins.Zhao on 15/10/20.
 //  Copyright © 2015年 Beijing Like Technology Co.Ltd . ( http://www.likeorz.com ). All rights reserved.
 //
 
-#import "LKRankCell.h"
+#import "LKRankMiniCell.h"
 #import "UIImageView+WebCache.h"
 
-@interface LKRankCell ()
+@interface LKRankMiniCell ()
 
 LC_PROPERTY(strong) LCUIImageView *rankIcon;
 LC_PROPERTY(strong) LCUILabel *rankLabel;
@@ -22,43 +22,44 @@ LC_PROPERTY(strong) LCUILabel *increaseLikesLabel;
 
 @end
 
-@implementation LKRankCell
+@implementation LKRankMiniCell
 
 LC_IMP_SIGNAL(PushUserCenter);
 
 - (void)buildUI {
- 
+    
     self.selectionStyle = UITableViewCellSelectionStyleNone;
-
+    
     self.rankIcon = LCUIImageView.view;
-    self.rankIcon.viewFrameX = 10;
-    self.rankIcon.viewFrameY = 13;
-    self.rankIcon.viewFrameWidth = 25;
-    self.rankIcon.viewFrameHeight = 28;
+    self.rankIcon.viewFrameX = 8;
+    self.rankIcon.viewFrameY = 16;
+    self.rankIcon.viewFrameWidth = 19;
+    self.rankIcon.viewFrameHeight = 20;
     self.ADD(self.rankIcon);
     
     self.rankLabel = LCUILabel.view;
     self.rankLabel.font = LK_FONT(17);
-    self.rankLabel.viewFrameX = 18;
+    self.rankLabel.viewFrameX = 7;
     self.rankLabel.viewFrameY = 8;
+    self.rankLabel.viewFrameWidth = 21;
     self.rankLabel.viewFrameHeight = self.rankLabel.font.lineHeight;
     self.rankLabel.textAlignment = UITextAlignmentCenter;
     self.rankLabel.textColor = LC_RGB(127, 127, 127);
     self.ADD(self.rankLabel);
     
     self.headView = LCUIImageView.view;
-    self.headView.viewFrameX = self.rankIcon.viewRightX + 11;
-    self.headView.viewFrameY = 6;
-    self.headView.viewFrameWidth = 39;
-    self.headView.viewFrameHeight = 39;
-    self.headView.cornerRadius = 39 * 0.5;
+    self.headView.viewFrameX = self.rankIcon.viewRightX + 8;
+    self.headView.viewFrameY = 8;
+    self.headView.viewFrameWidth = 35;
+    self.headView.viewFrameHeight = 35;
+    self.headView.cornerRadius = 35 * 0.5;
     self.headView.userInteractionEnabled = YES;
     [self.headView addTapGestureRecognizer:self selector:@selector(handleHeadTap:)];
     self.ADD(self.headView);
     
     self.nameLabel = LCUILabel.view;
     self.nameLabel.font = LK_FONT(12);
-    self.nameLabel.viewFrameX = self.headView.viewRightX + 14;
+    self.nameLabel.viewFrameX = self.headView.viewRightX + 12;
     self.nameLabel.viewFrameY = 12;
     self.nameLabel.viewFrameHeight = self.nameLabel.font.lineHeight;
     self.nameLabel.textColor = [UIColor blackColor];
@@ -86,7 +87,7 @@ LC_IMP_SIGNAL(PushUserCenter);
 //    self.suffixLabel.font = LK_FONT(11);
 //    self.suffixLabel.viewFrameHeight = self.suffixLabel.font.lineHeight;
 //    self.suffixLabel.viewFrameWidth = [self.suffixLabel.text sizeWithFont:LK_FONT(11) byHeight:self.suffixLabel.viewFrameHeight].width;
-//    self.suffixLabel.viewFrameX = LC_DEVICE_WIDTH - self.suffixLabel.viewFrameWidth - 14;
+//    self.suffixLabel.viewFrameX = LC_DEVICE_WIDTH - self.suffixLabel.viewFrameWidth - 8;
 //    self.suffixLabel.viewFrameY = 51 - 9 - self.suffixLabel.viewFrameHeight;
 //    self.suffixLabel.textColor = LC_RGB(156, 156, 156);
 //    self.ADD(self.suffixLabel);
@@ -111,8 +112,6 @@ LC_IMP_SIGNAL(PushUserCenter);
     
     NSString *rankString = [rank.rank stringValue];
     self.rankLabel.text = rankString;
-    CGSize rankLabelSize = [rankString sizeWithFont:LK_FONT(17) byHeight:self.rankLabel.viewFrameHeight];
-    self.rankLabel.viewFrameWidth = rankLabelSize.width;
     
     [self.headView sd_setImageWithURL:[NSURL URLWithString:rank.user.avatar] placeholderImage:nil options:SDWebImageRetryFailed];
     
@@ -125,7 +124,7 @@ LC_IMP_SIGNAL(PushUserCenter);
     self.likesLabel.viewFrameWidth = likesSize.width;
     self.hotIconView.viewFrameX = self.likesLabel.viewRightX + 4;
     
-//    self.increaseLikesLabel.text = [rank.likes stringValue];
+    //    self.increaseLikesLabel.text = [rank.likes stringValue];
     NSAttributedString *attributedString =[[NSAttributedString alloc] initWithString:[rank.likes stringValue] attributes:@{NSKernAttributeName : @(-1.3f)}];
     
     [self.increaseLikesLabel setAttributedText:attributedString];
@@ -133,41 +132,41 @@ LC_IMP_SIGNAL(PushUserCenter);
     
     switch ([rankString integerValue]) {
         case 1: {
-            self.rankIcon.image = [UIImage imageNamed:@"RankFirst.png"];
+            self.rankIcon.image = [UIImage imageNamed:@"RankFirst_mini.png"];
             self.rankLabel.hidden = YES;
             self.rankLabel.viewFrameY = 8;
             self.hotIconView.hidden = NO;
 //            self.suffixLabel.textColor = LKColor.color;
             self.increaseLikesLabel.textColor = LKColor.color;
             
-            self.increaseLikesLabel.font = LK_FONT_B(35);
-            increaseLabelSize = [self.increaseLikesLabel.text sizeWithFont:LK_FONT_B(35) byHeight:self.increaseLikesLabel.viewFrameHeight];
+            self.increaseLikesLabel.font = LK_FONT_B(30);
+            increaseLabelSize = [self.increaseLikesLabel.text sizeWithFont:LK_FONT_B(30) byHeight:self.increaseLikesLabel.viewFrameHeight];
             break;
         }
             
         case 2: {
-            self.rankIcon.image = [UIImage imageNamed:@"RankSecond.png"];
+            self.rankIcon.image = [UIImage imageNamed:@"RankSecond_mini.png"];
             self.rankLabel.hidden = YES;
             self.rankLabel.viewFrameY = 8;
             self.hotIconView.hidden = NO;
 //            self.suffixLabel.textColor = LC_RGB(126, 211, 33);
             self.increaseLikesLabel.textColor = LC_RGB(126, 211, 33);
             
-            self.increaseLikesLabel.font = LK_FONT_B(32);
-            increaseLabelSize = [self.increaseLikesLabel.text sizeWithFont:LK_FONT_B(32) byHeight:self.increaseLikesLabel.viewFrameHeight];
+            self.increaseLikesLabel.font = LK_FONT_B(29);
+            increaseLabelSize = [self.increaseLikesLabel.text sizeWithFont:LK_FONT_B(29) byHeight:self.increaseLikesLabel.viewFrameHeight];
             break;
         }
-
+            
         case 3: {
-            self.rankIcon.image = [UIImage imageNamed:@"RankThird.png"];
+            self.rankIcon.image = [UIImage imageNamed:@"RankThird_mini.png"];
             self.rankLabel.hidden = YES;
             self.rankLabel.viewFrameY = 8;
             self.hotIconView.hidden = NO;
 //            self.suffixLabel.textColor = LC_RGB(245, 166, 35);
             self.increaseLikesLabel.textColor = LC_RGB(245, 166, 35);
             
-            self.increaseLikesLabel.font = LK_FONT_B(30);
-            increaseLabelSize = [self.increaseLikesLabel.text sizeWithFont:LK_FONT_B(30) byHeight:self.increaseLikesLabel.viewFrameHeight];
+            self.increaseLikesLabel.font = LK_FONT_B(28);
+            increaseLabelSize = [self.increaseLikesLabel.text sizeWithFont:LK_FONT_B(28) byHeight:self.increaseLikesLabel.viewFrameHeight];
             break;
         }
             

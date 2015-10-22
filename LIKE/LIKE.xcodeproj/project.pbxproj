@@ -711,6 +711,9 @@
 		13AC85581BD636F6002134E7 /* RankThird_mini@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13AC85551BD636F6002134E7 /* RankThird_mini@3x.png */; settings = {ASSET_TAGS = (); }; };
 		13AC855B1BD6420E002134E7 /* LKRankMiniCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AC855A1BD6420E002134E7 /* LKRankMiniCell.m */; settings = {ASSET_TAGS = (); }; };
 		13AC855D1BD65C7D002134E7 /* Hot3@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13AC855C1BD65C7D002134E7 /* Hot3@3x.png */; settings = {ASSET_TAGS = (); }; };
+		13AC859B1BD7C5EB002134E7 /* RankFirst_mini@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13AC85981BD7C5EB002134E7 /* RankFirst_mini@2x.png */; settings = {ASSET_TAGS = (); }; };
+		13AC859C1BD7C5EB002134E7 /* RankSecond_mini@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13AC85991BD7C5EB002134E7 /* RankSecond_mini@2x.png */; settings = {ASSET_TAGS = (); }; };
+		13AC859D1BD7C5EB002134E7 /* RankThird_mini@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13AC859A1BD7C5EB002134E7 /* RankThird_mini@2x.png */; settings = {ASSET_TAGS = (); }; };
 		13B5B4E61B15CB6800252A78 /* TalkIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13B5B4E31B15CB6800252A78 /* TalkIcon@3x.png */; };
 		13B5B4E81B15CB6800252A78 /* TalkTip@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13B5B4E51B15CB6800252A78 /* TalkTip@3x.png */; };
 		13B5B4EB1B15EE1300252A78 /* LKComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B5B4EA1B15EE1300252A78 /* LKComment.m */; };
@@ -2219,6 +2222,9 @@
 		13AC85591BD6420E002134E7 /* LKRankMiniCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKRankMiniCell.h; sourceTree = "<group>"; };
 		13AC855A1BD6420E002134E7 /* LKRankMiniCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKRankMiniCell.m; sourceTree = "<group>"; };
 		13AC855C1BD65C7D002134E7 /* Hot3@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hot3@3x.png"; sourceTree = "<group>"; };
+		13AC85981BD7C5EB002134E7 /* RankFirst_mini@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RankFirst_mini@2x.png"; sourceTree = "<group>"; };
+		13AC85991BD7C5EB002134E7 /* RankSecond_mini@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RankSecond_mini@2x.png"; sourceTree = "<group>"; };
+		13AC859A1BD7C5EB002134E7 /* RankThird_mini@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RankThird_mini@2x.png"; sourceTree = "<group>"; };
 		13B5B4E31B15CB6800252A78 /* TalkIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TalkIcon@3x.png"; sourceTree = "<group>"; };
 		13B5B4E51B15CB6800252A78 /* TalkTip@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TalkTip@3x.png"; sourceTree = "<group>"; };
 		13B5B4E91B15EE1300252A78 /* LKComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKComment.h; sourceTree = "<group>"; };
@@ -4919,6 +4925,9 @@
 				13AC854D1BD636E9002134E7 /* RankFirst@3x.png */,
 				13AC854E1BD636E9002134E7 /* RankSecond@3x.png */,
 				13AC854F1BD636E9002134E7 /* RankThird@3x.png */,
+				13AC85981BD7C5EB002134E7 /* RankFirst_mini@2x.png */,
+				13AC85991BD7C5EB002134E7 /* RankSecond_mini@2x.png */,
+				13AC859A1BD7C5EB002134E7 /* RankThird_mini@2x.png */,
 				13AC85531BD636F6002134E7 /* RankFirst_mini@3x.png */,
 				13AC85541BD636F6002134E7 /* RankSecond_mini@3x.png */,
 				13AC85551BD636F6002134E7 /* RankThird_mini@3x.png */,
@@ -5922,11 +5931,13 @@
 				13AC84FF1BD118C9002134E7 /* tabbar_notification_selected@2x.png in Resources */,
 				13D9BF251AEB997E0020C94F /* Ansel.png in Resources */,
 				1387C3521B31703300B065A7 /* MobileIcon@3x.png in Resources */,
+				13AC859D1BD7C5EB002134E7 /* RankThird_mini@2x.png in Resources */,
 				134F626F1BCCFC46007D5187 /* AlreadyFocusWrite@3x.png in Resources */,
 				133972E91BC91BCB00D5977F /* tabbar_notification_badge@2x.png in Resources */,
 				1351B2D21BBA8AFE004DFEEC /* CancelSubscribe@3x.png in Resources */,
 				13DEEC191AE789E6005E01A6 /* LC_WebReload.png in Resources */,
 				1357480E1BA05CAD00855603 /* 1024.jpg in Resources */,
+				13AC859B1BD7C5EB002134E7 /* RankFirst_mini@2x.png in Resources */,
 				133973031BC9467500D5977F /* NavigationBarMoreShadow@3x.png in Resources */,
 				1359F49F1B6A237400A0ABE9 /* GtaTrevor.png in Resources */,
 				135E8AA01B4511B900C2270C /* AMap.bundle in Resources */,
@@ -5937,6 +5948,7 @@
 				134F62491BCBDE00007D5187 /* NavigationBarBack@3x.png in Resources */,
 				13AC85021BD118C9002134E7 /* tabbar_userCenter_selected@2x.png in Resources */,
 				138EDE111AD7B0A30020957C /* LCGLBubbleEffect.vsh in Resources */,
+				13AC859C1BD7C5EB002134E7 /* RankSecond_mini@2x.png in Resources */,
 				13AC85281BD13489002134E7 /* CodeIconIp4@2x.png in Resources */,
 				134F62141BCB53DD007D5187 /* CameraClose@3x.png in Resources */,
 				13DEEC131AE789E6005E01A6 /* LC_ios7_navbar_bg@2x.png in Resources */,

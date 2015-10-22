@@ -22,19 +22,31 @@ LC_PROPERTY(strong) NSArray *dataSource;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self loadData];
     self.initTableViewStyle = UITableViewStyleGrouped;
 }
 
 - (void)buildUI {
 
     [self buildNavigationBar];
+    [self buildPullLoader];
+    [self loadData:LCUIPullLoaderDiretionTop];
 }
 
 - (void)buildNavigationBar {
     
     self.title = LC_LO(@"like全球排行榜");
     [self setNavigationBarButton:LCUINavigationBarButtonTypeLeft image:[UIImage imageNamed:@"NavigationBarBack.png" useCache:YES] selectImage:nil];
+}
+
+- (void)buildPullLoader {
+    self.pullLoader = [LCUIPullLoader pullLoaderWithScrollView:self.tableView pullStyle:LCUIPullLoaderStyleHeaderAndFooter];
+    self.pullLoader.indicatorViewStyle = UIActivityIndicatorViewStyleWhite;
+    
+    @weakly(self);
+    self.pullLoader.beginRefresh = ^(LCUIPullLoaderDiretion diretion){
+        @normally(self);
+        [self loadData:diretion];
+    };
 }
 
 #pragma mark Handle Signal
@@ -126,27 +138,27 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
     [LKUserCenterViewController pushUserCenterWithUser:rank.user navigationController:self.navigationController];
 }
 
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    CATransform3D rotation;
-    rotation = CATransform3DMakeRotation((90.0*M_PI)/180, 0.0, 0.7, 0.4);
-    rotation.m34 = 1.0/ -600;
-    
-    cell.layer.shadowColor = [[UIColor blackColor]CGColor];
-    cell.layer.shadowOffset = CGSizeMake(10, 10);
-    cell.alpha = 0;
-    cell.layer.transform = rotation;
-    cell.layer.anchorPoint = CGPointMake(0.5, 0.5);
-    
-    [UIView beginAnimations:@"rotation" context:NULL];
-    [UIView setAnimationDuration:0.8];
-    cell.layer.transform = CATransform3DIdentity;
-    cell.alpha = 1;
-    cell.layer.shadowOffset = CGSizeMake(0, 0);
-    [UIView commitAnimations];
-}
+//-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+//    
+//    CATransform3D rotation;
+//    rotation = CATransform3DMakeRotation((90.0*M_PI)/180, 0.0, 0.7, 0.4);
+//    rotation.m34 = 1.0/ -600;
+//    
+//    cell.layer.shadowColor = [[UIColor blackColor]CGColor];
+//    cell.layer.shadowOffset = CGSizeMake(10, 10);
+//    cell.alpha = 0;
+//    cell.layer.transform = rotation;
+//    cell.layer.anchorPoint = CGPointMake(0.5, 0.5);
+//    
+//    [UIView beginAnimations:@"rotation" context:NULL];
+//    [UIView setAnimationDuration:0.8];
+//    cell.layer.transform = CATransform3DIdentity;
+//    cell.alpha = 1;
+//    cell.layer.shadowOffset = CGSizeMake(0, 0);
+//    [UIView commitAnimations];
+//}
 
-- (void)loadData {
+- (void)loadData:(LCUIPullLoaderDiretion)diretion {
     
     LKRankInterface *rankInterface = [[LKRankInterface alloc] init];
     
@@ -162,10 +174,15 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
             self.dataSource = rankInterface.ranks;
         }
         
-        [self.tableView reloadData];
+        [self reloadData];
     } failure:^(LCBaseRequest *request) {
-        
+        [self.pullLoader endRefresh];
     }];
+}
+
+- (void)reloadData {
+    [self.pullLoader endRefresh];
+    [self.tableView reloadData];
 }
 
 @end

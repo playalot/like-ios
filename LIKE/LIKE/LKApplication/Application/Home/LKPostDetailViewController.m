@@ -225,7 +225,7 @@ LC_PROPERTY(assign) BOOL isBackgroundImageGIF;
 //        self.header.backgroundView.url = self.post.content
         [self.header.backgroundView sd_setImageWithURL:[NSURL URLWithString:self.post.preview] placeholderImage:nil];
         
-        if ([self.post.preview containsString:@".gif"]) {
+        if ([self.post.preview rangeOfString:@".gif"].location != NSNotFound) {
             self.isBackgroundImageGIF = YES;
         }
         

@@ -11,7 +11,7 @@
 
 @interface LKSearchResultCollectionViewCell ()
 
-LC_PROPERTY(strong) LCUIImageView * contentImage;
+//LC_PROPERTY(strong) LCUIImageView * contentImage;
 LC_PROPERTY(strong) LCUIImageView * head;
 LC_PROPERTY(strong) LCUILabel * title;
 LC_PROPERTY(strong) LCUILabel * likes;

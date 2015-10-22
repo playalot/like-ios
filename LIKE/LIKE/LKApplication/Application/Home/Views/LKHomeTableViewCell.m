@@ -146,22 +146,22 @@ LC_IMP_SIGNAL(PushPostDetail);
     // 推荐理由标签
     self.recommendedReasonWithTag = LCUIButton.view;
     self.recommendedReasonWithTag.viewFrameWidth = LC_DEVICE_WIDTH / 2;
-    self.recommendedReasonWithTag.viewFrameHeight = LK_FONT(10).lineHeight;
+    self.recommendedReasonWithTag.viewFrameHeight = LK_FONT(10).lineHeight + 6;
     self.recommendedReasonWithTag.viewFrameX = LC_DEVICE_WIDTH / 2 - 15 - 14;
-    self.recommendedReasonWithTag.viewFrameY = self.likesTip.viewFrameY;
+    self.recommendedReasonWithTag.viewFrameY = self.likesTip.viewFrameY - 5;
     self.recommendedReasonWithTag.title = LC_LO(@"有故事的人");
     self.recommendedReasonWithTag.titleColor = LC_RGB(151, 151, 151);
     self.recommendedReasonWithTag.titleFont = LK_FONT(10);
     self.recommendedReasonWithTag.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-    self.recommendedReasonWithTag.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 1);
+    self.recommendedReasonWithTag.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 14);
     [self.recommendedReasonWithTag addTarget:self action:@selector(recommendedReasonBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     self.headerBack.ADD(self.recommendedReasonWithTag);
     
     self.commonInterest = LCUIButton.view;
     self.commonInterest.viewFrameWidth = 12;
     self.commonInterest.viewFrameHeight = 11;
-    self.commonInterest.viewFrameY = self.recommendedReasonWithTag.viewFrameY + 1;
-    self.commonInterest.viewFrameX = self.recommendedReasonWithTag.viewRightX + 2;
+    self.commonInterest.viewFrameY = self.recommendedReasonWithTag.viewFrameY + 4;
+    self.commonInterest.viewFrameX = self.recommendedReasonWithTag.viewRightX - 12;
     self.commonInterest.buttonImage = [UIImage imageNamed:@"CommonInterest.png" useCache:YES];
     [self.commonInterest addTarget:self action:@selector(recommendedReasonBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     self.headerBack.ADD(self.commonInterest);
@@ -332,8 +332,8 @@ LC_IMP_SIGNAL(PushPostDetail);
     if (self.recommendedReasonWithTag.hidden == YES) {
         self.recommendedReason.viewFrameY = (54 - self.recommendedReason.viewFrameHeight) * 0.5;
     } else {
-        self.recommendedReasonWithTag.viewFrameX = CGRectGetMaxX(self.recommendedReason.frame) - self.recommendedReasonWithTag.viewFrameWidth - 14;
-        self.commonInterest.viewFrameX = self.recommendedReasonWithTag.viewRightX + 2;
+        self.recommendedReasonWithTag.viewFrameX = CGRectGetMaxX(self.recommendedReason.frame) - self.recommendedReasonWithTag.viewFrameWidth;
+        self.commonInterest.viewFrameX = self.recommendedReasonWithTag.viewRightX - 12;
     }
 }
 

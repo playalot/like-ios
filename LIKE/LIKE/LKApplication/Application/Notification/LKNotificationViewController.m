@@ -116,8 +116,6 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
     [self.notificationModel getNotificationsAtFirstPage:diretion == LCUIPullLoaderDiretionTop requestFinished:^(NSString *error) {
         @normally(self);
         
-        [self.pullLoader endRefresh];
-        
         if (!error) {
             
             self.cartoonImageView.hidden = self.notificationModel.datasource.count ? YES : NO;
@@ -125,6 +123,7 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
                 [LKNotificationCount cleanBadge];
             }
             
+            [self.pullLoader endRefresh];
             [self.tableView reloadData];
         }
     }];

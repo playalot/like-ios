@@ -265,6 +265,12 @@ LC_HANDLE_UI_SIGNAL(PushPostDetail, signal) {
     [self.navigationController pushViewController:detail animated:YES];
 }
 
+LC_HANDLE_UI_SIGNAL(PushSearchResult, signal) {
+    LKTag *tag = signal.object;
+    LKSearchResultsViewController * result = [[LKSearchResultsViewController alloc] initWithSearchString:tag.tag];
+    [self.navigationController pushViewController:result animated:YES];
+}
+
 - (void)postDetailViewController:(LKPostDetailViewController *)ctrl didUpdatedPost:(LKPost *)post {
     
 }

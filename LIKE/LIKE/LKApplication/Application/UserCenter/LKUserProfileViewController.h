@@ -15,7 +15,7 @@
 LC_PROPERTY(assign) BOOL needBackButton;
 LC_PROPERTY(assign) BOOL settingButtonHidden;
 
-LC_PROPERTY(strong) LKUserInfoModel *userInfoModel;;
+LC_PROPERTY(strong) LKUserInfoModel *userInfoModel;
 LC_PROPERTY(strong) LKUser *user;
 
 - (void)scrollToPostByIndex:(NSInteger)index;

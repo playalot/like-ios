@@ -30,6 +30,8 @@
 #import "LCEncryptorAES.h"
 #import "LKChooseInterestView.h"
 #import "LKLoginViewIp4Controller.h"
+#import "LKNotification.h"
+#import "LKNotificationModel.h"
 
 @interface AppDelegate () <LC_CMD_IMP, RDVTabBarControllerDelegate>
 
@@ -419,10 +421,7 @@ LC_PROPERTY(strong) NSDictionary *launchOptions;
     NSInteger badgeCount = [userInfo[@"aps"][@"badge"] integerValue];
     [[LKNavigator navigator] bindBadgeForItemIndex:2 badgeCount:badgeCount];
     
-    NSDictionary *alertInfo = userInfo[@"aps"][@"alert"];
-    if (alertInfo) {
-        
-    }
+    NSLog(@"Received notification: %@", userInfo);
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {

@@ -159,7 +159,7 @@ LC_IMP_SIGNAL(PushUserCenter);
         self.ADD(self.tagListView);
         [self.tagListView setTagWithTagArray:notification.tags];
         
-    } else if (notification.type == LKNotificationTypeFocus) {
+    } else if (notification.type == LKNotificationTypeFocus || notification.type == LKNotificationTypeOfficial) {
         
         self.moreButton.hidden = NO;
         self.cellHeight = [[self class] height:notification];

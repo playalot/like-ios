@@ -384,6 +384,9 @@ static PHImageRequestOptions *requestOptions;
     }
     
     LKImageCropperViewController * cropper = [[LKImageCropperViewController alloc] initWithImage:image];
+    if (self.tagString) {
+        cropper.tagString = self.tagString;
+    }
     
     [cropper showBackButton];
     

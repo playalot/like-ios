@@ -778,6 +778,7 @@
 		13CF22A01BB258C20087DD89 /* LittleTag@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13CF229F1BB258C20087DD89 /* LittleTag@3x.png */; };
 		13CF22A91BB281770087DD89 /* SeparateLine_selected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13CF22A71BB281770087DD89 /* SeparateLine_selected@3x.png */; };
 		13CF22AA1BB281770087DD89 /* SeparateLine@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13CF22A81BB281770087DD89 /* SeparateLine@3x.png */; };
+		13D4AE551BDA01FE0008DA40 /* LKBannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D4AE541BDA01FE0008DA40 /* LKBannerView.m */; };
 		13D549DD1B60E90F00D3CA2C /* ADTickerLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D549DC1B60E90F00D3CA2C /* ADTickerLabel.m */; };
 		13D63AC81AE9FBFD001587C0 /* LKInputTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D63AC71AE9FBFD001587C0 /* LKInputTextViewController.m */; };
 		13D63ACB1AEA01F1001587C0 /* LKNotificationCount.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D63ACA1AEA01F1001587C0 /* LKNotificationCount.m */; };
@@ -2372,6 +2373,8 @@
 		13CF229F1BB258C20087DD89 /* LittleTag@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LittleTag@3x.png"; sourceTree = "<group>"; };
 		13CF22A71BB281770087DD89 /* SeparateLine_selected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SeparateLine_selected@3x.png"; sourceTree = "<group>"; };
 		13CF22A81BB281770087DD89 /* SeparateLine@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SeparateLine@3x.png"; sourceTree = "<group>"; };
+		13D4AE531BDA01FE0008DA40 /* LKBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKBannerView.h; sourceTree = "<group>"; };
+		13D4AE541BDA01FE0008DA40 /* LKBannerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKBannerView.m; sourceTree = "<group>"; };
 		13D549DB1B60E90F00D3CA2C /* ADTickerLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTickerLabel.h; sourceTree = "<group>"; };
 		13D549DC1B60E90F00D3CA2C /* ADTickerLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADTickerLabel.m; sourceTree = "<group>"; };
 		13D63AC61AE9FBFD001587C0 /* LKInputTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKInputTextViewController.h; sourceTree = "<group>"; };
@@ -2956,6 +2959,8 @@
 				BC484AC41BB050C700F69D50 /* LKHotUserHeaderView.m */,
 				BC484AC61BB0F6B400F69D50 /* LKHotTagsUsersView.h */,
 				BC484AC71BB0F6B400F69D50 /* LKHotTagsUsersView.m */,
+				13D4AE531BDA01FE0008DA40 /* LKBannerView.h */,
+				13D4AE541BDA01FE0008DA40 /* LKBannerView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3251,9 +3256,9 @@
 		138EDBEF1AD7B08A0020957C /* LIKE */ = {
 			isa = PBXGroup;
 			children = (
-				138EDEC81AD7B65B0020957C /* LKApplication */,
 				138EDBF41AD7B08A0020957C /* AppDelegate.h */,
 				138EDBF51AD7B08A0020957C /* AppDelegate.m */,
+				138EDEC81AD7B65B0020957C /* LKApplication */,
 				138EDECA1AD7B65B0020957C /* LKResource */,
 				138EDECB1AD7B65B0020957C /* LKUIKit */,
 				138EDECC1AD7B70F0020957C /* LKExternal */,
@@ -6535,6 +6540,7 @@
 				13A951A51B4CE528002B73ED /* AFURLConnectionOperation.m in Sources */,
 				13DEEBFE1AE755C0005E01A6 /* LKFriendshipModel.m in Sources */,
 				13BCD88F1ADBA92200A0CBF5 /* POPAnimationTracer.mm in Sources */,
+				13D4AE551BDA01FE0008DA40 /* LKBannerView.m in Sources */,
 				BC6960DE1BBFBEE5006245D7 /* LKAuthenticationAccessory.m in Sources */,
 				137106991B576212008BCD66 /* LKHotTagDetail.m in Sources */,
 				1377F04C1B5E35D8008E21BC /* WMLArrayDiff.m in Sources */,

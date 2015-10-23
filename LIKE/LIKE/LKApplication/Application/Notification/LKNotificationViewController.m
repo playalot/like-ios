@@ -7,7 +7,7 @@
 //
 
 #import "LKNotificationViewController.h"
-#import "LKNotificationModel.h"
+//#import "LKNotificationModel.h"
 #import "LKNotificationCount.h"
 #import "LKNotificationCell.h"
 #import "LKNotificationHeader.h"
@@ -27,7 +27,7 @@
 
 @interface LKNotificationViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerDelegate>
 
-LC_PROPERTY(strong) LKNotificationModel *notificationModel;
+//LC_PROPERTY(strong) LKNotificationModel *notificationModel;
 LC_PROPERTY(strong) LKNotificationHeader *notificationHeader;
 LC_PROPERTY(strong) LCUITableView *tableView;
 LC_PROPERTY(strong) LCUIPullLoader *pullLoader;

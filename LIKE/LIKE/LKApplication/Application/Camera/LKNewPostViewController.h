@@ -9,6 +9,8 @@
 
 @interface LKNewPostViewController : LCUITableViewController
 
+LC_PROPERTY(copy) NSString *tagString;
+
 -(instancetype) initWithImage:(UIImage *)image;
 
 @end

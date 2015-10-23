@@ -50,7 +50,7 @@ LC_IMP_SIGNAL(PushSearchResult);
     
     layout.sectionInset = UIEdgeInsetsMake(0, 5, 5, 5);
 // TODO 设置banner的显示与隐藏
-    layout.headerHeight = 146;
+    layout.headerHeight = 154;
     layout.footerHeight = 49;
     layout.minimumColumnSpacing = 5;
     layout.minimumInteritemSpacing = 5;

@@ -31,6 +31,7 @@
 		131915641B8C267900EC0F42 /* SMS_SDKLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 131915601B8C267900EC0F42 /* SMS_SDKLocalizable.strings */; };
 		131915651B8C267900EC0F42 /* SMS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 131915621B8C267900EC0F42 /* SMS_SDK.framework */; };
 		131915671B8C26C400EC0F42 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 131915661B8C26C400EC0F42 /* MessageUI.framework */; };
+		131DC27C1BDA3C4A00C124FA /* BannerPlaceholder@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 131DC27B1BDA3C4A00C124FA /* BannerPlaceholder@3x.png */; };
 		1326229B1B8EF5850074C589 /* Wasted.png in Resources */ = {isa = PBXBuildFile; fileRef = 132622991B8EF5850074C589 /* Wasted.png */; };
 		1326229C1B8EF5850074C589 /* Wasted2.png in Resources */ = {isa = PBXBuildFile; fileRef = 1326229A1B8EF5850074C589 /* Wasted2.png */; };
 		132622A01B93FC0D0074C589 /* libPushSDK-1.8.5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1326229F1B93FC0D0074C589 /* libPushSDK-1.8.5.a */; };
@@ -1010,6 +1011,7 @@
 		131915621B8C267900EC0F42 /* SMS_SDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SMS_SDK.framework; sourceTree = "<group>"; };
 		131915631B8C267900EC0F42 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/SMS_SDKLocalizable.strings"; sourceTree = "<group>"; };
 		131915661B8C26C400EC0F42 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		131DC27B1BDA3C4A00C124FA /* BannerPlaceholder@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BannerPlaceholder@3x.png"; sourceTree = "<group>"; };
 		132622991B8EF5850074C589 /* Wasted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Wasted.png; sourceTree = "<group>"; };
 		1326229A1B8EF5850074C589 /* Wasted2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Wasted2.png; sourceTree = "<group>"; };
 		1326229E1B93FC0D0074C589 /* APService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APService.h; sourceTree = "<group>"; };
@@ -4985,6 +4987,7 @@
 		13B9A20F1BB92531007D2893 /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				131DC27B1BDA3C4A00C124FA /* BannerPlaceholder@3x.png */,
 				13B9A2181BB9343A007D2893 /* HotTagButton_Gray@3x.png */,
 				13B9A2191BB9343A007D2893 /* HotTagButton_Red@3x.png */,
 				13F584C11BCE3F630004F144 /* RecommendUser@3x.png */,
@@ -6024,6 +6027,7 @@
 				13CF22A91BB281770087DD89 /* SeparateLine_selected@3x.png in Resources */,
 				130CF59D1BB00CD8002F4189 /* segment_favor@3x.png in Resources */,
 				130CF59F1BB00CD8002F4189 /* segment_photo@3x.png in Resources */,
+				131DC27C1BDA3C4A00C124FA /* BannerPlaceholder@3x.png in Resources */,
 				134765341AE2564D0055D099 /* PostDidFinish@3x.png in Resources */,
 				13877D141BBCE49600521D2D /* Interest_bottom@3x.png in Resources */,
 				13E491051BB57188009840B9 /* ProhibitionOfSelf@3x.png in Resources */,

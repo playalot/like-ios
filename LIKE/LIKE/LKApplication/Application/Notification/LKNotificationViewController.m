@@ -24,6 +24,7 @@
 #import "LKTagCommentsViewController.h"
 #import "RMPZoomTransitionAnimator.h"
 #import "LKPostInterface.h"
+#import "LKSearchResultsViewController.h"
 
 @interface LKNotificationViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerDelegate>
 
@@ -175,6 +176,9 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
     LKNotification *notification = self.notificationModel.datasource[indexPath.row];
     if (notification.type == LKNotificationTypeFocus) {
         [LKUserCenterViewController pushUserCenterWithUser:notification.user navigationController:self.navigationController];
+    } else if (notification.type == LKNotificationTypeOfficial) {
+        LKSearchResultsViewController *result = [[LKSearchResultsViewController alloc] initWithSearchString:notification.tag];
+        [self.navigationController pushViewController:result animated:YES];
     } else {
         if ((notification.type == LKNotificationTypeComment ||
             notification.type == LKNotificationTypeReply || notification.type == LKNotificationTypeUpdate) && [notification.tagID isKindOfClass:[NSNumber class]]) {

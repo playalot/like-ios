@@ -32,7 +32,7 @@ LC_PROPERTY(strong) LCUILabel *participantsLabel;
     self.bannerView.viewFrameY = 3;
     self.bannerView.viewFrameWidth = LC_DEVICE_WIDTH;
     self.bannerView.viewFrameHeight = 146;
-    self.bannerView.image = [UIImage imageNamed:@"Interest_bottom.png"];
+    self.bannerView.image = [UIImage imageNamed:@"BannerPlaceholder.png"];
     self.bannerView.userInteractionEnabled = YES;
     [self.bannerView addTapGestureRecognizer:self selector:@selector(bannerViewTapAction:)];
     self.ADD(self.bannerView);
@@ -47,7 +47,6 @@ LC_PROPERTY(strong) LCUILabel *participantsLabel;
     self.participantsLabel.textAlignment = UITextAlignmentCenter;
     NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"已有%@小伙伴\n参与此活动", @(99999)]];
     self.participantsLabel.attributedText = attrString;
-    self.participantsLabel.textColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
     self.ADD(self.participantsLabel);
 }
 

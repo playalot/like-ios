@@ -60,9 +60,9 @@ LC_PROPERTY(assign) NSInteger page;
     self.ADD(self.blur);
 
     self.scrollView = UIScrollView.view;
-    self.scrollView.viewFrameY = 42;
+    self.scrollView.viewFrameY = 38;
     self.scrollView.viewFrameWidth = self.viewFrameWidth;
-    self.scrollView.viewFrameHeight = self.blur.viewFrameHeight - 42 - 15;
+    self.scrollView.viewFrameHeight = self.blur.viewFrameHeight - 38 - 15;
     self.scrollView.pagingEnabled = YES;
     self.scrollView.delegate = self;
     self.scrollView.showsHorizontalScrollIndicator = NO;

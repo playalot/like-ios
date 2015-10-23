@@ -501,8 +501,8 @@ LC_PROPERTY(strong) UIView *wastedView;
 
 -(void) finished
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
-//    [self.navigationController popViewControllerAnimated:YES];
+//    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)switchFilterAtIndex:(NSInteger)index

@@ -147,7 +147,7 @@ LC_IMP_SIGNAL(PushUserCenter);
     
     self.headImageView.image = nil;
 //    self.headImageView.url = notification.user.avatar;
-    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:notification.user.avatar] placeholderImage:nil];
+    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:notification.user.avatar] placeholderImage:nil options:SDWebImageRetryFailed];
     
     self.nameLabel.text = [NSString stringWithFormat:@"%@   %@", notification.user.name, [LKNotificationCell getTitle:notification]];
     

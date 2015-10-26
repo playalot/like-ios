@@ -7,7 +7,7 @@
 //
 
 #import "LKNotificationViewController.h"
-#import "LKNotificationModel.h"
+//#import "LKNotificationModel.h"
 #import "LKNotificationCount.h"
 #import "LKNotificationCell.h"
 #import "LKNotificationHeader.h"
@@ -24,10 +24,11 @@
 #import "LKTagCommentsViewController.h"
 #import "RMPZoomTransitionAnimator.h"
 #import "LKPostInterface.h"
+#import "LKSearchResultsViewController.h"
 
 @interface LKNotificationViewController () <UITableViewDataSource, UITableViewDelegate, LKPostDetailViewControllerDelegate>
 
-LC_PROPERTY(strong) LKNotificationModel *notificationModel;
+//LC_PROPERTY(strong) LKNotificationModel *notificationModel;
 LC_PROPERTY(strong) LKNotificationHeader *notificationHeader;
 LC_PROPERTY(strong) LCUITableView *tableView;
 LC_PROPERTY(strong) LCUIPullLoader *pullLoader;
@@ -114,8 +115,6 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
     [self.notificationModel getNotificationsAtFirstPage:diretion == LCUIPullLoaderDiretionTop requestFinished:^(NSString *error) {
         @normally(self);
         
-        [self.pullLoader endRefresh];
-        
         if (!error) {
             
             self.cartoonImageView.hidden = self.notificationModel.datasource.count ? YES : NO;
@@ -123,6 +122,7 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
                 [LKNotificationCount cleanBadge];
             }
             
+            [self.pullLoader endRefresh];
             [self.tableView reloadData];
         }
     }];
@@ -174,6 +174,9 @@ LC_HANDLE_UI_SIGNAL(PushUserCenter, signal) {
     LKNotification *notification = self.notificationModel.datasource[indexPath.row];
     if (notification.type == LKNotificationTypeFocus) {
         [LKUserCenterViewController pushUserCenterWithUser:notification.user navigationController:self.navigationController];
+    } else if (notification.type == LKNotificationTypeOfficial) {
+        LKSearchResultsViewController *result = [[LKSearchResultsViewController alloc] initWithSearchString:notification.tag];
+        [self.navigationController pushViewController:result animated:YES];
     } else {
         if ((notification.type == LKNotificationTypeComment ||
             notification.type == LKNotificationTypeReply || notification.type == LKNotificationTypeUpdate) && [notification.tagID isKindOfClass:[NSNumber class]]) {

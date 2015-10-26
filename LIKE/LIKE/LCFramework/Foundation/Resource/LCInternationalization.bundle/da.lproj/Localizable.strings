@@ -233,3 +233,9 @@
 "RecommentReason3" = "Mybe you like";
 "RecommentReason4" = "Following";
 
+
+// LKRankViewController
+"like全球排行榜" = "like global ranking list";
+"今日最没事干的liker" = "liker with nothing to do";
+"今日新增like" = "Increasing likes";
+

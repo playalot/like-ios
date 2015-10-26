@@ -10,4 +10,6 @@
 
 @interface LKCameraRollViewController : LCUIViewController
 
+LC_PROPERTY(copy) NSString *tagString;
+
 @end

@@ -316,6 +316,10 @@ LC_PROPERTY(strong) UIView *backView;
             self.locationButton.viewFrameY = self.inputView.viewFrameY - 18 - 25;
         });
     }];
+    
+    if (self.tagString) {
+        [self addNewTag:self.tagString];
+    }
 }
 
 #pragma mark -

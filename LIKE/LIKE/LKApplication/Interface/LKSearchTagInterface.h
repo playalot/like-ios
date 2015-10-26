@@ -11,7 +11,7 @@
 @interface LKSearchTagInterface : LKBaseInterface
 
 LC_PROPERTY(strong) NSString *searchString;
-LC_PROPERTY(copy)NSNumber *timestamp;
+LC_PROPERTY(copy) NSNumber *timestamp;
 
 - (instancetype)initWithSearchString:(NSString *)searchString;
 

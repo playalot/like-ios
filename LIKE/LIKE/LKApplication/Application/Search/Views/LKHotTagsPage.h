@@ -17,5 +17,6 @@
 -(void) show;
 
 LC_ST_SIGNAL(PushPostDetail);
+LC_ST_SIGNAL(PushSearchResult);
 
 @end

@@ -335,8 +335,8 @@ static PHImageRequestOptions *requestOptions;
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == 0) {
-//        [self.navigationController pushViewController:[LKCameraViewController viewController] animated:YES];
-        [self presentViewController:[LKCameraViewController viewController] animated:YES completion:nil];
+        [self.navigationController pushViewController:[LKCameraViewController viewController] animated:YES];
+//        [self presentViewController:[LKCameraViewController viewController] animated:YES completion:nil];
     } else {
         if (IOS8_OR_LATER) {
             
@@ -384,6 +384,9 @@ static PHImageRequestOptions *requestOptions;
     }
     
     LKImageCropperViewController * cropper = [[LKImageCropperViewController alloc] initWithImage:image];
+    if (self.tagString) {
+        cropper.tagString = self.tagString;
+    }
     
     [cropper showBackButton];
     

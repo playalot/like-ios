@@ -698,7 +698,11 @@ LC_PROPERTY(strong) UIView *wastedView;
         [self postNotification:LKCameraViewControllerDismiss];
     } else {
         // push 发布控制器
-        [self.navigationController pushViewController:[[LKNewPostViewController alloc] initWithImage:image] animated:YES];
+        LKNewPostViewController *newPost = [[LKNewPostViewController alloc] initWithImage:image];
+        if (self.tagString) {
+            newPost.tagString = self.tagString;
+        }
+        [self.navigationController pushViewController:newPost animated:YES];
     }
 }
 

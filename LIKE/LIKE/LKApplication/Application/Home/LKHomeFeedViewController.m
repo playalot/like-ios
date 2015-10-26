@@ -26,6 +26,7 @@
 #import "LKEditorPickInterface.h"
 #import "LKLoginViewIp4Controller.h"
 #import "LKLikeRecommendViewController.h"
+#import "XSportLight.h"
 
 #define NORMAL_CELL_IDENTIFIER @"Content"
 #define PRECOMPUTED_CELL_IDENTIFIER @"Content2"
@@ -66,6 +67,30 @@ LC_PROPERTY(weak) id delegate;
 @end
 
 @implementation LKHomeFeedViewController
+
+//- (void)viewWillAppear:(BOOL)animated {
+//    [super viewWillAppear:animated];
+// 
+//    XSportLight *SportLight = [[XSportLight alloc]init];
+//    SportLight.messageArray = @[
+//                                @"欢迎来到 like 新世界",
+//                                @"点这里发布图片",
+//                                @"你关注的人发布的内容都在这里",
+//                                @"来瞅瞅今天的 全球排行榜 吧~",
+//                                @"马上体验!"
+//                                ];
+//    SportLight.rectArray = @[
+//                             [NSValue valueWithCGRect:CGRectMake(0,0,0,0)],
+//                             [NSValue valueWithCGRect:CGRectMake(LC_DEVICE_WIDTH/2, LC_DEVICE_HEIGHT - 5, 50, 50)],
+//                             [NSValue valueWithCGRect:CGRectMake(27, 45, 50, 50)],
+//                             [NSValue valueWithCGRect:CGRectMake(LC_DEVICE_WIDTH - 27, 45, 50, 50)],
+//                             [NSValue valueWithCGRect:CGRectMake(0,0,0,0)]
+//                             ];
+//    
+//    [self presentViewController:SportLight animated:false completion:^{
+//        
+//    }];
+//}
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];

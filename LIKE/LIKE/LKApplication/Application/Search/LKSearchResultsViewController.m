@@ -12,17 +12,19 @@
 #import "UIImageView+WebCache.h"
 #import "LKPostTableViewController.h"
 #import "LKSearchTagInterface.h"
+#import "LKAssistiveTouchButton.h"
 
 @interface LKSearchResultsViewController () <LKPostTableViewControllerDelegate>
 
-LC_PROPERTY(copy) NSString * searchString;
+LC_PROPERTY(copy) NSString *searchString;
 LC_PROPERTY(assign) NSInteger page;
-LC_PROPERTY(strong) NSDictionary * info;
+LC_PROPERTY(strong) NSDictionary *info;
 LC_PROPERTY(strong) NSDictionary *tagInfo;
 LC_PROPERTY(strong) LCUIButton *subscribeBtn;
 LC_PROPERTY(getter=isSubscribed) BOOL subscribed;
 LC_PROPERTY(strong) NSNumber *timestamp;
 LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
+LC_PROPERTY(strong) LKAssistiveTouchButton *assistiveTouchButton;
 
 @end
 
@@ -30,6 +32,28 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
 
 - (void)dealloc {
     [self cancelAllRequests];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[LKNavigator navigator].tabBarController setTabBarHidden:YES animated:NO];
+    
+    if (self.assistiveTouchButton) {
+        LC_FAST_ANIMATIONS(0.25, ^{
+            self.assistiveTouchButton.alpha = 1;
+        });
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[LKNavigator navigator].tabBarController setTabBarHidden:NO animated:YES];
+    
+    if (self.assistiveTouchButton) {
+        LC_FAST_ANIMATIONS(0.25, ^{
+            self.assistiveTouchButton.alpha = 0;
+        });
+    }
 }
 
 - (instancetype)initWithSearchString:(NSString *)searchString {
@@ -215,10 +239,90 @@ LC_PROPERTY(strong) LKPostTableViewController *browsingViewController;
     label.FIT();
     view.ADD(label);
     
+    [self setupAssistiveTouchButton];
+    
     view.viewFrameWidth = LC_DEVICE_WIDTH;
     view.viewFrameHeight = label.viewBottomY + 15 < 96 ? 96 : label.viewBottomY + 15;
     
     return view;
+}
+
+- (void)setupAssistiveTouchButton {
+    
+    if (!self.assistiveTouchButton) {
+        
+        CGFloat width = 100;
+        
+        self.assistiveTouchButton = [[LKAssistiveTouchButton alloc] initWithFrame:CGRectMake(LC_DEVICE_WIDTH / 2 - width / 2, LC_DEVICE_HEIGHT + 20 - width, width, width) inView:self.view];
+        
+        [UIApplication sharedApplication].keyWindow.ADD(self.assistiveTouchButton);
+        
+        
+        if (LKUserDefaults.singleton[@"LKAssistiveTouchButton"]) {
+            
+            CGRect frame = CGRectFromString(LKUserDefaults.singleton[@"LKAssistiveTouchButton"]);
+            
+            self.assistiveTouchButton.frame = frame;
+        }
+        
+        
+        
+        @weakly(self);
+        
+        self.assistiveTouchButton.touchDown = ^(){
+            
+            @normally(self);
+            
+            [self touchDown:self.assistiveTouchButton.view];
+        };
+        
+        self.assistiveTouchButton.touchEnd = ^(){
+            
+            @normally(self);
+            
+            [self touchEnd:self.assistiveTouchButton.view];
+        };
+        
+        self.assistiveTouchButton.didSelected = ^(){
+            
+            @normally(self);
+            
+            [self didTap];
+        };
+    }
+}
+
+- (void)didTap {
+    LKCameraRollViewController *cameraRoll = [LKCameraRollViewController viewController];
+    [LCUIApplication presentViewController:LC_UINAVIGATION(cameraRoll) animation:YES];
+    cameraRoll.tagString = self.title;
+}
+
+- (void)touchDown:(UIView *)button {
+
+    [@[button] pop_sequenceWithInterval:0 animations:^(UIView *circle, NSInteger index){
+        
+        button.pop_springBounciness = 10;
+        button.pop_springSpeed = 12;
+        button.pop_spring.pop_scaleXY = CGPointMake(1.2, 1.2);
+        
+    } completion:^(BOOL finished){
+        
+        
+    }];
+}
+
+-(void) touchEnd:(UIView *)button
+{
+    [@[button] pop_sequenceWithInterval:0 animations:^(id object, NSInteger index) {
+        
+        button.pop_springBounciness = 10;
+        button.pop_springSpeed = 12;
+        button.pop_spring.pop_scaleXY = CGPointMake(1, 1);
+        
+    } completion:^(BOOL finished) {
+        ;
+    }];
 }
 
 -(CGFloat) headerHeight

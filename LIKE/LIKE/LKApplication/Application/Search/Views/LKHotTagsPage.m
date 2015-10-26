@@ -13,6 +13,7 @@
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "LKSearchResultCollectionViewCell.h"
 #import "LKMoreContentButton.h"
+#import "LKBannerView.h"
 
 // test
 
@@ -22,12 +23,13 @@
 
 @interface LKHotTagsPage () <UICollectionViewDataSource, UICollectionViewDelegate, CHTCollectionViewDelegateWaterfallLayout>
 
-LC_PROPERTY(strong) LKTag * tagValue;
+LC_PROPERTY(strong) LKTag *tagValue;
 LC_PROPERTY(assign) BOOL loadFinished;
 LC_PROPERTY(assign) BOOL loading;
-LC_PROPERTY(strong) NSMutableArray * posts;
-LC_PROPERTY(strong) CHTCollectionViewWaterfallLayout * layout;
-//LC_PROPERTY(strong) LKHotUserView * hotUsersView;
+LC_PROPERTY(strong) NSMutableArray *posts;
+LC_PROPERTY(strong) CHTCollectionViewWaterfallLayout *layout;
+//LC_PROPERTY(strong) LKHotUserView *hotUsersView;
+LC_PROPERTY(strong) LKBannerView *bannerView;
 LC_PROPERTY(strong) LKMoreContentButton *moreContentBtn;
 
 @end
@@ -35,6 +37,7 @@ LC_PROPERTY(strong) LKMoreContentButton *moreContentBtn;
 @implementation LKHotTagsPage
 
 LC_IMP_SIGNAL(PushPostDetail);
+LC_IMP_SIGNAL(PushSearchResult);
 
 -(void) dealloc
 {
@@ -46,7 +49,8 @@ LC_IMP_SIGNAL(PushPostDetail);
     CHTCollectionViewWaterfallLayout * layout = [[CHTCollectionViewWaterfallLayout alloc] init];
     
     layout.sectionInset = UIEdgeInsetsMake(0, 5, 5, 5);
-//    layout.headerHeight = 92;
+// TODO 设置banner的显示与隐藏
+    layout.headerHeight = 154;
     layout.footerHeight = 49;
     layout.minimumColumnSpacing = 5;
     layout.minimumInteritemSpacing = 5;
@@ -65,7 +69,7 @@ LC_IMP_SIGNAL(PushPostDetail);
         [self registerClass:[LKSearchResultCollectionViewCell class]
             forCellWithReuseIdentifier:CELL_IDENTIFIER];
         
-        [self registerClass:[LKHotUserView class] forSupplementaryViewOfKind:CHTCollectionElementKindSectionHeader withReuseIdentifier:HEADER_IDENTIFIER];
+        [self registerClass:[LKBannerView class] forSupplementaryViewOfKind:CHTCollectionElementKindSectionHeader withReuseIdentifier:HEADER_IDENTIFIER];
 
         [self registerClass:[LKMoreContentButton class] forSupplementaryViewOfKind:CHTCollectionElementKindSectionFooter withReuseIdentifier:FOOTER_IDENTIFIER];
         
@@ -164,7 +168,18 @@ LC_IMP_SIGNAL(PushPostDetail);
         
         reusableView = [collectionView dequeueReusableSupplementaryViewOfKind:kind  withReuseIdentifier:HEADER_IDENTIFIER forIndexPath:indexPath];
         
-//        self.hotUsersView = (LKHotUserView *)reusableView;
+        self.bannerView = (LKBannerView *)reusableView;
+        self.bannerView.tagValue = self.tagValue;
+        
+        @weakly(self);
+        
+        self.bannerView.bannerViewDidTap = ^(LKTag *tag) {
+            
+            @normally(self);
+          
+            NSLog(@"%@", tag);
+            self.SEND(self.PushSearchResult).object = tag;
+        };
     }
     else if ([kind isEqualToString:CHTCollectionElementKindSectionFooter]){
         

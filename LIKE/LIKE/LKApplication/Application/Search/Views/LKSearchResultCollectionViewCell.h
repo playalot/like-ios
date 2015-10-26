@@ -12,6 +12,7 @@
 @interface LKSearchResultCollectionViewCell : UICollectionViewCell
 
 LC_PROPERTY(strong) LKPost * post;
+LC_PROPERTY(strong) LCUIImageView * contentImage;
 
 +(CGSize) sizeWithPost:(LKPost *)post;
 

@@ -26,7 +26,7 @@
 
         for (NSDictionary *data in tmp) {
             
-            [self.datasource addObject:[[LKNotification alloc] initWithDictionary:data error:nil]];
+            [self.datasource addObject:[LKNotification objectFromDictionary:data]];
         }
             
     }
@@ -51,7 +51,7 @@
         NSMutableArray *datasource = [NSMutableArray array];
         
         for (NSDictionary *dic in tmp) {
-            [datasource addObject:[[LKNotification alloc] initWithDictionary:dic error:nil]];
+            [datasource addObject:[LKNotification objectFromDictionary:dic]];
         }
         
         if (firstPage) {

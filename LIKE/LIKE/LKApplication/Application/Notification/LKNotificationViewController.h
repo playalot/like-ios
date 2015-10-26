@@ -7,8 +7,11 @@
 //
 
 #import "LCUIViewController.h"
+#import "LKNotificationModel.h"
 
 @interface LKNotificationViewController : LCUIViewController
+
+LC_PROPERTY(strong) LKNotificationModel *notificationModel;
 
 - (void)refresh;
 

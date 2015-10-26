@@ -74,10 +74,6 @@
 
     } failure:^(LCBaseRequest *request) {
         
-//        if (requestFinished) {
-//            requestFinished([NSError allocWithZone:nil]);
-//        }
-        
     }];
 }
 

@@ -70,8 +70,6 @@ LC_PROPERTY(strong) LCUIImageView *cartoonImageView;
 
 - (void)buildTableView {
     self.tableView = [[LCUITableView alloc] initWithFrame:CGRectZero];
-    //    self.tableView.frame = self.view.bounds;
-    //    self.tableView.viewFrameHeight -= 49;
     self.tableView.viewFrameWidth = self.view.viewFrameWidth;
     self.tableView.viewFrameHeight = self.view.viewFrameHeight - 64 - 49;
     self.tableView.backgroundView = nil;

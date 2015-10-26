@@ -28,6 +28,18 @@
     return sheet;
 }
 
++ (instancetype)showWithTitle:(NSString *)title buttonTitles:(NSArray *)titles shareTitles:(NSArray *)shareTitles shareImage:(UIImage *)shareImage didSelected:(LCUIActionSheetDidSelected)didSelected {
+    
+    LKActionSheet *sheet = [[LKActionSheet alloc] initWithTitle:title buttonTitles:titles shareTitles:shareTitles shareImage:shareImage redButtonIndex:-1 delegate:nil];
+    
+    sheet.delegate = sheet;
+    sheet.didSelected = didSelected;
+    
+    [sheet show];
+    
+    return sheet;
+}
+
 - (void)actionSheet:(TRActionSheet *)actionSheet didClickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (self.didSelected) {

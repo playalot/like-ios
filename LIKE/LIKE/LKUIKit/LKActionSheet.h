@@ -16,4 +16,10 @@ LC_PROPERTY(copy) LCUIActionSheetDidSelected didSelected;
                   buttonTitles:(NSArray *)titles
                    didSelected:(LCUIActionSheetDidSelected)didSelected;
 
++ (instancetype) showWithTitle:(NSString *)title
+                  buttonTitles:(NSArray *)titles
+                   shareTitles:(NSArray *)shareTitles
+                    shareImage:(UIImage *)shareImage
+                   didSelected:(LCUIActionSheetDidSelected)didSelected;
+
 @end

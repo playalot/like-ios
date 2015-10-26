@@ -62,6 +62,13 @@
                redButtonIndex:(NSInteger)buttonIndex
                      delegate:(id<TRActionSheetDelegate>)delegate;
 
+- (instancetype)initWithTitle:(NSString *)title
+                 buttonTitles:(NSArray *)titles
+                  shareTitles:(NSArray *)shareTitles
+                   shareImage:(UIImage *)shareImage
+               redButtonIndex:(NSInteger)buttonIndex
+                     delegate:(id<TRActionSheetDelegate>)delegate;
+
 - (void)show;
 
 @end

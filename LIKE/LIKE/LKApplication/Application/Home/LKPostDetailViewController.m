@@ -490,7 +490,7 @@ LC_PROPERTY(assign) BOOL isBackgroundImageGIF;
 -(void) _moreAction {
     [self.inputView resignFirstResponder];
     
-    NSString *favorStr = self.post.favorited ? @"取消收藏" : @"收藏图片";
+    NSString *favorStr = self.post.favorited ? @"取消收藏" : @"收 藏";
     
     @weakly(self);
 
@@ -507,22 +507,12 @@ LC_PROPERTY(assign) BOOL isBackgroundImageGIF;
             
             @normally(self);
 
-            /*if (index == 0) {
-                
-                // 举报
-                [self _report];
-            }
-            else */
             if (index == 0){
                 
                 // 删除
                 [self _delete];
                 
-            } else if (index == 1) {
-              
-                [self favoriteImageWithStatus:self.post.favorited];
-                
-            } else if (index == 2){
+            } else if (index == 1){
                 
                 if (self.header.backgroundView.image) {
                     
@@ -530,24 +520,21 @@ LC_PROPERTY(assign) BOOL isBackgroundImageGIF;
                 }
             }
         }];
-    }
-    else{
+    } else {
         
-        [LKActionSheet showWithTitle:nil/*LC_LO(@"更多")*/ buttonTitles:@[LC_LO(favorStr),LC_LO(@"举报"),/*LC_LO(@"保存图片")*/] didSelected:^(NSInteger index) {
-            
+        UIImage *shareImage = [self buildShareImage:0];
+        [LKActionSheet showWithTitle:LC_LO(@"分享这张照片") buttonTitles:@[LC_LO(favorStr),LC_LO(@"举 报")] shareTitles:@[LC_LO(@"微信好友"), LC_LO(@"朋友圈"), LC_LO(@"QQ好友"), LC_LO(@"微博")] shareImage:shareImage didSelected:^(NSInteger index) {
+           
             @normally(self);
-
+            
             if (index == 0) {
                 
                 [self favoriteImageWithStatus:self.post.favorited];
                 
             } else if (index == 1) {
                 
-                // 举报
-//                [self _report];
                 [self reportReason];
             }
-            
         }];
     }
 }

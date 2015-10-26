@@ -72,6 +72,9 @@
 "取消屏蔽" = "Cancel block";
 "已屏蔽该用户" = "Aleady block user!";
 "取消屏蔽成功" = "Cancel block successfully!";
+"收 藏" = "Favor";
+"举 报" = "Report";
+"取 消" = "Cancel";
 
 // Tip
 "上传失败啦！请检查您的网络稍后再试Orz～" = "Upload failed! Please check your internet connection";

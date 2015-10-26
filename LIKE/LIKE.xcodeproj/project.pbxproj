@@ -32,6 +32,10 @@
 		131915651B8C267900EC0F42 /* SMS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 131915621B8C267900EC0F42 /* SMS_SDK.framework */; };
 		131915671B8C26C400EC0F42 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 131915661B8C26C400EC0F42 /* MessageUI.framework */; };
 		131DC27C1BDA3C4A00C124FA /* BannerPlaceholder@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 131DC27B1BDA3C4A00C124FA /* BannerPlaceholder@3x.png */; };
+		131DC2811BDDE47700C124FA /* QQShare@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 131DC27D1BDDE47700C124FA /* QQShare@3x.png */; };
+		131DC2821BDDE47700C124FA /* WeChatFeedShare@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 131DC27E1BDDE47700C124FA /* WeChatFeedShare@3x.png */; };
+		131DC2831BDDE47700C124FA /* WeChatFriendShare@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 131DC27F1BDDE47700C124FA /* WeChatFriendShare@3x.png */; };
+		131DC2841BDDE47700C124FA /* WeiboShare@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 131DC2801BDDE47700C124FA /* WeiboShare@3x.png */; };
 		1326229B1B8EF5850074C589 /* Wasted.png in Resources */ = {isa = PBXBuildFile; fileRef = 132622991B8EF5850074C589 /* Wasted.png */; };
 		1326229C1B8EF5850074C589 /* Wasted2.png in Resources */ = {isa = PBXBuildFile; fileRef = 1326229A1B8EF5850074C589 /* Wasted2.png */; };
 		132622A01B93FC0D0074C589 /* libPushSDK-1.8.5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1326229F1B93FC0D0074C589 /* libPushSDK-1.8.5.a */; };
@@ -1012,6 +1016,10 @@
 		131915631B8C267900EC0F42 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/SMS_SDKLocalizable.strings"; sourceTree = "<group>"; };
 		131915661B8C26C400EC0F42 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		131DC27B1BDA3C4A00C124FA /* BannerPlaceholder@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BannerPlaceholder@3x.png"; sourceTree = "<group>"; };
+		131DC27D1BDDE47700C124FA /* QQShare@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "QQShare@3x.png"; sourceTree = "<group>"; };
+		131DC27E1BDDE47700C124FA /* WeChatFeedShare@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WeChatFeedShare@3x.png"; sourceTree = "<group>"; };
+		131DC27F1BDDE47700C124FA /* WeChatFriendShare@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WeChatFriendShare@3x.png"; sourceTree = "<group>"; };
+		131DC2801BDDE47700C124FA /* WeiboShare@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WeiboShare@3x.png"; sourceTree = "<group>"; };
 		132622991B8EF5850074C589 /* Wasted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Wasted.png; sourceTree = "<group>"; };
 		1326229A1B8EF5850074C589 /* Wasted2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Wasted2.png; sourceTree = "<group>"; };
 		1326229E1B93FC0D0074C589 /* APService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APService.h; sourceTree = "<group>"; };
@@ -5437,6 +5445,10 @@
 				133973081BC9474300D5977F /* WeChatFeedIcon@3x.png */,
 				133973091BC9474300D5977F /* WeChatFriendIcon@3x.png */,
 				1387C3511B31703300B065A7 /* MobileIcon@3x.png */,
+				131DC27D1BDDE47700C124FA /* QQShare@3x.png */,
+				131DC27E1BDDE47700C124FA /* WeChatFeedShare@3x.png */,
+				131DC27F1BDDE47700C124FA /* WeChatFriendShare@3x.png */,
+				131DC2801BDDE47700C124FA /* WeiboShare@3x.png */,
 			);
 			path = Share;
 			sourceTree = "<group>";
@@ -5862,12 +5874,15 @@
 				13E3EE021B60955400A48E76 /* zh2TW.txt in Resources */,
 				139055781B9D9F1C00DBF34A /* avatar.png in Resources */,
 				13892C3B1B1C31E40053303E /* HomepageIcon@3x.png in Resources */,
+				131DC2811BDDE47700C124FA /* QQShare@3x.png in Resources */,
 				13877D171BBCE49600521D2D /* Interest_mushroom@3x.png in Resources */,
 				13DA0FC61AEB8AFE005B9476 /* CameraFocus@3x.png in Resources */,
 				134F62201BCB56E7007D5187 /* FacebookLogin@3x.png in Resources */,
+				131DC2831BDDE47700C124FA /* WeChatFriendShare@3x.png in Resources */,
 				130CF59C1BB00CD8002F4189 /* segment_fans@3x.png in Resources */,
 				138EDE8C1AD7B0A30020957C /* LCInternationalization.bundle in Resources */,
 				13B5B4E61B15CB6800252A78 /* TalkIcon@3x.png in Resources */,
+				131DC2841BDDE47700C124FA /* WeiboShare@3x.png in Resources */,
 				13877D131BBCE49600521D2D /* Interest_aerolite@3x.png in Resources */,
 				13C363CC1BB030A8004CE0FA /* NotificationNoMessage@3x.png in Resources */,
 				13AC852B1BD13489002134E7 /* PhoneIconIp4@2x.png in Resources */,
@@ -5929,6 +5944,7 @@
 				1359F4A41B6A24B800A0ABE9 /* Gta-walking@3x.png in Resources */,
 				13E27EF51AF8B7D000C17362 /* cellLine@2x.png in Resources */,
 				133973011BC9465600D5977F /* NavigationBarBackShadow@3x.png in Resources */,
+				131DC2821BDDE47700C124FA /* WeChatFeedShare@3x.png in Resources */,
 				13AC85581BD636F6002134E7 /* RankThird_mini@3x.png in Resources */,
 				130CF59E1BB00CD8002F4189 /* segment_follow@3x.png in Resources */,
 				134765361AE2564D0055D099 /* PostNavigationBar@3x.png in Resources */,
